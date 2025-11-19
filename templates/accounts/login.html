@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تسجيل الدخول - منصة سفراء القرآن</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #001f3f, #003366);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+            width: 360px;
+            text-align: center;
+            backdrop-filter: blur(6px);
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            color: #ffcc00;
+            font-size: 26px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-align: right;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 5px #ffcc00;
+        }
+
+        button {
+            background-color: #ffcc00;
+            color: #001f3f;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #ffd633;
+            transform: scale(1.02);
+        }
+
+        p {
+            margin-top: 15px;
+        }
+
+        a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 15px;
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #ffcc00;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .home-link:hover {
+            background-color: #ffcc00;
+            color: #001f3f;
+        }
+
+        .message {
+            color: #ff6666;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>تسجيل الدخول</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label>اسم المستخدم:</label>
+            <input type="text" name="username" required>
+
+            <label>كلمة المرور:</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">دخول</button>
+        </form>
+
+        <p>ليس لديك حساب؟ <a href="{% url 'register' %}">أنشئ حساب</a></p>
+
+        {% for msg in messages %}
+            <p class="message">{{ msg }}</p>
+        {% endfor %}
+
+        <a href="{% url 'home' %}" class="home-link">🏠 الصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,528 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    <meta name="description" content="{{ post.meta_description|default:post.excerpt }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1b3a70 100%);
+            min-height: 100vh;
+            color: white;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn:hover {
+            background: rgba(102, 126, 234, 0.3);
+            transform: translateX(5px);
+        }
+        
+        /* Post Header */
+        .post-header {
+            margin-bottom: 40px;
+        }
+        
+        .post-meta-top {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .category-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.9;
+        }
+        
+        .post-title {
+            font-size: 2.8em;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .post-excerpt {
+            font-size: 1.2em;
+            opacity: 0.85;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+        }
+        
+        .author-details h4 {
+            margin-bottom: 5px;
+        }
+        
+        .author-details small {
+            opacity: 0.7;
+        }
+        
+        /* Featured Image */
+        .featured-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Post Content */
+        .post-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            font-size: 1.1em;
+        }
+        
+        .post-content p {
+            margin-bottom: 20px;
+        }
+        
+        .post-content h2, .post-content h3 {
+            margin: 30px 0 15px;
+            color: #667eea;
+        }
+        
+        .post-content ul, .post-content ol {
+            margin: 20px 0 20px 30px;
+        }
+        
+        .post-content li {
+            margin-bottom: 10px;
+        }
+        
+        .post-content blockquote {
+            border-right: 4px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            font-style: italic;
+        }
+        
+        /* Share Buttons */
+        .share-section {
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .share-section h3 {
+            margin-bottom: 15px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .share-facebook { background: #3b5998; }
+        .share-twitter { background: #1da1f2; }
+        .share-whatsapp { background: #25d366; }
+        .share-linkedin { background: #0077b5; }
+        
+        /* Comments Section */
+        .comments-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .comment-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-right: 3px solid #667eea;
+        }
+        
+        .comment-author {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #667eea;
+        }
+        
+        .comment-date {
+            font-size: 0.85em;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        
+        /* Comment Form */
+        .comment-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Related Posts */
+        .related-section {
+            margin-top: 60px;
+        }
+        
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .related-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .related-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .related-content {
+            padding: 20px;
+        }
+        
+        .related-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .related-title a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .related-title a:hover {
+            color: #667eea;
+        }
+        
+        /* Messages */
+        .message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .message.success {
+            background: rgba(39, 174, 96, 0.2);
+            border-right: 3px solid #27ae60;
+        }
+        
+        .message.error {
+            background: rgba(231, 76, 60, 0.2);
+            border-right: 3px solid #e74c3c;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .post-title {
+                font-size: 2em;
+            }
+            
+            .post-content {
+                padding: 25px;
+            }
+            
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <a href="{% url 'blog_list' %}" class="back-btn">
+            ← العودة للمدونة
+        </a>
+        
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Post Header -->
+        <div class="post-header">
+            <div class="post-meta-top">
+                {% if post.category %}
+                <span class="category-badge">{{ post.category.icon }} {{ post.category.name }}</span>
+                {% endif %}
+                <span class="meta-item">👁 {{ post.views_count }} مشاهدة</span>
+                <span class="meta-item">⏱ {{ post.reading_time }} دقائق قراءة</span>
+                <span class="meta-item">📅 {{ post.published_at|date:"d M Y" }}</span>
+            </div>
+            
+            <h1 class="post-title">{{ post.title }}</h1>
+            
+            {% if post.excerpt %}
+            <p class="post-excerpt">{{ post.excerpt }}</p>
+            {% endif %}
+            
+            <div class="author-info">
+                <div class="author-avatar">👨‍💼</div>
+                <div class="author-details">
+                    <h4>{{ post.author.get_full_name|default:post.author.username }}</h4>
+                    <small>تم النشر في {{ post.published_at|date:"d F Y" }}</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Featured Image -->
+        {% if post.image %}
+        <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="featured-image">
+        {% endif %}
+        
+        <!-- Post Content -->
+        <div class="post-content">
+            {{ post.content|linebreaks }}
+        </div>
+        
+        <!-- Share Section -->
+        <div class="share-section">
+            <h3>📤 شارك هذا المقال</h3>
+            <div class="share-buttons">
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-btn share-facebook">
+                    Facebook
+                </a>
+                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="share-btn share-twitter">
+                    Twitter
+                </a>
+                <a href="https://wa.me/?text={{ post.title }} {{ request.build_absolute_uri }}" target="_blank" class="share-btn share-whatsapp">
+                    WhatsApp
+                </a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="share-btn share-linkedin">
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+        
+        <!-- Comment Form -->
+        {% if post.allow_comments %}
+        <div class="comment-form">
+            <h3>💬 اترك تعليقك</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="author_name">الاسم *</label>
+                    <input type="text" id="author_name" name="author_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="author_email">البريد الإلكتروني *</label>
+                    <input type="email" id="author_email" name="author_email" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">التعليق *</label>
+                    <textarea id="content" name="content" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">إرسال التعليق</button>
+            </form>
+        </div>
+        {% endif %}
+        
+        <!-- Comments -->
+        <div class="comments-section">
+            <div class="comments-header">
+                <h3>💬 التعليقات</h3>
+                <span style="opacity: 0.7;">{{ comments_count }} تعليق</span>
+            </div>
+            
+            {% if comments %}
+                {% for comment in comments %}
+                <div class="comment-item">
+                    <div class="comment-author">{{ comment.author_name }}</div>
+                    <div class="comment-date">{{ comment.created_at|date:"d F Y, H:i" }}</div>
+                    <p>{{ comment.content }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center; opacity: 0.7; padding: 30px;">لا توجد تعليقات بعد. كن أول من يعلق!</p>
+            {% endif %}
+        </div>
+        
+        <!-- Related Posts -->
+        {% if related_posts %}
+        <div class="related-section">
+            <h2 class="section-title">📚 مقالات ذات صلة</h2>
+            <div class="related-grid">
+                {% for related in related_posts %}
+                <div class="related-card">
+                    {% if related.image %}
+                    <img src="{{ related.image.url }}" alt="{{ related.title }}" class="related-image">
+                    {% else %}
+                    <div class="related-image" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 3em;">
+                        📝
+                    </div>
+                    {% endif %}
+                    <div class="related-content">
+                        <h3 class="related-title">
+                            <a href="{% url 'blog_detail' related.slug %}">{{ related.title }}</a>
+                        </h3>
+                        <div style="display: flex; gap: 15px; font-size: 0.85em; opacity: 0.8; margin-top: 10px;">
+                            <span>👁 {{ related.views_count }}</span>
+                            <span>⏱ {{ related.reading_time }} د</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

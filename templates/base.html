@@ -1,0 +1,842 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{% block meta_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار مناسبة تبدأ من 5 ريال. معلمون متقنون، حصص فردية، ومتابعة مستمرة لجميع الأعمار.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن, تعليم القرآن عن بعد, معلم قرآن اونلاين, حفظ القرآن الكريم, تجويد القرآن, دروس قرآن للأطفال, معلمة قرآن, تحفيظ قرآن بأسعار مناسبة, حصص قرآن فردية, تعليم القرآن للكبار{% endblock %}">
+    <meta name="author" content="المنصة التعليمية">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="{% block canonical_url %}https://yourwebsite.com{{ request.path }}{% endblock %}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}{% block title %}المنصة التعليمية{% endblock %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية وأسعار مناسبة تبدأ من 5 ريال{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}https://yourwebsite.com{% static 'images/logo.jpeg' %}{% endblock %}">
+    <meta property="og:locale" content="ar_EG">
+    <meta property="og:site_name" content="المنصة التعليمية">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://yourwebsite.com{{ request.path }}">
+    <meta name="twitter:description" content="{% block twitter_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية وأسعار مناسبة{% endblock %}">
+    <meta name="twitter:image" content="https://yourwebsite.com{% static 'images/logo.jpeg' %}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpeg' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/logo.jpeg' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo.jpeg' %}">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "المنصة التعليمية",
+      "description": "منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد",
+      "url": "https://yourwebsite.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://yourwebsite.com{% static 'images/logo.jpeg' %}",
+        "width": 250,
+        "height": 250
+      },
+      "image": "https://yourwebsite.com{% static 'images/logo.jpeg' %}",
+      "telephone": "+20-111-170-4395",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "EG",
+        "addressLocality": "مصر"
+      },
+      "sameAs": [
+        "https://www.facebook.com/share/1B8ssMKgDd/",
+        "https://wa.me/message/OPUYNILYAHPOL1"
+      ],
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday"
+        ],
+        "opens": "09:00",
+        "closes": "24:00"
+      },
+      "priceRange": "5 ريال - 10 ريال",
+      "areaServed": {
+        "@type": "Country",
+        "name": "مصر"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "خدمات تحفيظ القرآن الكريم",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "تحفيظ القرآن للأطفال",
+              "description": "برنامج متكامل لتحفيظ القرآن الكريم للأطفال من سن 6 سنوات"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "تصحيح التلاوة",
+              "description": "تحسين التلاوة وتصحيح الأخطاء التجويدية"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "تحفيظ القرآن للكبار",
+              "description": "برنامج مخصص للبالغين لحفظ القرآن الكريم"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    {% block breadcrumb_schema %}{% endblock %}
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-light: #F4E5C3;
+            --gold-dark: #B8941E;
+            --navy-dark: #0a1f44;
+            --navy-medium: #1b3a70;
+            --navy-light: #2d4a7c;
+            --text-light: #f0f8ff;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+            background: linear-gradient(135deg, var(--navy-dark) 0%, #112b50 100%);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Skip to main content for accessibility */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--gold-primary);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 0 0 8px 0;
+            font-weight: 600;
+        }
+
+        .skip-to-content:focus {
+            top: 0;
+            outline: 3px solid white;
+        }
+
+        /* Header with Logo */
+        .main-header {
+            background: linear-gradient(135deg, var(--navy-medium) 0%, var(--navy-dark) 100%);
+            color: #fff;
+            padding: 30px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            padding: 10px;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .header-content h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, var(--navy-medium) 0%, #112b50 100%);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 20px rgba(0,0,0,0.4);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        nav a:hover, nav a:focus {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+            outline: 2px solid var(--gold-primary);
+            outline-offset: 2px;
+        }
+
+        nav a.active {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        nav a.login-btn {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: white;
+            font-weight: 700;
+        }
+
+        nav a.login-btn:hover {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        nav a.logout-btn {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        nav a.logout-btn:hover {
+            background: linear-gradient(135deg, #c82333, #dc3545);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background: linear-gradient(135deg, #ff4757, #ff3838);
+            color: white;
+            font-size: 0.7em;
+            font-weight: bold;
+            padding: 5px 9px;
+            border-radius: 50%;
+            min-width: 24px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(255, 71, 87, 0.6);
+            animation: pulse-notification 2s infinite;
+            display: none;
+        }
+
+        .notification-badge.active {
+            display: block;
+        }
+
+        @keyframes pulse-notification {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 3px 10px rgba(255, 71, 87, 0.6);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 5px 20px rgba(255, 71, 87, 0.8);
+            }
+        }
+
+        /* Bell Animation */
+        nav a:hover .fa-bell {
+            animation: ring 0.6s ease;
+        }
+
+        @keyframes ring {
+            0%, 100% { transform: rotate(0deg); }
+            10%, 30%, 50%, 70%, 90% { transform: rotate(-12deg); }
+            20%, 40%, 60%, 80% { transform: rotate(12deg); }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s;
+        }
+
+        .menu-toggle:hover, .menu-toggle:focus {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+            outline: 2px solid white;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, #0a1628 100%);
+            color: var(--text-light);
+            padding: 60px 20px 30px;
+            margin-top: 80px;
+            border-top: 3px solid var(--gold-primary);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--gold-primary);
+            margin-bottom: 25px;
+            font-size: 1.5em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-section p, .footer-section li {
+            line-height: 2;
+            opacity: 0.9;
+            margin-bottom: 12px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-section ul li a:hover, .footer-section ul li a:focus {
+            color: var(--gold-primary);
+            padding-right: 12px;
+            outline: 1px solid var(--gold-primary);
+            outline-offset: 4px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+            border-radius: 50%;
+            color: var(--gold-primary);
+            font-size: 1.4em;
+            transition: all 0.3s;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .social-links a:hover, .social-links a:focus {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: white;
+            transform: translateY(-5px) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+            border-color: var(--gold-primary);
+            outline: 2px solid white;
+            outline-offset: 3px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 35px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-bottom a {
+            color: var(--gold-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .footer-bottom a:hover, .footer-bottom a:focus {
+            color: var(--gold-light);
+            text-decoration: underline;
+            outline: 1px solid var(--gold-primary);
+            outline-offset: 4px;
+        }
+
+        /* Performance - Lazy loading placeholder */
+        img[loading="lazy"] {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .logo-container {
+                width: 70px;
+                height: 70px;
+            }
+
+            .header-content h1 {
+                font-size: 1.8em;
+                text-align: center;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                display: none;
+                padding: 10px 20px;
+            }
+
+            .nav-container.active {
+                display: flex;
+                animation: slideDown 0.3s ease;
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .menu-toggle {
+                display: block;
+                margin: 0 auto;
+            }
+
+            nav a {
+                width: 100%;
+                justify-content: center;
+                font-size: 1.05em;
+                padding: 14px 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            main {
+                padding: 30px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 25px 15px;
+            }
+
+            .logo-container {
+                width: 60px;
+                height: 60px;
+            }
+
+            .header-content h1 {
+                font-size: 1.5em;
+            }
+
+            nav a {
+                font-size: 1em;
+                padding: 12px 18px;
+            }
+
+            .social-links a {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2em;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: var(--gold-primary);
+            color: white;
+        }
+
+        ::-moz-selection {
+            background: var(--gold-primary);
+            color: white;
+        }
+
+        /* Focus visible for keyboard navigation */
+        *:focus-visible {
+            outline: 2px solid var(--gold-primary);
+            outline-offset: 3px;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-to-content">انتقل إلى المحتوى الرئيسي</a>
+
+    <!-- Header with Logo -->
+    <header class="main-header" role="banner">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="{% static 'images/logo.jpeg' %}" 
+                     alt="شعار المنصة التعليمية - تحفيظ القرآن الكريم" 
+                     width="80" 
+                     height="80">
+            </div>
+            <h1>🎓 المنصة التعليمية</h1>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="القائمة الرئيسية">
+        <button class="menu-toggle" 
+                onclick="toggleMenu()" 
+                aria-label="فتح القائمة" 
+                aria-expanded="false" 
+                aria-controls="navContainer">
+            <i class="fas fa-bars" aria-hidden="true"></i> القائمة
+        </button>
+        <div class="nav-container" id="navContainer">
+            <a href="{% url 'home' %}" 
+               {% if request.resolver_match.url_name == 'home' %}class="active" aria-current="page"{% endif %}>
+                <i class="fas fa-home" aria-hidden="true"></i> الرئيسية
+            </a>
+            <a href="{% url 'about' %}" 
+               {% if request.resolver_match.url_name == 'about' %}class="active" aria-current="page"{% endif %}>
+                <i class="fas fa-info-circle" aria-hidden="true"></i> عنّا
+            </a>
+            <a href="{% url 'quality_standards' %}" 
+               {% if request.resolver_match.url_name == 'quality_standards' %}class="active" aria-current="page"{% endif %}>
+                <i class="fas fa-award" aria-hidden="true"></i> مواثيق الجودة
+            </a>
+            <a href="{% url 'contact' %}" 
+               {% if request.resolver_match.url_name == 'contact' %}class="active" aria-current="page"{% endif %}>
+                <i class="fas fa-envelope" aria-hidden="true"></i> تواصل معنا
+            </a>
+            <a href="{% url 'blog_list' %}" 
+               {% if 'blog' in request.path %}class="active" aria-current="page"{% endif %}>
+                <i class="fas fa-blog" aria-hidden="true"></i> المدوّنة
+            </a>
+            <a href="{% url 'pricing' %}" 
+               {% if request.resolver_match.url_name == 'pricing' %}class="active" aria-current="page"{% endif %}>
+                <i class="fas fa-tags" aria-hidden="true"></i> الباقات
+            </a>
+            
+            {% if user.is_authenticated %}
+                {% if user.user_type == 'supervisor' %}
+                    <a href="{% url 'supervisor_dashboard' %}" 
+                       {% if request.resolver_match.url_name == 'supervisor_dashboard' %}class="active" aria-current="page"{% endif %}
+                       id="supervisorDashboardLink">
+                        <i class="fas fa-bell" aria-hidden="true"></i>
+                        <span class="notification-badge" 
+                              id="notificationBadge" 
+                              aria-live="polite" 
+                              aria-atomic="true">0</span>
+                        لوحة المشرف
+                    </a>
+                {% else %}
+                    <a href="{% url 'profile' %}" 
+                       {% if request.resolver_match.url_name == 'profile' %}class="active" aria-current="page"{% endif %}>
+                        <i class="fas fa-user" aria-hidden="true"></i> ملفي الشخصي
+                    </a>
+                    <a href="{% url 'student_dashboard' %}" 
+                       {% if request.resolver_match.url_name == 'student_dashboard' %}class="active" aria-current="page"{% endif %}>
+                        <i class="fas fa-tachometer-alt" aria-hidden="true"></i> لوحة التحكم
+                    </a>
+                {% endif %}
+                
+                <a href="{% url 'logout' %}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt" aria-hidden="true"></i> تسجيل الخروج
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="login-btn">
+                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i> تسجيل الدخول
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-graduation-cap"></i> عن المنصة</h3>
+                <p>منصة تعليمية متميزة تقدم دروساً عن بُعد بجودة عالية وأسعار مناسبة للجميع.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1B8ssMKgDd/" target="_blank" title="فيسبوك" aria-label="فيسبوك">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" title="تويتر" aria-label="تويتر">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" title="إنستجرام" aria-label="إنستجرام">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" title="يوتيوب" aria-label="يوتيوب">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://wa.me/message/OPUYNILYAHPOL1" target="_blank" title="واتساب" aria-label="واتساب">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3><i class="fas fa-link"></i> روابط سريعة</h3>
+                <ul>
+                    <li><a href="{% url 'home' %}"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
+                    <li><a href="{% url 'about' %}"><i class="fas fa-chevron-left"></i> من نحن</a></li>
+                    <li><a href="{% url 'quality_standards' %}"><i class="fas fa-chevron-left"></i> مواثيق الجودة</a></li>
+                    <li><a href="{% url 'pricing' %}"><i class="fas fa-chevron-left"></i> الباقات</a></li>
+                    <li><a href="{% url 'blog_list' %}"><i class="fas fa-chevron-left"></i> المدونة</a></li>
+                    <li><a href="{% url 'contact' %}"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3><i class="fas fa-phone-alt"></i> تواصل معنا</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +20 111 170 4395</li>
+                    <li><i class="fas fa-map-marker-alt"></i> جمهورية مصر العربية</li>
+                    <li><i class="fas fa-clock"></i> السبت - الخميس: 9 صباحاً - 12 مساءً</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 المنصة التعليمية. جميع الحقوق محفوظة.</p>
+            <p style="margin-top: 12px; font-size: 0.95em;">
+                <a href="{% url 'quality_standards' %}">مواثيق الجودة</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const navContainer = document.getElementById('navContainer');
+            navContainer.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const navContainer = document.getElementById('navContainer');
+            const toggle = document.querySelector('.menu-toggle');
+            
+            if (!nav.contains(event.target) && window.innerWidth <= 968) {
+                navContainer.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking a link on mobile
+        if (window.innerWidth <= 968) {
+            document.querySelectorAll('.nav-container a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('navContainer').classList.remove('active');
+                });
+            });
+        }
+
+        // Notification System for Supervisors
+        (function () {
+            const meta = document.querySelector('meta[name="is-supervisor"]');
+            const isSupervisor = meta && meta.content === '1';
+            if (!isSupervisor) return;
+
+            function updateNotificationCount() {
+                fetch('/api/unread-count/')
+                    .then(response => response.json())
+                    .then(data => {
+                        const badge = document.getElementById('notificationBadge');
+                        const count = data.total_unread || 0;
+                        
+                        if (count > 0) {
+                            badge.textContent = count > 99 ? '99+' : count;
+                            badge.classList.add('active');
+                            
+                            if (!window.location.pathname.includes('supervisor/dashboard')) {
+                                document.title = `(${count}) رسائل جديدة - المنصة التعليمية`;
+                            }
+                        } else {
+                            badge.classList.remove('active');
+                            if (!window.location.pathname.includes('supervisor/dashboard')) {
+                                document.title = 'المنصة التعليمية';
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            updateNotificationCount();
+            setInterval(updateNotificationCount, 30000);
+        })();
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

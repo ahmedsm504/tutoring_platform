@@ -1,0 +1,410 @@
+{% extends 'base.html' %}
+
+{% block title %}مواثيق ومعايير الجودة - المنصة التعليمية{% endblock %}
+
+{% block extra_css %}
+<style>
+    .quality-hero {
+        background: linear-gradient(135deg, #1b3a70 0%, #2d5a88 100%);
+        padding: 80px 20px;
+        text-align: center;
+        border-radius: 20px;
+        margin-bottom: 50px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .quality-hero::before {
+        content: '✨';
+        position: absolute;
+        font-size: 200px;
+        opacity: 0.05;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .quality-hero h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        color: #fff;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        position: relative;
+        z-index: 1;
+    }
+
+    .quality-hero p {
+        font-size: 1.3em;
+        line-height: 1.8;
+        max-width: 900px;
+        margin: 0 auto;
+        opacity: 0.95;
+        position: relative;
+        z-index: 1;
+    }
+
+    .intro-section {
+        background: rgba(76, 175, 80, 0.1);
+        border-right: 5px solid #4CAF50;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 50px;
+        box-shadow: 0 5px 20px rgba(76, 175, 80, 0.2);
+    }
+
+    .intro-section p {
+        font-size: 1.2em;
+        line-height: 2;
+        margin: 0;
+    }
+
+    .standards-container {
+        display: grid;
+        gap: 40px;
+    }
+
+    .standard-card {
+        background: linear-gradient(135deg, rgba(27, 58, 112, 0.3) 0%, rgba(17, 43, 80, 0.3) 100%);
+        border: 2px solid rgba(76, 175, 80, 0.3);
+        border-radius: 20px;
+        padding: 40px;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .standard-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(circle, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(30%, -30%);
+    }
+
+    .standard-card:hover {
+        transform: translateY(-8px);
+        border-color: #4CAF50;
+        box-shadow: 0 15px 40px rgba(76, 175, 80, 0.3);
+        background: linear-gradient(135deg, rgba(27, 58, 112, 0.4) 0%, rgba(17, 43, 80, 0.4) 100%);
+    }
+
+    .standard-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .standard-icon {
+        font-size: 3.5em;
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 2px 5px rgba(76, 175, 80, 0.3));
+    }
+
+    .standard-title {
+        font-size: 2em;
+        color: #4CAF50;
+        margin: 0;
+        text-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+    }
+
+    .standard-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .standard-list li {
+        padding: 18px 20px;
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.03);
+        border-right: 4px solid #4CAF50;
+        border-radius: 10px;
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        transition: all 0.3s ease;
+        line-height: 1.8;
+    }
+
+    .standard-list li:hover {
+        background: rgba(76, 175, 80, 0.1);
+        transform: translateX(-5px);
+        box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+    }
+
+    .standard-list li::before {
+        content: '✓';
+        color: #4CAF50;
+        font-weight: bold;
+        font-size: 1.3em;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: rgba(76, 175, 80, 0.2);
+        border-radius: 50%;
+        margin-top: 2px;
+    }
+
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(69, 160, 73, 0.1) 100%);
+        border: 2px solid #4CAF50;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 50px 0;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+    }
+
+    .highlight-box h3 {
+        font-size: 2em;
+        color: #4CAF50;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .highlight-box p {
+        font-size: 1.2em;
+        line-height: 2;
+        margin: 0;
+    }
+
+    .closing-message {
+        background: linear-gradient(135deg, #1b3a70 0%, #2d5a88 100%);
+        padding: 50px;
+        border-radius: 20px;
+        text-align: center;
+        margin-top: 60px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .closing-message h2 {
+        font-size: 2.5em;
+        margin-bottom: 25px;
+        color: #4CAF50;
+        text-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+    }
+
+    .closing-message p {
+        font-size: 1.3em;
+        line-height: 2;
+        margin-bottom: 15px;
+    }
+
+    .closing-message .final-note {
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #4CAF50;
+        margin-top: 30px;
+        font-style: italic;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .standard-card {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .standard-card:nth-child(1) { animation-delay: 0.1s; }
+    .standard-card:nth-child(2) { animation-delay: 0.2s; }
+    .standard-card:nth-child(3) { animation-delay: 0.3s; }
+    .standard-card:nth-child(4) { animation-delay: 0.4s; }
+    .standard-card:nth-child(5) { animation-delay: 0.5s; }
+    .standard-card:nth-child(6) { animation-delay: 0.6s; }
+    .standard-card:nth-child(7) { animation-delay: 0.7s; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .quality-hero h1 {
+            font-size: 2em;
+        }
+
+        .quality-hero p {
+            font-size: 1.1em;
+        }
+
+        .standard-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .standard-title {
+            font-size: 1.5em;
+        }
+
+        .standard-icon {
+            font-size: 2.5em;
+        }
+
+        .standard-card {
+            padding: 25px;
+        }
+
+        .closing-message {
+            padding: 30px 20px;
+        }
+
+        .closing-message h2 {
+            font-size: 1.8em;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="quality-hero">
+    <h1>✨ مواثيق ومعايير الجودة ✨</h1>
+    <p>في مؤسستنا التعليمية، نؤمن أن تعليم القرآن مسؤولية عظيمة، وأن جودة التعليم هي أساس رسالتنا. لذلك وضعنا مجموعة من المواثيق والمعايير التي تضمن للطلاب وأولياء الأمور تجربة تعليمية آمنة، راقية، ومتقنة، مع التزام كامل بالأخلاق والاحتراف.</p>
+</div>
+
+<!-- Standards Container -->
+<div class="standards-container">
+    
+    <!-- ميثاق المعلمة -->
+    <div class="standard-card">
+        <div class="standard-header">
+            <div class="standard-icon">👩‍🏫</div>
+            <h2 class="standard-title">أولًا: ميثاق المعلمة</h2>
+        </div>
+        <ul class="standard-list">
+            <li>الصبر واللطف في التعامل مع جميع الطلاب، صغارًا وكبارًا، وتقديم بيئة تعلم هادئة ومحفزة.</li>
+            <li>تقديم تلاوة نموذجية معتمدة على أعلى معايير التجويد والقراءات الصحيحة.</li>
+            <li>الالتزام بالحجاب والضوابط الشرعية في الحصة المرئية حفاظًا على الوقار والاحتراف.</li>
+            <li>احترام خصوصية الطالب وعدم تسجيل أو مشاركة أي جزء من الحصة دون إذن مسبق.</li>
+            <li>الالتزام بوقت الحصة وعدم التأخير إلا لظروف قهرية يتم إبلاغ الإدارة بها مسبقًا.</li>
+            <li>التدرّج في التعليم بما يناسب مستوى كل طالب دون تعقيد أو ضغط غير مناسب.</li>
+            <li>التشجيع والتحفيز المستمر مع استخدام الكلمات الإيجابية التي تعزز ثقة الطالب بنفسه.</li>
+            <li>التواصل الحضاري مع أولياء الأمور والالتزام بأخلاقيات الحوار.</li>
+            <li>التطوير المستمر عبر حضور ورش تدريبية ومراجعة دورية للأساليب التعليمية.</li>
+            <li>العدل بين الطلاب وعدم التفضيل لأي طالب على حساب آخر.</li>
+        </ul>
+    </div>
+
+    <!-- معايير الحصة التعليمية -->
+    <div class="standard-card">
+        <div class="standard-header">
+            <div class="standard-icon">📚</div>
+            <h2 class="standard-title">ثانيًا: معايير الحصة التعليمية</h2>
+        </div>
+        <ul class="standard-list">
+            <li>بدء الحصة بجلسة تلاوة سريعة لتثبيت الحفظ أو المهارة.</li>
+            <li>تصحيح التلاوة بدقة مع شرح الأخطاء بطريقة مبسطة.</li>
+            <li>تدريب الطالب على مخارج الحروف وصفاتها بأسلوب تطبيقي.</li>
+            <li>تقديم جزء من أحكام التجويد بشكل مبسط حسب المستوى.</li>
+            <li>اختبار سريع للتأكد من فهم الطالب لما تم شرحه.</li>
+            <li>تحديد واجب يومي أو أسبوعي مناسب.</li>
+            <li>إنهاء الحصة بخطة قصيرة للطالب لما يجب مراجعته قبل الدرس القادم.</li>
+        </ul>
+    </div>
+
+    <!-- معايير المتابعة -->
+    <div class="standard-card">
+        <div class="standard-header">
+            <div class="standard-icon">📊</div>
+            <h2 class="standard-title">ثالثًا: معايير المتابعة وتقييم التقدّم</h2>
+        </div>
+        <ul class="standard-list">
+            <li>تقييم مبدئي لتحديد مستوى الطالب بدقة.</li>
+            <li>إعداد خطة تعليمية خاصة تناسب عمره وقدرته ومستواه.</li>
+            <li>تقارير شهرية مكتوبة توضح: مستوى الطالب، نقاط القوة، نقاط الضعف، وتوصيات للتطور.</li>
+            <li>تحديث الخطة التعليمية عند الحاجة لضمان أفضل النتائج.</li>
+        </ul>
+    </div>
+
+    <!-- سياسة التعامل مع الأطفال -->
+    <div class="standard-card">
+        <div class="standard-header">
+            <div class="standard-icon">👶</div>
+            <h2 class="standard-title">رابعًا: سياسة التعامل مع الأطفال</h2>
+        </div>
+        <ul class="standard-list">
+            <li>عدم استخدام أي أسلوب ترهيب أو ضغط نفسي على الطفل.</li>
+            <li>الاعتماد على التشجيع واللعب التعليمي بما يناسب العمر.</li>
+            <li>احترام اختلاف قدرات الأطفال وصبرهم وتركيزهم.</li>
+            <li>التواصل أسبوعيًا مع ولي الأمر لشرح التقدم.</li>
+            <li>الحِفاظ على بيئة هادئة وآمنة أثناء التعليم.</li>
+            <li>مراعاة الفروق الفردية دون مقارنة الطفل بغيره.</li>
+        </ul>
+    </div>
+
+    <!-- سياسة الاحترام والخصوصية -->
+    <div class="standard-card">
+        <div class="standard-header">
+            <div class="standard-icon">🔒</div>
+            <h2 class="standard-title">خامسًا: سياسة الاحترام والخصوصية</h2>
+        </div>
+        <ul class="standard-list">
+            <li>عدم تسجيل أي حصة دون إذن.</li>
+            <li>عدم مشاركة أي بيانات مع طرف خارجي.</li>
+            <li>عدم استخدام صور أو أصوات الطلاب لأي غرض بدون موافقة.</li>
+            <li>توفير قنوات تواصل آمنة وخصوصية تامة في الرسائل والدعم الفني.</li>
+        </ul>
+    </div>
+
+    <!-- ضمان الجودة -->
+    <div class="standard-card">
+        <div class="standard-header">
+            <div class="standard-icon">⭐</div>
+            <h2 class="standard-title">سادسًا: ضمان الجودة للمستوى التعليمي</h2>
+        </div>
+        <ul class="standard-list">
+            <li>حصة تجريبية مجانية أو مخفّضة للطلاب الجدد.</li>
+            <li>إعادة شرح النقاط غير المتقنة دون أي رسوم إضافية.</li>
+            <li>نظام مراجعة داخلية لمتابعة أداء المعلمات كل شهر.</li>
+            <li>خطط تطوير دورية بأساليب تعليمية حديثة.</li>
+            <li>ضمان الوصول إلى مستوى إتقان لا يقل عن 85% في التلاوة والحفظ خلال المراحل التعليمية.</li>
+        </ul>
+    </div>
+
+    <!-- حقوق الطالب -->
+    <div class="standard-card">
+        <div class="standard-header">
+            <div class="standard-icon">✋</div>
+            <h2 class="standard-title">سابعًا: حقوق الطالب</h2>
+        </div>
+        <ul class="standard-list">
+            <li>حقه في التعلم باحترام وأمان.</li>
+            <li>حقه في تغيير المعلمة عند الحاجة.</li>
+            <li>حقه في خطة تعليمية واضحة ومتابعة مستمرة.</li>
+            <li>حقه في استرداد جزء من الرسوم في حال وجود سبب مقنع.</li>
+            <li>حقه في الحصول على شهادات بنهاية كل مستوى.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Closing Message -->
+<div class="closing-message">
+    <h2>🌿 ختامًا</h2>
+    <p>صفحة "مواثيق الجودة" هي عهد نلتزم به أمام طلابنا وأولياء أمورهم.</p>
+    <p>نهدف من خلالها إلى تقديم تعليم قرآن راقٍ، محترف، وآمن، يليق بكلام الله ويليق بمن يطلبه.</p>
+    <p class="final-note">نسعى كل يوم نحو الأفضل… لأن رسالتنا أعظم من مجرد تعليم—إنها بناء جيلٍ مُتقنٍ للقرآن.</p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}عنّا - المنصة التعليمية{% endblock %}
+
+{% block extra_css %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+    h2 {
+        color: #4CAF50;
+        text-align: center;
+        font-size: 2.2em;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    h2::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 3px;
+        background-color: #4CAF50;
+        margin: 10px auto 0 auto;
+        border-radius: 2px;
+    }
+
+    section {
+        margin-bottom: 60px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(76, 175, 80, 0.1);
+    }
+
+    section:hover {
+        border-color: rgba(76, 175, 80, 0.3);
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
+
+    p {
+        font-size: 1.1em;
+        line-height: 1.8;
+        color: #e0f0ff;
+        text-align: justify;
+        max-width: 850px;
+        margin: 0 auto;
+    }
+
+    .team {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .member-card {
+        background: linear-gradient(145deg, #112b50, #0c234a);
+        border-radius: 15px;
+        padding: 25px;
+        width: 250px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        transition: all 0.5s ease;
+        border: 2px solid rgba(76, 175, 80, 0.1);
+    }
+
+    .member-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 15px 30px rgba(76, 175, 80, 0.4);
+        border-color: rgba(76, 175, 80, 0.5);
+    }
+
+    .member-card img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        border: 3px solid #4CAF50;
+        object-fit: cover;
+    }
+
+    .member-card h3 {
+        margin: 0;
+        color: #4CAF50;
+        font-size: 1.3em;
+    }
+
+    .member-card p {
+        margin: 8px 0 0 0;
+        color: #cce0ff;
+        font-size: 1em;
+        text-align: center;
+    }
+
+    @media(max-width: 768px){
+        .team {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        section {
+            padding: 30px 20px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section>
+    <h2>من نحن</h2>
+    <p>
+        نحن مؤسسة تعليمية رائدة ومتخصصة في تحفيظ القرآن الكريم وتدريس علومه للطلاب من مختلف أنحاء العالم. نسعى إلى غرس محبة كتاب الله في القلوب وتخريج جيل متقن في الحفظ والقراءة وفهم القرآن الكريم ملتزم بقيم الإسلام السمحة وأخلاق القرآن. نقدم برامج تعليمية متكاملة تجمع بين الوسائل الحديثة والأساليب الأصيلة بإشراف نخبة من المعلمين والمعلمات المتقنين لتحقيق بيئة تعليمية وتربوية تواكب احتياجات العصر.
+    </p>
+</section>
+
+<section>
+    <h2>رؤيتنا</h2>
+    <p>
+        نحن ندرك أهمية العلم والقيم، لذلك نسهم في بناء الإنسان ونشر وتعليم القرآن بأسلوب يسير ومؤثر ليصل نوره على كل بيت وكل قلب وعقل، وليكون حفظة القرآن سفراء للخير والإيمان أينما وجدوا.
+    </p>
+</section>
+
+<section>
+    <h2>رسالتنا</h2>
+    <p>
+        نشر رسالة القرآن الكريم وتعليمه للناطقين بالعربية وغير الناطقين بها من خلال بيئة آمنة وفعالة. نحن لا نقدم مجرد معلم، بل نقدم رفيقاً وموجهاً لك ليصحبك في تلك الرحلة في الدنيا ولنكون معاً في الآخرة.
+    </p>
+</section>
+
+<section>
+    <h2>قيمنا</h2>
+    <p>
+        - الالتزام بأخلاق القرآن الكريم<br>
+        - الإخلاص في العمل<br>
+        - الإتقان والجودة في التعليم<br>
+        - الاحترام المتبادل والتعامل برقي
+    </p>
+</section>
+
+<section>
+    <h2>فريق العمل</h2>
+    <div class="team">
+        <div class="member-card">
+            <img src="https://img.icons8.com/color/96/000000/teacher.png" alt="أحمد سمير">
+            <h3>أحمد سمير</h3>
+            <p>مطور المنصة</p>
+        </div>
+
+        <div class="member-card">
+            <img src="https://img.icons8.com/color/96/000000/teacher.png" alt="رويدا العجمي">
+            <h3>رويدا العجمي</h3>
+            <p>مختص محتوى تعليمي</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

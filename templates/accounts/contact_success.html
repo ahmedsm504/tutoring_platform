@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تم الحجز بنجاح</title>
+    <style>
+        body { font-family: Arial; text-align: center; direction: rtl; background: #f0f8ff; padding-top: 100px;}
+        .success { background: #4CAF50; color: white; padding: 50px; border-radius: 10px; display: inline-block;}
+        a { display: inline-block; margin-top: 20px; text-decoration: none; color: #4CAF50; font-weight: bold;}
+    </style>
+</head>
+<body>
+    <div class="success">
+        <h1>تم الحجز بنجاح 🎉</h1>
+        <p>شكرًا لك {{ name }}! سيتم التواصل معك قريبًا.</p>
+        <a href="{% url 'home' %}">العودة للرئيسية</a>
+    </div>
+</body>
+</html>

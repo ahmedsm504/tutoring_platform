@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل طالب جديد - منصة سفراء القرآن</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a1f44, #112b50);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .register-container {
+            background: linear-gradient(145deg, #112b50, #0c234a);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(76, 175, 80, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .register-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .register-container::-webkit-scrollbar-track {
+            background: rgba(12, 35, 74, 0.5);
+            border-radius: 10px;
+        }
+
+        .register-container::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #4CAF50;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 i {
+            margin-left: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #b3daff;
+            font-size: 1.05em;
+        }
+
+        label .required {
+            color: #ff6b6b;
+            margin-right: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Cairo', sans-serif;
+            background: rgba(12, 35, 74, 0.8);
+            color: #f0f8ff;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            background: rgba(12, 35, 74, 1);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #0c234a;
+            color: #f0f8ff;
+            padding: 10px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 16px;
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #45a049, #4CAF50);
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .links {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .links p {
+            margin-bottom: 15px;
+            color: #b3daff;
+        }
+
+        .links a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            color: #45a049;
+            text-decoration: underline;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 15px;
+            background: transparent;
+            color: #4CAF50;
+            border: 2px solid #4CAF50;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .home-link:hover {
+            background: #4CAF50;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .message {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 600;
+            animation: shake 0.5s ease;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4CAF50;
+            font-size: 1.1em;
+        }
+
+        .input-with-icon {
+            padding-left: 45px;
+        }
+
+        @media(max-width: 600px) {
+            .register-container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            input, select {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 1.1em;
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1><i class="fas fa-user-plus"></i>تسجيل طالب جديد</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label><span class="required">*</span>اسم المستخدم:</label>
+                <div class="input-icon">
+                    <input type="text" name="username" class="input-with-icon" required>
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="required">*</span>الاسم الكامل:</label>
+                <div class="input-icon">
+                    <input type="text" name="full_name" class="input-with-icon" required>
+                    <i class="fas fa-id-card"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="required">*</span>البريد الإلكتروني:</label>
+                <div class="input-icon">
+                    <input type="email" name="email" class="input-with-icon" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="required">*</span>كلمة المرور:</label>
+                <div class="input-icon">
+                    <input type="password" name="password" class="input-with-icon" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="required">*</span>الدولة:</label>
+                <div class="input-icon">
+                    <input type="text" name="country" class="input-with-icon" required>
+                    <i class="fas fa-globe"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="required">*</span>رقم الهاتف:</label>
+                <div class="input-icon">
+                    <input type="text" name="phone" class="input-with-icon" required>
+                    <i class="fas fa-phone"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="required">*</span>رقم هاتف ولي الأمر:</label>
+                <div class="input-icon">
+                    <input type="text" name="parent_phone" class="input-with-icon" required>
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="required">*</span>العمر:</label>
+                <div class="input-icon">
+                    <input type="number" name="age" min="4" max="100" class="input-with-icon" required>
+                    <i class="fas fa-birthday-cake"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="required">*</span>عدد الحلقات المطلوبة:</label>
+                <div class="input-icon">
+                    <select name="lessons_count" class="input-with-icon" required>
+                        <option value="" disabled selected>اختر عدد الحلقات</option>
+                        <option value="4">4 حلقات</option>
+                        <option value="8">8 حلقات</option>
+                        <option value="12">12 حلقة</option>
+                        <option value="16">16 حلقة</option>
+                    </select>
+                    <i class="fas fa-book-reader"></i>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label><span class="required">*</span>مدة الجلسة:</label>
+                <div class="input-icon">
+                    <select name="session_duration" class="input-with-icon" required>
+                        <option value="" disabled selected>اختر مدة الجلسة</option>
+                        <option value="30">30 دقيقة</option>
+                        <option value="40">40 دقيقة</option>
+                        <option value="60">60 دقيقة</option>
+                    </select>
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label><span class="required">*</span>الباقة:</label>
+                <select name="package_name" required>
+                    <option value="">اختر الباقة</option>
+                    <option value="باقة البداية النورانية">🌙 باقة البداية النورانية</option>
+                    <option value="باقة الغراس الطيب">🌿 باقة الغراس الطيب</option>
+                    <option value="باقة الهمة العالية">🔥 باقة الهمة العالية</option>
+                    <option value="باقة سفراء القرآن">📖 باقة سفراء القرآن</option>
+                </select>
+            </div>
+
+            <button type="submit">
+                <i class="fas fa-check-circle"></i> تسجيل
+            </button>
+        </form>
+
+        <div class="links">
+            <p>لديك حساب؟ <a href="{% url 'login' %}">سجّل الدخول</a></p>
+            <a href="{% url 'home' %}" class="home-link">
+                <i class="fas fa-home"></i> الصفحة الرئيسية
+            </a>
+        </div>
+
+        {% if messages %}
+            {% for msg in messages %}
+                <p class="message {% if msg.tags %}{{ msg.tags }}{% endif %}">
+                    <i class="fas fa-exclamation-circle"></i> {{ msg }}
+                </p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

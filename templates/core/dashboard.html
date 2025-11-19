@@ -1,0 +1,633 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}لوحة التحكم المالية المتطورة{% endblock %}
+
+{% block extrastyle %}
+<style>
+    :root {
+        --primary-color: #2196F3;
+        --success-color: #4CAF50;
+        --danger-color: #f44336;
+        --warning-color: #ff9800;
+        --info-color: #00bcd4;
+    }
+
+    .dashboard-container {
+        padding: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 30px;
+        border-radius: 15px;
+        color: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .dashboard-header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    /* فلاتر التاريخ */
+    .date-filters {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+    }
+
+    .filter-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        justify-content: center;
+    }
+
+    .filter-tab {
+        padding: 12px 30px;
+        border: 2px solid #e0e0e0;
+        background: white;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+    }
+
+    .filter-tab.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    .filter-inputs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .filter-inputs input,
+    .filter-inputs select {
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .filter-inputs input:focus,
+    .filter-inputs select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    }
+
+    .btn-filter {
+        padding: 12px 30px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .btn-filter:hover {
+        background: #1976D2;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    /* بطاقات الإحصائيات */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+    }
+
+    .stat-card.income::before {
+        background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    }
+
+    .stat-card.expense::before {
+        background: linear-gradient(90deg, #f44336, #e91e63);
+    }
+
+    .stat-card.profit::before {
+        background: linear-gradient(90deg, #2196F3, #00bcd4);
+    }
+
+    .stat-card.salary::before {
+        background: linear-gradient(90deg, #ff9800, #ffc107);
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .stat-title {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .stat-change {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .stat-change.up {
+        color: var(--success-color);
+    }
+
+    .stat-change.down {
+        color: var(--danger-color);
+    }
+
+    /* الرسوم البيانية */
+    .charts-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .chart-container {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .chart-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .chart-subtitle {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 5px;
+    }
+
+    /* جدول المقارنة */
+    .comparison-table {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow-x: auto;
+    }
+
+    .comparison-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .comparison-table th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        text-align: right;
+        font-weight: 600;
+    }
+
+    .comparison-table td {
+        padding: 15px;
+        border-bottom: 1px solid #e0e0e0;
+        text-align: right;
+    }
+
+    .comparison-table tr:hover {
+        background: #f5f5f5;
+    }
+
+    .profit-positive {
+        color: var(--success-color);
+        font-weight: 600;
+    }
+
+    .profit-negative {
+        color: var(--danger-color);
+        font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .dashboard-header h1 {
+            font-size: 1.8rem;
+        }
+
+        .filter-tabs {
+            flex-direction: column;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+        <h1>📊 لوحة التحكم المالية المتطورة</h1>
+        <p>تتبع الإيرادات والمصروفات بذكاء</p>
+    </div>
+
+    <!-- فلاتر التاريخ -->
+    <div class="date-filters">
+        <form method="GET" id="filterForm">
+            <div class="filter-tabs">
+                <button type="button" class="filter-tab {% if not filter_type or filter_type == 'all' %}active{% endif %}" 
+                        onclick="setFilterType('all')">📅 كل البيانات</button>
+                <button type="button" class="filter-tab {% if filter_type == 'day' %}active{% endif %}" 
+                        onclick="setFilterType('day')">📆 يوم محدد</button>
+                <button type="button" class="filter-tab {% if filter_type == 'month' %}active{% endif %}" 
+                        onclick="setFilterType('month')">📊 شهر محدد</button>
+                <button type="button" class="filter-tab {% if filter_type == 'range' %}active{% endif %}" 
+                        onclick="setFilterType('range')">📈 فترة زمنية</button>
+            </div>
+
+            <input type="hidden" name="filter_type" id="filterTypeInput" value="{{ filter_type|default:'all' }}">
+
+            <div class="filter-inputs" id="filterInputs">
+                <!-- سيتم إضافة الحقول ديناميكياً -->
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit" class="btn-filter">🔍 تطبيق الفلتر</button>
+                <a href="{% url 'dashboard' %}" class="btn-filter" role="button" style="background: #757575; text-decoration: none;">🔄 إعادة تعيين</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- بطاقات الإحصائيات -->
+    <div class="stats-grid">
+        <div class="stat-card income">
+            <div class="stat-icon">💰</div>
+            <div class="stat-title">إجمالي الإيرادات</div>
+            <div class="stat-value" style="color: var(--success-color);">{{ total_income|floatformat:2 }} جنيه</div>
+            {% if income_up %}
+            <div class="stat-change up">
+                ↑ {{ total_income_change|floatformat:1 }}%
+                <span style="font-size: 0.8rem; opacity: 0.7;">مقارنة بالأمس</span>
+            </div>
+            {% else %}
+            <div class="stat-change down">
+                ↓ {{ total_income_change|floatformat:1 }}%
+                <span style="font-size: 0.8rem; opacity: 0.7;">مقارنة بالأمس</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="stat-card expense">
+            <div class="stat-icon">💸</div>
+            <div class="stat-title">إجمالي المصروفات</div>
+            <div class="stat-value" style="color: var(--danger-color);">{{ total_expenses|floatformat:2 }} جنيه</div>
+            {% if expenses_up %}
+            <div class="stat-change up">
+                ↑ {{ total_expenses_change|floatformat:1 }}%
+                <span style="font-size: 0.8rem; opacity: 0.7;">مقارنة بالأمس</span>
+            </div>
+            {% else %}
+            <div class="stat-change down">
+                ↓ {{ total_expenses_change|floatformat:1 }}%
+                <span style="font-size: 0.8rem; opacity: 0.7;">مقارنة بالأمس</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="stat-card profit">
+            <div class="stat-icon">📈</div>
+            <div class="stat-title">صافي الربح</div>
+            <div class="stat-value {% if net_profit >= 0 %}profit-positive{% else %}profit-negative{% endif %}">
+                {{ net_profit|floatformat:2 }} جنيه
+            </div>
+            {% if profit_up %}
+            <div class="stat-change up">
+                ↑ {{ net_profit_change|floatformat:1 }}%
+                <span style="font-size: 0.8rem; opacity: 0.7;">مقارنة بالأمس</span>
+            </div>
+            {% else %}
+            <div class="stat-change down">
+                ↓ {{ net_profit_change|floatformat:1 }}%
+                <span style="font-size: 0.8rem; opacity: 0.7;">مقارنة بالأمس</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="stat-card salary">
+            <div class="stat-icon">👥</div>
+            <div class="stat-title">إجمالي الرواتب</div>
+            <div class="stat-value" style="color: var(--warning-color);">{{ total_salaries|floatformat:2 }} جنيه</div>
+            <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                {% if filter_type == 'day' %}
+                راتب يوم واحد (حسب الفلتر)
+                {% elif filter_type == 'month' %}
+                راتب شهر كامل (حسب الفلتر)
+                {% elif filter_type == 'range' %}
+                راتب الفترة المحددة
+                {% else %}
+                شامل المكافآت والخصومات
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- الرسوم البيانية -->
+    <div class="charts-grid">
+        <!-- رسم بياني للربح/الخسارة الشهرية -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <div>
+                    <div class="chart-title">📊 تحليل الربح والخسارة الشهرية</div>
+                    <div class="chart-subtitle">مقارنة الأداء المالي عبر الأشهر</div>
+                </div>
+            </div>
+            <canvas id="profitLossChart" height="100"></canvas>
+        </div>
+
+        <!-- رسم بياني للإيرادات اليومية -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <div>
+                    <div class="chart-title">📈 الإيرادات اليومية</div>
+                    <div class="chart-subtitle">آخر 7 أيام</div>
+                </div>
+            </div>
+            <canvas id="dailyChart" height="80"></canvas>
+        </div>
+
+        <!-- رسم بياني مقارن -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <div>
+                    <div class="chart-title">💹 مقارنة الإيرادات والمصروفات</div>
+                    <div class="chart-subtitle">آخر 6 أشهر</div>
+                </div>
+            </div>
+            <canvas id="comparisonChart" height="100"></canvas>
+        </div>
+    </div>
+
+    <!-- جدول المقارنة الشهرية -->
+    <!-- تم إزالة الجدول لتبسيط الواجهة -->
+</div>
+{% endblock %}
+
+{% block extrahead %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // إدارة الفلاتر
+    function setFilterType(type) {
+        document.getElementById('filterTypeInput').value = type;
+        document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+        event.target.classList.add('active');
+        updateFilterInputs(type);
+    }
+
+    function updateFilterInputs(type) {
+        const container = document.getElementById('filterInputs');
+        const today = new Date().toISOString().split('T')[0]; // تاريخ اليوم بصيغة YYYY-MM-DD
+        let html = '';
+
+        if (type === 'day') {
+            html = `
+                <input type="date" name="date" value="${'{{ selected_date }}' || today}" max="${today}" required>
+            `;
+        } else if (type === 'month') {
+            const currentMonth = new Date().getMonth() + 1;
+            const currentYear = new Date().getFullYear();
+            html = `
+                <select name="month" required>
+                    <option value="">اختر الشهر</option>
+                    <option value="1" ${currentMonth === 1 ? 'selected' : ''}>يناير</option>
+                    <option value="2" ${currentMonth === 2 ? 'selected' : ''}>فبراير</option>
+                    <option value="3" ${currentMonth === 3 ? 'selected' : ''}>مارس</option>
+                    <option value="4" ${currentMonth === 4 ? 'selected' : ''}>أبريل</option>
+                    <option value="5" ${currentMonth === 5 ? 'selected' : ''}>مايو</option>
+                    <option value="6" ${currentMonth === 6 ? 'selected' : ''}>يونيو</option>
+                    <option value="7" ${currentMonth === 7 ? 'selected' : ''}>يوليو</option>
+                    <option value="8" ${currentMonth === 8 ? 'selected' : ''}>أغسطس</option>
+                    <option value="9" ${currentMonth === 9 ? 'selected' : ''}>سبتمبر</option>
+                    <option value="10" ${currentMonth === 10 ? 'selected' : ''}>أكتوبر</option>
+                    <option value="11" ${currentMonth === 11 ? 'selected' : ''}>نوفمبر</option>
+                    <option value="12" ${currentMonth === 12 ? 'selected' : ''}>ديسمبر</option>
+                </select>
+                <input type="number" name="year" placeholder="السنة" value="${'{{ selected_year }}' || currentYear}" required min="2020" max="2030">
+            `;
+        } else if (type === 'range') {
+            html = `
+                <input type="date" name="start_date" placeholder="من تاريخ" value="${'{{ start_date }}' || today}" max="${today}" required>
+                <input type="date" name="end_date" placeholder="إلى تاريخ" value="${'{{ end_date }}' || today}" max="${today}" required>
+            `;
+        }
+
+        container.innerHTML = html;
+    }
+
+    // تحديث الفلاتر عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterType = document.getElementById('filterTypeInput').value;
+        updateFilterInputs(filterType);
+    });
+
+    // رسم بياني للربح والخسارة
+    const profitLossData = JSON.parse('{{ monthly_comparison|escapejs }}');
+    const months = profitLossData.map(d => d.month);
+    const profits = profitLossData.map(d => d.profit);
+
+    const profitLossCtx = document.getElementById('profitLossChart').getContext('2d');
+    new Chart(profitLossCtx, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'صافي الربح/الخسارة (جنيه)',
+                data: profits,
+                backgroundColor: profits.map(p => p >= 0 ? 'rgba(76, 175, 80, 0.6)' : 'rgba(244, 67, 54, 0.6)'),
+                borderColor: profits.map(p => p >= 0 ? 'rgb(76, 175, 80)' : 'rgb(244, 67, 54)'),
+                borderWidth: 2,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += context.parsed.y.toFixed(2) + ' جنيه';
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + ' جنيه';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // رسم بياني للإيرادات اليومية
+    const dailyData = JSON.parse('{{ daily_revenue|escapejs }}');
+    const dailyDates = dailyData.map(d => d.date);
+    const dailyTotals = dailyData.map(d => d.total);
+
+    const dailyCtx = document.getElementById('dailyChart').getContext('2d');
+    new Chart(dailyCtx, {
+        type: 'line',
+        data: {
+            labels: dailyDates,
+            datasets: [{
+                label: 'الإيرادات اليومية (جنيه)',
+                data: dailyTotals,
+                borderColor: 'rgb(33, 150, 243)',
+                backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 5,
+                pointBackgroundColor: 'rgb(33, 150, 243)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + ' جنيه';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // رسم بياني مقارن
+    const incomes = profitLossData.map(d => d.income);
+    const expenses = profitLossData.map(d => d.expenses + d.salaries);
+
+    const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+    new Chart(comparisonCtx, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [
+                {
+                    label: 'الإيرادات',
+                    data: incomes,
+                    borderColor: 'rgb(76, 175, 80)',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'المصروفات (شامل الرواتب)',
+                    data: expenses,
+                    borderColor: 'rgb(244, 67, 54)',
+                    backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + ' جنيه';
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

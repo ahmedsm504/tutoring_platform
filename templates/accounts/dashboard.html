@@ -1,0 +1,450 @@
+{% extends 'base.html' %}
+
+{% block title %}لوحة التحكم - المنصة التعليمية{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-hero {
+        background: linear-gradient(135deg, #1b3a70 0%, #4CAF50 100%);
+        padding: 40px 30px;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .dashboard-hero h1 {
+        font-size: 2.2em;
+        margin-bottom: 10px;
+        color: white;
+    }
+
+    .dashboard-hero h2 {
+        font-size: 1.2em;
+        margin: 8px 0;
+        color: rgba(255,255,255,0.95);
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .dashboard-section {
+        background: linear-gradient(135deg, rgba(27, 58, 112, 0.3) 0%, rgba(17, 43, 80, 0.3) 100%);
+        border: 2px solid rgba(76, 175, 80, 0.3);
+        border-radius: 20px;
+        padding: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .dashboard-section:hover {
+        transform: translateY(-5px);
+        border-color: #4CAF50;
+        box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .section-header h2 {
+        color: #4CAF50;
+        font-size: 1.8em;
+        margin: 0;
+    }
+
+    .section-header i {
+        font-size: 2em;
+        color: #4CAF50;
+    }
+
+    /* جدول الحلقات */
+    .sessions-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(10, 31, 68, 0.3);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .sessions-table thead tr {
+        background: linear-gradient(135deg, #1b3a70, #4CAF50);
+    }
+
+    .sessions-table th {
+        padding: 15px;
+        text-align: center;
+        color: white;
+        font-weight: 600;
+    }
+
+    .sessions-table td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+        color: #e0f0ff;
+    }
+
+    .sessions-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .sessions-table tr:hover {
+        background: rgba(76, 175, 80, 0.1);
+    }
+
+    .status-badge {
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9em;
+    }
+
+    .status-present {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+    }
+
+    .status-absent {
+        background: linear-gradient(135deg, #f44336, #e91e63);
+        color: white;
+    }
+
+    .status-none {
+        background: linear-gradient(135deg, #9e9e9e, #757575);
+        color: white;
+    }
+
+    /* المحادثة */
+    .chat-container {
+        background: rgba(10, 31, 68, 0.3);
+        border-radius: 15px;
+        padding: 15px;
+        max-height: 400px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    .chat-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .chat-container::-webkit-scrollbar-track {
+        background: rgba(12, 35, 74, 0.5);
+        border-radius: 10px;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb {
+        background: #4CAF50;
+        border-radius: 10px;
+    }
+
+    .chat-message {
+        padding: 12px 18px;
+        margin: 8px 0;
+        border-radius: 20px;
+        max-width: 75%;
+        word-wrap: break-word;
+        position: relative;
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .chat-message.supervisor {
+        background: linear-gradient(135deg, #1b3a70, #2d4a7c);
+        color: white;
+        align-self: flex-start;
+        border-bottom-left-radius: 5px;
+    }
+
+    .chat-message.student {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+    }
+
+    .chat-message .sender {
+        font-weight: bold;
+        font-size: 0.9em;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .chat-message .time {
+        display: block;
+        font-size: 0.7em;
+        color: rgba(255,255,255,0.7);
+        margin-top: 5px;
+    }
+
+    .no-messages {
+        text-align: center;
+        padding: 50px 20px;
+        color: #b3daff;
+    }
+
+    .no-messages i {
+        font-size: 4em;
+        color: #4CAF50;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* صندوق إرسال الرسالة */
+    .message-box {
+        background: rgba(10, 31, 68, 0.3);
+        padding: 20px;
+        border-radius: 15px;
+        border: 2px solid rgba(76, 175, 80, 0.2);
+    }
+
+    .message-box label {
+        display: block;
+        color: #b3daff;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+
+    .message-box textarea {
+        width: 100%;
+        height: 100px;
+        border-radius: 12px;
+        border: 2px solid rgba(76, 175, 80, 0.3);
+        padding: 12px;
+        resize: vertical;
+        font-size: 1em;
+        background: rgba(12, 35, 74, 0.5);
+        color: #f0f8ff;
+        font-family: 'Segoe UI', sans-serif;
+        transition: all 0.3s ease;
+    }
+
+    .message-box textarea:focus {
+        outline: none;
+        border-color: #4CAF50;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+    }
+
+    .message-box textarea::placeholder {
+        color: rgba(240, 248, 255, 0.6);
+    }
+
+    .message-box button {
+        margin-top: 12px;
+        padding: 14px 30px;
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1em;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .message-box button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 50px 20px;
+        color: #b3daff;
+        font-style: italic;
+    }
+
+    .no-data i {
+        font-size: 4em;
+        color: #4CAF50;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-hero h1 {
+            font-size: 1.8em;
+        }
+
+        .dashboard-hero h2 {
+            font-size: 1em;
+        }
+
+        .section-header h2 {
+            font-size: 1.4em;
+        }
+
+        .chat-message {
+            max-width: 90%;
+        }
+
+        .sessions-table {
+            font-size: 0.85em;
+        }
+
+        .sessions-table th,
+        .sessions-table td {
+            padding: 10px 6px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="dashboard-hero">
+    <h1>🎓 مرحباً، {{ profile.full_name }}</h1>
+    <h2>📦 الباقة: {{ profile.package_name }}</h2>
+    <h2>📚 عدد الحلقات: {{ profile.get_lessons_count_display }}</h2>
+</div>
+
+<!-- Dashboard Grid -->
+<div class="dashboard-grid">
+    <!-- جدول الحلقات -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <i class="fas fa-calendar-alt"></i>
+            <h2>جدول الحلقات</h2>
+        </div>
+
+        {% if sessions %}
+        <table class="sessions-table">
+            <thead>
+                <tr>
+                    <th><i class="far fa-calendar"></i> التاريخ</th>
+                    <th><i class="fas fa-info-circle"></i> الحالة</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                <tr>
+                    <td>{{ session.date|date:"Y/m/d - h:i A" }}</td>
+                    <td>
+                        {% if session.status == 'present' %}
+                            <span class="status-badge status-present">
+                                <i class="fas fa-check"></i> حاضر
+                            </span>
+                        {% elif session.status == 'absent' %}
+                            <span class="status-badge status-absent">
+                                <i class="fas fa-times"></i> غائب
+                            </span>
+                        {% else %}
+                            <span class="status-badge status-none">
+                                <i class="fas fa-minus"></i> غير محدد
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-data">
+            <i class="fas fa-calendar-times"></i>
+            <p>لا توجد حلقات مسجلة حتى الآن</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- المحادثة -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <i class="fas fa-comments"></i>
+            <h2>الرسائل</h2>
+        </div>
+
+        <div class="chat-container" id="chatBox">
+            {% if messages %}
+                {% for msg in messages %}
+                    {% if msg.sender.user_type == 'supervisor' %}
+                    <div class="chat-message supervisor">
+                        <div class="sender">
+                            <i class="fas fa-user-shield"></i> المشرفة
+                        </div>
+                        <div>{{ msg.content }}</div>
+                        <span class="time">
+                            <i class="far fa-clock"></i> {{ msg.created_at|date:"Y/m/d - h:i A" }}
+                        </span>
+                    </div>
+                    {% else %}
+                    <div class="chat-message student">
+                        <div class="sender">
+                            <i class="fas fa-user"></i> أنت
+                        </div>
+                        <div>{{ msg.content }}</div>
+                        <span class="time">
+                            <i class="far fa-clock"></i> {{ msg.created_at|date:"Y/m/d - h:i A" }}
+                        </span>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+            <div class="no-messages">
+                <i class="fas fa-comment-slash"></i>
+                <p>لا توجد رسائل حتى الآن</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="message-box">
+            <form method="POST" action="{% url 'send_message' %}">
+                {% csrf_token %}
+                <label><i class="fas fa-pen"></i> أرسل رسالة للمشرفة:</label>
+                <textarea name="content" required placeholder="اكتب رسالتك هنا..."></textarea>
+                <input type="hidden" name="recipient" value="{{ profile.user.id }}"> 
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i> إرسال
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auto scroll to bottom of chat container
+    const chatBox = document.getElementById('chatBox');
+    if(chatBox && !chatBox.querySelector('.no-messages')){
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+</script>
+
+{% endblock %}
