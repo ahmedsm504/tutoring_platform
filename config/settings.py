@@ -25,7 +25,6 @@ import os
 import dj_database_url
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 if DEBUG:
@@ -86,6 +85,7 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 SILENCED_SYSTEM_CHECKS = ['security.W019']  # لتجنب تحذيرات
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
