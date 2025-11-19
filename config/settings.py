@@ -25,17 +25,26 @@ import os
 import dj_database_url
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# الاتصال بقاعدة البيانات
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',  # قاعدة بيانات محلية للتطوير
-        conn_max_age=600,
-        ssl_require=True  # مطلوب على PostgreSQL في بعض السيرفرات
-    )
-}
+if DEBUG:
+    # تشغيل محلي بـ SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    # تشغيل على Railway بـ PostgreSQL
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
 
 # السماح بالدومين على الريل واي
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
