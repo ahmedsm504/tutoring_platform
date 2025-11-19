@@ -20,7 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9dzao5r7s$m1eo767^%$f!38%fo$up-5*wmz1n61+v39o+mlm$'
 
 import os
 import dj_database_url
@@ -29,22 +28,18 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
-# افتراضيًا Local SQLite
+# الاتصال بقاعدة البيانات
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',  # قاعدة بيانات محلية للتطوير
+        conn_max_age=600,
+        ssl_require=True  # مطلوب على PostgreSQL في بعض السيرفرات
+    )
 }
 
-# لو فيه متغير DATABASE_URL موجود، استخدم PostgreSQL
-DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL:
-    DATABASES['default'] = dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True
-    )
+# السماح بالدومين على الريل واي
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+
 
 
 
