@@ -46,13 +46,19 @@ else:
     }
 
 # السماح بالدومين على الريل واي
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://tutoringplatform-production-b8c8.up.railway.app/'
+ALLOWED_HOSTS = [
+    'tutoringplatform-production-b8c8.up.railway.app',
+    'localhost',
+    '127.0.0.1'
 ]
 
-CSRF_TRUSTED_ORIGINS = [x.strip() for x in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if x.strip()]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
 
 
 
