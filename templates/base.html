@@ -129,6 +129,128 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* أيقونات التواصل الثابتة */
+    .social-fixed {
+        position: fixed;
+        bottom: 100px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 1000;
+    }
+
+    .social-fixed a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        color: white;
+        font-size: 26px;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .social-fixed a::before {
+        content: attr(title);
+        position: absolute;
+        right: 70px;
+        background: rgba(12, 35, 74, 0.95);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        font-size: 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .social-fixed a:hover::before {
+        opacity: 1;
+    }
+
+    .social-fixed a:hover {
+        transform: scale(1.15);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+    }
+
+    .whatsapp {
+        background: linear-gradient(135deg, #25D366, #128C7E);
+    }
+
+    .facebook {
+        background: linear-gradient(135deg, #3b5998, #2d4373);
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+        .contact-hero h1 {
+            font-size: 1.8em;
+        }
+
+        .contact-hero p {
+            font-size: 1.1em;
+        }
+
+        .contact-form-section {
+            padding: 30px 20px;
+            margin: 20px;
+        }
+
+        .form-title {
+            font-size: 1.6em;
+        }
+
+        .contact-info {
+            grid-template-columns: 1fr;
+        }
+
+        .social-fixed {
+            left: 10px;
+            bottom: 90px;
+            gap: 10px;
+        }
+
+        .social-fixed a {
+            width: 50px;
+            height: 50px;
+            font-size: 22px;
+        }
+
+        .social-fixed a::before {
+            display: none;
+        }
+    }
+
+    @media(max-width: 480px) {
+        .contact-hero {
+            padding: 30px 15px;
+        }
+
+        .contact-hero h1 {
+            font-size: 1.5em;
+        }
+
+        .contact-form-section {
+            margin: 15px;
+            padding: 25px 15px;
+        }
+
+        .form-title {
+            font-size: 1.4em;
+        }
+
+        .submit-btn {
+            font-size: 1.1em;
+            padding: 14px 30px;
+        }
+    }
 
         :root {
             --gold-primary: #D4AF37;
@@ -459,7 +581,6 @@
             margin-top: 20px;
             flex-wrap: wrap;
         }
-
         .social-links a {
             display: inline-flex;
             align-items: center;
@@ -716,6 +837,7 @@
     <!-- Main Content -->
     <main id="main-content" role="main">
         {% block content %}
+        
         {% endblock %}
     </main>
 
@@ -743,6 +865,14 @@
                         <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
+            </div>
+            <div class="social-fixed">
+                <a href="https://wa.me/201111704395" target="_blank" class="whatsapp" title="تواصل معنا على واتساب">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.facebook.com/share/17TkgS1JmC/" target="_blank" class="facebook" title="تابعنا على فيسبوك">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
             </div>
 
             <div class="footer-section">
@@ -774,6 +904,8 @@
             </p>
         </div>
     </footer>
+
+
 
     <script>
         // Toggle Mobile Menu
