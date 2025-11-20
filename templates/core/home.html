@@ -75,6 +75,12 @@
   "embedUrl": "https://www.youtube.com/embed/d7-WTMQljn0"
 }
 </script>
+
+<!-- Preconnect للموارد الخارجية -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://www.youtube.com">
 {% endblock %}
 
 {% block extra_css %}
@@ -100,6 +106,8 @@
         margin: 0 auto;
         border-radius: 12px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        cursor: pointer;
+        background: #000;
     }
 
     .video-wrapper iframe {
@@ -110,6 +118,64 @@
         height: 100%;
         border: 0;
         border-radius: 12px;
+    }
+
+    /* صورة مصغرة للفيديو قبل التحميل */
+    .video-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://img.youtube.com/vi/d7-WTMQljn0/maxresdefault.jpg') center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        transition: opacity 0.3s ease;
+    }
+
+    .video-placeholder::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.3);
+        border-radius: 12px;
+    }
+
+    .play-button {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        background: rgba(255,0,0,0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+        z-index: 1;
+    }
+
+    .play-button::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 25px solid white;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        margin-left: 5px;
+    }
+
+    .video-wrapper:hover .play-button {
+        transform: scale(1.1);
+    }
+
+    .video-placeholder.hidden {
+        opacity: 0;
+        pointer-events: none;
     }
 
     .features {
@@ -384,6 +450,17 @@
         .social-fixed a::before {
             display: none;
         }
+
+        .play-button {
+            width: 60px;
+            height: 60px;
+        }
+
+        .play-button::after {
+            border-left: 20px solid white;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+        }
     }
 
     @media (max-width: 480px) {
@@ -425,15 +502,10 @@
 <!-- Video Section -->
 <section class="video-container" aria-labelledby="video-heading">
     <h2 id="video-heading">🎬 الفيديو التعريفي للمنصة</h2>
-    <div class="video-wrapper">
-        <iframe 
-            src="https://www.youtube.com/embed/d7-WTMQljn0?rel=0&modestbranding=1"
-            title="الفيديو التعريفي - المنصة التعليمية لتحفيظ القرآن الكريم"
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-        </iframe>
+    <div class="video-wrapper" id="video-wrapper" onclick="loadVideo()">
+        <div class="video-placeholder" id="video-placeholder">
+            <div class="play-button" aria-label="تشغيل الفيديو"></div>
+        </div>
     </div>
 </section>
 
@@ -484,6 +556,7 @@
         <h3 itemprop="name">دعم نفسي</h3>
         <p itemprop="description">نوفر بيئة متكاملة من الدعم والرعاية للطالب</p>
     </article>
+
     <article class="feature-card" itemscope itemtype="https://schema.org/Service">
         <i class="fa-solid fa-users" aria-hidden="true"></i>
         <h3 itemprop="name">لجميع الأعمار</h3>
@@ -547,6 +620,29 @@
 
 {% block extra_js %}
 <script>
+// تحميل الفيديو بشكل lazy عند النقر
+let videoLoaded = false;
+
+function loadVideo() {
+    if (videoLoaded) return;
+    
+    const wrapper = document.getElementById('video-wrapper');
+    const placeholder = document.getElementById('video-placeholder');
+    
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/d7-WTMQljn0?autoplay=1&rel=0&modestbranding=1';
+    iframe.title = 'الفيديو التعريفي - المنصة التعليمية لتحفيظ القرآن الكريم';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allowFullscreen = true;
+    iframe.setAttribute('loading', 'lazy');
+    
+    placeholder.classList.add('hidden');
+    wrapper.appendChild(iframe);
+    videoLoaded = true;
+    wrapper.onclick = null;
+}
+
 // تحسين الأداء باستخدام Intersection Observer
 (function() {
     'use strict';
@@ -642,9 +738,14 @@
         reviewsGrid.appendChild(fragment);
     }
 
-    // Defer non-critical scripts
+    // Defer non-critical scripts - تحميل Font Awesome بشكل async
     window.addEventListener('load', function() {
-        // يمكن إضافة سكريبتات إضافية هنا بعد تحميل الصفحة
+        // تحميل Font Awesome بعد تحميل الصفحة
+        const fontAwesome = document.createElement('link');
+        fontAwesome.rel = 'stylesheet';
+        fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+        fontAwesome.crossOrigin = 'anonymous';
+        document.head.appendChild(fontAwesome);
     });
 })();
 </script>
