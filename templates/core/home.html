@@ -1,132 +1,85 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}الرئيسية - المنصة التعليمية{% endblock %}
+{% block title %}المنصة التعليمية - تحفيظ القرآن الكريم عن بُعد | حصص فردية من 5 ريال{% endblock %}
+
+{% block meta_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد. حصص فردية بأسعار تبدأ من 5 ريال. معلمون متقنون، متابعة مستمرة، ومواعيد مرنة لجميع الأعمار.{% endblock %}
+
+{% block meta_keywords %}تحفيظ القرآن, تعليم القرآن اونلاين, حفظ القرآن للأطفال, معلمة قرآن عن بعد, دروس تجويد, تحفيظ قرآن رخيص, حصص قرآن فردية, تعليم القرآن للكبار{% endblock %}
+
+{% block og_title %}المنصة التعليمية - تحفيظ القرآن الكريم عن بُعد{% endblock %}
+
+{% block og_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار مناسبة. معلمون متقنون وحصص فردية لجميع الأعمار.{% endblock %}
+
+{% block canonical_url %}https://yourwebsite.com/{% endblock %}
+
+{% block breadcrumb_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "الرئيسية",
+    "item": "https://yourwebsite.com/"
+  }]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "كم تبلغ تكلفة حصة تحفيظ القرآن؟",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "تبدأ أسعارنا من 5 ريال للحصة مدتها 30 دقيقة، و7 ريال لـ 40 دقيقة، و10 ريال لحصة 60 دقيقة"
+    }
+  },{
+    "@type": "Question",
+    "name": "هل يوجد حصة تجريبية مجانية؟",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "نعم، نوفر حصة تجريبية مجانية للطلاب الجدد لتجربة خدماتنا"
+    }
+  },{
+    "@type": "Question",
+    "name": "هل المعلمون مؤهلون؟",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "جميع معلمينا حاصلون على إجازات في القرآن الكريم ولديهم خبرة واسعة في التحفيظ والتجويد"
+    }
+  },{
+    "@type": "Question",
+    "name": "ما هي أعمار الطلاب المستهدفين؟",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "نقدم برامج تحفيظ القرآن للأطفال من سن 6 سنوات وللشباب والكبار من جميع الأعمار"
+    }
+  }]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "الفيديو التعريفي للمنصة التعليمية",
+  "description": "تعرف على خدماتنا في تحفيظ القرآن الكريم عن بُعد",
+  "thumbnailUrl": "https://yourwebsite.com{% static 'images/video-thumbnail.jpg' %}",
+  "uploadDate": "2025-01-01T08:00:00+03:00",
+  "contentUrl": "https://www.youtube.com/watch?v=d7-WTMQljn0",
+  "embedUrl": "https://www.youtube.com/embed/d7-WTMQljn0"
+}
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* أيقونات التواصل الثابتة */
-    .social-fixed {
-        position: fixed;
-        bottom: 100px;
-        left: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        z-index: 1000;
-    }
-
-    .social-fixed a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        color: white;
-        font-size: 26px;
-        text-decoration: none;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        transition: all 0.3s ease;
-        position: relative;
-    }
-
-    .social-fixed a::before {
-        content: attr(title);
-        position: absolute;
-        right: 70px;
-        background: rgba(12, 35, 74, 0.95);
-        color: white;
-        padding: 8px 15px;
-        border-radius: 8px;
-        white-space: nowrap;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        font-size: 14px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-
-    .social-fixed a:hover::before {
-        opacity: 1;
-    }
-
-    .social-fixed a:hover {
-        transform: scale(1.15);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-    }
-
-    .whatsapp {
-        background: linear-gradient(135deg, #25D366, #128C7E);
-    }
-
-    .facebook {
-        background: linear-gradient(135deg, #3b5998, #2d4373);
-    }
-
-    /* Responsive */
-    @media(max-width: 768px) {
-        .contact-hero h1 {
-            font-size: 1.8em;
-        }
-
-        .contact-hero p {
-            font-size: 1.1em;
-        }
-
-        .contact-form-section {
-            padding: 30px 20px;
-            margin: 20px;
-        }
-
-        .form-title {
-            font-size: 1.6em;
-        }
-
-        .contact-info {
-            grid-template-columns: 1fr;
-        }
-
-        .social-fixed {
-            left: 10px;
-            bottom: 90px;
-            gap: 10px;
-        }
-
-        .social-fixed a {
-            width: 50px;
-            height: 50px;
-            font-size: 22px;
-        }
-
-        .social-fixed a::before {
-            display: none;
-        }
-    }
-
-    @media(max-width: 480px) {
-        .contact-hero {
-            padding: 30px 15px;
-        }
-
-        .contact-hero h1 {
-            font-size: 1.5em;
-        }
-
-        .contact-form-section {
-            margin: 15px;
-            padding: 25px 15px;
-        }
-
-        .form-title {
-            font-size: 1.4em;
-        }
-
-        .submit-btn {
-            font-size: 1.1em;
-            padding: 14px 30px;
-        }
-    }
+    /* Critical CSS - يتم تحميلها أولاً */
     .video-container { 
         text-align: center;
         margin: 30px 0;
@@ -138,10 +91,25 @@
         font-size: 2em;
     }
 
-    .video-container iframe {
-        max-width: 100%;
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        max-width: 80%;
+        margin: 0 auto;
         border-radius: 12px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: 12px;
     }
 
     .features {
@@ -156,9 +124,10 @@
         padding: 30px 20px;
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         text-align: center;
         border: 2px solid transparent;
+        will-change: transform;
     }
 
     .feature-card:hover {
@@ -171,7 +140,8 @@
         font-size: 60px; 
         color: #4CAF50; 
         margin-bottom: 15px;
-        transition: transform 0.3s;
+        transition: transform 0.3s ease;
+        will-change: transform;
     }
 
     .feature-card:hover i {
@@ -214,8 +184,9 @@
         overflow: hidden;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         background: #1b3a70;
+        will-change: transform;
     }
 
     .review-item:hover {
@@ -229,7 +200,9 @@
         object-fit: cover;
         border: 3px solid #4CAF50;
         border-radius: 12px;
-        transition: transform 0.3s;
+        transition: transform 0.3s ease;
+        will-change: transform;
+        background: rgba(255, 255, 255, 0.1);
     }
 
     .review-item:hover img {
@@ -278,8 +251,9 @@
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         text-align: center;
-        transition: all 0.3s;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         border: 2px solid transparent;
+        will-change: transform;
     }
 
     .support-card:hover {
@@ -306,8 +280,86 @@
         line-height: 1.6;
     }
 
+    /* Fixed Social Icons */
+    .social-fixed {
+        position: fixed;
+        bottom: 100px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 1000;
+    }
+
+    .social-fixed a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        color: white;
+        font-size: 26px;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        will-change: transform;
+    }
+
+    .social-fixed a::before {
+        content: attr(aria-label);
+        position: absolute;
+        right: 70px;
+        background: rgba(12, 35, 74, 0.95);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        font-size: 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .social-fixed a:hover::before {
+        opacity: 1;
+    }
+
+    .social-fixed a:hover, .social-fixed a:focus {
+        transform: scale(1.15);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+        outline: 2px solid white;
+        outline-offset: 3px;
+    }
+
+    .whatsapp {
+        background: linear-gradient(135deg, #25D366, #128C7E);
+    }
+
+    .facebook {
+        background: linear-gradient(135deg, #3b5998, #2d4373);
+    }
+
+    /* Loading skeleton */
+    .skeleton {
+        background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
+        .video-wrapper {
+            max-width: 95%;
+        }
+
         .reviews-grid {
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
@@ -317,12 +369,28 @@
             height: 220px;
         }
 
-        .video-container iframe {
-            height: 300px;
+        .social-fixed {
+            left: 10px;
+            bottom: 90px;
+            gap: 10px;
+        }
+
+        .social-fixed a {
+            width: 50px;
+            height: 50px;
+            font-size: 22px;
+        }
+
+        .social-fixed a::before {
+            display: none;
         }
     }
 
     @media (max-width: 480px) {
+        .video-wrapper {
+            max-width: 100%;
+        }
+
         .reviews-grid {
             grid-template-columns: 1fr;
             gap: 15px;
@@ -332,141 +400,252 @@
             height: 200px;
         }
 
-        .video-container iframe {
-            height: 250px;
+        .feature-card {
+            padding: 25px 15px;
+        }
+    }
+
+    /* Prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- Main Heading -->
+<h1 style="text-align:center; color:#4CAF50; font-size:2.5em; margin-bottom:30px;">
+    تحفيظ القرآن الكريم عن بُعد - معلمون متقنون وأسعار مناسبة
+</h1>
+
 <!-- Video Section -->
-<section class="video-container">
-    <h2>🎬 الفيديو التعريفي للمنصة</h2>
-<iframe width="80%" height="450"
-    src="https://www.youtube.com/embed/d7-WTMQljn0?autoplay=1&mute=1&controls=1&rel=0"
-    title="Intro Video"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-</iframe>
-
-
+<section class="video-container" aria-labelledby="video-heading">
+    <h2 id="video-heading">🎬 الفيديو التعريفي للمنصة</h2>
+    <div class="video-wrapper">
+        <iframe 
+            src="https://www.youtube.com/embed/d7-WTMQljn0?rel=0&modestbranding=1"
+            title="الفيديو التعريفي - المنصة التعليمية لتحفيظ القرآن الكريم"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+        </iframe>
+    </div>
 </section>
 
 <!-- Features Section -->
-<section class="features">
-    <div class="feature-card">
-        <i class="fa-solid fa-laptop-code"></i>
-        <h3>تعلم عن بعد</h3>
-        <p>استمتع بالدروس من أي مكان في أي وقت.</p>
-    </div>
-    <div class="feature-card">
-        <i class="fa-solid fa-video"></i>
-        <h3>حصص فردية</h3>
-        <p>معلمين متقنين يصلون إلى منزلك لضمان تركيز وانضباط الطالب.</p>
-    </div>
-    <div class="feature-card">
-        <i class="fa-solid fa-book-open-reader"></i>
-        <h3>مناهج مميزة</h3>
-        <p>مناهج تم تصميمها واختيارها بعناية فائقة لضمان أفضل النتائج.</p>
-    </div>
-    <div class="feature-card">
-        <i class="fa-solid fa-money-bill-wave"></i>
-        <h3>أسعار مناسبة</h3>
-        <p>تبدأ الأسعار من 5 ريال فقط لتناسب الجميع.</p>
-    </div>
-    <div class="feature-card">
-        <i class="fa-solid fa-clock"></i>
-        <h3>مواعيد مرنة</h3>
-        <p>اختر الوقت الذي يناسبك للدراسة بسهولة.</p>
-    </div>
-    <div class="feature-card">
-        <i class="fa-solid fa-book"></i>
-        <h3>حل مشاكل الحفظ</h3>
-        <p>نساعدك على تخطي أي صعوبة تواجهك أثناء الحفظ.</p>
-    </div>
-    <div class="feature-card">
-        <i class="fa-solid fa-heart"></i>
-        <h3>دعم نفسي</h3>
-        <p>نوفر بيئة متكاملة من الدعم والرعاية للطالب.</p>
-    </div>
+<section class="features" aria-labelledby="features-heading">
+    <h2 id="features-heading" style="grid-column: 1 / -1; text-align: center; color: #4CAF50; font-size: 2em; margin-bottom: 10px;">
+        لماذا تختار منصتنا لتحفيظ القرآن؟
+    </h2>
+    
+    <article class="feature-card" itemscope itemtype="https://schema.org/Service">
+        <i class="fa-solid fa-laptop-code" aria-hidden="true"></i>
+        <h3 itemprop="name">تعلم عن بعد</h3>
+        <p itemprop="description">استمتع بدروس تحفيظ القرآن من أي مكان وفي أي وقت يناسبك</p>
+    </article>
+    
+    <article class="feature-card" itemscope itemtype="https://schema.org/Service">
+        <i class="fa-solid fa-video" aria-hidden="true"></i>
+        <h3 itemprop="name">حصص فردية</h3>
+        <p itemprop="description">معلمين متقنين يصلون إلى منزلك لضمان تركيز وانضباط الطالب</p>
+    </article>
+    
+    <article class="feature-card" itemscope itemtype="https://schema.org/Service">
+        <i class="fa-solid fa-book-open-reader" aria-hidden="true"></i>
+        <h3 itemprop="name">مناهج مميزة</h3>
+        <p itemprop="description">مناهج تم تصميمها واختيارها بعناية فائقة لضمان أفضل النتائج</p>
+    </article>
+    
+    <article class="feature-card" itemscope itemtype="https://schema.org/Service">
+        <i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i>
+        <h3 itemprop="name">أسعار مناسبة</h3>
+        <p itemprop="description">تبدأ الأسعار من 5 ريال فقط لتناسب الجميع</p>
+    </article>
+    
+    <article class="feature-card" itemscope itemtype="https://schema.org/Service">
+        <i class="fa-solid fa-clock" aria-hidden="true"></i>
+        <h3 itemprop="name">مواعيد مرنة</h3>
+        <p itemprop="description">اختر الوقت الذي يناسبك للدراسة بسهولة</p>
+    </article>
+    
+    <article class="feature-card" itemscope itemtype="https://schema.org/Service">
+        <i class="fa-solid fa-book" aria-hidden="true"></i>
+        <h3 itemprop="name">حل مشاكل الحفظ</h3>
+        <p itemprop="description">نساعدك على تخطي أي صعوبة تواجهك أثناء الحفظ</p>
+    </article>
+    
+    <article class="feature-card" itemscope itemtype="https://schema.org/Service">
+        <i class="fa-solid fa-heart" aria-hidden="true"></i>
+        <h3 itemprop="name">دعم نفسي</h3>
+        <p itemprop="description">نوفر بيئة متكاملة من الدعم والرعاية للطالب</p>
+    </article>
+    <article class="feature-card" itemscope itemtype="https://schema.org/Service">
+        <i class="fa-solid fa-users" aria-hidden="true"></i>
+        <h3 itemprop="name">لجميع الأعمار</h3>
+        <p itemprop="description">برامج مخصصة للأطفال والشباب والكبار تناسب كل الفئات العمرية</p>
+    </article>
 </section>
 
 <!-- Reviews Section -->
-<section class="reviews-section">
-    <h2>🌟 آراء طلابنا</h2>
-    <div class="reviews-grid" id="reviews-grid">
+<section class="reviews-section" aria-labelledby="reviews-heading">
+    <h2 id="reviews-heading">🌟 آراء طلابنا وأولياء الأمور</h2>
+    <div class="reviews-grid" id="reviews-grid" role="list">
         <!-- سيتم إضافة الصور هنا من خلال JavaScript -->
     </div>
 </section>
 
 <!-- Support Section -->
-<section class="support-section">
-    <h2>💪 لماذا نحن الأفضل؟</h2>
+<section class="support-section" aria-labelledby="support-heading">
+    <h2 id="support-heading">💪 لماذا نحن الأفضل؟</h2>
     <div class="support-features">
-        <div class="support-card">
-            <i class="fa-solid fa-user-check"></i>
+        <article class="support-card">
+            <i class="fa-solid fa-user-check" aria-hidden="true"></i>
             <h4>معلمون مؤهلون</h4>
-            <p>معلمون ذوو خبرة عالية ومؤهلات أكاديمية متميزة</p>
-        </div>
-        <div class="support-card">
-            <i class="fa-solid fa-certificate"></i>
+            <p>معلمون ذوو خبرة عالية ومؤهلات أكاديمية متميزة في تحفيظ القرآن الكريم</p>
+        </article>
+        <article class="support-card">
+            <i class="fa-solid fa-certificate" aria-hidden="true"></i>
             <h4>شهادات معتمدة</h4>
-            <p>احصل على شهادات معتمدة بعد إتمام الدورات</p>
-        </div>
-        <div class="support-card">
-            <i class="fa-solid fa-headset"></i>
+            <p>احصل على شهادات معتمدة بعد إتمام مراحل الحفظ</p>
+        </article>
+        <article class="support-card">
+            <i class="fa-solid fa-headset" aria-hidden="true"></i>
             <h4>دعم فني 24/7</h4>
-            <p>فريق دعم متواجد على مدار الساعة لمساعدتك</p>
-        </div>
-        <div class="support-card">
-            <i class="fa-solid fa-chart-line"></i>
+            <p>فريق دعم متواجد على مدار الساعة لمساعدتك والإجابة على استفساراتك</p>
+        </article>
+        <article class="support-card">
+            <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
             <h4>متابعة مستمرة</h4>
-            <p>تقارير دورية عن تقدم الطالب ومستواه</p>
-        </div>
+            <p>تقارير دورية مفصلة عن تقدم الطالب ومستواه في الحفظ</p>
+        </article>
     </div>
-                    <!-- أيقونات واتساب وفيسبوك الثابتة -->
-
 </section>
+
+<!-- Fixed Social Icons -->
+<aside class="social-fixed" aria-label="روابط التواصل السريع">
+    <a href="https://wa.me/message/OPUYNILYAHPOL1" 
+       class="whatsapp" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       aria-label="تواصل معنا عبر واتساب">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+    <a href="https://www.facebook.com/share/1B8ssMKgDd/" 
+       class="facebook" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       aria-label="تابعنا على فيسبوك">
+        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+    </a>
+</aside>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // مصفوفة أسماء الصور
+// تحسين الأداء باستخدام Intersection Observer
+(function() {
+    'use strict';
+    
+    // تحميل الصور بشكل كسول
     const reviews = [
-        'review1.jpeg', 'review2.jpeg', 'review3.jpeg', 'review4.jpeg',
-        'review5.jpeg', 'review6.jpeg', 'review7.jpeg', 'review8.jpeg',
-        'review9.jpeg', 'review10.jpeg', 'review11.jpeg', 'review12.jpeg'
+        {file: 'review1.jpeg', alt: 'رأي طالب عن تجربته في تحفيظ القرآن مع المنصة التعليمية'},
+        {file: 'review2.jpeg', alt: 'تقييم ولي أمر لجودة التعليم والمتابعة في المنصة'},
+        {file: 'review3.jpeg', alt: 'شهادة طالبة عن تحسن مستواها في حفظ القرآن'},
+        {file: 'review4.jpeg', alt: 'رأي إيجابي عن المعلمات وطريقة التدريس'},
+        {file: 'review5.jpeg', alt: 'تجربة ناجحة في تحفيظ القرآن للأطفال'},
+        {file: 'review6.jpeg', alt: 'تقييم خمس نجوم لخدمات المنصة التعليمية'},
+        {file: 'review7.jpeg', alt: 'شكر وتقدير من ولي أمر للمنصة'},
+        {file: 'review8.jpeg', alt: 'رأي طالب عن مرونة المواعيد وجودة التعليم'},
+        {file: 'review9.jpeg', alt: 'تجربة متميزة في تصحيح التلاوة والتجويد'},
+        {file: 'review10.jpeg', alt: 'تقييم إيجابي للدعم الفني والمتابعة'},
+        {file: 'review11.jpeg', alt: 'شهادة عن فعالية البرامج التعليمية'},
+        {file: 'review12.jpeg', alt: 'رأي ولي أمر عن التطور السريع لابنه'}
     ];
 
-    const reviewsGrid = document.getElementById('reviews-grid');
-    
-    // إنشاء عناصر الصور
-    reviews.forEach((review, index) => {
-        const reviewItem = document.createElement('div');
-        reviewItem.className = 'review-item';
+    // انتظار تحميل DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+    function init() {
+        const reviewsGrid = document.getElementById('reviews-grid');
+        if (!reviewsGrid) return;
+
+        // Intersection Observer لتحميل الصور عند الحاجة
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const src = img.getAttribute('data-src');
+                    if (src) {
+                        img.src = src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.01
+        });
+
+        // إنشاء عناصر الصور
+        const fragment = document.createDocumentFragment();
         
-        const reviewNumber = document.createElement('div');
-        reviewNumber.className = 'review-number';
-        reviewNumber.textContent = `#${index + 1}`;
+        reviews.forEach((review, index) => {
+            const reviewItem = document.createElement('article');
+            reviewItem.className = 'review-item';
+            reviewItem.setAttribute('role', 'listitem');
+            reviewItem.setAttribute('itemscope', '');
+            reviewItem.setAttribute('itemtype', 'https://schema.org/Review');
+            
+            const reviewNumber = document.createElement('div');
+            reviewNumber.className = 'review-number';
+            reviewNumber.textContent = `#${index + 1}`;
+            reviewNumber.setAttribute('aria-label', `تقييم رقم ${index + 1}`);
+            
+            const img = document.createElement('img');
+            img.className = 'skeleton';
+            img.setAttribute('data-src', `/static/images/${review.file}`);
+            img.alt = review.alt;
+            img.width = 300;
+            img.height = 350;
+            img.loading = 'lazy';
+            img.setAttribute('itemprop', 'image');
+            
+            // Fallback للصور
+            img.onerror = function() {
+                this.onerror = null;
+                this.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%231b3a70' width='300' height='350'/%3E%3Ctext fill='%234CAF50' font-family='Arial' font-size='20' x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle'%3Eرأي طالب ${index + 1}%3C/text%3E%3C/svg%3E`;
+                this.classList.remove('skeleton');
+            };
+            
+            img.onload = function() {
+                this.classList.remove('skeleton');
+            };
+            
+            reviewItem.appendChild(reviewNumber);
+            reviewItem.appendChild(img);
+            fragment.appendChild(reviewItem);
+            
+            // مراقبة الصورة
+            imageObserver.observe(img);
+        });
         
-        const img = document.createElement('img');
-        img.src = `/static/images/${review}`;
-        img.alt = `رأي طالب ${index + 1}`;
-        img.loading = 'lazy';
-        
-        // إذا فشل تحميل الصورة
-        img.onerror = function() {
-            this.src = `https://via.placeholder.com/300x350/1b3a70/4CAF50?text=رأي+طالب+${index + 1}`;
-        };
-        
-        reviewItem.appendChild(reviewNumber);
-        reviewItem.appendChild(img);
-        reviewsGrid.appendChild(reviewItem);
+        reviewsGrid.appendChild(fragment);
+    }
+
+    // Defer non-critical scripts
+    window.addEventListener('load', function() {
+        // يمكن إضافة سكريبتات إضافية هنا بعد تحميل الصفحة
     });
-});
+})();
 </script>
 {% endblock %}
