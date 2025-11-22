@@ -120,3 +120,13 @@ class Comment(models.Model):
     
     def __str__(self):
         return f"{self.author_name} - {self.post.title[:30]}"
+    
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.cache import cache
+
+@receiver(post_save, sender=Post)
+def clear_sitemap_cache(sender, instance, **kwargs):
+    """مسح كاش الـ Sitemap عند نشر مقال جديد"""
+    cache.clear()

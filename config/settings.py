@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'admin_interface',
     'colorfield',
+    'django.contrib.sites', 
     'django.contrib.sitemaps',
 
     # Apps الخاصة بنا
@@ -218,3 +219,27 @@ cloudinary.config(
     api_secret=CLOUDINARY['api_secret']
 )
 
+SITE_ID = 1
+
+# Security Settings (للإنتاج فقط)
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+# Cache للـ Sitemap (اختياري)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-sitemap-cache',
+    }
+}
+
+# Sitemap Caching
+SITEMAP_CACHE_TIMEOUT = 3600  # ساعة واحدة

@@ -1,0 +1,119 @@
+# robots.txt - المنصة التعليمية لتحفيظ القرآن الكريم
+
+User-agent: *
+Allow: /
+Allow: /static/
+Allow: /media/
+
+# السماح بالصفحات العامة
+Allow: /blog/
+Allow: /pricing/
+Allow: /about/
+Allow: /contact/
+Allow: /quality_standards/
+
+# منع الصفحات الخاصة
+Disallow: /admin/
+Disallow: /accounts/profile/
+Disallow: /accounts/student_dashboard/
+Disallow: /accounts/supervisor_dashboard/
+Disallow: /dashboard/
+Disallow: /api/
+
+# منع صفحات تسجيل الدخول
+Disallow: /accounts/login/
+Disallow: /accounts/logout/
+Disallow: /accounts/register/
+
+# منع البحث والفلترة
+Disallow: /*?search=
+Disallow: /*?filter=
+Disallow: /*?page=
+Disallow: /*?sort=
+
+# منع الملفات الحساسة
+Disallow: /*.json$
+Disallow: /*.xml$ 
+Disallow: /*.sql$
+Disallow: /*.log$
+
+# السماح بالـ CSS و JS
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+
+# Sitemap Location
+Sitemap: {{ request.scheme }}://{{ request.get_host }}/sitemap.xml
+
+# Crawl-delay للتحكم في سرعة الزحف
+Crawl-delay: 1
+
+# ========================================
+# إعدادات لمحركات بحث محددة
+# ========================================
+
+# Google Bot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0.5
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+# ========================================
+# منع الـ Bots السيئة
+# ========================================
+
+# AhrefsBot (استهلاك عالي للموارد)
+User-agent: AhrefsBot
+Crawl-delay: 10
+Disallow: /
+
+# SemrushBot
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# MJ12bot
+User-agent: MJ12bot
+Disallow: /
+
+# DotBot
+User-agent: dotbot
+Disallow: /
+
+# Scrapers
+User-agent: Scrapy
+Disallow: /
+
+User-agent: Python-urllib
+Disallow: /
+
+User-agent: Python-requests
+Disallow: /
+
+# ========================================
+# Social Media Crawlers (السماح بها)
+# ========================================
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
