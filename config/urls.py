@@ -1,36 +1,83 @@
-"""
-URL configuration for config project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# urls.py (الملف الرئيسي للمشروع)
 from django.contrib import admin
-from django.urls import path,include
-
-
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
+
+# استيراد Sitemaps
+from .sitemaps import (
+    StaticViewSitemap,
+    BlogPostSitemap,
+    BlogCategorySitemap,
+    PricingPackagesSitemap,
+    QualityStandardsSitemap,
+    PopularPagesSitemap,
+    ImageSitemap,
+    NewsSitemap,
+    MobileSitemap,
+)
+
+# تعريف جميع Sitemaps
+sitemaps = {
+    'static': StaticViewSitemap,          # الصفحات الثابتة
+    'blog': BlogPostSitemap,              # مقالات المدونة
+    'categories': BlogCategorySitemap,    # تصنيفات المدونة
+    'packages': PricingPackagesSitemap,   # الباقات
+    'quality': QualityStandardsSitemap,   # مواثيق الجودة
+    'popular': PopularPagesSitemap,       # الصفحات الشائعة
+    'images': ImageSitemap,               # صور المقالات
+    'news': NewsSitemap,                  # الأخبار الحديثة
+    'mobile': MobileSitemap,              # صفحات الموبايل
+}
 
 urlpatterns = [
+    # Admin Panel
     path('admin/', admin.site.urls),
-    path('', include('core.urls')),
-    path('accounts/', include('accounts.urls')),
-    path("blog/", include("blog.urls")),
-
-
-
+    
+    # ============= Sitemap =============
+    path('sitemap.xml', 
+         sitemap, 
+         {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
+    
+    # Sitemap Index (إذا كان لديك sitemaps كثيرة)
+    path('sitemap-<section>.xml',
+         sitemap,
+         {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
+    
+    # ============= Robots.txt =============
+    path('robots.txt',
+         TemplateView.as_view(
+             template_name="robots.txt",
+             content_type="text/plain"
+         ),
+         name='robots'),
+    
+    # ============= Core URLs =============
+    path('', include('core.urls')),           # الصفحات الرئيسية
+    
+    # ============= Accounts URLs =============
+    path('accounts/', include('accounts.urls')),  # نظام المستخدمين
+    
+    # ============= Blog URLs =============
+    path('blog/', include('blog.urls')),      # المدونة
+    
+    # ============= Security Files =============
+    # .well-known للتحقق من الملكية
+    path('.well-known/security.txt',
+         TemplateView.as_view(
+             template_name="security.txt",
+             content_type="text/plain"
+         ),
+         name='security'),
 ]
 
+# Static and Media files في وضع التطوير
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+
