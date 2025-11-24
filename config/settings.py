@@ -48,6 +48,8 @@ else:
 # السماح بالدومين على الريل واي
 ALLOWED_HOSTS = [
     'tutoringplatform-production-b8c8.up.railway.app',
+    "alagme.com",
+    "www.alagme.com",
     'localhost',
     '127.0.0.1'
 ]
