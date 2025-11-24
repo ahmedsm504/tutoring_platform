@@ -45,7 +45,6 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://alagme.com',
     'https://www.alagme.com',
-    'www.alagme.com',
     'https://tutoringplatform-production-b8c8.up.railway.app',
 ]
 
