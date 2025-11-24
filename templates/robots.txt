@@ -33,7 +33,6 @@ Disallow: /*?sort=
 
 # منع الملفات الحساسة
 Disallow: /*.json$
-Disallow: /*.xml$ 
 Disallow: /*.sql$
 Disallow: /*.log$
 
