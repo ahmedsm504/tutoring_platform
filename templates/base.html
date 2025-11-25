@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-        <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNXPQQNRNP"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -10,38 +10,52 @@
       gtag('js', new Date());
       gtag('config', 'G-RNXPQQNRNP');
     </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
     
-    <!-- Title -->
-    <title>{% block title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endblock %}</title>
+    <!-- Title - محسّنة للسيو -->
+    <title>{% block title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد | حصص اونلاين{% endblock %}</title>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="{% block meta_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار مناسبة تبدأ من 5 ريال. معلمون متقنون، حصص فردية، ومتابعة مستمرة لجميع الأعمار.{% endblock %}">
-    <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن, تعليم القرآن عن بعد, معلم قرآن اونلاين, حفظ القرآن الكريم, تجويد القرآن, دروس قرآن للأطفال, معلمة قرآن, تحفيظ قرآن بأسعار مناسبة, حصص قرآن فردية, تعليم القرآن للكبار{% endblock %}">
-    <meta name="author" content="مؤسسة العجمي ">
+    <!-- SEO Meta Tags - محسّنة -->
+    <meta name="description" content="{% block meta_description %}مؤسسة العجمي لتحفيظ القرآن الكريم عن بُعد - حصص فردية مع معلمين متقنين بأسعار تبدأ من 5 ريال. متوفر للأطفال والكبار في مصر والخليج والسعودية والإمارات والكويت وقطر.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}مؤسسة العجمي, تحفيظ القرآن الكريم عن بُعد, معلم قرآن اونلاين, حفظ القرآن الكريم, تحفيظ قرآن للأطفال, معلمة قرآن, دروس تجويد قرآن, حصص قرآن فردية, تعليم القرآن عن بعد, معلم قرآن مصر, معلم قرآن الخليج, معلم قرآن السعودية, معلم قرآن الإمارات, معلم قرآن الكويت, تحفيظ قرآن بسعر رخيص, دروس قرآن للكبار, تصحيح التلاوة, تجويد قرآن اونلاين{% endblock %}">
+    <meta name="author" content="مؤسسة العجمي">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="googlebot" content="index, follow">
-    <link rel="canonical" href="{% block canonical_url %}https://yourwebsite.com{{ request.path }}{% endblock %}">
+    <meta name="googlebot" content="index, follow, max-snippet:-1">
+    
+    <!-- Geo Targeting للخليج والدول العربية -->
+    <meta name="geo.region" content="EG,SA,AE,KW,QA,BH,OM" />
+    <meta name="geo.position" content="26.0667;44.2667" />
+    <meta name="ICBM" content="26.0667, 44.2667" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{% block canonical_url %}https://alagme.com{{ request.path }}{% endblock %}">
+    
+    <!-- Language Alternatives -->
+    <link rel="alternate" hreflang="ar" href="https://alagme.com/ar/" />
+    <link rel="alternate" hreflang="en" href="https://alagme.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://alagme.com/" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourwebsite.com{{ request.path }}">
-    <meta property="og:title" content="{% block og_title %}المنصة التعليمية - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية وأسعار مناسبة تبدأ من 5 ريال{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}https://yourwebsite.com{% static 'images/logo.jpeg' %}{% endblock %}">
+    <meta property="og:url" content="https://alagme.com{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد | حصص اونلاين{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}منصة العجمي التعليمية المتخصصة في تحفيظ القرآن الكريم عن بُعد. حصص فردية مع معلمين متقنين بأسعار مناسبة تبدأ من 5 ريال. متوفر في مصر والسعودية والإمارات والخليج.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}https://alagme.com{% static 'images/logo.jpeg' %}{% endblock %}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:locale" content="ar_EG">
-    <meta property="og:site_name" content="مؤسسة العجمي ">
+    <meta property="og:locale" content="ar_AR">
+    <meta property="og:site_name" content="مؤسسة العجمي">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://yourwebsite.com{{ request.path }}">
-    <meta name="twitter:title" content="{% block twitter_title %}المنصة التعليمية - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية وأسعار مناسبة{% endblock %}">
-    <meta name="twitter:image" content="https://yourwebsite.com{% static 'images/logo.jpeg' %}">
+    <meta name="twitter:url" content="https://alagme.com{{ request.path }}">
+    <meta name="twitter:title" content="{% block twitter_title %}مؤسسة العجمي - تحفيظ القرآن عن بُعد{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}حصص قرآن اونلاين مع معلمين متقنين. ابدأ اليوم بأسعار مناسبة من 5 ريال فقط.{% endblock %}">
+    <meta name="twitter:image" content="https://alagme.com{% static 'images/logo.jpeg' %}">
+    <meta name="twitter:creator" content="@AlajmiAcademy">
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpeg' %}">
@@ -53,22 +67,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
-    <!-- Structured Data / Schema.org -->
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    
+    <!-- Structured Data / Schema.org - EducationalOrganization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
-      "name": "المنصة التعليمية",
-      "description": "منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد",
-      "url": "https://yourwebsite.com",
+      "@id": "https://alagme.com",
+      "name": "مؤسسة العجمي",
+      "alternateName": ["منصة العجمي التعليمية", "أكاديمية العجمي لتحفيظ القرآن"],
+      "description": "منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بحصص فردية مع معلمين متقنين",
+      "url": "https://alagme.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://yourwebsite.com{% static 'images/logo.jpeg' %}",
+        "url": "https://alagme.com{% static 'images/logo.jpeg' %}",
         "width": 250,
         "height": 250
       },
-      "image": "https://yourwebsite.com{% static 'images/logo.jpeg' %}",
+      "image": "https://alagme.com{% static 'images/logo.jpeg' %}",
       "telephone": "+20-111-170-4395",
+      "email": "info@alagme.com",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "EG",
@@ -76,25 +97,37 @@
       },
       "sameAs": [
         "https://www.facebook.com/share/1B8ssMKgDd/",
-        "https://wa.me/message/OPUYNILYAHPOL1"
+        "https://wa.me/message/OPUYNILYAHPOL1",
+        "https://www.instagram.com/mwssljmy",
+        "https://youtube.com/@alagme-c5h",
+        "https://vm.tiktok.com/ZSH3KtHsS5oPQ-wNExT/"
       ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+20-111-170-4395",
+        "contactType": "Customer Service",
+        "availableLanguage": ["ar", "en"]
+      },
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Saturday",
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday"
-        ],
+        "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
         "opens": "09:00",
         "closes": "24:00"
       },
       "priceRange": "5 ريال - 10 ريال",
-      "areaServed": {
-        "@type": "Country",
-        "name": "مصر"
+      "areaServed": [
+        {"@type": "Country", "name": "EG"},
+        {"@type": "Country", "name": "SA"},
+        {"@type": "Country", "name": "AE"},
+        {"@type": "Country", "name": "KW"},
+        {"@type": "Country", "name": "QA"},
+        {"@type": "Country", "name": "BH"},
+        {"@type": "Country", "name": "OM"}
+      ],
+      "availableLanguage": ["ar", "en"],
+      "founder": {
+        "@type": "Person",
+        "name": "مؤسسة العجمي"
       },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
@@ -102,35 +135,125 @@
         "itemListElement": [
           {
             "@type": "Offer",
+            "@id": "https://alagme.com/services/children",
+            "name": "تحفيظ القرآن للأطفال",
+            "description": "برنامج متكامل لتحفيظ القرآن الكريم للأطفال من سن 6 سنوات مع معلمين متخصصين",
+            "price": "5",
+            "priceCurrency": "SAR",
+            "availability": "https://schema.org/InStock",
             "itemOffered": {
               "@type": "Service",
               "name": "تحفيظ القرآن للأطفال",
-              "description": "برنامج متكامل لتحفيظ القرآن الكريم للأطفال من سن 6 سنوات"
+              "description": "حصص فردية مخصصة لتحفيظ القرآن الكريم للأطفال"
             }
           },
           {
             "@type": "Offer",
+            "@id": "https://alagme.com/services/tajweed",
+            "name": "تصحيح التلاوة والتجويد",
+            "description": "تحسين التلاوة وتصحيح الأخطاء التجويدية وتعليم أحكام التجويد الصحيحة",
+            "price": "5",
+            "priceCurrency": "SAR",
+            "availability": "https://schema.org/InStock",
             "itemOffered": {
               "@type": "Service",
               "name": "تصحيح التلاوة",
-              "description": "تحسين التلاوة وتصحيح الأخطاء التجويدية"
+              "description": "دروس متخصصة في تصحيح التلاوة والتجويد"
             }
           },
           {
             "@type": "Offer",
+            "@id": "https://alagme.com/services/adults",
+            "name": "تحفيظ القرآن للكبار",
+            "description": "برنامج مخصص للبالغين والكبار لحفظ القرآن الكريم في أوقات مرنة",
+            "price": "5",
+            "priceCurrency": "SAR",
+            "availability": "https://schema.org/InStock",
             "itemOffered": {
               "@type": "Service",
               "name": "تحفيظ القرآن للكبار",
-              "description": "برنامج مخصص للبالغين لحفظ القرآن الكريم"
+              "description": "حصص فردية مرنة لتحفيظ القرآن للكبار"
             }
           }
         ]
       }
     }
     </script>
-
     
+    <!-- Structured Data / Schema.org - LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "مؤسسة العجمي",
+      "image": "https://alagme.com{% static 'images/logo.jpeg' %}",
+      "description": "منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد",
+      "telephone": "+20-111-170-4395",
+      "email": "info@alagme.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "EG",
+        "addressLocality": "مصر"
+      },
+      "url": "https://alagme.com",
+      "priceRange": "5-10 ريال"
+    }
+    </script>
+    
+    <!-- Structured Data / Schema.org - Organization for Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "مؤسسة العجمي",
+      "url": "https://alagme.com",
+      "logo": "https://alagme.com{% static 'images/logo.jpeg' %}",
+      "description": "منصة متخصصة في تحفيظ القرآن الكريم عن بُعد بحصص فردية مع معلمين متقنين",
+      "sameAs": [
+        "https://www.facebook.com/share/1B8ssMKgDd/",
+        "https://wa.me/message/OPUYNILYAHPOL1",
+        "https://www.instagram.com/mwssljmy",
+        "https://youtube.com/@alagme-c5h",
+        "https://vm.tiktok.com/ZSH3KtHsS5oPQ-wNExT/"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Support",
+        "telephone": "+20-111-170-4395",
+        "email": "info@alagme.com"
+      }
+    }
+    </script>
+    
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "الرئيسية",
+          "item": "https://alagme.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "الخدمات",
+          "item": "https://alagme.com/services/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "تحفيظ القرآن",
+          "item": "https://alagme.com/services/quran-memorization/"
+        }
+      ]
+    }
+    </script>
 
+</html>
     <!-- BreadcrumbList Schema -->
     {% block breadcrumb_schema %}{% endblock %}
     
