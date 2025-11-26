@@ -67,12 +67,7 @@ urlpatterns = [
     
     # ============= Security Files =============
     # .well-known للتحقق من الملكية
-    path('.well-known/security.txt',
-         TemplateView.as_view(
-             template_name="security.txt",
-             content_type="text/plain"
-         ),
-         name='security'),
+
 ]
 
 # Static and Media files في وضع التطوير
