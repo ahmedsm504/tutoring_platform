@@ -12,7 +12,29 @@
 {% block og_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار مناسبة. معلمون متقنون وحصص فردية لجميع الأعمار.{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<!-- Critical CSS للصفحة الرئيسية - Inline -->
+<style>
+    /* Hero Section Critical CSS */
+    .hero-banner{min-height:80vh;display:flex;align-items:center;padding:60px 20px 40px;background:linear-gradient(135deg,#0a1929 0%,#1a2332 100%)}
+    .hero-content{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+    .hero-text h1{font-size:2.8em;color:#4CAF50;margin-bottom:20px;line-height:1.2}
+    .hero-text p{font-size:1.3em;color:#e9d561;margin-bottom:30px}
+    .cta-buttons{display:flex;gap:15px;flex-wrap:wrap}
+    .btn-primary{display:inline-block;padding:15px 35px;background:linear-gradient(135deg,#4CAF50,#45a049);color:#fff;text-decoration:none;border-radius:10px;font-size:1.1em;font-weight:700;transition:all .3s ease;box-shadow:0 4px 10px rgba(76,175,80,.3)}
+    .btn-secondary{display:inline-block;padding:15px 35px;background:transparent;color:#4CAF50;border:2px solid #4CAF50;text-decoration:none;border-radius:10px;font-size:1.1em;font-weight:700;transition:all .3s ease}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(76,175,80,.5)}
+    .btn-secondary:hover{background:#4CAF50;color:#fff}
+    @media(max-width:768px){.hero-content{grid-template-columns:1fr}.hero-text h1{font-size:2em}}
+</style>
+
+<!-- home.css - تحميل غير محظور -->
+<link rel="stylesheet" 
+      href="{% static 'css/home.css' %}" 
+      media="print" 
+      onload="this.media='all'">
+<noscript>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</noscript>
 {% endblock %}
 
 {% block content %}
@@ -24,7 +46,7 @@
             <p>"يا يحي خذ الكتاب بقوة"</p>
             <div class="cta-buttons">
                 <a href="{% url 'contact' %}" class="btn-primary">احجز حصتك التجريبية المجانية</a>
-                <a href="#packages" class="btn-secondary">اعرف الباقات</a>
+                <a href="{% url 'pricing' %}" class="btn-secondary">اعرف الباقات</a>
             </div>
         </div>
         <div class="hero-video">
@@ -102,151 +124,33 @@
     <div class="carousel-indicators" id="features-indicators"></div>
 </section>
 
-<!-- Pricing Section -->
-<section id="packages">
-    <h2 class="section-title">💎 اختر الباقة التي تناسب هدفك</h2>
-    <div class="pricing">
-        <!-- الباقة الأولى -->
-        <div class="card">
-            <h3>🌙 باقة البداية النورانية</h3>
-            <p>
-                <strong>مناسبة للأطفال من سن 6 سنوات</strong><br>
-                اختر عدد الحلقات المناسبة لطفلك بمرونة كاملة.
-            </p>
-            <ul>
-                <li>شرح مبسط لمعاني الآيات يناسب فهم الطفل</li>
-                <li>ألعاب تفاعلية تعليمية مشوقة</li>
-                <li>تعليم العقيدة والسيرة النبوية</li>
-                <li>واجبات يومية لترسيخ الحفظ</li>
-                <li>التحفيظ بالتجويد والتلقين الصحيح</li>
-            </ul>
-            <p style="text-align:center; margin-top:15px;">
-                <span class="highlight">*نقترح 40 دقيقة لطفلك*</span><br>
-                <span class="feature-badge">💡 الحلقة الأولى تجريبية ومجانية</span>
-            </p>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>المدة</th>
-                        <th>السعر للحلقة</th>
-                    </tr>
-                    <tr><td>30 دقيقة</td><td class="price">5 ريال</td></tr>
-                    <tr><td>40 دقيقة</td><td class="price">7 ريال</td></tr>
-                    <tr><td>60 دقيقة</td><td class="price">10 ريال</td></tr>
-                </table>
-                <p class="table-note">
-                    يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك
-                </p>
-            </div>
-            <a href="{% url 'contact' %}" class="btn">احجز الآن</a>
+<!-- Quick Packages Preview -->
+<section style="text-align: center; padding: 60px 20px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%);">
+    <h2 class="section-title">💎 باقاتنا التعليمية</h2>
+    <p style="color: #b3daff; font-size: 1.2em; margin-bottom: 30px;">اختر الباقة المناسبة لك ولأسرتك</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 30px auto;">
+        <div style="background: rgba(17, 43, 80, 0.6); padding: 25px; border-radius: 15px; border: 2px solid rgba(76, 175, 80, 0.2);">
+            <h3 style="color: #4CAF50; font-size: 1.5em; margin-bottom: 15px;">🌙 البداية النورانية</h3>
+            <p style="color: #e0f0ff; margin-bottom: 15px;">للأطفال من سن 6 سنوات</p>
+            <p style="color: #f8e96a; font-size: 1.3em; font-weight: bold;">من 5 ريال</p>
         </div>
-
-        <!-- الباقة الثانية -->
-        <div class="card">
-            <h3>🌿 باقة الغراس الطيب</h3>
-            <p>
-                <strong>لتحسين التلاوة وتصحيح الأخطاء التجويدية</strong><br>
-                تمكين الطالب من تلاوة القرآن بشكل صحيح خالي من اللحن.
-            </p>
-            <p><strong>✨ مميزات الباقة:</strong></p>
-            <ul>
-                <li>تصحيح التلاوة من المصحف مباشرة</li>
-                <li>تدريب عملي على المخارج والصفات</li>
-                <li>مراجعة الأخطاء الفردية وتحليل النطق</li>
-                <li>تقييم دوري وشهادة إتمام</li>
-            </ul>
-            <p><strong>👤 مناسبة لمن:</strong></p>
-            <ul>
-                <li>من يقرأ القرآن ويريد تصحيح تلاوته</li>
-                <li>من يعاني من صعوبة في النطق أو المدود</li>
-            </ul>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>المدة</th>
-                        <th>السعر للحلقة</th>
-                    </tr>
-                    <tr><td>30 دقيقة</td><td class="price">5 ريال</td></tr>
-                    <tr><td>40 دقيقة</td><td class="price">7 ريال</td></tr>
-                    <tr><td>60 دقيقة</td><td class="price">10 ريال</td></tr>
-                </table>
-                <p class="table-note">
-                    يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك
-                </p>
-            </div>
-            <a href="{% url 'contact' %}" class="btn">احجز الآن</a>
+        <div style="background: rgba(17, 43, 80, 0.6); padding: 25px; border-radius: 15px; border: 2px solid rgba(76, 175, 80, 0.2);">
+            <h3 style="color: #4CAF50; font-size: 1.5em; margin-bottom: 15px;">🌿 الغراس الطيب</h3>
+            <p style="color: #e0f0ff; margin-bottom: 15px;">تحسين التلاوة والتجويد</p>
+            <p style="color: #f8e96a; font-size: 1.3em; font-weight: bold;">من 5 ريال</p>
         </div>
-
-        <!-- الباقة الثالثة -->
-        <div class="card">
-            <h3>🔥 باقة الهمة العالية</h3>
-            <p>
-                <strong>للطلاب من سن 10 إلى 15 سنة</strong><br>
-                حفظ القرآن الكريم بتدرج وراحة مع متابعة دقيقة.
-            </p>
-            <p><strong>📘 تشمل الباقة:</strong></p>
-            <ul>
-                <li>جلسات لحفظ الجديد والمراجعة</li>
-                <li>تصحيح الورد اليومي من المعلمة</li>
-                <li>تعليم العقيدة والسيرة والأحاديث الصحيحة</li>
-                <li>متابعة الأداء الأسبوعي وتقارير تقدم</li>
-                <li>معلمون ذوو خبرة عالية في التحفيظ</li>
-                <li>مرونة في أوقات الدراسة</li>
-            </ul>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>المدة</th>
-                        <th>السعر للحلقة</th>
-                    </tr>
-                    <tr><td>30 دقيقة</td><td class="price">5 ريال</td></tr>
-                    <tr><td>40 دقيقة</td><td class="price">7 ريال</td></tr>
-                    <tr><td>60 دقيقة</td><td class="price">10 ريال</td></tr>
-                </table>
-                <p class="table-note">
-                    يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك
-                </p>
-            </div>
-            <a href="{% url 'contact' %}" class="btn">احجز الآن</a>
+        <div style="background: rgba(17, 43, 80, 0.6); padding: 25px; border-radius: 15px; border: 2px solid rgba(76, 175, 80, 0.2);">
+            <h3 style="color: #4CAF50; font-size: 1.5em; margin-bottom: 15px;">🔥 الهمة العالية</h3>
+            <p style="color: #e0f0ff; margin-bottom: 15px;">للشباب 10-15 سنة</p>
+            <p style="color: #f8e96a; font-size: 1.3em; font-weight: bold;">من 5 ريال</p>
         </div>
-
-        <!-- الباقة الرابعة -->
-        <div class="card">
-            <h3>📖 باقة سفراء القرآن</h3>
-            <p>
-                <strong>برنامج مخصص للبالغين</strong><br>
-                حفظ القرآن الكريم بخطى ثابتة ومنهج منظم يناسب أوقاتك.
-            </p>
-            <p><strong>✨ مميزات الباقة:</strong></p>
-            <ul>
-                <li>تسميع الحفظ الجديد ومراجعة القديم</li>
-                <li>ضبط القراءة ومخارج الحروف والأحكام</li>
-                <li>خطة حفظ مرنة تناسب جدولك اليومي</li>
-                <li>جلسات فردية مريحة عبر الإنترنت</li>
-                <li>متابعة دقيقة وتقييم دوري</li>
-            </ul>
-            <p><strong>👥 مناسبة لـ:</strong></p>
-            <ul>
-                <li>الكبار الراغبين في بدء الحفظ من البداية</li>
-                <li>من يرغبون في استكمال ما بدأوه</li>
-            </ul>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>المدة</th>
-                        <th>السعر للحلقة</th>
-                    </tr>
-                    <tr><td>30 دقيقة</td><td class="price">5 ريال</td></tr>
-                    <tr><td>40 دقيقة</td><td class="price">7 ريال</td></tr>
-                    <tr><td>60 دقيقة</td><td class="price">10 ريال</td></tr>
-                </table>
-                <p class="table-note">
-                    يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك
-                </p>
-            </div>
-            <a href="{% url 'contact' %}" class="btn">احجز الآن</a>
+        <div style="background: rgba(17, 43, 80, 0.6); padding: 25px; border-radius: 15px; border: 2px solid rgba(76, 175, 80, 0.2);">
+            <h3 style="color: #4CAF50; font-size: 1.5em; margin-bottom: 15px;">📖 سفراء القرآن</h3>
+            <p style="color: #e0f0ff; margin-bottom: 15px;">برنامج خاص للبالغين</p>
+            <p style="color: #f8e96a; font-size: 1.3em; font-weight: bold;">من 5 ريال</p>
         </div>
     </div>
+    <a href="{% url 'pricing' %}" class="btn-primary" style="margin-top: 30px; display: inline-block;">اعرف التفاصيل الكاملة</a>
 </section>
 
 <!-- Reviews Section -->
@@ -308,7 +212,7 @@
         <div class="info-card">
             <i class="fab fa-whatsapp"></i>
             <h3>واتساب</h3>
-            <p><a href="https://wa.me/201111704395" target="_blank">تواصل مباشر</a></p>
+            <p><a href="https://wa.me/201111704395" target="_blank" rel="noopener noreferrer">تواصل مباشر</a></p>
             <p>رد فوري على</p>
             <p>استفساراتك</p>
         </div>
@@ -324,32 +228,14 @@
 </section>
 
 <!-- CTA Section -->
-<section style="text-align: center; margin: 50px 50px; padding: 40px 20px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%); border-radius: 20px; border: 2px solid rgba(76, 175, 80, 0.2);">
+<section style="text-align: center; margin: 50px 20px; padding: 40px 20px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%); border-radius: 20px; border: 2px solid rgba(76, 175, 80, 0.2);">
     <h2 style="color: #e9d561; font-size: 2em; margin-bottom: 20px;">🎓 لا تتردد - احجز حصتك المجانية الآن</h2>
     <p style="color: #b3daff; font-size: 1.2em; margin-bottom: 30px;">الحلقة الأولى مجانية بالكامل - جرب معنا الآن</p>
-    <a href="{% url 'contact' %}" class="btn" style="margin: 50px auto;">احجز الآن</a>
+    <a href="{% url 'contact' %}" class="btn-primary">احجز الآن</a>
 </section>
-
-<!-- Social Fixed Icons -->
-<aside class="social-fixed">
-    <a href="https://wa.me/message/OPUYNILYAHPOL1" 
-       class="whatsapp"
-       target="_blank" 
-       rel="noopener noreferrer" 
-       title="تواصل معنا عبر واتساب">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-    <a href="https://www.facebook.com/share/1B8ssMKgDd/" 
-       class="facebook" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       title="تابعنا على فيسبوك">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-</aside>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/carouselconfig.js' %}"></script>
-<script src="{% static 'js/reviews.js' %}"></script>
+<script defer src="{% static 'js/carouselconfig.js' %}"></script>
+<script defer src="{% static 'js/reviews.js' %}"></script>
 {% endblock %}

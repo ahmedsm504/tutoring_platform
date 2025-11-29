@@ -21,15 +21,59 @@
     <meta name="description" content="{% block meta_description %}مؤسسة العجمي لتحفيظ القرآن الكريم عن بُعد - حصص فردية مع معلمين متقنين بأسعار تبدأ من 5 ريال. متوفر للأطفال والكبار في مصر والخليج والسعودية والإمارات والكويت وقطر.{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}مؤسسة العجمي, تحفيظ القرآن الكريم عن بُعد, معلم قرآن اونلاين, حفظ القرآن الكريم, تحفيظ قرآن للأطفال, معلمة قرآن, دروس تجويد قرآن{% endblock %}">
     
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpeg' %}">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ============================================ -->
+    <!-- تحسين الأداء: Preconnect للموارد الخارجية -->
+    <!-- ============================================ -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- External CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- ============================================ -->
+    <!-- Critical CSS Inline (الأساسيات فقط) -->
+    <!-- ============================================ -->
+    <style>
+        /* Critical CSS - الأساسيات فقط للعرض الأول */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Cairo',sans-serif;background:linear-gradient(135deg,#0a1929 0%,#1a2332 100%);color:#f0f8ff;line-height:1.6;min-height:100vh}
+        .skip-to-content{position:absolute;left:-9999px;z-index:999;padding:1em;background:#4CAF50;color:#fff;text-decoration:none}
+        .skip-to-content:focus{left:50%;transform:translateX(-50%);top:0}
+        /* Navigation Critical */
+        .main-nav{background:linear-gradient(135deg,#0c1e36,#1a2f4a);padding:15px 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,0.3)}
+        .nav-container{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 20px}
+    </style>
     
+    <!-- ============================================ -->
+    <!-- CSS - تحميل غير محظور (Non-blocking) -->
+    <!-- ============================================ -->
+    
+    <!-- Font Awesome - async loading -->
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          media="print" 
+          onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+    
+    <!-- Main CSS - async loading -->
+    <link rel="stylesheet" 
+          href="{% static 'css/style.css' %}" 
+          media="print" 
+          onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </noscript>
+    
+    <!-- CSS خاص بكل صفحة -->
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -42,7 +86,11 @@
             <!-- Logo on the right -->
             <div class="nav-logo">
                 <a href="{% url 'home' %}">
-                    <img src="{% static 'images/logo.jpeg' %}" alt="شعار مؤسسة العجمي" width="60" height="60">
+                    <img src="{% static 'images/logo.jpeg' %}" 
+                         alt="شعار مؤسسة العجمي" 
+                         width="60" 
+                         height="60"
+                         loading="eager">
                     <span>مؤسسة العجمي</span>
                 </a>
             </div>
@@ -107,10 +155,10 @@
 
     <!-- Social Fixed Icons -->
     <div class="social-fixed">
-        <a href="https://wa.me/201111704395" target="_blank" class="whatsapp" title="تواصل معنا على واتساب">
+        <a href="https://wa.me/201111704395" target="_blank" rel="noopener noreferrer" class="whatsapp" title="تواصل معنا على واتساب">
             <i class="fab fa-whatsapp"></i>
         </a>
-        <a href="https://www.facebook.com/share/17TkgS1JmC/" target="_blank" class="facebook" title="تابعنا على فيسبوك">
+        <a href="https://www.facebook.com/share/17TkgS1JmC/" target="_blank" rel="noopener noreferrer" class="facebook" title="تابعنا على فيسبوك">
             <i class="fab fa-facebook-f"></i>
         </a>
     </div>
@@ -122,19 +170,19 @@
                 <h3><i class="fas fa-graduation-cap"></i> عن المنصة</h3>
                 <p>منصة تعليمية متميزة تقدم دروساً عن بُعد بجودة عالية وأسعار مناسبة للجميع.</p>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/share/1B8ssMKgDd/" target="_blank" title="فيسبوك">
+                    <a href="https://www.facebook.com/share/1B8ssMKgDd/" target="_blank" rel="noopener noreferrer" title="فيسبوك">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://www.instagram.com/mwssljmy" target="_blank" title="إنستجرام">
+                    <a href="https://www.instagram.com/mwssljmy" target="_blank" rel="noopener noreferrer" title="إنستجرام">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="https://youtube.com/@alagme-c5h" target="_blank" title="يوتيوب">
+                    <a href="https://youtube.com/@alagme-c5h" target="_blank" rel="noopener noreferrer" title="يوتيوب">
                         <i class="fab fa-youtube"></i>
                     </a>
-                    <a href="https://vm.tiktok.com/ZSH3KtHsS5oPQ-wNExT/" target="_blank" title="تيك توك">
+                    <a href="https://vm.tiktok.com/ZSH3KtHsS5oPQ-wNExT/" target="_blank" rel="noopener noreferrer" title="تيك توك">
                         <i class="fab fa-tiktok"></i>
                     </a>
-                    <a href="https://wa.me/message/OPUYNILYAHPOL1" target="_blank" title="واتساب">
+                    <a href="https://wa.me/message/OPUYNILYAHPOL1" target="_blank" rel="noopener noreferrer" title="واتساب">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
@@ -167,7 +215,10 @@
         </div>
     </footer>
 
-    <script src="{% static 'js/script.js' %}"></script>
+    <!-- ============================================ -->
+    <!-- JavaScript - تحميل مؤجل -->
+    <!-- ============================================ -->
+    <script defer src="{% static 'js/script.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
