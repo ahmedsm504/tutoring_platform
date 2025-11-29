@@ -69,7 +69,7 @@
                 <a href="{% url 'blog_list' %}" {% if 'blog' in request.path %}class="active"{% endif %}>
                     <i class="fas fa-blog"></i> المدوّنة
                 </a>
-                <a href="#packages" {% if request.resolver_match.url_name == 'pricing' %}class="active"{% endif %}>
+                <a href="{% url 'pricing' %}" {% if request.resolver_match.url_name == 'pricing' %}class="active"{% endif %}>
                     <i class="fas fa-tags"></i> الباقات
                 </a>
                 
