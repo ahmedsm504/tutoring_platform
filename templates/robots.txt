@@ -36,7 +36,7 @@ Disallow: /*.json$
 Disallow: /*.sql$
 Disallow: /*.log$
 
-# السماح بالـ CSS و JS
+# السماح بالملفات الثابتة المفيدة للفهرسة
 Allow: /*.css$
 Allow: /*.js$
 Allow: /*.jpg$
@@ -45,53 +45,22 @@ Allow: /*.png$
 Allow: /*.webp$
 Allow: /*.svg$
 
-# Sitemap Location
+# Sitemap
 Sitemap: https://alagme.com/sitemap.xml
 
-# Crawl-delay للتحكم في سرعة الزحف
-Crawl-delay: 1
-
-# ========================================
-# إعدادات لمحركات بحث محددة
-# ========================================
-
-# Google Bot
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 0.5
-
-# Bing Bot
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 0.5
-
-# Yandex
-User-agent: Yandex
-Allow: /
-Crawl-delay: 1
-
-# ========================================
 # منع الـ Bots السيئة
-# ========================================
-
-# AhrefsBot (استهلاك عالي للموارد)
 User-agent: AhrefsBot
-Crawl-delay: 10
 Disallow: /
 
-# SemrushBot
 User-agent: SemrushBot
-Crawl-delay: 10
+Disallow: /
 
-# MJ12bot
 User-agent: MJ12bot
 Disallow: /
 
-# DotBot
 User-agent: dotbot
 Disallow: /
 
-# Scrapers
 User-agent: Scrapy
 Disallow: /
 
@@ -101,10 +70,7 @@ Disallow: /
 User-agent: Python-requests
 Disallow: /
 
-# ========================================
-# Social Media Crawlers (السماح بها)
-# ========================================
-
+# Social Bots (السماح)
 User-agent: facebookexternalhit
 Allow: /
 
