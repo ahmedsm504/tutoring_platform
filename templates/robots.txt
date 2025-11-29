@@ -46,7 +46,7 @@ Allow: /*.webp$
 Allow: /*.svg$
 
 # Sitemap Location
-Sitemap: {{ request.scheme }}://{{ request.get_host }}/sitemap.xml
+Sitemap: https://alagme.com/sitemap.xml
 
 # Crawl-delay للتحكم في سرعة الزحف
 Crawl-delay: 1
