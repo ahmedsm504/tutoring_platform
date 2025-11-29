@@ -6,6 +6,7 @@ from pathlib import Path
 import os
 import dj_database_url
 
+
 # Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -218,11 +219,22 @@ cloudinary.config(
 # Site Framework
 SITE_ID = 1
 
-# Cache Configuration
+# Canonical URL
+CANONICAL_URL = 'https://alagme.com'  # غيّر الدومين
+
+# Default Protocol
+DEFAULT_PROTOCOL = 'https'
+
+# Cache للـ Sitemap (لتحسين الأداء)
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-sitemap-cache',
+        'LOCATION': 'unique-snowflake',
+    },
+    'sitemap': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_sitemap_cache',
+        'TIMEOUT': 86400,  # يوم واحد
     }
 }
 
