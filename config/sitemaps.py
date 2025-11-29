@@ -2,7 +2,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from django.utils import timezone
-from datetime import datetime
+from datetime import timedelta
 
 # استيراد الموديلات
 try:
@@ -57,6 +57,7 @@ class BlogPostSitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.8
     protocol = 'https'
+    limit = 1000  # عدد العناصر في كل sitemap
 
     def items(self):
         """جلب جميع المقالات المنشورة"""
@@ -79,8 +80,7 @@ class BlogPostSitemap(Sitemap):
             return 0.9
         elif hasattr(obj, 'views_count') and obj.views_count > 100:
             return 0.85
-        else:
-            return 0.7
+        return 0.7
 
 
 class BlogCategorySitemap(Sitemap):
@@ -97,15 +97,16 @@ class BlogCategorySitemap(Sitemap):
 
     def lastmod(self, obj):
         """آخر تعديل للتصنيف"""
+        if not HAS_BLOG:
+            return timezone.now()
+            
         # آخر مقال منشور في هذا التصنيف
         latest_post = Post.objects.filter(
             category=obj, 
             status='published'
         ).order_by('-published_at').first()
         
-        if latest_post:
-            return latest_post.published_at
-        return timezone.now()
+        return latest_post.published_at if latest_post else timezone.now()
 
     def location(self, obj):
         """URL التصنيف"""
@@ -124,28 +125,32 @@ class PricingPackagesSitemap(Sitemap):
             {
                 'name': 'باقة البداية النورانية',
                 'slug': 'beginner-package',
-                'description': 'برنامج تحفيظ القرآن للأطفال'
+                'description': 'برنامج تحفيظ القرآن للأطفال',
+                'anchor': 'beginner'
             },
             {
                 'name': 'باقة الغراس الطيب',
                 'slug': 'intermediate-package',
-                'description': 'تحسين التلاوة وتصحيح الأخطاء'
+                'description': 'تحسين التلاوة وتصحيح الأخطاء',
+                'anchor': 'intermediate'
             },
             {
                 'name': 'باقة الهمة العالية',
                 'slug': 'advanced-package',
-                'description': 'حفظ القرآن للشباب'
+                'description': 'حفظ القرآن للشباب',
+                'anchor': 'advanced'
             },
             {
                 'name': 'باقة سفراء القرآن',
                 'slug': 'adults-package',
-                'description': 'برنامج تحفيظ للكبار'
+                'description': 'برنامج تحفيظ للكبار',
+                'anchor': 'adults'
             },
         ]
 
     def location(self, item):
-        """URL الباقة مع anchor"""
-        return reverse('pricing') + f"#{item['slug']}"
+        """URL الباقة - الصفحة الرئيسية للباقات"""
+        return reverse('pricing')
 
     def lastmod(self, item):
         """آخر تعديل"""
@@ -172,14 +177,13 @@ class QualityStandardsSitemap(Sitemap):
 
     def location(self, item):
         """URL القسم"""
-        return reverse('quality_standards') + f"#{item['anchor']}"
+        return reverse('quality_standards')
 
     def lastmod(self, item):
         """آخر تعديل"""
         return timezone.now()
 
 
-# Sitemap إضافي للصفحات الشائعة (Popular Pages)
 class PopularPagesSitemap(Sitemap):
     """Sitemap للصفحات الأكثر زيارة"""
     changefreq = "weekly"
@@ -227,25 +231,22 @@ class PopularPagesSitemap(Sitemap):
         return timezone.now()
 
 
-# ===============================
-# Image Sitemap (اختياري)
-# ===============================
 class ImageSitemap(Sitemap):
-    """Sitemap للصور (للمدونة والمراجعات)"""
+    """Sitemap للصور (للمدونة)"""
     changefreq = "monthly"
     priority = 0.6
     protocol = 'https'
+    limit = 500
 
     def items(self):
         """الصور من المقالات"""
         if not HAS_BLOG:
             return []
         
-        # جلب المقالات التي تحتوي على صور
         return Post.objects.filter(
             status='published',
             image__isnull=False
-        ).exclude(image='').order_by('-published_at')[:50]  # أحدث 50 مقال
+        ).exclude(image='').order_by('-published_at')[:50]
 
     def location(self, obj):
         """URL المقال الذي يحتوي على الصورة"""
@@ -256,9 +257,6 @@ class ImageSitemap(Sitemap):
         return obj.updated_at if hasattr(obj, 'updated_at') else obj.published_at
 
 
-# ===============================
-# News Sitemap (للأخبار السريعة)
-# ===============================
 class NewsSitemap(Sitemap):
     """Sitemap للأخبار والمقالات الحديثة (آخر 48 ساعة)"""
     changefreq = "hourly"
@@ -270,7 +268,7 @@ class NewsSitemap(Sitemap):
         if not HAS_BLOG:
             return []
         
-        two_days_ago = timezone.now() - timezone.timedelta(days=2)
+        two_days_ago = timezone.now() - timedelta(days=2)
         return Post.objects.filter(
             status='published',
             published_at__gte=two_days_ago
@@ -285,9 +283,6 @@ class NewsSitemap(Sitemap):
         return obj.updated_at if hasattr(obj, 'updated_at') else obj.published_at
 
 
-# ===============================
-# Mobile Sitemap (اختياري)
-# ===============================
 class MobileSitemap(Sitemap):
     """Sitemap للصفحات المحسّنة للموبايل"""
     changefreq = "daily"
