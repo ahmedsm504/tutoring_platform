@@ -1,9 +1,17 @@
 # robots.txt - المنصة التعليمية لتحفيظ القرآن الكريم
 
+# السماح لكل البوتات العادية وGoogle Extended
 User-agent: *
 Allow: /
 Allow: /static/
 Allow: /media/
+
+# السماح بكل نسخ Googlebot بما فيهم Google-Extended
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 # السماح بالصفحات العامة
 Allow: /blog/
@@ -25,7 +33,7 @@ Disallow: /accounts/login/
 Disallow: /accounts/logout/
 Disallow: /accounts/register/
 
-# منع البحث والفلترة
+# منع البحث والفلترة في الروابط
 Disallow: /*?search=
 Disallow: /*?filter=
 Disallow: /*?page=
@@ -70,7 +78,7 @@ Disallow: /
 User-agent: Python-requests
 Disallow: /
 
-# Social Bots (السماح)
+# السماح بالـ Social Bots
 User-agent: facebookexternalhit
 Allow: /
 
