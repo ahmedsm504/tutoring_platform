@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}تواصل معنا - المنصة التعليمية{% endblock %}
+{% block title %}تواصل معنا - احجز حصتك المجانية | مؤسسة العجمي{% endblock %}
+
+{% block meta_description %}تواصل مع مؤسسة العجمي لتحفيظ القرآن الكريم. احجز حصتك التجريبية المجانية الآن. رقم الهاتف: 01044568181. تواصل عبر واتساب أو املأ نموذج التسجيل.{% endblock %}
+
+{% block meta_keywords %}تواصل معنا, احجز حصة مجانية, تحفيظ القرآن, حجز حلقات القرآن, رقم تواصل, واتساب تحفيظ القرآن, نموذج التسجيل{% endblock %}
+
+{% block og_title %}تواصل معنا - احجز حصتك المجانية | مؤسسة العجمي{% endblock %}
+
+{% block og_description %}احجز حصتك التجريبية المجانية الآن. تواصل معنا عبر الهاتف أو واتساب: 01044568181{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -391,20 +399,42 @@
         }
     }
 </style>
+
+<!-- Structured Data for Contact Page -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "تواصل معنا - مؤسسة العجمي",
+  "description": "تواصل مع مؤسسة العجمي لتحفيظ القرآن الكريم واحجز حصتك التجريبية المجانية",
+  "url": "{{ request.build_absolute_uri }}",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "مؤسسة العجمي",
+    "telephone": "+20-104-456-8181",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "EG",
+      "addressRegion": "مصر"
+    }
+  }
+}
+</script>
 {% endblock %}
 
 {% block content %}
+<article itemscope itemtype="https://schema.org/ContactPage">
 <!-- Hero Section -->
-<div class="contact-hero">
-    <h1>🎓 احجز حصتك التجريبية المجانية الآن</h1>
-    <p>املأ النموذج وسنتواصل معك في أقرب وقت</p>
-</div>
+<header class="contact-hero">
+    <h1 itemprop="name">🎓 احجز حصتك التجريبية المجانية الآن</h1>
+    <p itemprop="description">املأ النموذج وسنتواصل معك في أقرب وقت</p>
+</header>
 
 <!-- رسائل Django -->
 {% if messages %}
 <div class="messages-container">
     {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
+        <div class="alert alert-{{ message.tags }}" role="alert">
             {% if message.tags == 'success' %}
                 <i class="fas fa-check-circle"></i>
             {% elif message.tags == 'error' %}
@@ -419,13 +449,13 @@
 {% endif %}
 
 <!-- Form Section -->
-<div class="contact-form-section">
+<section class="contact-form-section">
     <h2 class="form-title">
         <i class="fas fa-edit"></i>
         املأ بياناتك للحجز
     </h2>
     
-    <form method="POST" novalidate>
+    <form method="POST" novalidate aria-label="نموذج حجز الحصة المجانية">
         {% csrf_token %}
         
         {% for field in form %}
@@ -438,14 +468,14 @@
             </label>
             
             {% if field.name == 'gender' %}
-                <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" {% if field.field.required %}required{% endif %}>
+                <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" {% if field.field.required %}required aria-required="true"{% endif %}>
                     <option value="">اختر الجنس</option>
                     {% for value, label in field.field.choices %}
                         <option value="{{ value }}" {% if field.value == value %}selected{% endif %}>{{ label }}</option>
                     {% endfor %}
                 </select>
             {% elif field.name == 'notes' %}
-                <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" placeholder="{{ field.field.widget.attrs.placeholder|default:'أي ملاحظات أو استفسارات (اختياري)' }}" {% if field.field.required %}required{% endif %}>{{ field.value|default:'' }}</textarea>
+                <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" placeholder="{{ field.field.widget.attrs.placeholder|default:'أي ملاحظات أو استفسارات (اختياري)' }}" {% if field.field.required %}required aria-required="true"{% endif %} aria-label="{{ field.label }}">{{ field.value|default:'' }}</textarea>
             {% else %}
                 <input type="{{ field.field.widget.input_type|default:'text' }}" 
                        name="{{ field.name }}" 
@@ -453,12 +483,13 @@
                        class="form-control" 
                        placeholder="{{ field.field.widget.attrs.placeholder|default:field.label }}"
                        value="{{ field.value|default:'' }}"
-                       {% if field.field.required %}required{% endif %}>
+                       {% if field.field.required %}required aria-required="true"{% endif %}
+                       aria-label="{{ field.label }}">
             {% endif %}
             
             {% if field.errors %}
                 {% for error in field.errors %}
-                    <span class="error-message">
+                    <span class="error-message" role="alert">
                         <i class="fas fa-exclamation-circle"></i> {{ error }}
                     </span>
                 {% endfor %}
@@ -466,58 +497,57 @@
         </div>
         {% endfor %}
         
-        <button type="submit" class="submit-btn">
+        <button type="submit" class="submit-btn" aria-label="إرسال نموذج الحجز">
             <i class="fas fa-paper-plane"></i>
             احجز الآن
         </button>
     </form>
-</div>
-
-
+</section>
 
 <!-- Contact Info Cards -->
-<div class="contact-info">
-    <div class="info-card">
+<section class="contact-info" itemscope itemtype="https://schema.org/Organization">
+    <article class="info-card">
         <i class="fas fa-phone"></i>
         <h3>اتصل بنا</h3>
-        <p><a href="tel:+201044568181">+20 104 456 8181</a></p>
+        <p itemprop="telephone"><a href="tel:+201044568181">+20 104 456 8181</a></p>
         <p>السبت - الخميس</p>
         <p>9 صباحاً - 12 مساءً</p>
-    </div>
+    </article>
 
-    <div class="info-card">
+    <article class="info-card">
         <i class="fab fa-whatsapp"></i>
         <h3>واتساب</h3>
-        <p><a href="https://wa.me/201044568181" target="_blank">تواصل مباشر</a></p>
+        <p><a href="https://wa.me/201044568181" target="_blank" rel="noopener noreferrer">تواصل مباشر</a></p>
         <p>رد فوري على</p>
         <p>استفساراتك</p>
-    </div>
+    </article>
 
-    <div class="info-card">
+    <article class="info-card" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
         <i class="fas fa-map-marker-alt"></i>
         <h3>موقعنا</h3>
-        <p>جمهورية مصر العربية</p>
+        <p itemprop="addressCountry">جمهورية مصر العربية</p>
         <p>تعليم أونلاين</p>
         <p>من أي مكان</p>
-    </div>
-</div>
+    </article>
+</section>
+</article>
 
 <!-- أيقونات التواصل الاجتماعي الثابتة -->
-<div class="social-fixed">
-    <a href="https://wa.me/201044568181" target="_blank" class="whatsapp" title="تواصل معنا على واتساب">
+<aside class="social-fixed" aria-label="روابط التواصل الاجتماعي الثابتة">
+    <a href="https://wa.me/201044568181" target="_blank" rel="noopener noreferrer" class="whatsapp" title="تواصل معنا على واتساب" aria-label="واتساب">
         <i class="fab fa-whatsapp"></i>
     </a>
-    <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" class="facebook" title="تابعنا على فيسبوك">
+    <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="noopener noreferrer" class="facebook" title="تابعنا على فيسبوك" aria-label="فيسبوك">
         <i class="fab fa-facebook-f"></i>
     </a>
-    <a href="https://www.instagram.com/ala.gme/" target="_blank" class="instagram" title="تابعنا على إنستجرام">
+    <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="noopener noreferrer" class="instagram" title="تابعنا على إنستجرام" aria-label="إنستجرام">
         <i class="fab fa-instagram"></i>
     </a>
-    <a href="https://www.tiktok.com/@alagme_12" target="_blank" class="tiktok" title="تابعنا على تيك توك">
+    <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="noopener noreferrer" class="tiktok" title="تابعنا على تيك توك" aria-label="تيك توك">
         <i class="fab fa-tiktok"></i>
     </a>
-    <a href="https://x.com/alagme_12" target="_blank" class="twitter" title="تابعنا على تويتر">
+    <a href="https://x.com/alagme_12" target="_blank" rel="noopener noreferrer" class="twitter" title="تابعنا على تويتر" aria-label="تويتر">
         <i class="fab fa-twitter"></i>
     </a>
-</div>
+</aside>
 {% endblock %}

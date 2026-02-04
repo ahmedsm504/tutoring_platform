@@ -1,18 +1,106 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}المنصة التعليمية - تحفيظ القرآن الكريم عن بُعد | حصص فردية من 7 ريال{% endblock %}
+{% block title %}تحفيظ القرآن الكريم عن بعد | حصص فردية من 7 ريال | معلمون متقنون | Alagme.com{% endblock %}
 
-{% block meta_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد. حصص فردية بأسعار تبدأ من 7 ريال. معلمون متقنون، متابعة مستمرة، ومواعيد مرنة لجميع الأعمار.{% endblock %}
+{% block meta_description %}احجز الآن حصص تحفيظ القرآن الكريم عن بعد للأطفال والكبار. حصص فردية 100% مع معلمين متقنين. أسعار تبدأ من 7 ريال. حلقة تجريبية مجانية. مواعيد مرنة. دورات نور البيان والأربعون النووية.{% endblock %}
 
-{% block meta_keywords %}تحفيظ القرآن, تعليم القرآن اونلاين, حفظ القرآن للأطفال, معلمة قرآن عن بعد, دروس تجويد, تحفيظ قرآن رخيص, حصص قرآن فردية, تعليم القرآن للكبار{% endblock %}
+{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ القرآن اونلاين, حفظ القرآن للأطفال, معلم قرآن عن بعد, معلمة قرآن, دروس تجويد, تحفيظ قرآن رخيص, حصص قرآن فردية, تعليم القرآن للكبار, منصة تحفيظ قرآن, حفظ القرآن بالتجويد, نور البيان, الأربعون النووية, alagme, العجمي, قرآن كريم, تحفيظ قرآن للصغار, تحفيظ قرآن للكبار, تعليم تجويد القرآن{% endblock %}
 
-{% block og_title %}المنصة التعليمية - تحفيظ القرآن الكريم {% endblock %}
+{% block og_title %}تحفيظ القرآن الكريم عن بُعد - حصص فردية من 7 ريال | Alagme{% endblock %}
 
-{% block og_description %}منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار مناسبة. معلمون متقنون وحصص فردية لجميع الأعمار.{% endblock %}
+{% block og_description %}منصة Alagme لتحفيظ القرآن الكريم عن بعد. معلمون متقنون حاصلون على إجازات. حصص فردية 100%. أسعار مناسبة تبدأ من 7 ريال. حلقة تجريبية مجانية. مواعيد مرنة 24/7.{% endblock %}
+
+{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<!-- Canonical URL -->
+<link rel="canonical" href="https://alagme.com/">
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Alagme",
+  "description": "منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد",
+  "url": "https://alagme.com",
+  "logo": "https://alagme.com{% static 'images/logo.png' %}",
+  "telephone": "+201044568181",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "EG",
+    "addressLocality": "مصر"
+  },
+  "sameAs": [
+    "https://www.facebook.com/profile.php?id=61587497605651",
+    "https://www.instagram.com/ala.gme/",
+    "https://www.tiktok.com/@alagme_12",
+    "https://x.com/alagme_12"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Alagme - تحفيظ القرآن الكريم",
+  "url": "https://alagme.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://alagme.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "كم سعر حصة تحفيظ القرآن الكريم؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "تبدأ أسعار حصص تحفيظ القرآن من 7 ريال سعودي لحلقة 30 دقيقة، و10 ريال لحلقة 40 دقيقة، و15 ريال لحلقة 60 دقيقة. نوفر أيضاً حلقة تجريبية مجانية."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هل الحلقة الأولى مجانية؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "نعم، نوفر حلقة تجريبية مجانية بالكامل لجميع الطلاب الجدد لتجربة الخدمة قبل الاشتراك."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هل المعلمون مؤهلون؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "جميع معلمينا حاصلون على إجازات في القرآن الكريم ولديهم خبرة واسعة في تحفيظ القرآن للأطفال والكبار."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "الرئيسية",
+    "item": "https://alagme.com"
+  }]
+}
+</script>
 {% endblock %}
 
 {% block content %}
