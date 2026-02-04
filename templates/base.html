@@ -2,13 +2,14 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-        <!-- Google Tag Manager -->
+    <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WLL77QGN');</script>
     <!-- End Google Tag Manager -->
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNXPQQNRNP"></script>
     <script>
@@ -22,14 +23,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
     
-    <title>{% block title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد | حصص اونلاين{% endblock %}</title>
+    <!-- Title -->
+    <title>{% block title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد | حصص اونلاين من 7 ريال{% endblock %}</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="{% block meta_description %}مؤسسة العجمي لتحفيظ القرآن الكريم عن بُعد - حصص فردية مع معلمين متقنين بأسعار تبدأ من 5 ريال. متوفر للأطفال والكبار في مصر والخليج والسعودية والإمارات والكويت وقطر.{% endblock %}">
-    <meta name="keywords" content="{% block meta_keywords %}مؤسسة العجمي, تحفيظ القرآن الكريم عن بُعد, معلم قرآن اونلاين, حفظ القرآن الكريم, تحفيظ قرآن للأطفال, معلمة قرآن, دروس تجويد قرآن{% endblock %}">
+    <meta name="description" content="{% block meta_description %}مؤسسة العجمي لتحفيظ القرآن الكريم عن بُعد - حصص فردية مع معلمين متقنين بأسعار تبدأ من 7 ريال. متوفر للأطفال والكبار في مصر والخليج والسعودية والإمارات والكويت وقطر. حلقات تحفيظ اونلاين احترافية.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endblock %}">
+    <meta name="author" content="مؤسسة العجمي">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:locale" content="ar_EG">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد | حصص من 7 ريال{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين. أسعار تبدأ من 7 ريال. برامج للأطفال والكبار. حلقة تجريبية مجانية.{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:site_name" content="مؤسسة العجمي">
+    <meta property="og:image" content="{% static 'images/logo.jpeg' %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}حصص فردية لتحفيظ القرآن من 7 ريال. معلمون متقنون. حلقة تجريبية مجانية.{% endblock %}">
+    <meta name="twitter:image" content="{% static 'images/logo.jpeg' %}">
+    
+    <!-- Mobile App Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="العجمي">
+    
+    <!-- Geo Tags -->
+    <meta name="geo.region" content="EG">
+    <meta name="geo.placename" content="Egypt">
     
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpeg' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/logo.jpeg' %}">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -37,13 +76,69 @@
     <!-- External CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "مؤسسة العجمي",
+      "alternateName": "Al-Agmi Foundation",
+      "url": "{{ request.build_absolute_uri }}",
+      "logo": "{% static 'images/logo.jpeg' %}",
+      "description": "مؤسسة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "EG",
+        "addressRegion": "مصر"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+20-104-456-8181",
+        "contactType": "Customer Service",
+        "availableLanguage": ["ar", "Arabic"]
+      },
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61587497605651",
+        "https://www.instagram.com/ala.gme/",
+        "https://www.tiktok.com/@alagme_12",
+        "https://x.com/alagme_12",
+        "https://youtube.com/@alagme-c5h"
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "مؤسسة العجمي - تحفيظ القرآن الكريم",
+      "image": "{% static 'images/logo.jpeg' %}",
+      "priceRange": "7-15 ريال",
+      "telephone": "+20-104-456-8181",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "EG"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          "opens": "09:00",
+          "closes": "24:00"
+        }
+      ]
+    }
+    </script>
+    
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-        <!-- Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLL77QGN"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    
     <!-- Skip to main content -->
     <a href="#main-content" class="skip-to-content">انتقل إلى المحتوى الرئيسي</a>
 
@@ -52,9 +147,9 @@
         <div class="nav-container">
             <!-- Logo on the right -->
             <div class="nav-logo">
-                <a href="{% url 'home' %}">
-                    <img src="{% static 'images/logo.jpeg' %}" alt="شعار مؤسسة العجمي" width="60" height="60">
-                    <span> العجمي</span>
+                <a href="{% url 'home' %}" aria-label="الصفحة الرئيسية - مؤسسة العجمي">
+                    <img src="{% static 'images/logo.jpeg' %}" alt="شعار مؤسسة العجمي لتحفيظ القرآن الكريم" width="60" height="60">
+                    <span>العجمي</span>
                 </a>
             </div>
 
@@ -65,45 +160,45 @@
 
             <!-- Navigation Links on the left -->
             <div class="nav-links" id="navLinks">
-                <a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>
+                <a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %} aria-label="الرئيسية">
                     <i class="fas fa-home"></i> الرئيسية
                 </a>
-                <a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}>
+                <a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %} aria-label="من نحن">
                     <i class="fas fa-info-circle"></i> عنّا
                 </a>
-                <a href="{% url 'quality_standards' %}" {% if request.resolver_match.url_name == 'quality_standards' %}class="active"{% endif %}>
+                <a href="{% url 'quality_standards' %}" {% if request.resolver_match.url_name == 'quality_standards' %}class="active"{% endif %} aria-label="مواثيق الجودة">
                     <i class="fas fa-award"></i> مواثيق الجودة
                 </a>
-                <a href="{% url 'contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %}>
+                <a href="{% url 'contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %} aria-label="تواصل معنا">
                     <i class="fas fa-envelope"></i> تواصل معنا
                 </a>
-                <a href="{% url 'blog_list' %}" {% if 'blog' in request.path %}class="active"{% endif %}>
+                <a href="{% url 'blog_list' %}" {% if 'blog' in request.path %}class="active"{% endif %} aria-label="المدونة">
                     <i class="fas fa-blog"></i> المدوّنة
                 </a>
-                <a href="{% url 'pricing' %}" {% if request.resolver_match.url_name == 'pricing' %}class="active"{% endif %}>
+                <a href="{% url 'pricing' %}" {% if request.resolver_match.url_name == 'pricing' %}class="active"{% endif %} aria-label="الباقات والأسعار">
                     <i class="fas fa-tags"></i> الباقات
                 </a>
                 
                 {% if user.is_authenticated %}
                     {% if user.user_type == 'supervisor' %}
-                        <a href="{% url 'supervisor_dashboard' %}" {% if request.resolver_match.url_name == 'supervisor_dashboard' %}class="active"{% endif %} id="supervisorDashboardLink">
+                        <a href="{% url 'supervisor_dashboard' %}" {% if request.resolver_match.url_name == 'supervisor_dashboard' %}class="active"{% endif %} id="supervisorDashboardLink" aria-label="لوحة المشرف">
                             <i class="fas fa-bell"></i>
                             <span class="notification-badge" id="notificationBadge">0</span>
                             لوحة المشرف
                         </a>
                     {% else %}
-                        <a href="{% url 'profile' %}" {% if request.resolver_match.url_name == 'profile' %}class="active"{% endif %}>
+                        <a href="{% url 'profile' %}" {% if request.resolver_match.url_name == 'profile' %}class="active"{% endif %} aria-label="ملفي الشخصي">
                             <i class="fas fa-user"></i> ملفي الشخصي
                         </a>
-                        <a href="{% url 'student_dashboard' %}" {% if request.resolver_match.url_name == 'student_dashboard' %}class="active"{% endif %}>
+                        <a href="{% url 'student_dashboard' %}" {% if request.resolver_match.url_name == 'student_dashboard' %}class="active"{% endif %} aria-label="لوحة التحكم">
                             <i class="fas fa-tachometer-alt"></i> لوحة التحكم
                         </a>
                     {% endif %}
-                    <a href="{% url 'logout' %}" class="logout-btn">
+                    <a href="{% url 'logout' %}" class="logout-btn" aria-label="تسجيل الخروج">
                         <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
                     </a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="login-btn">
+                    <a href="{% url 'login' %}" class="login-btn" aria-label="تسجيل الدخول">
                         <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
                     </a>
                 {% endif %}
@@ -117,47 +212,47 @@
     </main>
 
     <!-- Social Fixed Icons -->
-    <div class="social-fixed">
-        <a href="https://wa.me/201044568181" target="_blank" class="whatsapp" title="تواصل معنا على واتساب">
+    <aside class="social-fixed" aria-label="روابط التواصل الاجتماعي">
+        <a href="https://wa.me/201044568181" target="_blank" rel="noopener noreferrer" class="whatsapp" title="تواصل معنا على واتساب" aria-label="واتساب">
             <i class="fab fa-whatsapp"></i>
         </a>
-        <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" class="facebook" title="تابعنا على فيسبوك">
+        <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="noopener noreferrer" class="facebook" title="تابعنا على فيسبوك" aria-label="فيسبوك">
             <i class="fab fa-facebook-f"></i>
         </a>
-        <a href="https://www.instagram.com/ala.gme/" target="_blank" class="instagram" title="تابعنا على إنستجرام">
+        <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="noopener noreferrer" class="instagram" title="تابعنا على إنستجرام" aria-label="إنستجرام">
             <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://www.tiktok.com/@alagme_12" target="_blank" class="tiktok" title="تابعنا على تيك توك">
+        <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="noopener noreferrer" class="tiktok" title="تابعنا على تيك توك" aria-label="تيك توك">
             <i class="fab fa-tiktok"></i>
         </a>
-        <a href="https://x.com/alagme_12" target="_blank" class="twitter" title="تابعنا على تويتر">
+        <a href="https://x.com/alagme_12" target="_blank" rel="noopener noreferrer" class="twitter" title="تابعنا على تويتر" aria-label="تويتر">
             <i class="fab fa-twitter"></i>
         </a>
-    </div>
+    </aside>
 
     <!-- Footer -->
-    <footer>
+    <footer role="contentinfo">
         <div class="footer-content">
             <div class="footer-section">
                 <h3><i class="fas fa-graduation-cap"></i> عن المنصة</h3>
-                <p>منصة تعليمية متميزة تقدم دروساً عن بُعد بجودة عالية وأسعار مناسبة للجميع.</p>
+                <p>مؤسسة تعليمية متميزة متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية وأسعار مناسبة للجميع.</p>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" title="فيسبوك">
+                    <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="noopener noreferrer" title="فيسبوك" aria-label="فيسبوك">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://www.instagram.com/ala.gme/" target="_blank" title="إنستجرام">
+                    <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="noopener noreferrer" title="إنستجرام" aria-label="إنستجرام">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="https://youtube.com/@alagme-c5h" target="_blank" title="يوتيوب">
+                    <a href="https://youtube.com/@alagme-c5h" target="_blank" rel="noopener noreferrer" title="يوتيوب" aria-label="يوتيوب">
                         <i class="fab fa-youtube"></i>
                     </a>
-                    <a href="https://www.tiktok.com/@alagme_12" target="_blank" title="تيك توك">
+                    <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="noopener noreferrer" title="تيك توك" aria-label="تيك توك">
                         <i class="fab fa-tiktok"></i>
                     </a>
-                    <a href="https://wa.me/201044568181" target="_blank" title="واتساب">
+                    <a href="https://wa.me/201044568181" target="_blank" rel="noopener noreferrer" title="واتساب" aria-label="واتساب">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a href="https://x.com/alagme_12" target="_blank" title="تويتر">
+                    <a href="https://x.com/alagme_12" target="_blank" rel="noopener noreferrer" title="تويتر" aria-label="تويتر">
                         <i class="fab fa-twitter"></i>
                     </a>
                 </div>
@@ -177,9 +272,9 @@
 
             <div class="footer-section">
                 <h3><i class="fas fa-phone-alt"></i> تواصل معنا</h3>
-                <ul>
-                    <li><i class="fas fa-phone"></i> +20 104 456 8181</li>
-                    <li><i class="fas fa-map-marker-alt"></i> جمهورية مصر العربية</li>
+                <ul itemscope itemtype="https://schema.org/Organization">
+                    <li itemprop="telephone"><i class="fas fa-phone"></i> <a href="tel:+201044568181">+20 104 456 8181</a></li>
+                    <li itemprop="address"><i class="fas fa-map-marker-alt"></i> جمهورية مصر العربية</li>
                     <li><i class="fas fa-clock"></i> السبت - الخميس: 9 صباحاً - 12 مساءً</li>
                 </ul>
             </div>
