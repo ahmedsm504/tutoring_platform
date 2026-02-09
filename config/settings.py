@@ -273,23 +273,10 @@ LOGGING = {
 # إعدادات البريد الإلكتروني - النسخة المصححة
 # ============================================
 
-# 1. إعدادات البريد (Gmail)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False  # تأكد أن هذا False لأنك تستخدم TLS
 
-# 2. معلومات الحساب - إصلاح مهم!
-# لاحظ: لا تضع كلمة المرور مباشرة هنا، استخدم متغيرات البيئة
-EMAIL_HOST_USER = 'mwsstaljmy740@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# 3. استخدام App Password بدلاً من كلمة المرور العادية
-# لأن Gmail يطلب كلمة مرور تطبيق وليس كلمة المرور العادية
-EMAIL_HOST_PASSWORD = 'Roro0100'  # تأكد أن هذا App Password وليس كلمة المرور العادية
 
-# 4. معلومات المرسل
-DEFAULT_FROM_EMAIL = 'مجتمع تحفيظ القرآن <mwsstaljmy740@gmail.com>'
 
 # 5. المسؤولين
 ADMINS = [
