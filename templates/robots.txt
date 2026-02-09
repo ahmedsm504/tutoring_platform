@@ -1,92 +1,29 @@
-# robots.txt - المنصة التعليمية لتحفيظ القرآن الكريم
-
-# السماح لكل البوتات العادية وGoogle Extended
 User-agent: *
 Allow: /
-Allow: /static/
-Allow: /media/
 
-# السماح بكل نسخ Googlebot بما فيهم Google-Extended
-User-agent: Googlebot
+# Sitemaps
+Sitemap: https://alagme.com/sitemap.xml
+
+# الصفحات المحظورة
+Disallow: /admin/
+Disallow: /accounts/login/
+Disallow: /accounts/register/
+Disallow: /media/private/
+
+# السماح بفهرسة الصفحات الرئيسية
 Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-# السماح بالصفحات العامة
 Allow: /blog/
+Allow: /questions/
 Allow: /pricing/
 Allow: /about/
 Allow: /contact/
-Allow: /quality_standards/
 
-# منع الصفحات الخاصة
-Disallow: /admin/
-Disallow: /accounts/profile/
-Disallow: /accounts/student_dashboard/
-Disallow: /accounts/supervisor_dashboard/
-Disallow: /dashboard/
-Disallow: /api/
-
-# منع صفحات تسجيل الدخول
-Disallow: /accounts/login/
-Disallow: /accounts/logout/
-Disallow: /accounts/register/
-
-# منع البحث والفلترة في الروابط
-Disallow: /*?search=
-Disallow: /*?filter=
-Disallow: /*?page=
-Disallow: /*?sort=
-
-# منع الملفات الحساسة
-Disallow: /*.json$
-Disallow: /*.sql$
-Disallow: /*.log$
-
-# السماح بالملفات الثابتة المفيدة للفهرسة
-Allow: /*.css$
-Allow: /*.js$
-Allow: /*.jpg$
-Allow: /*.jpeg$
-Allow: /*.png$
-Allow: /*.webp$
-Allow: /*.svg$
-
-# Sitemap
-Sitemap: https://alagme.com/sitemap.xml
-
-# منع الـ Bots السيئة
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: SemrushBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: dotbot
-Disallow: /
-
-User-agent: Scrapy
-Disallow: /
-
-User-agent: Python-urllib
-Disallow: /
-
-User-agent: Python-requests
-Disallow: /
-
-# السماح بالـ Social Bots
-User-agent: facebookexternalhit
+# Bot-specific rules
+User-agent: Googlebot
 Allow: /
 
-User-agent: Twitterbot
+User-agent: Bingbot
 Allow: /
 
-User-agent: WhatsApp
-Allow: /
-
-User-agent: TelegramBot
-Allow: /
+# Crawl delay
+Crawl-delay: 10
