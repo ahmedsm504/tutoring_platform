@@ -1,0 +1,1521 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ question.title }} | أسئلة تحفيظ القرآن{% endblock %}
+{% block meta_description %}{{ question.meta_description|default:question.question_text|truncatewords:30 }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/qna.css' %}">
+<style>
+/* أنماط رسائل Django Messages */
+.django-messages {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    width: 90%;
+    max-width: 650px;
+}
+
+.message-alert {
+    padding: 1.25rem 3rem 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 40px -10px rgba(49, 40, 40, 0.3);
+    animation: slideInDown 0.4s ease-out;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-weight: 600;
+    line-height: 1.7;
+    position: relative;
+}
+
+.message-alert i.icon {
+    font-size: 1.75rem;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+.message-alert .message-content {
+    flex: 1;
+}
+
+.message-alert.success {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    color: #065f46;
+    border-right: 6px solid #10b981;
+}
+
+.message-alert.info {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    color: #1e40af;
+    border-right: 6px solid #3b82f6;
+}
+
+.message-alert.danger,
+.message-alert.error {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #991b1b;
+    border-right: 6px solid #ef4444;
+}
+
+.message-alert.warning {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #92400e;
+    border-right: 6px solid #f59e0b;
+}
+
+.message-close {
+    position: absolute;
+    left: 1rem;
+    top: 1.25rem;
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+    color: inherit;
+    line-height: 1;
+}
+
+.message-close:hover {
+    opacity: 1;
+}
+
+/* أنماط جديدة للـ Avatar */
+.avatar-cosmic {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.25rem;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.asteroid-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    box-shadow: 0 4px 10px rgba(19, 75, 167, 0.3);
+}
+
+/* تحسينات للأزرار */
+.quasar-btn, .asteroid-vote {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quasar-btn:hover, .asteroid-vote:hover {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    border-color: #cbd5e1;
+}
+
+.quasar-btn.voted, .asteroid-vote.voted {
+    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+    border-color: #f87171;
+    color: #991b1b;
+}
+
+.quasar-btn.voted i, .asteroid-vote.voted i {
+    color: #ef4444;
+}
+
+/* تحسينات للأزرار الإدارية */
+.admin-wormhole {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.wormhole-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.wormhole-btn.verify {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.wormhole-btn.delete {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.wormhole-btn.verify:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.wormhole-btn.delete:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
+/* تحسينات حالة الإجابة */
+.status-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.status-badge.community-answered {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+/* أنماط Toast جديدة */
+.toast-notification {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #10b981;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.3);
+    z-index: 9999;
+    animation: toastIn 0.4s ease-out;
+}
+
+.toast-notification.error {
+    background: #ef4444;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes slideOutUp {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+    }
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes toastOut {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
+/* ============================================
+   تحسينات إضافية لتفتيح الخلفيات
+   ============================================ */
+
+/* ============================================
+   تعديل خلفيات العناصر الداكنة
+   ============================================ */
+/* ============================================
+   تحسين أنماط خلفيات أقسام إجابات المجتمع - نسخة محسنة
+   ============================================ */
+
+/* 1. البطاقة الرئيسية - تصميم حديث */
+.asteroid-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 1.5rem !important;
+    overflow: hidden !important;
+    margin-bottom: 1.5rem !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 2px 8px rgba(213, 23, 23, 0.04) !important;
+    border-left: 4px solid #6366f1 !important;
+}
+
+.asteroid-card:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+    transform: translateY(-3px) translateX(2px) !important;
+    border-color: #c7d2fe !important;
+}
+
+.asteroid-card.verified {
+    border-left: 4px solid #10b981 !important;
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+}
+
+/* 2. نص الإجابة - خلفية بيضاء نقية مع ظل ناعم */
+.asteroid-body {
+    background: #ffffff !important;
+    padding: 1.75rem !important;
+    color: #1e293b !important;
+    line-height: 1.8 !important;
+    font-size: 1.05rem !important;
+    border-radius: 1rem !important;
+    margin: 1rem !important;
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid #f1f5f9 !important;
+}
+
+/* 3. تذييل الإجابة - خلفية شفافة مع تدرج خفيف */
+.asteroid-footer {
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.95) 100%) !important;
+    backdrop-filter: blur(8px) !important;
+    padding: 1.25rem 1.5rem !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-top: 1px solid rgba(226, 232, 240, 0.8) !important;
+    margin-top: 0.5rem !important;
+}
+
+/* 4. زر التصويت - تصميم عصري */
+.asteroid-vote {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 2rem !important;
+    padding: 0.75rem 1.5rem !important;
+    color: #4b5563 !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.asteroid-vote:hover:not(.voted) {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    border-color: #cbd5e1 !important;
+    color: #374151 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.asteroid-vote:active {
+    transform: translateY(0) !important;
+}
+
+.asteroid-vote i {
+    font-size: 1.1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.asteroid-vote:hover i:not(.voted i) {
+    color: #ef4444 !important;
+    transform: scale(1.1) !important;
+}
+
+.asteroid-vote.voted {
+    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%) !important;
+    border-color: #f87171 !important;
+    color: #991b1b !important;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2) !important;
+}
+
+.asteroid-vote.voted i {
+    color: #ef4444 !important;
+    animation: heartBeat 0.6s ease !important;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+
+/* 5. زر الحذف - تصميم واضح وعصري */
+.wormhole-btn.delete {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 1rem !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25) !important;
+}
+
+.wormhole-btn.delete:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.35) !important;
+}
+
+.wormhole-btn.delete:active {
+    transform: translateY(0) !important;
+}
+
+.wormhole-btn.delete i {
+    font-size: 0.9rem !important;
+}
+
+/* 6. تحسين أرقام التصويت */
+.likes-count {
+    font-weight: 800 !important;
+    min-width: 24px !important;
+    text-align: center !important;
+    font-size: 1.1rem !important;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+.asteroid-vote.voted .likes-count {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+}
+
+/* 7. تحسين النصوص */
+.asteroid-body p {
+    margin-bottom: 1rem !important;
+    color: #334155 !important;
+}
+
+.asteroid-body p:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* 8. تأثيرات للبطاقة عند التحقق */
+.asteroid-card.verified::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-bottom-left-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.asteroid-card.verified::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-weight: bold;
+    z-index: 1;
+}
+
+/* 9. تحسين المسافات والترتيب */
+.admin-wormhole {
+    display: flex !important;
+    gap: 0.75rem !important;
+    align-items: center !important;
+}
+
+/* 10. تحسين استجابة التصميم للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .asteroid-card {
+        margin-bottom: 1rem !important;
+        border-radius: 1rem !important;
+    }
+    
+    .asteroid-body {
+        padding: 1.25rem !important;
+        margin: 0.75rem !important;
+        border-radius: 0.75rem !important;
+    }
+    
+    .asteroid-footer {
+        padding: 1rem !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        align-items: stretch !important;
+    }
+    
+    .asteroid-vote, 
+    .wormhole-btn.delete {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    
+    .admin-wormhole {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+}
+
+/* 11. تحسينات إضافية للظهور */
+.asteroid-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.asteroid-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.asteroid-card:hover::before {
+    opacity: 1;
+}
+
+/* 12. تحسين رأس الإجابة */
+.asteroid-header {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+}
+
+.asteroid-avatar {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 800 !important;
+    font-size: 1.25rem !important;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3) !important;
+    border: 3px solid white !important;
+}
+
+.asteroid-card.verified .asteroid-avatar {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+.asteroid-meta {
+    flex: 1 !important;
+}
+
+.asteroid-author {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.asteroid-time {
+    color: #64748b !important;
+    font-size: 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+/* 13. تحسينات لمسات نهائية */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.asteroid-body {
+    text-align: right;
+    direction: rtl;
+}
+/* ============================================
+   تعديل خلفيات العناصر الداكنة
+   ============================================ */
+
+/* 1. قسم معلومات المستخدم - تحويل الخلفية الداكنة إلى فاتحة */
+.author-constellation {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0 !important;
+    margin-top: 1.5rem;
+}
+
+/* 2. مربع المشاهدات - خلفية فاتحة */
+.view-satellite {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #4b5563 !important;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+}
+
+/* 3. أزرار التصويت - خلفية فاتحة */
+.quasar-btn, .asteroid-vote {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    border: 2px solid #e2e8f0 !important;
+    color: #4b5563 !important;
+}
+
+.quasar-btn:hover, .asteroid-vote:hover {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+    border-color: #cbd5e1 !important;
+}
+
+/* 4. أزرار الإدارة (الحذف) */
+.admin-wormhole {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.wormhole-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.wormhole-btn.verify {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+}
+
+.wormhole-btn.delete {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+}
+
+/* 5. تعديل الأيقونات في قسم المعلومات */
+.author-meta-cosmic {
+    color: #6b7280 !important; /* لون أفتح للنصوص الثانوية */
+}
+
+/* 6. تحسين مظهر الأرقام */
+.stats-galaxy .quasar-value {
+    color: #1f2937 !important; /* لون داكن لكن ليس أسود */
+}
+
+/* 7. تحسين الأزرار المميزة */
+.frequent-comet {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+    color: white !important;
+}
+
+/* 8. تحسين شارات الحالة */
+.status-badge {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
+    color: #1e40af !important;
+    border: none !important;
+}
+
+.status-badge.answered {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%) !important;
+    color: #065f46 !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- عرض رسائل Django -->
+{% if messages %}
+<div class="django-messages">
+    {% for message in messages %}
+    <div class="message-alert {{ message.tags }}" role="alert">
+        <i class="icon fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' or message.tags == 'danger' %}exclamation-circle{% elif message.tags == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+        <div class="message-content">{{ message }}</div>
+        <button type="button" class="message-close" onclick="this.parentElement.remove()" aria-label="إغلاق">×</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="cosmic-realm">
+    <div class="container-cosmic">
+        <div class="nebula-grid">
+            
+            <!-- MAIN CONTENT -->
+            <main class="cosmic-main">
+                
+                <!-- QUESTION STAR -->
+                <article class="question-star animate-in" itemscope itemtype="https://schema.org/Question">
+                    <div class="star-core">
+                        {% if question.category %}
+                        <a href="{% url 'qna:question_list' %}?category={{ question.category.slug }}" 
+                           class="category-supernova" itemprop="about">
+                            <i class="fas fa-tag"></i>
+                            <span>{{ question.category.name }}</span>
+                        </a>
+                        {% endif %}
+
+                        <h1 class="title-cosmos" itemprop="name">{{ question.title }}</h1>
+
+                        <div class="question-nebula" itemprop="text">
+                            {{ question.question_text|linebreaksbr }}
+                        </div>
+
+                        <footer class="author-constellation">
+                            <div class="avatar-cosmic" aria-hidden="true">
+                                {{ question.visitor_name.0|upper }}
+                            </div>
+                            <div class="author-info-cosmic">
+                                <div class="author-name-cosmic" itemprop="author">{{ question.visitor_name }}</div>
+                                <div class="author-meta-cosmic">
+                                    <i class="far fa-clock"></i>
+                                    <time datetime="{{ question.created_at|date:'c' }}" itemprop="dateCreated">
+                                        {{ question.created_at|timesince }} مضت
+                                    </time>
+                                </div>
+                            </div>
+                            <div class="stats-galaxy">
+                                <div class="view-satellite" itemprop="interactionStatistic">
+                                    <i class="far fa-eye"></i>
+                                    <span itemprop="userInteractionCount">{{ question.view_count }}</span>
+                                    <span>مشاهدة</span>
+                                </div>
+                                {% if question.is_frequent %}
+                                <span class="frequent-comet">
+                                    <i class="fas fa-redo"></i> سؤال متكرر
+                                </span>
+                                {% endif %}
+                            </div>
+                        </footer>
+                    </div>
+                </article>
+
+                <!-- OFFICIAL ANSWER -->
+                {% if has_official_answer %}
+                <section class="answer-supernova animate-in delay-100" 
+                         itemprop="suggestedAnswer" 
+                         itemscope 
+                         itemtype="https://schema.org/Answer">
+                    <header class="supernova-header">
+                        <h2 class="supernova-title">
+                            <i class="fas fa-check-circle"></i>
+                            <span>الإجابة الرسمية</span>
+                        </h2>
+                        {% if official_answer.is_featured %}
+                        <span class="featured-asteroid">
+                            <i class="fas fa-star"></i> مميزة
+                        </span>
+                        {% endif %}
+                    </header>
+                    <div class="supernova-body">
+                        <div class="answer-text-cosmic" itemprop="text">
+                            {{ official_answer.answer_text|linebreaksbr }}
+                        </div>
+
+                        <footer class="author-constellation">
+                            <div class="avatar-cosmic" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" aria-hidden="true">
+                                {{ official_answer.answered_by.first_name.0|upper|default:official_answer.answered_by.username.0|upper }}
+                            </div>
+                            <div class="author-info-cosmic">
+                                <div class="author-name-cosmic" itemprop="author">
+                                    {{ official_answer.answered_by.get_full_name|default:official_answer.answered_by.username }}
+                                </div>
+                                <div class="author-meta-cosmic">
+                                    <i class="far fa-clock"></i>
+                                    <time datetime="{{ official_answer.answered_at|date:'c' }}" itemprop="dateCreated">
+                                        {{ official_answer.answered_at|timesince }} مضت
+                                    </time>
+                                </div>
+                            </div>
+                            <div class="vote-quasar">
+                                <button class="quasar-btn vote-btn official-vote" 
+                                        data-answer-id="{{ official_answer.id }}"
+                                        data-type="official"
+                                        aria-label="تصويت إيجابي">
+                                    <i class="far fa-heart"></i>
+                                    <span class="likes-count">{{ official_answer.likes }}</span>
+                                </button>
+                            </div>
+                        </footer>
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- STATUS BADGE - حالة السؤال -->
+                <div class="status-container" style="margin: 1.5rem 0;">
+                    {% if has_official_answer %}
+                        <span class="status-badge answered" style="font-size: 1rem; padding: 0.75rem 1.5rem;">
+                            <i class="fas fa-check-double"></i>
+                            <span>تمت الإجابة رسمياً</span>
+                        </span>
+                    {% elif community_answers %}
+                        <span class="status-badge community-answered" style="font-size: 1rem; padding: 0.75rem 1.5rem;">
+                            <i class="fas fa-users"></i>
+                            <span>لديه {{ community_answers.count }} إجابة مجتمعية</span>
+                        </span>
+                    {% else %}
+                        <span class="status-badge pending" style="font-size: 1rem; padding: 0.75rem 1.5rem;">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span>ينتظر الإجابة</span>
+                        </span>
+                    {% endif %}
+                    
+                    {% if question.is_frequent %}
+                    <span class="status-badge" style="background: #f59e0b; color: white; padding: 0.75rem 1.5rem; font-size: 1rem;">
+                        <i class="fas fa-redo"></i>
+                        <span>سؤال متكرر</span>
+                    </span>
+                    {% endif %}
+                </div>
+
+                <!-- COMMUNITY ANSWERS -->
+                <section class="community-asteroids animate-in delay-200" 
+                         id="answers-section" 
+                         aria-labelledby="community-heading">
+                    <header class="asteroids-header">
+                        <h2 class="asteroids-title" id="community-heading">
+                            <i class="fas fa-users"></i> إجابات المجتمع
+                        </h2>
+                        <span class="asteroid-count">{{ community_answers.count }}</span>
+                    </header>
+                    
+                    {% if community_answers %}
+                        <div class="asteroids-list">
+                        {% for answer in community_answers %}
+                        <article class="asteroid-card animate-in" 
+                                 style="animation-delay: {{ forloop.counter|add:2 }}00ms"
+                                 itemprop="suggestedAnswer" 
+                                 itemscope 
+                                 itemtype="https://schema.org/Answer"
+                                 data-answer-id="{{ answer.id }}">
+                            <header class="asteroid-header">
+                                <div class="asteroid-avatar" aria-hidden="true">
+                                    {% if answer.answered_by %}
+                                        {{ answer.answered_by.first_name.0|upper|default:answer.answered_by.username.0|upper }}
+                                    {% else %}
+                                        {{ answer.visitor_name.0|upper }}
+                                    {% endif %}
+                                </div>
+                                <div class="asteroid-meta">
+                                    <div class="asteroid-author" itemprop="author">
+                                        {% if answer.answered_by %}
+                                            {{ answer.answered_by.get_full_name|default:answer.answered_by.username }}
+                                        {% else %}
+                                            {{ answer.visitor_name }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="asteroid-time">
+                                        <i class="far fa-clock"></i> 
+                                        {{ answer.created_at|timesince }} مضت
+                                    </div>
+                                </div>
+                            </header>
+                            
+                            <div class="asteroid-body" itemprop="text">
+                                {{ answer.answer_text|linebreaksbr }}
+                            </div>
+                            
+                            <footer class="asteroid-footer">
+                                <button class="asteroid-vote vote-btn community-vote" 
+                                        data-answer-id="{{ answer.id }}"
+                                        data-type="community"
+                                        aria-label="تصويت إيجابي">
+                                    <i class="far fa-heart"></i>
+                                    <span class="likes-count">{{ answer.likes }}</span>
+                                </button>
+                                
+                                {% if user.is_staff %}
+                                <div class="admin-wormhole">
+                                    <button class="wormhole-btn delete delete-btn" 
+                                            data-answer-id="{{ answer.id }}"
+                                            aria-label="حذف الإجابة">
+                                        <i class="fas fa-trash"></i> حذف
+                                    </button>
+                                </div>
+                                {% endif %}
+                            </footer>
+                        </article>
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 2px solid #60a5fa; border-radius: 1rem; padding: 2rem; text-align: center; margin-top: 1rem;">
+                            <i class="fas fa-info-circle" style="font-size: 3rem; color: #2563eb; margin-bottom: 1rem;"></i>
+                            <p style="color: #1e40af; font-weight: 700; margin: 0;">لا توجد إجابات مجتمعية بعد. كن أول من يجيب!</p>
+                        </div>
+                    {% endif %}
+                </section>
+
+                <!-- ANSWER FORM -->
+                <section class="form-nebula animate-in delay-300" aria-labelledby="form-heading">
+                    <h2 class="form-title-cosmic" id="form-heading">
+                        <i class="fas fa-edit"></i> أضف إجابتك
+                    </h2>
+                    
+                    {% if user.is_authenticated %}
+                    <div class="user-pulse" role="status">
+                        <i class="fas fa-user-circle"></i>
+                        <span>ستنشر إجابتك باسم: <strong>{{ user.get_full_name|default:user.username }}</strong></span>
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post" id="answerForm">
+                        {% csrf_token %}
+                        
+                        {% if not user.is_authenticated %}
+                        <div class="row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="cosmic-field">
+                                <label for="visitor_name" class="cosmic-label">اسمك *</label>
+                                <input type="text" 
+                                       class="cosmic-input" 
+                                       id="visitor_name" 
+                                       name="visitor_name" 
+                                       placeholder="اكتب اسمك" 
+                                       required
+                                       minlength="2"
+                                       maxlength="50"
+                                       value="{{ form.visitor_name.value|default:'' }}">
+                            </div>
+                            <div class="cosmic-field">
+                                <label for="visitor_email" class="cosmic-label">البريد الإلكتروني (اختياري)</label>
+                                <input type="email" 
+                                       class="cosmic-input" 
+                                       id="visitor_email" 
+                                       name="visitor_email" 
+                                       placeholder="email@example.com"
+                                       value="{{ form.visitor_email.value|default:'' }}">
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="cosmic-field">
+                            <label for="answer_text" class="cosmic-label">إجابتك *</label>
+                            <textarea class="cosmic-textarea" 
+                                      id="answer_text" 
+                                      name="answer_text" 
+                                      placeholder="اكتب إجابتك هنا..." 
+                                      required
+                                      minlength="10"
+                                      maxlength="2000"
+                                      rows="6">{{ form.answer_text.value|default:'' }}</textarea>
+                            <div class="char-meteor">
+                                <span id="charCount">{{ form.answer_text.value|length|default:0 }}</span> / 2000 حرف
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-field">
+                            <div class="star-checkbox">
+                                <input type="checkbox" id="agree_to_terms" name="agree_to_terms" required {% if form.agree_to_terms.value %}checked{% endif %}>
+                                <label for="agree_to_terms">
+                                    أوافق على <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">شروط النشر</a> وأن إجابتي ظاهرة للجميع
+                                </label>
+                            </div>
+                            {% if form.agree_to_terms.errors %}
+                            <div style="color: #ef4444; font-size: 0.875rem; margin-top: 0.5rem;">
+                                {{ form.agree_to_terms.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-actions">
+                            <a href="{% url 'qna:question_list' %}" class="btn-cosmic btn-cosmic-secondary">
+                                <i class="fas fa-arrow-right"></i> العودة للأسئلة
+                            </a>
+                            <button type="submit" class="btn-cosmic btn-cosmic-primary" id="submitAnswer">
+                                <i class="fas fa-paper-plane"></i> نشر الإجابة
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- SHARE -->
+                <aside class="share-constellation animate-in delay-400" aria-label="مشاركة السؤال">
+                    <h3 class="share-title"><i class="fas fa-share-alt"></i> شارك هذا السؤال</h3>
+                    <div class="share-galaxy">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="share-planet facebook"
+                           aria-label="فيسبوك">
+                            <i class="fab fa-facebook-f"></i> فيسبوك
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ question.title|urlencode }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="share-planet twitter"
+                           aria-label="تويتر">
+                            <i class="fab fa-twitter"></i> تويتر
+                        </a>
+                        <a href="https://api.whatsapp.com/send?text={{ question.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="share-planet whatsapp"
+                           aria-label="واتساب">
+                            <i class="fab fa-whatsapp"></i> واتساب
+                        </a>
+                        <button class="share-planet copy" onclick="copyToClipboard()" aria-label="نسخ الرابط">
+                            <i class="fas fa-link"></i> نسخ الرابط
+                        </button>
+                    </div>
+                </aside>
+
+            </main>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar-universe">
+                
+                <!-- RELATED QUESTIONS -->
+                {% if related_questions %}
+                <section class="related-stars animate-in">
+                    <header class="related-header">
+                        <h6><i class="fas fa-link"></i> أسئلة ذات صلة</h6>
+                    </header>
+                    <ul class="related-list-cosmic">
+                        {% for related in related_questions %}
+                        <li class="related-item-cosmic">
+                            <a href="{% url 'qna:question_detail' related.slug %}" 
+                               class="related-link-cosmic"
+                               itemprop="relatedLink">
+                                <div class="related-title">{{ related.title|truncatewords:10 }}</div>
+                                <div class="related-meta-cosmic">
+                                    {% if related.has_official %}
+                                    <span style="color: #10b981;">
+                                        <i class="fas fa-check"></i> مُجاب
+                                    </span>
+                                    {% elif related.has_community_answers %}
+                                    <span style="color: #3b82f6;">
+                                        <i class="fas fa-users"></i> مجتمع
+                                    </span>
+                                    {% else %}
+                                    <span style="color: #f59e0b;">
+                                        <i class="fas fa-clock"></i> منتظر
+                                    </span>
+                                    {% endif %}
+                                    <span><i class="far fa-eye"></i> {{ related.view_count }}</span>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                {% endif %}
+
+                <!-- CTA -->
+                <section class="cta-blackhole animate-in delay-100">
+                    <i class="fas fa-question-circle cta-icon"></i>
+                    <h3 class="cta-title">لديك سؤال؟</h3>
+                    <p class="cta-text">اطرح سؤالك واحصل على إجابة من مجتمعنا المتخصص</p>
+                    <a href="{% url 'qna:ask' %}" class="cta-wormhole">اطرح سؤالك الآن</a>
+                </section>
+
+                <!-- CATEGORIES -->
+                <section class="categories-nebula animate-in delay-200">
+                    <header class="nebula-header">
+                        <h6><i class="fas fa-folder"></i> تصفح الفئات</h6>
+                    </header>
+                    <div class="nebula-body">
+                        <a href="{% url 'qna:question_list' %}" class="nebula-btn all">
+                            <i class="fas fa-th-large"></i> جميع الأسئلة
+                        </a>
+                        <a href="{% url 'qna:question_list' %}?filter=featured" class="nebula-btn featured">
+                            <i class="fas fa-star"></i> الأسئلة المميزة
+                        </a>
+                        <a href="{% url 'qna:question_list' %}?filter=unanswered" class="nebula-btn unanswered">
+                            <i class="fas fa-question-circle"></i> بحاجة إلى إجابة
+                        </a>
+                    </div>
+                </section>
+
+                <!-- STATS -->
+                <section class="stats-quasar animate-in delay-300">
+                    <header class="quasar-header">
+                        <h6><i class="fas fa-chart-bar"></i> إحصائيات السؤال</h6>
+                    </header>
+                    <div class="quasar-grid">
+                        <div class="quasar-item">
+                            <div class="quasar-label">المشاهدات</div>
+                            <div class="quasar-value">{{ question.view_count }}</div>
+                        </div>
+                        <div class="quasar-item">
+                            <div class="quasar-label">الإجابات</div>
+                            <div class="quasar-value">{{ community_answers.count }}</div>
+                        </div>
+                        <div class="quasar-item">
+                            <div class="quasar-label">الحالة</div>
+                            <div class="quasar-status {% if has_official_answer %}answered{% elif community_answers %}community{% else %}pending{% endif %}">
+                                {% if has_official_answer %}
+                                <i class="fas fa-check-circle"></i> مُجاب
+                                {% elif community_answers %}
+                                <i class="fas fa-users"></i> مجتمع
+                                {% else %}
+                                <i class="fas fa-clock"></i> بانتظار
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="quasar-item">
+                            <div class="quasar-label">النشر</div>
+                            <div style="font-size: 0.9rem; font-weight: 800; color: var(--text-primary);">
+                                {{ question.created_at|date:"Y-m-d" }}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!-- TERMS MODAL -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 1.5rem; border: none;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-bottom: 2px solid #e2e8f0;">
+                <h5 class="modal-title" id="termsTitle" style="font-weight: 900; color: var(--text-primary);">شروط نشر الإجابات</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <i class="fas fa-check-circle" style="color: var(--qna-primary); margin-top: 0.25rem;"></i>
+                        <span style="color: var(--text-secondary); font-weight: 500;">يجب أن تكون الإجابة مرتبطة بالسؤال ومفيدة</span>
+                    </li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <i class="fas fa-check-circle" style="color: var(--qna-primary); margin-top: 0.25rem;"></i>
+                        <span style="color: var(--text-secondary); font-weight: 500;">الإجابة يجب أن تكون واضحة ومختصرة قدر الإمكان</span>
+                    </li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <i class="fas fa-check-circle" style="color: var(--qna-primary); margin-top: 0.25rem;"></i>
+                        <span style="color: var(--text-secondary); font-weight: 500;">يمنع نشر أي محتوى مسيء أو غير لائق</span>
+                    </li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <i class="fas fa-check-circle" style="color: var(--qna-primary); margin-top: 0.25rem;"></i>
+                        <span style="color: var(--text-secondary); font-weight: 500;">الإجابات تُنشر فوراً وتظهر للجميع</span>
+                    </li>
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; display: flex; align-items: flex-start; gap: 0.75rem;">
+                        <i class="fas fa-check-circle" style="color: var(--qna-primary); margin-top: 0.25rem;"></i>
+                        <span style="color: var(--text-secondary); font-weight: 500;">يحق للإدارة حذف أي إجابة غير مناسبة</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer" style="border-top: 2px solid #e2e8f0; padding: 1.5rem;">
+                <button type="button" class="btn-cosmic btn-cosmic-primary w-100" data-bs-dismiss="modal">
+                    <i class="fas fa-check"></i> فهمت وأوافق
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// دالة لإنشاء Toast رسالة
+function showToast(message, type = 'success') {
+    // إزالة أي toast موجود
+    const existingToasts = document.querySelectorAll('.toast-notification');
+    existingToasts.forEach(toast => toast.remove());
+    
+    // إنشاء toast جديد
+    const toast = document.createElement('div');
+    toast.className = `toast-notification ${type === 'error' ? 'error' : ''}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    // إزالة Toast بعد 3 ثواني
+    setTimeout(() => {
+        toast.style.animation = 'toastOut 0.4s ease-out';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 400);
+    }, 3000);
+}
+
+// دالة نسخ الرابط
+async function copyToClipboard() {
+    try {
+        await navigator.clipboard.writeText(window.location.href);
+        showToast('✨ تم نسخ الرابط بنجاح!');
+    } catch (err) {
+        showToast('❌ فشل نسخ الرابط', 'error');
+    }
+}
+
+// دالة الحصول على CSRF token - نسخة مُحسنة
+function getCSRFToken() {
+    // المحاولة الأولى: من input hidden في النموذج
+    let csrfToken = null;
+    const csrfInput = document.querySelector('[name=csrfmiddlewaretoken]');
+    if (csrfInput) {
+        csrfToken = csrfInput.value;
+        console.log('CSRF token found in input:', csrfToken ? 'Yes' : 'No');
+    }
+    
+    // المحاولة الثانية: من cookies
+    if (!csrfToken) {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === 'csrftoken') {
+                csrfToken = value;
+                console.log('CSRF token found in cookies:', csrfToken ? 'Yes' : 'No');
+                break;
+            }
+        }
+    }
+    
+    if (!csrfToken) {
+        console.error('CSRF token not found!');
+        showToast('❌ خطأ في الأمان. يرجى تحديث الصفحة.', 'error');
+    }
+    
+    return csrfToken;
+}
+
+// تهيئة الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('QnA Detail Page Initialized');
+    
+    // 1. إعداد عداد الأحرف
+    const textarea = document.getElementById('answer_text');
+    const charCount = document.getElementById('charCount');
+    
+    if (textarea && charCount) {
+        textarea.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = length;
+            
+            if (length > 1800) {
+                charCount.style.color = '#ef4444';
+            } else {
+                charCount.style.color = '';
+            }
+        });
+    }
+    
+    // 2. دالة مساعدة لإرسال طلبات AJAX - المسارات الصحيحة
+    async function sendAjaxRequest(endpoint, method = 'POST', data = null) {
+        const csrfToken = getCSRFToken();
+        
+        if (!csrfToken) {
+            throw new Error('CSRF token not found');
+        }
+        
+        // بناء URL الصحيح - استخدم المسار المطلق
+        let url = endpoint;
+        
+        // إذا كان المسار نسبيًا، أضف المسار الأساسي
+        if (url.startsWith('/')) {
+            // المسار مطلق، استخدمه كما هو
+            console.log('Using absolute URL:', url);
+        } else {
+            // المسار نسبي، أضف المسار الحالي
+            const baseUrl = window.location.origin;
+            url = `${baseUrl}/${url}`;
+            console.log('Constructed URL:', url);
+        }
+        
+        const headers = {
+            'X-CSRFToken': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest'
+        };
+        
+        if (data && typeof data === 'object') {
+            headers['Content-Type'] = 'application/json';
+            data = JSON.stringify(data);
+        }
+        
+        console.log(`Sending ${method} request to: ${url}`);
+        console.log('Headers:', headers);
+        
+        try {
+            const response = await fetch(url, {
+                method: method,
+                headers: headers,
+                body: data,
+                credentials: 'same-origin'
+            });
+            
+            console.log('Response status:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error('Request failed:', error);
+            throw error;
+        }
+    }
+    
+    // 3. الحصول على المسار الأساسي
+    function getBaseUrl() {
+        // استخدم المسار الحالي لاستخراج المسار الأساسي
+        const currentPath = window.location.pathname;
+        // توقع أن المسار يكون مثل /questions/{slug}/
+        const parts = currentPath.split('/');
+        if (parts.length >= 2) {
+            return `/${parts[1]}/`; // يعود /questions/
+        }
+        return '/qna/'; // افتراضي
+    }
+    
+    const baseUrl = getBaseUrl();
+    console.log('Base URL detected:', baseUrl);
+    
+    // 4. معالج التصويت للإجابات الرسمية
+    document.querySelectorAll('.official-vote').forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const answerId = this.dataset.answerId;
+            const url = `${baseUrl}vote/${answerId}/`; // المسار الصحيح
+            
+            console.log('Voting on official answer ID:', answerId, 'URL:', url);
+            
+            // التحقق من التصويت المسبق
+            const storageKey = `voted_official_${answerId}`;
+            if (localStorage.getItem(storageKey)) {
+                showToast('⚠️ لقد صوّت مسبقاً على هذه الإجابة', 'error');
+                return;
+            }
+            
+            const originalHTML = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            this.disabled = true;
+            
+            try {
+                const data = await sendAjaxRequest(url);
+                console.log('Response data:', data);
+                
+                if (data.success) {
+                    // تحديث العداد
+                    const likesSpan = this.querySelector('.likes-count');
+                    if (likesSpan) {
+                        likesSpan.textContent = data.likes;
+                    }
+                    
+                    // تغيير أيقونة القلب
+                    const icon = this.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-heart';
+                        icon.style.color = '#ef4444';
+                    }
+                    
+                    // تعطيل الزر وحفظ التصويت
+                    this.classList.add('voted');
+                    this.style.background = 'linear-gradient(135deg, #fecaca 0%, #fca5a5 100%)';
+                    this.style.borderColor = '#f87171';
+                    this.style.color = '#991b1b';
+                    
+                    localStorage.setItem(storageKey, 'true');
+                    
+                    showToast('❤️ شكراً لتصويتك!');
+                } else {
+                    this.innerHTML = originalHTML;
+                    this.disabled = false;
+                    showToast(data.message || '❌ حدث خطأ أثناء التصويت', 'error');
+                }
+            } catch (error) {
+                console.error('Vote error:', error);
+                this.innerHTML = originalHTML;
+                this.disabled = false;
+                showToast('❌ حدث خطأ في الاتصال. تأكد من أن المسارات صحيحة.', 'error');
+            }
+        });
+    });
+    
+    // 5. معالج التصويت للإجابات المجتمعية
+    document.querySelectorAll('.community-vote').forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const answerId = this.dataset.answerId;
+            const url = `${baseUrl}vote-community/${answerId}/`; // المسار الصحيح
+            
+            console.log('Voting on community answer ID:', answerId, 'URL:', url);
+            
+            // التحقق من التصويت المسبق
+            const storageKey = `voted_community_${answerId}`;
+            if (localStorage.getItem(storageKey)) {
+                showToast('⚠️ لقد صوّت مسبقاً على هذه الإجابة', 'error');
+                return;
+            }
+            
+            const originalHTML = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            this.disabled = true;
+            
+            try {
+                const data = await sendAjaxRequest(url);
+                console.log('Response data:', data);
+                
+                if (data.success) {
+                    // تحديث العداد
+                    const likesSpan = this.querySelector('.likes-count');
+                    if (likesSpan) {
+                        likesSpan.textContent = data.likes;
+                    }
+                    
+                    // تغيير أيقونة القلب
+                    const icon = this.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-heart';
+                        icon.style.color = '#ef4444';
+                    }
+                    
+                    // تعطيل الزر وحفظ التصويت
+                    this.classList.add('voted');
+                    this.style.background = 'linear-gradient(135deg, #fecaca 0%, #fca5a5 100%)';
+                    this.style.borderColor = '#f87171';
+                    this.style.color = '#991b1b';
+                    
+                    localStorage.setItem(storageKey, 'true');
+                    
+                    showToast('❤️ شكراً لتصويتك!');
+                } else {
+                    this.innerHTML = originalHTML;
+                    this.disabled = false;
+                    showToast(data.message || '❌ حدث خطأ أثناء التصويت', 'error');
+                }
+            } catch (error) {
+                console.error('Vote error:', error);
+                this.innerHTML = originalHTML;
+                this.disabled = false;
+                showToast('❌ حدث خطأ في الاتصال. تأكد من أن المسارات صحيحة.', 'error');
+            }
+        });
+    });
+    
+    // 6. معالج حذف الإجابات المجتمعية (للمشرفين فقط)
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const answerId = this.dataset.answerId;
+            const url = `${baseUrl}delete-community/${answerId}/`; // المسار الصحيح
+            
+            console.log('Deleting community answer ID:', answerId, 'URL:', url);
+            
+            if (!confirm('هل أنت متأكد من حذف هذه الإجابة؟ هذا الإجراء لا يمكن التراجع عنه.')) {
+                return;
+            }
+            
+            const originalHTML = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            this.disabled = true;
+            
+            try {
+                const data = await sendAjaxRequest(url);
+                console.log('Response data:', data);
+                
+                if (data.success) {
+                    showToast('✅ تم حذف الإجابة بنجاح');
+                    
+                    // إزالة الإجابة من الواجهة
+                    const answerCard = this.closest('.asteroid-card');
+                    if (answerCard) {
+                        answerCard.style.opacity = '0';
+                        answerCard.style.transform = 'translateY(-20px)';
+                        answerCard.style.transition = 'all 0.3s ease';
+                        
+                        setTimeout(() => {
+                            answerCard.remove();
+                            
+                            // تحديث العداد
+                            const countElement = document.querySelector('.asteroid-count');
+                            if (countElement) {
+                                const currentCount = parseInt(countElement.textContent);
+                                countElement.textContent = currentCount - 1;
+                            }
+                        }, 300);
+                    }
+                } else {
+                    this.innerHTML = originalHTML;
+                    this.disabled = false;
+                    showToast(data.message || '❌ حدث خطأ أثناء الحذف', 'error');
+                }
+            } catch (error) {
+                console.error('Delete error:', error);
+                this.innerHTML = originalHTML;
+                this.disabled = false;
+                showToast('❌ حدث خطأ في الاتصال. تأكد من أن المسارات صحيحة.', 'error');
+            }
+        });
+    });
+    
+    // 7. إخفاء رسائل Django تلقائياً
+    const messages = document.querySelectorAll('.message-alert');
+    messages.forEach(msg => {
+        setTimeout(() => {
+            msg.style.animation = 'slideOutUp 0.4s ease-out';
+            setTimeout(() => {
+                if (msg.parentNode) {
+                    msg.remove();
+                }
+            }, 400);
+        }, 5000);
+    });
+    
+    // 8. الرسوم المتحركة
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    document.querySelectorAll('.animate-in').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        observer.observe(el);
+    });
+});
+
+// أضف console.log للتصحيح
+console.log('QnA Script loaded successfully');
+</script>
+{% endblock %}

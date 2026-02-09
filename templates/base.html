@@ -175,6 +175,9 @@
                 <a href="{% url 'blog_list' %}" {% if 'blog' in request.path %}class="active"{% endif %} aria-label="المدونة">
                     <i class="fas fa-blog"></i> المدوّنة
                 </a>
+                <a href="{% url 'qna:question_list' %}" {% if 'qna' in request.path %}class="active"{% endif %} aria-label="أسئلة وأجوبة">
+                    <i class="fas fa-question-circle"></i> أسئلة وأجوبة
+                </a>
                 <a href="{% url 'pricing' %}" {% if request.resolver_match.url_name == 'pricing' %}class="active"{% endif %} aria-label="الباقات والأسعار">
                     <i class="fas fa-tags"></i> الباقات
                 </a>
@@ -266,6 +269,7 @@
                     <li><a href="{% url 'quality_standards' %}"><i class="fas fa-chevron-left"></i> مواثيق الجودة</a></li>
                     <li><a href="{% url 'pricing' %}"><i class="fas fa-chevron-left"></i> الباقات</a></li>
                     <li><a href="{% url 'blog_list' %}"><i class="fas fa-chevron-left"></i> المدونة</a></li>
+                    <li><a href="{% url 'qna:question_list' %}"><i class="fas fa-chevron-left"></i> أسئلة وأجوبة</a></li>
                     <li><a href="{% url 'contact' %}"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
                 </ul>
             </div>

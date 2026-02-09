@@ -65,6 +65,7 @@ urlpatterns = [
     # ============= Blog URLs =============
     path('blog/', include('blog.urls')),      # المدونة
     
+    path('questions/', include('qna.urls', namespace='qna')),
     # ============= Security Files =============
     # .well-known للتحقق من الملكية
 

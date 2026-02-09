@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}أضف إجابتك على: {{ question.title }}{% endblock %}
+{% block meta_description %}شارك معرفتك وأضف إجابتك على سؤال: {{ question.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/qna.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cosmic-realm">
+    <div class="container-cosmic">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <!-- بطاقة النموذج -->
+                <div class="form-nebula animate-scale">
+                    <h1 class="form-title-cosmic">
+                        <i class="fas fa-reply"></i> أضف إجابتك
+                    </h1>
+                    
+                    <!-- السؤال المرجعي -->
+                    <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 1.5rem; border-radius: 1rem; margin-bottom: 2rem; border-right: 5px solid var(--qna-primary);">
+                        <h5 style="color: var(--text-primary); font-weight: 700; margin-bottom: 0.75rem;">السؤال:</h5>
+                        <h6 style="color: var(--text-secondary); font-weight: 600; margin-bottom: 1rem;">{{ question.title }}</h6>
+                        <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">
+                            <i class="far fa-user"></i> {{ question.visitor_name }} | 
+                            <i class="far fa-clock"></i> {{ question.created_at|date:"Y-m-d" }}
+                        </p>
+                    </div>
+                    
+                    <!-- نموذج الإجابة -->
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- معلومات الزائر (لغير المسجلين) -->
+                        {% if not user.is_authenticated %}
+                        <div class="row" style="margin-bottom: 2rem;">
+                            <div class="col-md-6" style="margin-bottom: 1.5rem;">
+                                <div class="cosmic-field">
+                                    <label for="{{ form.visitor_name.id_for_label }}" class="cosmic-label">
+                                        {{ form.visitor_name.label }} *
+                                    </label>
+                                    {{ form.visitor_name }}
+                                    {% if form.visitor_name.errors %}
+                                    <div style="color: #ef4444; font-size: 0.95rem; margin-top: 0.5rem;">
+                                        {{ form.visitor_name.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="margin-bottom: 1.5rem;">
+                                <div class="cosmic-field">
+                                    <label for="{{ form.visitor_email.id_for_label }}" class="cosmic-label">
+                                        {{ form.visitor_email.label }}
+                                    </label>
+                                    {{ form.visitor_email }}
+                                    {% if form.visitor_email.errors %}
+                                    <div style="color: #ef4444; font-size: 0.95rem; margin-top: 0.5rem;">
+                                        {{ form.visitor_email.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="user-pulse" style="margin-bottom: 2rem;">
+                            <i class="fas fa-user-circle"></i>
+                            ستنشر الإجابة باسم: <strong>{{ user.get_full_name|default:user.username }}</strong>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- نص الإجابة -->
+                        <div class="cosmic-field">
+                            <label for="{{ form.answer_text.id_for_label }}" class="cosmic-label">
+                                {{ form.answer_text.label }} *
+                            </label>
+                            {{ form.answer_text }}
+                            {% if form.answer_text.errors %}
+                            <div style="color: #ef4444; font-size: 0.95rem; margin-top: 0.5rem;">
+                                {{ form.answer_text.errors }}
+                            </div>
+                            {% endif %}
+                            <div style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+                                <i class="fas fa-info-circle"></i> 
+                                اكتب إجابة مفيدة ومختصرة. الإجابات غير المناسبة سيتم حذفها.
+                            </div>
+                        </div>
+                        
+                        <!-- الموافقة على الشروط -->
+                        <div class="cosmic-field">
+                            <div class="star-checkbox">
+                                {{ form.agree_to_terms }}
+                                <label for="{{ form.agree_to_terms.id_for_label }}">
+                                    {{ form.agree_to_terms.label }}
+                                </label>
+                                {% if form.agree_to_terms.errors %}
+                                <div style="color: #ef4444; font-size: 0.95rem; margin-top: 0.5rem;">
+                                    {{ form.agree_to_terms.errors }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- أزرار -->
+                        <div class="form-actions">
+                            <a href="{% url 'qna:question_detail' question.slug %}" class="btn-cosmic btn-cosmic-secondary">
+                                <i class="fas fa-arrow-right"></i> عودة للسؤال
+                            </a>
+                            <button type="submit" class="btn-cosmic btn-cosmic-primary">
+                                <i class="fas fa-paper-plane"></i> نشر الإجابة
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- نصائح -->
+                    <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border: 2px solid #fbbf24; border-radius: 1rem; padding: 1.5rem; margin-top: 2rem;">
+                        <h6 style="color: var(--text-primary); font-weight: 700; margin-bottom: 1rem;">
+                            <i class="fas fa-lightbulb" style="color: #f59e0b;"></i> نصائح لكتابة إجابة جيدة:
+                        </h6>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-right: 1.5rem; line-height: 1.8;">
+                            <li>كن محدداً وواضحاً</li>
+                            <li>قدم أمثلة عملية عندما يكون ذلك ممكناً</li>
+                            <li>تجنب الإجابات القصيرة جداً أو الطويلة جداً</li>
+                            <li>استخدم لغة مهذبة واحترم آراء الآخرين</li>
+                            <li>تأكد من صحة المعلومات التي تقدمها</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // الرسوم المتحركة
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'scale(1)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.animate-scale').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'scale(0.95)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        observer.observe(el);
+    });
+});
+</script>
+{% endblock %}

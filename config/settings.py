@@ -99,6 +99,7 @@ INSTALLED_APPS = [
     'core',
     'payments',
     'blog',
+    'qna',
     'cloudinary',
     'cloudinary_storage',
 
@@ -268,3 +269,36 @@ LOGGING = {
         },
     },
 }
+
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # أو مزود البريد الخاص بك
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mwsstaljmy740@gmail.com'
+EMAIL_HOST_PASSWORD = 'Roro0100'
+DEFAULT_FROM_EMAIL = 'مجتمع تحفيظ القرآن <noreply@quran-tahfiz.com>'
+ADMINS = [
+    ('Admin Name', 'admin@example.com'),
+]
+
+# settings.py
+
+# إعدادات الرسائل
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
+# إعدادات البريد الإلكتروني (اختياري)
+ADMINS = [
+    ('Admin', 'admin@example.com'),
+]
+
+DEFAULT_FROM_EMAIL = 'mwsstaljmy740@gmail.com'

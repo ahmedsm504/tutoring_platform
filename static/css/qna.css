@@ -1,0 +1,2161 @@
+/* ============================================
+   QNA UNIFIED DESIGN SYSTEM
+   نظام تصميم موحد لجميع صفحات الأسئلة والأجوبة
+   ============================================ */
+
+:root {
+    /* الألوان الأساسية - واضحة ومقروءة */
+    --qna-primary: #6366f1;
+    --qna-primary-dark: #4f46e5;
+    --qna-primary-light: #818cf8;
+    --qna-secondary: #10b981;
+    --qna-warning: #f59e0b;
+    --qna-danger: #ef4444;
+    --qna-info: #3b82f6;
+    
+    /* ألوان النصوص - واضحة جداً */
+    --text-primary: #26344c;
+    --text-secondary: #1d2a3e;
+    --text-muted: #64748b;
+    --text-light: #94a3b8;
+    
+    /* ألوان الخلفيات - فاتحة */
+    --bg-white: #ffffff;
+    --bg-light: #f8fafc;
+    --bg-lighter: #f1f5f9;
+    --bg-gray: #e2e8f0;
+    
+    /* التدرجات */
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-success: linear-gradient(135deg, #34d399 0%, #059669 100%);
+    --gradient-warning: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    --gradient-info: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    
+    /* الظلال */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    
+    /* الحركات */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.4s ease;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    /* المسافات */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4rem;
+    
+    /* الحدود */
+    --radius-sm: 0.5rem;
+    --radius-md: 1rem;
+    --radius-lg: 1.5rem;
+    --radius-xl: 2rem;
+    --radius-full: 9999px;
+}
+
+/* ============================================
+   إعادة تعيين أساسية
+   ============================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--qna-primary);
+    text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+a:hover {
+    color: var(--qna-primary-dark);
+}
+
+/* ============================================
+   صفحة قائمة الأسئلة
+   ============================================ */
+
+/* الحاوية الرئيسية */
+.qna-universe {
+    min-height: 100vh;
+    background: var(--bg-light);
+    padding: var(--space-xl) 0;
+    position: relative;
+}
+
+.container-ultimate {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+/* قسم البطل */
+.hero-ultimate {
+    background: var(--gradient-primary);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-2xl);
+    margin-bottom: var(--space-xl);
+    position: relative;
+}
+
+.hero-content-ultimate {
+    position: relative;
+    z-index: 2;
+    padding: var(--space-2xl) var(--space-xl);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-xl);
+    align-items: center;
+}
+
+.hero-text-content {
+    color: white;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    color: white;
+}
+
+.hero-title-ultimate {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    color: white;
+}
+
+.hero-subtitle-ultimate {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 600px;
+}
+
+.hero-cta-ultimate {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: white;
+    color: var(--qna-primary);
+    padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-lg);
+    font-weight: 800;
+    font-size: 1.125rem;
+    box-shadow: var(--shadow-xl);
+    transition: all var(--transition-base);
+}
+
+.hero-cta-ultimate:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.3);
+    color: var(--qna-primary);
+}
+
+/* بطاقات الإحصائيات */
+.stats-orbit {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.stat-planet {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl) var(--space-md);
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-slow);
+    border: 2px solid var(--bg-gray);
+}
+
+.stat-planet:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-2xl);
+    border-color: var(--qna-primary-light);
+}
+
+.stat-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto var(--space-md);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: var(--bg-lighter);
+    color: var(--qna-primary);
+}
+
+.stat-number-ultimate {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.stat-label-ultimate {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* الشبكة الرئيسية */
+.content-solar-system {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+}
+
+/* الشريط الجانبي */
+.sidebar-constellation {
+    position: sticky;
+    top: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.sidebar-star {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 1px solid var(--bg-gray);
+    transition: all var(--transition-base);
+}
+
+.sidebar-star:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.sidebar-header-glow {
+    background: var(--gradient-primary);
+    color: white;
+    padding: var(--space-md) var(--space-lg);
+    font-weight: 800;
+    font-size: 1.125rem;
+}
+
+.sidebar-body-glow {
+    padding: var(--space-lg);
+}
+
+.sidebar-section-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+    margin-bottom: var(--space-md);
+}
+
+/* قائمة الفئات */
+.category-constellation {
+    list-style: none;
+    margin-bottom: var(--space-lg);
+}
+
+.category-star {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-xs);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 600;
+    transition: all var(--transition-base);
+    cursor: pointer;
+    border-right: 3px solid transparent;
+}
+
+.category-star:hover {
+    background: var(--bg-lighter);
+    color: var(--qna-primary);
+    border-right-color: var(--qna-primary);
+    transform: translateX(-6px);
+}
+
+.category-star.active {
+    background: var(--bg-lighter);
+    color: var(--qna-primary);
+    border-right-color: var(--qna-primary);
+    font-weight: 800;
+}
+
+.category-count {
+    background: var(--bg-lighter);
+    color: var(--text-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 800;
+    min-width: 2rem;
+    text-align: center;
+}
+
+.category-star:hover .category-count,
+.category-star.active .category-count {
+    background: var(--qna-primary);
+    color: white;
+}
+
+/* أزرار التصفية */
+.filter-nebula {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+}
+
+.filter-comet {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    transition: all var(--transition-base);
+    border: 2px solid;
+    background: var(--bg-white);
+    cursor: pointer;
+}
+
+.filter-comet-gold {
+    border-color: #fbbf24;
+    color: #92400e;
+}
+
+.filter-comet-gold:hover {
+    background: var(--gradient-warning);
+    color: white;
+    border-color: transparent;
+}
+
+.filter-comet-blue {
+    border-color: #3b82f6;
+    color: #1e40af;
+}
+
+.filter-comet-blue:hover {
+    background: var(--gradient-info);
+    color: white;
+    border-color: transparent;
+}
+
+.filter-comet-green {
+    border-color: #10b981;
+    color: #065f46;
+}
+
+.filter-comet-green:hover {
+    background: var(--gradient-success);
+    color: white;
+    border-color: transparent;
+}
+
+/* القائمة المنسدلة */
+.select-cosmos {
+    width: 100%;
+    padding: var(--space-md);
+    border: 2px solid var(--bg-gray);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--bg-white);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.select-cosmos:focus {
+    outline: none;
+    border-color: var(--qna-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* البحث */
+.search-nebula {
+    margin-bottom: var(--space-xl);
+}
+
+.search-wormhole {
+    position: relative;
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 2px solid transparent;
+    transition: all var(--transition-base);
+}
+
+.search-wormhole:focus-within {
+    border-color: var(--qna-primary);
+    box-shadow: var(--shadow-xl);
+}
+
+.search-input-wormhole {
+    width: 100%;
+    padding: var(--space-lg);
+    padding-left: 10rem;
+    border: none;
+    background: transparent;
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.search-input-wormhole:focus {
+    outline: none;
+}
+
+.search-input-wormhole::placeholder {
+    color: var(--text-light);
+}
+
+.search-btn-wormhole {
+    position: absolute;
+    left: var(--space-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-md);
+    font-weight: 800;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.search-btn-wormhole:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: var(--shadow-lg);
+}
+
+/* بطاقات الأسئلة */
+.questions-galaxy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.question-meteor {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--bg-gray);
+    transition: all var(--transition-slow);
+    overflow: hidden;
+    position: relative;
+}
+
+.question-meteor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--gradient-primary);
+    transform: scaleY(0);
+    transition: transform var(--transition-base);
+}
+
+.question-meteor:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-2xl);
+    border-color: var(--qna-primary-light);
+}
+
+.question-meteor:hover::before {
+    transform: scaleY(1);
+}
+
+.question-core {
+    padding: var(--space-xl);
+}
+
+.question-layout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-xl);
+}
+
+.question-main-core {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.question-category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    background: var(--gradient-info);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 700;
+    width: fit-content;
+    box-shadow: var(--shadow-sm);
+}
+
+.question-title-core {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.4;
+    transition: color var(--transition-base);
+}
+
+.question-title-core:hover {
+    color: var(--qna-primary);
+}
+
+.question-excerpt-core {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.question-meta-core {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    padding-top: var(--space-md);
+    border-top: 2px solid var(--bg-lighter);
+}
+
+.meta-atom {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.meta-atom i {
+    color: var(--text-light);
+}
+
+/* حالة الإجابة */
+.answer-core {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    min-width: 150px;
+}
+
+.status-supernova {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    font-weight: 800;
+    text-align: center;
+    min-width: 120px;
+    box-shadow: var(--shadow-md);
+}
+
+.status-supernova.answered {
+    background: var(--gradient-success);
+    color: white;
+}
+
+.status-supernova.unanswered {
+    background: var(--bg-lighter);
+    color: var(--text-secondary);
+    border: 2px solid var(--bg-gray);
+}
+
+.status-supernova i {
+    font-size: 2.5rem;
+}
+
+/* الترقيم */
+.pagination-cosmos {
+    margin-top: var(--space-2xl);
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-orbit {
+    display: flex;
+    gap: var(--space-xs);
+    list-style: none;
+    background: var(--bg-white);
+    padding: var(--space-sm);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    height: 3rem;
+    padding: 0 var(--space-md);
+    border-radius: var(--radius-md);
+    font-weight: 800;
+    color: var(--text-secondary);
+    transition: all var(--transition-base);
+}
+
+.pagination-link:hover {
+    color: var(--qna-primary);
+    background: var(--bg-lighter);
+}
+
+.pagination-moon.active .pagination-link {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.pagination-moon.disabled .pagination-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* حالة فارغة */
+.empty-void {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-xl);
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.empty-icon-void {
+    font-size: 6rem;
+    color: var(--text-light);
+    margin-bottom: var(--space-xl);
+}
+
+.empty-title-void {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+}
+
+.empty-text-void {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    margin-bottom: var(--space-xl);
+    line-height: 1.6;
+}
+
+.empty-btn-void {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: var(--gradient-primary);
+    color: white;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-lg);
+    font-weight: 800;
+    font-size: 1.125rem;
+    box-shadow: var(--shadow-xl);
+    transition: all var(--transition-base);
+}
+
+.empty-btn-void:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -10px rgba(99, 102, 241, 0.4);
+    color: white;
+}
+
+/* CTA */
+.cta-supernova {
+    background: var(--bg-white);
+    border: 3px solid var(--qna-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.cta-supernova:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-4px);
+}
+
+.cta-title-super {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.cta-text-super {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: var(--space-lg);
+    line-height: 1.6;
+}
+
+.cta-stats-super {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-badge-super {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.cta-badge-blue {
+    background: var(--gradient-info);
+    color: white;
+}
+
+.cta-badge-green {
+    background: var(--gradient-success);
+    color: white;
+}
+
+/* ============================================
+   صفحة تفاصيل السؤال
+   ============================================ */
+
+.cosmic-realm {
+    min-height: 100vh;
+    background: var(--bg-light);
+    padding: var(--space-xl) 0 var(--space-2xl);
+}
+
+.container-cosmic {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+.nebula-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: var(--space-2xl);
+}
+
+/* بطاقة السؤال */
+.question-star {
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    border: 2px solid var(--bg-gray);
+    margin-bottom: var(--space-xl);
+    transition: all var(--transition-base);
+}
+
+.question-star:hover {
+    box-shadow: var(--shadow-2xl);
+}
+
+.star-core {
+    padding: var(--space-2xl);
+}
+
+.category-supernova {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.category-supernova:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    color: white;
+}
+
+.title-cosmos {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    line-height: 1.3;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xl);
+}
+
+.question-nebula {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    padding: var(--space-xl);
+    background: var(--bg-lighter);
+    border-radius: var(--radius-lg);
+    border-right: 5px solid var(--qna-primary);
+    margin-bottom: var(--space-xl);
+}
+
+.author-constellation {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-top: var(--space-xl);
+    border-top: 2px solid var(--bg-lighter);
+}
+
+.avatar-cosmic {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    box-shadow: var(--shadow-lg);
+    flex-shrink: 0;
+}
+
+.author-info-cosmic {
+    flex-grow: 1;
+}
+
+.author-name-cosmic {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.author-meta-cosmic {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.stats-galaxy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: flex-end;
+}
+
+.view-satellite {
+    background: var(--bg-lighter);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.frequent-comet {
+    background: var(--gradient-warning);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+/* الإجابة الرسمية */
+.answer-supernova {
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    border: 3px solid var(--qna-secondary);
+    margin-bottom: var(--space-xl);
+}
+
+.supernova-header {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    padding: var(--space-xl) var(--space-2xl);
+    border-bottom: 2px solid rgba(16, 185, 129, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.supernova-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #065f46;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: 0;
+}
+
+.featured-asteroid {
+    background: var(--gradient-warning);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.supernova-body {
+    padding: var(--space-2xl);
+}
+
+.answer-text-cosmic {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+}
+
+.vote-quasar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.quasar-btn {
+    background: var(--bg-white);
+    border: 3px solid #fecdd3;
+    color: #f43f5e;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-lg);
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    transition: all var(--transition-base);
+}
+
+.quasar-btn:hover:not(:disabled) {
+    background: #f43f5e;
+    color: white;
+    border-color: transparent;
+    transform: scale(1.05);
+}
+
+.quasar-btn.voted {
+    background: #f43f5e;
+    color: white;
+    border-color: transparent;
+}
+
+.quasar-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.likes-count {
+    font-weight: 800;
+}
+
+/* حالة الانتظار */
+.waiting-void {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 3px dashed #fbbf24;
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.waiting-icon {
+    font-size: 5rem;
+    color: #f59e0b;
+    margin-bottom: var(--space-xl);
+}
+
+.waiting-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #78350f;
+    margin-bottom: var(--space-md);
+}
+
+.waiting-text {
+    color: #92400e;
+    font-size: 1.125rem;
+}
+
+/* إجابات المجتمع */
+.community-asteroids {
+    margin-top: var(--space-2xl);
+}
+
+.asteroids-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 2px solid var(--bg-gray);
+}
+
+.asteroids-title {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: 0;
+}
+
+.asteroid-count {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-full);
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.asteroid-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--bg-gray);
+    transition: all var(--transition-base);
+}
+
+.asteroid-card:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateX(8px);
+}
+
+.asteroid-card.verified {
+    border-color: var(--qna-secondary);
+}
+
+.asteroid-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.asteroid-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.asteroid-card.verified .asteroid-avatar {
+    background: var(--gradient-success);
+}
+
+.asteroid-meta {
+    flex-grow: 1;
+}
+
+.asteroid-author {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.verified-nebula {
+    background: var(--gradient-success);
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.asteroid-time {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.asteroid-body {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+    font-size: 1.05rem;
+}
+
+.asteroid-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-md);
+    border-top: 2px solid var(--bg-lighter);
+}
+
+.asteroid-vote {
+    background: var(--bg-white);
+    border: 2px solid var(--bg-gray);
+    color: var(--text-secondary);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    transition: all var(--transition-base);
+}
+
+.asteroid-vote:hover:not(:disabled) {
+    background: #f43f5e;
+    color: white;
+    border-color: #f43f5e;
+}
+
+.asteroid-vote.voted {
+    background: #f43f5e;
+    color: white;
+    border-color: #f43f5e;
+}
+
+.admin-wormhole {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.wormhole-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.wormhole-btn.verify {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.wormhole-btn.verify:hover {
+    background: #10b981;
+    color: white;
+}
+
+.wormhole-btn.delete {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.wormhole-btn.delete:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* نموذج الإجابة */
+.form-nebula {
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    margin-top: var(--space-2xl);
+    box-shadow: var(--shadow-xl);
+    border: 2px solid var(--bg-gray);
+}
+
+.form-title-cosmic {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.user-pulse {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-right: 4px solid #3b82f6;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: #1e40af;
+    font-weight: 600;
+}
+
+.cosmic-field {
+    margin-bottom: var(--space-lg);
+}
+
+.cosmic-label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 800;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.cosmic-input,
+.cosmic-textarea {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid var(--bg-gray);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all var(--transition-base);
+    background: var(--bg-lighter);
+    color: var(--text-primary);
+}
+
+.cosmic-input:focus,
+.cosmic-textarea:focus {
+    outline: none;
+    border-color: var(--qna-primary);
+    background: var(--bg-white);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.cosmic-textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.8;
+}
+
+.char-meteor {
+    text-align: left;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: var(--space-xs);
+    font-weight: 600;
+}
+
+.star-checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    cursor: pointer;
+}
+
+.star-checkbox input {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--qna-primary);
+    cursor: pointer;
+}
+
+.star-checkbox label {
+    color: var(--text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.star-checkbox a {
+    color: var(--qna-primary);
+    font-weight: 800;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-xl);
+}
+
+.btn-cosmic {
+    padding: 1rem 2.5rem;
+    border-radius: var(--radius-lg);
+    font-weight: 800;
+    font-size: 1.1rem;
+    transition: all var(--transition-base);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    cursor: pointer;
+    border: none;
+}
+
+.btn-cosmic-secondary {
+    background: var(--bg-lighter);
+    color: var(--text-secondary);
+}
+
+.btn-cosmic-secondary:hover {
+    background: var(--bg-gray);
+    transform: translateX(-4px);
+}
+
+.btn-cosmic-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-cosmic-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* المشاركة */
+.share-constellation {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin-top: var(--space-xl);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--bg-gray);
+}
+
+.share-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.share-galaxy {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.share-planet {
+    flex: 1;
+    min-width: 120px;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.share-planet:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    color: white;
+}
+
+.share-planet.facebook {
+    background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
+}
+
+.share-planet.twitter {
+    background: linear-gradient(135deg, #1da1f2 0%, #0d95e8 100%);
+}
+
+.share-planet.whatsapp {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+}
+
+.share-planet.copy {
+    background: linear-gradient(135deg, #475569 0%, #334155 100%);
+}
+
+/* الشريط الجانبي */
+.sidebar-universe {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    position: sticky;
+    top: var(--space-lg);
+}
+
+.related-stars {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 2px solid var(--bg-gray);
+}
+
+.related-header {
+    background: var(--bg-lighter);
+    padding: var(--space-lg);
+    border-bottom: 2px solid var(--bg-gray);
+}
+
+.related-header h6 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.related-list-cosmic {
+    list-style: none;
+}
+
+.related-item-cosmic {
+    border-bottom: 2px solid var(--bg-lighter);
+}
+
+.related-item-cosmic:last-child {
+    border-bottom: none;
+}
+
+.related-link-cosmic {
+    display: block;
+    padding: var(--space-md) var(--space-lg);
+    color: var(--text-secondary);
+    border-right: 3px solid transparent;
+    transition: all var(--transition-base);
+}
+
+.related-link-cosmic:hover {
+    background: var(--bg-lighter);
+    border-right-color: var(--qna-primary);
+    color: var(--qna-primary);
+}
+
+.related-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: var(--space-xs);
+    color: var(--text-primary);
+}
+
+.related-meta-cosmic {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.cta-blackhole {
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    text-align: center;
+    color: white;
+    box-shadow: var(--shadow-xl);
+}
+
+.cta-icon {
+    font-size: 3.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.cta-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: var(--space-sm);
+}
+
+.cta-text {
+    opacity: 0.95;
+    margin-bottom: var(--space-xl);
+    line-height: 1.6;
+}
+
+.cta-wormhole {
+    background: white;
+    color: var(--qna-primary);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-lg);
+    font-weight: 800;
+    display: inline-block;
+    transition: all var(--transition-base);
+}
+
+.cta-wormhole:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    color: var(--qna-primary);
+}
+
+.categories-nebula {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 2px solid var(--bg-gray);
+}
+
+.nebula-header {
+    background: var(--bg-lighter);
+    padding: var(--space-lg);
+    border-bottom: 2px solid var(--bg-gray);
+}
+
+.nebula-header h6 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.nebula-body {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.nebula-btn {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    text-align: center;
+    transition: all var(--transition-base);
+    border: 2px solid;
+    background: var(--bg-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+}
+
+.nebula-btn.all {
+    border-color: var(--qna-primary);
+    color: var(--qna-primary);
+}
+
+.nebula-btn.all:hover {
+    background: var(--qna-primary);
+    color: white;
+}
+
+.nebula-btn.featured {
+    border-color: #f59e0b;
+    color: #d97706;
+}
+
+.nebula-btn.featured:hover {
+    background: #f59e0b;
+    color: white;
+}
+
+.nebula-btn.unanswered {
+    border-color: #3b82f6;
+    color: #2563eb;
+}
+
+.nebula-btn.unanswered:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+.stats-quasar {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 2px solid var(--bg-gray);
+}
+
+.quasar-header {
+    background: var(--bg-lighter);
+    padding: var(--space-lg);
+    border-bottom: 2px solid var(--bg-gray);
+}
+
+.quasar-header h6 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.quasar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--bg-gray);
+}
+
+.quasar-item {
+    background: var(--bg-white);
+    padding: var(--space-lg);
+    text-align: center;
+}
+
+.quasar-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+}
+
+.quasar-value {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.quasar-status {
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.quasar-status.answered {
+    color: var(--qna-secondary);
+}
+
+.quasar-status.pending {
+    color: #f59e0b;
+}
+
+/* ============================================
+   صفحة طرح السؤال
+   ============================================ */
+
+.ask-question-container {
+    background: var(--bg-light);
+    min-height: 100vh;
+    padding: var(--space-xl) 0;
+}
+
+.ask-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    background: var(--gradient-primary);
+    padding: var(--space-2xl) var(--space-xl);
+    border-radius: var(--radius-xl);
+    color: white;
+    box-shadow: var(--shadow-2xl);
+}
+
+.ask-header h1 {
+    font-weight: 900;
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.ask-header .lead {
+    font-size: 1.25rem;
+    opacity: 0.95;
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.stat-mini-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    border: 2px solid var(--bg-gray);
+    transition: all var(--transition-base);
+}
+
+.stat-mini-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-2xl);
+}
+
+.stat-mini-card h3 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.tips-alert {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    border-right: 5px solid #3b82f6;
+    margin-bottom: var(--space-xl);
+}
+
+.tips-alert .alert-heading {
+    color: var(--text-primary);
+    font-weight: 800;
+    margin-bottom: var(--space-md);
+    font-size: 1.25rem;
+}
+
+.tips-alert ul {
+    margin: 0;
+    padding-right: var(--space-lg);
+}
+
+.tips-alert li {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.form-main-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-2xl);
+    border: 2px solid var(--bg-gray);
+}
+
+.section-header {
+    color: var(--text-primary);
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 3px solid var(--bg-gray);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+    font-size: 1rem;
+}
+
+.form-control,
+.form-select {
+    width: 100%;
+    border: 2px solid var(--bg-gray);
+    border-radius: var(--radius-md);
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    transition: all var(--transition-base);
+    background: var(--bg-lighter);
+    color: var(--text-primary);
+}
+
+.form-control:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--qna-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background: var(--bg-white);
+}
+
+.form-control::placeholder {
+    color: var(--text-light);
+}
+
+.form-text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-top: var(--space-xs);
+}
+
+.text-danger {
+    color: #ef4444;
+}
+
+.form-check {
+    padding: var(--space-md);
+    background: var(--bg-lighter);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--bg-gray);
+    transition: all var(--transition-base);
+}
+
+.form-check:hover {
+    background: var(--bg-white);
+    border-color: var(--qna-primary);
+}
+
+.form-check-input {
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--qna-primary);
+}
+
+.form-check-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: var(--space-sm);
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--bg-gray);
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    padding: 0.875rem 2rem;
+    font-weight: 700;
+    transition: all var(--transition-base);
+    background: var(--bg-white);
+}
+
+.btn-outline-secondary:hover {
+    background: var(--text-secondary);
+    border-color: var(--text-secondary);
+    color: white;
+}
+
+.btn-primary-submit {
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 1rem 3rem;
+    font-weight: 800;
+    font-size: 1.125rem;
+    color: white;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border: none;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+    border-right: 5px solid #ef4444;
+    padding: var(--space-md);
+}
+
+/* ============================================
+   تحسينات الاستجابة
+   ============================================ */
+
+@media (max-width: 1200px) {
+    .content-solar-system,
+    .nebula-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar-constellation,
+    .sidebar-universe {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-content-ultimate {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--space-lg);
+    }
+    
+    .stats-orbit {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .question-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --space-xl: 2rem;
+        --space-2xl: 3rem;
+    }
+    
+    .hero-title-ultimate {
+        font-size: 2rem;
+    }
+    
+    .stats-orbit {
+        gap: var(--space-sm);
+    }
+    
+    .question-core,
+    .star-core,
+    .supernova-body,
+    .form-main-card {
+        padding: var(--space-lg);
+    }
+    
+    .title-cosmos {
+        font-size: 1.75rem;
+    }
+    
+    .stats-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-orbit {
+        grid-template-columns: 1fr;
+    }
+    
+    .meta-atom span {
+        display: none;
+    }
+    
+    .pagination-link {
+        min-width: 2.5rem;
+        height: 2.5rem;
+        padding: 0 var(--space-sm);
+    }
+}
+
+/* ============================================
+   الرسوم المتحركة
+   ============================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse-soft {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-scale {
+    animation: scaleIn 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+}
+
+/* ============================================
+   شريط التمرير المخصص
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-lighter);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--qna-primary), var(--qna-primary-dark));
+    border-radius: 5px;
+    border: 2px solid var(--bg-lighter);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(var(--qna-primary-light), var(--qna-primary));
+}
+
+/* ============================================
+   إضافات للوضوح
+   ============================================ */
+
+/* تأكيد وضوح جميع النصوص */
+body, html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* تحسين التباين */
+strong, b {
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* روابط واضحة */
+a {
+    color: var(--qna-primary);
+    font-weight: 600;
+}
+
+a:hover {
+    color: var(--qna-primary-dark);
+    text-decoration: underline;
+}
+
+/* تحسين الأزرار */
+button, .btn {
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:disabled, .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* نصوص واضحة في الحاويات الملونة */
+.hero-text-content,
+.hero-badge,
+.category-supernova,
+.share-planet,
+.cta-blackhole,
+.supernova-header {
+    color: white !important;
+}
+
+.hero-text-content * {
+    color: white !important;
+}
+
+/* التأكد من وضوح العناوين */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 800;
+}
+
+/* النصوص في البطاقات */
+.question-title-core,
+.title-cosmos,
+.asteroid-author,
+.related-title {
+    color: var(--text-primary) !important;
+}
+
+/* نصوص الأزرار */
+.btn-cosmic-primary,
+.btn-primary-submit,
+.empty-btn-void,
+.hero-cta-ultimate {
+    color: white !important;
+}
+
+/* ============================================
+   النهاية
+   ============================================ */
