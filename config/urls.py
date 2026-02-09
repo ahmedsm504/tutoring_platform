@@ -17,32 +17,51 @@ from .sitemaps import (
     ImageSitemap,
     NewsSitemap,
     MobileSitemap,
+    # QNA Sitemaps
+    QNAQuestionsSitemap,
+    QNACategorySitemap,
+    QNAAnsweredQuestionsSitemap,
+    FrequentQuestionsSitemap,
 )
 
 # تعريف جميع Sitemaps
 sitemaps = {
-    'static': StaticViewSitemap,          # الصفحات الثابتة
-    'blog': BlogPostSitemap,              # مقالات المدونة
-    'categories': BlogCategorySitemap,    # تصنيفات المدونة
-    'packages': PricingPackagesSitemap,   # الباقات
-    'quality': QualityStandardsSitemap,   # مواثيق الجودة
-    'popular': PopularPagesSitemap,       # الصفحات الشائعة
-    'images': ImageSitemap,               # صور المقالات
-    'news': NewsSitemap,                  # الأخبار الحديثة
-    'mobile': MobileSitemap,              # صفحات الموبايل
+    # الصفحات الأساسية
+    'static': StaticViewSitemap,              # الصفحات الثابتة
+    'popular': PopularPagesSitemap,           # الصفحات الشائعة
+    'mobile': MobileSitemap,                  # صفحات الموبايل
+    
+    # المدونة
+    'blog': BlogPostSitemap,                  # مقالات المدونة
+    'blog-categories': BlogCategorySitemap,   # تصنيفات المدونة
+    'images': ImageSitemap,                   # صور المقالات
+    
+    # الباقات والجودة
+    'packages': PricingPackagesSitemap,       # الباقات التعليمية
+    'quality': QualityStandardsSitemap,       # مواثيق الجودة
+    
+    # الأسئلة والأجوبة (QNA)
+    'qna-questions': QNAQuestionsSitemap,     # جميع الأسئلة
+    'qna-categories': QNACategorySitemap,     # تصنيفات الأسئلة
+    'qna-answered': QNAAnsweredQuestionsSitemap,  # الأسئلة المُجابة
+    'qna-frequent': FrequentQuestionsSitemap, # الأسئلة المتكررة
+    
+    # المحتوى الحديث
+    'news': NewsSitemap,                      # الأخبار والمحتوى الحديث
 }
 
 urlpatterns = [
-    # Admin Panel
+    # ============= Admin Panel =============
     path('admin/', admin.site.urls),
     
     # ============= Sitemap =============
+    # Sitemap الرئيسي
     path('sitemap.xml', 
          sitemap, 
          {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap'),
     
-    # Sitemap Index (إذا كان لديك sitemaps كثيرة)
+    # Sitemaps منفصلة لكل قسم
     path('sitemap-<section>.xml',
          sitemap,
          {'sitemaps': sitemaps},
@@ -57,18 +76,25 @@ urlpatterns = [
          name='robots'),
     
     # ============= Core URLs =============
-    path('', include('core.urls')),           # الصفحات الرئيسية
+    path('', include('core.urls')),           # الصفحات الرئيسية (home, pricing, about, etc.)
     
     # ============= Accounts URLs =============
-    path('accounts/', include('accounts.urls')),  # نظام المستخدمين
+    path('accounts/', include('accounts.urls')),  # نظام المستخدمين (login, register, profile)
     
     # ============= Blog URLs =============
-    path('blog/', include('blog.urls')),      # المدونة
+    path('blog/', include('blog.urls')),      # المدونة (posts, categories)
     
-    path('questions/', include('qna.urls', namespace='qna')),
-    # ============= Security Files =============
-    # .well-known للتحقق من الملكية
-
+    # ============= QNA URLs =============
+    path('questions/', include('qna.urls', namespace='qna')),  # الأسئلة والأجوبة
+    
+    # ============= Security & Verification Files =============
+    # يمكنك إضافة ملفات التحقق من Google Search Console و Bing هنا
+    # مثال:
+    # path('google123456789.html', 
+    #      TemplateView.as_view(
+    #          template_name="google123456789.html",
+    #          content_type="text/html"
+    #      )),
 ]
 
 # Static and Media files في وضع التطوير
