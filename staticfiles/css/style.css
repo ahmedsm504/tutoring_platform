@@ -204,45 +204,77 @@ html {
     font-weight: 600;
 }
 
-/* ============================================
-   Social Fixed Icons
-   ============================================ */
-.social-fixed {
-    position: fixed;
-    bottom: 100px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 1000;
-}
+    /* أيقونات التواصل الثابتة */
+    .social-fixed {
+        position: fixed;
+        bottom: 100px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 1000;
+    }
 
-.social-fixed a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    color: white;
-    font-size: 26px;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s ease;
-}
+    .social-fixed a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        color: white;
+        font-size: 26px;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        transition: all 0.3s ease;
+        position: relative;
+    }
 
-.social-fixed a:hover {
-    transform: scale(1.15);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
-}
+    .social-fixed a::before {
+        content: attr(title);
+        position: absolute;
+        right: 70px;
+        background: rgba(12, 35, 74, 0.95);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        font-size: 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
 
-.whatsapp {
-    background: linear-gradient(135deg, #25D366, #128C7E);
-}
+    .social-fixed a:hover::before {
+        opacity: 1;
+    }
 
-.facebook {
-    background: linear-gradient(135deg, #3b5998, #2d4373);
-}
+    .social-fixed a:hover {
+        transform: scale(1.15);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+    }
+
+    .whatsapp {
+        background: linear-gradient(135deg, #25D366, #128C7E);
+    }
+
+    .facebook {
+        background: linear-gradient(135deg, #3b5998, #2d4373);
+    }
+
+    .instagram {
+        background: linear-gradient(135deg, #E1306C, #C13584);
+    }
+
+    .tiktok {
+        background: linear-gradient(135deg, #000000, #EE1D52);
+    }
+
+    .twitter {
+        background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+    }
+
 
 /* ============================================
    Footer
