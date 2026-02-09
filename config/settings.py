@@ -269,22 +269,37 @@ LOGGING = {
         },
     },
 }
+# ============================================
+# إعدادات البريد الإلكتروني - النسخة المصححة
+# ============================================
 
-# settings.py
+# 1. إعدادات البريد (Gmail)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # أو مزود البريد الخاص بك
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False  # تأكد أن هذا False لأنك تستخدم TLS
+
+# 2. معلومات الحساب - إصلاح مهم!
+# لاحظ: لا تضع كلمة المرور مباشرة هنا، استخدم متغيرات البيئة
 EMAIL_HOST_USER = 'mwsstaljmy740@gmail.com'
-EMAIL_HOST_PASSWORD = 'Roro0100'
-DEFAULT_FROM_EMAIL = 'مجتمع تحفيظ القرآن <noreply@quran-tahfiz.com>'
+
+# 3. استخدام App Password بدلاً من كلمة المرور العادية
+# لأن Gmail يطلب كلمة مرور تطبيق وليس كلمة المرور العادية
+EMAIL_HOST_PASSWORD = 'Roro0100'  # تأكد أن هذا App Password وليس كلمة المرور العادية
+
+# 4. معلومات المرسل
+DEFAULT_FROM_EMAIL = 'مجتمع تحفيظ القرآن <mwsstaljmy740@gmail.com>'
+
+# 5. المسؤولين
 ADMINS = [
-    ('Admin Name', 'admin@example.com'),
+    ('Admin', 'admin@example.com'),
 ]
 
-# settings.py
+# 6. مدير الموقع
+MANAGERS = ADMINS
 
-# إعدادات الرسائل
+# 7. إعدادات الرسائل
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 from django.contrib.messages import constants as messages
@@ -295,10 +310,3 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
-
-# إعدادات البريد الإلكتروني (اختياري)
-ADMINS = [
-    ('Admin', 'admin@example.com'),
-]
-
-DEFAULT_FROM_EMAIL = 'mwsstaljmy740@gmail.com'
