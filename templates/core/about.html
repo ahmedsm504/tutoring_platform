@@ -2,29 +2,44 @@
 
 {% block title %}من نحن - مؤسسة العجمي لتحفيظ القرآن الكريم عن بُعد{% endblock %}
 
-{% block meta_description %}تعرف على مؤسسة العجمي - مؤسسة تعليمية رائدة في تحفيظ القرآن الكريم عن بُعد. رؤيتنا، رسالتنا، قيمنا وفريق العمل المتميز.{% endblock %}
+{% block meta_description %}تعرف على مؤسسة العجمي - منصة قرآنية تعنى بالفهم قبل الحفظ، وتعليم التلاوة والتجويد بأسلوب متدرج.{% endblock %}
 
-{% block meta_keywords %}مؤسسة العجمي، من نحن، تحفيظ القرآن، رؤيتنا، رسالتنا، فريق العمل، معلمو القرآن{% endblock %}
+{% block meta_keywords %}مؤسسة العجمي، من نحن، منصة قرآنية، تعليم التجويد، تلاوة القرآن، فهم القرآن{% endblock %}
 
 {% block og_title %}من نحن - مؤسسة العجمي لتحفيظ القرآن الكريم{% endblock %}
 
-{% block og_description %}مؤسسة تعليمية رائدة متخصصة في تحفيظ القرآن الكريم وتدريس علومه للطلاب من مختلف أنحاء العالم.{% endblock %}
+{% block og_description %}منصة تعليمية قرآنية تجمع بين صحة التلقي ووضوح الشرح، وتبني قارئاً واعياً متصلاً بالقرآن.{% endblock %}
 
 {% block extra_css %}
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Cairo', sans-serif;
+        background: linear-gradient(145deg, #0a1a2f, #07111f);
+        color: #f0f9ff;
+        line-height: 1.8;
+    }
 
     h1, h2 {
         color: #4CAF50;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         position: relative;
+        font-weight: 700;
     }
 
     h1 {
-        font-size: 2.5em;
-        margin-top: 40px;
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        font-size: 2.6em;
+        margin-top: 50px;
+        text-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        letter-spacing: 1px;
     }
 
     h2 {
@@ -34,93 +49,117 @@
     h2::after {
         content: '';
         display: block;
-        width: 80px;
-        height: 3px;
-        background-color: #4CAF50;
-        margin: 10px auto 0 auto;
-        border-radius: 2px;
+        width: 90px;
+        height: 4px;
+        background: linear-gradient(90deg, #4CAF50, #81c784);
+        margin: 15px auto 0;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(76, 175, 80, 0.5);
     }
 
     article, section {
-        margin-bottom: 60px;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 40px;
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(76, 175, 80, 0.1);
+        margin-bottom: 70px;
+        background: rgba(18, 30, 41, 0.7);
+        padding: 50px 40px;
+        border-radius: 30px;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(76, 175, 80, 0.2);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        transition: all 0.4s ease;
     }
 
     article:hover, section:hover {
-        border-color: rgba(76, 175, 80, 0.3);
-        transform: translateY(-5px);
-        transition: all 0.3s ease;
+        border-color: rgba(76, 175, 80, 0.5);
+        box-shadow: 0 20px 45px rgba(76, 175, 80, 0.2);
+        transform: translateY(-6px);
     }
 
     p {
-        font-size: 1.1em;
-        line-height: 1.8;
-        color: #e0f0ff;
+        font-size: 1.2em;
+        line-height: 1.9;
+        color: #e6f7ff;
         text-align: justify;
-        max-width: 850px;
-        margin: 0 auto;
+        max-width: 900px;
+        margin: 0 auto 20px;
+        font-weight: 400;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
     }
 
     ul {
-        font-size: 1.1em;
-        line-height: 1.8;
-        color: #e0f0ff;
-        max-width: 850px;
+        font-size: 1.2em;
+        line-height: 2;
+        color: #e6f7ff;
+        max-width: 900px;
         margin: 0 auto;
+        list-style: none;
+        padding-right: 20px;
     }
 
     ul li {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        position: relative;
+        padding-right: 30px;
+    }
+
+    ul li::before {
+        content: '✓';
+        color: #4CAF50;
+        font-weight: bold;
+        position: absolute;
+        right: 0;
+        font-size: 1.3em;
     }
 
     .team {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 30px;
-        margin-top: 30px;
+        gap: 40px;
+        margin-top: 40px;
     }
 
     .member-card {
-        background: linear-gradient(145deg, #112b50, #0c234a);
-        border-radius: 15px;
-        padding: 25px;
-        width: 250px;
+        background: linear-gradient(145deg, #132a42, #0c1e30);
+        border-radius: 20px;
+        padding: 30px 25px;
+        width: 260px;
         text-align: center;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-        transition: all 0.5s ease;
-        border: 2px solid rgba(76, 175, 80, 0.1);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid rgba(76, 175, 80, 0.15);
     }
 
     .member-card:hover {
-        transform: translateY(-10px) scale(1.05);
-        box-shadow: 0 15px 30px rgba(76, 175, 80, 0.4);
-        border-color: rgba(76, 175, 80, 0.5);
+        transform: translateY(-12px) scale(1.03);
+        box-shadow: 0 20px 35px rgba(76, 175, 80, 0.4);
+        border-color: rgba(76, 175, 80, 0.7);
     }
 
     .member-card img {
-        width: 100px;
-        height: 100px;
+        width: 110px;
+        height: 110px;
         border-radius: 50%;
-        margin-bottom: 15px;
-        border: 3px solid #4CAF50;
+        margin-bottom: 20px;
+        border: 4px solid #4CAF50;
         object-fit: cover;
+        background: white;
+        padding: 5px;
     }
 
     .member-card h3 {
         margin: 0;
         color: #4CAF50;
-        font-size: 1.3em;
+        font-size: 1.5em;
+        font-weight: 700;
     }
 
     .member-card p {
-        margin: 8px 0 0 0;
-        color: #cce0ff;
-        font-size: 1em;
+        margin: 10px 0 0;
+        color: #b3e0ff;
+        font-size: 1.1em;
         text-align: center;
     }
 
@@ -128,19 +167,41 @@
         .team {
             flex-direction: column;
             align-items: center;
+            gap: 25px;
         }
 
         article, section {
-            padding: 30px 20px;
+            padding: 35px 20px;
+            margin-bottom: 50px;
         }
 
         h1 {
-            font-size: 2em;
+            font-size: 2.1em;
         }
 
         h2 {
-            font-size: 1.8em;
+            font-size: 1.9em;
         }
+
+        p, ul {
+            font-size: 1.1em;
+            text-align: right;
+        }
+    }
+
+    @media(max-width: 480px) {
+        h1 { font-size: 1.9em; }
+        h2 { font-size: 1.7em; }
+        article, section { padding: 25px 15px; }
+    }
+
+    /* تنسيق خاص لجملة الشعار */
+    .highlight {
+        color: #4CAF50;
+        font-weight: 700;
+        font-size: 1.3em;
+        display: inline-block;
+        margin-top: 15px;
     }
 </style>
 
@@ -150,11 +211,11 @@
   "@context": "https://schema.org",
   "@type": "AboutPage",
   "name": "من نحن - مؤسسة العجمي",
-  "description": "تعرف على مؤسسة العجمي - مؤسسة تعليمية رائدة في تحفيظ القرآن الكريم عن بُعد",
+  "description": "منصة تعليمية قرآنية تجمع بين الفهم والتجويد والتلاوة بأسلوب مبتكر.",
   "mainEntity": {
     "@type": "Organization",
     "name": "مؤسسة العجمي",
-    "description": "مؤسسة تعليمية رائدة ومتخصصة في تحفيظ القرآن الكريم وتدريس علومه",
+    "description": "منصة قرآنية تعنى بالفهم قبل الحفظ، وتقديم تعليم متقن للتلاوة والتجويد.",
     "founder": [
       {
         "@type": "Person",
@@ -174,38 +235,53 @@
 
 {% block content %}
 <article itemscope itemtype="https://schema.org/AboutPage">
-    <h1 itemprop="name">من نحن - مؤسسة العجمي</h1>
+    <h1 itemprop="name">منصة العجمي</h1>
     
     <section itemscope itemtype="https://schema.org/Organization">
         <h2>من نحن</h2>
-        <p itemprop="description">
-            نحن مؤسسة تعليمية رائدة ومتخصصة في تحفيظ القرآن الكريم وتدريس علومه للطلاب من مختلف أنحاء العالم. نسعى إلى غرس محبة كتاب الله في القلوب وتخريج جيل متقن في الحفظ والقراءة وفهم القرآن الكريم ملتزم بقيم الإسلام السمحة وأخلاق القرآن. نقدم برامج تعليمية متكاملة تجمع بين الوسائل الحديثة والأساليب الأصيلة بإشراف نخبة من المعلمين والمعلمات المتقنين لتحقيق بيئة تعليمية وتربوية تواكب احتياجات العصر.
-        </p>
+        <div itemprop="description">
+            <p>
+                نحن منصة تعليمية قرآنية، نؤمن أن العلاقة الحقيقية مع القرآن تبدأ بـ <strong>الفهم قبل الحفظ</strong>، وبالمنهج قبل الكثرة. 
+                نسعى إلى تقديم تعليم قرآني يجمع بين صحة التلقي ووضوح الشرح، بعيدًا عن التعقيد أو التلقين الجاف.
+            </p>
+            <p>
+                نقدّم تعليم التلاوة والتجويد بأسلوب متدرّج، يراعي اختلاف المستويات، ويُعيد للقرآن حضوره في القلب قبل اللسان. 
+                نهدف إلى بناء قارئ واعٍ بما يقرأ، مدركٍ لأحكامه، متصلٍ بالقرآن أثرًا وسلوكًا.
+            </p>
+            <p style="margin-top: 25px; font-size: 1.25em; color: #c8e6c9; text-align: center; background: rgba(76,175,80,0.1); padding: 15px; border-radius: 40px;">
+                منصتنا وُجدت لكل من يبحث عن علمٍ يُفهم، وتعليمٍ يُتقن، وقرآنٍ يُعاش… لا يُتجاوز.
+            </p>
+            <p style="text-align: center; font-size: 1.4em; font-weight: 700; color: #81c784; margin-top: 10px;">
+                علمٌ يُفهم | أثرٌ يبقى 💙
+            </p>
+        </div>
     </section>
 
     <section>
         <h2>رؤيتنا</h2>
         <p>
-            نحن ندرك أهمية العلم والقيم، لذلك نسهم في بناء الإنسان ونشر وتعليم القرآن بأسلوب يسير ومؤثر ليصل نوره على كل بيت وكل قلب وعقل، وليكون حفظة القرآن سفراء للخير والإيمان أينما وجدوا.
+            ندرك أهمية العلم والقيم، لذلك نسهم في بناء الإنسان ونشر وتعليم القرآن بأسلوب يسير ومؤثر ليصل نوره إلى كل بيت وكل قلب وعقل، 
+            وليكون حفظة القرآن سفراء للخير والإيمان أينما وجدوا.
         </p>
     </section>
 
     <section>
         <h2>رسالتنا</h2>
         <p>
-            نشر رسالة القرآن الكريم وتعليمه للناطقين بالعربية وغير الناطقين بها من خلال بيئة آمنة وفعالة. نحن لا نقدم مجرد معلم، بل نقدم رفيقاً وموجهاً لك ليصحبك في تلك الرحلة في الدنيا ولنكون معاً في الآخرة.
+            نشر رسالة القرآن الكريم وتعليمه للناطقين بالعربية وغير الناطقين بها من خلال بيئة آمنة وفعالة. 
+            نحن لا نقدم مجرد معلم، بل نقدم رفيقاً وموجهاً ليصحبك في هذه الرحلة في الدنيا، ولنكون معاً في الآخرة.
         </p>
     </section>
 
     <section>
         <h2>قيمنا</h2>
         <ul>
-            <li>✓ الالتزام بأخلاق القرآن الكريم</li>
-            <li>✓ الإخلاص في العمل</li>
-            <li>✓ الإتقان والجودة في التعليم</li>
-            <li>✓ الاحترام المتبادل والتعامل برقي</li>
-            <li>✓ التطوير المستمر والابتكار</li>
-            <li>✓ المسؤولية والأمانة في التعليم</li>
+            <li>الالتزام بأخلاق القرآن الكريم</li>
+            <li>الإخلاص في العمل</li>
+            <li>الإتقان والجودة في التعليم</li>
+            <li>الاحترام المتبادل والتعامل برقي</li>
+            <li>التطوير المستمر والابتكار</li>
+            <li>المسؤولية والأمانة في التعليم</li>
         </ul>
     </section>
 
@@ -217,7 +293,6 @@
                 <h3 itemprop="name">أحمد سمير</h3>
                 <p itemprop="jobTitle">مطور المنصة</p>
             </div>
-
             <div class="member-card" itemprop="employee" itemscope itemtype="https://schema.org/Person">
                 <img src="https://img.icons8.com/color/96/000000/teacher.png" alt="رويدا العجمي - مختص محتوى تعليمي" itemprop="image">
                 <h3 itemprop="name">رويدا العجمي</h3>
@@ -229,13 +304,13 @@
     <section>
         <h2>لماذا تختارنا؟</h2>
         <ul>
-            <li>✓ معلمون مؤهلون وحاصلون على إجازات في القرآن الكريم</li>
-            <li>✓ حصص فردية مخصصة لكل طالب</li>
-            <li>✓ مرونة في اختيار الأوقات المناسبة</li>
-            <li>✓ أسعار تنافسية تبدأ من 7 ريال</li>
-            <li>✓ متابعة مستمرة وتقييم دوري</li>
-            <li>✓ حلقة تجريبية مجانية</li>
-            <li>✓ برامج متنوعة تناسب جميع الأعمار والمستويات</li>
+            <li>معلمون مؤهلون وحاصلون على إجازات في القرآن الكريم</li>
+            <li>حصص فردية مخصصة لكل طالب</li>
+            <li>مرونة في اختيار الأوقات المناسبة</li>
+            <li>أسعار تنافسية تبدأ من 7 ريال</li>
+            <li>متابعة مستمرة وتقييم دوري</li>
+            <li>حلقة تجريبية مجانية</li>
+            <li>برامج متنوعة تناسب جميع الأعمار والمستويات</li>
         </ul>
     </section>
 </article>
