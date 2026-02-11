@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 1
+web: python manage.py migrate && python manage.py collectstatic --noinput && python manage.py create_super_user_if_not_exists && gunicorn config.wsgi
