@@ -258,7 +258,7 @@ function loadHeroVideo() {
     
     // Create iframe
     const iframe = document.createElement('iframe');
-      iframe.src = 'https://www.youtube.com/embed/d7-WTMQljn0?autoplay=1&rel=0&modestbranding=1';
+      iframe.src = 'https://www.youtube.com/embed/yUpz_m5kWBE?autoplay=1&rel=0&modestbranding=1';
     iframe.title = 'الفيديو التعريفي - المنصة التعليمية لتحفيظ القرآن الكريم';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.referrerPolicy = 'strict-origin-when-cross-origin';
