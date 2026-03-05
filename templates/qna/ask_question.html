@@ -54,225 +54,657 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/qna.css' %}">
+<style>
+/* === أنماط خاصة بصفحة طرح السؤال === */
+
+/* الحاوية الرئيسية */
+.ask-universe {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+    padding: 3rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.ask-universe::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background: linear-gradient(135deg, var(--qna-primary) 0%, var(--qna-secondary) 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.container-ask {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* الهيدر الكوني */
+.ask-header-orbit {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: floatIn 0.8s ease-out;
+}
+
+.ask-header-orbit h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.ask-header-orbit h1 i {
+    background: linear-gradient(135deg, var(--qna-primary), var(--qna-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 3rem;
+}
+
+.ask-header-orbit .lead {
+    font-size: 1.3rem;
+    color: #475569;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* بطاقات الإحصائيات */
+.stats-galaxy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-bottom: 3rem;
+}
+
+.stat-nebula {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: transform 0.3s ease;
+    animation: slideUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.stat-nebula:nth-child(1) { animation-delay: 0.1s; }
+.stat-nebula:nth-child(2) { animation-delay: 0.2s; }
+
+.stat-nebula:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.stat-number.primary {
+    background: linear-gradient(135deg, var(--qna-primary), #1e40af);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-number.success {
+    background: linear-gradient(135deg, #10b981, #047857);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    color: #334155;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* نصائح مضيئة */
+.tips-comet {
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    border-right: 6px solid #f97316;
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 15px 30px -10px rgba(249, 115, 22, 0.2);
+    animation: glowPulse 2s infinite;
+}
+
+.tips-comet h5 {
+    color: #7b341e;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.tips-comet h5 i {
+    font-size: 1.8rem;
+    color: #f97316;
+}
+
+.tips-comet ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 30px;
+}
+
+.tips-comet li {
+    color: #422006;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tips-comet li::before {
+    content: "✨";
+    font-size: 1.2rem;
+}
+
+/* بطاقة النموذج الرئيسية */
+.form-cosmos {
+    background: white;
+    border-radius: 40px;
+    padding: 3rem;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    margin-bottom: 3rem;
+    animation: floatIn 0.8s ease-out 0.3s both;
+}
+
+.section-header {
+    color: #1e293b;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(to right, var(--qna-primary), var(--qna-secondary));
+    border-image-slice: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-header i {
+    background: linear-gradient(135deg, var(--qna-primary), var(--qna-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.8rem;
+}
+
+/* حقول الإدخال */
+.form-group-cosmic {
+    margin-bottom: 1.8rem;
+}
+
+.form-label-cosmic {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: #334155;
+    font-size: 1rem;
+}
+
+.form-control-cosmic {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 18px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+}
+
+.form-control-cosmic:focus {
+    border-color: var(--qna-primary);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+    background: white;
+}
+
+textarea.form-control-cosmic {
+    min-height: 150px;
+    resize: vertical;
+}
+
+select.form-control-cosmic {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 1rem center;
+    background-size: 1.2rem;
+}
+
+/* رسائل المساعدة والأخطاء */
+.help-text-cosmic {
+    display: block;
+    margin-top: 0.5rem;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.error-text-cosmic {
+    color: #dc2626;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* مربع الموافقة على الشروط */
+.terms-check-cosmic {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border: 2px solid #bae6fd;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.terms-check-cosmic input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    accent-color: var(--qna-primary);
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.terms-check-cosmic label {
+    font-weight: 600;
+    color: #0369a1;
+    cursor: pointer;
+    flex: 1;
+}
+
+.terms-check-cosmic small {
+    display: block;
+    margin-top: 0.5rem;
+    color: #0284c7;
+}
+
+/* أزرار التحكم */
+.actions-orbit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.btn-cosmic {
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.btn-cosmic-primary {
+    background: linear-gradient(135deg, var(--qna-primary), var(--qna-secondary));
+    color: white;
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+}
+
+.btn-cosmic-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.5);
+}
+
+.btn-cosmic-secondary {
+    background: white;
+    color: #334155;
+    border: 2px solid #e2e8f0;
+}
+
+.btn-cosmic-secondary:hover {
+    border-color: var(--qna-primary);
+    color: var(--qna-primary);
+    transform: translateY(-3px);
+}
+
+/* أمثلة الأسئلة */
+.examples-galaxy {
+    margin-top: 3rem;
+}
+
+.examples-galaxy h5 {
+    color: #1e293b;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.example-star {
+    background: white;
+    border-radius: 20px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    border-right: 6px solid transparent;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    animation: slideUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.example-star:hover {
+    transform: translateX(-10px);
+    border-right-color: var(--qna-primary);
+    box-shadow: 0 15px 30px -10px rgba(0,0,0,0.15);
+}
+
+.example-star .title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.example-star .views {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.example-star .badge-cosmic {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* حركات */
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes glowPulse {
+    0% { box-shadow: 0 15px 30px -10px rgba(249, 115, 22, 0.2); }
+    50% { box-shadow: 0 20px 40px -5px rgba(249, 115, 22, 0.4); }
+    100% { box-shadow: 0 15px 30px -10px rgba(249, 115, 22, 0.2); }
+}
+
+/* تحسينات للأجهزة الصغيرة */
+@media (max-width: 768px) {
+    .ask-header-orbit h1 {
+        font-size: 2.2rem;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .form-cosmos {
+        padding: 1.5rem;
+    }
+    .actions-orbit {
+        flex-direction: column-reverse;
+    }
+    .btn-cosmic {
+        width: 100%;
+    }
+    .stats-galaxy {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="ask-question-container" role="main" aria-labelledby="ask-question-heading">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <!-- رأس الصفحة -->
-                <div class="ask-header">
-                    <h1 id="ask-question-heading">❓ اطرح سؤالاً عن القرآن الكريم</h1>
-                    <p class="lead">
-                        شارك سؤالك مع مجتمعنا واحصل على إجابة من معلمين متخصصين في تحفيظ القرآن الكريم والتجويد والتفسير
-                    </p>
-                </div>
+<div class="ask-universe">
+    <div class="container-ask">
 
-                <!-- إحصائيات تشجيعية (مع قيم افتراضية) -->
-                <div class="row stats-row mb-4" aria-label="إحصائيات المنصة">
-                    <div class="col-md-6 mb-3">
-                        <div class="stat-mini-card">
-                            <h3 class="text-primary">{{ total_questions|default:"0" }}</h3>
-                            <p class="text-muted mb-0">سؤال تمت الإجابة عليه</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="stat-mini-card">
-                            <h3 class="text-success">{{ total_answers|default:"0" }}</h3>
-                            <p class="text-muted mb-0">إجابة من المعلمين</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- الهيدر الكوني -->
+        <div class="ask-header-orbit">
+            <h1>
+                <i class="fas fa-question-circle"></i>
+                اطرح سؤالاً عن القرآن الكريم
+            </h1>
+            <p class="lead">
+                شارك سؤالك مع مجتمعنا واحصل على إجابة من معلمين متخصصين في تحفيظ القرآن الكريم والتجويد والتفسير
+            </p>
+        </div>
 
-                <!-- نصائح قبل طرح السؤال -->
-                <div class="alert tips-alert mb-4" role="alert" aria-labelledby="tips-heading">
-                    <h5 class="alert-heading" id="tips-heading"><i class="fas fa-lightbulb"></i> نصائح لكتابة سؤال جيد:</h5>
-                    <ul class="mb-0">
-                        <li>اكتب عنواناً واضحاً ومحدداً (10 أحرف على الأقل)</li>
-                        <li>اشرح سؤالك بالتفصيل (20 حرف على الأقل)</li>
-                        <li>اختر الفئة المناسبة لسؤالك</li>
-                        <li>تأكد من أن سؤالك لم يُطرح من قبل</li>
-                        <li>استخدم لغة واضحة ومهذبة</li>
-                    </ul>
-                </div>
-
-                <!-- نموذج السؤال -->
-                <div class="form-main-card">
-                    <form method="post" novalidate aria-label="نموذج طرح السؤال">
-                        {% csrf_token %}
-                        
-                        <!-- معلومات الزائر -->
-                        <div class="mb-4">
-                            <h5 class="section-header">
-                                <i class="fas fa-user-circle"></i> معلوماتك الشخصية
-                            </h5>
-                            
-                            <div class="mb-3">
-                                <label for="{{ form.visitor_name.id_for_label }}" class="form-label">
-                                    {{ form.visitor_name.label }} <span class="text-danger">*</span>
-                                </label>
-                                {{ form.visitor_name }}
-                                {% if form.visitor_name.help_text %}
-                                <small class="form-text d-block text-muted">{{ form.visitor_name.help_text }}</small>
-                                {% endif %}
-                                {% if form.visitor_name.errors %}
-                                <div class="text-danger small mt-1" role="alert">
-                                    <i class="fas fa-exclamation-circle"></i> {{ form.visitor_name.errors.0 }}
-                                </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="{{ form.visitor_email.id_for_label }}" class="form-label">
-                                        {{ form.visitor_email.label }}
-                                    </label>
-                                    {{ form.visitor_email }}
-                                    {% if form.visitor_email.help_text %}
-                                    <small class="form-text d-block text-muted">{{ form.visitor_email.help_text }}</small>
-                                    {% endif %}
-                                    {% if form.visitor_email.errors %}
-                                    <div class="text-danger small mt-1" role="alert">
-                                        <i class="fas fa-exclamation-circle"></i> {{ form.visitor_email.errors.0 }}
-                                    </div>
-                                    {% endif %}
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="{{ form.visitor_phone.id_for_label }}" class="form-label">
-                                        {{ form.visitor_phone.label }}
-                                    </label>
-                                    {{ form.visitor_phone }}
-                                    {% if form.visitor_phone.help_text %}
-                                    <small class="form-text d-block text-muted">{{ form.visitor_phone.help_text }}</small>
-                                    {% endif %}
-                                    {% if form.visitor_phone.errors %}
-                                    <div class="text-danger small mt-1" role="alert">
-                                        <i class="fas fa-exclamation-circle"></i> {{ form.visitor_phone.errors.0 }}
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <!-- محتوى السؤال -->
-                        <div class="mb-4">
-                            <h5 class="section-header">
-                                <i class="fas fa-question-circle"></i> سؤالك
-                            </h5>
-                            
-                            <div class="mb-3">
-                                <label for="{{ form.category.id_for_label }}" class="form-label">
-                                    {{ form.category.label }}
-                                </label>
-                                {{ form.category }}
-                                {% if form.category.errors %}
-                                <div class="text-danger small mt-1" role="alert">
-                                    <i class="fas fa-exclamation-circle"></i> {{ form.category.errors.0 }}
-                                </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="{{ form.title.id_for_label }}" class="form-label">
-                                    {{ form.title.label }} <span class="text-danger">*</span>
-                                </label>
-                                {{ form.title }}
-                                {% if form.title.help_text %}
-                                <small class="form-text d-block text-muted">{{ form.title.help_text }}</small>
-                                {% endif %}
-                                {% if form.title.errors %}
-                                <div class="text-danger small mt-1" role="alert">
-                                    <i class="fas fa-exclamation-circle"></i> {{ form.title.errors.0 }}
-                                </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="{{ form.question_text.id_for_label }}" class="form-label">
-                                    {{ form.question_text.label }} <span class="text-danger">*</span>
-                                </label>
-                                {{ form.question_text }}
-                                {% if form.question_text.help_text %}
-                                <small class="form-text d-block text-muted">{{ form.question_text.help_text }}</small>
-                                {% endif %}
-                                {% if form.question_text.errors %}
-                                <div class="text-danger small mt-1" role="alert">
-                                    <i class="fas fa-exclamation-circle"></i> {{ form.question_text.errors.0 }}
-                                </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <!-- الموافقة على الشروط -->
-                        <div class="mb-4">
-                            <div class="form-check" style="padding: 15px; background: #f7fafc; border-radius: 12px; border: 2px solid #e2e8f0;">
-                                {{ form.agree_to_terms }}
-                                <label class="form-check-label" for="{{ form.agree_to_terms.id_for_label }}" style="margin-right: 10px; cursor: pointer;">
-                                    {{ form.agree_to_terms.label }}
-                                </label>
-                                {% if form.agree_to_terms.errors %}
-                                <div class="text-danger small mt-1 d-block" role="alert">
-                                    <i class="fas fa-exclamation-circle"></i> {{ form.agree_to_terms.errors.0 }}
-                                </div>
-                                {% endif %}
-                            </div>
-                            <small class="form-text d-block mt-2" style="padding-right: 30px; color: #718096;">
-                                <i class="fas fa-info-circle"></i> سيتم مراجعة سؤالك من قبل فريقنا قبل نشره. نحتفظ بالحق في تعديل أو رفض الأسئلة غير المناسبة.
-                            </small>
-                        </div>
-
-                        <!-- أخطاء النموذج العامة -->
-                        {% if form.non_field_errors %}
-                        <div class="alert alert-danger" role="alert">
-                            <i class="fas fa-exclamation-triangle"></i> {{ form.non_field_errors }}
-                        </div>
-                        {% endif %}
-
-                        <!-- أزرار الإرسال -->
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                            <a href="{% url 'qna:question_list' %}" class="btn btn-outline-secondary" style="border-radius: 12px; padding: 12px 30px; font-weight: 600;" aria-label="العودة إلى قائمة الأسئلة">
-                                <i class="fas fa-arrow-right"></i> إلغاء
-                            </a>
-                            <button type="submit" class="btn btn-primary-submit" aria-label="إرسال السؤال">
-                                <i class="fas fa-paper-plane"></i> إرسال السؤال
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- أمثلة على أسئلة جيدة -->
-                {% if example_questions %}
-                <div class="mt-5" aria-labelledby="examples-heading">
-                    <h5 id="examples-heading" style="color: #2d3748; font-weight: 600; margin-bottom: 20px;">
-                        <i class="fas fa-star" style="color: #fbbf24;"></i> أمثلة على أسئلة جيدة:
-                    </h5>
-                    {% for question in example_questions %}
-                    <a href="{% url 'qna:question_detail' question.slug %}" 
-                       style="background: white; border: none; border-radius: 15px; padding: 20px; margin-bottom: 12px; border-right: 4px solid var(--qna-primary); display: block; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s;"
-                       aria-label="اطلع على سؤال: {{ question.title }}">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 style="color: #2d3748; font-weight: 600; margin-bottom: 8px;">{{ question.title }}</h6>
-                                <small style="color: #718096;">
-                                    <i class="fas fa-eye"></i> {{ question.view_count }} مشاهدة
-                                </small>
-                            </div>
-                            <span class="badge" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); padding: 5px 10px; border-radius: 8px;">
-                                <i class="fas fa-check-circle"></i> مُجاب
-                            </span>
-                        </div>
-                    </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
+        <!-- إحصائيات تشجيعية -->
+        <div class="stats-galaxy">
+            <div class="stat-nebula">
+                <div class="stat-number primary">{{ total_questions|default:"0" }}</div>
+                <div class="stat-label">سؤال تمت الإجابة عليه</div>
+            </div>
+            <div class="stat-nebula">
+                <div class="stat-number success">{{ total_answers|default:"0" }}</div>
+                <div class="stat-label">إجابة من المعلمين</div>
             </div>
         </div>
+
+        <!-- نصائح لكتابة سؤال جيد (مذنب مضيء) -->
+        <div class="tips-comet">
+            <h5><i class="fas fa-lightbulb"></i> نصائح لكتابة سؤال جيد:</h5>
+            <ul>
+                <li>عنوان واضح ومحدد (10 أحرف على الأقل)</li>
+                <li>شرح تفصيلي (20 حرف على الأقل)</li>
+                <li>اختيار الفئة المناسبة</li>
+                <li>التأكد من عدم تكرار السؤال</li>
+                <li>لغة واضحة ومهذبة</li>
+            </ul>
+        </div>
+
+        <!-- بطاقة النموذج الرئيسية -->
+        <div class="form-cosmos">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- معلومات الزائر -->
+                <h5 class="section-header">
+                    <i class="fas fa-user-astronaut"></i> معلوماتك الشخصية
+                </h5>
+
+                <div class="form-group-cosmic">
+                    <label class="form-label-cosmic" for="{{ form.visitor_name.id_for_label }}">
+                        {{ form.visitor_name.label }} <span class="text-danger">*</span>
+                    </label>
+                    {{ form.visitor_name }}
+                    {% if form.visitor_name.help_text %}
+                        <small class="help-text-cosmic">{{ form.visitor_name.help_text }}</small>
+                    {% endif %}
+                    {% if form.visitor_name.errors %}
+                        <div class="error-text-cosmic"><i class="fas fa-exclamation-circle"></i> {{ form.visitor_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group-cosmic">
+                            <label class="form-label-cosmic" for="{{ form.visitor_email.id_for_label }}">
+                                {{ form.visitor_email.label }}
+                            </label>
+                            {{ form.visitor_email }}
+                            {% if form.visitor_email.help_text %}
+                                <small class="help-text-cosmic">{{ form.visitor_email.help_text }}</small>
+                            {% endif %}
+                            {% if form.visitor_email.errors %}
+                                <div class="error-text-cosmic"><i class="fas fa-exclamation-circle"></i> {{ form.visitor_email.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group-cosmic">
+                            <label class="form-label-cosmic" for="{{ form.visitor_phone.id_for_label }}">
+                                {{ form.visitor_phone.label }}
+                            </label>
+                            {{ form.visitor_phone }}
+                            {% if form.visitor_phone.help_text %}
+                                <small class="help-text-cosmic">{{ form.visitor_phone.help_text }}</small>
+                            {% endif %}
+                            {% if form.visitor_phone.errors %}
+                                <div class="error-text-cosmic"><i class="fas fa-exclamation-circle"></i> {{ form.visitor_phone.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- محتوى السؤال -->
+                <h5 class="section-header">
+                    <i class="fas fa-rocket"></i> سؤالك
+                </h5>
+
+                <div class="form-group-cosmic">
+                    <label class="form-label-cosmic" for="{{ form.category.id_for_label }}">
+                        {{ form.category.label }}
+                    </label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <div class="error-text-cosmic"><i class="fas fa-exclamation-circle"></i> {{ form.category.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group-cosmic">
+                    <label class="form-label-cosmic" for="{{ form.title.id_for_label }}">
+                        {{ form.title.label }} <span class="text-danger">*</span>
+                    </label>
+                    {{ form.title }}
+                    {% if form.title.help_text %}
+                        <small class="help-text-cosmic">{{ form.title.help_text }}</small>
+                    {% endif %}
+                    {% if form.title.errors %}
+                        <div class="error-text-cosmic"><i class="fas fa-exclamation-circle"></i> {{ form.title.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group-cosmic">
+                    <label class="form-label-cosmic" for="{{ form.question_text.id_for_label }}">
+                        {{ form.question_text.label }} <span class="text-danger">*</span>
+                    </label>
+                    {{ form.question_text }}
+                    {% if form.question_text.help_text %}
+                        <small class="help-text-cosmic">{{ form.question_text.help_text }}</small>
+                    {% endif %}
+                    {% if form.question_text.errors %}
+                        <div class="error-text-cosmic"><i class="fas fa-exclamation-circle"></i> {{ form.question_text.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- الموافقة على الشروط -->
+                <div class="terms-check-cosmic">
+                    {{ form.agree_to_terms }}
+                    <label for="{{ form.agree_to_terms.id_for_label }}">
+                        {{ form.agree_to_terms.label }}
+                        <small>سيتم مراجعة سؤالك قبل النشر. نحتفظ بالحق في تعديل أو رفض الأسئلة غير المناسبة.</small>
+                    </label>
+                </div>
+                {% if form.agree_to_terms.errors %}
+                    <div class="error-text-cosmic"><i class="fas fa-exclamation-circle"></i> {{ form.agree_to_terms.errors.0 }}</div>
+                {% endif %}
+
+                <!-- أخطاء النموذج العامة -->
+                {% if form.non_field_errors %}
+                <div class="error-text-cosmic" style="background: #fee2e2; padding: 15px; border-radius: 18px; margin-bottom: 20px;">
+                    <i class="fas fa-exclamation-triangle"></i> {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <!-- أزرار الإرسال -->
+                <div class="actions-orbit">
+                    <a href="{% url 'qna:question_list' %}" class="btn-cosmic btn-cosmic-secondary">
+                        <i class="fas fa-arrow-right"></i> إلغاء
+                    </a>
+                    <button type="submit" class="btn-cosmic btn-cosmic-primary">
+                        <i class="fas fa-paper-plane"></i> إرسال السؤال
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- أمثلة على أسئلة جيدة (إن وجدت) -->
+        {% if example_questions %}
+        <div class="examples-galaxy">
+            <h5><i class="fas fa-star" style="color: #fbbf24;"></i> أمثلة على أسئلة جيدة:</h5>
+            {% for question in example_questions %}
+            <a href="{% url 'qna:question_detail' question.slug %}" class="example-star" style="animation-delay: {{ forloop.counter|add:2 }}00ms;">
+                <div>
+                    <div class="title">{{ question.title }}</div>
+                    <small class="views"><i class="fas fa-eye"></i> {{ question.view_count }} مشاهدة</small>
+                </div>
+                <span class="badge-cosmic"><i class="fas fa-check-circle"></i> مُجاب</span>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
 </div>
+
+<script>
+// تفعيل الحقول ديناميكياً (إضافة الكلاسات)
+document.addEventListener('DOMContentLoaded', function() {
+    // إضافة كلاس CSS لحقول الإدخال
+    const formControls = document.querySelectorAll('input:not([type="checkbox"]), textarea, select');
+    formControls.forEach(el => {
+        if (el.type !== 'checkbox') {
+            el.classList.add('form-control-cosmic');
+        }
+    });
+
+    // معالجة checkbox
+    const agreeCheck = document.getElementById('{{ form.agree_to_terms.id_for_label }}');
+    if (agreeCheck) {
+        agreeCheck.classList.add('form-check-input-cosmic'); // اختياري
+    }
+});
+</script>
 {% endblock %}
