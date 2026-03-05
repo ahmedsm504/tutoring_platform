@@ -227,6 +227,10 @@ CANONICAL_URL = 'https://alagme.com'  # غيّر الدومين
 DEFAULT_PROTOCOL = 'https'
 
 # Cache للـ Sitemap (لتحسين الأداء)
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -234,7 +238,7 @@ CACHES = {
     },
     'sitemap': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_sitemap_cache',
+        'LOCATION': os.path.join(BASE_DIR, 'sitemap_cache'),  # مسار مطلق الآن
         'TIMEOUT': 86400,  # يوم واحد
     }
 }

@@ -1,45 +1,93 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}اطرح سؤالك | مجتمع تحفيظ القرآن{% endblock %}
-{% block meta_description %}اطرح سؤالك حول تحفيظ القرآن الكريم وتعلم التجويد واحصل على إجابة من معلمين متخصصين.{% endblock %}
+{% block title %}اطرح سؤالاً عن تحفيظ القرآن وتجويده | منصة العجمي{% endblock %}
+
+{% block meta_description %}هل لديك سؤال حول تحفيظ القرآن أو التجويد أو تفسير الآيات؟ اطرح سؤالك على مجتمعنا من المعلمين المتخصصين واحصل على إجابة موثوقة ومجانية.{% endblock %}
+
+{% block meta_keywords %}طرح سؤال, استفسار قرآني, فتوى قرآنية, تحفيظ القرآن, تجويد, تفسير, أحكام تلاوة, سؤال وجواب قرآن{% endblock %}
+
+{% block og_title %}اطرح سؤالاً عن القرآن الكريم - العجمي{% endblock %}
+{% block og_description %}مجتمع متخصص في الإجابة عن أسئلتكم في تحفيظ القرآن وتجويده. اطرح سؤالك الآن.{% endblock %}
+{% block twitter_title %}اطرح سؤالاً قرآنيًا - العجمي{% endblock %}
+{% block twitter_description %}أجوبة موثقة من معلمين متخصصين في القرآن وعلومه.{% endblock %}
+
+{% block extra_ldjson %}
+<!-- بيانات منظمة لصفحة طرح السؤال (WebPage) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "اطرح سؤالاً عن تحفيظ القرآن",
+  "description": "صفحة تتيح للزوار طرح أسئلتهم حول تحفيظ القرآن وتجويده وتفسيره",
+  "url": "{{ request.build_absolute_uri }}",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "الرئيسية",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "الأسئلة والأجوبة",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'qna:question_list' %}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "اطرح سؤالاً"
+      }
+    ]
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ request.scheme }}://{{ request.get_host }}{% url 'qna:question_list' %}?search={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/qna.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="ask-question-container">
+<div class="ask-question-container" role="main" aria-labelledby="ask-question-heading">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <!-- رأس الصفحة -->
                 <div class="ask-header">
-                    <h1>❓ اطرح سؤالك</h1>
+                    <h1 id="ask-question-heading">❓ اطرح سؤالاً عن القرآن الكريم</h1>
                     <p class="lead">
-                        شارك سؤالك مع مجتمعنا واحصل على إجابة من معلمين متخصصين في تحفيظ القرآن الكريم
+                        شارك سؤالك مع مجتمعنا واحصل على إجابة من معلمين متخصصين في تحفيظ القرآن الكريم والتجويد والتفسير
                     </p>
                 </div>
 
-                <!-- إحصائيات تشجيعية -->
-                <div class="row stats-row mb-4">
+                <!-- إحصائيات تشجيعية (مع قيم افتراضية) -->
+                <div class="row stats-row mb-4" aria-label="إحصائيات المنصة">
                     <div class="col-md-6 mb-3">
                         <div class="stat-mini-card">
-                            <h3 class="text-primary">{{ total_questions|default:0 }}</h3>
+                            <h3 class="text-primary">{{ total_questions|default:"0" }}</h3>
                             <p class="text-muted mb-0">سؤال تمت الإجابة عليه</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="stat-mini-card">
-                            <h3 class="text-success">{{ total_answers|default:0 }}</h3>
+                            <h3 class="text-success">{{ total_answers|default:"0" }}</h3>
                             <p class="text-muted mb-0">إجابة من المعلمين</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- نصائح قبل طرح السؤال -->
-                <div class="alert tips-alert mb-4">
-                    <h5 class="alert-heading"><i class="fas fa-lightbulb"></i> نصائح لكتابة سؤال جيد:</h5>
+                <div class="alert tips-alert mb-4" role="alert" aria-labelledby="tips-heading">
+                    <h5 class="alert-heading" id="tips-heading"><i class="fas fa-lightbulb"></i> نصائح لكتابة سؤال جيد:</h5>
                     <ul class="mb-0">
                         <li>اكتب عنواناً واضحاً ومحدداً (10 أحرف على الأقل)</li>
                         <li>اشرح سؤالك بالتفصيل (20 حرف على الأقل)</li>
@@ -51,7 +99,7 @@
 
                 <!-- نموذج السؤال -->
                 <div class="form-main-card">
-                    <form method="post" novalidate>
+                    <form method="post" novalidate aria-label="نموذج طرح السؤال">
                         {% csrf_token %}
                         
                         <!-- معلومات الزائر -->
@@ -69,7 +117,7 @@
                                 <small class="form-text d-block text-muted">{{ form.visitor_name.help_text }}</small>
                                 {% endif %}
                                 {% if form.visitor_name.errors %}
-                                <div class="text-danger small mt-1">
+                                <div class="text-danger small mt-1" role="alert">
                                     <i class="fas fa-exclamation-circle"></i> {{ form.visitor_name.errors.0 }}
                                 </div>
                                 {% endif %}
@@ -85,7 +133,7 @@
                                     <small class="form-text d-block text-muted">{{ form.visitor_email.help_text }}</small>
                                     {% endif %}
                                     {% if form.visitor_email.errors %}
-                                    <div class="text-danger small mt-1">
+                                    <div class="text-danger small mt-1" role="alert">
                                         <i class="fas fa-exclamation-circle"></i> {{ form.visitor_email.errors.0 }}
                                     </div>
                                     {% endif %}
@@ -100,7 +148,7 @@
                                     <small class="form-text d-block text-muted">{{ form.visitor_phone.help_text }}</small>
                                     {% endif %}
                                     {% if form.visitor_phone.errors %}
-                                    <div class="text-danger small mt-1">
+                                    <div class="text-danger small mt-1" role="alert">
                                         <i class="fas fa-exclamation-circle"></i> {{ form.visitor_phone.errors.0 }}
                                     </div>
                                     {% endif %}
@@ -122,7 +170,7 @@
                                 </label>
                                 {{ form.category }}
                                 {% if form.category.errors %}
-                                <div class="text-danger small mt-1">
+                                <div class="text-danger small mt-1" role="alert">
                                     <i class="fas fa-exclamation-circle"></i> {{ form.category.errors.0 }}
                                 </div>
                                 {% endif %}
@@ -137,7 +185,7 @@
                                 <small class="form-text d-block text-muted">{{ form.title.help_text }}</small>
                                 {% endif %}
                                 {% if form.title.errors %}
-                                <div class="text-danger small mt-1">
+                                <div class="text-danger small mt-1" role="alert">
                                     <i class="fas fa-exclamation-circle"></i> {{ form.title.errors.0 }}
                                 </div>
                                 {% endif %}
@@ -152,7 +200,7 @@
                                 <small class="form-text d-block text-muted">{{ form.question_text.help_text }}</small>
                                 {% endif %}
                                 {% if form.question_text.errors %}
-                                <div class="text-danger small mt-1">
+                                <div class="text-danger small mt-1" role="alert">
                                     <i class="fas fa-exclamation-circle"></i> {{ form.question_text.errors.0 }}
                                 </div>
                                 {% endif %}
@@ -169,7 +217,7 @@
                                     {{ form.agree_to_terms.label }}
                                 </label>
                                 {% if form.agree_to_terms.errors %}
-                                <div class="text-danger small mt-1 d-block">
+                                <div class="text-danger small mt-1 d-block" role="alert">
                                     <i class="fas fa-exclamation-circle"></i> {{ form.agree_to_terms.errors.0 }}
                                 </div>
                                 {% endif %}
@@ -181,17 +229,17 @@
 
                         <!-- أخطاء النموذج العامة -->
                         {% if form.non_field_errors %}
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger" role="alert">
                             <i class="fas fa-exclamation-triangle"></i> {{ form.non_field_errors }}
                         </div>
                         {% endif %}
 
                         <!-- أزرار الإرسال -->
                         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                            <a href="{% url 'qna:question_list' %}" class="btn btn-outline-secondary" style="border-radius: 12px; padding: 12px 30px; font-weight: 600;">
+                            <a href="{% url 'qna:question_list' %}" class="btn btn-outline-secondary" style="border-radius: 12px; padding: 12px 30px; font-weight: 600;" aria-label="العودة إلى قائمة الأسئلة">
                                 <i class="fas fa-arrow-right"></i> إلغاء
                             </a>
-                            <button type="submit" class="btn btn-primary-submit">
+                            <button type="submit" class="btn btn-primary-submit" aria-label="إرسال السؤال">
                                 <i class="fas fa-paper-plane"></i> إرسال السؤال
                             </button>
                         </div>
@@ -200,13 +248,14 @@
 
                 <!-- أمثلة على أسئلة جيدة -->
                 {% if example_questions %}
-                <div class="mt-5">
-                    <h5 style="color: #2d3748; font-weight: 600; margin-bottom: 20px;">
+                <div class="mt-5" aria-labelledby="examples-heading">
+                    <h5 id="examples-heading" style="color: #2d3748; font-weight: 600; margin-bottom: 20px;">
                         <i class="fas fa-star" style="color: #fbbf24;"></i> أمثلة على أسئلة جيدة:
                     </h5>
                     {% for question in example_questions %}
                     <a href="{% url 'qna:question_detail' question.slug %}" 
-                       style="background: white; border: none; border-radius: 15px; padding: 20px; margin-bottom: 12px; border-right: 4px solid var(--qna-primary); display: block; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s;">
+                       style="background: white; border: none; border-radius: 15px; padding: 20px; margin-bottom: 12px; border-right: 4px solid var(--qna-primary); display: block; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s;"
+                       aria-label="اطلع على سؤال: {{ question.title }}">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
                                 <h6 style="color: #2d3748; font-weight: 600; margin-bottom: 8px;">{{ question.title }}</h6>
@@ -226,32 +275,4 @@
         </div>
     </div>
 </div>
-
-<!-- بيانات منظمة لمحركات البحث -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "اطرح سؤالك",
-  "description": "اطرح سؤالك حول تحفيظ القرآن الكريم وتعلم التجويد",
-  "breadcrumb": {
-    "@type": "BreadcrumbList",
-    "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1,
-      "name": "الرئيسية",
-      "item": "{{ request.scheme }}://{{ request.get_host }}/"
-    },{
-      "@type": "ListItem",
-      "position": 2,
-      "name": "الأسئلة والأجوبة",
-      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'qna:question_list' %}"
-    },{
-      "@type": "ListItem",
-      "position": 3,
-      "name": "اطرح سؤالك"
-    }]
-  }
-}
-</script>
 {% endblock %}

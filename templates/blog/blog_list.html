@@ -1,9 +1,82 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}المدونة - مقالات متميزة | مؤسسة العجمي{% endblock %}
+{% block title %}المدونة - مقالات في تحفيظ القرآن وتجويده | مؤسسة العجمي{% endblock %}
 
-{% block meta_description %}اقرأ أحدث مقالات مؤسسة العجمي عن تحفيظ القرآن الكريم والتعليم الإسلامي. نصائح وفوائد دينية وتربوية.{% endblock %}
+{% block meta_description %}اقرأ أحدث مقالات مؤسسة العجمي المتخصصة في تحفيظ القرآن الكريم وتعليم التجويد وتفسير الآيات. نصائح وفوائد دينية وتربوية للمسلمين.{% endblock %}
+
+{% block meta_keywords %}مدونة قرآنية, مقالات تحفيظ القرآن, تعليم التجويد, تفسير القرآن, نصائح دينية, فوائد إسلامية, قصص الأنبياء, أحكام التلاوة{% endblock %}
+
+{% block og_title %}المدونة - مقالات في تحفيظ القرآن وتجويده | العجمي{% endblock %}
+{% block og_description %}تصفح أحدث المقالات المتخصصة في علوم القرآن وتحفيظه. محتوى مفيد وشامل لكل المهتمين بكتاب الله.{% endblock %}
+{% block twitter_title %}المدونة - العجمي{% endblock %}
+{% block twitter_description %}مقالات مميزة في تحفيظ القرآن وتجويده.{% endblock %}
+
+{% block extra_ldjson %}
+<!-- بيانات منظمة BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "الرئيسية",
+      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "المدونة",
+      "item": "{{ request.build_absolute_uri }}"
+    }
+  ]
+}
+</script>
+
+<!-- بيانات منظمة للمدونة (Blog) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "مدونة مؤسسة العجمي",
+  "description": "مدونة متخصصة في تحفيظ القرآن الكريم وتعليم التجويد وتفسير الآيات",
+  "url": "{{ request.build_absolute_uri }}",
+  "blogPost": [
+    {% for post in posts %}
+    {
+      "@type": "BlogPosting",
+      "headline": "{{ post.title|escapejs }}",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}",
+      "datePublished": "{{ post.created_at|date:'c' }}",
+      "description": "{{ post.excerpt|escapejs }}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
+<!-- بيانات منظمة لقائمة المقالات (ItemList) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "قائمة مقالات المدونة",
+  "description": "قائمة بأحدث المقالات المنشورة في مدونة مؤسسة العجمي",
+  "numberOfItems": {{ posts.paginator.count }},
+  "itemListElement": [
+    {% for post in posts %}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.counter }},
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -707,67 +780,39 @@
 {% endblock %}
 
 {% block content %}
-<div class="blog-container">
-    <!-- Search and Filter -->
-    <form method="get" class="search-filter-bar">
-        <div class="search-box">
-            <input type="text" name="search" placeholder="🔍 ابحث عن مقال..." value="{{ search_query }}" required>
-        </div>
-        <div class="filter-group">
-            <a href="?sort=latest" class="filter-btn {% if current_sort == 'latest' %}active{% endif %}">الأحدث</a>
-            <a href="?sort=popular" class="filter-btn {% if current_sort == 'popular' %}active{% endif %}">الأكثر قراءة</a>
-            <a href="?sort=oldest" class="filter-btn {% if current_sort == 'oldest' %}active{% endif %}">الأقدم</a>
-        </div>
-    </form>
+<main role="main" aria-labelledby="blog-heading">
+    <!-- Hidden H1 for SEO -->
+    <h1 id="blog-heading" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
+        مدونة مؤسسة العجمي - مقالات في تحفيظ القرآن الكريم وتجويده
+    </h1>
 
-    <!-- Featured Posts -->
-    {% if featured_posts %}
-    <div class="featured-section">
-        <h2 class="section-title">⭐ مقالات مميزة</h2>
-        <div class="featured-grid">
-            {% for post in featured_posts %}
-            <a href="{% url 'blog_detail' post.slug %}" class="featured-link">
-                <article class="featured-card">
-                    <span class="featured-badge">⭐ مميز</span>
-                    <div class="featured-image-container">
-                        {% if post.image %}
-                        <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="featured-image" loading="lazy" width="100%" height="290">
-                        {% else %}
-                        <div class="featured-placeholder">📝</div>
-                        {% endif %}
-                    </div>
-                    <div class="post-content">
-                        <div class="post-meta">
-                            {% if post.category %}
-                            <span class="category-badge">{{ post.category.icon }} {{ post.category.name }}</span>
-                            {% endif %}
-                            <span class="meta-item">👁 {{ post.views_count }} مشاهدة</span>
-                            <span class="meta-item">⏱ {{ post.reading_time }} دقائق</span>
-                        </div>
-                        <h3 class="post-title">{{ post.title }}</h3>
-                        <p class="post-excerpt">{{ post.excerpt|truncatewords:20 }}</p>
-                        <div class="read-more">قراءة المزيد ←</div>
-                    </div>
-                </article>
-            </a>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
+    <div class="blog-container">
+        <!-- Search and Filter -->
+        <form method="get" class="search-filter-bar" role="search" aria-label="بحث وتصفية المقالات">
+            <div class="search-box">
+                <input type="text" name="search" placeholder="🔍 ابحث عن مقال..." value="{{ search_query }}" aria-label="كلمات البحث">
+            </div>
+            <div class="filter-group">
+                <a href="?sort=latest" class="filter-btn {% if current_sort == 'latest' %}active{% endif %}" aria-label="ترتيب حسب الأحدث">الأحدث</a>
+                <a href="?sort=popular" class="filter-btn {% if current_sort == 'popular' %}active{% endif %}" aria-label="ترتيب حسب الأكثر قراءة">الأكثر قراءة</a>
+                <a href="?sort=oldest" class="filter-btn {% if current_sort == 'oldest' %}active{% endif %}" aria-label="ترتيب حسب الأقدم">الأقدم</a>
+            </div>
+        </form>
 
-    <div class="layout">
-        <!-- Main Content -->
-        <main class="main-content">
-            <h2 class="section-title">📖 جميع المقالات</h2>
-            <div class="posts-grid">
-                {% for post in posts %}
-                <a href="{% url 'blog_detail' post.slug %}" class="post-link">
-                    <article class="post-card">
-                        <div class="post-image-container">
+        <!-- Featured Posts -->
+        {% if featured_posts %}
+        <div class="featured-section" aria-labelledby="featured-heading">
+            <h2 class="section-title" id="featured-heading">⭐ مقالات مميزة</h2>
+            <div class="featured-grid">
+                {% for post in featured_posts %}
+                <a href="{% url 'blog_detail' post.slug %}" class="featured-link" aria-label="اقرأ المقال: {{ post.title }}">
+                    <article class="featured-card">
+                        <span class="featured-badge" aria-hidden="true">⭐ مميز</span>
+                        <div class="featured-image-container">
                             {% if post.image %}
-                            <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="post-image" loading="lazy" width="100%" height="240">
+                            <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="featured-image" loading="lazy" width="100%" height="290">
                             {% else %}
-                            <div class="post-placeholder">📝</div>
+                            <div class="featured-placeholder" aria-hidden="true">📝</div>
                             {% endif %}
                         </div>
                         <div class="post-content">
@@ -775,79 +820,114 @@
                                 {% if post.category %}
                                 <span class="category-badge">{{ post.category.icon }} {{ post.category.name }}</span>
                                 {% endif %}
-                                <span class="meta-item">👁 {{ post.views_count }}</span>
-                                <span class="meta-item">⏱ {{ post.reading_time }} د</span>
+                                <span class="meta-item"><i class="fas fa-eye" aria-hidden="true"></i> {{ post.views_count }} مشاهدة</span>
+                                <span class="meta-item"><i class="fas fa-clock" aria-hidden="true"></i> {{ post.reading_time }} دقائق</span>
                             </div>
                             <h3 class="post-title">{{ post.title }}</h3>
-                            <p class="post-excerpt">{{ post.excerpt|truncatewords:15 }}</p>
-                            <div class="read-more">قراءة المزيد ←</div>
+                            <p class="post-excerpt">{{ post.excerpt|truncatewords:20 }}</p>
+                            <span class="read-more" aria-hidden="true">قراءة المزيد ←</span>
                         </div>
                     </article>
                 </a>
-                {% empty %}
-                <p class="no-posts-message">لا توجد مقالات متاحة حالياً 📚</p>
                 {% endfor %}
             </div>
-            
-            <!-- Pagination -->
-            {% if posts.has_other_pages %}
-            <nav class="pagination" role="navigation" aria-label="pagination">
-                {% if posts.has_previous %}
-                <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" title="الصفحة السابقة">السابق</a>
-                {% endif %}
-                
-                <span class="current">صفحة {{ posts.number }} من {{ posts.paginator.num_pages }}</span>
-                
-                {% if posts.has_next %}
-                <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" title="الصفحة التالية">التالي</a>
-                {% endif %}
-            </nav>
-            {% endif %}
-        </main>
-        
-        <!-- Sidebar -->
-        <aside class="sidebar" role="complementary">
-            <!-- Categories -->
-            {% if categories %}
-            <div class="sidebar-widget">
-                <h3 class="widget-title">📁 التصنيفات</h3>
-                <ul class="category-list">
-                    {% for category in categories %}
-                    <li class="category-item">
-                        <a href="?category={{ category.slug }}" title="عرض تصنيف {{ category.name }}">
-                            <span>{{ category.icon }} {{ category.name }}</span>
-                            <span class="category-count">{{ category.posts_count }}</span>
-                        </a>
-                    </li>
+        </div>
+        {% endif %}
+
+        <div class="layout">
+            <!-- Main Content -->
+            <main class="main-content" aria-labelledby="all-posts-heading">
+                <h2 class="section-title" id="all-posts-heading">📖 جميع المقالات</h2>
+                <div class="posts-grid">
+                    {% for post in posts %}
+                    <a href="{% url 'blog_detail' post.slug %}" class="post-link" aria-label="اقرأ المقال: {{ post.title }}">
+                        <article class="post-card">
+                            <div class="post-image-container">
+                                {% if post.image %}
+                                <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="post-image" loading="lazy" width="100%" height="240">
+                                {% else %}
+                                <div class="post-placeholder" aria-hidden="true">📝</div>
+                                {% endif %}
+                            </div>
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    {% if post.category %}
+                                    <span class="category-badge">{{ post.category.icon }} {{ post.category.name }}</span>
+                                    {% endif %}
+                                    <span class="meta-item"><i class="fas fa-eye" aria-hidden="true"></i> {{ post.views_count }}</span>
+                                    <span class="meta-item"><i class="fas fa-clock" aria-hidden="true"></i> {{ post.reading_time }} د</span>
+                                </div>
+                                <h3 class="post-title">{{ post.title }}</h3>
+                                <p class="post-excerpt">{{ post.excerpt|truncatewords:15 }}</p>
+                                <span class="read-more" aria-hidden="true">قراءة المزيد ←</span>
+                            </div>
+                        </article>
+                    </a>
+                    {% empty %}
+                    <p class="no-posts-message" role="alert">لا توجد مقالات متاحة حالياً 📚</p>
                     {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
+                </div>
+                
+                <!-- Pagination -->
+                {% if posts.has_other_pages %}
+                <nav class="pagination" role="navigation" aria-label="التنقل بين صفحات المقالات">
+                    {% if posts.has_previous %}
+                    <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" title="الصفحة السابقة" aria-label="الصفحة السابقة">السابق</a>
+                    {% endif %}
+                    
+                    <span class="current" aria-current="page">صفحة {{ posts.number }} من {{ posts.paginator.num_pages }}</span>
+                    
+                    {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" title="الصفحة التالية" aria-label="الصفحة التالية">التالي</a>
+                    {% endif %}
+                </nav>
+                {% endif %}
+            </main>
             
-            <!-- Popular Posts -->
-            {% if popular_posts %}
-            <div class="sidebar-widget">
-                <h3 class="widget-title">🔥 الأكثر قراءة</h3>
-                {% for post in popular_posts %}
-                <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none;">
-                    <article class="popular-post-item">
-                        <div class="popular-post-image-container">
-                            {% if post.image %}
-                            <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="popular-post-image" loading="lazy" width="75" height="75">
-                            {% else %}
-                            <div class="popular-post-placeholder">📝</div>
-                            {% endif %}
-                        </div>
-                        <div class="popular-post-info">
-                            <h4>{{ post.title|truncatewords:8 }}</h4>
-                            <small>👁 {{ post.views_count }} مشاهدة</small>
-                        </div>
-                    </article>
-                </a>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </aside>
+            <!-- Sidebar -->
+            <aside class="sidebar" role="complementary" aria-label="قائمة جانبية: التصنيفات والمقالات الأكثر قراءة">
+                <!-- Categories -->
+                {% if categories %}
+                <div class="sidebar-widget">
+                    <h3 class="widget-title"><i class="fas fa-folder" aria-hidden="true"></i> التصنيفات</h3>
+                    <ul class="category-list">
+                        {% for category in categories %}
+                        <li class="category-item">
+                            <a href="?category={{ category.slug }}" title="عرض تصنيف {{ category.name }}" aria-label="عرض مقالات تصنيف {{ category.name }}">
+                                <span>{{ category.icon }} {{ category.name }}</span>
+                                <span class="category-count">{{ category.posts_count }}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                <!-- Popular Posts -->
+                {% if popular_posts %}
+                <div class="sidebar-widget">
+                    <h3 class="widget-title"><i class="fas fa-fire" aria-hidden="true"></i> الأكثر قراءة</h3>
+                    {% for post in popular_posts %}
+                    <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none;" aria-label="اقرأ المقال: {{ post.title }}">
+                        <article class="popular-post-item">
+                            <div class="popular-post-image-container">
+                                {% if post.image %}
+                                <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="popular-post-image" loading="lazy" width="75" height="75">
+                                {% else %}
+                                <div class="popular-post-placeholder" aria-hidden="true">📝</div>
+                                {% endif %}
+                            </div>
+                            <div class="popular-post-info">
+                                <h4>{{ post.title|truncatewords:8 }}</h4>
+                                <small><i class="fas fa-eye" aria-hidden="true"></i> {{ post.views_count }} مشاهدة</small>
+                            </div>
+                        </article>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </aside>
+        </div>
     </div>
-</div>
+</main>
 {% endblock %}
