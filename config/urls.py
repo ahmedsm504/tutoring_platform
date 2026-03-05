@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
+from core.views import robots_txt
 
 # استيراد Sitemaps (بعد التعديلات - إزالة الخرائط المكررة)
 from .sitemaps import (
@@ -52,12 +53,7 @@ urlpatterns = [
          name='django.contrib.sitemaps.views.sitemap'),
     
     # ============= Robots.txt =============
-    path('robots.txt',
-         TemplateView.as_view(
-             template_name="robots.txt",
-             content_type="text/plain"
-         ),
-         name='robots'),
+    path("robots.txt", robots_txt),
     
     # ============= Core URLs =============
     path('', include('core.urls')),  # الصفحات الرئيسية (home, pricing, about, etc.)
