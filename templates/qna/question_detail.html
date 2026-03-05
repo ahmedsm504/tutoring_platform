@@ -1,8 +1,89 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ question.title }} | أسئلة تحفيظ القرآن{% endblock %}
-{% block meta_description %}{{ question.meta_description|default:question.question_text|truncatewords:30 }}{% endblock %}
+{% block title %}{{ question.title }} | أجوبة في تحفيظ القرآن وتجويده{% endblock %}
+
+{% block meta_description %}{{ question.question_text|truncatewords:30 }}{% endblock %}
+
+{% block meta_keywords %}{% if question.category %}{{ question.category.name }},{% endif %} تحفيظ قرآن, تجويد, تفسير, أحكام تلاوة, فتاوى قرآنية, استفسارات قرآنية{% endblock %}
+
+{% block og_title %}{{ question.title }} - منصة العجمي{% endblock %}
+{% block og_description %}{{ question.question_text|truncatewords:30 }}{% endblock %}
+{% block twitter_title %}{{ question.title }} - العجمي{% endblock %}
+{% block twitter_description %}{{ question.question_text|truncatewords:30 }}{% endblock %}
+
+{% block extra_ldjson %}
+<!-- بيانات منظمة لصفحة السؤال (QAPage) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "QAPage",
+  "mainEntity": {
+    "@type": "Question",
+    "name": "{{ question.title }}",
+    "text": "{{ question.question_text|escapejs }}",
+    "dateCreated": "{{ question.created_at|date:'c' }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ question.visitor_name }}"
+    },
+    "answerCount": {{ community_answers.count }},
+    {% if has_official_answer %}
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "{{ official_answer.answer_text|escapejs }}",
+      "dateCreated": "{{ official_answer.answered_at|date:'c' }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ official_answer.answered_by.get_full_name|default:official_answer.answered_by.username }}"
+      }
+    },
+    {% endif %}
+    "suggestedAnswer": [
+      {% for answer in community_answers %}
+      {
+        "@type": "Answer",
+        "text": "{{ answer.answer_text|escapejs }}",
+        "dateCreated": "{{ answer.created_at|date:'c' }}",
+        "author": {
+          "@type": "Person",
+          "name": "{% if answer.answered_by %}{{ answer.answered_by.get_full_name|default:answer.answered_by.username }}{% else %}{{ answer.visitor_name }}{% endif %}"
+        }
+      }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+
+<!-- بيانات مسار التنقل (BreadcrumbList) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "الرئيسية",
+      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "أسئلة وأجوبة",
+      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'qna:question_list' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ question.title }}",
+      "item": "{{ request.build_absolute_uri }}"
+    }
+  ]
+}
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/qna.css' %}">
@@ -967,7 +1048,7 @@
                         </div>
 
                         <footer class="author-constellation">
-                            <div class="avatar-cosmic" aria-hidden="true">
+                            <div class="avatar-cosmic" aria-hidden="true" role="img" aria-label="صورة رمزية للسائل {{ question.visitor_name }}">
                                 {{ question.visitor_name.0|upper }}
                             </div>
                             <div class="author-info-cosmic">
@@ -980,7 +1061,7 @@
                                 </div>
                             </div>
                             <div class="stats-galaxy">
-                                <div class="view-satellite" itemprop="interactionStatistic">
+                                <div class="view-satellite" itemprop="interactionStatistic" itemscope itemtype="https://schema.org/InteractionCounter">
                                     <i class="far fa-eye"></i>
                                     <span itemprop="userInteractionCount">{{ question.view_count }}</span>
                                     <span>مشاهدة</span>
@@ -998,7 +1079,7 @@
                 <!-- OFFICIAL ANSWER -->
                 {% if has_official_answer %}
                 <section class="answer-supernova animate-in delay-100" 
-                         itemprop="suggestedAnswer" 
+                         itemprop="acceptedAnswer" 
                          itemscope 
                          itemtype="https://schema.org/Answer">
                     <header class="supernova-header">
@@ -1018,7 +1099,7 @@
                         </div>
 
                         <footer class="author-constellation">
-                            <div class="avatar-cosmic" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" aria-hidden="true">
+                            <div class="avatar-cosmic" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" aria-hidden="true" role="img" aria-label="صورة رمزية للمجيب {{ official_answer.answered_by.get_full_name|default:official_answer.answered_by.username }}">
                                 {{ official_answer.answered_by.first_name.0|upper|default:official_answer.answered_by.username.0|upper }}
                             </div>
                             <div class="author-info-cosmic">
@@ -1094,7 +1175,7 @@
                                  itemtype="https://schema.org/Answer"
                                  data-answer-id="{{ answer.id }}">
                             <header class="asteroid-header">
-                                <div class="asteroid-avatar" aria-hidden="true">
+                                <div class="asteroid-avatar" aria-hidden="true" role="img" aria-label="صورة رمزية للمجيب {% if answer.answered_by %}{{ answer.answered_by.get_full_name|default:answer.answered_by.username }}{% else %}{{ answer.visitor_name }}{% endif %}">
                                     {% if answer.answered_by %}
                                         {{ answer.answered_by.first_name.0|upper|default:answer.answered_by.username.0|upper }}
                                     {% else %}
@@ -1111,7 +1192,7 @@
                                     </div>
                                     <div class="asteroid-time">
                                         <i class="far fa-clock"></i> 
-                                        {{ answer.created_at|timesince }} مضت
+                                        <time datetime="{{ answer.created_at|date:'c' }}">{{ answer.created_at|timesince }} مضت</time>
                                     </div>
                                 </div>
                             </header>

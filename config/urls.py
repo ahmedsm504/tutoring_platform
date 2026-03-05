@@ -6,17 +6,13 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
 
-# استيراد Sitemaps
+# استيراد Sitemaps (بعد التعديلات - إزالة الخرائط المكررة)
 from .sitemaps import (
     StaticViewSitemap,
     BlogPostSitemap,
     BlogCategorySitemap,
-    PricingPackagesSitemap,
-    QualityStandardsSitemap,
     PopularPagesSitemap,
-    ImageSitemap,
     NewsSitemap,
-    MobileSitemap,
     # QNA Sitemaps
     QNAQuestionsSitemap,
     QNACategorySitemap,
@@ -24,21 +20,15 @@ from .sitemaps import (
     FrequentQuestionsSitemap,
 )
 
-# تعريف جميع Sitemaps
+# تعريف جميع Sitemaps المتاحة
 sitemaps = {
     # الصفحات الأساسية
-    'static': StaticViewSitemap,              # الصفحات الثابتة
-    'popular': PopularPagesSitemap,           # الصفحات الشائعة
-    'mobile': MobileSitemap,                  # صفحات الموبايل
+    'static': StaticViewSitemap,          # الصفحات الثابتة
+    'popular': PopularPagesSitemap,       # الصفحات الشائعة
     
     # المدونة
-    'blog': BlogPostSitemap,                  # مقالات المدونة
-    'blog-categories': BlogCategorySitemap,   # تصنيفات المدونة
-    'images': ImageSitemap,                   # صور المقالات
-    
-    # الباقات والجودة
-    'packages': PricingPackagesSitemap,       # الباقات التعليمية
-    'quality': QualityStandardsSitemap,       # مواثيق الجودة
+    'blog': BlogPostSitemap,              # مقالات المدونة
+    'blog-categories': BlogCategorySitemap,  # تصنيفات المدونة
     
     # الأسئلة والأجوبة (QNA)
     'qna-questions': QNAQuestionsSitemap,     # جميع الأسئلة
@@ -47,7 +37,7 @@ sitemaps = {
     'qna-frequent': FrequentQuestionsSitemap, # الأسئلة المتكررة
     
     # المحتوى الحديث
-    'news': NewsSitemap,                      # الأخبار والمحتوى الحديث
+    'news': NewsSitemap,                  # الأخبار والمحتوى الحديث
 }
 
 urlpatterns = [
@@ -61,12 +51,6 @@ urlpatterns = [
          {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap'),
     
-    # Sitemaps منفصلة لكل قسم
-    path('sitemap-<section>.xml',
-         sitemap,
-         {'sitemaps': sitemaps},
-         name='django.contrib.sitemaps.views.sitemap'),
-    
     # ============= Robots.txt =============
     path('robots.txt',
          TemplateView.as_view(
@@ -76,30 +60,19 @@ urlpatterns = [
          name='robots'),
     
     # ============= Core URLs =============
-    path('', include('core.urls')),           # الصفحات الرئيسية (home, pricing, about, etc.)
+    path('', include('core.urls')),  # الصفحات الرئيسية (home, pricing, about, etc.)
     
     # ============= Accounts URLs =============
-    path('accounts/', include('accounts.urls')),  # نظام المستخدمين (login, register, profile)
+    path('accounts/', include('accounts.urls')),  # نظام المستخدمين
     
     # ============= Blog URLs =============
-    path('blog/', include('blog.urls')),      # المدونة (posts, categories)
+    path('blog/', include('blog.urls')),  # المدونة
     
     # ============= QNA URLs =============
     path('questions/', include('qna.urls', namespace='qna')),  # الأسئلة والأجوبة
-    
-    # ============= Security & Verification Files =============
-    # يمكنك إضافة ملفات التحقق من Google Search Console و Bing هنا
-    # مثال:
-    # path('google123456789.html', 
-    #      TemplateView.as_view(
-    #          template_name="google123456789.html",
-    #          content_type="text/html"
-    #      )),
 ]
 
 # Static and Media files في وضع التطوير
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    
-

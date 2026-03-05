@@ -1,29 +1,9 @@
 User-agent: *
 Allow: /
 
-# Sitemaps
 Sitemap: https://alagme.com/sitemap.xml
 
-# الصفحات المحظورة
 Disallow: /admin/
 Disallow: /accounts/login/
 Disallow: /accounts/register/
 Disallow: /media/private/
-
-# السماح بفهرسة الصفحات الرئيسية
-Allow: /
-Allow: /blog/
-Allow: /questions/
-Allow: /pricing/
-Allow: /about/
-Allow: /contact/
-
-# Bot-specific rules
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-# Crawl delay
-Crawl-delay: 10

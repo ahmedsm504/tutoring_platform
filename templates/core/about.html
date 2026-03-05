@@ -1,14 +1,86 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}من نحن - مؤسسة العجمي لتحفيظ القرآن الكريم عن بُعد{% endblock %}
+{% block title %}من نحن - مؤسسة العجمي لتحفيظ القرآن الكريم أونلاين | رؤيتنا ورسالتنا{% endblock %}
 
-{% block meta_description %}تعرف على مؤسسة العجمي - منصة قرآنية تعنى بالفهم قبل الحفظ، وتعليم التلاوة والتجويد بأسلوب متدرج.{% endblock %}
+{% block meta_description %}تعرف على مؤسسة العجمي، منصة قرآنية متخصصة في تحفيظ القرآن الكريم عن بُعد. نؤمن بالفهم قبل الحفظ، ونقدم تعليم التلاوة والتجويد بأسلوب متدرج. رؤيتنا وفريق العمل وقيمنا.{% endblock %}
 
-{% block meta_keywords %}مؤسسة العجمي، من نحن، منصة قرآنية، تعليم التجويد، تلاوة القرآن، فهم القرآن{% endblock %}
+{% block meta_keywords %}مؤسسة العجمي، من نحن، منصة قرآنية، تعليم التجويد، تلاوة القرآن، فهم القرآن، تحفيظ قرآن عن بعد، رؤية ورسالة، قيم المنصة، فريق العمل، أحمد سمير، رويدا العجمي{% endblock %}
 
-{% block og_title %}من نحن - مؤسسة العجمي لتحفيظ القرآن الكريم{% endblock %}
+{% block og_title %}من نحن - مؤسسة العجمي لتحفيظ القرآن الكريم عن بُعد{% endblock %}
 
-{% block og_description %}منصة تعليمية قرآنية تجمع بين صحة التلقي ووضوح الشرح، وتبني قارئاً واعياً متصلاً بالقرآن.{% endblock %}
+{% block og_description %}منصة تعليمية قرآنية تجمع بين صحة التلقي ووضوح الشرح، وتبني قارئاً واعياً متصلاً بالقرآن. تعرف على رؤيتنا ورسالتنا وفريق العمل.{% endblock %}
+
+{% block twitter_title %}من نحن - العجمي{% endblock %}
+{% block twitter_description %}منصة العجمي: علم يُفهم وأثر يبقى. تعرف على قصتنا وفريق العمل.{% endblock %}
+
+{% block extra_ldjson %}
+<!-- بيانات منظمة محدثة لصفحة "من نحن" -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "من نحن - مؤسسة العجمي",
+  "description": "صفحة تعريفية بمنصة العجمي لتحفيظ القرآن الكريم عن بُعد، تشمل الرؤية والرسالة والقيم وفريق العمل.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "مؤسسة العجمي",
+    "alternateName": "Al-Agmi Foundation",
+    "description": "منصة قرآنية تعنى بالفهم قبل الحفظ، وتقديم تعليم متقن للتلاوة والتجويد بأسلوب متدرج.",
+    "url": "{{ request.build_absolute_uri }}",
+    "logo": "{% static 'images/logo.jpeg' %}",
+    "foundingDate": "2024",
+    "founder": [
+      {
+        "@type": "Person",
+        "name": "أحمد سمير",
+        "jobTitle": "مطور المنصة والمؤسس المشارك"
+      },
+      {
+        "@type": "Person",
+        "name": "رويدا العجمي",
+        "jobTitle": "مختص محتوى تعليمي ومؤسس مشارك"
+      }
+    ],
+    "slogan": "علم يُفهم وأثر يبقى",
+    "knowsAbout": ["تحفيظ القرآن", "التجويد", "تفسير القرآن", "القرآن الكريم"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "EG",
+      "addressRegion": "مصر"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+20-104-456-8181",
+      "contactType": "Customer Service",
+      "availableLanguage": "Arabic"
+    }
+  }
+}
+</script>
+
+<!-- بيانات BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "الرئيسية",
+      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "من نحن",
+      "item": "{{ request.build_absolute_uri }}"
+    }
+  ]
+}
+</script>
+{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -204,114 +276,94 @@
         margin-top: 15px;
     }
 </style>
-
-<!-- Structured Data for About Page -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "AboutPage",
-  "name": "من نحن - مؤسسة العجمي",
-  "description": "منصة تعليمية قرآنية تجمع بين الفهم والتجويد والتلاوة بأسلوب مبتكر.",
-  "mainEntity": {
-    "@type": "Organization",
-    "name": "مؤسسة العجمي",
-    "description": "منصة قرآنية تعنى بالفهم قبل الحفظ، وتقديم تعليم متقن للتلاوة والتجويد.",
-    "founder": [
-      {
-        "@type": "Person",
-        "name": "أحمد سمير",
-        "jobTitle": "مطور المنصة"
-      },
-      {
-        "@type": "Person",
-        "name": "رويدا العجمي",
-        "jobTitle": "مختص محتوى تعليمي"
-      }
-    ]
-  }
-}
-</script>
 {% endblock %}
 
 {% block content %}
-<article itemscope itemtype="https://schema.org/AboutPage">
-    <h1 itemprop="name">منصة العجمي</h1>
-    
-    <section itemscope itemtype="https://schema.org/Organization">
-        <h2>من نحن</h2>
-        <div itemprop="description">
-            <p>
-                نحن منصة تعليمية قرآنية، نؤمن أن العلاقة الحقيقية مع القرآن تبدأ بـ <strong>الفهم قبل الحفظ</strong>، وبالمنهج قبل الكثرة. 
-                نسعى إلى تقديم تعليم قرآني يجمع بين صحة التلقي ووضوح الشرح، بعيدًا عن التعقيد أو التلقين الجاف.
-            </p>
-            <p>
-                نقدّم تعليم التلاوة والتجويد بأسلوب متدرّج، يراعي اختلاف المستويات، ويُعيد للقرآن حضوره في القلب قبل اللسان. 
-                نهدف إلى بناء قارئ واعٍ بما يقرأ، مدركٍ لأحكامه، متصلٍ بالقرآن أثرًا وسلوكًا.
-            </p>
-            <p style="margin-top: 25px; font-size: 1.25em; color: #c8e6c9; text-align: center; background: rgba(76,175,80,0.1); padding: 15px; border-radius: 40px;">
-                منصتنا وُجدت لكل من يبحث عن علمٍ يُفهم، وتعليمٍ يُتقن، وقرآنٍ يُعاش… لا يُتجاوز.
-            </p>
-            <p style="text-align: center; font-size: 1.4em; font-weight: 700; color: #81c784; margin-top: 10px;">
-                علمٌ يُفهم | أثرٌ يبقى 💙
-            </p>
-        </div>
-    </section>
+<main role="main">
+    <!-- Hidden H1 for SEO (already present, but ensuring structure) -->
+    <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
+        منصة العجمي لتحفيظ القرآن الكريم - رؤيتنا ورسالتنا وفريق العمل
+    </h1>
 
-    <section>
-        <h2>رؤيتنا</h2>
-        <p>
-            ندرك أهمية العلم والقيم، لذلك نسهم في بناء الإنسان ونشر وتعليم القرآن بأسلوب يسير ومؤثر ليصل نوره إلى كل بيت وكل قلب وعقل، 
-            وليكون حفظة القرآن سفراء للخير والإيمان أينما وجدوا.
-        </p>
-    </section>
-
-    <section>
-        <h2>رسالتنا</h2>
-        <p>
-            نشر رسالة القرآن الكريم وتعليمه للناطقين بالعربية وغير الناطقين بها من خلال بيئة آمنة وفعالة. 
-            نحن لا نقدم مجرد معلم، بل نقدم رفيقاً وموجهاً ليصحبك في هذه الرحلة في الدنيا، ولنكون معاً في الآخرة.
-        </p>
-    </section>
-
-    <section>
-        <h2>قيمنا</h2>
-        <ul>
-            <li>الالتزام بأخلاق القرآن الكريم</li>
-            <li>الإخلاص في العمل</li>
-            <li>الإتقان والجودة في التعليم</li>
-            <li>الاحترام المتبادل والتعامل برقي</li>
-            <li>التطوير المستمر والابتكار</li>
-            <li>المسؤولية والأمانة في التعليم</li>
-        </ul>
-    </section>
-
-    <section itemscope itemtype="https://schema.org/Organization">
-        <h2>فريق العمل</h2>
-        <div class="team">
-            <div class="member-card" itemprop="employee" itemscope itemtype="https://schema.org/Person">
-                <img src="https://img.icons8.com/color/96/000000/teacher.png" alt="أحمد سمير - مطور المنصة" itemprop="image">
-                <h3 itemprop="name">أحمد سمير</h3>
-                <p itemprop="jobTitle">مطور المنصة</p>
+    <article itemscope itemtype="https://schema.org/AboutPage" aria-labelledby="about-heading">
+        <h1 id="about-heading" itemprop="name">منصة العجمي</h1>
+        
+        <section aria-labelledby="who-heading" itemscope itemtype="https://schema.org/Organization">
+            <h2 id="who-heading">من نحن</h2>
+            <div itemprop="description">
+                <p>
+                    نحن منصة تعليمية قرآنية، نؤمن أن العلاقة الحقيقية مع القرآن تبدأ بـ <strong>الفهم قبل الحفظ</strong>، وبالمنهج قبل الكثرة. 
+                    نسعى إلى تقديم تعليم قرآني يجمع بين صحة التلقي ووضوح الشرح، بعيدًا عن التعقيد أو التلقين الجاف.
+                </p>
+                <p>
+                    نقدّم تعليم التلاوة والتجويد بأسلوب متدرّج، يراعي اختلاف المستويات، ويُعيد للقرآن حضوره في القلب قبل اللسان. 
+                    نهدف إلى بناء قارئ واعٍ بما يقرأ، مدركٍ لأحكامه، متصلٍ بالقرآن أثرًا وسلوكًا.
+                </p>
+                <p style="margin-top: 25px; font-size: 1.25em; color: #c8e6c9; text-align: center; background: rgba(76,175,80,0.1); padding: 15px; border-radius: 40px;">
+                    منصتنا وُجدت لكل من يبحث عن علمٍ يُفهم، وتعليمٍ يُتقن، وقرآنٍ يُعاش… لا يُتجاوز.
+                </p>
+                <p style="text-align: center; font-size: 1.4em; font-weight: 700; color: #81c784; margin-top: 10px;">
+                    علمٌ يُفهم | أثرٌ يبقى 💙
+                </p>
             </div>
-            <div class="member-card" itemprop="employee" itemscope itemtype="https://schema.org/Person">
-                <img src="https://img.icons8.com/color/96/000000/teacher.png" alt="رويدا العجمي - مختص محتوى تعليمي" itemprop="image">
-                <h3 itemprop="name">رويدا العجمي</h3>
-                <p itemprop="jobTitle">مختص محتوى تعليمي</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <h2>لماذا تختارنا؟</h2>
-        <ul>
-            <li>معلمون مؤهلون وحاصلون على إجازات في القرآن الكريم</li>
-            <li>حصص فردية مخصصة لكل طالب</li>
-            <li>مرونة في اختيار الأوقات المناسبة</li>
-            <li>أسعار تنافسية تبدأ من 7 ريال</li>
-            <li>متابعة مستمرة وتقييم دوري</li>
-            <li>حلقة تجريبية مجانية</li>
-            <li>برامج متنوعة تناسب جميع الأعمار والمستويات</li>
-        </ul>
-    </section>
-</article>
+        <section aria-labelledby="vision-heading">
+            <h2 id="vision-heading">رؤيتنا</h2>
+            <p>
+                ندرك أهمية العلم والقيم، لذلك نسهم في بناء الإنسان ونشر وتعليم القرآن بأسلوب يسير ومؤثر ليصل نوره إلى كل بيت وكل قلب وعقل، 
+                وليكون حفظة القرآن سفراء للخير والإيمان أينما وجدوا.
+            </p>
+        </section>
+
+        <section aria-labelledby="mission-heading">
+            <h2 id="mission-heading">رسالتنا</h2>
+            <p>
+                نشر رسالة القرآن الكريم وتعليمه للناطقين بالعربية وغير الناطقين بها من خلال بيئة آمنة وفعالة. 
+                نحن لا نقدم مجرد معلم، بل نقدم رفيقاً وموجهاً ليصحبك في هذه الرحلة في الدنيا، ولنكون معاً في الآخرة.
+            </p>
+        </section>
+
+        <section aria-labelledby="values-heading">
+            <h2 id="values-heading">قيمنا</h2>
+            <ul>
+                <li>الالتزام بأخلاق القرآن الكريم</li>
+                <li>الإخلاص في العمل</li>
+                <li>الإتقان والجودة في التعليم</li>
+                <li>الاحترام المتبادل والتعامل برقي</li>
+                <li>التطوير المستمر والابتكار</li>
+                <li>المسؤولية والأمانة في التعليم</li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="team-heading" itemscope itemtype="https://schema.org/Organization">
+            <h2 id="team-heading">فريق العمل</h2>
+            <div class="team">
+                <div class="member-card" itemprop="employee" itemscope itemtype="https://schema.org/Person">
+                    <img src="https://img.icons8.com/color/96/000000/teacher.png" alt="صورة أحمد سمير - مطور المنصة ومؤسس مشارك في منصة العجمي" itemprop="image">
+                    <h3 itemprop="name">أحمد سمير</h3>
+                    <p itemprop="jobTitle">مطور المنصة والمؤسس المشارك</p>
+                </div>
+                <div class="member-card" itemprop="employee" itemscope itemtype="https://schema.org/Person">
+                    <img src="https://img.icons8.com/color/96/000000/teacher.png" alt="صورة رويدا العجمي - مختص محتوى تعليمي ومؤسس مشارك في منصة العجمي" itemprop="image">
+                    <h3 itemprop="name">رويدا العجمي</h3>
+                    <p itemprop="jobTitle">مختص محتوى تعليمي ومؤسس مشارك</p>
+                </div>
+            </div>
+        </section>
+
+        <section aria-labelledby="why-heading">
+            <h2 id="why-heading">لماذا تختار منصة العجمي لتحفيظ القرآن؟</h2>
+            <ul>
+                <li>معلمون مؤهلون وحاصلون على إجازات في القرآن الكريم</li>
+                <li>حصص فردية مخصصة لكل طالب</li>
+                <li>مرونة في اختيار الأوقات المناسبة</li>
+                <li>أسعار تنافسية تبدأ من 7 ريال</li>
+                <li>متابعة مستمرة وتقييم دوري</li>
+                <li>حلقة تجريبية مجانية</li>
+                <li>برامج متنوعة تناسب جميع الأعمار والمستويات</li>
+            </ul>
+        </section>
+    </article>
+</main>
 {% endblock %}
