@@ -207,3 +207,21 @@ def dashboard(request):
     }
 
     return render(request, "core/dashboard.html", context)
+
+
+from django.http import HttpResponse
+
+def robots_txt(request):
+    return HttpResponse(
+"""User-agent: *
+Allow: /
+
+Sitemap: https://alagme.com/sitemap.xml
+
+Disallow: /admin/
+Disallow: /accounts/login/
+Disallow: /accounts/register/
+Disallow: /media/private/
+""",
+        content_type="text/plain"
+    )
