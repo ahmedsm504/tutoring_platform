@@ -266,6 +266,11 @@
     color: black !important;
 }
 
+/* جعل بطاقة السؤال تبدو قابلة للنقر */
+.question-meteor {
+    cursor: pointer;
+}
+
 </style>
 {% endblock %}
 
@@ -698,6 +703,20 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
         observer.observe(el);
+    });
+    
+    // جعل البطاقة بأكملها قابلة للنقر (مع الحفاظ على الروابط الداخلية)
+    document.querySelectorAll('.question-meteor').forEach(card => {
+        card.addEventListener('click', function(e) {
+            // إذا تم النقر على رابط أو داخل رابط (مثل الفئة أو حالة السؤال)، اترك السلوك الطبيعي
+            if (e.target.closest('a')) return;
+            
+            // وإلا، ابحث عن رابط عنوان السؤال وقم بمحاكاة النقر عليه
+            const link = this.querySelector('a.question-title-core');
+            if (link) {
+                link.click(); // يحافظ على Ctrl+click والزر الأوسط
+            }
+        });
     });
 });
 </script>
