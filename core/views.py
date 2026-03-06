@@ -210,10 +210,8 @@ def dashboard(request):
 
 
 from django.http import HttpResponse
-from django.shortcuts import redirect
 
-# ملف robots الجديد
-def robots_txt_new(request):
+def robots_txt(request):
     return HttpResponse(
 """User-agent: *
 Allow: /
@@ -227,7 +225,3 @@ Disallow: /media/private/
 """,
         content_type="text/plain"
     )
-
-# redirect من robots.txt القديم للملف الجديد
-def robots_redirect(request):
-    return redirect("/robots-new.txt", permanent=True)

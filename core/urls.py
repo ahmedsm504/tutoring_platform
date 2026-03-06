@@ -1,18 +1,17 @@
 from django.urls import path
 from . import views
-from .views import dashboard, robots_txt_new, robots_redirect
+from .views import dashboard
+from .views import robots_txt
+
+
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('pricing/', views.pricing, name='pricing'),
-    path('dashboard/', dashboard, name='dashboard'),
+    path("dashboard/", dashboard, name="dashboard"),
     path('quality-standards/', views.quality_standards, name='quality_standards'),
+    path("robots.txt", robots_txt),
 
-    # ملف robots الجديد
-    path('robots-new.txt', robots_txt_new),
-
-    # redirect من robots.txt القديم
-    path('robots.txt', robots_redirect),
 ]
