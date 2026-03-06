@@ -301,3 +301,23 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+
+
+# في ملف views.py أو urls.py
+from django.http import HttpResponse
+from django.views.decorators.cache import never_cache
+
+@never_cache
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "",
+        "Sitemap: https://alagme.com/sitemap.xml",
+        "",
+        "Disallow: /admin/",
+        "Disallow: /accounts/login/",
+        "Disallow: /accounts/register/",
+        "Disallow: /media/private/",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
