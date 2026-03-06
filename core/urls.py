@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 from .views import dashboard
-from .views import RobotsTxtView
 
 
 
@@ -13,7 +12,7 @@ urlpatterns = [
     path('pricing/', views.pricing, name='pricing'),
     path("dashboard/", dashboard, name="dashboard"),
     path('quality-standards/', views.quality_standards, name='quality_standards'),
-    path('robots.txt', RobotsTxtView.as_view(), name='robots_txt'),
+
 
 
 ]
