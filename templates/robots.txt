@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://{{ request.get_host }}/sitemap.xml
+
+Disallow: /admin/
+Disallow: /accounts/login/
+Disallow: /accounts/register/
+Disallow: /media/private/
