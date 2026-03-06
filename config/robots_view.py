@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_http_methods
 
 @never_cache
-@require_GET
+@require_http_methods(["GET", "HEAD"])  # يقبل GET و HEAD
 def robots_txt(request):
     lines = [
         "User-agent: *",
