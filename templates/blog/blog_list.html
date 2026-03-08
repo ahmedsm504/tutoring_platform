@@ -1,19 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}المدونة - مقالات في تحفيظ القرآن وتجويده | مؤسسة العجمي{% endblock %}
+{% block title %}مدونة تحفيظ القرآن الكريم | مؤسسة العجمي - مقالات وفوائد قرآنية{% endblock %}
 
-{% block meta_description %}اقرأ أحدث مقالات مؤسسة العجمي المتخصصة في تحفيظ القرآن الكريم وتعليم التجويد وتفسير الآيات. نصائح وفوائد دينية وتربوية للمسلمين.{% endblock %}
+{% block meta_description %}مدونة مؤسسة العجمي المتخصصة في تحفيظ القرآن الكريم وتعليم التجويد. اقرأ مقالات متنوعة في تفسير القرآن، أحكام التلاوة، قصص الأنبياء، ونصائح دينية مفيدة للمسلمين.{% endblock %}
 
-{% block meta_keywords %}مدونة قرآنية, مقالات تحفيظ القرآن, تعليم التجويد, تفسير القرآن, نصائح دينية, فوائد إسلامية, قصص الأنبياء, أحكام التلاوة{% endblock %}
+{% block meta_keywords %}تحفيظ القرآن الكريم, تعليم التجويد, تفسير القرآن, مدونة قرآنية, أحكام التلاوة, قصص الأنبياء, نصائح دينية, فوائد إسلامية, تعليم القرآن للأطفال, دورات قرآنية{% endblock %}
 
-{% block og_title %}المدونة - مقالات في تحفيظ القرآن وتجويده | العجمي{% endblock %}
-{% block og_description %}تصفح أحدث المقالات المتخصصة في علوم القرآن وتحفيظه. محتوى مفيد وشامل لكل المهتمين بكتاب الله.{% endblock %}
-{% block twitter_title %}المدونة - العجمي{% endblock %}
-{% block twitter_description %}مقالات مميزة في تحفيظ القرآن وتجويده.{% endblock %}
+{% block og_title %}مدونة العجمي لتحفيظ القرآن الكريم - مقالات تعليمية متخصصة{% endblock %}
+{% block og_description %}اكتشف مقالات متخصصة في تحفيظ وتعليم القرآن الكريم، التجويد، التفسير، وقصص الأنبياء من خبراء مؤسسة العجمي.{% endblock %}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/blog-og-image.jpg' %}{% endblock %}
+
+{% block twitter_title %}مدونة العجمي - مقالات تحفيظ القرآن الكريم{% endblock %}
+{% block twitter_description %}محتوى تعليمي متميز في القرآن والتجويد{% endblock %}
+{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/blog-twitter.jpg' %}{% endblock %}
+
+{% block extra_meta %}
+<!-- Additional SEO Meta Tags -->
+<meta name="author" content="مؤسسة العجمي">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="مؤسسة العجمي">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@AlAjami">
+<meta name="theme-color" content="#FFD700">
+{% endblock %}
 
 {% block extra_ldjson %}
-<!-- بيانات منظمة BreadcrumbList -->
+<!-- Schema.org Structured Data - BreadcrumbList -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -35,865 +52,1093 @@
 }
 </script>
 
-<!-- بيانات منظمة للمدونة (Blog) -->
+<!-- Schema.org Structured Data - Blog -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Blog",
-  "name": "مدونة مؤسسة العجمي",
-  "description": "مدونة متخصصة في تحفيظ القرآن الكريم وتعليم التجويد وتفسير الآيات",
+  "name": "مدونة مؤسسة العجمي لتحفيظ القرآن الكريم",
   "url": "{{ request.build_absolute_uri }}",
+  "description": "مدونة متخصصة في تحفيظ القرآن الكريم وتعليم التجويد وتفسير الآيات ونصائح دينية",
+  "publisher": {
+    "@type": "Organization",
+    "name": "مؤسسة العجمي",
+    "url": "{{ request.scheme }}://{{ request.get_host }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}"
+    },
+    "sameAs": [
+      "https://facebook.com/AlAjami",
+      "https://twitter.com/AlAjami",
+      "https://instagram.com/AlAjami"
+    ]
+  },
+  "inLanguage": "ar",
   "blogPost": [
     {% for post in posts %}
     {
       "@type": "BlogPosting",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}",
       "headline": "{{ post.title|escapejs }}",
+      "name": "{{ post.title|escapejs }}",
       "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}",
       "datePublished": "{{ post.created_at|date:'c' }}",
-      "description": "{{ post.excerpt|escapejs }}"
+      "dateModified": "{{ post.updated_at|date:'c' }}",
+      "description": "{{ post.excerpt|escapejs }}",
+      "image": "{% if post.image %}{{ request.scheme }}://{{ request.get_host }}{{ post.cloud_url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/default_post.webp' %}{% endif %}",
+      "author": {
+        "@type": "Organization",
+        "name": "مؤسسة العجمي"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "مؤسسة العجمي"
+      },
+      "articleBody": "{{ post.excerpt|escapejs }}"
     }{% if not forloop.last %},{% endif %}
     {% endfor %}
   ]
 }
 </script>
 
-<!-- بيانات منظمة لقائمة المقالات (ItemList) -->
+<!-- Schema.org Structured Data - ItemList -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "قائمة مقالات المدونة",
-  "description": "قائمة بأحدث المقالات المنشورة في مدونة مؤسسة العجمي",
+  "name": "قائمة مقالات مدونة العجمي",
+  "description": "قائمة بأحدث المقالات التعليمية في تحفيظ القرآن الكريم والتجويد",
   "numberOfItems": {{ posts.paginator.count }},
   "itemListElement": [
     {% for post in posts %}
     {
       "@type": "ListItem",
       "position": {{ forloop.counter }},
-      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}"
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}",
+      "name": "{{ post.title|escapejs }}"
     }{% if not forloop.last %},{% endif %}
     {% endfor %}
   ]
 }
 </script>
+
+<!-- Schema.org Structured Data - WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "مؤسسة العجمي",
+  "url": "{{ request.scheme }}://{{ request.get_host }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_list' %}?search={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<!-- FAQ Schema (if applicable) -->
+{% if featured_posts %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "ما هي فوائد تحفيظ القرآن الكريم؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "تحفيظ القرآن الكريم له فوائد عظيمة منها: الأجر والثواب العظيم، تقوية الذاكرة، الطمأنينة النفسية، والشفاعة يوم القيامة."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "كيف أبدأ في تعلم التجويد؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "يمكنك البدء بتعلم التجويد من خلال: الالتحاق بدورات متخصصة، دراسة أحكام التجويد الأساسية، الاستماع للقراء المتقنين، والممارسة المستمرة."
+      }
+    }
+  ]
+}
+</script>
+{% endif %}
 {% endblock %}
 
 {% block extra_css %}
 <style>
-    * {
-        box-sizing: border-box;
-    }
+/* ==================== RESET & BASE ==================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    /* Container */
-    .blog-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 40px 20px;
-        background: linear-gradient(135deg, #0f1729 0%, #1a2847 50%, #0f1729 100%);
-        min-height: 100vh;
-    }
+body {
+    font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0a0e1a;
+    color: #ffffff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-    /* Search and Filter */
-    .search-filter-bar {
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-        margin-bottom: 40px;
-        background: linear-gradient(145deg, rgba(20, 35, 65, 0.8), rgba(30, 50, 90, 0.8));
-        padding: 22px;
-        border-radius: 16px;
-        backdrop-filter: blur(15px);
-        border: 1.5px solid rgba(102, 126, 234, 0.4);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+/* ==================== CONTAINER ==================== */
+.blog-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 30px;
+}
+
+/* ==================== PAGE HEADER ==================== */
+.page-header {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
     }
-    
-    .search-box {
-        flex: 1;
-        min-width: 250px;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    
-    .search-box input {
-        width: 100%;
-        padding: 13px 18px;
-        border: 2px solid rgba(102, 126, 234, 0.3);
-        border-radius: 11px;
-        background: rgba(255, 255, 255, 0.08);
-        color: #e8f0ff;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        font-weight: 500;
+}
+
+.page-header h1 {
+    font-size: 3.5em;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+    font-weight: 900;
+    text-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+    letter-spacing: -1px;
+}
+
+.page-header p {
+    font-size: 1.3em;
+    color: #a8b8d8;
+    font-weight: 500;
+}
+
+/* ==================== STATS BAR ==================== */
+.stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    animation: fadeIn 1s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px 30px;
+    background: linear-gradient(135deg, rgba(26, 40, 71, 0.95), rgba(45, 63, 107, 0.95));
+    border-radius: 20px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    border-color: #FFD700;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+.stat-number {
+    font-size: 2.5em;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+}
+
+.stat-label {
+    color: #a8b8d8;
+    font-size: 0.95em;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+/* ==================== SEARCH & FILTER ==================== */
+.search-filter {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+    background: linear-gradient(135deg, #1a2847 0%, #2d3f6b 100%);
+    padding: 30px;
+    border-radius: 25px;
+    backdrop-filter: blur(20px);
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 15px 50px rgba(255, 215, 0, 0.15);
+    animation: slideUp 0.8s ease-out 0.3s both;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
-    
-    .search-box input:focus {
-        outline: none;
-        border-color: #667eea;
-        background: rgba(255, 255, 255, 0.12);
-        box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    
-    .search-box input::placeholder {
-        color: rgba(200, 220, 240, 0.5);
+}
+
+.search-filter input {
+    flex: 1;
+    min-width: 300px;
+    padding: 18px 25px;
+    border: 3px solid rgba(255, 215, 0, 0.4);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 17px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-family: 'Cairo', sans-serif;
+}
+
+.search-filter input:focus {
+    outline: none;
+    border-color: #FFD700;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    transform: scale(1.02);
+}
+
+.search-filter input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.filter-btn {
+    padding: 16px 30px;
+    border: 3px solid rgba(255, 215, 0, 0.4);
+    border-radius: 15px;
+    background: rgba(255, 215, 0, 0.1);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.filter-btn:hover {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    border-color: #FFD700;
+    color: #000;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    border-color: #FFD700;
+    color: #000;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+    font-weight: 900;
+}
+
+/* ==================== FEATURED SECTION ==================== */
+.featured-section {
+    margin-bottom: 80px;
+}
+
+.section-title {
+    font-size: 2.8em;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 150px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #FFD700);
+    border-radius: 10px;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 35px;
+    margin-bottom: 50px;
+}
+
+.featured-card {
+    position: relative;
+    border-radius: 25px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(26, 40, 71, 0.95) 0%, rgba(45, 63, 107, 0.95) 100%);
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.featured-card:hover {
+    transform: translateY(-20px) scale(1.03);
+    box-shadow: 0 35px 70px rgba(255, 215, 0, 0.3);
+    border-color: #FFD700;
+}
+
+.featured-badge {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1em;
+    font-weight: 900;
+    z-index: 10;
+    color: #000;
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+    animation: pulseBadge 2s infinite;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@keyframes pulseBadge {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
     }
-    
-    .filter-group {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-    
-    .filter-btn {
-        padding: 11px 22px;
-        border: 2px solid rgba(102, 126, 234, 0.35);
-        border-radius: 9px;
-        background: rgba(255, 255, 255, 0.05);
-        color: #d0e0ff;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 15px;
-        white-space: nowrap;
-    }
-    
-    .filter-btn:hover {
-        background: rgba(102, 126, 234, 0.15);
-        border-color: #667eea;
-        color: #ffffff;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.25);
-    }
-    
-    .filter-btn.active {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-color: #667eea;
-        color: #ffffff;
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
-    }
-    
-    /* Featured Posts */
-    .featured-section {
-        margin-bottom: 60px;
-    }
-    
-    .section-title {
-        font-size: 2.1em;
-        margin-bottom: 28px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-weight: 700;
-    }
-    
-    .featured-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-        gap: 28px;
-        margin-bottom: 50px;
-    }
-    
-    .featured-card {
-        position: relative;
-        border-radius: 18px;
-        overflow: hidden;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%);
-        border: 1.5px solid rgba(102, 126, 234, 0.3);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    }
-    
-    .featured-card:hover {
-        transform: translateY(-12px);
-        box-shadow: 0 25px 50px rgba(102, 126, 234, 0.25);
-        border-color: rgba(102, 126, 234, 0.5);
-    }
-    
-    .featured-badge {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
-        padding: 9px 17px;
-        border-radius: 22px;
-        font-size: 0.92em;
-        font-weight: bold;
-        z-index: 10;
-        color: #ffffff;
-        box-shadow: 0 5px 15px rgba(243, 156, 18, 0.35);
-    }
-    
-    .featured-image-container {
-        width: 100%;
-        height: 290px;
-        overflow: hidden;
-        position: relative;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-    }
-    
-    .featured-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-        transition: transform 0.4s ease;
-    }
-    
-    .featured-card:hover .featured-image {
+    50% {
         transform: scale(1.08);
+        box-shadow: 0 12px 35px rgba(255, 215, 0, 0.7);
     }
-    
-    .featured-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 4em;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* ==================== LAYOUT ==================== */
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 60px;
+    margin-top: 50px;
+}
+
+/* ==================== POSTS GRID ==================== */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 35px;
+    margin-bottom: 50px;
+}
+
+.post-card {
+    background: linear-gradient(135deg, rgba(26, 40, 71, 0.9) 0%, rgba(45, 63, 107, 0.9) 100%);
+    border-radius: 22px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 3px solid rgba(255, 215, 0, 0.25);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+    height: 100%;
+    position: relative;
+}
+
+.post-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s;
+    opacity: 0;
+    z-index: 0;
+}
+
+.post-card:hover::before {
+    opacity: 1;
+    left: 100%;
+}
+
+.post-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(255, 215, 0, 0.25);
+    border-color: #FFD700;
+}
+
+/* ==================== POST IMAGE ==================== */
+.post-image-container {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #1a2847, #2d3f6b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.post-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.6s ease;
+    display: block;
+}
+
+.post-card:hover .post-image {
+    transform: scale(1.15);
+}
+
+.post-placeholder {
+    font-size: 5em;
+}
+
+/* ==================== POST CONTENT ==================== */
+.post-content {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+}
+
+.meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 18px;
+    font-size: 0.92em;
+    flex-wrap: wrap;
+    color: #d0e0ff;
+    font-weight: 600;
+}
+
+.category-badge {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: #000;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.post-title {
+    font-size: 1.65em;
+    margin-bottom: 16px;
+    line-height: 1.5;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.post-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.post-title a:hover {
+    color: #FFD700;
+}
+
+.post-excerpt {
+    color: #c8d8ff;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    flex: 1;
+    font-size: 1.05em;
+    font-weight: 500;
+}
+
+.read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: 800;
+    transition: all 0.3s;
+    margin-top: auto;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.read-more:hover {
+    gap: 18px;
+    color: #FFA500;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+.widget {
+    background: linear-gradient(135deg, rgba(26, 40, 71, 0.95) 0%, rgba(45, 63, 107, 0.95) 100%);
+    border-radius: 22px;
+    padding: 32px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(15px);
+    border: 3px solid rgba(255, 215, 0, 0.25);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.widget-title {
+    font-size: 1.6em;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #FFD700;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-list li {
+    padding: 16px 0;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+    transition: all 0.3s;
+}
+
+.category-list li:hover {
+    padding-right: 12px;
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+.category-list li:last-child {
+    border-bottom: none;
+}
+
+.category-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: 600;
+    font-size: 1.05em;
+}
+
+.category-list a:hover {
+    color: #FFD700;
+}
+
+.category-count {
+    color: #000;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    padding: 6px 14px;
+    border-radius: 18px;
+    font-size: 0.92em;
+}
+
+.popular-post-item {
+    display: flex;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.popular-post-item:hover {
+    padding-right: 12px;
+    transform: translateX(8px);
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+.popular-post-item:last-child {
+    border-bottom: none;
+}
+
+.popular-post-image {
+    width: 90px;
+    height: 90px;
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #1a2847, #2d3f6b);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popular-post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s;
+}
+
+.popular-post-item:hover .popular-post-image img {
+    transform: scale(1.15);
+}
+
+.popular-post-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.popular-post-info h4 {
+    font-size: 1.05em;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.5;
+}
+
+.popular-post-info small {
+    color: #d0e0ff;
+    font-weight: 600;
+    font-size: 0.88em;
+}
+
+/* ==================== PAGINATION ==================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 70px 0;
+    flex-wrap: wrap;
+}
+
+.pagination a,
+.pagination span {
+    padding: 14px 26px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 3px solid rgba(255, 215, 0, 0.4);
+    border-radius: 15px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    font-weight: 700;
+    font-size: 1.05em;
+}
+
+.pagination a:hover {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border-color: #FFD700;
+    color: #000;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+
+.pagination .current {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border-color: #FFD700;
+    color: #000;
+    font-weight: 900;
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+}
+
+.no-posts {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 100px 40px;
+    color: #d0e0ff;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1200px) {
+    .featured-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     }
-    
-    .featured-link {
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-    
-    /* Posts Grid */
+
     .posts-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-        gap: 28px;
-        margin-bottom: 45px;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     }
-    
-    .post-card {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
-        border-radius: 16px;
-        overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 1px solid rgba(102, 126, 234, 0.25);
-        backdrop-filter: blur(10px);
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-    
-    .post-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.25);
-        border-color: rgba(102, 126, 234, 0.5);
-    }
-    
-    .post-image-container {
-        width: 100%;
-        height: 240px;
-        overflow: hidden;
-        position: relative;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-    }
-    
-    .post-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        transition: transform 0.4s ease;
-        display: block;
-    }
-    
-    .post-card:hover .post-image {
-        transform: scale(1.1);
-    }
-    
-    .post-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3.5em;
-    }
-    
-    .post-link {
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-    
-    .post-content {
-        padding: 22px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .post-meta {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 14px;
-        font-size: 0.88em;
-        flex-wrap: wrap;
-    }
-    
-    .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        color: #b8d0ff;
-        font-weight: 500;
-    }
-    
-    .category-badge {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        padding: 5px 13px;
-        border-radius: 16px;
-        font-size: 0.88em;
-        color: #ffffff;
-        font-weight: 600;
-        box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
-    }
-    
-    .post-title {
-        font-size: 1.45em;
-        margin-bottom: 12px;
-        line-height: 1.4;
-        font-weight: 600;
-        color: #e8f0ff;
-    }
-    
-    .post-title a {
-        color: inherit;
-        text-decoration: none;
-        transition: color 0.3s;
-    }
-    
-    .post-title a:hover {
-        color: #667eea;
-    }
-    
-    .post-excerpt {
-        color: #b8d0ff;
-        line-height: 1.65;
-        margin-bottom: 16px;
-        flex: 1;
-        font-size: 0.96em;
-    }
-    
-    .read-more {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 600;
-        transition: gap 0.3s;
-        margin-top: auto;
-        font-size: 0.98em;
-    }
-    
-    .read-more:hover {
-        gap: 12px;
-        text-decoration: underline;
-        color: #764ba2;
-    }
-    
-    /* Sidebar */
+}
+
+@media (max-width: 1000px) {
     .layout {
-        display: grid;
-        grid-template-columns: 1fr 360px;
-        gap: 45px;
-        margin-top: 40px;
+        grid-template-columns: 1fr;
+        gap: 40px;
     }
-    
+
     .sidebar {
-        position: sticky;
-        top: 20px;
-        height: fit-content;
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
     }
-    
-    .sidebar-widget {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-        border-radius: 16px;
-        padding: 26px;
-        margin-bottom: 26px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(102, 126, 234, 0.25);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+    .widget {
+        margin-bottom: 0;
     }
-    
-    .widget-title {
-        font-size: 1.32em;
-        margin-bottom: 22px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        color: #667eea;
-        font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .blog-container {
+        padding: 40px 18px;
     }
-    
-    .popular-post-item {
-        display: flex;
-        gap: 15px;
-        padding: 14px 0;
-        border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-        transition: all 0.3s;
+
+    .page-header h1 {
+        font-size: 2.5em;
     }
-    
-    .popular-post-item:hover {
-        padding-right: 8px;
-        transform: translateX(4px);
+
+    .page-header p {
+        font-size: 1.1em;
     }
-    
-    .popular-post-item:last-child {
-        border-bottom: none;
+
+    .stats-bar {
+        gap: 20px;
     }
-    
-    .popular-post-image-container {
-        width: 75px;
-        height: 75px;
-        border-radius: 12px;
-        overflow: hidden;
-        flex-shrink: 0;
-        position: relative;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+
+    .stat-item {
+        padding: 15px 20px;
     }
-    
-    .popular-post-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-        transition: transform 0.3s;
+
+    .stat-number {
+        font-size: 2em;
     }
-    
-    .popular-post-item:hover .popular-post-image {
-        transform: scale(1.1);
+
+    .posts-grid,
+    .featured-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
-    
-    .popular-post-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.6em;
-    }
-    
-    .popular-post-info {
-        flex: 1;
-        display: flex;
+
+    .search-filter {
         flex-direction: column;
-        justify-content: center;
+        padding: 25px;
+        gap: 15px;
     }
-    
-    .popular-post-info h4 {
-        font-size: 0.98em;
-        margin-bottom: 6px;
-        font-weight: 600;
-        color: #e8f0ff;
+
+    .search-filter input {
+        min-width: 100%;
     }
-    
-    .popular-post-info a {
-        color: inherit;
-        text-decoration: none;
-        transition: color 0.3s;
-    }
-    
-    .popular-post-info a:hover {
-        color: #667eea;
-    }
-    
-    .popular-post-info small {
-        color: #b8d0ff;
-        font-weight: 500;
-    }
-    
-    .category-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .category-item {
-        padding: 13px 0;
-        border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-        transition: all 0.3s;
-    }
-    
-    .category-item:hover {
-        padding-right: 8px;
-    }
-    
-    .category-item:last-child {
-        border-bottom: none;
-    }
-    
-    .category-item a {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #d0e0ff;
-        text-decoration: none;
-        transition: all 0.3s;
-        font-weight: 500;
-    }
-    
-    .category-item a:hover {
-        color: #667eea;
-    }
-    
-    .category-count {
-        color: #ffffff;
-        font-weight: bold;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
-        padding: 4px 11px;
-        border-radius: 13px;
+
+    .filter-btn {
+        padding: 13px 20px;
         font-size: 0.9em;
-    }
-    
-    /* Pagination */
-    .pagination {
-        display: flex;
-        justify-content: center;
-        gap: 11px;
-        margin: 50px 0;
-        flex-wrap: wrap;
-    }
-    
-    .pagination a, .pagination span {
-        padding: 11px 19px;
-        background: rgba(102, 126, 234, 0.1);
-        border: 2px solid rgba(102, 126, 234, 0.3);
-        border-radius: 9px;
-        color: #d0e0ff;
-        text-decoration: none;
-        transition: all 0.3s;
-        font-weight: 600;
-        font-size: 0.98em;
-    }
-    
-    .pagination a:hover {
-        background: rgba(102, 126, 234, 0.2);
-        border-color: #667eea;
-        color: #ffffff;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-    }
-    
-    .pagination .current {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-color: #667eea;
-        color: #ffffff;
-        font-weight: bold;
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.25);
-    }
-    
-    .no-posts-message {
+        flex: 1;
+        min-width: 120px;
         text-align: center;
-        grid-column: 1 / -1;
-        padding: 70px 25px;
-        color: #b8d0ff;
-        font-size: 1.15em;
-        font-weight: 500;
     }
-    
-    /* Responsive */
-    @media (max-width: 1200px) {
-        .featured-grid {
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-        
-        .posts-grid {
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        }
+
+    .section-title {
+        font-size: 2.2em;
     }
-    
-    @media (max-width: 1024px) {
-        .layout {
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-        
-        .sidebar {
-            position: static;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        
-        .sidebar-widget {
-            margin-bottom: 0;
-        }
-        
-        .featured-grid {
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        }
-        
-        .posts-grid {
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        }
+
+    .post-image-container {
+        height: 260px;
     }
-    
-    @media (max-width: 768px) {
-        .blog-container {
-            padding: 25px 15px;
-        }
-        
-        .posts-grid, .featured-grid {
-            grid-template-columns: 1fr;
-            gap: 22px;
-        }
-        
-        .search-filter-bar {
-            flex-direction: column;
-            padding: 18px;
-            gap: 12px;
-        }
-        
-        .search-box {
-            min-width: 100%;
-        }
-        
-        .filter-group {
-            justify-content: flex-start;
-            width: 100%;
-        }
-        
-        .filter-btn {
-            padding: 10px 16px;
-            font-size: 0.9em;
-            flex: 1;
-            min-width: 100px;
-            text-align: center;
-        }
-        
-        .section-title {
-            font-size: 1.8em;
-            margin-bottom: 22px;
-        }
-        
-        .featured-image-container {
-            height: 260px;
-        }
-        
-        .post-image-container {
-            height: 220px;
-        }
-        
-        .post-content {
-            padding: 18px;
-        }
-        
-        .post-title {
-            font-size: 1.25em;
-            margin-bottom: 10px;
-        }
-        
-        .post-excerpt {
-            font-size: 0.93em;
-            margin-bottom: 14px;
-        }
-        
-        .sidebar {
-            grid-template-columns: 1fr;
-        }
-        
-        .sidebar-widget {
-            padding: 20px;
-        }
-        
-        .popular-post-image-container {
-            width: 65px;
-            height: 65px;
-        }
+}
+
+@media (max-width: 480px) {
+    .blog-container {
+        padding: 25px 15px;
     }
-    
-    @media (max-width: 480px) {
-        .blog-container {
-            padding: 15px 12px;
-        }
-        
-        .search-filter-bar {
-            padding: 14px;
-            gap: 10px;
-        }
-        
-        .search-box input {
-            padding: 11px 14px;
-            font-size: 14px;
-        }
-        
-        .filter-btn {
-            padding: 8px 12px;
-            font-size: 0.8em;
-            flex: 1 1 calc(50% - 5px);
-        }
-        
-        .section-title {
-            font-size: 1.5em;
-        }
-        
-        .featured-image-container {
-            height: 220px;
-        }
-        
-        .post-image-container {
-            height: 200px;
-        }
-        
-        .post-content {
-            padding: 14px;
-        }
-        
-        .post-title {
-            font-size: 1.1em;
-            margin-bottom: 8px;
-        }
-        
-        .post-excerpt {
-            font-size: 0.9em;
-            margin-bottom: 12px;
-        }
-        
-        .post-meta {
-            gap: 8px;
-            font-size: 0.8em;
-        }
-        
-        .read-more {
-            font-size: 0.92em;
-        }
+
+    .page-header h1 {
+        font-size: 2em;
     }
+
+    .section-title {
+        font-size: 1.8em;
+    }
+
+    .filter-btn {
+        flex: 1 1 calc(50% - 8px);
+        font-size: 0.85em;
+    }
+
+    .post-image-container {
+        height: 240px;
+    }
+}
+
+/* ==================== LOADING ANIMATION ==================== */
+.loading-skeleton {
+    animation: shimmer 1.5s infinite;
+    background: linear-gradient(90deg, #1a2847 25%, #2d3f6b 50%, #1a2847 75%);
+    background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ==================== ACCESSIBILITY ==================== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Focus styles for accessibility */
+a:focus,
+button:focus,
+input:focus {
+    outline: 3px solid #FFD700;
+    outline-offset: 2px;
+}
 </style>
 {% endblock %}
 
 {% block content %}
 <main role="main" aria-labelledby="blog-heading">
-    <!-- Hidden H1 for SEO -->
-    <h1 id="blog-heading" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
-        مدونة مؤسسة العجمي - مقالات في تحفيظ القرآن الكريم وتجويده
-    </h1>
-
     <div class="blog-container">
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1 id="blog-heading">📚 مدونة العجمي</h1>
+            <p>مقالات متخصصة في تحفيظ القرآن الكريم وتجويده</p>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number">{{ posts.paginator.count|default:0 }}</span>
+                <span class="stat-label">مقال منشور</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ categories.count|default:0 }}</span>
+                <span class="stat-label">تصنيف</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ total_views|default:0 }}</span>
+                <span class="stat-label">قراءة</span>
+            </div>
+        </div>
+
         <!-- Search and Filter -->
-        <form method="get" class="search-filter-bar" role="search" aria-label="بحث وتصفية المقالات">
-            <div class="search-box">
-                <input type="text" name="search" placeholder="🔍 ابحث عن مقال..." value="{{ search_query }}" aria-label="كلمات البحث">
-            </div>
-            <div class="filter-group">
-                <a href="?sort=latest" class="filter-btn {% if current_sort == 'latest' %}active{% endif %}" aria-label="ترتيب حسب الأحدث">الأحدث</a>
-                <a href="?sort=popular" class="filter-btn {% if current_sort == 'popular' %}active{% endif %}" aria-label="ترتيب حسب الأكثر قراءة">الأكثر قراءة</a>
-                <a href="?sort=oldest" class="filter-btn {% if current_sort == 'oldest' %}active{% endif %}" aria-label="ترتيب حسب الأقدم">الأقدم</a>
-            </div>
+        <form method="get" class="search-filter" role="search" aria-label="بحث وتصفية المقالات">
+            <label for="search-input" class="sr-only">ابحث في المدونة</label>
+            <input 
+                type="text" 
+                id="search-input"
+                name="search" 
+                placeholder="🔍 ابحث عن مقال..." 
+                value="{{ search_query }}"
+                aria-label="كلمات البحث">
+
+            <a href="?sort=latest" 
+               class="filter-btn {% if current_sort == 'latest' %}active{% endif %}"
+               aria-label="ترتيب حسب الأحدث"
+               {% if current_sort == 'latest' %}aria-current="page"{% endif %}>
+                الأحدث
+            </a>
+
+            <a href="?sort=popular" 
+               class="filter-btn {% if current_sort == 'popular' %}active{% endif %}"
+               aria-label="ترتيب حسب الأكثر قراءة"
+               {% if current_sort == 'popular' %}aria-current="page"{% endif %}>
+                الأكثر قراءة
+            </a>
+
+            <a href="?sort=oldest" 
+               class="filter-btn {% if current_sort == 'oldest' %}active{% endif %}"
+               aria-label="ترتيب حسب الأقدم"
+               {% if current_sort == 'oldest' %}aria-current="page"{% endif %}>
+                الأقدم
+            </a>
         </form>
 
         <!-- Featured Posts -->
         {% if featured_posts %}
-        <div class="featured-section" aria-labelledby="featured-heading">
+        <section class="featured-section" aria-labelledby="featured-heading">
             <h2 class="section-title" id="featured-heading">⭐ مقالات مميزة</h2>
             <div class="featured-grid">
                 {% for post in featured_posts %}
-                <a href="{% url 'blog_detail' post.slug %}" class="featured-link" aria-label="اقرأ المقال: {{ post.title }}">
-                    <article class="featured-card">
-                        <span class="featured-badge" aria-hidden="true">⭐ مميز</span>
-                        <div class="featured-image-container">
+                <article class="featured-card" itemscope itemtype="https://schema.org/BlogPosting">
+                    <span class="featured-badge" aria-hidden="true">مميز</span>
+                    <a href="{% url 'blog_detail' post.slug %}" aria-label="اقرأ المقال: {{ post.title }}">
+                        <div class="post-image-container">
                             {% if post.image %}
-                            <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="featured-image" loading="lazy" width="100%" height="290">
+                            <img src="{{ post.cloud_url }}" 
+                                 alt="{{ post.title }}" 
+                                 class="post-image" 
+                                 loading="lazy"
+                                 itemprop="image">
                             {% else %}
-                            <div class="featured-placeholder" aria-hidden="true">📝</div>
+                            <img src="{% static 'images/default_post.webp' %}" 
+                                 alt="صورة افتراضية" 
+                                 class="post-image"
+                                 loading="lazy">
                             {% endif %}
                         </div>
                         <div class="post-content">
-                            <div class="post-meta">
+                            <div class="meta">
                                 {% if post.category %}
-                                <span class="category-badge">{{ post.category.icon }} {{ post.category.name }}</span>
+                                <span class="category-badge" itemprop="articleSection">
+                                    {{ post.category.icon }} {{ post.category.name }}
+                                </span>
                                 {% endif %}
-                                <span class="meta-item"><i class="fas fa-eye" aria-hidden="true"></i> {{ post.views_count }} مشاهدة</span>
-                                <span class="meta-item"><i class="fas fa-clock" aria-hidden="true"></i> {{ post.reading_time }} دقائق</span>
+                                <span aria-label="عدد المشاهدات">👁 {{ post.views_count }}</span>
+                                <span aria-label="وقت القراءة">⏱ {{ post.reading_time }} د</span>
                             </div>
-                            <h3 class="post-title">{{ post.title }}</h3>
-                            <p class="post-excerpt">{{ post.excerpt|truncatewords:20 }}</p>
-                            <span class="read-more" aria-hidden="true">قراءة المزيد ←</span>
+                            <h3 class="post-title" itemprop="headline">{{ post.title }}</h3>
+                            <p class="post-excerpt" itemprop="description">{{ post.excerpt|truncatewords:20 }}</p>
+                            <span class="read-more" aria-hidden="true">قراءة المزيد →</span>
+                            <meta itemprop="datePublished" content="{{ post.created_at|date:'c' }}">
+                            <meta itemprop="author" content="مؤسسة العجمي">
                         </div>
-                    </article>
-                </a>
+                    </a>
+                </article>
                 {% endfor %}
             </div>
-        </div>
+        </section>
         {% endif %}
 
+        <!-- Layout with Main Content and Sidebar -->
         <div class="layout">
             <!-- Main Content -->
-            <main class="main-content" aria-labelledby="all-posts-heading">
-                <h2 class="section-title" id="all-posts-heading">📖 جميع المقالات</h2>
+            <div>
+                <h2 class="section-title">📖 جميع المقالات</h2>
                 <div class="posts-grid">
                     {% for post in posts %}
-                    <a href="{% url 'blog_detail' post.slug %}" class="post-link" aria-label="اقرأ المقال: {{ post.title }}">
-                        <article class="post-card">
+                    <article class="post-card" itemscope itemtype="https://schema.org/BlogPosting">
+                        <a href="{% url 'blog_detail' post.slug %}" aria-label="اقرأ المقال: {{ post.title }}">
                             <div class="post-image-container">
                                 {% if post.image %}
-                                <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="post-image" loading="lazy" width="100%" height="240">
+                                <img src="{{ post.cloud_url }}" 
+                                     alt="{{ post.title }}" 
+                                     class="post-image" 
+                                     loading="lazy"
+                                     itemprop="image">
                                 {% else %}
-                                <div class="post-placeholder" aria-hidden="true">📝</div>
+                                <img src="{% static 'images/default_post.webp' %}" 
+                                     alt="صورة افتراضية" 
+                                     class="post-image"
+                                     loading="lazy">
                                 {% endif %}
                             </div>
                             <div class="post-content">
-                                <div class="post-meta">
+                                <div class="meta">
                                     {% if post.category %}
-                                    <span class="category-badge">{{ post.category.icon }} {{ post.category.name }}</span>
+                                    <span class="category-badge" itemprop="articleSection">
+                                        {{ post.category.icon }} {{ post.category.name }}
+                                    </span>
                                     {% endif %}
-                                    <span class="meta-item"><i class="fas fa-eye" aria-hidden="true"></i> {{ post.views_count }}</span>
-                                    <span class="meta-item"><i class="fas fa-clock" aria-hidden="true"></i> {{ post.reading_time }} د</span>
+                                    <span aria-label="عدد المشاهدات">👁 {{ post.views_count }}</span>
+                                    <span aria-label="وقت القراءة">⏱ {{ post.reading_time }} د</span>
                                 </div>
-                                <h3 class="post-title">{{ post.title }}</h3>
-                                <p class="post-excerpt">{{ post.excerpt|truncatewords:15 }}</p>
-                                <span class="read-more" aria-hidden="true">قراءة المزيد ←</span>
+                                <h3 class="post-title" itemprop="headline">{{ post.title }}</h3>
+                                <p class="post-excerpt" itemprop="description">{{ post.excerpt|truncatewords:15 }}</p>
+                                <span class="read-more" aria-hidden="true">قراءة المزيد →</span>
+                                <meta itemprop="datePublished" content="{{ post.created_at|date:'c' }}">
+                                <meta itemprop="author" content="مؤسسة العجمي">
                             </div>
-                        </article>
-                    </a>
+                        </a>
+                    </article>
                     {% empty %}
-                    <p class="no-posts-message" role="alert">لا توجد مقالات متاحة حالياً 📚</p>
+                    <p class="no-posts" role="alert">لا توجد مقالات متاحة حالياً 📚</p>
                     {% endfor %}
                 </div>
-                
+
                 <!-- Pagination -->
                 {% if posts.has_other_pages %}
                 <nav class="pagination" role="navigation" aria-label="التنقل بين صفحات المقالات">
                     {% if posts.has_previous %}
-                    <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" title="الصفحة السابقة" aria-label="الصفحة السابقة">السابق</a>
+                    <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" 
+                       aria-label="الصفحة السابقة">
+                        السابق
+                    </a>
                     {% endif %}
-                    
-                    <span class="current" aria-current="page">صفحة {{ posts.number }} من {{ posts.paginator.num_pages }}</span>
-                    
+
+                    <span class="current" aria-current="page">
+                        {{ posts.number }} / {{ posts.paginator.num_pages }}
+                    </span>
+
                     {% if posts.has_next %}
-                    <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" title="الصفحة التالية" aria-label="الصفحة التالية">التالي</a>
+                    <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" 
+                       aria-label="الصفحة التالية">
+                        التالي
+                    </a>
                     {% endif %}
                 </nav>
                 {% endif %}
-            </main>
-            
+            </div>
+
             <!-- Sidebar -->
-            <aside class="sidebar" role="complementary" aria-label="قائمة جانبية: التصنيفات والمقالات الأكثر قراءة">
-                <!-- Categories -->
+            <aside class="sidebar" role="complementary" aria-label="الشريط الجانبي">
+                <!-- Categories Widget -->
                 {% if categories %}
-                <div class="sidebar-widget">
-                    <h3 class="widget-title"><i class="fas fa-folder" aria-hidden="true"></i> التصنيفات</h3>
+                <div class="widget">
+                    <h3 class="widget-title">📁 التصنيفات</h3>
                     <ul class="category-list">
                         {% for category in categories %}
-                        <li class="category-item">
-                            <a href="?category={{ category.slug }}" title="عرض تصنيف {{ category.name }}" aria-label="عرض مقالات تصنيف {{ category.name }}">
+                        <li>
+                            <a href="?category={{ category.slug }}" 
+                               aria-label="عرض مقالات تصنيف {{ category.name }}">
                                 <span>{{ category.icon }} {{ category.name }}</span>
                                 <span class="category-count">{{ category.posts_count }}</span>
                             </a>
@@ -902,26 +1147,28 @@
                     </ul>
                 </div>
                 {% endif %}
-                
-                <!-- Popular Posts -->
+
+                <!-- Popular Posts Widget -->
                 {% if popular_posts %}
-                <div class="sidebar-widget">
-                    <h3 class="widget-title"><i class="fas fa-fire" aria-hidden="true"></i> الأكثر قراءة</h3>
+                <div class="widget">
+                    <h3 class="widget-title">🔥 الأكثر قراءة</h3>
                     {% for post in popular_posts %}
-                    <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none;" aria-label="اقرأ المقال: {{ post.title }}">
-                        <article class="popular-post-item">
-                            <div class="popular-post-image-container">
-                                {% if post.image %}
-                                <img src="{{ post.cloud_url }}" alt="{{ post.title }}" class="popular-post-image" loading="lazy" width="75" height="75">
-                                {% else %}
-                                <div class="popular-post-placeholder" aria-hidden="true">📝</div>
-                                {% endif %}
-                            </div>
-                            <div class="popular-post-info">
-                                <h4>{{ post.title|truncatewords:8 }}</h4>
-                                <small><i class="fas fa-eye" aria-hidden="true"></i> {{ post.views_count }} مشاهدة</small>
-                            </div>
-                        </article>
+                    <a href="{% url 'blog_detail' post.slug %}" 
+                       class="popular-post-item"
+                       aria-label="اقرأ المقال: {{ post.title }}">
+                        <div class="popular-post-image">
+                            {% if post.image %}
+                            <img src="{{ post.cloud_url }}" 
+                                 alt="{{ post.title }}"
+                                 loading="lazy">
+                            {% else %}
+                            <span style="font-size: 2em;">📝</span>
+                            {% endif %}
+                        </div>
+                        <div class="popular-post-info">
+                            <h4>{{ post.title|truncatewords:6 }}</h4>
+                            <small>👁 {{ post.views_count }} مشاهدة</small>
+                        </div>
                     </a>
                     {% endfor %}
                 </div>
