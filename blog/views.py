@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Post, Category, Comment
@@ -22,14 +22,14 @@ def blog_list(request):
     if category_slug:
         posts_list = posts_list.filter(category__slug=category_slug)
     
-    # الترتيب — التعديل هنا
+    # الترتيب
     sort_by = request.GET.get('sort', 'latest')
     if sort_by == 'popular':
         posts_list = posts_list.order_by('-views_count')
     elif sort_by == 'oldest':
-        posts_list = posts_list.order_by('created_at')   # ✅ بدل published_at
+        posts_list = posts_list.order_by('created_at')
     else:  # latest
-        posts_list = posts_list.order_by('-created_at')  # ✅ بدل -published_at
+        posts_list = posts_list.order_by('-created_at')
     
     # Pagination
     paginator = Paginator(posts_list, 9)
@@ -47,6 +47,11 @@ def blog_list(request):
     # المقالات الأكثر قراءة
     popular_posts = Post.objects.filter(status='published').order_by('-views_count')[:5]
     
+    # مجموع المشاهدات ✅
+    total_views = Post.objects.filter(status='published').aggregate(
+        total=Sum('views_count')
+    )['total'] or 0
+
     context = {
         'posts': posts,
         'featured_posts': featured_posts,
@@ -55,9 +60,7 @@ def blog_list(request):
         'search_query': search_query,
         'current_category': category_slug,
         'current_sort': sort_by,
-        'total_views': Post.objects.filter(status='published').aggregate(
-            total=Count('views_count')
-        )['total'] or 0,
+        'total_views': total_views,
     }
     
     return render(request, 'blog/blog_list.html', context)
@@ -112,7 +115,7 @@ def category_posts(request, slug):
     category = get_object_or_404(Category, slug=slug)
     posts_list = Post.objects.filter(
         status='published', category=category
-    ).order_by('-created_at')  # ✅ بدل -published_at
+    ).order_by('-created_at')
     
     # Pagination
     paginator = Paginator(posts_list, 9)
