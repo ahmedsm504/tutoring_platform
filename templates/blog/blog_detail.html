@@ -502,13 +502,18 @@
             <div class="related-grid">
                 {% for related in related_posts %}
                 <div class="related-card">
-                    {% if related.image %}
+
+                    <!-- ✅ التعديل هنا: يتحقق من cloud_url أولاً ثم image.url ثم placeholder -->
+                    {% if related.cloud_url %}
+                    <img src="{{ related.cloud_url }}" alt="{{ related.title }}" class="related-image">
+                    {% elif related.image %}
                     <img src="{{ related.image.url }}" alt="{{ related.title }}" class="related-image">
                     {% else %}
                     <div class="related-image" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 3em;">
                         📝
                     </div>
                     {% endif %}
+
                     <div class="related-content">
                         <h3 class="related-title">
                             <a href="{% url 'blog_detail' related.slug %}">{{ related.title }}</a>
