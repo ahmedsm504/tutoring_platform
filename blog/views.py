@@ -22,17 +22,17 @@ def blog_list(request):
     if category_slug:
         posts_list = posts_list.filter(category__slug=category_slug)
     
-    # الترتيب
+    # الترتيب — التعديل هنا
     sort_by = request.GET.get('sort', 'latest')
     if sort_by == 'popular':
         posts_list = posts_list.order_by('-views_count')
     elif sort_by == 'oldest':
-        posts_list = posts_list.order_by('published_at')
+        posts_list = posts_list.order_by('created_at')   # ✅ بدل published_at
     else:  # latest
-        posts_list = posts_list.order_by('-published_at')
+        posts_list = posts_list.order_by('-created_at')  # ✅ بدل -published_at
     
     # Pagination
-    paginator = Paginator(posts_list, 9)  # 9 مقالات في الصفحة
+    paginator = Paginator(posts_list, 9)
     page_number = request.GET.get('page')
     posts = paginator.get_page(page_number)
     
@@ -55,6 +55,9 @@ def blog_list(request):
         'search_query': search_query,
         'current_category': category_slug,
         'current_sort': sort_by,
+        'total_views': Post.objects.filter(status='published').aggregate(
+            total=Count('views_count')
+        )['total'] or 0,
     }
     
     return render(request, 'blog/blog_list.html', context)
@@ -107,7 +110,9 @@ def blog_detail(request, slug):
 def category_posts(request, slug):
     """عرض مقالات تصنيف معين"""
     category = get_object_or_404(Category, slug=slug)
-    posts_list = Post.objects.filter(status='published', category=category).order_by('-published_at')
+    posts_list = Post.objects.filter(
+        status='published', category=category
+    ).order_by('-created_at')  # ✅ بدل -published_at
     
     # Pagination
     paginator = Paginator(posts_list, 9)
