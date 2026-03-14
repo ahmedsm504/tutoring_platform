@@ -13,7 +13,7 @@
 {% block twitter_description %}أجوبة موثقة عن كل ما يتعلق بتحفيظ القرآن وتلاوته.{% endblock %}
 
 {% block extra_ldjson %}
-<!-- بيانات منظمة للصفحة (BreadcrumbList) -->
+<!-- BreadcrumbList -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -35,20 +35,52 @@
 }
 </script>
 
+<!-- FAQPage Schema — الأهم لجوجل عشان يعرض rich results -->
 {% if questions %}
-<!-- بيانات منظمة لقائمة الأسئلة (ItemList) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for question in questions %}
+    {% if question.has_official %}
+    {
+      "@type": "Question",
+      "name": "{{ question.title|escapejs }}",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'qna:question_detail' question.slug %}",
+      "dateCreated": "{{ question.created_at|date:'c' }}",
+      "answerCount": 1,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ question.official_answer.content|truncatewords:50|escapejs }}",
+        "dateCreated": "{{ question.official_answer.created_at|date:'c' }}",
+        "upvoteCount": {{ question.official_answer.likes|default:0 }},
+        "author": {
+          "@type": "Organization",
+          "name": "مؤسسة العجمي"
+        }
+      }
+    }{% if not forloop.last %},{% endif %}
+    {% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
+<!-- ItemList Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "name": "قائمة الأسئلة المتعلقة بتحفيظ القرآن",
   "description": "مجموعة من الأسئلة والأجوبة حول تحفيظ القرآن وتجويده وتفسيره.",
-  "numberOfItems": {{ questions.paginator.count }},
+  "numberOfItems": {{ total_questions|default:0 }},
   "itemListElement": [
     {% for question in questions %}
     {
       "@type": "ListItem",
       "position": {{ forloop.counter }},
+      "name": "{{ question.title|escapejs }}",
       "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'qna:question_detail' question.slug %}"
     }{% if not forloop.last %},{% endif %}
     {% endfor %}
@@ -61,7 +93,6 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/qna.css' %}">
 <style>
-/* أنماط رسائل Django Messages */
 .django-messages {
     position: fixed;
     top: 2rem;
@@ -135,11 +166,8 @@
     line-height: 1;
 }
 
-.message-close:hover {
-    opacity: 1;
-}
+.message-close:hover { opacity: 1; }
 
-/* أنماط إضافية لحالة الإجابة */
 .status-badge {
     padding: 0.5rem 1rem;
     border-radius: 50px;
@@ -175,7 +203,6 @@
     box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
-/* تحسين عرض حالة الإجابة في القائمة */
 .question-meteor.answered {
     border-right: 4px solid #10b981;
     background: linear-gradient(90deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%);
@@ -200,7 +227,6 @@
     font-weight: 600;
 }
 
-/* تحسين عرض حالة الإجابة في الدائرة */
 .answer-core {
     display: flex;
     flex-direction: column;
@@ -231,7 +257,6 @@
     box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
 }
 
-/* تحسين عرض الإحصائيات */
 .stat-subtext {
     font-size: 0.8rem;
     opacity: 0.8;
@@ -240,43 +265,27 @@
 }
 
 @keyframes slideInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideOutUp {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-30px); }
 }
+
 .hero-cta-ultimate,
 .hero-cta-ultimate span,
 .hero-cta-ultimate i {
     color: black !important;
 }
 
-/* جعل بطاقة السؤال تبدو قابلة للنقر */
-.question-meteor {
-    cursor: pointer;
-}
-
+.question-meteor { cursor: pointer; }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<!-- عرض رسائل Django -->
 {% if messages %}
 <div class="django-messages">
     {% for message in messages %}
@@ -291,7 +300,7 @@
 
 <div class="qna-universe">
     <div class="container-ultimate">
-        
+
         <!-- HERO SECTION -->
         <section class="hero-ultimate animate-scale">
             <div class="hero-content-ultimate">
@@ -300,7 +309,6 @@
                         <i class="fas fa-sparkles"></i>
                         <span>منصة متخصصة في تحفيظ القرآن</span>
                     </div>
-                    <!-- تعديل H1 ليكون أكثر دقة للسيو -->
                     <h1 class="hero-title-ultimate">أسئلة وأجوبة في تحفيظ القرآن الكريم</h1>
                     <p class="hero-subtitle-ultimate">احصل على إجابات دقيقة من معلمين معتمدين في التجويد والتفسير وعلوم القرآن الكريم</p>
                 </div>
@@ -321,7 +329,7 @@
                 <div class="stat-label-ultimate">سؤال</div>
                 <div class="stat-subtext">منها {{ answered_count|default:"0" }} مجاب</div>
             </article>
-            
+
             <article class="stat-planet animate-in delay-200">
                 <div class="stat-icon-wrapper">
                     <i class="fas fa-check-circle"></i>
@@ -330,7 +338,7 @@
                 <div class="stat-label-ultimate">إجابة</div>
                 <div class="stat-subtext">إجابات رسمية</div>
             </article>
-            
+
             <article class="stat-planet animate-in delay-300">
                 <div class="stat-icon-wrapper">
                     <i class="fas fa-folder-open"></i>
@@ -339,7 +347,7 @@
                 <div class="stat-label-ultimate">فئة</div>
                 <div class="stat-subtext">أقسام متنوعة</div>
             </article>
-            
+
             <article class="stat-planet animate-in delay-400">
                 <div class="stat-icon-wrapper">
                     <i class="fas fa-comments"></i>
@@ -352,26 +360,24 @@
 
         <!-- MAIN SOLAR SYSTEM -->
         <div class="content-solar-system">
-            
-            <!-- SIDEBAR CONSTELLATION -->
+
+            <!-- SIDEBAR -->
             <aside class="sidebar-constellation" aria-label="لوحة التصفية والبحث">
-                
-                <!-- Filters Star -->
+
                 <div class="sidebar-star animate-in">
                     <div class="sidebar-header-glow">
                         <i class="fas fa-sliders-h"></i>
                         <span>تصفية النتائج</span>
                     </div>
                     <div class="sidebar-body-glow">
-                        
-                        <!-- Categories -->
+
                         <h6 class="sidebar-section-title">
                             <i class="fas fa-th-large"></i>
                             الفئات
                         </h6>
                         <ul class="category-constellation">
                             <li>
-                                <a href="{% url 'qna:question_list' %}" 
+                                <a href="{% url 'qna:question_list' %}"
                                    class="category-star {% if not request.GET.category %}active{% endif %}"
                                    {% if not request.GET.category %}aria-current="page"{% endif %}>
                                     <span>جميع الفئات</span>
@@ -380,7 +386,7 @@
                             </li>
                             {% for cat in categories %}
                             <li>
-                                <a href="{% url 'qna:question_list' %}?category={{ cat.slug }}" 
+                                <a href="{% url 'qna:question_list' %}?category={{ cat.slug }}"
                                    class="category-star {% if request.GET.category == cat.slug %}active{% endif %}"
                                    {% if request.GET.category == cat.slug %}aria-current="page"{% endif %}>
                                     <span>{{ cat.name }}</span>
@@ -390,31 +396,30 @@
                             {% endfor %}
                         </ul>
 
-                        <!-- Filters -->
                         <h6 class="sidebar-section-title">
                             <i class="fas fa-filter"></i>
                             نوع الأسئلة
                         </h6>
                         <div class="filter-nebula">
-                            <a href="{% url 'qna:question_list' %}?filter=featured" 
+                            <a href="{% url 'qna:question_list' %}?filter=featured"
                                class="filter-comet filter-comet-gold"
                                {% if request.GET.filter == 'featured' %}aria-current="page"{% endif %}>
                                 <i class="fas fa-star"></i>
                                 <span>مميزة</span>
                             </a>
-                            <a href="{% url 'qna:question_list' %}?filter=unanswered" 
+                            <a href="{% url 'qna:question_list' %}?filter=unanswered"
                                class="filter-comet filter-comet-blue"
                                {% if request.GET.filter == 'unanswered' %}aria-current="page"{% endif %}>
                                 <i class="fas fa-question-circle"></i>
                                 <span>بلا إجابة</span>
                             </a>
-                            <a href="{% url 'qna:question_list' %}?filter=frequent" 
+                            <a href="{% url 'qna:question_list' %}?filter=frequent"
                                class="filter-comet filter-comet-green"
                                {% if request.GET.filter == 'frequent' %}aria-current="page"{% endif %}>
                                 <i class="fas fa-fire"></i>
                                 <span>الأكثر تداولاً</span>
                             </a>
-                            <a href="{% url 'qna:question_list' %}?filter=answered" 
+                            <a href="{% url 'qna:question_list' %}?filter=answered"
                                class="filter-comet filter-comet-green"
                                {% if request.GET.filter == 'answered' %}aria-current="page"{% endif %}>
                                 <i class="fas fa-check-circle"></i>
@@ -422,26 +427,18 @@
                             </a>
                         </div>
 
-                        <!-- Sort -->
                         <h6 class="sidebar-section-title">
                             <i class="fas fa-sort"></i>
                             الترتيب حسب
                         </h6>
                         <select class="select-cosmos" onchange="window.location.href = updateUrlParam('sort', this.value)" aria-label="ترتيب الأسئلة حسب">
-                            <option value="newest" {% if request.GET.sort == 'newest' or not request.GET.sort %}selected{% endif %}>
-                                الأحدث
-                            </option>
-                            <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>
-                                الأقدم
-                            </option>
-                            <option value="most_viewed" {% if request.GET.sort == 'most_viewed' %}selected{% endif %}>
-                                الأكثر مشاهدة
-                            </option>
+                            <option value="newest" {% if request.GET.sort == 'newest' or not request.GET.sort %}selected{% endif %}>الأحدث</option>
+                            <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>الأقدم</option>
+                            <option value="most_viewed" {% if request.GET.sort == 'most_viewed' %}selected{% endif %}>الأكثر مشاهدة</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- CTA Supernova -->
                 <div class="cta-supernova animate-in delay-200">
                     <h5 class="cta-title-super">📊 إحصاءات المجتمع</h5>
                     <p class="cta-text-super">شارك معرفتك وساعد الآخرين في رحلتهم مع القرآن الكريم</p>
@@ -461,14 +458,14 @@
 
             <!-- MAIN GALAXY -->
             <main class="main-galaxy">
-                
+
                 <!-- Search -->
                 <div class="search-nebula animate-in delay-200">
                     <form method="get" class="search-wormhole" role="search">
-                        <input type="text" 
-                               name="search" 
-                               class="search-input-wormhole" 
-                               placeholder="ابحث في الأسئلة عن موضوع معين..." 
+                        <input type="text"
+                               name="search"
+                               class="search-input-wormhole"
+                               placeholder="ابحث في الأسئلة عن موضوع معين..."
                                value="{{ request.GET.search }}"
                                aria-label="بحث في الأسئلة"
                                autocomplete="off">
@@ -481,187 +478,184 @@
 
                 <!-- Questions -->
                 {% if questions %}
-                    <div class="questions-galaxy">
-                        {% for question in questions %}
-                        <article class="question-meteor 
-                                      {% if question.has_official %}answered{% elif question.has_community_answers %}community-answered{% endif %} 
-                                      {% if question.has_featured %}featured{% endif %} animate-in" 
-                                 style="animation-delay: {{ forloop.counter|add:2 }}00ms"
-                                 aria-labelledby="question-title-{{ question.id }}">
-                            <div class="question-core">
-                                <div class="question-layout">
-                                    <div class="question-main-core">
-                                        {% if question.category %}
-                                        <span class="question-category-tag">
-                                            <i class="fas fa-tag"></i>
-                                            {{ question.category.name }}
+                <div class="questions-galaxy">
+                    {% for question in questions %}
+                    <article class="question-meteor
+                                  {% if question.has_official %}answered{% elif question.has_community_answers %}community-answered{% endif %}
+                                  {% if question.has_featured %}featured{% endif %} animate-in"
+                             style="animation-delay: {{ forloop.counter|add:2 }}00ms"
+                             aria-labelledby="question-title-{{ question.id }}"
+                             itemscope itemtype="https://schema.org/Question">
+
+                        <div class="question-core">
+                            <div class="question-layout">
+                                <div class="question-main-core">
+                                    {% if question.category %}
+                                    <span class="question-category-tag">
+                                        <i class="fas fa-tag"></i>
+                                        {{ question.category.name }}
+                                    </span>
+                                    {% endif %}
+
+                                    <div class="status-container" style="margin-bottom: 0.5rem;">
+                                        {% if question.has_official %}
+                                            {% if question.has_featured %}
+                                            <span class="status-badge featured">
+                                                <i class="fas fa-star"></i>
+                                                <span>مميزة</span>
+                                            </span>
+                                            {% else %}
+                                            <span class="status-badge answered">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span>تمت الإجابة</span>
+                                            </span>
+                                            {% endif %}
+                                        {% elif question.has_community_answers %}
+                                            <span class="status-badge community-answered">
+                                                <i class="fas fa-users"></i>
+                                                <span>إجابات مجتمعية</span>
+                                            </span>
+                                        {% else %}
+                                            <span class="status-badge pending">
+                                                <i class="fas fa-clock"></i>
+                                                <span>قيد الانتظار</span>
+                                            </span>
+                                        {% endif %}
+
+                                        {% if question.is_frequent %}
+                                        <span class="status-badge" style="background: #f59e0b; color: white; margin-right: 0.5rem;">
+                                            <i class="fas fa-redo"></i>
+                                            <span>متكرر</span>
                                         </span>
                                         {% endif %}
-                                        
-                                        <!-- حالة السؤال -->
-                                        <div class="status-container" style="margin-bottom: 0.5rem;">
-                                            {% if question.has_official %}
-                                                {% if question.has_featured %}
-                                                <span class="status-badge featured">
-                                                    <i class="fas fa-star"></i>
-                                                    <span>مميزة</span>
-                                                </span>
-                                                {% else %}
-                                                <span class="status-badge answered">
-                                                    <i class="fas fa-check-circle"></i>
-                                                    <span>تمت الإجابة</span>
-                                                </span>
-                                                {% endif %}
-                                            {% elif question.has_community_answers %}
-                                                <span class="status-badge community-answered">
-                                                    <i class="fas fa-users"></i>
-                                                    <span>إجابات مجتمعية</span>
-                                                </span>
-                                            {% else %}
-                                                <span class="status-badge pending">
-                                                    <i class="fas fa-clock"></i>
-                                                    <span>قيد الانتظار</span>
-                                                </span>
-                                            {% endif %}
-                                            
-                                            {% if question.is_frequent %}
-                                            <span class="status-badge" style="background: #f59e0b; color: white; margin-right: 0.5rem;">
-                                                <i class="fas fa-redo"></i>
-                                                <span>متكرر</span>
-                                            </span>
-                                            {% endif %}
-                                        </div>
-                                        
-                                        <a href="{% url 'qna:question_detail' question.slug %}" class="question-title-core" id="question-title-{{ question.id }}">
-                                            {{ question.title }}
-                                        </a>
-                                        
-                                        <p class="question-excerpt-core">
-                                            {{ question.question_text|truncatewords:25 }}
-                                        </p>
-                                        
-                                        <div class="question-meta-core">
-                                            <span class="meta-atom" title="اسم السائل">
-                                                <i class="fas fa-user-circle"></i>
-                                                <span>{{ question.visitor_name|default:"زائر" }}</span>
-                                            </span>
-                                            <span class="meta-atom" title="تاريخ النشر">
-                                                <i class="far fa-clock"></i>
-                                                <span>{{ question.created_at|timesince }}</span>
-                                            </span>
-                                            <span class="meta-atom" title="عدد المشاهدات">
-                                                <i class="far fa-eye"></i>
-                                                <span>{{ question.view_count|default:"0" }}</span>
-                                            </span>
-                                            {% if question.has_official %}
-                                            <span class="meta-atom" title="عدد التصويتات">
-                                                <i class="fas fa-thumbs-up"></i>
-                                                <span>{{ question.official_answer.likes|default:"0" }}</span>
-                                            </span>
-                                            {% endif %}
-                                        </div>
                                     </div>
-                                    
-                                    <div class="answer-core">
+
+                                    <a href="{% url 'qna:question_detail' question.slug %}"
+                                       class="question-title-core"
+                                       id="question-title-{{ question.id }}"
+                                       itemprop="name">
+                                        {{ question.title }}
+                                    </a>
+
+                                    <p class="question-excerpt-core" itemprop="text">
+                                        {{ question.question_text|truncatewords:25 }}
+                                    </p>
+
+                                    <div class="question-meta-core">
+                                        <span class="meta-atom" title="اسم السائل">
+                                            <i class="fas fa-user-circle"></i>
+                                            <span>{{ question.visitor_name|default:"زائر" }}</span>
+                                        </span>
+                                        <span class="meta-atom" title="تاريخ النشر">
+                                            <i class="far fa-clock"></i>
+                                            <span>{{ question.created_at|timesince }}</span>
+                                        </span>
+                                        <span class="meta-atom" title="عدد المشاهدات">
+                                            <i class="far fa-eye"></i>
+                                            <span>{{ question.view_count|default:"0" }}</span>
+                                        </span>
                                         {% if question.has_official %}
-                                        <div class="status-supernova answered" title="تم الإجابة على هذا السؤال">
-                                            <i class="fas fa-check-double"></i>
-                                            <span>مُجاب</span>
-                                        </div>
-                                        {% elif question.has_community_answers %}
-                                        <div class="status-supernova community-answered" title="لديه إجابات مجتمعية">
-                                            <i class="fas fa-users"></i>
-                                            <span>مجتمع</span>
-                                        </div>
-                                        {% else %}
-                                        <div class="status-supernova unanswered" title="ينتظر الإجابة">
-                                            <i class="fas fa-hourglass-half"></i>
-                                            <span>ينتظر</span>
-                                        </div>
+                                        <span class="meta-atom" title="عدد التصويتات">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            <span>{{ question.official_answer.likes|default:"0" }}</span>
+                                        </span>
                                         {% endif %}
                                     </div>
                                 </div>
-                            </div>
-                        </article>
-                        {% endfor %}
-                    </div>
 
-                    <!-- Pagination -->
-                    {% if questions.has_other_pages %}
-                    <nav class="pagination-cosmos" aria-label="تنقل الصفحات">
-                        <ul class="pagination-orbit">
-                            {% if questions.has_previous %}
-                            <li class="pagination-moon">
-                                <a class="pagination-link" href="?page={{ questions.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة السابقة">
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
+                                <div class="answer-core">
+                                    {% if question.has_official %}
+                                    <div class="status-supernova answered" title="تم الإجابة على هذا السؤال">
+                                        <i class="fas fa-check-double"></i>
+                                        <span>مُجاب</span>
+                                    </div>
+                                    {% elif question.has_community_answers %}
+                                    <div class="status-supernova community-answered" title="لديه إجابات مجتمعية">
+                                        <i class="fas fa-users"></i>
+                                        <span>مجتمع</span>
+                                    </div>
+                                    {% else %}
+                                    <div class="status-supernova unanswered" title="ينتظر الإجابة">
+                                        <i class="fas fa-hourglass-half"></i>
+                                        <span>ينتظر</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if questions.has_other_pages %}
+                <nav class="pagination-cosmos" aria-label="تنقل الصفحات">
+                    <ul class="pagination-orbit">
+                        {% if questions.has_previous %}
+                        <li class="pagination-moon">
+                            <a class="pagination-link" href="?page={{ questions.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة السابقة">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="pagination-moon disabled">
+                            <span class="pagination-link" aria-disabled="true"><i class="fas fa-chevron-right"></i></span>
+                        </li>
+                        {% endif %}
+
+                        {% for num in questions.paginator.page_range %}
+                            {% if questions.number == num %}
+                            <li class="pagination-moon active" aria-current="page">
+                                <span class="pagination-link">{{ num }}</span>
                             </li>
-                            {% else %}
-                            <li class="pagination-moon disabled">
-                                <span class="pagination-link" aria-disabled="true">
-                                    <i class="fas fa-chevron-right"></i>
-                                </span>
+                            {% elif num > questions.number|add:'-3' and num < questions.number|add:'3' %}
+                            <li class="pagination-moon">
+                                <a class="pagination-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة {{ num }}">{{ num }}</a>
+                            </li>
+                            {% elif num == questions.number|add:'-3' or num == questions.number|add:'3' %}
+                            <li class="pagination-moon">
+                                <span class="pagination-link" style="cursor: default;" aria-hidden="true">...</span>
                             </li>
                             {% endif %}
-                            
-                            {% for num in questions.paginator.page_range %}
-                                {% if questions.number == num %}
-                                <li class="pagination-moon active" aria-current="page">
-                                    <span class="pagination-link">{{ num }}</span>
-                                </li>
-                                {% elif num > questions.number|add:'-3' and num < questions.number|add:'3' %}
-                                <li class="pagination-moon">
-                                    <a class="pagination-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة {{ num }}">
-                                        {{ num }}
-                                    </a>
-                                </li>
-                                {% elif num == questions.number|add:'-3' or num == questions.number|add:'3' %}
-                                <li class="pagination-moon">
-                                    <span class="pagination-link" style="cursor: default;" aria-hidden="true">...</span>
-                                </li>
-                                {% endif %}
-                            {% endfor %}
-                            
-                            {% if questions.has_next %}
-                            <li class="pagination-moon">
-                                <a class="pagination-link" href="?page={{ questions.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة التالية">
-                                    <i class="fas fa-chevron-left"></i>
-                                </a>
-                            </li>
-                            {% else %}
-                            <li class="pagination-moon disabled">
-                                <span class="pagination-link" aria-disabled="true">
-                                    <i class="fas fa-chevron-left"></i>
-                                </span>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                    {% endif %}
+                        {% endfor %}
+
+                        {% if questions.has_next %}
+                        <li class="pagination-moon">
+                            <a class="pagination-link" href="?page={{ questions.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة التالية">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="pagination-moon disabled">
+                            <span class="pagination-link" aria-disabled="true"><i class="fas fa-chevron-left"></i></span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
 
                 {% else %}
-                    <!-- Empty State -->
-                    <div class="empty-void animate-scale">
-                        <i class="fas fa-search empty-icon-void"></i>
-                        <h3 class="empty-title-void">
-                            {% if request.GET.search %}
-                                لا توجد نتائج للبحث
-                            {% else %}
-                                لا توجد أسئلة بعد
-                            {% endif %}
-                        </h3>
-                        <p class="empty-text-void">
-                            {% if request.GET.search %}
-                                لم نجد أسئلة تطابق "{{ request.GET.search }}". جرب كلمات مختلفة.
-                            {% else %}
-                                كن أول من يبدأ النقاش واطرح سؤالك حول تحفيظ القرآن!
-                            {% endif %}
-                        </p>
-                        <a href="{% url 'qna:ask' %}" class="empty-btn-void" aria-label="اطرح سؤالاً جديداً">
-                            <i class="fas fa-plus-circle"></i>
-                            بم تفكر
-                        </a>
-                    </div>
+                <div class="empty-void animate-scale">
+                    <i class="fas fa-search empty-icon-void"></i>
+                    <h3 class="empty-title-void">
+                        {% if request.GET.search %}
+                            لا توجد نتائج للبحث
+                        {% else %}
+                            لا توجد أسئلة بعد
+                        {% endif %}
+                    </h3>
+                    <p class="empty-text-void">
+                        {% if request.GET.search %}
+                            لم نجد أسئلة تطابق "{{ request.GET.search }}". جرب كلمات مختلفة.
+                        {% else %}
+                            كن أول من يبدأ النقاش واطرح سؤالك حول تحفيظ القرآن!
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'qna:ask' %}" class="empty-btn-void" aria-label="اطرح سؤالاً جديداً">
+                        <i class="fas fa-plus-circle"></i>
+                        بم تفكر
+                    </a>
+                </div>
                 {% endif %}
 
             </main>
@@ -670,14 +664,12 @@
 </div>
 
 <script>
-// دالة لتحديث معاملات URL
 function updateUrlParam(key, value) {
     const url = new URL(window.location.href);
     url.searchParams.set(key, value);
     return url.toString();
 }
 
-// إخفاء الرسائل تلقائياً بعد 8 ثوانٍ
 document.addEventListener('DOMContentLoaded', () => {
     const messages = document.querySelectorAll('.message-alert');
     messages.forEach(msg => {
@@ -686,8 +678,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => msg.remove(), 400);
         }, 8000);
     });
-    
-    // Intersection Observer للرسوم المتحركة
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -697,25 +688,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    
+
     document.querySelectorAll('.animate-in').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
         observer.observe(el);
     });
-    
-    // جعل البطاقة بأكملها قابلة للنقر (مع الحفاظ على الروابط الداخلية)
+
     document.querySelectorAll('.question-meteor').forEach(card => {
         card.addEventListener('click', function(e) {
-            // إذا تم النقر على رابط أو داخل رابط (مثل الفئة أو حالة السؤال)، اترك السلوك الطبيعي
             if (e.target.closest('a')) return;
-            
-            // وإلا، ابحث عن رابط عنوان السؤال وقم بمحاكاة النقر عليه
             const link = this.querySelector('a.question-title-core');
-            if (link) {
-                link.click(); // يحافظ على Ctrl+click والزر الأوسط
-            }
+            if (link) link.click();
         });
     });
 });
