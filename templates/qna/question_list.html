@@ -36,19 +36,18 @@
 </script>
 
 {% if questions %}
-<!-- FAQPage Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {% for question in questions %}{% if question.has_official and question.prefetched_answers %}{
+    {% for question in questions %}{% if question.has_official %}{
       "@type": "Question",
       "name": "{{ question.title|striptags|escapejs }}",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "{{ question.prefetched_answers.0.answer_text|striptags|truncatewords:80|escapejs }}",
-        "upvoteCount": {{ question.prefetched_answers.0.likes|default:0 }},
+        "text": "{{ question.official_answer.answer_text|striptags|truncatewords:80|escapejs }}",
+        "upvoteCount": {{ question.official_answer.likes|default:0 }},
         "author": {
           "@type": "Organization",
           "name": "مؤسسة العجمي"

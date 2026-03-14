@@ -76,13 +76,8 @@ class QuestionListView(ListView):
         else:
             queryset = queryset.order_by('-created_at')
 
-        return queryset.select_related('category').prefetch_related(
-            Prefetch(
-                'official_answer',
-                queryset=QuestionAnswer.objects.all(),
-                to_attr='prefetched_answers'
-            )
-        )
+        # ✅ select_related للـ OneToOneField بدل Prefetch
+        return queryset.select_related('category', 'official_answer')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
