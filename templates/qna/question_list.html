@@ -35,34 +35,26 @@
 }
 </script>
 
-<!-- FAQPage Schema — الأهم لجوجل عشان يعرض rich results -->
 {% if questions %}
+<!-- FAQPage Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {% for question in questions %}
-    {% if question.has_official %}
-    {
+    {% for question in questions %}{% if question.has_official and question.prefetched_answers %}{
       "@type": "Question",
-      "name": "{{ question.title|escapejs }}",
-      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'qna:question_detail' question.slug %}",
-      "dateCreated": "{{ question.created_at|date:'c' }}",
-      "answerCount": 1,
+      "name": "{{ question.title|striptags|escapejs }}",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "{{ question.official_answer.content|truncatewords:50|escapejs }}",
-        "dateCreated": "{{ question.official_answer.created_at|date:'c' }}",
-        "upvoteCount": {{ question.official_answer.likes|default:0 }},
+        "text": "{{ question.prefetched_answers.0.answer_text|striptags|truncatewords:80|escapejs }}",
+        "upvoteCount": {{ question.prefetched_answers.0.likes|default:0 }},
         "author": {
           "@type": "Organization",
           "name": "مؤسسة العجمي"
         }
       }
-    }{% if not forloop.last %},{% endif %}
-    {% endif %}
-    {% endfor %}
+    }{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}
   ]
 }
 </script>
@@ -80,7 +72,7 @@
     {
       "@type": "ListItem",
       "position": {{ forloop.counter }},
-      "name": "{{ question.title|escapejs }}",
+      "name": "{{ question.title|striptags|escapejs }}",
       "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'qna:question_detail' question.slug %}"
     }{% if not forloop.last %},{% endif %}
     {% endfor %}
@@ -554,10 +546,11 @@
                                             <i class="far fa-eye"></i>
                                             <span>{{ question.view_count|default:"0" }}</span>
                                         </span>
-                                        {% if question.has_official %}
+                                        <!-- ✅ استخدام prefetched_answers بدل official_answer -->
+                                        {% if question.has_official and question.prefetched_answers %}
                                         <span class="meta-atom" title="عدد التصويتات">
                                             <i class="fas fa-thumbs-up"></i>
-                                            <span>{{ question.official_answer.likes|default:"0" }}</span>
+                                            <span>{{ question.prefetched_answers.0.likes|default:"0" }}</span>
                                         </span>
                                         {% endif %}
                                     </div>
@@ -706,3 +699,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 {% endblock %}
+
+
