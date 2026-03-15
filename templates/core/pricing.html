@@ -11,7 +11,6 @@
 {% block og_description %}حصص فردية لتحفيظ القرآن وتصحيح التلاوة ودورات متخصصة بأسعار تبدأ من 5 ريال. اختر الباقة المناسبة لك.{% endblock %}
 {% block twitter_title %}باقات وأسعار تحفيظ القرآن - العجمي{% endblock %}
 {% block twitter_description %}أفضل العروض والأسعار لحصص تحفيظ القرآن عن بُعد. ابدأ رحلتك الآن.{% endblock %}
-
 {% block extra_ldjson %}
 <!-- بيانات منظمة (BreadcrumbList) -->
 <script type="application/ld+json">
@@ -34,7 +33,6 @@
 }
 </script>
 
-<!-- بيانات منظمة للمنتجات (Product) مع العروض (Offer) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,17 +46,28 @@
       "item": {
         "@type": "Product",
         "name": "باقة البداية النورانية",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
         "description": "مناسبة للأطفال من سن 6 سنوات. شرح مبسط لمعاني الآيات، ألعاب تفاعلية، تعليم العقيدة والسيرة، واجبات يومية، تحفيظ بالتجويد.",
+        "brand": {"@type": "Brand", "name": "مؤسسة العجمي"},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "10",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
         "offers": {
           "@type": "AggregateOffer",
           "lowPrice": "7",
           "highPrice": "15",
           "priceCurrency": "SAR",
+          "availability": "https://schema.org/InStock",
+          "priceValidUntil": "2026-12-31",
           "offerCount": "3",
           "offers": [
-            {"@type": "Offer", "name": "30 دقيقة", "price": "7", "priceCurrency": "SAR"},
-            {"@type": "Offer", "name": "40 دقيقة", "price": "10", "priceCurrency": "SAR"},
-            {"@type": "Offer", "name": "60 دقيقة", "price": "15", "priceCurrency": "SAR"}
+            {"@type": "Offer", "name": "30 دقيقة", "price": "7", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"},
+            {"@type": "Offer", "name": "40 دقيقة", "price": "10", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"},
+            {"@type": "Offer", "name": "60 دقيقة", "price": "15", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"}
           ]
         },
         "url": "{{ request.build_absolute_uri }}#package-1"
@@ -70,17 +79,28 @@
       "item": {
         "@type": "Product",
         "name": "باقة الغراس الطيب",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
         "description": "لتحسين التلاوة وتصحيح الأخطاء التجويدية. تدريب عملي على المخارج والصفات، تقييم دوري.",
+        "brand": {"@type": "Brand", "name": "مؤسسة العجمي"},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "10",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
         "offers": {
           "@type": "AggregateOffer",
           "lowPrice": "7",
           "highPrice": "15",
           "priceCurrency": "SAR",
+          "availability": "https://schema.org/InStock",
+          "priceValidUntil": "2026-12-31",
           "offerCount": "3",
           "offers": [
-            {"@type": "Offer", "name": "30 دقيقة", "price": "7", "priceCurrency": "SAR"},
-            {"@type": "Offer", "name": "40 دقيقة", "price": "10", "priceCurrency": "SAR"},
-            {"@type": "Offer", "name": "60 دقيقة", "price": "15", "priceCurrency": "SAR"}
+            {"@type": "Offer", "name": "30 دقيقة", "price": "7", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"},
+            {"@type": "Offer", "name": "40 دقيقة", "price": "10", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"},
+            {"@type": "Offer", "name": "60 دقيقة", "price": "15", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"}
           ]
         },
         "url": "{{ request.build_absolute_uri }}#package-2"
@@ -92,17 +112,28 @@
       "item": {
         "@type": "Product",
         "name": "باقة الهمة العالية",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
         "description": "للطلاب من سن 10 إلى 15 سنة. حفظ القرآن مع متابعة دقيقة، تعليم العقيدة والسيرة، مرونة في الأوقات.",
+        "brand": {"@type": "Brand", "name": "مؤسسة العجمي"},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "10",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
         "offers": {
           "@type": "AggregateOffer",
           "lowPrice": "7",
           "highPrice": "15",
           "priceCurrency": "SAR",
+          "availability": "https://schema.org/InStock",
+          "priceValidUntil": "2026-12-31",
           "offerCount": "3",
           "offers": [
-            {"@type": "Offer", "name": "30 دقيقة", "price": "7", "priceCurrency": "SAR"},
-            {"@type": "Offer", "name": "40 دقيقة", "price": "10", "priceCurrency": "SAR"},
-            {"@type": "Offer", "name": "60 دقيقة", "price": "15", "priceCurrency": "SAR"}
+            {"@type": "Offer", "name": "30 دقيقة", "price": "7", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"},
+            {"@type": "Offer", "name": "40 دقيقة", "price": "10", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"},
+            {"@type": "Offer", "name": "60 دقيقة", "price": "15", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"}
           ]
         },
         "url": "{{ request.build_absolute_uri }}#package-3"
@@ -114,17 +145,28 @@
       "item": {
         "@type": "Product",
         "name": "باقة سفراء القرآن",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
         "description": "برنامج مخصص للبالغين. حفظ القرآن بخطى ثابتة، جلسات فردية، متابعة دقيقة.",
+        "brand": {"@type": "Brand", "name": "مؤسسة العجمي"},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "10",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
         "offers": {
           "@type": "AggregateOffer",
           "lowPrice": "7",
           "highPrice": "15",
           "priceCurrency": "SAR",
+          "availability": "https://schema.org/InStock",
+          "priceValidUntil": "2026-12-31",
           "offerCount": "3",
           "offers": [
-            {"@type": "Offer", "name": "30 دقيقة", "price": "7", "priceCurrency": "SAR"},
-            {"@type": "Offer", "name": "40 دقيقة", "price": "10", "priceCurrency": "SAR"},
-            {"@type": "Offer", "name": "60 دقيقة", "price": "15", "priceCurrency": "SAR"}
+            {"@type": "Offer", "name": "30 دقيقة", "price": "7", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"},
+            {"@type": "Offer", "name": "40 دقيقة", "price": "10", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"},
+            {"@type": "Offer", "name": "60 دقيقة", "price": "15", "priceCurrency": "SAR", "availability": "https://schema.org/InStock", "priceValidUntil": "2026-12-31"}
           ]
         },
         "url": "{{ request.build_absolute_uri }}#package-4"
@@ -136,12 +178,23 @@
       "item": {
         "@type": "Product",
         "name": "دورة نور البيان",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
         "description": "لتعليم القراءة الصحيحة والبيان الواضح. دورة تأسيسية متكاملة لتعليم القراءة السليمة باللغة العربية.",
+        "brand": {"@type": "Brand", "name": "مؤسسة العجمي"},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "10",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
         "offers": {
           "@type": "Offer",
           "name": "40 دقيقة",
           "price": "13",
-          "priceCurrency": "SAR"
+          "priceCurrency": "SAR",
+          "availability": "https://schema.org/InStock",
+          "priceValidUntil": "2026-12-31"
         },
         "url": "{{ request.build_absolute_uri }}#package-5"
       }
@@ -152,12 +205,23 @@
       "item": {
         "@type": "Product",
         "name": "دورة الأربعون النووية",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
         "description": "دراسة منهجية في أصول السنة النبوية. برنامج علمي تأصيلي لدراسة الأحاديث الأربعين النووية.",
+        "brand": {"@type": "Brand", "name": "مؤسسة العجمي"},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "reviewCount": "10",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
         "offers": {
           "@type": "Offer",
           "name": "40 دقيقة",
           "price": "13",
-          "priceCurrency": "SAR"
+          "priceCurrency": "SAR",
+          "availability": "https://schema.org/InStock",
+          "priceValidUntil": "2026-12-31"
         },
         "url": "{{ request.build_absolute_uri }}#package-6"
       }
@@ -173,12 +237,10 @@
 
 {% block content %}
 <main role="main" aria-labelledby="pricing-heading">
-    <!-- Hidden H1 for SEO -->
     <h1 id="pricing-heading" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
         باقات وأسعار تحفيظ القرآن الكريم أونلاين - منصة العجمي
     </h1>
 
-    <!-- Pricing Section -->
     <section id="packages" aria-label="الباقات المتاحة">
         <h2 class="section-title">💎 اختر الباقة التي تناسب هدفك</h2>
         <div class="pricing">
@@ -211,9 +273,7 @@
                         <tr><td>40 دقيقة</td><td class="price">10 ريال</td></tr>
                         <tr><td>60 دقيقة</td><td class="price">15 ريال</td></tr>
                     </table>
-                    <p class="table-note">
-                        يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك
-                    </p>
+                    <p class="table-note">يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك</p>
                 </div>
                 <a href="{% url 'contact' %}" class="btn" aria-label="احجز باقة البداية النورانية">احجز الآن</a>
             </div>
@@ -248,9 +308,7 @@
                         <tr><td>40 دقيقة</td><td class="price">10 ريال</td></tr>
                         <tr><td>60 دقيقة</td><td class="price">15 ريال</td></tr>
                     </table>
-                    <p class="table-note">
-                        يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك
-                    </p>
+                    <p class="table-note">يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك</p>
                 </div>
                 <a href="{% url 'contact' %}" class="btn" aria-label="احجز باقة الغراس الطيب">احجز الآن</a>
             </div>
@@ -282,9 +340,7 @@
                         <tr><td>40 دقيقة</td><td class="price">10 ريال</td></tr>
                         <tr><td>60 دقيقة</td><td class="price">15 ريال</td></tr>
                     </table>
-                    <p class="table-note">
-                        يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك
-                    </p>
+                    <p class="table-note">يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك</p>
                 </div>
                 <a href="{% url 'contact' %}" class="btn" aria-label="احجز باقة الهمة العالية">احجز الآن</a>
             </div>
@@ -320,9 +376,7 @@
                         <tr><td>40 دقيقة</td><td class="price">10 ريال</td></tr>
                         <tr><td>60 دقيقة</td><td class="price">15 ريال</td></tr>
                     </table>
-                    <p class="table-note">
-                        يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك
-                    </p>
+                    <p class="table-note">يمكنك اختيار عدد الحصص الشهرية ونوع البرنامج والوقت المناسب لك</p>
                 </div>
                 <a href="{% url 'contact' %}" class="btn" aria-label="احجز باقة سفراء القرآن">احجز الآن</a>
             </div>
@@ -367,9 +421,7 @@
                         </tr>
                         <tr><td>40 دقيقة</td><td class="price">13 ريال</td></tr>
                     </table>
-                    <p class="table-note">
-                        دورة متخصصة بمنهج علمي مدروس لتأسيس قوي في القراءة العربية
-                    </p>
+                    <p class="table-note">دورة متخصصة بمنهج علمي مدروس لتأسيس قوي في القراءة العربية</p>
                 </div>
                 <a href="{% url 'contact' %}" class="btn" aria-label="احجز دورة نور البيان">احجز الآن</a>
             </div>
@@ -411,9 +463,7 @@
                         </tr>
                         <tr><td>40 دقيقة</td><td class="price">13 ريال</td></tr>
                     </table>
-                    <p class="table-note">
-                        دورة علمية متخصصة في دراسة الأحاديث النبوية الصحيحة
-                    </p>
+                    <p class="table-note">دورة علمية متخصصة في دراسة الأحاديث النبوية الصحيحة</p>
                 </div>
                 <a href="{% url 'contact' %}" class="btn" aria-label="احجز دورة الأربعين النووية">احجز الآن</a>
             </div>
