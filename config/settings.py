@@ -247,3 +247,8 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+
+SESSION_COOKIE_SIZE = 4096  # تقليل حجم الـ session
+
+# أو غيّر الـ session engine لـ database بدل cookies
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
