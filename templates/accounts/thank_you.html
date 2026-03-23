@@ -214,8 +214,12 @@
     </div>
     <!-- GA4 Event for Thank You Page -->
 <script>
-  gtag('event', 'thank_you_view', {
-    'send_to': 'G-RNXPQQNRNP'
+  document.addEventListener('DOMContentLoaded', function() {
+    // إرسال الحدث إلى GA4
+    gtag('event', 'thank_you_view', {
+      'send_to': 'G-RNXPQQNRNP'
+    });
+    console.log("GA4 Event: thank_you_view sent"); // لمراقبة في Console
   });
 </script>
 </main>
