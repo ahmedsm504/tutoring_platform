@@ -124,6 +124,9 @@ def logout_view(request):
     return redirect('home')
 
 
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 def thank_you(request):
     return render(request, 'accounts/thank_you.html')
 
