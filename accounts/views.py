@@ -124,6 +124,9 @@ def logout_view(request):
     return redirect('home')
 
 
+def thank_you(request):
+    return render(request, 'accounts/thank_you.html')
+
 # ==========================================
 # صفحة التواصل وحجز التجربة
 # ==========================================
@@ -132,8 +135,7 @@ def contact_view(request):
         form = TrialBookingForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "تم الحجز بنجاح ✅ سنتواصل معك قريباً")
-            return redirect('contact')
+            return redirect('thank_you')
         else:
             messages.error(request, "حدث خطأ في الحجز. الرجاء المحاولة مرة أخرى.")
     else:

@@ -23,4 +23,5 @@ urlpatterns = [
     
     # ============= API Endpoints =============
     path('api/unread-count/', views.get_unread_count, name='get_unread_count'),
+    path('thank-you/', views.thank_you, name='thank_you'),
 ]

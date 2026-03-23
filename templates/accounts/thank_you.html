@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تم الحجز بنجاح - مؤسسة العجمي{% endblock %}
+
+{% block meta_description %}تم حجز حصتك التجريبية المجانية بنجاح في مؤسسة العجمي لتحفيظ القرآن الكريم. سنتواصل معك قريباً.{% endblock %}
+
+{% block extra_css %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+    .thank-you-wrapper {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .thank-you-card {
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+        padding: 50px 40px;
+        background: linear-gradient(145deg, rgba(17, 43, 80, 0.4), rgba(12, 35, 74, 0.4));
+        border-radius: 24px;
+        border: 2px solid rgba(76, 175, 80, 0.4);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .checkmark-circle {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4CAF50, #2e7d32);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        box-shadow: 0 0 30px rgba(76, 175, 80, 0.5);
+        animation: popIn 0.5s ease 0.3s both;
+    }
+
+    @keyframes popIn {
+        from { transform: scale(0); }
+        to   { transform: scale(1); }
+    }
+
+    .checkmark-circle i {
+        font-size: 45px;
+        color: white;
+    }
+
+    .thank-you-card h1 {
+        font-size: 2em;
+        color: #e8f7e9;
+        margin-bottom: 15px;
+    }
+
+    .thank-you-card p.subtitle {
+        font-size: 1.15em;
+        color: #b3daff;
+        margin-bottom: 30px;
+        line-height: 1.7;
+    }
+
+    .divider {
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #4CAF50, transparent);
+        margin: 25px auto;
+        border-radius: 2px;
+    }
+
+    .steps-list {
+        text-align: right;
+        background: rgba(12, 35, 74, 0.5);
+        border-radius: 12px;
+        padding: 20px 25px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(76, 175, 80, 0.2);
+    }
+
+    .steps-list p {
+        color: #b3daff;
+        margin: 8px 0;
+        font-size: 1em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .steps-list i {
+        color: #4CAF50;
+        font-size: 0.95em;
+        flex-shrink: 0;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .btn-whatsapp {
+        padding: 14px 28px;
+        background: linear-gradient(135deg, #25D366, #128C7E);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 1.05em;
+        font-weight: 700;
+        font-family: 'Cairo', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-whatsapp:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(37, 211, 102, 0.5);
+    }
+
+    .btn-home {
+        padding: 14px 28px;
+        background: transparent;
+        color: #b3daff;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 1.05em;
+        font-weight: 600;
+        font-family: 'Cairo', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 2px solid rgba(76, 129, 175, 0.4);
+        transition: all 0.3s;
+    }
+
+    .btn-home:hover {
+        border-color: #4CAF50;
+        color: #e8f7e9;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 480px) {
+        .thank-you-card {
+            padding: 35px 20px;
+        }
+        .thank-you-card h1 {
+            font-size: 1.6em;
+        }
+        .action-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        .btn-whatsapp,
+        .btn-home {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main role="main" class="thank-you-wrapper">
+    <div class="thank-you-card">
+
+        <div class="checkmark-circle">
+            <i class="fas fa-check" aria-hidden="true"></i>
+        </div>
+
+        <h1>تم الحجز بنجاح! 🎉</h1>
+        <p class="subtitle">
+            شكراً لك على تسجيلك في مؤسسة العجمي لتحفيظ القرآن الكريم.<br>
+            سنتواصل معك في أقرب وقت بإذن الله.
+        </p>
+
+        <div class="divider"></div>
+
+        <div class="steps-list" aria-label="الخطوات القادمة">
+            <p><i class="fas fa-check-circle" aria-hidden="true"></i> تم استلام بياناتك بنجاح</p>
+            <p><i class="fas fa-phone" aria-hidden="true"></i> سيتصل بك أحد المشرفين خلال 24 ساعة</p>
+            <p><i class="fas fa-calendar-check" aria-hidden="true"></i> سيتم تحديد موعد الحصة التجريبية المجانية</p>
+            <p><i class="fas fa-book-open" aria-hidden="true"></i> استعد لرحلتك مع القرآن الكريم</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="https://wa.me/201044568181"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="btn-whatsapp"
+               aria-label="تواصل معنا عبر واتساب">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                تواصل عبر واتساب
+            </a>
+            <a href="{% url 'home' %}" class="btn-home" aria-label="العودة للصفحة الرئيسية">
+                <i class="fas fa-home" aria-hidden="true"></i>
+                الرئيسية
+            </a>
+        </div>
+
+    </div>
+</main>
+{% endblock %}
