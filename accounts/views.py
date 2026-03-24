@@ -448,3 +448,28 @@ def get_unread_count(request):
         'unread_count': unread_count,
         'success': True
     })
+
+
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from .models import FCMToken
+import json
+
+@csrf_exempt
+def save_fcm_token(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            token = data.get('token')
+            is_admin = request.user.is_staff if request.user.is_authenticated else False
+
+            if token:
+                FCMToken.objects.update_or_create(
+                    token=token,
+                    defaults={'is_admin': is_admin}
+                )
+                return JsonResponse({'status': 'success'})
+            return JsonResponse({'status': 'error', 'message': 'لا يوجد token'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'error'})

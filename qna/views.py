@@ -17,7 +17,6 @@ from .models import (
 )
 from .forms import PublicQuestionForm, CommunityAnswerForm
 import json
-from accounts.notifications import send_push_notification
 
 
 class QuestionListView(ListView):
@@ -369,12 +368,7 @@ class AskQuestionView(CreateView):
 
         question.status = 'pending'
         question.save()
-        # بعد question.save()
-        send_push_notification(
-            title=f'❓ سؤال جديد: {question.title[:50]}',
-            message=f'{question.visitor_name}: {question.question_text[:80]}',
-            url=f'https://alagme.com/qna/{question.slug}/'
-        )
+        
 
         self.send_admin_notification(question)
 

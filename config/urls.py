@@ -6,6 +6,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from .robots_view import robots_txt
+from django.views.generic import TemplateView
+from accounts import views as accounts_views
+
 
 # استيراد الخرائط المحدثة (بعد إزالة المكررة)
 from .sitemaps import (
@@ -39,8 +42,18 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('blog/', include('blog.urls')),
     path('questions/', include('qna.urls', namespace='qna')),
+        # ... الـ urls الموجودة
+    path('firebase-messaging-sw.js', TemplateView.as_view(
+        template_name='firebase-messaging-sw.js',
+        content_type='application/javascript'
+    ), name='firebase-sw'),
+    path('save-fcm-token/', accounts_views.save_fcm_token, name='save_fcm_token'),
+
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+

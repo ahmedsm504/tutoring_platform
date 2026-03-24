@@ -86,11 +86,11 @@ INSTALLED_APPS = [
     'accounts',
     'core',
     'payments',
-    'blog',
-    'qna',
     'cloudinary',
     'cloudinary_storage',
     'corsheaders',
+    'blog.apps.BlogConfig',  # مش بس 'blog'
+    'qna.apps.QnaConfig',
 ]
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -253,7 +253,8 @@ SESSION_COOKIE_SIZE = 4096  # تقليل حجم الـ session
 # أو غيّر الـ session engine لـ database بدل cookies
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-from decouple import config
+import os
 
-ONESIGNAL_APP_ID = config("ONESIGNAL_APP_ID")
-ONESIGNAL_API_KEY = config("ONESIGNAL_API_KEY")
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+FIREBASE_CREDENTIALS = os.path.join(BASE_DIR, 'alagme-notifications-firebase-adminsdk-fbsvc-c217506122.json')

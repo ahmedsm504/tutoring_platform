@@ -21,16 +21,60 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253419170065458"
      crossorigin="anonymous"></script>
 
-     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-        <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
-        OneSignalDeferred.push(async function(OneSignal) {
-            await OneSignal.init({
-            appId: "7cf73c03-afd6-43ff-af0f-856b49862d15",
-            });
-        });
-        </script>
+     <!-- Firebase Notifications -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-X81jKdtfaMRblBEsIEl01OVga2Hqe2E",
+    authDomain: "alagme-notifications.firebaseapp.com",
+    projectId: "alagme-notifications",
+    storageBucket: "alagme-notifications.firebasestorage.app",
+    messagingSenderId: "914317417493",
+    appId: "1:914317417493:web:2a9acda899a263a1c1821c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  // تسجيل Service Worker
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(registration => {
+      console.log('Service Worker registered ✅');
+
+      // طلب إذن الإشعارات
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          getToken(messaging, {
+            vapidKey: "BDJXpC_xK5MZzmk7-qA1wiNAOYsOSIHZ6dWbjMGmX8p0hE9IB_Tp_lutxtN8tUC_hfqvlRym_3AniPt8IvfwmBQ",
+            serviceWorkerRegistration: registration
+          }).then(currentToken => {
+            if (currentToken) {
+              // حفظ الـ token في Django
+              fetch('/save-fcm-token/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ token: currentToken })
+              });
+            }
+          }).catch(err => console.log('Token error:', err));
+        }
+      });
+    });
+
+  // استقبال الإشعارات وأنت في الصفحة
+  onMessage(messaging, (payload) => {
+    const { title, body } = payload.notification;
+    new Notification(title, {
+      body: body,
+      icon: '/static/images/logo.jpeg'
+    });
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">

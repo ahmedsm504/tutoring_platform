@@ -1,29 +1,77 @@
-import requests
-import json
+import firebase_admin
+from firebase_admin import credentials, messaging
 from django.conf import settings
 
-def send_push_notification(title, message, url="https://alagme.com"):
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": f"Basic {settings.ONESIGNAL_API_KEY}"
-    }
+if not firebase_admin._apps:
+    cred = credentials.Certificate(settings.FIREBASE_CREDENTIALS)
+    firebase_admin.initialize_app(cred)
 
-    payload = {
-        "app_id": settings.ONESIGNAL_APP_ID,
-        "included_segments": ["All"],  # جميع المشتركين
-        "headings": {"ar": title, "en": title},
-        "contents": {"ar": message, "en": message},
-        "url": url
-    }
 
+def send_public_notification(title, message, url="https://alagme.com"):
+    """للكل — مقالات وأسئلة"""
     try:
-        response = requests.post(
-            "https://api.onesignal.com/notifications",
-            headers=headers,
-            data=json.dumps(payload)
+        from accounts.models import FCMToken
+        tokens = list(FCMToken.objects.values_list('token', flat=True))
+
+        if not tokens:
+            print("لا يوجد مشتركين")
+            return None
+
+        msg = messaging.MulticastMessage(
+            notification=messaging.Notification(
+                title=title,
+                body=message,
+            ),
+            webpush=messaging.WebpushConfig(
+                fcm_options=messaging.WebpushFCMOptions(
+                    link=url,
+                ),
+                notification=messaging.WebpushNotification(
+                    icon='/static/images/logo.jpeg',
+                ),
+            ),
+            tokens=tokens,
         )
-        return response.json()
+
+        response = messaging.send_each_for_multicast(msg)  # ✅ الدالة الجديدة
+        print(f"✅ أُرسل لـ {response.success_count} | فشل {response.failure_count}")
+        return response
+
     except Exception as e:
-        print(f"OneSignal Error: {e}")
+        print(f"Firebase Error: {e}")
+        return None
+
+
+def send_admin_notification(title, message, url="https://alagme.com"):
+    """للأدمن بس"""
+    try:
+        from accounts.models import FCMToken
+        tokens = list(FCMToken.objects.filter(is_admin=True).values_list('token', flat=True))
+
+        if not tokens:
+            print("لا يوجد token للأدمن")
+            return None
+
+        msg = messaging.MulticastMessage(
+            notification=messaging.Notification(
+                title=title,
+                body=message,
+            ),
+            webpush=messaging.WebpushConfig(
+                fcm_options=messaging.WebpushFCMOptions(
+                    link=url,
+                ),
+                notification=messaging.WebpushNotification(
+                    icon='/static/images/logo.jpeg',
+                ),
+            ),
+            tokens=tokens,
+        )
+
+        response = messaging.send_each_for_multicast(msg)
+        print(f"✅ أُرسل للأدمن")
+        return response
+
+    except Exception as e:
+        print(f"Firebase Admin Error: {e}")
         return None

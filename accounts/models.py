@@ -313,3 +313,13 @@ class TrialBooking(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.phone} ({self.get_gender_display()})"
+    
+
+
+class FCMToken(models.Model):
+    token = models.TextField(unique=True)
+    is_admin = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{'Admin' if self.is_admin else 'User'} - {self.token[:20]}..."
