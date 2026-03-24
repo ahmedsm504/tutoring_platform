@@ -253,5 +253,7 @@ SESSION_COOKIE_SIZE = 4096  # تقليل حجم الـ session
 # أو غيّر الـ session engine لـ database بدل cookies
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-ONESIGNAL_APP_ID = "7cf73c03-afd6-43ff-af0f-856b49862d15"
-ONESIGNAL_API_KEY = "os_v2_app_pt3tya5p2zb77lypqvvutbrncuc7xhs3wyxeac4rjwyplhngrzlvh7dxrxfoq5v4xxygtdqfaaph7rxmjxlqnvj4vhf44p55fk3hgka"
+from decouple import config
+
+ONESIGNAL_APP_ID = config("ONESIGNAL_APP_ID")
+ONESIGNAL_API_KEY = config("ONESIGNAL_API_KEY")

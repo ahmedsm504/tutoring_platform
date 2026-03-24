@@ -17,6 +17,7 @@ from .models import (
 )
 from .forms import PublicQuestionForm, CommunityAnswerForm
 import json
+from accounts.notifications import send_push_notification
 
 
 class QuestionListView(ListView):
@@ -368,8 +369,6 @@ class AskQuestionView(CreateView):
 
         question.status = 'pending'
         question.save()
-        from accounts.notifications import send_push_notification
-
         # بعد question.save()
         send_push_notification(
             title=f'❓ سؤال جديد: {question.title[:50]}',
