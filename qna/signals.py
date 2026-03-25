@@ -7,7 +7,6 @@ from django.db import transaction
 
 @receiver(pre_save, sender=PublicQuestion)
 def cache_old_status(sender, instance, **kwargs):
-    """احفظ الـ status القديم قبل الحفظ"""
     if instance.pk:
         try:
             old = PublicQuestion.objects.get(pk=instance.pk)
@@ -20,7 +19,6 @@ def cache_old_status(sender, instance, **kwargs):
 
 @receiver(post_save, sender=PublicQuestion)
 def notify_question_approved(sender, instance, created, **kwargs):
-    """ابعت إشعار لما السؤال يتعتمد"""
     if created:
         return
 
