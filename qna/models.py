@@ -43,6 +43,7 @@ class PublicQuestion(models.Model):
     )
     visitor_email = models.EmailField(verbose_name="البريد الإلكتروني", blank=True)
     visitor_phone = models.CharField(max_length=20, blank=True, verbose_name="الهاتف")
+    notification_sent = models.BooleanField(default=False, verbose_name="تم إرسال إشعار")
     
     # محتوى السؤال
     title = models.CharField(

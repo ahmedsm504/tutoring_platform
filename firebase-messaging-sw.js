@@ -1,3 +1,5 @@
+
+
 importScripts('https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js');
 
@@ -12,42 +14,44 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+// 📩 استقبال الإشعار في الخلفية
 messaging.onBackgroundMessage((payload) => {
-    const { title, body } = payload.notification;
-    const url = payload.data?.url || '/';
+    console.log("📩 Background Message:", payload);
 
-    self.registration.showNotification(title, {
-        body: body,
+    const notificationTitle = payload.notification.title;
+    const notificationOptions = {
+        body: payload.notification.body,
         icon: '/static/images/logo.jpeg',
-        badge: '/static/images/logo.jpeg',
-        actions: [
-            { action: 'open', title: '👁️ زيارة' },
-            { action: 'close', title: '⏰ لاحقاً' }
-        ],
-        data: { url }
-    });
+        data: {
+            url: payload.fcmOptions?.link || "https://alagme.com"
+        }
+    };
+
+    self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
-// لما المستخدم يضغط على الإشعار أو على زيارة
-self.addEventListener('notificationclick', (event) => {
+
+// 👇🔥 لما المستخدم يضغط على الإشعار
+self.addEventListener('notificationclick', function (event) {
     event.notification.close();
 
-    if (event.action === 'close') return;
+    const urlToOpen = event.notification.data.url || "https://alagme.com";
 
-    const url = event.notification.data?.url || '/';
     event.waitUntil(
-        clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-            // لو الموقع مفتوح خليه يفتح الـ url في نفس التاب
-            for (const client of clientList) {
-                if (client.url.includes('alagme.com') && 'focus' in client) {
-                    client.navigate(url);
+        clients.matchAll({
+            type: "window",
+            includeUncontrolled: true
+        }).then((clientList) => {
+            // لو التاب مفتوحة بالفعل
+            for (let i = 0; i < clientList.length; i++) {
+                let client = clientList[i];
+                if (client.url.includes("alagme.com") && 'focus' in client) {
+                    client.navigate(urlToOpen);
                     return client.focus();
                 }
             }
-            // لو مفيش تاب مفتوح افتح تاب جديد
-            if (clients.openWindow) {
-                return clients.openWindow(url);
-            }
+            // لو مش مفتوحة
+            return clients.openWindow(urlToOpen);
         })
     );
 });
