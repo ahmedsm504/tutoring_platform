@@ -14,8 +14,40 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
     const { title, body } = payload.notification;
+    const url = payload.data?.url || '/';
+
     self.registration.showNotification(title, {
         body: body,
-        icon: '/static/images/logo.jpeg'
+        icon: '/static/images/logo.jpeg',
+        badge: '/static/images/logo.jpeg',
+        actions: [
+            { action: 'open', title: '👁️ زيارة' },
+            { action: 'close', title: '⏰ لاحقاً' }
+        ],
+        data: { url }
     });
+});
+
+// لما المستخدم يضغط على الإشعار أو على زيارة
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+
+    if (event.action === 'close') return;
+
+    const url = event.notification.data?.url || '/';
+    event.waitUntil(
+        clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+            // لو الموقع مفتوح خليه يفتح الـ url في نفس التاب
+            for (const client of clientList) {
+                if (client.url.includes('alagme.com') && 'focus' in client) {
+                    client.navigate(url);
+                    return client.focus();
+                }
+            }
+            // لو مفيش تاب مفتوح افتح تاب جديد
+            if (clients.openWindow) {
+                return clients.openWindow(url);
+            }
+        })
+    );
 });
