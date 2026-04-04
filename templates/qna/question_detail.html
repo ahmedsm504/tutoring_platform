@@ -24,7 +24,8 @@
     "dateCreated": "{{ question.created_at|date:'c' }}",
     "author": {
       "@type": "Person",
-      "name": "{{ question.visitor_name|escapejs }}"
+      "name": "{{ question.visitor_name|escapejs }}",
+      "url": "{{ request.scheme }}://{{ request.get_host }}"
     },
     "answerCount": {{ community_answers.count }},
     {% if has_official_answer and official_answer %}
@@ -33,9 +34,11 @@
       "text": "{{ official_answer.answer_text|striptags|escapejs }}",
       "dateCreated": "{{ official_answer.answered_at|date:'c' }}",
       "upvoteCount": {{ official_answer.likes|default:0 }},
+      "url": "{{ request.build_absolute_uri }}#official-answer",
       "author": {
         "@type": "Person",
-        "name": "{{ official_answer.answered_by.get_full_name|default:official_answer.answered_by.username|escapejs }}"
+        "name": "{{ official_answer.answered_by.get_full_name|default:official_answer.answered_by.username|escapejs }}",
+        "url": "{{ request.scheme }}://{{ request.get_host }}"
       }
     },
     {% endif %}
@@ -46,9 +49,11 @@
         "text": "{{ answer.answer_text|striptags|truncatewords:80|escapejs }}",
         "dateCreated": "{{ answer.created_at|date:'c' }}",
         "upvoteCount": {{ answer.likes|default:0 }},
+        "url": "{{ request.build_absolute_uri }}#answer-{{ answer.id }}",
         "author": {
           "@type": "Person",
-          "name": "{% if answer.answered_by %}{{ answer.answered_by.get_full_name|default:answer.answered_by.username|escapejs }}{% else %}{{ answer.visitor_name|escapejs }}{% endif %}"
+          "name": "{% if answer.answered_by %}{{ answer.answered_by.get_full_name|default:answer.answered_by.username|escapejs }}{% else %}{{ answer.visitor_name|escapejs }}{% endif %}",
+          "url": "{{ request.scheme }}://{{ request.get_host }}"
         }
       }{% if not forloop.last %},{% endif %}
       {% endfor %}
@@ -208,7 +213,6 @@
     .status-badge { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important; color: #1e40af !important; border: none !important; }
     .status-badge.answered { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%) !important; color: #065f46 !important; }
 
-    /* ✅ Sidebar headings - من h6 إلى h3 مع تصغير بصري */
     .sidebar-heading-small {
         font-size: 0.85rem !important;
         font-weight: 700;
@@ -217,19 +221,16 @@
         gap: 0.5rem;
     }
 
-    /* ✅ CTA heading - من h3 إلى h2 مع تصغير بصري */
     .cta-title-small {
         font-size: 1rem !important;
         font-weight: 800;
     }
 
-    /* ✅ Modal heading - من h5 إلى h2 مع تصغير بصري */
     .modal-heading {
         font-size: 1.1rem !important;
         font-weight: 900;
     }
 
-    /* sr-only للـ accessibility */
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
 
     @media (max-width: 1024px) {
@@ -331,14 +332,13 @@
                 <article class="question-star animate-in" itemscope itemtype="https://schema.org/Question">
                     <div class="star-core">
                         {% if question.category %}
-                        <a href="{% url 'qna:question_list' %}?category={{ question.category.slug %}"
+                        <a href="{% url 'qna:question_list' %}?category={{ question.category.slug }}"
                            class="category-supernova" itemprop="about">
                             <i class="fas fa-tag"></i>
                             <span>{{ question.category.name }}</span>
                         </a>
                         {% endif %}
 
-                        <!-- ✅ H1 وحيد في الصفحة -->
                         <h1 class="title-cosmos" itemprop="name">{{ question.title }}</h1>
 
                         <div class="question-nebula" itemprop="text">
@@ -375,11 +375,11 @@
                 <!-- OFFICIAL ANSWER -->
                 {% if has_official_answer and official_answer %}
                 <section class="answer-supernova animate-in delay-100"
+                         id="official-answer"
                          itemprop="acceptedAnswer"
                          itemscope
                          itemtype="https://schema.org/Answer">
                     <header class="supernova-header">
-                        <!-- ✅ H2: قسم رئيسي تحت H1 -->
                         <h2 class="supernova-title">
                             <i class="fas fa-check-circle"></i>
                             <span>الإجابة الرسمية</span>
@@ -454,7 +454,6 @@
                          id="answers-section"
                          aria-labelledby="community-heading">
                     <header class="asteroids-header">
-                        <!-- ✅ H2: قسم رئيسي تحت H1 -->
                         <h2 class="asteroids-title" id="community-heading">
                             <i class="fas fa-users"></i> إجابات المجتمع
                         </h2>
@@ -465,6 +464,7 @@
                         <div class="asteroids-list">
                         {% for answer in community_answers %}
                         <article class="asteroid-card animate-in"
+                                 id="answer-{{ answer.id }}"
                                  style="animation-delay: {{ forloop.counter|add:2 }}00ms"
                                  itemprop="suggestedAnswer"
                                  itemscope
@@ -526,7 +526,6 @@
 
                 <!-- ANSWER FORM -->
                 <section class="form-nebula animate-in delay-300" aria-labelledby="form-heading">
-                    <!-- ✅ H2: قسم رئيسي تحت H1 -->
                     <h2 class="form-title-cosmic" id="form-heading">
                         <i class="fas fa-edit"></i> أضف إجابتك
                     </h2>
@@ -581,7 +580,6 @@
 
                 <!-- SHARE -->
                 <aside class="share-constellation animate-in delay-400" aria-label="مشاركة السؤال">
-                    <!-- ✅ H2: قسم مستقل تحت H1 (يعيش في aside لكن ما زال يحتاج تسلسل صحيح) -->
                     <h2 class="share-title"><i class="fas fa-share-alt"></i> شارك هذا السؤال</h2>
                     <div class="share-galaxy">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank" rel="noopener noreferrer" class="share-planet facebook" aria-label="فيسبوك">
@@ -607,7 +605,6 @@
                 {% if related_questions %}
                 <section class="related-stars animate-in" aria-labelledby="related-heading">
                     <header class="related-header">
-                        <!-- ✅ تم التغيير: من h6 إلى h2 مع class يحافظ على المظهر البصري -->
                         <h2 class="sidebar-heading-small" id="related-heading">
                             <i class="fas fa-link"></i> أسئلة ذات صلة
                         </h2>
@@ -636,7 +633,6 @@
 
                 <section class="cta-blackhole animate-in delay-100" aria-labelledby="cta-heading">
                     <i class="fas fa-question-circle cta-icon"></i>
-                    <!-- ✅ تم التغيير: من h3 إلى h2 مع class يحافظ على المظهر -->
                     <h2 class="cta-title cta-title-small" id="cta-heading">لديك سؤال؟</h2>
                     <p class="cta-text">اطرح سؤالك واحصل على إجابة من مجتمعنا المتخصص</p>
                     <a href="{% url 'qna:ask' %}" class="cta-wormhole">اطرح سؤالك الآن</a>
@@ -644,7 +640,6 @@
 
                 <section class="categories-nebula animate-in delay-200" aria-labelledby="categories-heading">
                     <header class="nebula-header">
-                        <!-- ✅ تم التغيير: من h6 إلى h2 مع class يحافظ على المظهر -->
                         <h2 class="sidebar-heading-small" id="categories-heading">
                             <i class="fas fa-folder"></i> تصفح الفئات
                         </h2>
@@ -664,7 +659,6 @@
 
                 <section class="stats-quasar animate-in delay-300" aria-labelledby="stats-heading">
                     <header class="quasar-header">
-                        <!-- ✅ تم التغيير: من h6 إلى h2 مع class يحافظ على المظهر -->
                         <h2 class="sidebar-heading-small" id="stats-heading">
                             <i class="fas fa-chart-bar"></i> إحصائيات السؤال
                         </h2>
@@ -703,7 +697,6 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 1.5rem; border: none;">
             <div class="modal-header" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-bottom: 2px solid #e2e8f0;">
-                <!-- ✅ تم التغيير: من h5 إلى h2 مع class يحافظ على المظهر -->
                 <h2 class="modal-title modal-heading" id="termsTitle">شروط نشر الإجابات</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
             </div>
