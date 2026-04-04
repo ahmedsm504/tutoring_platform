@@ -6,7 +6,12 @@ import json
 
 if not firebase_admin._apps:
     firebase_json = os.environ.get("FIREBASE_CREDENTIALS_JSON")
-    cred = credentials.Certificate(json.loads(firebase_json))
+
+    if firebase_json:
+        cred = credentials.Certificate(json.loads(firebase_json))
+    else:
+        cred = credentials.Certificate(r"C:\serviceAccountKey.json")
+
     firebase_admin.initialize_app(cred)
 
 

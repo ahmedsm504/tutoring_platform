@@ -111,9 +111,12 @@
             justify-content: center;
             font-size: 1.8em;
         }
-        
-        .author-details h4 {
+
+        /* ✅ تم التغيير: من h4 إلى p مع class خاص */
+        .author-details .author-name {
             margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 1em;
         }
         
         .author-details small {
@@ -143,7 +146,8 @@
         .post-content p {
             margin-bottom: 20px;
         }
-        
+
+        /* ✅ محتوى المقال: H2 و H3 فقط (لا H1 داخل المحتوى) */
         .post-content h2, .post-content h3 {
             margin: 30px 0 15px;
             color: #667eea;
@@ -174,9 +178,11 @@
             margin-bottom: 40px;
             backdrop-filter: blur(10px);
         }
-        
-        .share-section h3 {
+
+        /* ✅ تم التغيير: من h3 إلى h2 */
+        .share-section h2 {
             margin-bottom: 15px;
+            font-size: 1.4em;
         }
         
         .share-buttons {
@@ -249,6 +255,12 @@
             margin-bottom: 40px;
             backdrop-filter: blur(10px);
         }
+
+        /* ✅ تم التغيير: من h3 إلى h2 */
+        .comment-form h2,
+        .comments-section h2 {
+            font-size: 1.4em;
+        }
         
         .form-group {
             margin-bottom: 20px;
@@ -297,8 +309,9 @@
         .related-section {
             margin-top: 60px;
         }
-        
-        .section-title {
+
+        /* ✅ تم التغيير: من h2 إلى h2 (صح أصلاً) */
+        .related-section h2.section-title {
             font-size: 2em;
             margin-bottom: 30px;
             display: flex;
@@ -333,7 +346,8 @@
         .related-content {
             padding: 20px;
         }
-        
+
+        /* ✅ تم التغيير: من h3 إلى h3 (صح لأنه تحت h2) */
         .related-title {
             font-size: 1.2em;
             margin-bottom: 10px;
@@ -398,7 +412,7 @@
         {% endif %}
         
         <!-- Post Header -->
-        <div class="post-header">
+        <header class="post-header">
             <div class="post-meta-top">
                 {% if post.category %}
                 <span class="category-badge">{{ post.category.icon }} {{ post.category.name }}</span>
@@ -407,7 +421,8 @@
                 <span class="meta-item">⏱ {{ post.reading_time }} دقائق قراءة</span>
                 <span class="meta-item">📅 {{ post.published_at|date:"d M Y" }}</span>
             </div>
-            
+
+            <!-- ✅ H1 وحيد في الصفحة -->
             <h1 class="post-title">{{ post.title }}</h1>
             
             {% if post.excerpt %}
@@ -417,11 +432,12 @@
             <div class="author-info">
                 <div class="author-avatar">👨‍💼</div>
                 <div class="author-details">
-                    <h4>{{ post.author.get_full_name|default:post.author.username }}</h4>
+                    <!-- ✅ تم التغيير: من h4 إلى p لأنه ليس عنواناً هيكلياً -->
+                    <p class="author-name">{{ post.author.get_full_name|default:post.author.username }}</p>
                     <small>تم النشر في {{ post.published_at|date:"d F Y" }}</small>
                 </div>
             </div>
-        </div>
+        </header>
         
         <!-- Featured Image -->
         {% if post.image %}
@@ -429,13 +445,15 @@
         {% endif %}
         
         <!-- Post Content -->
-        <div class="post-content">
+        <!-- ✅ تنبيه: تأكد أن محتوى المقال في قاعدة البيانات يبدأ بـ H2 وليس H1 أو H3 مباشرة -->
+        <article class="post-content">
             {{ post.content|linebreaks }}
-        </div>
+        </article>
         
         <!-- Share Section -->
-        <div class="share-section">
-            <h3>📤 شارك هذا المقال</h3>
+        <section class="share-section">
+            <!-- ✅ تم التغيير: من h3 إلى h2 -->
+            <h2>📤 شارك هذا المقال</h2>
             <div class="share-buttons">
                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-btn share-facebook">
                     Facebook
@@ -450,12 +468,13 @@
                     LinkedIn
                 </a>
             </div>
-        </div>
+        </section>
         
         <!-- Comment Form -->
         {% if post.allow_comments %}
-        <div class="comment-form">
-            <h3>💬 اترك تعليقك</h3>
+        <section class="comment-form">
+            <!-- ✅ تم التغيير: من h3 إلى h2 -->
+            <h2>💬 اترك تعليقك</h2>
             <form method="post">
                 {% csrf_token %}
                 <div class="form-group">
@@ -472,13 +491,14 @@
                 </div>
                 <button type="submit" class="submit-btn">إرسال التعليق</button>
             </form>
-        </div>
+        </section>
         {% endif %}
         
         <!-- Comments -->
-        <div class="comments-section">
+        <section class="comments-section">
             <div class="comments-header">
-                <h3>💬 التعليقات</h3>
+                <!-- ✅ تم التغيير: من h3 إلى h2 -->
+                <h2>💬 التعليقات</h2>
                 <span style="opacity: 0.7;">{{ comments_count }} تعليق</span>
             </div>
             
@@ -493,17 +513,16 @@
             {% else %}
                 <p style="text-align: center; opacity: 0.7; padding: 30px;">لا توجد تعليقات بعد. كن أول من يعلق!</p>
             {% endif %}
-        </div>
+        </section>
         
         <!-- Related Posts -->
         {% if related_posts %}
-        <div class="related-section">
+        <section class="related-section">
+            <!-- ✅ H2 صح لأنه قسم رئيسي تحت H1 -->
             <h2 class="section-title">📚 مقالات ذات صلة</h2>
             <div class="related-grid">
                 {% for related in related_posts %}
-                <div class="related-card">
-
-                    <!-- ✅ التعديل هنا: يتحقق من cloud_url أولاً ثم image.url ثم placeholder -->
+                <article class="related-card">
                     {% if related.cloud_url %}
                     <img src="{{ related.cloud_url }}" alt="{{ related.title }}" class="related-image">
                     {% elif related.image %}
@@ -515,6 +534,7 @@
                     {% endif %}
 
                     <div class="related-content">
+                        <!-- ✅ H3 صح لأنه تحت H2 -->
                         <h3 class="related-title">
                             <a href="{% url 'blog_detail' related.slug %}">{{ related.title }}</a>
                         </h3>
@@ -523,10 +543,10 @@
                             <span>⏱ {{ related.reading_time }} د</span>
                         </div>
                     </div>
-                </div>
+                </article>
                 {% endfor %}
             </div>
-        </div>
+        </section>
         {% endif %}
     </div>
 </body>

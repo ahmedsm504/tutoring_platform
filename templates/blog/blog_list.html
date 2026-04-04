@@ -16,7 +16,6 @@
 {% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/blog-twitter.jpg' %}{% endblock %}
 
 {% block extra_meta %}
-<!-- Additional SEO Meta Tags -->
 <meta name="author" content="مؤسسة العجمي">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="googlebot" content="index, follow">
@@ -30,7 +29,6 @@
 {% endblock %}
 
 {% block extra_ldjson %}
-<!-- Schema.org Structured Data - BreadcrumbList -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -52,7 +50,6 @@
 }
 </script>
 
-<!-- Schema.org Structured Data - Blog -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -102,7 +99,6 @@
 }
 </script>
 
-<!-- Schema.org Structured Data - ItemList -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -123,7 +119,6 @@
 }
 </script>
 
-<!-- Schema.org Structured Data - WebSite -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -141,7 +136,6 @@
 }
 </script>
 
-<!-- FAQ Schema (if applicable) -->
 {% if featured_posts %}
 <script type="application/ld+json">
 {
@@ -203,14 +197,8 @@ body {
 }
 
 @keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .page-header h1 {
@@ -294,14 +282,8 @@ body {
 }
 
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .search-filter input {
@@ -434,14 +416,8 @@ body {
 }
 
 @keyframes pulseBadge {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
-    }
-    50% {
-        transform: scale(1.08);
-        box-shadow: 0 12px 35px rgba(255, 215, 0, 0.7);
-    }
+    0%, 100% { transform: scale(1); box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5); }
+    50% { transform: scale(1.08); box-shadow: 0 12px 35px rgba(255, 215, 0, 0.7); }
 }
 
 /* ==================== LAYOUT ==================== */
@@ -514,10 +490,7 @@ body {
 .post-image-container::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 100%);
     z-index: 1;
     pointer-events: none;
@@ -572,6 +545,7 @@ body {
     letter-spacing: 0.5px;
 }
 
+/* ✅ post-title الآن H3 (تحت H2 الخاص بالقسم) */
 .post-title {
     font-size: 1.65em;
     margin-bottom: 16px;
@@ -637,6 +611,7 @@ body {
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
 }
 
+/* ✅ widget-title الآن H3 (تحت H2 الخاص بالقسم) */
 .widget-title {
     font-size: 1.6em;
     margin-bottom: 28px;
@@ -745,7 +720,8 @@ body {
     justify-content: center;
 }
 
-.popular-post-info h4 {
+/* ✅ تم التغيير: من h4 إلى p لأنه ليس عنواناً هيكلياً */
+.popular-post-info .post-name {
     font-size: 1.05em;
     margin-bottom: 8px;
     font-weight: 700;
@@ -808,112 +784,42 @@ body {
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1200px) {
-    .featured-grid {
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    }
-
-    .posts-grid {
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    }
+    .featured-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+    .posts-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
 }
 
 @media (max-width: 1000px) {
-    .layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
+    .layout { grid-template-columns: 1fr; gap: 40px; }
     .sidebar {
         position: static;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 30px;
     }
-
-    .widget {
-        margin-bottom: 0;
-    }
+    .widget { margin-bottom: 0; }
 }
 
 @media (max-width: 768px) {
-    .blog-container {
-        padding: 40px 18px;
-    }
-
-    .page-header h1 {
-        font-size: 2.5em;
-    }
-
-    .page-header p {
-        font-size: 1.1em;
-    }
-
-    .stats-bar {
-        gap: 20px;
-    }
-
-    .stat-item {
-        padding: 15px 20px;
-    }
-
-    .stat-number {
-        font-size: 2em;
-    }
-
-    .posts-grid,
-    .featured-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .search-filter {
-        flex-direction: column;
-        padding: 25px;
-        gap: 15px;
-    }
-
-    .search-filter input {
-        min-width: 100%;
-    }
-
-    .filter-btn {
-        padding: 13px 20px;
-        font-size: 0.9em;
-        flex: 1;
-        min-width: 120px;
-        text-align: center;
-    }
-
-    .section-title {
-        font-size: 2.2em;
-    }
-
-    .post-image-container {
-        height: 260px;
-    }
+    .blog-container { padding: 40px 18px; }
+    .page-header h1 { font-size: 2.5em; }
+    .page-header p { font-size: 1.1em; }
+    .stats-bar { gap: 20px; }
+    .stat-item { padding: 15px 20px; }
+    .stat-number { font-size: 2em; }
+    .posts-grid, .featured-grid { grid-template-columns: 1fr; gap: 30px; }
+    .search-filter { flex-direction: column; padding: 25px; gap: 15px; }
+    .search-filter input { min-width: 100%; }
+    .filter-btn { padding: 13px 20px; font-size: 0.9em; flex: 1; min-width: 120px; text-align: center; }
+    .section-title { font-size: 2.2em; }
+    .post-image-container { height: 260px; }
 }
 
 @media (max-width: 480px) {
-    .blog-container {
-        padding: 25px 15px;
-    }
-
-    .page-header h1 {
-        font-size: 2em;
-    }
-
-    .section-title {
-        font-size: 1.8em;
-    }
-
-    .filter-btn {
-        flex: 1 1 calc(50% - 8px);
-        font-size: 0.85em;
-    }
-
-    .post-image-container {
-        height: 240px;
-    }
+    .blog-container { padding: 25px 15px; }
+    .page-header h1 { font-size: 2em; }
+    .section-title { font-size: 1.8em; }
+    .filter-btn { flex: 1 1 calc(50% - 8px); font-size: 0.85em; }
+    .post-image-container { height: 240px; }
 }
 
 /* ==================== LOADING ANIMATION ==================== */
@@ -924,12 +830,8 @@ body {
 }
 
 @keyframes shimmer {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
-    }
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 /* ==================== ACCESSIBILITY ==================== */
@@ -944,10 +846,7 @@ body {
     border: 0;
 }
 
-/* Focus styles for accessibility */
-a:focus,
-button:focus,
-input:focus {
+a:focus, button:focus, input:focus {
     outline: 3px solid #FFD700;
     outline-offset: 2px;
 }
@@ -957,8 +856,10 @@ input:focus {
 {% block content %}
 <main role="main" aria-labelledby="blog-heading">
     <div class="blog-container">
+
         <!-- Page Header -->
         <header class="page-header">
+            <!-- ✅ H1 وحيد في الصفحة -->
             <h1 id="blog-heading">📚 مدونة العجمي</h1>
             <p>مقالات متخصصة في تحفيظ القرآن الكريم وتجويده</p>
         </header>
@@ -982,39 +883,31 @@ input:focus {
         <!-- Search and Filter -->
         <form method="get" class="search-filter" role="search" aria-label="بحث وتصفية المقالات">
             <label for="search-input" class="sr-only">ابحث في المدونة</label>
-            <input 
-                type="text" 
+            <input
+                type="text"
                 id="search-input"
-                name="search" 
-                placeholder="🔍 ابحث عن مقال..." 
+                name="search"
+                placeholder="🔍 ابحث عن مقال..."
                 value="{{ search_query }}"
                 aria-label="كلمات البحث">
-
-            <a href="?sort=latest" 
+            <a href="?sort=latest"
                class="filter-btn {% if current_sort == 'latest' %}active{% endif %}"
                aria-label="ترتيب حسب الأحدث"
-               {% if current_sort == 'latest' %}aria-current="page"{% endif %}>
-                الأحدث
-            </a>
-
-            <a href="?sort=popular" 
+               {% if current_sort == 'latest' %}aria-current="page"{% endif %}>الأحدث</a>
+            <a href="?sort=popular"
                class="filter-btn {% if current_sort == 'popular' %}active{% endif %}"
                aria-label="ترتيب حسب الأكثر قراءة"
-               {% if current_sort == 'popular' %}aria-current="page"{% endif %}>
-                الأكثر قراءة
-            </a>
-
-            <a href="?sort=oldest" 
+               {% if current_sort == 'popular' %}aria-current="page"{% endif %}>الأكثر قراءة</a>
+            <a href="?sort=oldest"
                class="filter-btn {% if current_sort == 'oldest' %}active{% endif %}"
                aria-label="ترتيب حسب الأقدم"
-               {% if current_sort == 'oldest' %}aria-current="page"{% endif %}>
-                الأقدم
-            </a>
+               {% if current_sort == 'oldest' %}aria-current="page"{% endif %}>الأقدم</a>
         </form>
 
         <!-- Featured Posts -->
         {% if featured_posts %}
         <section class="featured-section" aria-labelledby="featured-heading">
+            <!-- ✅ H2: قسم رئيسي تحت H1 -->
             <h2 class="section-title" id="featured-heading">⭐ مقالات مميزة</h2>
             <div class="featured-grid">
                 {% for post in featured_posts %}
@@ -1023,14 +916,14 @@ input:focus {
                     <a href="{% url 'blog_detail' post.slug %}" aria-label="اقرأ المقال: {{ post.title }}">
                         <div class="post-image-container">
                             {% if post.image %}
-                            <img src="{{ post.cloud_url }}" 
-                                 alt="{{ post.title }}" 
-                                 class="post-image" 
+                            <img src="{{ post.cloud_url }}"
+                                 alt="{{ post.title }}"
+                                 class="post-image"
                                  loading="lazy"
                                  itemprop="image">
                             {% else %}
-                            <img src="{% static 'images/default_post.webp' %}" 
-                                 alt="صورة افتراضية" 
+                            <img src="{% static 'images/default_post.webp' %}"
+                                 alt="صورة افتراضية"
                                  class="post-image"
                                  loading="lazy">
                             {% endif %}
@@ -1045,6 +938,7 @@ input:focus {
                                 <span aria-label="عدد المشاهدات">👁 {{ post.views_count }}</span>
                                 <span aria-label="وقت القراءة">⏱ {{ post.reading_time }} د</span>
                             </div>
+                            <!-- ✅ H3: عنوان المقال تحت H2 قسم "مقالات مميزة" -->
                             <h3 class="post-title" itemprop="headline">{{ post.title }}</h3>
                             <p class="post-excerpt" itemprop="description">{{ post.excerpt|truncatewords:20 }}</p>
                             <span class="read-more" aria-hidden="true">قراءة المزيد →</span>
@@ -1060,8 +954,10 @@ input:focus {
 
         <!-- Layout with Main Content and Sidebar -->
         <div class="layout">
+
             <!-- Main Content -->
             <div>
+                <!-- ✅ H2: قسم رئيسي تحت H1 -->
                 <h2 class="section-title">📖 جميع المقالات</h2>
                 <div class="posts-grid">
                     {% for post in posts %}
@@ -1069,14 +965,14 @@ input:focus {
                         <a href="{% url 'blog_detail' post.slug %}" aria-label="اقرأ المقال: {{ post.title }}">
                             <div class="post-image-container">
                                 {% if post.image %}
-                                <img src="{{ post.cloud_url }}" 
-                                     alt="{{ post.title }}" 
-                                     class="post-image" 
+                                <img src="{{ post.cloud_url }}"
+                                     alt="{{ post.title }}"
+                                     class="post-image"
                                      loading="lazy"
                                      itemprop="image">
                                 {% else %}
-                                <img src="{% static 'images/default_post.webp' %}" 
-                                     alt="صورة افتراضية" 
+                                <img src="{% static 'images/default_post.webp' %}"
+                                     alt="صورة افتراضية"
                                      class="post-image"
                                      loading="lazy">
                                 {% endif %}
@@ -1091,6 +987,7 @@ input:focus {
                                     <span aria-label="عدد المشاهدات">👁 {{ post.views_count }}</span>
                                     <span aria-label="وقت القراءة">⏱ {{ post.reading_time }} د</span>
                                 </div>
+                                <!-- ✅ H3: عنوان المقال تحت H2 قسم "جميع المقالات" -->
                                 <h3 class="post-title" itemprop="headline">{{ post.title }}</h3>
                                 <p class="post-excerpt" itemprop="description">{{ post.excerpt|truncatewords:15 }}</p>
                                 <span class="read-more" aria-hidden="true">قراءة المزيد →</span>
@@ -1108,21 +1005,13 @@ input:focus {
                 {% if posts.has_other_pages %}
                 <nav class="pagination" role="navigation" aria-label="التنقل بين صفحات المقالات">
                     {% if posts.has_previous %}
-                    <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" 
-                       aria-label="الصفحة السابقة">
-                        السابق
-                    </a>
+                    <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                       aria-label="الصفحة السابقة">السابق</a>
                     {% endif %}
-
-                    <span class="current" aria-current="page">
-                        {{ posts.number }} / {{ posts.paginator.num_pages }}
-                    </span>
-
+                    <span class="current" aria-current="page">{{ posts.number }} / {{ posts.paginator.num_pages }}</span>
                     {% if posts.has_next %}
-                    <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" 
-                       aria-label="الصفحة التالية">
-                        التالي
-                    </a>
+                    <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                       aria-label="الصفحة التالية">التالي</a>
                     {% endif %}
                 </nav>
                 {% endif %}
@@ -1130,14 +1019,16 @@ input:focus {
 
             <!-- Sidebar -->
             <aside class="sidebar" role="complementary" aria-label="الشريط الجانبي">
+
                 <!-- Categories Widget -->
                 {% if categories %}
                 <div class="widget">
+                    <!-- ✅ H3: عنوان widget تحت H2 الخاص بالمحتوى الرئيسي -->
                     <h3 class="widget-title">📁 التصنيفات</h3>
                     <ul class="category-list">
                         {% for category in categories %}
                         <li>
-                            <a href="?category={{ category.slug }}" 
+                            <a href="?category={{ category.slug }}"
                                aria-label="عرض مقالات تصنيف {{ category.name }}">
                                 <span>{{ category.icon }} {{ category.name }}</span>
                                 <span class="category-count">{{ category.posts_count }}</span>
@@ -1151,14 +1042,15 @@ input:focus {
                 <!-- Popular Posts Widget -->
                 {% if popular_posts %}
                 <div class="widget">
+                    <!-- ✅ H3: عنوان widget تحت H2 -->
                     <h3 class="widget-title">🔥 الأكثر قراءة</h3>
                     {% for post in popular_posts %}
-                    <a href="{% url 'blog_detail' post.slug %}" 
+                    <a href="{% url 'blog_detail' post.slug %}"
                        class="popular-post-item"
                        aria-label="اقرأ المقال: {{ post.title }}">
                         <div class="popular-post-image">
                             {% if post.image %}
-                            <img src="{{ post.cloud_url }}" 
+                            <img src="{{ post.cloud_url }}"
                                  alt="{{ post.title }}"
                                  loading="lazy">
                             {% else %}
@@ -1166,13 +1058,15 @@ input:focus {
                             {% endif %}
                         </div>
                         <div class="popular-post-info">
-                            <h4>{{ post.title|truncatewords:6 }}</h4>
+                            <!-- ✅ تم التغيير: من h4 إلى p لأن اسم المقال هنا ليس عنواناً هيكلياً -->
+                            <p class="post-name">{{ post.title|truncatewords:6 }}</p>
                             <small>👁 {{ post.views_count }} مشاهدة</small>
                         </div>
                     </a>
                     {% endfor %}
                 </div>
                 {% endif %}
+
             </aside>
         </div>
     </div>
