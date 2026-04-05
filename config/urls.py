@@ -53,7 +53,7 @@ urlpatterns = [
         content_type='application/javascript'
     ), name='firebase-sw'),
     path('save-fcm-token/', accounts_views.save_fcm_token, name='save_fcm_token'),
-    path("b52bd4ea55c149459d7c6e1f2ca39c98.txt", indexnow_key),
+    path("4de67fcf83f54455b2f2ac2911f398f2.txt", indexnow_key),
 
 ]
 
