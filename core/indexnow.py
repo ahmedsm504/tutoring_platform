@@ -3,8 +3,8 @@ import requests
 def send_indexnow(url):
     data = {
         "host": "alagme.com",
-        "key": "b52bd4ea55c149459d7c6e1f2ca39c98",
-        "keyLocation": "https://alagme.com/b52bd4ea55c149459d7c6e1f2ca39c98.txt",
+        "key": "4de67fcf83f54455b2f2ac2911f398f2",
+        "keyLocation": "https://alagme.com/4de67fcf83f54455b2f2ac2911f398f2.txt",
         "urlList": [url]
     }
 
