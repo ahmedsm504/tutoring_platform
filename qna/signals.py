@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from .models import PublicQuestion
 from accounts.notifications import send_public_notification
 from django.db import transaction
+from core.indexnow import send_indexnow  # 👈 ضيف ده
 
 
 @receiver(pre_save, sender=PublicQuestion)
@@ -25,8 +26,14 @@ def notify_question_approved(sender, instance, created, **kwargs):
     old_status = getattr(instance, '_old_status', None)
 
     if old_status and old_status != 'approved' and instance.status == 'approved':
+        
+        url = f'https://alagme.com/questions/question/{instance.slug}/'
+
         transaction.on_commit(lambda: send_public_notification(
             title=f'❓ سؤال جديد: {instance.title[:50]}',
             message=instance.question_text[:100],
-            url=f'https://alagme.com/questions/question/{instance.slug}/'
+            url=url
         ))
+
+        # 🔥 IndexNow (بعد الحفظ الفعلي)
+        transaction.on_commit(lambda: send_indexnow(url))

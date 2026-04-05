@@ -9,6 +9,11 @@ from .robots_view import robots_txt
 from django.views.generic import TemplateView
 from accounts import views as accounts_views
 
+from django.http import HttpResponse
+
+def indexnow_key(request):
+    return HttpResponse("b52bd4ea55c149459d7c6e1f2ca39c98", content_type="text/plain")
+
 
 # استيراد الخرائط المحدثة (بعد إزالة المكررة)
 from .sitemaps import (
@@ -48,6 +53,7 @@ urlpatterns = [
         content_type='application/javascript'
     ), name='firebase-sw'),
     path('save-fcm-token/', accounts_views.save_fcm_token, name='save_fcm_token'),
+    path("b52bd4ea55c149459d7c6e1f2ca39c98.txt", indexnow_key),
 
 ]
 
