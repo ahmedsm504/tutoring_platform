@@ -55,6 +55,7 @@ urlpatterns = [
     path('save-fcm-token/', accounts_views.save_fcm_token, name='save_fcm_token'),
     path("800e60e37753412893002525b148ce17.txt", indexnow_key),
 
+
 ]
 
 if settings.DEBUG:
