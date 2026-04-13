@@ -9,7 +9,7 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WLL77QGN');</script>
     <!-- End Google Tag Manager -->
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNXPQQNRNP"></script>
     <script>
@@ -21,78 +21,71 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253419170065458"
      crossorigin="anonymous"></script>
 
-     <!-- Firebase Notifications -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js";
+    <!-- Firebase Notifications -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+      import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyC-X81jKdtfaMRblBEsIEl01OVga2Hqe2E",
-    authDomain: "alagme-notifications.firebaseapp.com",
-    projectId: "alagme-notifications",
-    storageBucket: "alagme-notifications.firebasestorage.app",
-    messagingSenderId: "914317417493",
-    appId: "1:914317417493:web:2a9acda899a263a1c1821c"
-  };
+      const firebaseConfig = {
+        apiKey: "AIzaSyC-X81jKdtfaMRblBEsIEl01OVga2Hqe2E",
+        authDomain: "alagme-notifications.firebaseapp.com",
+        projectId: "alagme-notifications",
+        storageBucket: "alagme-notifications.firebasestorage.app",
+        messagingSenderId: "914317417493",
+        appId: "1:914317417493:web:2a9acda899a263a1c1821c"
+      };
 
-  const app = initializeApp(firebaseConfig);
-  const messaging = getMessaging(app);
+      const app = initializeApp(firebaseConfig);
+      const messaging = getMessaging(app);
 
-  // تسجيل Service Worker
-  navigator.serviceWorker.register('/firebase-messaging-sw.js')
-    .then(registration => {
-      console.log('Service Worker registered ✅');
-
-      // طلب إذن الإشعارات
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          getToken(messaging, {
-            vapidKey: "BDJXpC_xK5MZzmk7-qA1wiNAOYsOSIHZ6dWbjMGmX8p0hE9IB_Tp_lutxtN8tUC_hfqvlRym_3AniPt8IvfwmBQ",
-            serviceWorkerRegistration: registration
-          }).then(currentToken => {
-            if (currentToken) {
-              // حفظ الـ token في Django
-              fetch('/save-fcm-token/', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ token: currentToken })
-              });
+      navigator.serviceWorker.register('/firebase-messaging-sw.js')
+        .then(registration => {
+          console.log('Service Worker registered ✅');
+          Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+              getToken(messaging, {
+                vapidKey: "BDJXpC_xK5MZzmk7-qA1wiNAOYsOSIHZ6dWbjMGmX8p0hE9IB_Tp_lutxtN8tUC_hfqvlRym_3AniPt8IvfwmBQ",
+                serviceWorkerRegistration: registration
+              }).then(currentToken => {
+                if (currentToken) {
+                  fetch('/save-fcm-token/', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ token: currentToken })
+                  });
+                }
+              }).catch(err => console.log('Token error:', err));
             }
-          }).catch(err => console.log('Token error:', err));
-        }
-      });
-    });
+          });
+        });
 
-  // استقبال الإشعارات وأنت في الصفحة
-  onMessage(messaging, (payload) => {
-    const { title, body } = payload.notification;
-    new Notification(title, {
-      body: body,
-      icon: '/static/images/logo.jpeg'
-    });
-  });
-</script>
+      onMessage(messaging, (payload) => {
+        const { title, body } = payload.notification;
+        new Notification(title, {
+          body: body,
+          icon: '/static/images/logo.jpeg'
+        });
+      });
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
-    
-    <!-- Title - محسن للسيو (50-60 حرف) -->
+
     <title>{% block title %}مؤسسة العجمي | تحفيظ القرآن أونلاين من 7 ريال{% endblock %}</title>
     <meta name="yandex-verification" content="2e1b6302af7d6340" />
     <meta name="6ccf56db95ea081a7d94b3dce02408c2179346ca" content="6ccf56db95ea081a7d94b3dce02408c2179346ca" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <!-- SEO Meta Tags - الوصف محسن (150-160 حرف) -->
     <meta name="description" content="{% block meta_description %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن عن بُعد بأسعار تبدأ من 7 ريال. معلمون متقنون للأطفال والكبار في مصر والخليج. جرب حصة مجانية الآن.{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endblock %}">
     <meta name="author" content="مؤسسة العجمي">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
-    
-    <!-- Open Graph Meta Tags (لتحسين المشاركة على فيسبوك وغيره) -->
+
     <meta property="og:locale" content="ar_EG">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد | حصص من 7 ريال{% endblock %}">
@@ -102,59 +95,61 @@
     <meta property="og:image" content="{% static 'images/logo.jpeg' %}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    
-    <!-- Twitter Card Meta Tags -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block twitter_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}حصص فردية لتحفيظ القرآن من 7 ريال. معلمون متقنون. حلقة تجريبية مجانية.{% endblock %}">
     <meta name="twitter:image" content="{% static 'images/logo.jpeg' %}">
-    
-    <!-- Mobile App Meta Tags (لتحسين تجربة الهاتف) -->
+
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="العجمي">
-    
-    <!-- Geo Tags (استهداف جغرافي لمصر) -->
+
     <meta name="geo.region" content="EG">
     <meta name="geo.placename" content="Egypt">
-    
-    <!-- Favicon وأيقونة أبل - مع preload لتسريع التحميل -->
+
     <link rel="preload" as="image" href="{% static 'images/logo.jpeg' %}">
     <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpeg' %}">
     <link rel="apple-touch-icon" href="{% static 'images/logo.jpeg' %}">
-    
-    <!-- Preconnect for Performance (اتصالات مسبقة للموارد الخارجية) -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    
-    <!-- Font Awesome (مع async للتحميل غير المتزامن لتحسين السرعة) -->
+
     <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    
-    <!-- External CSS المحلي -->
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-    <!-- Structured Data - Organization (بيانات المنظمة) -->
+
+    <!-- ✅ Schema 1: EducationalOrganization - مصحح مع url كامل وليس relative -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
       "name": "مؤسسة العجمي",
       "alternateName": "Al-Agmi Foundation",
-      "url": "{{ request.build_absolute_uri }}",
-      "logo": "{% static 'images/logo.jpeg' %}",
-      "description": "مؤسسة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
+        "width": 200,
+        "height": 200
+      },
+      "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
+      "description": "مؤسسة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار تبدأ من 7 ريال",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "EG",
-        "addressRegion": "مصر"
+        "addressRegion": "مصر",
+        "addressLocality": "القاهرة",
+        "streetAddress": "جمهورية مصر العربية",
+        "postalCode": "11511"
       },
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+20-104-456-8181",
-        "contactType": "Customer Service",
+        "contactType": "customer service",
         "availableLanguage": ["ar", "Arabic"]
       },
       "sameAs": [
@@ -166,19 +161,30 @@
       ]
     }
     </script>
-    
-    <!-- Structured Data - Local Business (نشاط محلي) -->
+
+    <!-- ✅ Schema 2: LocalBusiness - مصحح بإضافة name وimage وurl كاملة -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "مؤسسة العجمي - تحفيظ القرآن الكريم",
-      "image": "{% static 'images/logo.jpeg' %}",
-      "priceRange": "7-15 ريال",
+      "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
       "telephone": "+20-104-456-8181",
+      "priceRange": "7-15 ريال",
+      "description": "مؤسسة متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار تبدأ من 7 ريال",
       "address": {
         "@type": "PostalAddress",
-        "addressCountry": "EG"
+        "addressCountry": "EG",
+        "addressRegion": "مصر",
+        "addressLocality": "القاهرة",
+        "streetAddress": "جمهورية مصر العربية",
+        "postalCode": "11511"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 30.0444,
+        "longitude": 31.2357
       },
       "openingHoursSpecification": [
         {
@@ -187,13 +193,18 @@
           "opens": "09:00",
           "closes": "24:00"
         }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61587497605651",
+        "https://www.instagram.com/ala.gme/",
+        "https://www.tiktok.com/@alagme_12",
+        "https://x.com/alagme_12",
+        "https://youtube.com/@alagme-c5h"
       ]
     }
     </script>
-    
-    <!-- حجز مكان لإضافة بيانات منظمة خاصة بالصفحات الفرعية (مثل المقالات والأسئلة) -->
+
     {% block extra_ldjson %}{% endblock %}
-    
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -201,30 +212,24 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLL77QGN"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    
-    <!-- Skip to main content (إمكانية الوصول) -->
+
     <a href="#main-content" class="skip-to-content">انتقل إلى المحتوى الرئيسي</a>
 
     <!-- Navigation -->
     <nav class="main-nav" role="navigation" aria-label="القائمة الرئيسية">
         <div class="nav-container">
-            <!-- Logo on the right -->
             <div class="nav-logo">
                 <a href="{% url 'home' %}" aria-label="الصفحة الرئيسية - مؤسسة العجمي">
-                    <!-- إضافة loading="lazy" للصورة لتحسين السرعة -->
                     <img src="{% static 'images/logo.jpeg' %}" alt="شعار مؤسسة العجمي لتحفيظ القرآن الكريم" width="60" height="60" loading="lazy">
                     <span>العجمي</span>
                 </a>
             </div>
 
-            <!-- Mobile Menu Toggle -->
             <button class="menu-toggle" onclick="toggleMenu()" aria-label="فتح القائمة">
                 <i class="fas fa-bars"></i>
             </button>
 
-            <!-- Navigation Links on the left -->
             <div class="nav-links" id="navLinks">
-                <!-- تم إضافة aria-current للروابط النشطة لتحسين إمكانية الوصول -->
                 <a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active" aria-current="page"{% endif %} aria-label="الرئيسية">
                     <i class="fas fa-home"></i> الرئيسية
                 </a>
@@ -246,7 +251,7 @@
                 <a href="{% url 'pricing' %}" {% if request.resolver_match.url_name == 'pricing' %}class="active" aria-current="page"{% endif %} aria-label="الباقات والأسعار">
                     <i class="fas fa-tags"></i> الباقات
                 </a>
-                
+
                 {% if user.is_authenticated %}
                     {% if user.user_type == 'supervisor' %}
                         <a href="{% url 'supervisor_dashboard' %}" {% if request.resolver_match.url_name == 'supervisor_dashboard' %}class="active" aria-current="page"{% endif %} id="supervisorDashboardLink" aria-label="لوحة المشرف">
@@ -279,7 +284,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Social Fixed Icons (أيقونات التواصل الثابتة) -->
+    <!-- Social Fixed Icons -->
     <aside class="social-fixed" aria-label="روابط التواصل الاجتماعي">
         <a href="https://wa.me/201044568181" target="_blank" rel="noopener noreferrer" class="whatsapp" title="تواصل معنا على واتساب" aria-label="واتساب">
             <i class="fab fa-whatsapp"></i>
@@ -305,7 +310,6 @@
                 <h3><i class="fas fa-graduation-cap"></i> عن المنصة</h3>
                 <p>منصة تعليمية متميزة متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية وأسعار مناسبة للجميع.</p>
                 <div class="social-links">
-                    <!-- إضافة rel="me" لربط حسابات التواصل بالموقع (يدعم السيو) -->
                     <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="me noopener noreferrer" title="فيسبوك" aria-label="فيسبوك">
                         <i class="fab fa-facebook-f"></i>
                     </a>
@@ -342,9 +346,10 @@
 
             <div class="footer-section">
                 <h3><i class="fas fa-phone-alt"></i> تواصل معنا</h3>
-                <ul itemscope itemtype="https://schema.org/Organization">
-                    <li itemprop="telephone"><i class="fas fa-phone"></i> <a href="tel:+201044568181">+20 104 456 8181</a></li>
-                    <li itemprop="address"><i class="fas fa-map-marker-alt"></i> جمهورية مصر العربية</li>
+                <!-- ✅ تم إزالة itemscope/itemtype من هنا لأنه كان بيعمل Organization بدون name -->
+                <ul>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+201044568181">+20 104 456 8181</a></li>
+                    <li><i class="fas fa-map-marker-alt"></i> جمهورية مصر العربية</li>
                     <li><i class="fas fa-clock"></i> السبت - الخميس: 9 صباحاً - 12 مساءً</li>
                 </ul>
             </div>
@@ -355,7 +360,6 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script src="{% static 'js/script.js' %}" defer></script>
     {% block extra_js %}{% endblock %}
 </body>
