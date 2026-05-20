@@ -156,7 +156,6 @@
 
 .stat-subtext { font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem; font-weight: 500; }
 
-/* ✅ عناوين الـ sidebar - من h6 إلى h3 مع تصغير بصري بالـ CSS */
 .sidebar-section-title {
     font-size: 0.85rem !important;
     font-weight: 700;
@@ -167,7 +166,6 @@
 }
 .sidebar-section-title:first-of-type { margin-top: 0; }
 
-/* ✅ عنوان CTA - من h5 إلى h2 مع تصغير بصري */
 .cta-title-super {
     font-size: 1.1rem !important;
     font-weight: 800;
@@ -209,7 +207,6 @@
                         <i class="fas fa-sparkles"></i>
                         <span>منصة متخصصة في تحفيظ القرآن</span>
                     </div>
-                    <!-- ✅ H1 وحيد في الصفحة -->
                     <h1 class="hero-title-ultimate" id="hero-heading">أسئلة وأجوبة في تحفيظ القرآن الكريم</h1>
                     <p class="hero-subtitle-ultimate">احصل على إجابات دقيقة من معلمين معتمدين في التجويد والتفسير وعلوم القرآن الكريم</p>
                 </div>
@@ -261,7 +258,6 @@
                     </div>
                     <div class="sidebar-body-glow">
 
-                        <!-- ✅ تم التغيير: من h6 إلى h3 (صح هيكلياً تحت H1) مع class يحافظ على المظهر -->
                         <h3 class="sidebar-section-title">
                             <i class="fas fa-th-large"></i>
                             الفئات
@@ -287,7 +283,6 @@
                             {% endfor %}
                         </ul>
 
-                        <!-- ✅ تم التغيير: من h6 إلى h3 -->
                         <h3 class="sidebar-section-title">
                             <i class="fas fa-filter"></i>
                             نوع الأسئلة
@@ -319,7 +314,6 @@
                             </a>
                         </div>
 
-                        <!-- ✅ تم التغيير: من h6 إلى h3 -->
                         <h3 class="sidebar-section-title">
                             <i class="fas fa-sort"></i>
                             الترتيب حسب
@@ -334,7 +328,6 @@
                 </div>
 
                 <div class="cta-supernova animate-in delay-200">
-                    <!-- ✅ تم التغيير: من h5 إلى h2 (قسم مستقل تحت H1) مع class يحافظ على المظهر -->
                     <h2 class="cta-title-super">📊 إحصاءات المجتمع</h2>
                     <p class="cta-text-super">شارك معرفتك وساعد الآخرين في رحلتهم مع القرآن الكريم</p>
                     <div class="cta-stats-super">
@@ -427,7 +420,6 @@
                                         {% endif %}
                                     </div>
 
-                                    <!-- ✅ H2: عنوان كل سؤال (تحت H1 الصفحة) -->
                                     <a href="{% url 'qna:question_detail' question.slug %}"
                                        class="question-title-core"
                                        id="question-title-{{ question.id }}"
@@ -485,10 +477,11 @@
                     {% endfor %}
                 </div>
 
-                <!-- Pagination -->
+                <!-- ✅ Pagination معدّل - يعرض كل الصفحات -->
                 {% if questions.has_other_pages %}
                 <nav class="pagination-cosmos" aria-label="تنقل الصفحات">
                     <ul class="pagination-orbit">
+
                         {% if questions.has_previous %}
                         <li class="pagination-moon">
                             <a class="pagination-link" href="?page={{ questions.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة السابقة">
@@ -506,13 +499,9 @@
                             <li class="pagination-moon active" aria-current="page">
                                 <span class="pagination-link">{{ num }}</span>
                             </li>
-                            {% elif num > questions.number|add:'-3' and num < questions.number|add:'3' %}
+                            {% else %}
                             <li class="pagination-moon">
                                 <a class="pagination-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة {{ num }}">{{ num }}</a>
-                            </li>
-                            {% elif num == questions.number|add:'-3' or num == questions.number|add:'3' %}
-                            <li class="pagination-moon">
-                                <span class="pagination-link" style="cursor: default;" aria-hidden="true">...</span>
                             </li>
                             {% endif %}
                         {% endfor %}
@@ -528,6 +517,7 @@
                             <span class="pagination-link" aria-disabled="true"><i class="fas fa-chevron-left"></i></span>
                         </li>
                         {% endif %}
+
                     </ul>
                 </nav>
                 {% endif %}
@@ -535,7 +525,6 @@
                 {% else %}
                 <div class="empty-void animate-scale">
                     <i class="fas fa-search empty-icon-void"></i>
-                    <!-- ✅ H2: عنوان حالة فارغة -->
                     <h2 class="empty-title-void">
                         {% if request.GET.search %}
                             لا توجد نتائج للبحث
