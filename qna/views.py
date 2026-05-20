@@ -24,7 +24,7 @@ class QuestionListView(ListView):
     template_name = 'qna/question_list.html'
     context_object_name = 'questions'
     paginate_by = 10
-
+    
     def get_queryset(self):
         queryset = PublicQuestion.objects.filter(status='approved')
 
@@ -76,22 +76,8 @@ class QuestionListView(ListView):
         else:
             queryset = queryset.order_by('-created_at')
 
+        # ✅ select_related للـ OneToOneField بدل Prefetch
         return queryset.select_related('category', 'official_answer')
-
-    def get(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        paginator = Paginator(queryset, self.paginate_by)
-        page_number = request.GET.get('page', 1)
-
-        try:
-            page_obj = paginator.page(page_number)
-        except Exception:
-            page_obj = paginator.page(1)
-
-        context = self.get_context_data(object_list=queryset)
-        context['questions'] = page_obj
-        context['paginator'] = paginator
-        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -243,6 +229,7 @@ class QuestionDetailView(DetailView):
         else:
             context['is_subscribed'] = False
 
+        # ✅ related_questions مع annotations صح
         related_qs = PublicQuestion.objects.filter(
             status='approved'
         ).exclude(id=self.object.id).annotate(
@@ -381,6 +368,7 @@ class AskQuestionView(CreateView):
 
         question.status = 'pending'
         question.save()
+        
 
         self.send_admin_notification(question)
 
