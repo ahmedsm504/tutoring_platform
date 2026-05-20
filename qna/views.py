@@ -23,8 +23,8 @@ class QuestionListView(ListView):
     model = PublicQuestion
     template_name = 'qna/question_list.html'
     context_object_name = 'questions'
-    paginate_by = 15
-
+    paginate_by = 10
+    
     def get_queryset(self):
         queryset = PublicQuestion.objects.filter(status='approved')
 
