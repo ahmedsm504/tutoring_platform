@@ -477,23 +477,29 @@
                     {% endfor %}
                 </div>
 
-                <!-- ✅ Pagination معدّل - يعرض كل الصفحات -->
+                <!-- ===== PAGINATION - مُصلح ===== -->
                 {% if questions.has_other_pages %}
                 <nav class="pagination-cosmos" aria-label="تنقل الصفحات">
                     <ul class="pagination-orbit">
 
+                        <!-- زر السابق -->
                         {% if questions.has_previous %}
                         <li class="pagination-moon">
-                            <a class="pagination-link" href="?page={{ questions.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة السابقة">
+                            <a class="pagination-link"
+                               href="?page={{ questions.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                               aria-label="الصفحة السابقة">
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         </li>
                         {% else %}
                         <li class="pagination-moon disabled">
-                            <span class="pagination-link" aria-disabled="true"><i class="fas fa-chevron-right"></i></span>
+                            <span class="pagination-link" aria-disabled="true">
+                                <i class="fas fa-chevron-right"></i>
+                            </span>
                         </li>
                         {% endif %}
 
+                        <!-- أرقام الصفحات -->
                         {% for num in questions.paginator.page_range %}
                             {% if questions.number == num %}
                             <li class="pagination-moon active" aria-current="page">
@@ -501,26 +507,34 @@
                             </li>
                             {% else %}
                             <li class="pagination-moon">
-                                <a class="pagination-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة {{ num }}">{{ num }}</a>
+                                <a class="pagination-link"
+                                   href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                                   aria-label="الصفحة {{ num }}">{{ num }}</a>
                             </li>
                             {% endif %}
                         {% endfor %}
 
+                        <!-- زر التالي -->
                         {% if questions.has_next %}
                         <li class="pagination-moon">
-                            <a class="pagination-link" href="?page={{ questions.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة التالية">
+                            <a class="pagination-link"
+                               href="?page={{ questions.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                               aria-label="الصفحة التالية">
                                 <i class="fas fa-chevron-left"></i>
                             </a>
                         </li>
                         {% else %}
                         <li class="pagination-moon disabled">
-                            <span class="pagination-link" aria-disabled="true"><i class="fas fa-chevron-left"></i></span>
+                            <span class="pagination-link" aria-disabled="true">
+                                <i class="fas fa-chevron-left"></i>
+                            </span>
                         </li>
                         {% endif %}
 
                     </ul>
                 </nav>
                 {% endif %}
+                <!-- ===== نهاية PAGINATION ===== -->
 
                 {% else %}
                 <div class="empty-void animate-scale">
