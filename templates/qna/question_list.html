@@ -171,6 +171,59 @@
     font-weight: 800;
 }
 
+.pagination-cosmos {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.pagination-orbit {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-moon .pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.08);
+    color: inherit;
+    border: 1px solid rgba(255,255,255,0.15);
+    cursor: pointer;
+}
+
+.pagination-moon .pagination-link:hover {
+    background: rgba(255,255,255,0.18);
+    transform: translateY(-2px);
+}
+
+.pagination-moon.active .pagination-link {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.pagination-moon.disabled .pagination-link {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 @keyframes slideInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideOutUp { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-30px); } }
 
@@ -477,64 +530,52 @@
                     {% endfor %}
                 </div>
 
-                <!-- ===== PAGINATION - مُصلح ===== -->
-                {% if questions.has_other_pages %}
+                <!-- ✅ Pagination -->
+                {% with questions.paginator as paginator %}
+                {% if paginator.num_pages > 1 %}
                 <nav class="pagination-cosmos" aria-label="تنقل الصفحات">
                     <ul class="pagination-orbit">
 
-                        <!-- زر السابق -->
                         {% if questions.has_previous %}
                         <li class="pagination-moon">
-                            <a class="pagination-link"
-                               href="?page={{ questions.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
-                               aria-label="الصفحة السابقة">
+                            <a class="pagination-link" href="?page={{ questions.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة السابقة">
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         </li>
                         {% else %}
                         <li class="pagination-moon disabled">
-                            <span class="pagination-link" aria-disabled="true">
-                                <i class="fas fa-chevron-right"></i>
-                            </span>
+                            <span class="pagination-link" aria-disabled="true"><i class="fas fa-chevron-right"></i></span>
                         </li>
                         {% endif %}
 
-                        <!-- أرقام الصفحات -->
-                        {% for num in questions.paginator.page_range %}
+                        {% for num in paginator.page_range %}
                             {% if questions.number == num %}
                             <li class="pagination-moon active" aria-current="page">
                                 <span class="pagination-link">{{ num }}</span>
                             </li>
                             {% else %}
                             <li class="pagination-moon">
-                                <a class="pagination-link"
-                                   href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
-                                   aria-label="الصفحة {{ num }}">{{ num }}</a>
+                                <a class="pagination-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة {{ num }}">{{ num }}</a>
                             </li>
                             {% endif %}
                         {% endfor %}
 
-                        <!-- زر التالي -->
                         {% if questions.has_next %}
                         <li class="pagination-moon">
-                            <a class="pagination-link"
-                               href="?page={{ questions.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
-                               aria-label="الصفحة التالية">
+                            <a class="pagination-link" href="?page={{ questions.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-label="الصفحة التالية">
                                 <i class="fas fa-chevron-left"></i>
                             </a>
                         </li>
                         {% else %}
                         <li class="pagination-moon disabled">
-                            <span class="pagination-link" aria-disabled="true">
-                                <i class="fas fa-chevron-left"></i>
-                            </span>
+                            <span class="pagination-link" aria-disabled="true"><i class="fas fa-chevron-left"></i></span>
                         </li>
                         {% endif %}
 
                     </ul>
                 </nav>
                 {% endif %}
-                <!-- ===== نهاية PAGINATION ===== -->
+                {% endwith %}
 
                 {% else %}
                 <div class="empty-void animate-scale">
