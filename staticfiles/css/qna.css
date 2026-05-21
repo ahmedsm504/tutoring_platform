@@ -2156,6 +2156,49 @@ h1, h2, h3, h4, h5, h6 {
     color: white !important;
 }
 
+/* ===== Pagination Fix ===== */
+.pagination-cosmos {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 15px !important;
+    margin: 50px 0 !important;
+    flex-wrap: wrap !important;
+}
+
+.pagination-cosmos a,
+.pagination-cosmos span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 14px 26px !important;
+    background: rgba(99, 102, 241, 0.1) !important;
+    border: 3px solid rgba(99, 102, 241, 0.4) !important;
+    border-radius: 15px !important;
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    font-size: 1.05em !important;
+    min-width: unset !important;
+    height: unset !important;
+}
+
+.pagination-cosmos a:hover {
+    background: var(--gradient-primary) !important;
+    border-color: var(--qna-primary) !important;
+    color: white !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3) !important;
+    text-decoration: none !important;
+}
+
+.pagination-cosmos .current-page {
+    background: var(--gradient-primary) !important;
+    border-color: var(--qna-primary) !important;
+    color: white !important;
+    font-weight: 900 !important;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4) !important;
+}
+
 /* ============================================
    النهاية
    ============================================ */
