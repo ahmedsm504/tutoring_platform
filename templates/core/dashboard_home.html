@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% block title %}الرئيسية - لوحة التحكم{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px;">
+    <h2 style="color: #4a1a8a;">🏠 لوحة التحكم</h2>
+    <div class="flex">
+        <a href="{% url 'add_student' %}" class="btn btn-primary"><i class="fas fa-user-plus"></i> إضافة طالب</a>
+        <a href="{% url 'add_teacher' %}" class="btn btn-outline"><i class="fas fa-user-plus"></i> إضافة معلمة</a>
+        <a href="{% url 'add_country' %}" class="btn btn-outline"><i class="fas fa-globe"></i> إضافة دولة</a>
+    </div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-box"><div class="number">{{ total_students }}</div><div class="label">👨‍🎓 إجمالي الطلاب</div></div>
+    <div class="stat-box" style="border-right-color: #22c55e;"><div class="number">{{ active_students }}</div><div class="label">🟢 طلاب مقيدين</div></div>
+    <div class="stat-box" style="border-right-color: #ef4444;"><div class="number">{{ inactive_students }}</div><div class="label">🔴 غير مقيدين</div></div>
+    <div class="stat-box" style="border-right-color: #f59e0b;"><div class="number">{{ total_teachers }}</div><div class="label">👩‍🏫 المعلمات</div></div>
+</div>
+
+<h3 style="color: #4a1a8a; margin-top: 30px;">🌍 اختر دولة</h3>
+<div class="country-grid">
+    {% for country in countries %}
+    <a href="{% url 'country_students' country.id %}" class="country-card">
+        <span class="flag">{{ country.flag_icon }}</span>
+        <div class="name">{{ country.name }}</div>
+        <div style="font-size: 0.9rem; color: #7c6b9e;">{{ country.students.count }} طالب</div>
+    </a>
+    {% empty %}
+    <p style="color: #6d5b8e;">لا توجد دول مضافة. <a href="{% url 'add_country' %}" style="color: #7c3aed;">أضف دولة الآن</a></p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,61 +1,35 @@
 from django.contrib import admin
-from .models import Teacher, Student, Expense
+from .models import Country, Teacher, Student, StudentNote, Expense
 
-# ===============================
-#        Teacher Admin
-# ===============================
+class StudentNoteInline(admin.TabularInline):
+    model = StudentNote
+    extra = 1
+    readonly_fields = ('created_at',)
+
+@admin.register(Country)
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'flag_icon', 'is_active')
+    search_fields = ('name',)
+
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = (
-        'name', 
-        'job_title', 
-        'salary', 
-        'working_hours', 
-        'bonus', 
-        'deduction', 
-        'start_date', 
-        'total_students_count'
-    )
-    search_fields = ('name', 'job_title')
-    list_filter = ('job_title', 'start_date')
-    ordering = ('-start_date',)
+    list_display = ('name', 'phone', 'current_students_count', 'net_salary')
+    search_fields = ('name', 'phone')
 
-    # دالة لحساب عدد الطلاب المرتبطين بالمعلم
-    def total_students_count(self, obj):
-        return obj.total_students()
-    total_students_count.short_description = "عدد الطلاب"
-
-
-# ===============================
-#        Student Admin
-# ===============================
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = (
-        'name', 
-        'teacher', 
-        'session_duration', 
-        'lessons_count', 
-        'payment_type', 
-        'paid_amount', 
-        'total_paid_amount'
-    )
-    search_fields = ('name', 'teacher__name')
-    list_filter = ('session_duration', 'lessons_count', 'payment_type', 'teacher')
-    ordering = ('-join_date',)
+    list_display = ('name', 'country', 'teacher', 'status', 'payment_status', 'subscription_fee')
+    list_filter = ('status', 'payment_status', 'country', 'teacher')
+    search_fields = ('name', 'phone', 'governorate')
+    inlines = [StudentNoteInline]
+    readonly_fields = ('join_date',)
 
-    # دالة لحساب المبلغ الكلي حسب نوع الدفع
-    def total_paid_amount(self, obj):
-        return obj.total_paid()
-    total_paid_amount.short_description = "الإجمالي المدفوع"
+@admin.register(StudentNote)
+class StudentNoteAdmin(admin.ModelAdmin):
+    list_display = ('student', 'note_text', 'created_at')
+    search_fields = ('student__name',)
 
-
-# ===============================
-#        Expense Admin
-# ===============================
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
     list_display = ('title', 'amount', 'date')
-    search_fields = ('title',)
     list_filter = ('date',)
-    ordering = ('-date',)

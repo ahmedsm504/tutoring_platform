@@ -1,211 +1,361 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from datetime import timedelta, datetime
-from .models import Teacher, Student, Expense
-import json
+from django.db.models import Sum, Q
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from .models import Country, Teacher, Student, StudentNote, Expense
+from datetime import datetime
 
-# =======================
-# صفحات الموقع العامة
-# =======================
+# =============================================
+# الصفحات العامة (القديمة)
+# =============================================
 def home(request):
-    # أسماء الصور في static/images/
-    reviews = [
-        'review1.jpeg', 'review2.jpeg', 'review3.jpeg', 'review4.jpeg',
-        'review5.jpeg', 'review6.jpeg', 'review7.jpeg', 'review8.jpeg',
-        'review9.jpeg', 'review10.jpeg', 'review11.jpeg', 'review12.jpeg',
-        'review13.jpeg', 'review14.jpeg'
-    ]
-    return render(request, 'core/home.html', {'reviews': reviews})
+    reviews = ['review1.jpeg', 'review2.jpeg']
+    return render(request, 'core/base.html', {'page': 'home', 'reviews': reviews})
 
 def about(request):
-    return render(request, 'core/about.html')
+    return render(request, 'core/base.html', {'page': 'about'})
 
 def contact(request):
-    return render(request, 'core/contact.html')
+    return render(request, 'core/base.html', {'page': 'contact'})
 
 def pricing(request):
-    return render(request, 'core/pricing.html')
+    return render(request, 'core/base.html', {'page': 'pricing'})
 
 def quality_standards(request):
-    return render(request, 'core/quality_standards.html')
+    return render(request, 'core/base.html', {'page': 'quality_standards'})
 
-# =======================
-# لوحة التحكم المالية المتطورة
-# =======================
+# =============================================
+# لوحة التحكم الرئيسية (الجديدة)
+# =============================================
 @staff_member_required
-def dashboard(request):
-    today = timezone.now().date()
-    yesterday = today - timedelta(days=1)
+def dashboard_home(request):
+    try:
+        countries = Country.objects.filter(is_active=True)
+        total_students = Student.objects.count()
+        active_students = Student.objects.filter(status='active').count()
+        inactive_students = total_students - active_students
+        total_teachers = Teacher.objects.count()
+    except:
+        countries = []
+        total_students = 0
+        active_students = 0
+        inactive_students = 0
+        total_teachers = 0
     
-    # الحصول على معاملات الفلترة
-    filter_type = request.GET.get('filter_type', 'all')
-    
-    # تحديد نطاق التاريخ بناءً على الفلتر
-    if filter_type == 'day':
-        selected_date = request.GET.get('date')
-        if selected_date:
-            selected_date = datetime.strptime(selected_date, '%Y-%m-%d').date()
-            students = Student.objects.filter(join_date=selected_date)
-            expenses = Expense.objects.filter(date=selected_date)
-            # الرواتب لليوم الواحد = الراتب الشهري / 30
-            teachers = Teacher.objects.all()
-            total_salaries = sum((t.salary + t.bonus - t.deduction) / 30 for t in teachers)
-        else:
-            students = Student.objects.all()
-            expenses = Expense.objects.all()
-            teachers = Teacher.objects.all()
-            total_salaries = sum(t.salary + t.bonus - t.deduction for t in teachers)
-            
-    elif filter_type == 'month':
-        month = request.GET.get('month')
-        year = request.GET.get('year')
-        if month and year:
-            students = Student.objects.filter(join_date__year=year, join_date__month=month)
-            expenses = Expense.objects.filter(date__year=year, date__month=month)
-            # الرواتب لشهر كامل
-            teachers = Teacher.objects.all()
-            total_salaries = sum(t.salary + t.bonus - t.deduction for t in teachers)
-        else:
-            students = Student.objects.all()
-            expenses = Expense.objects.all()
-            teachers = Teacher.objects.all()
-            total_salaries = sum(t.salary + t.bonus - t.deduction for t in teachers)
-            
-    elif filter_type == 'range':
-        start_date = request.GET.get('start_date')
-        end_date = request.GET.get('end_date')
-        if start_date and end_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
-            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
-            students = Student.objects.filter(join_date__range=[start_date, end_date])
-            expenses = Expense.objects.filter(date__range=[start_date, end_date])
-            # حساب الرواتب حسب عدد الأيام في الفترة
-            days_count = (end_date - start_date).days + 1
-            teachers = Teacher.objects.all()
-            total_salaries = sum((t.salary + t.bonus - t.deduction) * days_count / 30 for t in teachers)
-        else:
-            students = Student.objects.all()
-            expenses = Expense.objects.all()
-            teachers = Teacher.objects.all()
-            total_salaries = sum(t.salary + t.bonus - t.deduction for t in teachers)
-    else:
-        # all - عرض كل البيانات
-        students = Student.objects.all()
-        expenses = Expense.objects.all()
-        teachers = Teacher.objects.all()
-        # إجمالي الرواتب (شامل المكافآت والخصومات)
-        total_salaries = sum(t.salary + t.bonus - t.deduction for t in teachers)
-    
-    # إجمالي الإيرادات
-    total_income = sum(s.total_paid() for s in students)
-    
-    # إجمالي المصروفات
-    total_expenses = sum(e.amount for e in expenses)
-    
-    # صافي الربح
-    net_profit = total_income - (total_salaries + total_expenses)
-
-    # =======================
-    # حساب التغيرات اليومية (مقارنة بالأمس)
-    # =======================
-    yesterday_students = Student.objects.filter(join_date=yesterday)
-    yesterday_expenses_qs = Expense.objects.filter(date=yesterday)
-    
-    yesterday_income = sum(s.total_paid() for s in yesterday_students)
-    yesterday_expenses_total = sum(e.amount for e in yesterday_expenses_qs)
-    yesterday_profit = yesterday_income - (total_salaries + yesterday_expenses_total)
-
-    def calc_change(current, previous):
-        """حساب نسبة التغيير"""
-        if previous == 0:
-            return 0, current >= 0
-        change = round((current - previous) / previous * 100, 2)
-        return abs(change), change >= 0
-
-    total_income_change, income_up = calc_change(total_income, yesterday_income)
-    total_expenses_change, expenses_up = calc_change(total_expenses, yesterday_expenses_total)
-    net_profit_change, profit_up = calc_change(net_profit, yesterday_profit)
-
-    # =======================
-    # الإيرادات اليومية - آخر 7 أيام
-    # =======================
-    daily_revenue = []
-    for i in range(7):
-        day = today - timedelta(days=i)
-        day_students = Student.objects.filter(join_date=day)
-        day_total = sum(s.total_paid() for s in day_students)
-        daily_revenue.append({
-            'date': day.strftime('%d %b'),
-            'total': float(day_total)
-        })
-    daily_revenue.reverse()
-
-    # =======================
-    # المقارنة الشهرية - آخر 6 أشهر
-    # =======================
-    monthly_comparison = []
-    for i in range(5, -1, -1):
-        # حساب أول يوم من الشهر
-        first_day = (today.replace(day=1) - timedelta(days=30*i)).replace(day=1)
-        year = first_day.year
-        month = first_day.month
-        
-        # الطلاب والمصروفات لهذا الشهر
-        month_students = Student.objects.filter(
-            join_date__year=year,
-            join_date__month=month
-        )
-        month_expenses = Expense.objects.filter(
-            date__year=year,
-            date__month=month
-        )
-        
-        # الحسابات
-        month_income = sum(s.total_paid() for s in month_students)
-        month_expenses_total = sum(e.amount for e in month_expenses)
-        month_profit = month_income - (total_salaries + month_expenses_total)
-        
-        monthly_comparison.append({
-            'month': first_day.strftime('%b %Y'),
-            'income': float(month_income),
-            'expenses': float(month_expenses_total),
-            'salaries': float(total_salaries),
-            'profit': float(month_profit)
-        })
-
-    # تحويل البيانات إلى JSON للرسوم البيانية
-    daily_revenue_json = json.dumps(daily_revenue, ensure_ascii=False)
-    monthly_comparison_json = json.dumps(monthly_comparison, ensure_ascii=False)
-
     context = {
-        # الإحصائيات الأساسية
-        "total_salaries": total_salaries,
-        "total_income": total_income,
-        "total_expenses": total_expenses,
-        "net_profit": net_profit,
-        
-        # التغيرات اليومية
-        "total_income_change": total_income_change,
-        "income_up": income_up,
-        "total_expenses_change": total_expenses_change,
-        "expenses_up": expenses_up,
-        "net_profit_change": net_profit_change,
-        "profit_up": profit_up,
-        
-        # البيانات للرسوم البيانية
-        "daily_revenue": daily_revenue_json,
-        "monthly_comparison": monthly_comparison_json,
-        
-        # معلومات الفلتر
-        "filter_type": filter_type,
-        "selected_date": request.GET.get('date', ''),
-        "selected_month": request.GET.get('month', ''),
-        "selected_year": request.GET.get('year', ''),
-        "start_date": request.GET.get('start_date', ''),
-        "end_date": request.GET.get('end_date', ''),
+        'page': 'dashboard_home',
+        'countries': countries,
+        'total_students': total_students,
+        'active_students': active_students,
+        'inactive_students': inactive_students,
+        'total_teachers': total_teachers,
     }
+    return render(request, 'core/base.html', context)
 
-    return render(request, "core/dashboard.html", context)
+# =============================================
+# طلاب دولة معينة
+# =============================================
+@staff_member_required
+def country_students(request, country_id):
+    country = get_object_or_404(Country, id=country_id)
+    students = Student.objects.filter(country=country)
+    
+    status_filter = request.GET.get('status')
+    teacher_filter = request.GET.get('teacher')
+    month_filter = request.GET.get('month')
+    
+    if status_filter:
+        students = students.filter(status=status_filter)
+    if teacher_filter:
+        students = students.filter(teacher_id=teacher_filter)
+    if month_filter:
+        students = students.filter(month__icontains=month_filter)
+    
+    teachers = Teacher.objects.all()
+    context = {
+        'page': 'country_students',
+        'country': country,
+        'students': students,
+        'teachers': teachers,
+    }
+    return render(request, 'core/base.html', context)
 
+# =============================================
+# إضافة طالب
+# =============================================
+@staff_member_required
+def add_student(request):
+    countries = Country.objects.filter(is_active=True)
+    teachers = Teacher.objects.all()
+    
+    if request.method == 'POST':
+        try:
+            def parse_date(date_str):
+                return datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else None
+            
+            student = Student(
+                country_id=request.POST.get('country'),
+                teacher_id=request.POST.get('teacher') or None,
+                name=request.POST.get('name'),
+                age=request.POST.get('age') or None,
+                phone=request.POST.get('phone'),
+                governorate=request.POST.get('governorate'),
+                package_name=request.POST.get('package_name'),
+                lessons_count=request.POST.get('lessons_count', 4),
+                subscription_fee=request.POST.get('subscription_fee', 0),
+                month=request.POST.get('month'),
+                start_date=parse_date(request.POST.get('start_date')) or timezone.now().date(),
+                end_date=parse_date(request.POST.get('end_date')),
+                last_payment_date=parse_date(request.POST.get('last_payment_date')),
+                payment_status=request.POST.get('payment_status', 'pending'),
+                status=request.POST.get('status', 'active'),
+                notes=request.POST.get('notes', ''),
+            )
+            student.save()
+            if request.POST.get('note_text'):
+                StudentNote.objects.create(
+                    student=student,
+                    note_text=request.POST.get('note_text'),
+                    created_by=request.user.username
+                )
+            messages.success(request, f'✅ تم إضافة الطالب {student.name} بنجاح!')
+            return redirect('country_students', country_id=student.country.id)
+        except Exception as e:
+            messages.error(request, f'❌ حدث خطأ: {str(e)}')
+    
+    context = {
+        'page': 'add_student',
+        'countries': countries,
+        'teachers': teachers,
+    }
+    return render(request, 'core/base.html', context)
 
+# =============================================
+# تفاصيل الطالب
+# =============================================
+@staff_member_required
+def student_detail(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    if not student.country:
+        messages.warning(request, '⚠️ هذا الطالب ليس لديه دولة محددة.')
+        return redirect('dashboard_home')
+    
+    if request.method == 'POST' and request.POST.get('note_text'):
+        StudentNote.objects.create(
+            student=student,
+            note_text=request.POST.get('note_text'),
+            created_by=request.user.username
+        )
+        messages.success(request, '📝 تم إضافة الملاحظة!')
+        return redirect('student_detail', student_id=student.id)
+    
+    context = {
+        'page': 'student_detail',
+        'student': student,
+        'notes': student.notes_timeline.all(),
+    }
+    return render(request, 'core/base.html', context)
+
+# =============================================
+# تبديل حالة الطالب
+# =============================================
+@staff_member_required
+def toggle_student_status(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    student.status = 'inactive' if student.status == 'active' else 'active'
+    student.save()
+    messages.success(request, f'✅ تم تغيير حالة {student.name}')
+    return redirect('student_detail', student_id=student.id)
+
+# =============================================
+# قائمة المعلمات
+# =============================================
+@staff_member_required
+def teachers_list(request):
+    teachers = Teacher.objects.all()
+    return render(request, 'core/base.html', {'page': 'teachers_list', 'teachers': teachers})
+
+# =============================================
+# تفاصيل المعلمة
+# =============================================
+@staff_member_required
+def teacher_detail(request, teacher_id):
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    students = Student.objects.filter(teacher=teacher)
+    context = {
+        'page': 'teacher_detail',
+        'teacher': teacher,
+        'students': students,
+        'current_students': students.filter(status='active').count(),
+        'previous_students': students.filter(status='inactive').count(),
+    }
+    return render(request, 'core/base.html', context)
+
+# =============================================
+# جميع الطلاب
+# =============================================
+@staff_member_required
+def all_students(request):
+    students = Student.objects.select_related('country', 'teacher').all()
+    query = request.GET.get('q')
+    if query:
+        students = students.filter(
+            Q(name__icontains=query) |
+            Q(phone__icontains=query) |
+            Q(governorate__icontains=query)
+        )
+    return render(request, 'core/base.html', {'page': 'all_students', 'students': students})
+
+# =============================================
+# النسب والإحصائيات
+# =============================================
+@staff_member_required
+def statistics(request):
+    teachers = Teacher.objects.all()
+    stats = []
+    for teacher in teachers:
+        students = Student.objects.filter(teacher=teacher)
+        total_fees = students.aggregate(Sum('subscription_fee'))['subscription_fee__sum'] or 0
+        stats.append({
+            'teacher': teacher,
+            'student_count': students.count(),
+            'total_fees': total_fees,
+            'platform_share': total_fees * 0.30,
+            'teacher_share': total_fees * 0.70,
+        })
+    return render(request, 'core/base.html', {'page': 'statistics', 'stats': stats})
+
+# =============================================
+# إدارة الدول
+# =============================================
+@staff_member_required
+def countries_list(request):
+    countries = Country.objects.all()
+    return render(request, 'core/base.html', {'page': 'countries_list', 'countries': countries})
+
+@staff_member_required
+def add_country(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        flag = request.POST.get('flag_icon', '🏳️')
+        if name:
+            Country.objects.create(name=name, flag_icon=flag)
+            messages.success(request, f'✅ تم إضافة الدولة {name}')
+            return redirect('countries_list')
+        messages.error(request, '❌ اسم الدولة مطلوب')
+    return render(request, 'core/base.html', {'page': 'add_country'})
+
+@staff_member_required
+def edit_country(request, country_id):
+    country = get_object_or_404(Country, id=country_id)
+    if request.method == 'POST':
+        country.name = request.POST.get('name')
+        country.flag_icon = request.POST.get('flag_icon')
+        country.save()
+        messages.success(request, f'✅ تم تحديث {country.name}')
+        return redirect('countries_list')
+    return render(request, 'core/base.html', {'page': 'edit_country', 'country': country})
+
+@staff_member_required
+def delete_country(request, country_id):
+    country = get_object_or_404(Country, id=country_id)
+    if request.method == 'POST':
+        country.delete()
+        messages.success(request, '🗑️ تم الحذف')
+        return redirect('countries_list')
+    return render(request, 'core/base.html', {'page': 'delete_country', 'country': country})
+
+# =============================================
+# إدارة المعلمات (إضافة، تعديل، حذف)
+# =============================================
+@staff_member_required
+def add_teacher(request):
+    if request.method == 'POST':
+        try:
+            teacher = Teacher(
+                name=request.POST.get('name'),
+                age=request.POST.get('age') or None,
+                phone=request.POST.get('phone'),
+                whatsapp=request.POST.get('whatsapp'),
+                governorate=request.POST.get('governorate'),
+                salary=request.POST.get('salary', 0),
+                bonus=request.POST.get('bonus', 0),
+                deduction=request.POST.get('deduction', 0),
+                hire_date=request.POST.get('hire_date') or timezone.now().date(),
+                notes=request.POST.get('notes', ''),
+            )
+            teacher.save()
+            messages.success(request, f'✅ تم إضافة {teacher.name}')
+            return redirect('teachers_list')
+        except Exception as e:
+            messages.error(request, f'❌ خطأ: {str(e)}')
+    return render(request, 'core/base.html', {'page': 'add_teacher'})
+
+@staff_member_required
+def edit_teacher(request, teacher_id):
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    if request.method == 'POST':
+        teacher.name = request.POST.get('name')
+        teacher.age = request.POST.get('age') or None
+        teacher.phone = request.POST.get('phone')
+        teacher.whatsapp = request.POST.get('whatsapp')
+        teacher.governorate = request.POST.get('governorate')
+        teacher.salary = request.POST.get('salary', 0)
+        teacher.bonus = request.POST.get('bonus', 0)
+        teacher.deduction = request.POST.get('deduction', 0)
+        teacher.hire_date = request.POST.get('hire_date') or timezone.now().date()
+        teacher.notes = request.POST.get('notes', '')
+        teacher.save()
+        messages.success(request, f'✅ تم تحديث {teacher.name}')
+        return redirect('teachers_list')
+    return render(request, 'core/base.html', {'page': 'edit_teacher', 'teacher': teacher})
+
+@staff_member_required
+def delete_teacher(request, teacher_id):
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    if request.method == 'POST':
+        teacher.delete()
+        messages.success(request, '🗑️ تم الحذف')
+        return redirect('teachers_list')
+    return render(request, 'core/base.html', {'page': 'delete_teacher', 'teacher': teacher})
+
+# =============================================
+# تعديل الطالب
+# =============================================
+@staff_member_required
+def edit_student(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    countries = Country.objects.all()
+    teachers = Teacher.objects.all()
+    
+    if request.method == 'POST':
+        try:
+            student.country_id = request.POST.get('country')
+            student.teacher_id = request.POST.get('teacher') or None
+            student.name = request.POST.get('name')
+            student.age = request.POST.get('age') or None
+            student.phone = request.POST.get('phone')
+            student.governorate = request.POST.get('governorate')
+            student.package_name = request.POST.get('package_name')
+            student.lessons_count = request.POST.get('lessons_count', 4)
+            student.subscription_fee = request.POST.get('subscription_fee', 0)
+            student.month = request.POST.get('month')
+            student.start_date = request.POST.get('start_date') or None
+            student.end_date = request.POST.get('end_date') or None
+            student.payment_status = request.POST.get('payment_status', 'pending')
+            student.status = request.POST.get('status', 'active')
+            student.notes = request.POST.get('notes', '')
+            student.save()
+            messages.success(request, f'✅ تم تحديث {student.name}')
+            return redirect('student_detail', student_id=student.id)
+        except Exception as e:
+            messages.error(request, f'❌ خطأ: {str(e)}')
+    
+    context = {
+        'page': 'edit_student',
+        'student': student,
+        'countries': countries,
+        'teachers': teachers,
+    }
+    return render(request, 'core/base.html', context)
