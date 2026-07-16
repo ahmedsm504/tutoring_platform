@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+{% block title %}طلاب {{ country.name }}{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+    <h2 style="color: #4a1a8a;">{{ country.flag_icon }} طلاب {{ country.name }}</h2>
+    <div class="flex">
+        <a href="{% url 'add_student' %}?country={{ country.id }}" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة طالب</a>
+        <a href="{% url 'dashboard_home' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
+    </div>
+</div>
+
+<form method="GET" class="flex" style="margin: 20px 0; background: white; padding: 15px 20px; border-radius: 16px; border: 1px solid #ede9fe;">
+    <input type="text" name="q" placeholder="بحث بالاسم..." value="{{ request.GET.q }}" style="padding: 8px 18px; border-radius: 30px; border: 2px solid #ede9fe;">
+    <select name="status" class="btn btn-outline btn-sm">
+        <option value="">جميع الحالات</option>
+        <option value="active" {% if request.GET.status == 'active' %}selected{% endif %}>مقيد</option>
+        <option value="inactive" {% if request.GET.status == 'inactive' %}selected{% endif %}>غير مقيد</option>
+    </select>
+    <select name="teacher" class="btn btn-outline btn-sm">
+        <option value="">جميع المعلمات</option>
+        {% for t in teachers %}
+        <option value="{{ t.id }}" {% if request.GET.teacher == t.id|stringformat:'s' %}selected{% endif %}>{{ t.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="governorate" placeholder="المحافظة" value="{{ request.GET.governorate }}" style="padding: 8px 18px; border-radius: 30px; border: 2px solid #ede9fe;">
+    <input type="text" name="month" placeholder="الشهر" value="{{ request.GET.month }}" style="padding: 8px 18px; border-radius: 30px; border: 2px solid #ede9fe;">
+    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-filter"></i> بحث</button>
+    <a href="{% url 'country_students' country.id %}" class="btn btn-outline btn-sm">إعادة تعيين</a>
+</form>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr><th>#</th><th>الاسم</th><th>المعلمة</th><th>الباقة</th><th>الشهر</th><th>الحالة</th><th>ملاحظات</th><th></th></tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr class="{% if student.status == 'inactive' %}status-inactive-row{% endif %}">
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'student_detail' student.id %}" style="color: #6d28d9; font-weight: 600;">{{ student.name }}</a></td>
+                <td>{{ student.teacher.name|default:"-" }}</td>
+                <td>{{ student.package_name|default:"-" }}</td>
+                <td>{{ student.month }}</td>
+                <td>
+                    {% if student.status == 'active' %}
+                        <span class="status-active">✅ مقيد</span>
+                    {% else %}
+                        <span class="status-inactive">❌ غير مقيد</span>
+                    {% endif %}
+                </td>
+                <td>{{ student.notes|default:"-"|truncatechars:25 }}</td>
+                <td>
+                    <a href="{% url 'edit_student' student.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'student_detail' student.id %}" class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8" style="text-align: center;">لا يوجد طلاب مطابقين.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

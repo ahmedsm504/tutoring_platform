@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% block title %}النسب{% endblock %}
+{% block content %}
+<h2 style="color:#4a1a8a;">📊 النسب والإحصائيات</h2>
+<p style="color:#6d5b8e; margin-bottom:15px;">القسمة الحالية: 30% للمنصة و70% للمعلمة من إجمالي اشتراكات طالباتها.</p>
+
+<div class="table-container">
+    <table>
+        <thead><tr><th>المعلمة</th><th>عدد الطلاب</th><th>إجمالي الاشتراكات</th><th>نسبة المنصة (30%)</th><th>نسبة المعلمة (70%)</th></tr></thead>
+        <tbody>
+            {% for stat in stats %}
+            <tr>
+                <td><strong>{{ stat.teacher.name }}</strong></td>
+                <td>{{ stat.student_count }}</td>
+                <td>{{ stat.total_fees|floatformat:2 }} جنيه</td>
+                <td>{{ stat.platform_share|floatformat:2 }} جنيه</td>
+                <td>{{ stat.teacher_share|floatformat:2 }} جنيه</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center;">لا توجد بيانات بعد.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

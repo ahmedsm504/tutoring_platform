@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block title %}حذف مصروف{% endblock %}
+{% block content %}
+<h2 style="color:#4a1a8a; margin-bottom:20px;">🗑️ حذف مصروف</h2>
+<div class="table-container" style="max-width:500px;">
+    <p style="margin-bottom:20px;">هل أنتِ متأكدة إنك عايزة تحذفي المصروف "<strong>{{ expense.title }}</strong>" بقيمة
+        {{ expense.amount|floatformat:2 }} جنيه بتاريخ {{ expense.date|date:"d/m/Y" }}؟</p>
+    <form method="POST" class="flex">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">نعم، احذفي المصروف</button>
+        <a href="{% url 'expenses_list' %}" class="btn btn-outline">إلغاء</a>
+    </form>
+</div>
+{% endblock %}

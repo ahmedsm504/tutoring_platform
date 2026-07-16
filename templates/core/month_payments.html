@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+{% block title %}مدفوعات {{ month_name }} {{ year }}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="page-title"><i class="fas fa-sack-dollar" style="color:var(--violet-600);"></i> مدفوعات {{ month_name }} {{ year }}</div>
+    <a href="{% url 'year_months' year %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> شهور {{ year }}</a>
+</div>
+
+<div class="stats-row">
+    <div class="stat-box">
+        <div class="number">{{ total|floatformat:2 }} جنيه</div>
+        <div class="label">💰 إجمالي {{ month_name }} {{ year }}</div>
+    </div>
+    <div class="stat-box">
+        <div class="number">{{ payments|length }}</div>
+        <div class="label">🧾 عدد الدفعات</div>
+    </div>
+</div>
+
+<div style="background:#fff; border:1px solid var(--border); border-radius: var(--radius-lg); padding:24px 26px; margin-top:22px; box-shadow: var(--shadow-sm);">
+    <h4 style="color:var(--ink); margin-bottom:14px;">➕ تسجيل دفعة جديدة في {{ month_name }} {{ year }}</h4>
+    <form method="POST" class="flex" style="align-items:flex-end;">
+        {% csrf_token %}
+        <div class="field" style="min-width:220px; flex:1;">
+            <label>الطالب *</label>
+            <select name="student" required>
+                <option value="">--- اختاري الطالب ---</option>
+                {% for s in all_students %}
+                <option value="{{ s.id }}">{{ s.name }} {% if s.country %}({{ s.country.name }}){% endif %}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="field" style="width:140px;">
+            <label>المبلغ *</label>
+            <input type="number" name="amount" step="0.01" required>
+        </div>
+        <div class="field" style="width:110px;">
+            <label>يوم الشهر</label>
+            <input type="number" name="day" min="1" max="31" value="1">
+        </div>
+        <div class="field" style="flex:1; min-width:180px;">
+            <label>ملاحظة (اختياري)</label>
+            <input type="text" name="note" placeholder="مثلاً: دفعة شهر أغسطس">
+        </div>
+        <button type="submit" class="btn btn-primary" style="height:46px;">حفظ الدفعة</button>
+    </form>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead><tr><th>الطالب</th><th>الدولة</th><th>المبلغ</th><th>تاريخ الدفعة</th><th>ملاحظة</th><th></th></tr></thead>
+        <tbody>
+            {% for p in payments %}
+            <tr>
+                <td><a href="{% url 'student_detail' p.student.id %}" style="color:var(--violet-700); font-weight:700;">{{ p.student.name }}</a></td>
+                <td>{{ p.student.country.flag_icon }} {{ p.student.country.name }}</td>
+                <td><strong>{{ p.amount|floatformat:2 }} جنيه</strong></td>
+                <td>{{ p.date|date:"Y/m/d" }}</td>
+                <td>{{ p.note|default:"-" }}</td>
+                <td>
+                    <form method="POST" action="{% url 'delete_payment' p.id %}" onsubmit="return confirm('تأكيد حذف الدفعة دي؟');" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center; padding:30px;">لسه مفيش دفعات مسجلة في {{ month_name }} {{ year }}.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% block title %}المصروفات{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px;">
+    <h2 style="color: #4a1a8a;">💸 المصروفات</h2>
+    <a href="{% url 'add_expense' %}" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة مصروف</a>
+</div>
+
+<div class="table-container" style="margin-top:0;">
+    <form method="GET" class="flex" style="margin-bottom: 20px;">
+        <input type="text" name="q" placeholder="بحث بالعنوان..." value="{{ search }}"
+               style="padding:10px 15px;border-radius:10px;border:1px solid #ede9fe;">
+
+        <select name="category" style="padding:10px 15px;border-radius:10px;border:1px solid #ede9fe;">
+            <option value="">كل التصنيفات</option>
+            {% for value, label in categories %}
+            <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="year" style="padding:10px 15px;border-radius:10px;border:1px solid #ede9fe;">
+            <option value="">كل السنين</option>
+            {% for y in years_range %}
+            <option value="{{ y }}" {% if selected_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="month" style="padding:10px 15px;border-radius:10px;border:1px solid #ede9fe;">
+            <option value="">كل الشهور</option>
+            <option value="1" {% if selected_month == "1" %}selected{% endif %}>يناير</option>
+            <option value="2" {% if selected_month == "2" %}selected{% endif %}>فبراير</option>
+            <option value="3" {% if selected_month == "3" %}selected{% endif %}>مارس</option>
+            <option value="4" {% if selected_month == "4" %}selected{% endif %}>أبريل</option>
+            <option value="5" {% if selected_month == "5" %}selected{% endif %}>مايو</option>
+            <option value="6" {% if selected_month == "6" %}selected{% endif %}>يونيو</option>
+            <option value="7" {% if selected_month == "7" %}selected{% endif %}>يوليو</option>
+            <option value="8" {% if selected_month == "8" %}selected{% endif %}>أغسطس</option>
+            <option value="9" {% if selected_month == "9" %}selected{% endif %}>سبتمبر</option>
+            <option value="10" {% if selected_month == "10" %}selected{% endif %}>أكتوبر</option>
+            <option value="11" {% if selected_month == "11" %}selected{% endif %}>نوفمبر</option>
+            <option value="12" {% if selected_month == "12" %}selected{% endif %}>ديسمبر</option>
+        </select>
+
+        <button type="submit" class="btn btn-outline">🔍 فلترة</button>
+        <a href="{% url 'expenses_list' %}" class="btn btn-outline">إعادة تعيين</a>
+    </form>
+
+    <table>
+        <thead>
+            <tr><th>العنوان</th><th>التصنيف</th><th>المبلغ</th><th>التاريخ</th><th>ملاحظات</th><th></th></tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td><strong>{{ expense.title }}</strong></td>
+                <td>{{ expense.get_category_display }}</td>
+                <td>{{ expense.amount|floatformat:2 }} جنيه</td>
+                <td>{{ expense.date|date:"d/m/Y" }}</td>
+                <td>{{ expense.notes|default:"—" }}</td>
+                <td class="flex">
+                    <a href="{% url 'edit_expense' expense.id %}" class="btn btn-outline btn-sm">تعديل</a>
+                    <a href="{% url 'delete_expense' expense.id %}" class="btn btn-danger btn-sm">حذف</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center;">لا توجد مصروفات مسجلة بعد.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="text-align:left; margin-top: 18px; font-weight:700; color:#4a1a8a; font-size:1.1rem;">
+        الإجمالي: {{ total_amount|floatformat:2 }} جنيه
+    </div>
+</div>
+{% endblock %}

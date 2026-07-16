@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block title %}السنوات{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="page-title"><i class="fas fa-calendar-days" style="color:var(--violet-600);"></i> السنوات</div>
+</div>
+<p class="text-muted" style="margin-bottom:6px;">اضغطي على سنة عشان تشوفي شهورها، وبعدين اضغطي على شهر عشان تشوفي مين دفع فيه وتضيفي دفعة جديدة.</p>
+
+<div class="country-grid">
+    {% for card in year_cards %}
+    <a href="{% url 'year_months' card.year %}" class="country-card">
+        <span class="flag"><i class="fas fa-calendar-days" style="color:var(--violet-500);"></i></span>
+        <div class="name">{{ card.year }}</div>
+        <div class="meta">{{ card.total|floatformat:2 }} جنيه · {{ card.count }} دفعة</div>
+    </a>
+    {% empty %}
+    <div class="empty-state">لا توجد أي دفعات مسجلة بعد. ابدئي بإضافة طالب أو تسجيل دفعة من صفحة أي طالب.</div>
+    {% endfor %}
+</div>
+{% endblock %}

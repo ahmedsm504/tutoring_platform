@@ -1,0 +1,104 @@
+{% extends 'core/base.html' %}
+{% block title %}إضافة طالب{% endblock %}
+{% block content %}
+<div style="max-width: 950px; margin: 8px auto 0; background: #ffffff; padding: 35px 40px; border-radius: 24px; border: 1px solid #ede9fe; box-shadow: 0 8px 30px rgba(0,0,0,0.06);">
+    <h2 style="color: #4a1a8a; text-align: center; margin-bottom: 30px;">➕ إضافة طالب جديد</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- نوع التسجيل: جديد ولا مسجل من قبل -->
+        <div style="background:var(--violet-50); border:1.6px solid var(--violet-200); border-radius:16px; padding:16px 20px; margin-bottom:22px;">
+            <label class="form-label" style="margin-bottom:10px;">هل الطالب ده جديد ولا مسجل عندنا من قبل؟ *</label>
+            <div class="flex" style="gap:22px;">
+                <label class="flex" style="gap:8px; cursor:pointer; font-weight:600;">
+                    <input type="radio" name="enrollment_type" value="new" checked onchange="toggleSourceField()"> طالب جديد
+                </label>
+                <label class="flex" style="gap:8px; cursor:pointer; font-weight:600;">
+                    <input type="radio" name="enrollment_type" value="existing" onchange="toggleSourceField()"> مسجل من قبل
+                </label>
+            </div>
+            <div id="sourceFieldWrap" class="field" style="margin-top:14px; max-width:320px;">
+                <label>مصدر الطالب</label>
+                <select name="acquisition_source">
+                    <option value="ad">إعلان</option>
+                    <option value="referral">توصية</option>
+                    <option value="website">الموقع</option>
+                    <option value="social_media">سوشيال ميديا</option>
+                    <option value="other">أخرى</option>
+                </select>
+                <span class="hint" style="display:block; color:var(--ink-muted); font-size:0.78rem; margin-top:5px;">
+                    عشان نعرف الإعلانات والتوصيات اللي بتجيب طلاب فعليًا
+                </span>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <label style="font-weight:600; color:#4a1a8a;">الدولة *</label>
+                <select name="country" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
+                    {% for c in countries %}
+                    <option value="{{ c.id }}" {% if request.GET.country == c.id|stringformat:'s' %}selected{% endif %}>{{ c.name }}</option>
+                    {% empty %}
+                    <option value="">لا توجد دول</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label style="font-weight:600; color:#4a1a8a;">المعلمة</label>
+                <select name="teacher" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
+                    <option value="">--- اختر ---</option>
+                    {% for t in teachers %}
+                    <option value="{{ t.id }}">{{ t.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div><label style="font-weight:600; color:#4a1a8a;">اسم الطالب *</label><input type="text" name="name" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">السن</label><input type="number" name="age" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">رقم الهاتف</label><input type="text" name="phone" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">المحافظة</label><input type="text" name="governorate" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">اسم الباقة</label><input type="text" name="package_name" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">عدد الحلقات</label><input type="number" name="lessons_count" value="4" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">الشهر *</label><input type="text" name="month" placeholder="يناير 2026" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">قيمة الاشتراك</label><input type="number" name="subscription_fee" step="0.01" value="0" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">تاريخ بداية الاشتراك</label><input type="date" name="start_date" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">تاريخ نهاية الاشتراك</label><input type="date" name="end_date" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div>
+                <label style="font-weight:600; color:#4a1a8a;">حالة الدفع</label>
+                <select name="payment_status" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
+                    <option value="paid">مدفوع</option>
+                    <option value="pending" selected>مستحق</option>
+                    <option value="overdue">متأخر</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-weight:600; color:#4a1a8a;">حالة الطالب</label>
+                <select name="status" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
+                    <option value="active" selected>مقيد</option>
+                    <option value="inactive">غير مقيد</option>
+                </select>
+            </div>
+        </div>
+
+        <p class="text-muted" style="font-size:0.8rem; margin-top:10px;">
+            💡 لو اخترتي حالة الدفع "مدفوع"، هيتسجل مبلغ الاشتراك تلقائيًا كأول دفعة في سجل "السنوات" بتاريخ بداية الاشتراك.
+        </p>
+
+        <div style="margin-top:20px;">
+            <label style="font-weight:600; color:#4a1a8a;">📝 ملاحظة أولية</label>
+            <textarea name="note_text" rows="3" placeholder="أي ملاحظة تحبي تسجليها من الأول (اختياري)" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></textarea>
+        </div>
+        <div style="text-align:center; margin-top:25px;">
+            <button type="submit" class="btn btn-primary" style="padding:14px 50px;">حفظ الطالب</button>
+            <a href="{% url 'dashboard_home' %}" class="btn btn-outline" style="margin-right:12px;">إلغاء</a>
+        </div>
+    </form>
+</div>
+
+<script>
+function toggleSourceField(){
+    const isNew = document.querySelector('input[name="enrollment_type"][value="new"]').checked;
+    document.getElementById('sourceFieldWrap').style.display = isNew ? 'block' : 'none';
+}
+document.addEventListener('DOMContentLoaded', toggleSourceField);
+</script>
+{% endblock %}

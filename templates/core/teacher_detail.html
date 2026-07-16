@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ teacher.name }}{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+    <h2 style="color:#4a1a8a;">👩‍🏫 {{ teacher.name }}</h2>
+    <div class="flex">
+        <a href="{% url 'edit_teacher' teacher.id %}" class="btn btn-primary"><i class="fas fa-edit"></i> تعديل</a>
+        <a href="{% url 'teachers_list' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:15px; background:white; padding:25px; border-radius:18px; border:1px solid #ede9fe; margin:20px 0;">
+    <div><strong>السن:</strong> {{ teacher.age|default:"-" }}</div>
+    <div><strong>المحافظة:</strong> {{ teacher.governorate|default:"-" }}</div>
+    <div><strong>الهاتف:</strong> {{ teacher.phone|default:"-" }}</div>
+    <div><strong>واتساب:</strong> {{ teacher.whatsapp|default:"-" }}</div>
+    <div><strong>تاريخ القبض:</strong> {{ teacher.hire_date|date:"Y/m/d" }}</div>
+    <div><strong>الراتب الأساسي:</strong> {{ teacher.salary }} جنيه</div>
+    <div><strong>المكافآت:</strong> {{ teacher.bonus }} جنيه</div>
+    <div><strong>الخصومات:</strong> {{ teacher.deduction }} جنيه</div>
+</div>
+
+{% if teacher.notes %}
+<div style="background:#fff9e6; border-right:4px solid #f59e0b; padding:16px 20px; border-radius:12px; margin-bottom:20px;">
+    <strong style="color:#92400e;">ملاحظات:</strong> {{ teacher.notes }}
+</div>
+{% endif %}
+
+<div class="stats-row">
+    <div class="stat-box" style="border-right-color:#22c55e;"><div class="number">{{ current_students }}</div><div class="label">🟢 طلاب مقيدين</div></div>
+    <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ previous_students }}</div><div class="label">🔴 طلاب غير مقيدين</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ teacher.net_salary }} جنيه</div><div class="label">💵 صافي المستحق</div></div>
+</div>
+
+<h4 style="color:#4a1a8a; margin-top:20px;">📚 طلاب هذه المعلمة</h4>
+<div class="table-container">
+    <table>
+        <thead><tr><th>الاسم</th><th>الدولة</th><th>الشهر</th><th>الحالة</th><th></th></tr></thead>
+        <tbody>
+            {% for s in students %}
+            <tr class="{% if s.status == 'inactive' %}status-inactive-row{% endif %}">
+                <td>{{ s.name }}</td>
+                <td>{{ s.country.flag_icon }} {{ s.country.name }}</td>
+                <td>{{ s.month }}</td>
+                <td>{% if s.status == 'active' %}<span class="status-active">مقيد</span>{% else %}<span class="status-inactive">غير مقيد</span>{% endif %}</td>
+                <td><a href="{% url 'student_detail' s.id %}" class="btn btn-primary btn-sm">عرض</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center;">لا يوجد طلاب لهذه المعلمة.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

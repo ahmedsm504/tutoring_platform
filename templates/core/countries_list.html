@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% block title %}الدول{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+    <h2 style="color: #4a1a8a;">🌍 الدول</h2>
+    <a href="{% url 'add_country' %}" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة دولة</a>
+</div>
+<div class="table-container">
+    <table>
+        <thead><tr><th>العلم</th><th>اسم الدولة</th><th>عدد الطلاب</th><th>نشطة؟</th><th>الإجراءات</th></tr></thead>
+        <tbody>
+            {% for country in countries %}
+            <tr>
+                <td style="font-size: 2rem;">{{ country.flag_icon }}</td>
+                <td><a href="{% url 'country_students' country.id %}" style="color:#6d28d9; font-weight:700;">{{ country.name }}</a></td>
+                <td>{{ country.students.count }}</td>
+                <td>{% if country.is_active %}<span class="status-active">نشطة</span>{% else %}<span class="status-inactive">متوقفة</span>{% endif %}</td>
+                <td>
+                    <a href="{% url 'edit_country' country.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'delete_country' country.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center;">لا توجد دول مضافة.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

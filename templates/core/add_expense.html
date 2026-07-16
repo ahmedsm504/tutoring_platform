@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+{% block title %}إضافة مصروف{% endblock %}
+{% block content %}
+<h2 style="color:#4a1a8a; margin-bottom:20px;">➕ إضافة مصروف جديد</h2>
+<div class="table-container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="flex" style="flex-direction: column; align-items: stretch; gap:15px; max-width:500px;">
+            <div>
+                <label>عنوان المصروف</label>
+                <input type="text" name="title" required
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ede9fe; margin-top:6px;">
+            </div>
+            <div>
+                <label>التصنيف</label>
+                <select name="category" style="width:100%; padding:10px; border-radius:10px; border:1px solid #ede9fe; margin-top:6px;">
+                    {% for value, label in categories %}
+                    <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label>المبلغ (جنيه)</label>
+                <input type="number" step="0.01" name="amount" required
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ede9fe; margin-top:6px;">
+            </div>
+            <div>
+                <label>التاريخ</label>
+                <input type="date" name="date"
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ede9fe; margin-top:6px;">
+            </div>
+            <div>
+                <label>ملاحظات</label>
+                <textarea name="notes" rows="3"
+                          style="width:100%; padding:10px; border-radius:10px; border:1px solid #ede9fe; margin-top:6px;"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">💾 حفظ المصروف</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block title %}جميع الطلاب{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+    <h2 style="color:#4a1a8a;">📋 جميع الطلاب</h2>
+    <button onclick="window.print()" class="btn btn-outline"><i class="fas fa-file-pdf"></i> تصدير / طباعة PDF</button>
+</div>
+
+<form method="GET" style="margin:20px 0;">
+    <div style="display:flex; gap:12px; background:white; padding:12px 20px; border-radius:16px; border:1px solid #ede9fe;">
+        <input type="text" name="q" placeholder="بحث بالاسم أو الهاتف..." value="{{ request.GET.q }}" style="flex:1; padding:10px; border-radius:12px; border:2px solid #ede9fe;">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
+    </div>
+</form>
+
+<div class="table-container">
+    <table>
+        <thead><tr><th>#</th><th>الاسم</th><th>الدولة</th><th>المعلمة</th><th>السن</th><th>الهاتف</th><th>الحالة</th><th></th></tr></thead>
+        <tbody>
+            {% for student in students %}
+            <tr class="{% if student.status == 'inactive' %}status-inactive-row{% endif %}">
+                <td>{{ forloop.counter }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.country.flag_icon }} {{ student.country.name }}</td>
+                <td>{{ student.teacher.name|default:"-" }}</td>
+                <td>{{ student.age|default:"-" }}</td>
+                <td>{{ student.phone|default:"-" }}</td>
+                <td>{% if student.status == 'active' %}<span class="status-active">مقيد</span>{% else %}<span class="status-inactive">غير مقيد</span>{% endif %}</td>
+                <td><a href="{% url 'student_detail' student.id %}" class="btn btn-primary btn-sm">عرض</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8" style="text-align:center;">لا يوجد طلاب مطابقين.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    @media print {
+        .sidebar, form, .btn, .flex a, button { display: none !important; }
+        .main-content { margin-right: 0 !important; padding: 0 !important; }
+        .table-container { border: none; box-shadow: none; }
+    }
+</style>
+{% endblock %}

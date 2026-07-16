@@ -1,132 +1,298 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}لوحة التحكم{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Cairo', sans-serif; background: #f8f4ff; display: flex; min-height: 100vh; }
-        
-        .sidebar {
-            width: 270px;
-            background: #6d28d9;
-            color: #fff;
-            padding: 25px 15px;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100%;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: 2px 0 12px rgba(0,0,0,0.15);
-        }
-        .sidebar .logo { font-size: 1.8rem; font-weight: 700; text-align: center; padding-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 25px; }
-        .sidebar .logo span { color: #facc15; }
-        .sidebar ul { list-style: none; padding: 0; }
-        .sidebar ul li { margin-bottom: 8px; }
-        .sidebar ul li a {
-            display: block;
-            padding: 12px 18px;
-            color: #e9d5ff;
-            text-decoration: none;
-            border-radius: 12px;
-            transition: 0.25s;
-            font-weight: 500;
-        }
-        .sidebar ul li a i { margin-left: 12px; width: 24px; text-align: center; }
-        .sidebar ul li a:hover, .sidebar ul li a.active { background: #8b5cf6; color: #fff; transform: translateX(-4px); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}لوحة التحكم{% endblock %}</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   0. جذور التصميم
+   ========================================================= */
+:root{
+    --violet-50:  #F7F5FC;
+    --violet-100: #EEE9FA;
+    --violet-200: #DDD3F5;
+    --violet-400: #A78BFA;
+    --violet-500: #8B5CF6;
+    --violet-600: #7C3AED;
+    --violet-700: #6D28D9;
+    --ink:        #33195E;
+    --ink-muted:  #746A93;
 
-        .main-content {
-            margin-right: 270px;
-            flex: 1;
-            padding: 30px 35px;
-            background: #f8f4ff;
-            min-height: 100vh;
-        }
+    --gold: #B4872E;
+    --gold-soft: #FBF2E2;
 
-        .country-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; margin-top: 25px; }
-        .country-card {
-            background: #fff;
-            border-radius: 18px;
-            padding: 25px 20px;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
-            border: 1px solid #ede9fe;
-            text-decoration: none;
-            color: #4a1a8a;
-            transition: 0.3s;
-        }
-        .country-card:hover { transform: translateY(-8px); box-shadow: 0 12px 32px rgba(109,40,217,0.15); border-color: #8b5cf6; }
-        .country-card .flag { font-size: 3.4rem; display: block; margin-bottom: 10px; }
-        .country-card .name { font-size: 1.3rem; font-weight: 700; }
+    --green:      #1D9A63;
+    --green-soft: #E5F7EE;
+    --red:        #DC3545;
+    --red-soft:   #FDEBEC;
+    --amber:      #B87F16;
+    --amber-soft: #FCF3DC;
 
-        .table-container { background: #fff; border-radius: 18px; padding: 20px 22px; border: 1px solid #ede9fe; margin-top: 25px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-        table th { background: #ede9fe; color: #4a1a8a; padding: 14px 12px; text-align: right; font-weight: 700; }
-        table td { padding: 14px 12px; border-bottom: 1px solid #f1edf9; }
+    --paper: #FFFFFF;
+    --page-bg: var(--violet-50);
+    --border: #E7E1F5;
 
-        .status-active { background: #dcfce7; color: #166534; padding: 4px 14px; border-radius: 30px; font-weight: 600; font-size: 0.8rem; display: inline-block; }
-        .status-inactive { background: #fee2e2; color: #991b1b; padding: 4px 14px; border-radius: 30px; font-weight: 600; font-size: 0.8rem; display: inline-block; }
-        .status-inactive-row { background-color: #fff5f5 !important; border-right: 4px solid #ef4444; }
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --radius-pill: 999px;
 
-        .btn { display: inline-block; padding: 10px 22px; border-radius: 30px; font-weight: 600; text-decoration: none; font-size: 0.9rem; transition: 0.25s; border: none; cursor: pointer; }
-        .btn-primary { background: #7c3aed; color: #fff; }
-        .btn-primary:hover { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(124,58,237,0.35); }
-        .btn-outline { background: transparent; border: 2px solid #7c3aed; color: #7c3aed; }
-        .btn-outline:hover { background: #7c3aed; color: #fff; }
-        .btn-danger { background: #ef4444; color: #fff; }
-        .btn-success { background: #22c55e; color: #fff; }
-        .btn-sm { padding: 6px 16px; font-size: 0.8rem; }
+    --shadow-sm: 0 1px 2px rgba(51, 25, 94, 0.06);
+    --shadow-md: 0 8px 24px rgba(51, 25, 94, 0.08);
+    --shadow-lg: 0 16px 40px rgba(51, 25, 94, 0.14);
 
-        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; margin: 25px 0; }
-        .stat-box { background: #fff; padding: 20px; border-radius: 16px; border-right: 5px solid #8b5cf6; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
-        .stat-box .number { font-size: 2rem; font-weight: 700; color: #4a1a8a; }
-        .stat-box .label { color: #6d5b8e; font-size: 0.95rem; }
+    --font-display: 'Cairo', sans-serif;
+    --font-body: 'Tajawal', sans-serif;
+}
 
-        .note-timeline { border-right: 3px solid #8b5cf6; padding-right: 20px; margin: 15px 0; }
-        .note-item { background: #f5f0ff; padding: 12px 18px; border-radius: 12px; margin-bottom: 12px; }
-        .note-item .time { font-size: 0.8rem; color: #7c6b9e; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .flex { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .mt-3 { margin-top: 20px; }
-        .mb-3 { margin-bottom: 20px; }
-        .text-center { text-align: center; }
+body{
+    font-family: var(--font-body);
+    background: var(--page-bg);
+    color: var(--ink);
+    display: flex;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); }
+a { color: inherit; }
+::selection { background: var(--violet-200); color: var(--ink); }
 
-        /* رسائل التنبيه */
-        .alert {
-            padding: 14px 22px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border-right: 5px solid;
-        }
-        .alert-success { background: #dcfce7; color: #166534; border-right-color: #22c55e; }
-        .alert-warning { background: #fef3c7; color: #92400e; border-right-color: #f59e0b; }
-        .alert-error { background: #fee2e2; color: #991b1b; border-right-color: #ef4444; }
+/* النجمة الهندسية الثمانية - العنصر المميز المتكرر في كل الموقع */
+.star-mark{
+    display:inline-block; width: 14px; height: 14px; flex-shrink: 0;
+    background-color: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L61 39 L96 39 L68 60 L79 96 L50 74 L21 96 L32 60 L4 39 L39 39 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L61 39 L96 39 L68 60 L79 96 L50 74 L21 96 L32 60 L4 39 L39 39 Z'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain; mask-size: contain;
+}
 
-        @media (max-width: 768px) {
-            .sidebar { width: 70px; padding: 15px 8px; }
-            .sidebar .logo { font-size: 1.1rem; }
-            .sidebar ul li a span { display: none; }
-            .sidebar ul li a i { margin-left: 0; font-size: 1.4rem; }
-            .main-content { margin-right: 70px; padding: 20px; }
-            .country-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-        }
-    </style>
-    {% block extra_css %}{% endblock %}
+/* =========================================================
+   1. الشريط الجانبي
+   ========================================================= */
+.sidebar{
+    width: 272px;
+    background: linear-gradient(175deg, var(--violet-700) 0%, #4C1D95 100%);
+    color: #fff;
+    padding: 26px 16px;
+    position: fixed;
+    top: 0; right: 0;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: var(--shadow-lg);
+}
+.sidebar .logo{
+    display:flex; align-items:center; gap: 12px;
+    padding: 4px 6px 22px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.14);
+}
+.sidebar .logo-mark{
+    width: 38px; height: 38px; border-radius: 12px;
+    background: rgba(255,255,255,0.14);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+}
+.sidebar .logo-mark .star-mark{ width: 20px; height: 20px; color:#fff; }
+.sidebar .logo-text{ font-weight: 800; font-size: 1.15rem; line-height:1.3; }
+.sidebar .logo-text small{ display:block; font-weight:500; font-size: 0.68rem; color:#E9D5FF; }
+
+.sidebar ul{ list-style: none; }
+.sidebar ul li{ margin-bottom: 3px; }
+.sidebar ul li a{
+    display:flex; align-items:center; gap: 13px;
+    padding: 11px 15px;
+    color: rgba(255,255,255,0.78);
+    text-decoration: none;
+    border-radius: 13px;
+    font-weight: 500;
+    font-size: 0.92rem;
+    position: relative;
+    transition: background .18s ease, color .18s ease;
+}
+.sidebar ul li a i{ width: 18px; text-align:center; font-size: 0.95rem; opacity:.9; }
+.sidebar ul li a:hover{ background: rgba(255,255,255,0.09); color:#fff; }
+.sidebar ul li a.active{ background: rgba(255,255,255,0.17); color:#fff; font-weight:700; }
+.sidebar ul li a.active::before{
+    content:""; position:absolute; right:-16px; top:50%; transform: translateY(-50%);
+    width:4px; height:20px; background: var(--gold); border-radius: var(--radius-pill);
+}
+
+/* =========================================================
+   2. المحتوى الرئيسي
+   ========================================================= */
+.main-content{ margin-right: 272px; flex: 1; padding: 32px 40px 60px; min-height: 100vh; }
+
+.page-header{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-bottom:8px; }
+.page-title{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.5rem; color:var(--ink); }
+
+/* =========================================================
+   3. كروت الدول / السنوات (نفس الشكل يتكرر للاتنين)
+   ========================================================= */
+.country-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 22px; }
+.country-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 26px 20px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    position: relative;
+    overflow: hidden;
+}
+.country-card::after{
+    content:""; position:absolute; left:-16px; bottom:-16px; width:74px; height:74px;
+    opacity:.07; background-color: var(--violet-600);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L61 39 L96 39 L68 60 L79 96 L50 74 L21 96 L32 60 L4 39 L39 39 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L61 39 L96 39 L68 60 L79 96 L50 74 L21 96 L32 60 L4 39 L39 39 Z'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain; mask-size: contain;
+}
+.country-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--violet-400); }
+.country-card .flag { font-size: 2.8rem; display: block; margin-bottom: 10px; }
+.country-card .name { font-size: 1.2rem; font-weight: 700; }
+.country-card .meta{ font-size:0.85rem; color:var(--ink-muted); margin-top:4px; }
+
+/* =========================================================
+   4. الجداول
+   ========================================================= */
+.table-container { background: #fff; border-radius: var(--radius-lg); padding: 6px 22px 8px; border: 1px solid var(--border); margin-top: 22px; overflow-x: auto; box-shadow: var(--shadow-sm); }
+table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+table th { background: var(--violet-50); color: var(--violet-700); padding: 15px 12px; text-align: right; font-weight: 700; font-size:0.85rem; }
+table td { padding: 14px 12px; border-bottom: 1px solid #F2EEFA; vertical-align:middle; }
+table tbody tr:last-child td{ border-bottom:none; }
+table tbody tr:hover{ background: var(--violet-50); }
+
+/* =========================================================
+   5. حالات الطالب/الدفع
+   ========================================================= */
+.status-active { background: var(--green-soft); color: var(--green); padding: 4px 14px; border-radius: 30px; font-weight: 700; font-size: 0.78rem; display: inline-block; }
+.status-inactive { background: var(--red-soft); color: var(--red); padding: 4px 14px; border-radius: 30px; font-weight: 700; font-size: 0.78rem; display: inline-block; }
+.status-inactive-row { background-color: var(--red-soft) !important; border-right: 4px solid var(--red); }
+.badge-warning{ background: var(--amber-soft); color: var(--amber); padding:4px 14px; border-radius:30px; font-weight:700; font-size:0.78rem; display:inline-block; }
+.badge-neutral{ background: var(--violet-100); color: var(--violet-700); padding:4px 14px; border-radius:30px; font-weight:700; font-size:0.78rem; display:inline-block; }
+
+/* =========================================================
+   6. الأزرار
+   ========================================================= */
+.btn { display: inline-flex; align-items:center; gap:7px; padding: 10px 22px; border-radius: 30px; font-weight: 700; text-decoration: none; font-size: 0.88rem; transition: .18s ease; border: none; cursor: pointer; font-family: var(--font-body); }
+.btn:active{ transform: translateY(1px); }
+.btn-primary { background: var(--violet-600); color: #fff; box-shadow: 0 4px 14px rgba(124,58,237,.28); }
+.btn-primary:hover { background: var(--violet-700); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(124,58,237,0.35); }
+.btn-outline { background: transparent; border: 1.6px solid var(--violet-600); color: var(--violet-600); }
+.btn-outline:hover { background: var(--violet-600); color: #fff; }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-danger:hover{ background:#c22c3b; transform: translateY(-1px); }
+.btn-success { background: var(--green); color: #fff; }
+.btn-success:hover{ background:#178553; transform: translateY(-1px); }
+.btn-sm { padding: 6px 15px; font-size: 0.78rem; }
+
+/* =========================================================
+   7. بطاقات الإحصائيات (الاسمين متوافقين: stat-box القديم و stat-card الجديد)
+   ========================================================= */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; margin: 22px 0 8px; }
+.stat-box, .stat-card {
+    background: #fff; padding: 20px; border-radius: var(--radius-md);
+    border-right: 5px solid var(--violet-500);
+    box-shadow: var(--shadow-sm);
+    display:flex; flex-direction:column; gap:2px;
+}
+.stat-box .number, .stat-card .number { font-size: 1.7rem; font-weight: 800; color: var(--ink); font-family: var(--font-display); }
+.stat-box .label, .stat-card .label { color: var(--ink-muted); font-size: 0.88rem; }
+
+/* =========================================================
+   8. سجل الملاحظات
+   ========================================================= */
+.note-timeline { border-right: 3px solid var(--violet-500); padding-right: 20px; margin: 15px 0; display:flex; flex-direction:column; gap:12px; }
+.note-item { background: var(--violet-50); padding: 13px 18px; border-radius: 13px; position:relative; }
+.note-item::before{
+    content:""; position:absolute; right:-27px; top:16px; width:9px; height:9px;
+    background-color: var(--gold);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L61 39 L96 39 L68 60 L79 96 L50 74 L21 96 L32 60 L4 39 L39 39 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L61 39 L96 39 L68 60 L79 96 L50 74 L21 96 L32 60 L4 39 L39 39 Z'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain; mask-size: contain;
+}
+.note-item .time { font-size: 0.78rem; color: var(--ink-muted); margin-top:4px; }
+
+/* =========================================================
+   9. الفورمات - حقول موحدة الشكل
+   ========================================================= */
+.field label, label.form-label{ display:block; font-weight:700; color:var(--ink); font-size:0.86rem; margin-bottom:7px; }
+.field input[type="text"], .field input[type="number"], .field input[type="date"],
+.field select, .field textarea,
+input[type="text"].form-input, input[type="number"].form-input, input[type="date"].form-input,
+select.form-input, textarea.form-input{
+    width:100%; padding:12px 14px; border-radius: var(--radius-sm);
+    border:1.6px solid var(--border); font-family: var(--font-body); font-size:0.92rem;
+    color: var(--ink); background:#fff; transition: border-color .15s ease, box-shadow .15s ease;
+}
+.field textarea, textarea.form-input{ resize: vertical; min-height:85px; }
+.field input:focus, .field select:focus, .field textarea:focus,
+.form-input:focus{ outline:none; border-color: var(--violet-500); box-shadow: 0 0 0 4px rgba(139,92,246,.14); }
+
+/* =========================================================
+   10. تنبيهات
+   ========================================================= */
+.alert { padding: 14px 22px; border-radius: 13px; margin-bottom: 18px; border-right: 5px solid; font-size:0.92rem; }
+.alert-success { background: var(--green-soft); color: var(--green); border-right-color: var(--green); }
+.alert-warning { background: var(--amber-soft); color: var(--amber); border-right-color: var(--amber); }
+.alert-error { background: var(--red-soft); color: var(--red); border-right-color: var(--red); }
+
+/* =========================================================
+   11. حالة فارغة + أدوات مساعدة
+   ========================================================= */
+.empty-state{ text-align:center; padding:44px 20px; color: var(--ink-muted); }
+.empty-state a{ color: var(--violet-600); font-weight:700; }
+
+.flex { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.mt-3 { margin-top: 20px; } .mb-3 { margin-bottom: 20px; }
+.text-center { text-align: center; } .text-muted{ color: var(--ink-muted); }
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline: 3px solid var(--violet-400); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce){ * { transition:none !important; } }
+
+/* =========================================================
+   12. الاستجابة
+   ========================================================= */
+@media (max-width: 900px) {
+    .sidebar { width: 74px; padding: 16px 8px; }
+    .sidebar .logo-text, .sidebar ul li a span { display: none; }
+    .sidebar .logo{ justify-content:center; }
+    .sidebar ul li a { justify-content:center; padding: 13px; }
+    .sidebar ul li a i { font-size: 1.2rem; }
+    .main-content { margin-right: 74px; padding: 20px 18px; }
+    .country-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
+</style>
+{% block extra_css %}{% endblock %}
 </head>
 <body>
     <div class="sidebar">
-        <div class="logo">📘 <span>منصتي</span></div>
+        <div class="logo">
+            <span class="logo-mark"><span class="star-mark"></span></span>
+            <span class="logo-text">منصتي<small>لوحة تحكم الطلاب والمعلمات</small></span>
+        </div>
         <ul>
-            <li><a href="{% url 'dashboard_home' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}"><i class="fas fa-home"></i> <span>الرئيسية</span></a></li>
-            <li><a href="{% url 'teachers_list' %}" class="{% if 'teachers' in request.path %}active{% endif %}"><i class="fas fa-chalkboard-teacher"></i> <span>المعلمات</span></a></li>
+            <li><a href="{% url 'dashboard_home' %}" class="{% if request.path == '/dashboard/' %}active{% endif %}"><i class="fas fa-house"></i> <span>الرئيسية</span></a></li>
+            <li><a href="{% url 'countries_list' %}" class="{% if 'countries' in request.path or 'country' in request.path %}active{% endif %}"><i class="fas fa-earth-africa"></i> <span>الدول</span></a></li>
+            <li><a href="{% url 'years_list' %}" class="{% if '/years/' in request.path %}active{% endif %}"><i class="fas fa-calendar-days"></i> <span>السنوات</span></a></li>
+            <li><a href="{% url 'teachers_list' %}" class="{% if 'teacher' in request.path %}active{% endif %}"><i class="fas fa-chalkboard-user"></i> <span>المعلمات</span></a></li>
             <li><a href="{% url 'all_students' %}" class="{% if 'all-students' in request.path %}active{% endif %}"><i class="fas fa-users"></i> <span>جميع الطلاب</span></a></li>
             <li><a href="{% url 'statistics' %}" class="{% if 'statistics' in request.path %}active{% endif %}"><i class="fas fa-chart-pie"></i> <span>النسب</span></a></li>
-            <li><a href="{% url 'countries_list' %}" class="{% if 'countries' in request.path %}active{% endif %}"><i class="fas fa-globe"></i> <span>الدول</span></a></li>
-            <li><a href="{% url 'add_teacher' %}" class="{% if 'add-teacher' in request.path %}active{% endif %}"><i class="fas fa-plus-circle"></i> <span>إضافة معلمة</span></a></li>
+            <li><a href="{% url 'expenses_list' %}" class="{% if 'expense' in request.path %}active{% endif %}"><i class="fas fa-money-bill-wave"></i> <span>المصروفات</span></a></li>
+            <li><a href="{% url 'financial_reports' %}" class="{% if 'financial-reports' in request.path %}active{% endif %}"><i class="fas fa-chart-line"></i> <span>التقارير المالية</span></a></li>
+            <li><a href="{% url 'add_student' %}" class="{% if 'add-student' in request.path %}active{% endif %}"><i class="fas fa-user-plus"></i> <span>إضافة طالب</span></a></li>
+            <li><a href="{% url 'add_teacher' %}" class="{% if 'add-teacher' in request.path %}active{% endif %}"><i class="fas fa-plus"></i> <span>إضافة معلمة</span></a></li>
         </ul>
     </div>
 
@@ -139,519 +305,12 @@
             {% endfor %}
         {% endif %}
 
-        {% block content %}
-        {# جميع الصفحات ستكون هنا باستخدام if page #}
-        {% if page == 'dashboard_home' %}
-            {# ==== لوحة التحكم الرئيسية ==== #}
-            <div class="flex" style="justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px;">
-                <h2 style="color: #4a1a8a;">🏠 لوحة التحكم</h2>
-                <div class="flex">
-                    <a href="{% url 'add_student' %}" class="btn btn-primary"><i class="fas fa-user-plus"></i> إضافة طالب</a>
-                    <a href="{% url 'add_teacher' %}" class="btn btn-outline"><i class="fas fa-user-plus"></i> إضافة معلمة</a>
-                    <a href="{% url 'add_country' %}" class="btn btn-outline"><i class="fas fa-globe"></i> إضافة دولة</a>
-                </div>
-            </div>
-            <div class="stats-row">
-                <div class="stat-box"><div class="number">{{ total_students }}</div><div class="label">👨‍🎓 إجمالي الطلاب</div></div>
-                <div class="stat-box" style="border-right-color: #22c55e;"><div class="number">{{ active_students }}</div><div class="label">🟢 طلاب مقيدين</div></div>
-                <div class="stat-box" style="border-right-color: #ef4444;"><div class="number">{{ inactive_students }}</div><div class="label">🔴 غير مقيدين</div></div>
-                <div class="stat-box" style="border-right-color: #f59e0b;"><div class="number">{{ total_teachers }}</div><div class="label">👩‍🏫 المعلمات</div></div>
-            </div>
-            <h3 style="color: #4a1a8a; margin-top: 30px;">🌍 اختر دولة</h3>
-            <div class="country-grid">
-                {% for country in countries %}
-                <a href="{% url 'country_students' country.id %}" class="country-card">
-                    <span class="flag">{{ country.flag_icon }}</span>
-                    <div class="name">{{ country.name }}</div>
-                    <div style="font-size: 0.9rem; color: #7c6b9e;">{{ country.students.count }} طالب</div>
-                </a>
-                {% empty %}
-                <p style="color: #6d5b8e;">لا توجد دول. <a href="{% url 'add_country' %}" style="color: #7c3aed;">أضف دولة</a></p>
-                {% endfor %}
-            </div>
-
-        {% elif page == 'country_students' %}
-            {# ==== طلاب دولة ==== #}
-            <div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
-                <h2 style="color: #4a1a8a;">{{ country.flag_icon }} طلاب {{ country.name }}</h2>
-                <div class="flex">
-                    <a href="{% url 'add_student' %}?country={{ country.id }}" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة طالب</a>
-                    <a href="{% url 'dashboard_home' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
-                </div>
-            </div>
-            <form method="GET" class="flex" style="margin: 20px 0; background: white; padding: 15px 20px; border-radius: 16px; border: 1px solid #ede9fe;">
-                <select name="status" class="btn btn-outline btn-sm">
-                    <option value="">جميع الحالات</option>
-                    <option value="active" {% if request.GET.status == 'active' %}selected{% endif %}>مقيد</option>
-                    <option value="inactive" {% if request.GET.status == 'inactive' %}selected{% endif %}>غير مقيد</option>
-                </select>
-                <select name="teacher" class="btn btn-outline btn-sm">
-                    <option value="">جميع المعلمات</option>
-                    {% for t in teachers %}
-                    <option value="{{ t.id }}" {% if request.GET.teacher == t.id|stringformat:'s' %}selected{% endif %}>{{ t.name }}</option>
-                    {% endfor %}
-                </select>
-                <input type="text" name="month" placeholder="الشهر" value="{{ request.GET.month }}" style="padding: 8px 18px; border-radius: 30px; border: 2px solid #ede9fe;">
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-filter"></i> بحث</button>
-            </form>
-            <div class="table-container">
-                <table>
-                    <thead><tr><th>#</th><th>الاسم</th><th>المعلمة</th><th>الباقة</th><th>الشهر</th><th>الحالة</th><th></th></tr></thead>
-                    <tbody>
-                        {% for student in students %}
-                        <tr class="{% if student.status == 'inactive' %}status-inactive-row{% endif %}">
-                            <td>{{ forloop.counter }}</td>
-                            <td><a href="{% url 'student_detail' student.id %}" style="color: #6d28d9; font-weight: 600;">{{ student.name }}</a></td>
-                            <td>{{ student.teacher.name|default:"-" }}</td>
-                            <td>{{ student.package_name|default:"-" }}</td>
-                            <td>{{ student.month }}</td>
-                            <td>{% if student.status == 'active' %}<span class="status-active">✅ مقيد</span>{% else %}<span class="status-inactive">❌ غير مقيد</span>{% endif %}</td>
-                            <td>
-                                <a href="{% url 'edit_student' student.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                                <a href="{% url 'student_detail' student.id %}" class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="7" style="text-align: center;">لا يوجد طلاب.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-        {% elif page == 'add_student' %}
-            {# ==== إضافة طالب ==== #}
-            <div style="max-width: 950px; margin: 30px auto; background: #ffffff; padding: 35px 40px; border-radius: 24px; border: 1px solid #ede9fe; box-shadow: 0 8px 30px rgba(0,0,0,0.06);">
-                <h2 style="color: #4a1a8a; text-align: center; margin-bottom: 30px;">➕ إضافة طالب جديد</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div>
-                            <label style="font-weight:600; color:#4a1a8a;">الدولة *</label>
-                            <select name="country" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                                {% for c in countries %}
-                                <option value="{{ c.id }}" {% if request.GET.country == c.id|stringformat:'s' %}selected{% endif %}>{{ c.name }}</option>
-                                {% empty %}
-                                <option value="">لا توجد دول</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div>
-                            <label style="font-weight:600; color:#4a1a8a;">المعلمة</label>
-                            <select name="teacher" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                                <option value="">--- اختر ---</option>
-                                {% for t in teachers %}
-                                <option value="{{ t.id }}">{{ t.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">اسم الطالب *</label><input type="text" name="name" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">السن</label><input type="number" name="age" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">رقم الهاتف</label><input type="text" name="phone" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">المحافظة</label><input type="text" name="governorate" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">اسم الباقة</label><input type="text" name="package_name" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">عدد الحلقات</label><input type="number" name="lessons_count" value="4" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">الشهر *</label><input type="text" name="month" placeholder="يناير 2024" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">قيمة الاشتراك</label><input type="number" name="subscription_fee" step="0.01" value="0" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">تاريخ البدء</label><input type="date" name="start_date" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">تاريخ النهاية</label><input type="date" name="end_date" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div>
-                            <label style="font-weight:600; color:#4a1a8a;">حالة الدفع</label>
-                            <select name="payment_status" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                                <option value="paid">مدفوع</option>
-                                <option value="pending">مستحق</option>
-                                <option value="overdue">متأخر</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="font-weight:600; color:#4a1a8a;">حالة الطالب</label>
-                            <select name="status" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                                <option value="active">مقيد</option>
-                                <option value="inactive">غير مقيد</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="margin-top:20px;">
-                        <label style="font-weight:600; color:#4a1a8a;">📝 ملاحظة أولية</label>
-                        <textarea name="note_text" rows="3" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></textarea>
-                    </div>
-                    <div style="text-align:center; margin-top:25px;">
-                        <button type="submit" class="btn btn-primary" style="padding:14px 50px;">حفظ الطالب</button>
-                        <a href="{% url 'dashboard_home' %}" class="btn btn-outline" style="margin-right:12px;">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-
-        {% elif page == 'student_detail' %}
-            {# ==== تفاصيل الطالب ==== #}
-            <div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
-                <h2 style="color: #4a1a8a;">👤 {{ student.name }}</h2>
-                <div class="flex">
-                    <a href="{% url 'toggle_student_status' student.id %}" class="btn {% if student.status == 'active' %}btn-danger{% else %}btn-success{% endif %}">
-                        {% if student.status == 'active' %}<i class="fas fa-times"></i> تعيين غير مقيد{% else %}<i class="fas fa-check"></i> تعيين مقيد{% endif %}
-                    </a>
-                    <a href="{% url 'country_students' student.country.id %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
-                </div>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:15px; background:white; padding:25px; border-radius:18px; border:1px solid #ede9fe; margin:20px 0;">
-                <div><strong>الدولة:</strong> {{ student.country.name }}</div>
-                <div><strong>المعلمة:</strong> {{ student.teacher.name|default:"-" }}</div>
-                <div><strong>الشهر:</strong> {{ student.month }}</div>
-                <div><strong>الباقة:</strong> {{ student.package_name|default:"-" }}</div>
-                <div><strong>الحلقات:</strong> {{ student.lessons_count }}</div>
-                <div><strong>الاشتراك:</strong> {{ student.subscription_fee }} جنيه</div>
-                <div><strong>الهاتف:</strong> {{ student.phone|default:"-" }}</div>
-                <div><strong>المحافظة:</strong> {{ student.governorate|default:"-" }}</div>
-                <div><strong>الحالة:</strong> {% if student.status == 'active' %}<span class="status-active">مقيد</span>{% else %}<span class="status-inactive">غير مقيد</span>{% endif %}</div>
-                <div><strong>حالة الدفع:</strong> {% if student.payment_status == 'paid' %}<span style="background:#dcfce7; color:#166534; padding:2px 14px; border-radius:30px;">مدفوع</span>{% elif student.payment_status == 'pending' %}<span style="background:#fef3c7; color:#92400e; padding:2px 14px; border-radius:30px;">مستحق</span>{% else %}<span style="background:#fee2e2; color:#991b1b; padding:2px 14px; border-radius:30px;">متأخر</span>{% endif %}</div>
-            </div>
-            <div style="background:white; padding:25px; border-radius:18px; border:1px solid #ede9fe;">
-                <h4 style="color:#4a1a8a;">📝 سجل الملاحظات</h4>
-                <form method="POST" style="display:flex; gap:12px; margin-bottom:20px;">
-                    {% csrf_token %}
-                    <input type="text" name="note_text" placeholder="أضف ملاحظة..." required style="flex:1; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                    <button type="submit" class="btn btn-primary">إضافة</button>
-                </form>
-                <div class="note-timeline">
-                    {% for note in notes %}
-                    <div class="note-item">
-                        <div>{{ note.note_text }}</div>
-                        <div class="time"><i class="far fa-clock"></i> {{ note.created_at|date:"Y-m-d H:i" }} {% if note.created_by %}- بواسطة {{ note.created_by }}{% endif %}</div>
-                    </div>
-                    {% empty %}
-                    <p style="color:#6d5b8e;">لا توجد ملاحظات.</p>
-                    {% endfor %}
-                </div>
-            </div>
-
-        {% elif page == 'teachers_list' %}
-            {# ==== قائمة المعلمات ==== #}
-            <h2 style="color:#4a1a8a;">👩‍🏫 قائمة المعلمات</h2>
-            <div class="table-container">
-                <table>
-                    <thead><tr><th>الاسم</th><th>الهاتف</th><th>الراتب الصافي</th><th>طلاب حاليين</th><th>طلاب سابقين</th><th></th></tr></thead>
-                    <tbody>
-                        {% for teacher in teachers %}
-                        <tr>
-                            <td><strong>{{ teacher.name }}</strong></td>
-                            <td>{{ teacher.phone|default:"-" }}</td>
-                            <td>{{ teacher.net_salary }} جنيه</td>
-                            <td>{{ teacher.current_students_count }}</td>
-                            <td>{{ teacher.previous_students_count }}</td>
-                            <td>
-                                <a href="{% url 'edit_teacher' teacher.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                                <a href="{% url 'delete_teacher' teacher.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
-                                <a href="{% url 'teacher_detail' teacher.id %}" class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="6" style="text-align:center;">لا توجد معلمات.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-        {% elif page == 'teacher_detail' %}
-            {# ==== تفاصيل المعلمة ==== #}
-            <div class="flex" style="justify-content: space-between;">
-                <h2 style="color:#4a1a8a;">👩‍🏫 {{ teacher.name }}</h2>
-                <a href="{% url 'teachers_list' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
-            </div>
-            <div class="stats-row">
-                <div class="stat-box"><div class="number">{{ current_students }}</div><div class="label">🟢 طلاب مقيدين</div></div>
-                <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ previous_students }}</div><div class="label">🔴 طلاب غير مقيدين</div></div>
-                <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ teacher.net_salary }} جنيه</div><div class="label">💵 صافي الراتب</div></div>
-            </div>
-            <h4 style="color:#4a1a8a; margin-top:20px;">📚 طلاب هذه المعلمة</h4>
-            <div class="table-container">
-                <table>
-                    <thead><tr><th>الاسم</th><th>الدولة</th><th>الشهر</th><th>الحالة</th><th></th></tr></thead>
-                    <tbody>
-                        {% for s in students %}
-                        <tr class="{% if s.status == 'inactive' %}status-inactive-row{% endif %}">
-                            <td>{{ s.name }}</td>
-                            <td>{{ s.country.name }}</td>
-                            <td>{{ s.month }}</td>
-                            <td>{% if s.status == 'active' %}<span class="status-active">مقيد</span>{% else %}<span class="status-inactive">غير مقيد</span>{% endif %}</td>
-                            <td><a href="{% url 'student_detail' s.id %}" class="btn btn-primary btn-sm">عرض</a></td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="5">لا يوجد طلاب لهذه المعلمة.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-        {% elif page == 'all_students' %}
-            {# ==== جميع الطلاب ==== #}
-            <h2 style="color:#4a1a8a;">📋 جميع الطلاب</h2>
-            <form method="GET" style="margin:20px 0;">
-                <div style="display:flex; gap:12px; background:white; padding:12px 20px; border-radius:16px; border:1px solid #ede9fe;">
-                    <input type="text" name="q" placeholder="بحث بالاسم أو الهاتف..." value="{{ request.GET.q }}" style="flex:1; padding:10px; border-radius:12px; border:2px solid #ede9fe;">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
-                </div>
-            </form>
-            <div class="table-container">
-                <table>
-                    <thead><tr><th>#</th><th>الاسم</th><th>الدولة</th><th>المعلمة</th><th>الهاتف</th><th>الحالة</th><th></th></tr></thead>
-                    <tbody>
-                        {% for student in students %}
-                        <tr class="{% if student.status == 'inactive' %}status-inactive-row{% endif %}">
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ student.name }}</td>
-                            <td>{{ student.country.name }}</td>
-                            <td>{{ student.teacher.name|default:"-" }}</td>
-                            <td>{{ student.phone|default:"-" }}</td>
-                            <td>{% if student.status == 'active' %}<span class="status-active">مقيد</span>{% else %}<span class="status-inactive">غير مقيد</span>{% endif %}</td>
-                            <td><a href="{% url 'student_detail' student.id %}" class="btn btn-primary btn-sm">عرض</a></td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="7" style="text-align:center;">لا يوجد طلاب.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-        {% elif page == 'statistics' %}
-            {# ==== النسب ==== #}
-            <h2 style="color:#4a1a8a;">📊 النسب والإحصائيات</h2>
-            <div class="table-container">
-                <table>
-                    <thead><tr><th>المعلمة</th><th>عدد الطلاب</th><th>إجمالي الاشتراكات</th><th>نسبة المنصة (30%)</th><th>نسبة المعلمة (70%)</th></tr></thead>
-                    <tbody>
-                        {% for stat in stats %}
-                        <tr>
-                            <td><strong>{{ stat.teacher.name }}</strong></td>
-                            <td>{{ stat.student_count }}</td>
-                            <td>{{ stat.total_fees|floatformat:2 }} جنيه</td>
-                            <td>{{ stat.platform_share|floatformat:2 }} جنيه</td>
-                            <td>{{ stat.teacher_share|floatformat:2 }} جنيه</td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="5">لا توجد بيانات.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-        {% elif page == 'countries_list' %}
-            {# ==== قائمة الدول ==== #}
-            <div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
-                <h2 style="color: #4a1a8a;">🌍 الدول</h2>
-                <a href="{% url 'add_country' %}" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة دولة</a>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead><tr><th>العلم</th><th>اسم الدولة</th><th>عدد الطلاب</th><th>الإجراءات</th></tr></thead>
-                    <tbody>
-                        {% for country in countries %}
-                        <tr>
-                            <td style="font-size: 2rem;">{{ country.flag_icon }}</td>
-                            <td><strong>{{ country.name }}</strong></td>
-                            <td>{{ country.students.count }}</td>
-                            <td>
-                                <a href="{% url 'edit_country' country.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                                <a href="{% url 'delete_country' country.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="4" style="text-align:center;">لا توجد دول.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-        {% elif page == 'add_country' %}
-            {# ==== إضافة دولة ==== #}
-            <div style="max-width: 500px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
-                <h2 style="color: #4a1a8a; text-align: center;">➕ إضافة دولة جديدة</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div style="margin-top:20px;">
-                        <label style="font-weight:600; color:#4a1a8a;">اسم الدولة *</label>
-                        <input type="text" name="name" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe; margin-top:6px;">
-                    </div>
-                    <div style="margin-top:15px;">
-                        <label style="font-weight:600; color:#4a1a8a;">أيقونة العلم</label>
-                        <input type="text" name="flag_icon" placeholder="🇪🇬" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe; margin-top:6px;">
-                    </div>
-                    <div style="text-align:center; margin-top:25px;">
-                        <button type="submit" class="btn btn-primary">حفظ</button>
-                        <a href="{% url 'countries_list' %}" class="btn btn-outline">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-
-        {% elif page == 'edit_country' %}
-            {# ==== تعديل دولة ==== #}
-            <div style="max-width: 500px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
-                <h2 style="color: #4a1a8a; text-align: center;">✏️ تعديل الدولة</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div style="margin-top:20px;">
-                        <label style="font-weight:600; color:#4a1a8a;">اسم الدولة *</label>
-                        <input type="text" name="name" value="{{ country.name }}" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe; margin-top:6px;">
-                    </div>
-                    <div style="margin-top:15px;">
-                        <label style="font-weight:600; color:#4a1a8a;">أيقونة العلم</label>
-                        <input type="text" name="flag_icon" value="{{ country.flag_icon }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe; margin-top:6px;">
-                    </div>
-                    <div style="text-align:center; margin-top:25px;">
-                        <button type="submit" class="btn btn-primary">تحديث</button>
-                        <a href="{% url 'countries_list' %}" class="btn btn-outline">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-
-        {% elif page == 'delete_country' %}
-            {# ==== حذف دولة ==== #}
-            <div style="max-width: 500px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe; text-align: center;">
-                <h2 style="color: #ef4444;">⚠️ تأكيد الحذف</h2>
-                <p style="margin: 20px 0; font-size: 1.1rem;">هل أنت متأكد من حذف الدولة <strong>{{ country.name }}</strong>؟</p>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 25px;">
-                        <button type="submit" class="btn btn-danger">نعم، احذف</button>
-                        <a href="{% url 'countries_list' %}" class="btn btn-outline">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-
-        {% elif page == 'add_teacher' %}
-            {# ==== إضافة معلمة ==== #}
-            <div style="max-width: 700px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
-                <h2 style="color: #4a1a8a; text-align: center;">👩‍🏫 إضافة معلمة جديدة</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 20px;">
-                        <div><label style="font-weight:600; color:#4a1a8a;">الاسم *</label><input type="text" name="name" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">السن</label><input type="number" name="age" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">رقم الهاتف</label><input type="text" name="phone" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">واتساب</label><input type="text" name="whatsapp" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">المحافظة</label><input type="text" name="governorate" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">تاريخ القبض</label><input type="date" name="hire_date" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">الراتب الأساسي</label><input type="number" name="salary" step="0.01" value="0" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">المكافآت</label><input type="number" name="bonus" step="0.01" value="0" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">الخصومات</label><input type="number" name="deduction" step="0.01" value="0" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                    </div>
-                    <div style="margin-top:15px;"><label style="font-weight:600; color:#4a1a8a;">ملاحظات</label><textarea name="notes" rows="2" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></textarea></div>
-                    <div style="text-align:center; margin-top:25px;">
-                        <button type="submit" class="btn btn-primary">حفظ المعلمة</button>
-                        <a href="{% url 'teachers_list' %}" class="btn btn-outline">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-
-        {% elif page == 'edit_teacher' %}
-            {# ==== تعديل معلمة ==== #}
-            <div style="max-width: 700px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
-                <h2 style="color: #4a1a8a; text-align: center;">✏️ تعديل المعلمة</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 20px;">
-                        <div><label style="font-weight:600; color:#4a1a8a;">الاسم *</label><input type="text" name="name" value="{{ teacher.name }}" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">السن</label><input type="number" name="age" value="{{ teacher.age }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">رقم الهاتف</label><input type="text" name="phone" value="{{ teacher.phone }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">واتساب</label><input type="text" name="whatsapp" value="{{ teacher.whatsapp }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">المحافظة</label><input type="text" name="governorate" value="{{ teacher.governorate }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">تاريخ القبض</label><input type="date" name="hire_date" value="{{ teacher.hire_date|date:'Y-m-d' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">الراتب الأساسي</label><input type="number" name="salary" step="0.01" value="{{ teacher.salary }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">المكافآت</label><input type="number" name="bonus" step="0.01" value="{{ teacher.bonus }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">الخصومات</label><input type="number" name="deduction" step="0.01" value="{{ teacher.deduction }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                    </div>
-                    <div style="margin-top:15px;"><label style="font-weight:600; color:#4a1a8a;">ملاحظات</label><textarea name="notes" rows="2" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">{{ teacher.notes }}</textarea></div>
-                    <div style="text-align:center; margin-top:25px;">
-                        <button type="submit" class="btn btn-primary">تحديث</button>
-                        <a href="{% url 'teachers_list' %}" class="btn btn-outline">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-
-        {% elif page == 'delete_teacher' %}
-            {# ==== حذف معلمة ==== #}
-            <div style="max-width: 500px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe; text-align: center;">
-                <h2 style="color: #ef4444;">⚠️ تأكيد الحذف</h2>
-                <p style="margin: 20px 0; font-size: 1.1rem;">هل أنت متأكد من حذف المعلمة <strong>{{ teacher.name }}</strong>؟</p>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 25px;">
-                        <button type="submit" class="btn btn-danger">نعم، احذف</button>
-                        <a href="{% url 'teachers_list' %}" class="btn btn-outline">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-
-        {% elif page == 'edit_student' %}
-            {# ==== تعديل الطالب ==== #}
-            <div style="max-width: 950px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
-                <h2 style="color: #4a1a8a; text-align: center;">✏️ تعديل بيانات الطالب</h2>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 20px;">
-                        <div>
-                            <label style="font-weight:600; color:#4a1a8a;">الدولة *</label>
-                            <select name="country" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                                {% for c in countries %}
-                                <option value="{{ c.id }}" {% if c.id == student.country.id %}selected{% endif %}>{{ c.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div>
-                            <label style="font-weight:600; color:#4a1a8a;">المعلمة</label>
-                            <select name="teacher" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                                <option value="">--- اختر ---</option>
-                                {% for t in teachers %}
-                                <option value="{{ t.id }}" {% if t.id == student.teacher.id %}selected{% endif %}>{{ t.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">اسم الطالب *</label><input type="text" name="name" value="{{ student.name }}" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">السن</label><input type="number" name="age" value="{{ student.age }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">رقم الهاتف</label><input type="text" name="phone" value="{{ student.phone }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">المحافظة</label><input type="text" name="governorate" value="{{ student.governorate }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">اسم الباقة</label><input type="text" name="package_name" value="{{ student.package_name }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">عدد الحلقات</label><input type="number" name="lessons_count" value="{{ student.lessons_count }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">الشهر *</label><input type="text" name="month" value="{{ student.month }}" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">قيمة الاشتراك</label><input type="number" name="subscription_fee" step="0.01" value="{{ student.subscription_fee }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">تاريخ البدء</label><input type="date" name="start_date" value="{{ student.start_date|date:'Y-m-d' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div><label style="font-weight:600; color:#4a1a8a;">تاريخ النهاية</label><input type="date" name="end_date" value="{{ student.end_date|date:'Y-m-d' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-                        <div>
-                            <label style="font-weight:600; color:#4a1a8a;">حالة الدفع</label>
-                            <select name="payment_status" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                                <option value="paid" {% if student.payment_status == 'paid' %}selected{% endif %}>مدفوع</option>
-                                <option value="pending" {% if student.payment_status == 'pending' %}selected{% endif %}>مستحق</option>
-                                <option value="overdue" {% if student.payment_status == 'overdue' %}selected{% endif %}>متأخر</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="font-weight:600; color:#4a1a8a;">حالة الطالب</label>
-                            <select name="status" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
-                                <option value="active" {% if student.status == 'active' %}selected{% endif %}>مقيد</option>
-                                <option value="inactive" {% if student.status == 'inactive' %}selected{% endif %}>غير مقيد</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="margin-top:20px;"><label style="font-weight:600; color:#4a1a8a;">ملاحظات</label><textarea name="notes" rows="2" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">{{ student.notes }}</textarea></div>
-                    <div style="text-align:center; margin-top:25px;">
-                        <button type="submit" class="btn btn-primary">تحديث الطالب</button>
-                        <a href="{% url 'student_detail' student.id %}" class="btn btn-outline">إلغاء</a>
-                    </div>
-                </form>
-            </div>
-
-        {% else %}
-            {# ==== صفحة غير معروفة ==== #}
-            <h1 style="color: #4a1a8a;">مرحباً!</h1>
-            <p>اختر صفحة من القائمة الجانبية.</p>
-        {% endif %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </div>
 
-    {# كود إخفاء رسائل التنبيه فقط - تم تعديله لاستهداف رسائل التنبيه وليس كل العناصر #}
     <script>
         setTimeout(() => {
-            document.querySelectorAll('.alert').forEach(el => {
-                el.style.display = 'none';
-            });
+            document.querySelectorAll('.alert').forEach(el => { el.style.display = 'none'; });
         }, 5000);
     </script>
 </body>

@@ -1,0 +1,117 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ student.name }}{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+    <h2 style="color: #4a1a8a;">👤 {{ student.name }}</h2>
+    <div class="flex">
+        <a href="{% url 'toggle_student_status' student.id %}" class="btn {% if student.status == 'active' %}btn-danger{% else %}btn-success{% endif %}">
+            {% if student.status == 'active' %}
+                <i class="fas fa-times"></i> تعيين غير مقيد
+            {% else %}
+                <i class="fas fa-check"></i> تعيين مقيد
+            {% endif %}
+        </a>
+        <a href="{% url 'edit_student' student.id %}" class="btn btn-primary"><i class="fas fa-edit"></i> تعديل</a>
+        <a href="{% url 'country_students' student.country.id %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:15px; background:white; padding:25px; border-radius:18px; border:1px solid #ede9fe; margin:20px 0;">
+    <div><strong>الدولة:</strong> {{ student.country.flag_icon }} {{ student.country.name }}</div>
+    <div><strong>المعلمة:</strong> {{ student.teacher.name|default:"-" }}</div>
+    <div><strong>الشهر:</strong> {{ student.month }}</div>
+    <div><strong>الباقة:</strong> {{ student.package_name|default:"-" }}</div>
+    <div><strong>عدد الحلقات:</strong> {{ student.lessons_count }}</div>
+    <div><strong>قيمة الاشتراك:</strong> {{ student.subscription_fee }} جنيه</div>
+    <div><strong>السن:</strong> {{ student.age|default:"-" }}</div>
+    <div><strong>الهاتف:</strong> {{ student.phone|default:"-" }}</div>
+    <div><strong>المحافظة:</strong> {{ student.governorate|default:"-" }}</div>
+    <div><strong>تاريخ التسجيل:</strong> {{ student.join_date|date:"Y/m/d" }}</div>
+    <div><strong>بداية الاشتراك:</strong> {{ student.start_date|date:"Y/m/d" }}</div>
+    <div><strong>نهاية الاشتراك:</strong> {{ student.end_date|date:"Y/m/d"|default:"-" }}</div>
+    <div><strong>الحالة:</strong>
+        {% if student.status == 'active' %}<span class="status-active">مقيد</span>{% else %}<span class="status-inactive">غير مقيد</span>{% endif %}
+    </div>
+    <div><strong>نوع التسجيل:</strong>
+        {% if student.enrollment_type == 'new' %}
+            <span class="badge-neutral">طالب جديد</span>
+        {% else %}
+            <span class="badge-neutral">مسجل من قبل</span>
+        {% endif %}
+    </div>
+    {% if student.enrollment_type == 'new' and student.acquisition_source %}
+    <div><strong>مصدر الطالب:</strong> <span class="badge-warning">{{ student.get_acquisition_source_display }}</span></div>
+    {% endif %}
+    <div><strong>حالة الدفع:</strong>
+        {% if student.payment_status == 'paid' %}
+            <span style="background:#dcfce7; color:#166534; padding:2px 14px; border-radius:30px;">مدفوع</span>
+        {% elif student.payment_status == 'pending' %}
+            <span style="background:#fef3c7; color:#92400e; padding:2px 14px; border-radius:30px;">مستحق</span>
+        {% else %}
+            <span style="background:#fee2e2; color:#991b1b; padding:2px 14px; border-radius:30px;">متأخر</span>
+        {% endif %}
+    </div>
+</div>
+
+{% if student.notes %}
+<div style="background:#fff9e6; border-right:4px solid #f59e0b; padding:16px 20px; border-radius:12px; margin-bottom:20px;">
+    <strong style="color:#92400e;">ملاحظة عامة:</strong> {{ student.notes }}
+</div>
+{% endif %}
+
+<div style="background:white; padding:25px; border-radius:18px; border:1px solid #ede9fe;">
+    <h4 style="color:#4a1a8a;">📝 سجل الملاحظات</h4>
+    <form method="POST" style="display:flex; gap:12px; margin:15px 0;">
+        {% csrf_token %}
+        <input type="text" name="note_text" placeholder="أضيفي ملاحظة جديدة..." required style="flex:1; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
+        <button type="submit" class="btn btn-primary">إضافة</button>
+    </form>
+    <div class="note-timeline">
+        {% for note in notes %}
+        <div class="note-item">
+            <div>{{ note.note_text }}</div>
+            <div class="time"><i class="far fa-clock"></i> {{ note.created_at|date:"Y/m/d - h:i A" }} {% if note.created_by %}- بواسطة {{ note.created_by }}{% endif %}</div>
+        </div>
+        {% empty %}
+        <p style="color:#6d5b8e;">لا توجد ملاحظات حتى الآن.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div style="background:white; padding:25px; border-radius:18px; border:1px solid #ede9fe; margin-top:20px;">
+    <h4 style="color:#4a1a8a;">💰 سجل المدفوعات</h4>
+    <form method="POST" action="{% url 'add_student_payment' student.id %}" class="flex" style="margin:15px 0; align-items:flex-end;">
+        {% csrf_token %}
+        <div class="field" style="width:140px;">
+            <label>المبلغ *</label>
+            <input type="number" name="amount" step="0.01" required>
+        </div>
+        <div class="field" style="width:170px;">
+            <label>تاريخ الدفعة</label>
+            <input type="date" name="date">
+        </div>
+        <div class="field" style="flex:1; min-width:180px;">
+            <label>ملاحظة (اختياري)</label>
+            <input type="text" name="note" placeholder="مثلاً: دفعة شهر أغسطس">
+        </div>
+        <button type="submit" class="btn btn-primary" style="height:46px;">تسجيل الدفعة</button>
+    </form>
+
+    <div class="table-container" style="margin-top:10px;">
+        <table>
+            <thead><tr><th>المبلغ</th><th>التاريخ</th><th>ملاحظة</th></tr></thead>
+            <tbody>
+                {% for p in payments %}
+                <tr>
+                    <td><strong>{{ p.amount|floatformat:2 }} جنيه</strong></td>
+                    <td>{{ p.date|date:"Y/m/d" }}</td>
+                    <td>{{ p.note|default:"-" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center;">لسه مفيش دفعات مسجلة لهذا الطالب.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

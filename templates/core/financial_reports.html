@@ -1,0 +1,112 @@
+{% extends 'core/base.html' %}
+{% block title %}التقارير المالية{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px;">
+    <h2 style="color:#4a1a8a;">📈 التقارير المالية - إيرادات ومصروفات وأرباح</h2>
+    <form method="GET">
+        <select name="year" onchange="this.form.submit()"
+                style="padding:10px 15px;border-radius:10px;border:1px solid #ede9fe;">
+            {% for y in years_with_data %}
+            <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>سنة {{ y }}</option>
+            {% endfor %}
+        </select>
+    </form>
+</div>
+
+<div class="stats-row">
+    <div class="stat-box" style="border-right-color:#22c55e;">
+        <div class="number">{{ year_income|floatformat:2 }}</div>
+        <div class="label">💰 إجمالي إيرادات السنة</div>
+    </div>
+    <div class="stat-box" style="border-right-color:#ef4444;">
+        <div class="number">{{ year_expenses|floatformat:2 }}</div>
+        <div class="label">💸 إجمالي مصروفات السنة</div>
+    </div>
+    <div class="stat-box" style="border-right-color:#f59e0b;">
+        <div class="number">{{ year_total_salaries|floatformat:2 }}</div>
+        <div class="label">👥 إجمالي رواتب السنة</div>
+    </div>
+    <div class="stat-box" style="border-right-color:#7c3aed;">
+        <div class="number">{{ year_profit|floatformat:2 }}</div>
+        <div class="label">📈 صافي ربح السنة</div>
+    </div>
+</div>
+
+<div class="table-container">
+    <canvas id="profitChart" height="95"></canvas>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr><th>الشهر</th><th>الإيرادات</th><th>المصروفات</th><th>رواتب المعلمات</th><th>صافي الربح/الخسارة</th></tr>
+        </thead>
+        <tbody>
+            {% for m in monthly_data %}
+            <tr>
+                <td><strong>{{ m.month_name }}</strong></td>
+                <td>{{ m.income|floatformat:2 }} جنيه</td>
+                <td>{{ m.expenses|floatformat:2 }} جنيه</td>
+                <td>{{ m.salaries|floatformat:2 }} جنيه</td>
+                <td style="font-weight:700; color: {% if m.profit >= 0 %}#166534{% else %}#991b1b{% endif %};">
+                    {{ m.profit|floatformat:2 }} جنيه
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const ctx = document.getElementById('profitChart').getContext('2d');
+    new Chart(ctx, {
+        data: {
+            labels: {{ chart_labels|safe }},
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'الإيرادات',
+                    data: {{ chart_income|safe }},
+                    backgroundColor: 'rgba(34,197,94,0.65)',
+                    borderRadius: 6
+                },
+                {
+                    type: 'bar',
+                    label: 'المصروفات + الرواتب',
+                    data: {{ chart_expenses|safe }},
+                    backgroundColor: 'rgba(239,68,68,0.65)',
+                    borderRadius: 6
+                },
+                {
+                    type: 'line',
+                    label: 'صافي الربح',
+                    data: {{ chart_profit|safe }},
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124,58,237,0.15)',
+                    fill: true,
+                    tension: 0.35,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#7c3aed'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { callback: function(value) { return value + ' جنيه'; } }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

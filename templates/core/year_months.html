@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% block title %}شهور سنة {{ year }}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="page-title"><i class="fas fa-calendar-days" style="color:var(--violet-600);"></i> شهور سنة {{ year }}</div>
+    <a href="{% url 'years_list' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> كل السنوات</a>
+</div>
+
+<div class="stats-row">
+    <div class="stat-box">
+        <div class="number">{{ year_total|floatformat:2 }} جنيه</div>
+        <div class="label">💰 إجمالي المدفوعات في {{ year }}</div>
+    </div>
+</div>
+
+<div class="country-grid">
+    {% for m in months_data %}
+    <a href="{% url 'month_payments' year m.month %}" class="country-card">
+        <span class="flag"><i class="fas fa-calendar" style="color:var(--violet-500);"></i></span>
+        <div class="name">{{ m.month_name }}</div>
+        <div class="meta">{{ m.total|floatformat:2 }} جنيه · {{ m.count }} دفعة</div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

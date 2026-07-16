@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% block title %}المعلمات{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+    <h2 style="color:#4a1a8a;">👩‍🏫 قائمة المعلمات</h2>
+    <a href="{% url 'add_teacher' %}" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة معلمة</a>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr><th>الاسم</th><th>السن</th><th>المحافظة</th><th>الهاتف</th><th>الراتب الصافي</th><th>طلاب حاليين</th><th>طلاب سابقين</th><th></th></tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td><a href="{% url 'teacher_detail' teacher.id %}" style="color:#6d28d9; font-weight:600;">{{ teacher.name }}</a></td>
+                <td>{{ teacher.age|default:"-" }}</td>
+                <td>{{ teacher.governorate|default:"-" }}</td>
+                <td>{{ teacher.phone|default:"-" }}</td>
+                <td>{{ teacher.net_salary }} جنيه</td>
+                <td><span class="status-active">{{ teacher.current_students_count }}</span></td>
+                <td><span class="status-inactive">{{ teacher.previous_students_count }}</span></td>
+                <td>
+                    <a href="{% url 'edit_teacher' teacher.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'delete_teacher' teacher.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                    <a href="{% url 'teacher_detail' teacher.id %}" class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8" style="text-align:center;">لا توجد معلمات مسجلة.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
