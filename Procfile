@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py collectstatic --noinput && python manage.py create_super_user_if_not_exists && gunicorn config.wsgi
+web: python manage.py makemigrations --noinput && python manage.py migrate --fake-initial --noinput && python manage.py collectstatic --noinput && python manage.py create_super_user_if_not_exists && gunicorn config.wsgi
