@@ -22,11 +22,15 @@ class Teacher(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="رقم الهاتف")
     whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name="واتساب")
     governorate = models.CharField(max_length=100, blank=True, null=True, verbose_name="المحافظة")
-    salary = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="الراتب الأساسي")
-    bonus = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="المكافآت")
-    deduction = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="الخصومات")
-    hire_date = models.DateField(default=timezone.now, verbose_name="تاريخ القبض")
-    notes = models.TextField(blank=True, null=True, verbose_name="ملاحظات")
+
+    commission_percent = models.DecimalField(
+        max_digits=5, decimal_places=2, default=60,
+        verbose_name="نسبة المعلمة من الاشتراكات (%)"
+    )
+    fixed_salary = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True,
+        verbose_name="راتب مثبت (بدل النسبة)"
+    )
 
     class Meta:
         verbose_name = "معلمة"
@@ -42,8 +46,44 @@ class Teacher(models.Model):
     def previous_students_count(self):
         return self.students.filter(status='inactive').count()
 
-    def net_salary(self):
-        return self.salary + self.bonus - self.deduction
+    def total_subscriptions(self):
+        """إجمالي قيمة اشتراكات كل طلابها (اللي بيتحسب عليها النسبة)"""
+        return sum(float(s.total_paid()) for s in self.students.all())
+
+    def calculated_salary(self):
+        """الراتب المستحق لها: مثبت لو موجود، وإلا نسبة من إجمالي اشتراكات طلابها"""
+        if self.fixed_salary is not None:
+            return round(float(self.fixed_salary), 2)
+        return round(self.total_subscriptions() * (float(self.commission_percent) / 100), 2)
+
+    def platform_share(self):
+        """نصيب المنصة من نفس الإجمالي"""
+        if self.fixed_salary is not None:
+            return round(self.total_subscriptions() - float(self.fixed_salary), 2)
+        return round(self.total_subscriptions() * (1 - float(self.commission_percent) / 100), 2)
+
+
+class TeacherSalaryRecord(models.Model):
+    """سجل كل مرة اتصرف فيها راتب لمعلمة - تاريخ الصرف + خصومات/مكافآت/إجازات خاصة بالمرة دي بالذات"""
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='salary_records', verbose_name="المعلمة")
+    payout_date = models.DateField(default=timezone.now, verbose_name="تاريخ الصرف")
+    base_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="الراتب الأساسي (محسوب وقت الصرف)")
+    bonus = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="المكافآت")
+    deduction = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="الخصومات")
+    leave_days = models.PositiveIntegerField(default=0, verbose_name="عدد أيام الإجازة")
+    notes = models.TextField(blank=True, null=True, verbose_name="ملاحظات")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ التسجيل")
+
+    class Meta:
+        verbose_name = "سجل راتب"
+        verbose_name_plural = "سجل الرواتب"
+        ordering = ['-payout_date', '-created_at']
+
+    def net_amount(self):
+        return round(float(self.base_amount) + float(self.bonus) - float(self.deduction), 2)
+
+    def __str__(self):
+        return f"{self.teacher.name} - {self.payout_date}"
 
 
 class Student(models.Model):

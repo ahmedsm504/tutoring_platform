@@ -1,22 +1,20 @@
 {% extends 'core/base.html' %}
 {% block title %}تعديل المعلمة{% endblock %}
 {% block content %}
-<div style="max-width: 700px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
+<div style="max-width: 600px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
     <h2 style="color: #4a1a8a; text-align: center;">✏️ تعديل المعلمة</h2>
+    <p class="text-center" style="margin-top:8px;">
+        <a href="{% url 'salaries_list' %}" class="btn btn-outline btn-sm"><i class="fas fa-sack-dollar"></i> تعديل نسبتها أو راتبها من صفحة الرواتب</a>
+    </p>
     <form method="POST">
         {% csrf_token %}
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 20px;">
-            <div><label style="font-weight:600; color:#4a1a8a;">الاسم *</label><input type="text" name="name" value="{{ teacher.name }}" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div style="grid-column: span 2;"><label style="font-weight:600; color:#4a1a8a;">الاسم *</label><input type="text" name="name" value="{{ teacher.name }}" required style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
             <div><label style="font-weight:600; color:#4a1a8a;">السن</label><input type="number" name="age" value="{{ teacher.age|default_if_none:'' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">المحافظة</label><input type="text" name="governorate" value="{{ teacher.governorate|default_if_none:'' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
             <div><label style="font-weight:600; color:#4a1a8a;">رقم الهاتف</label><input type="text" name="phone" value="{{ teacher.phone|default_if_none:'' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
             <div><label style="font-weight:600; color:#4a1a8a;">واتساب</label><input type="text" name="whatsapp" value="{{ teacher.whatsapp|default_if_none:'' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-            <div><label style="font-weight:600; color:#4a1a8a;">المحافظة</label><input type="text" name="governorate" value="{{ teacher.governorate|default_if_none:'' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-            <div><label style="font-weight:600; color:#4a1a8a;">تاريخ القبض</label><input type="date" name="hire_date" value="{{ teacher.hire_date|date:'Y-m-d' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-            <div><label style="font-weight:600; color:#4a1a8a;">الراتب الأساسي</label><input type="number" name="salary" step="0.01" value="{{ teacher.salary }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-            <div><label style="font-weight:600; color:#4a1a8a;">المكافآت</label><input type="number" name="bonus" step="0.01" value="{{ teacher.bonus }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
-            <div><label style="font-weight:600; color:#4a1a8a;">الخصومات</label><input type="number" name="deduction" step="0.01" value="{{ teacher.deduction }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
         </div>
-        <div style="margin-top:15px;"><label style="font-weight:600; color:#4a1a8a;">ملاحظات</label><textarea name="notes" rows="2" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">{{ teacher.notes|default_if_none:'' }}</textarea></div>
         <div style="text-align:center; margin-top:25px;">
             <button type="submit" class="btn btn-primary">تحديث</button>
             <a href="{% url 'teachers_list' %}" class="btn btn-outline">إلغاء</a>

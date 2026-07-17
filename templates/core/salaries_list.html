@@ -1,0 +1,130 @@
+{% extends 'core/base.html' %}
+{% block title %}قائمة الرواتب{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="page-title">💰 قائمة الرواتب</div>
+    <a href="{% url 'add_salary_record' %}" class="btn btn-primary"><i class="fas fa-plus"></i> تسجيل صرف راتب</a>
+</div>
+<p class="text-muted" style="margin-bottom:10px;">افتراضيًا كل معلمة جديدة بتاخد 60% من إجمالي اشتراكات طلابها (والمنصة 40%). تقدري تغيري نسبة أي معلمة هنا، أو تثبتي لها راتب شهري ثابت بدل النسبة.</p>
+
+<div class="section-eyebrow" style="margin-top:20px;"><span class="star-mark"></span> نسبة كل معلمة</div>
+
+<div class="table-container">
+    <table>
+        <thead><tr><th>المعلمة</th><th>إجمالي اشتراكات طلابها</th><th>نظام الحساب</th><th>الراتب الحالي</th><th style="min-width:340px;">تعديل</th></tr></thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td><a href="{% url 'teacher_detail' teacher.id %}" style="color:#6d28d9; font-weight:700;">{{ teacher.name }}</a></td>
+                <td>{{ teacher.total_subscriptions|floatformat:2 }} جنيه</td>
+                <td>
+                    {% if teacher.fixed_salary != None %}
+                        <span class="badge-neutral">راتب مثبت</span>
+                    {% else %}
+                        <span class="badge-neutral">{{ teacher.commission_percent }}%</span>
+                    {% endif %}
+                </td>
+                <td><strong>{{ teacher.calculated_salary|floatformat:2 }} جنيه</strong></td>
+                <td>
+                    <form method="POST" action="{% url 'update_teacher_commission' teacher.id %}" class="flex" style="gap:8px; flex-wrap:nowrap;">
+                        {% csrf_token %}
+                        <label class="flex" style="gap:5px; font-size:0.8rem; white-space:nowrap;">
+                            <input type="checkbox" name="use_fixed" id="useFixed-{{ teacher.id }}"
+                                   {% if teacher.fixed_salary != None %}checked{% endif %}
+                                   onchange="toggleFixed({{ teacher.id }})">
+                            راتب مثبت
+                        </label>
+                        <input type="number" step="0.01" name="commission_percent"
+                               id="percentInput-{{ teacher.id }}"
+                               value="{{ teacher.commission_percent }}"
+                               style="width:80px; padding:7px 10px; border-radius:8px; border:1.6px solid var(--border);"
+                               {% if teacher.fixed_salary != None %}disabled{% endif %}>
+                        <input type="number" step="0.01" name="fixed_salary"
+                               id="fixedInput-{{ teacher.id }}"
+                               value="{{ teacher.fixed_salary|default_if_none:'' }}"
+                               placeholder="قيمة الراتب"
+                               style="width:100px; padding:7px 10px; border-radius:8px; border:1.6px solid var(--border);"
+                               {% if teacher.fixed_salary == None %}disabled{% endif %}>
+                        <button type="submit" class="btn btn-primary btn-sm">حفظ</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center;">لا توجد معلمات مسجلة بعد.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="section-eyebrow"><span class="star-mark"></span> سجل عمليات الصرف</div>
+
+<form method="GET" class="filter-bar">
+    <input type="text" name="q" placeholder="بحث باسم المعلمة..." value="{{ search }}">
+    <select name="year">
+        <option value="">كل السنين</option>
+        {% for y in years_range %}
+        <option value="{{ y }}" {% if selected_year == y|stringformat:'s' %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+    <select name="month">
+        <option value="">كل الشهور</option>
+        <option value="1" {% if selected_month == '1' %}selected{% endif %}>يناير</option>
+        <option value="2" {% if selected_month == '2' %}selected{% endif %}>فبراير</option>
+        <option value="3" {% if selected_month == '3' %}selected{% endif %}>مارس</option>
+        <option value="4" {% if selected_month == '4' %}selected{% endif %}>أبريل</option>
+        <option value="5" {% if selected_month == '5' %}selected{% endif %}>مايو</option>
+        <option value="6" {% if selected_month == '6' %}selected{% endif %}>يونيو</option>
+        <option value="7" {% if selected_month == '7' %}selected{% endif %}>يوليو</option>
+        <option value="8" {% if selected_month == '8' %}selected{% endif %}>أغسطس</option>
+        <option value="9" {% if selected_month == '9' %}selected{% endif %}>سبتمبر</option>
+        <option value="10" {% if selected_month == '10' %}selected{% endif %}>أكتوبر</option>
+        <option value="11" {% if selected_month == '11' %}selected{% endif %}>نوفمبر</option>
+        <option value="12" {% if selected_month == '12' %}selected{% endif %}>ديسمبر</option>
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-filter"></i> بحث</button>
+    <a href="{% url 'salaries_list' %}" class="btn btn-outline btn-sm">إعادة تعيين</a>
+</form>
+
+<div class="stats-row">
+    <div class="stat-box">
+        <div class="number">{{ total_net|floatformat:2 }} جنيه</div>
+        <div class="label">💵 إجمالي الرواتب المصروفة (حسب الفلتر)</div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead><tr><th>المعلمة</th><th>تاريخ الصرف</th><th>الأساسي</th><th>مكافآت</th><th>خصومات</th><th>إجازات</th><th>الصافي</th><th>ملاحظات</th><th></th></tr></thead>
+        <tbody>
+            {% for r in records %}
+            <tr>
+                <td><a href="{% url 'teacher_detail' r.teacher.id %}" style="color:#6d28d9; font-weight:600;">{{ r.teacher.name }}</a></td>
+                <td>{{ r.payout_date|date:"Y/m/d" }}</td>
+                <td>{{ r.base_amount|floatformat:2 }}</td>
+                <td>{{ r.bonus|floatformat:2 }}</td>
+                <td>{{ r.deduction|floatformat:2 }}</td>
+                <td>{{ r.leave_days }}</td>
+                <td><strong>{{ r.net_amount|floatformat:2 }} جنيه</strong></td>
+                <td>{{ r.notes|default:"-"|truncatechars:25 }}</td>
+                <td>
+                    <form method="POST" action="{% url 'delete_salary_record' r.id %}" onsubmit="return confirm('تأكيد حذف سجل الراتب ده؟');" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="9" style="text-align:center;">لسه مفيش رواتب متصرفة.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function toggleFixed(teacherId){
+    const useFixed = document.getElementById('useFixed-' + teacherId).checked;
+    document.getElementById('percentInput-' + teacherId).disabled = useFixed;
+    document.getElementById('fixedInput-' + teacherId).disabled = !useFixed;
+}
+</script>
+{% endblock %}

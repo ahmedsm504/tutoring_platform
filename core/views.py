@@ -8,7 +8,7 @@ from django.db.models import Q, Sum
 import json
 import calendar
 
-from .models import Teacher, Student, Country, StudentNote, Expense, Payment
+from .models import Teacher, Student, Country, StudentNote, Expense, Payment, TeacherSalaryRecord
 
 
 ARABIC_MONTHS = {
@@ -100,10 +100,10 @@ def _monthly_expenses(year, month):
 
 
 def _total_salaries():
-    """إجمالي رواتب المعلمات الشهرية (بيتحسب كتكلفة ثابتة كل شهر)"""
+    """إجمالي الرواتب الشهرية المحسوبة (نسبة من الاشتراكات أو راتب مثبت) لكل المعلمات"""
     total = Decimal('0')
     for t in Teacher.objects.all():
-        total += Decimal(str(t.net_salary()))
+        total += Decimal(str(t.calculated_salary()))
     return total
 
 
@@ -376,6 +376,7 @@ def teacher_detail(request, teacher_id):
         'students': students,
         'current_students': students.filter(status='active').count(),
         'previous_students': students.filter(status='inactive').count(),
+        'salary_records': teacher.salary_records.all()[:12],
     }
     return render(request, 'core/teacher_detail.html', context)
 
@@ -393,13 +394,8 @@ def add_teacher(request):
                 phone=_or_none(request.POST.get('phone')),
                 whatsapp=_or_none(request.POST.get('whatsapp')),
                 governorate=_or_none(request.POST.get('governorate')),
-                hire_date=_or_none(request.POST.get('hire_date')) or timezone.now().date(),
-                salary=_to_decimal_or_zero(request.POST.get('salary')),
-                bonus=_to_decimal_or_zero(request.POST.get('bonus')),
-                deduction=_to_decimal_or_zero(request.POST.get('deduction')),
-                notes=request.POST.get('notes', '').strip(),
             )
-            messages.success(request, 'تم إضافة المعلمة بنجاح.')
+            messages.success(request, 'تم إضافة المعلمة بنجاح. تقدري تظبطي نسبتها أو راتبها المثبت من صفحة "قائمة الرواتب".')
             return redirect('teachers_list')
 
     return render(request, 'core/add_teacher.html')
@@ -415,11 +411,6 @@ def edit_teacher(request, teacher_id):
         teacher.phone = _or_none(request.POST.get('phone'))
         teacher.whatsapp = _or_none(request.POST.get('whatsapp'))
         teacher.governorate = _or_none(request.POST.get('governorate'))
-        teacher.hire_date = _or_none(request.POST.get('hire_date')) or teacher.hire_date
-        teacher.salary = _to_decimal_or_zero(request.POST.get('salary'))
-        teacher.bonus = _to_decimal_or_zero(request.POST.get('bonus'))
-        teacher.deduction = _to_decimal_or_zero(request.POST.get('deduction'))
-        teacher.notes = request.POST.get('notes', '').strip()
         teacher.save()
 
         messages.success(request, 'تم تحديث بيانات المعلمة.')
@@ -456,32 +447,43 @@ def all_students(request):
 
 
 # =======================
-# النسب (نسبة المنصة / نسبة المعلمة)
+# النسب (نسبة المنصة / نسبة المعلمة) - نسبة كل معلمة قابلة للتعديل من صفحة الرواتب
 # =======================
-PLATFORM_SHARE_PERCENT = 30
-TEACHER_SHARE_PERCENT = 70
-
-
 @staff_member_required
 def statistics(request):
     teachers = Teacher.objects.all()
     stats = []
 
+    grand_total_fees = 0
+    grand_platform_share = 0
+    grand_teacher_share = 0
+
     for teacher in teachers:
-        teacher_students = teacher.students.all()
-        total_fees = sum(float(s.total_paid()) for s in teacher_students)
-        platform_share = round(total_fees * (PLATFORM_SHARE_PERCENT / 100), 2)
-        teacher_share = round(total_fees * (TEACHER_SHARE_PERCENT / 100), 2)
+        total_fees = teacher.total_subscriptions()
+        teacher_share = teacher.calculated_salary()
+        platform_share = teacher.platform_share()
+
+        grand_total_fees += total_fees
+        grand_platform_share += platform_share
+        grand_teacher_share += teacher_share
 
         stats.append({
             'teacher': teacher,
-            'student_count': teacher_students.count(),
+            'student_count': teacher.students.count(),
             'total_fees': total_fees,
+            'is_fixed': teacher.fixed_salary is not None,
+            'commission_percent': teacher.commission_percent,
             'platform_share': platform_share,
             'teacher_share': teacher_share,
         })
 
-    return render(request, 'core/statistics.html', {'stats': stats})
+    context = {
+        'stats': stats,
+        'grand_total_fees': grand_total_fees,
+        'grand_platform_share': grand_platform_share,
+        'grand_teacher_share': grand_teacher_share,
+    }
+    return render(request, 'core/statistics.html', context)
 
 
 # =======================
@@ -785,3 +787,104 @@ def delete_payment(request, payment_id):
         messages.success(request, 'تم حذف الدفعة من السجل.')
 
     return redirect('month_payments', year=year, month=month)
+
+
+# =======================
+# قائمة الرواتب (تحديد نسبة/راتب مثبت لكل معلمة + تسجيل كل صرف راتب)
+# =======================
+@staff_member_required
+def salaries_list(request):
+    teachers = Teacher.objects.all()
+
+    q = request.GET.get('q', '').strip()
+    year = request.GET.get('year', '').strip()
+    month = request.GET.get('month', '').strip()
+
+    records = TeacherSalaryRecord.objects.select_related('teacher').all()
+    if q:
+        records = records.filter(teacher__name__icontains=q)
+    if year:
+        records = records.filter(payout_date__year=year)
+    if month:
+        records = records.filter(payout_date__month=month)
+
+    total_net = sum(r.net_amount() for r in records)
+
+    years_range = set(TeacherSalaryRecord.objects.values_list('payout_date__year', flat=True))
+    years_range.add(timezone.now().year)
+    years_range = sorted(years_range, reverse=True)
+
+    context = {
+        'teachers': teachers,
+        'records': records,
+        'total_net': total_net,
+        'years_range': years_range,
+        'selected_year': year,
+        'selected_month': month,
+        'search': q,
+    }
+    return render(request, 'core/salaries_list.html', context)
+
+
+@staff_member_required
+def update_teacher_commission(request, teacher_id):
+    """تعديل سريع لنسبة معلمة أو تثبيت راتب لها بدل النسبة"""
+    teacher = get_object_or_404(Teacher, pk=teacher_id)
+
+    if request.method == 'POST':
+        use_fixed = request.POST.get('use_fixed') == 'on'
+        if use_fixed:
+            teacher.fixed_salary = _to_decimal_or_zero(request.POST.get('fixed_salary'))
+        else:
+            teacher.fixed_salary = None
+            percent = _to_decimal_or_zero(request.POST.get('commission_percent'))
+            if 0 <= percent <= 100:
+                teacher.commission_percent = percent
+            else:
+                messages.error(request, 'النسبة لازم تكون رقم بين 0 و100.')
+                return redirect('salaries_list')
+        teacher.save()
+        messages.success(request, f'تم تحديث إعدادات راتب "{teacher.name}".')
+
+    return redirect('salaries_list')
+
+
+@staff_member_required
+def add_salary_record(request):
+    teachers = Teacher.objects.all()
+    preselected_teacher = request.GET.get('teacher', '')
+
+    if request.method == 'POST':
+        teacher_id = request.POST.get('teacher')
+        if not teacher_id:
+            messages.error(request, 'من فضلك اختاري المعلمة.')
+        else:
+            teacher = get_object_or_404(Teacher, pk=teacher_id)
+            TeacherSalaryRecord.objects.create(
+                teacher=teacher,
+                payout_date=_or_none(request.POST.get('payout_date')) or timezone.now().date(),
+                base_amount=Decimal(str(teacher.calculated_salary())),
+                bonus=_to_decimal_or_zero(request.POST.get('bonus')),
+                deduction=_to_decimal_or_zero(request.POST.get('deduction')),
+                leave_days=_to_int_or_none(request.POST.get('leave_days')) or 0,
+                notes=request.POST.get('notes', '').strip(),
+            )
+            messages.success(request, f'تم تسجيل صرف راتب "{teacher.name}".')
+            return redirect('salaries_list')
+
+    context = {
+        'teachers': teachers,
+        'preselected_teacher': preselected_teacher,
+    }
+    return render(request, 'core/add_salary_record.html', context)
+
+
+@staff_member_required
+def delete_salary_record(request, record_id):
+    record = get_object_or_404(TeacherSalaryRecord, pk=record_id)
+
+    if request.method == 'POST':
+        record.delete()
+        messages.success(request, 'تم حذف سجل الراتب.')
+
+    return redirect('salaries_list')

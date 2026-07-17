@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Country, Teacher, Student, StudentNote, Expense, Payment
+from .models import Country, Teacher, Student, StudentNote, Expense, Payment, TeacherSalaryRecord
 
 
 @admin.register(Country)
@@ -8,10 +8,17 @@ class CountryAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
 
 
+class SalaryRecordInline(admin.TabularInline):
+    model = TeacherSalaryRecord
+    extra = 0
+    readonly_fields = ('created_at',)
+
+
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone', 'governorate', 'net_salary', 'current_students_count', 'previous_students_count')
+    list_display = ('name', 'phone', 'governorate', 'commission_percent', 'fixed_salary', 'calculated_salary', 'current_students_count', 'previous_students_count')
     search_fields = ('name', 'phone')
+    inlines = [SalaryRecordInline]
 
 
 class StudentNoteInline(admin.TabularInline):
@@ -38,6 +45,13 @@ class PaymentAdmin(admin.ModelAdmin):
     list_display = ('student', 'amount', 'date', 'note')
     list_filter = ('date',)
     search_fields = ('student__name',)
+
+
+@admin.register(TeacherSalaryRecord)
+class TeacherSalaryRecordAdmin(admin.ModelAdmin):
+    list_display = ('teacher', 'payout_date', 'base_amount', 'bonus', 'deduction', 'leave_days', 'net_amount')
+    list_filter = ('payout_date', 'teacher')
+    search_fields = ('teacher__name',)
 
 
 @admin.register(Expense)

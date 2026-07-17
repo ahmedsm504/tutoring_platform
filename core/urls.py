@@ -47,4 +47,10 @@ urlpatterns = [
 
     # التقارير المالية (شهري / سنوي)
     path('financial-reports/', views.financial_reports, name='financial_reports'),
+
+    # قائمة الرواتب
+    path('salaries/', views.salaries_list, name='salaries_list'),
+    path('add-salary/', views.add_salary_record, name='add_salary_record'),
+    path('delete-salary/<int:record_id>/', views.delete_salary_record, name='delete_salary_record'),
+    path('teacher/<int:teacher_id>/update-commission/', views.update_teacher_commission, name='update_teacher_commission'),
 ]
