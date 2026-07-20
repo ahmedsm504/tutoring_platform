@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.utils import timezone
 
@@ -196,3 +197,50 @@ class Expense(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class MonthlyEvaluation(models.Model):
+    """نموذج تقييم ومتابعة أداء شهري لطالب - قابل للتحميل PDF أو المشاركة برابط عام لولي الأمر"""
+    TEMPLATE_CHOICES = [
+        ('teal_pink', 'تركواز ووردي'),
+        ('violet', 'بنفسجي (هوية المنصة)'),
+        ('sunny', 'أصفر وبرتقالي دافئ'),
+    ]
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='evaluations', verbose_name="الطالب")
+    public_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, verbose_name="رمز المشاركة العام")
+
+    # بيانات مأخوذة وقت إنشاء التقييم (بتفضل ثابتة حتى لو بيانات الطالب اتغيرت بعدين)
+    student_name = models.CharField(max_length=255, verbose_name="اسم الطالب")
+    teacher_name = models.CharField(max_length=255, blank=True, null=True, verbose_name="اسم المعلمة")
+    package_name = models.CharField(max_length=100, blank=True, null=True, verbose_name="الباقة")
+    lessons_count = models.PositiveIntegerField(default=4, verbose_name="عدد الحلقات")
+    month_label = models.CharField(max_length=30, verbose_name="الشهر")
+
+    # ملخص الإنجاز
+    memorization_progress = models.CharField(max_length=255, blank=True, null=True, verbose_name="مقدار حفظ الجديد")
+    review_progress = models.CharField(max_length=255, blank=True, null=True, verbose_name="مقدار المراجعة")
+    absences = models.CharField(max_length=255, blank=True, null=True, verbose_name="عدد مرات الغياب")
+
+    # تقييم المهارات
+    pronunciation_rating = models.CharField(max_length=100, blank=True, null=True, verbose_name="النطق ومخارج الحروف")
+    tajweed_rating = models.CharField(max_length=100, blank=True, null=True, verbose_name="تطبيق أحكام التجويد")
+    interaction_rating = models.CharField(max_length=100, blank=True, null=True, verbose_name="التفاعل مع المعلمة")
+    response_speed_rating = models.CharField(max_length=100, blank=True, null=True, verbose_name="سرعة الاستجابة والحفظ")
+    commitment_rating = models.CharField(max_length=100, blank=True, null=True, verbose_name="الالتزام بالمواعيد والآداب")
+
+    recommendations = models.TextField(blank=True, null=True, verbose_name="التوصيات / المستوى العام")
+    teacher_comment = models.TextField(blank=True, null=True, verbose_name="كلمة المعلمة")
+    month_rating = models.CharField(max_length=100, blank=True, null=True, verbose_name="مستوى الشهر")
+
+    template = models.CharField(max_length=20, choices=TEMPLATE_CHOICES, default='teal_pink', verbose_name="شكل النموذج")
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+
+    class Meta:
+        verbose_name = "تقييم شهري"
+        verbose_name_plural = "التقييمات الشهرية"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"تقييم {self.student_name} - {self.month_label}"

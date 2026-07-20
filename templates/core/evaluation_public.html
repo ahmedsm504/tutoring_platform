@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقييم {{ evaluation.student_name }} - {{ evaluation.month_label }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    *{ box-sizing:border-box; }
+    body{
+        margin:0; padding: 26px 14px 50px;
+        background: #F3F1FA;
+        font-family: 'Tajawal', sans-serif;
+        min-height: 100vh;
+    }
+    .page-actions{
+        max-width: 720px; margin: 0 auto 18px; text-align:center;
+    }
+    .download-btn{
+        display:inline-flex; align-items:center; gap:8px;
+        background: #6D28D9; color:#fff; border:none; padding: 12px 30px;
+        border-radius: 999px; font-weight:700; font-size:0.95rem; cursor:pointer;
+        font-family:'Tajawal', sans-serif; box-shadow: 0 6px 18px rgba(109,40,217,0.3);
+    }
+    .download-btn:hover{ background:#5B21B6; }
+    .footer-note{ text-align:center; color:#8b7fa8; font-size:0.78rem; margin-top:20px; }
+
+    @media print{
+        body{ background:#fff; padding:0; }
+        .page-actions, .footer-note{ display:none; }
+    }
+
+    @media (max-width: 480px){
+        body{ padding: 16px 8px 40px; }
+        .download-btn{ width:100%; justify-content:center; padding:13px 20px; font-size:0.9rem; }
+    }
+</style>
+</head>
+<body>
+    <div class="page-actions">
+        <button class="download-btn" onclick="window.print()">
+            ⬇️ تحميل / طباعة كـ PDF
+        </button>
+    </div>
+
+    {% include 'core/_evaluation_report.html' %}
+
+    <div class="footer-note">تقرير خاص بـ{{ evaluation.student_name }} من منصة العجمي التعليمية</div>
+</body>
+</html>

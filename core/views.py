@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta, datetime
 from decimal import Decimal
@@ -8,7 +9,7 @@ from django.db.models import Q, Sum
 import json
 import calendar
 
-from .models import Teacher, Student, Country, StudentNote, Expense, Payment, TeacherSalaryRecord
+from .models import Teacher, Student, Country, StudentNote, Expense, Payment, TeacherSalaryRecord, MonthlyEvaluation
 
 
 ARABIC_MONTHS = {
@@ -888,3 +889,116 @@ def delete_salary_record(request, record_id):
         messages.success(request, 'تم حذف سجل الراتب.')
 
     return redirect('salaries_list')
+
+
+# =======================
+# نموذج تقييم ومتابعة الأداء الشهري
+# =======================
+@staff_member_required
+def evaluations_list(request):
+    evaluations = MonthlyEvaluation.objects.select_related('student').all()
+
+    q = request.GET.get('q', '').strip()
+    if q:
+        evaluations = evaluations.filter(student_name__icontains=q)
+
+    return render(request, 'core/evaluations_list.html', {'evaluations': evaluations, 'search': q})
+
+
+@staff_member_required
+def add_evaluation(request):
+    students = Student.objects.all().order_by('name')
+    preselected_student = request.GET.get('student', '')
+    today = timezone.now().date()
+    default_month = f"{ARABIC_MONTHS[today.month]} {today.year}"
+
+    students_data = {
+        s.id: {
+            'teacher': s.teacher.name if s.teacher else '',
+            'package': s.package_name or '',
+            'lessons': s.lessons_count,
+        }
+        for s in students
+    }
+
+    if request.method == 'POST':
+        student_id = request.POST.get('student')
+        if not student_id:
+            messages.error(request, 'من فضلك اختاري الطالب.')
+        else:
+            student = get_object_or_404(Student, pk=student_id)
+            evaluation = MonthlyEvaluation.objects.create(
+                student=student,
+                student_name=request.POST.get('student_name', '').strip() or student.name,
+                teacher_name=request.POST.get('teacher_name', '').strip(),
+                package_name=request.POST.get('package_name', '').strip(),
+                lessons_count=_to_int_or_none(request.POST.get('lessons_count')) or student.lessons_count,
+                month_label=request.POST.get('month_label', '').strip() or default_month,
+                memorization_progress=request.POST.get('memorization_progress', '').strip(),
+                review_progress=request.POST.get('review_progress', '').strip(),
+                absences=request.POST.get('absences', '').strip(),
+                pronunciation_rating=request.POST.get('pronunciation_rating', '').strip(),
+                tajweed_rating=request.POST.get('tajweed_rating', '').strip(),
+                interaction_rating=request.POST.get('interaction_rating', '').strip(),
+                response_speed_rating=request.POST.get('response_speed_rating', '').strip(),
+                commitment_rating=request.POST.get('commitment_rating', '').strip(),
+                recommendations=request.POST.get('recommendations', '').strip(),
+                teacher_comment=request.POST.get('teacher_comment', '').strip(),
+                month_rating=request.POST.get('month_rating', '').strip(),
+                template=request.POST.get('template', 'teal_pink'),
+            )
+            messages.success(request, f'تم إنشاء تقييم "{evaluation.student_name}" بنجاح.')
+            return redirect('evaluation_detail', evaluation_id=evaluation.id)
+
+    preview_defaults = {
+        'student_name': 'اسم الطالب',
+        'teacher_name': 'اسم المعلمة',
+        'package_name': 'اسم الباقة',
+        'lessons_count': 4,
+        'month_label': default_month,
+        'memorization_progress': '-',
+        'review_progress': '-',
+        'absences': '-',
+        'pronunciation_rating': '-',
+        'tajweed_rating': '-',
+        'interaction_rating': '-',
+        'response_speed_rating': '-',
+        'commitment_rating': '-',
+        'recommendations': '-',
+        'teacher_comment': '-',
+        'month_rating': '-',
+        'template': 'teal_pink',
+    }
+
+    context = {
+        'students': students,
+        'preselected_student': preselected_student,
+        'default_month': default_month,
+        'students_json': json.dumps(students_data, ensure_ascii=False),
+        'preview_defaults': preview_defaults,
+    }
+    return render(request, 'core/add_evaluation.html', context)
+
+
+@staff_member_required
+def evaluation_detail(request, evaluation_id):
+    evaluation = get_object_or_404(MonthlyEvaluation, pk=evaluation_id)
+    public_url = request.build_absolute_uri(reverse('public_evaluation', args=[evaluation.public_token]))
+    return render(request, 'core/evaluation_detail.html', {'evaluation': evaluation, 'public_url': public_url})
+
+
+@staff_member_required
+def delete_evaluation(request, evaluation_id):
+    evaluation = get_object_or_404(MonthlyEvaluation, pk=evaluation_id)
+
+    if request.method == 'POST':
+        evaluation.delete()
+        messages.success(request, 'تم حذف التقييم.')
+
+    return redirect('evaluations_list')
+
+
+def public_evaluation(request, token):
+    """صفحة عامة بدون تسجيل دخول - عشان تُبعت كلينك لولي الأمر مباشرة"""
+    evaluation = get_object_or_404(MonthlyEvaluation, public_token=token)
+    return render(request, 'core/evaluation_public.html', {'evaluation': evaluation})

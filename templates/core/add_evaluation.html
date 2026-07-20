@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %}
+{% block title %}تقييم شهري جديد{% endblock %}
+{% block content %}
+<style>
+.eval-form-card{ max-width: 820px; margin: 8px auto 0; background:#fff; padding: 35px 40px; border-radius: 24px; border: 1px solid #ede9fe; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+.eval-form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.eval-form-grid.mt{ margin-top: 18px; }
+.eval-span-2{ grid-column: span 2; }
+.eval-template-choice{ display:flex; gap:16px; margin-bottom:10px; flex-wrap:wrap; }
+.eval-template-choice label{ display:flex; align-items:center; gap:6px; cursor:pointer; }
+
+@media (max-width: 700px){
+    .eval-form-card{ padding: 22px 18px; border-radius: 18px; }
+    .eval-form-grid{ grid-template-columns: 1fr; gap: 14px; }
+    .eval-span-2{ grid-column: span 1; }
+    .eval-template-choice{ flex-direction: column; gap: 10px; }
+}
+</style>
+
+<div class="eval-form-card">
+    <h2 style="color: #4a1a8a; text-align: center; margin-bottom: 8px;">📝 تقييم ومتابعة أداء شهري جديد</h2>
+    <p class="text-center text-muted" style="font-size:0.88rem; margin-bottom:26px;">اختاري الطالب الأول، وهنجيب بياناته الأساسية تلقائي، وبعد كده اكتبي تفاصيل التقييم.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="field">
+            <label>اختاري الطالب *</label>
+            <select name="student" id="studentSelect" required onchange="fillStudentData()">
+                <option value="">--- اختاري الطالب ---</option>
+                {% for s in students %}
+                <option value="{{ s.id }}" {% if preselected_student == s.id|stringformat:'s' %}selected{% endif %}>{{ s.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="eval-form-grid mt">
+            <div class="field"><label>اسم الطالب (يظهر في التقرير)</label><input type="text" name="student_name" id="studentNameInput"></div>
+            <div class="field"><label>اسم المعلمة</label><input type="text" name="teacher_name" id="teacherNameInput"></div>
+            <div class="field"><label>الباقة</label><input type="text" name="package_name" id="packageInput"></div>
+            <div class="field"><label>عدد الحلقات (شهريًا)</label><input type="number" name="lessons_count" id="lessonsInput"></div>
+            <div class="field eval-span-2"><label>الشهر *</label><input type="text" name="month_label" id="monthInput" value="{{ default_month }}" required></div>
+        </div>
+
+        <div class="section-eyebrow" style="margin-top:26px;"><span class="star-mark"></span> ملخص الإنجاز</div>
+        <div class="eval-form-grid">
+            <div class="field eval-span-2"><label>مقدار حفظ الجديد</label><input type="text" name="memorization_progress" placeholder="مثلاً: من الفاتحة الي المسد"></div>
+            <div class="field eval-span-2"><label>مقدار المراجعة</label><input type="text" name="review_progress" placeholder="مثلاً: تم مراجعة المحفوظ كامل"></div>
+            <div class="field eval-span-2"><label>عدد مرات الغياب</label><input type="text" name="absences" placeholder="مثلاً: لا يوجد غياب / غاب مرة واحدة"></div>
+        </div>
+
+        <div class="section-eyebrow"><span class="star-mark"></span> تقييم المهارات</div>
+        <p class="text-muted" style="font-size:0.78rem; margin-top:-6px; margin-bottom:10px;">اكتبي أي تقييم تحبيه (كلمة زي "ممتاز" أو جملة زي "في تحسن ملحوظ")</p>
+        <datalist id="ratingSuggestions">
+            <option value="ممتاز">
+            <option value="جيد جدًا">
+            <option value="جيد">
+            <option value="متوسط">
+            <option value="في تحسن ملحوظ">
+            <option value="يحتاج متابعة">
+        </datalist>
+        <div class="eval-form-grid">
+            <div class="field"><label>النطق ومخارج الحروف</label><input type="text" name="pronunciation_rating" list="ratingSuggestions"></div>
+            <div class="field"><label>تطبيق أحكام التجويد</label><input type="text" name="tajweed_rating" list="ratingSuggestions"></div>
+            <div class="field"><label>التفاعل مع المعلمة</label><input type="text" name="interaction_rating" list="ratingSuggestions"></div>
+            <div class="field"><label>سرعة الاستجابة والحفظ</label><input type="text" name="response_speed_rating" list="ratingSuggestions"></div>
+            <div class="field eval-span-2"><label>الالتزام بالمواعيد والآداب</label><input type="text" name="commitment_rating" list="ratingSuggestions"></div>
+        </div>
+
+        <div class="section-eyebrow"><span class="star-mark"></span> التوصيات وكلمة المعلمة</div>
+        <div class="field"><label>التوصيات / المستوى العام</label><textarea name="recommendations" rows="2"></textarea></div>
+        <div class="field" style="margin-top:14px;"><label>كلمة المعلمة</label><textarea name="teacher_comment" rows="2" placeholder="مثلاً: صعوبة في النطق ولكن المستوى في تحسن ملحوظ ومتابعة ولي الأمر ممتازة"></textarea></div>
+        <div class="field" style="margin-top:14px; max-width:260px;"><label>مستوى الشهر</label><input type="text" name="month_rating" list="ratingSuggestions" placeholder="ممتاز"></div>
+
+        <div class="section-eyebrow"><span class="star-mark"></span> شكل النموذج</div>
+        <div class="eval-template-choice">
+            <label><input type="radio" name="template" value="teal_pink" checked> 🩵 تركواز ووردي</label>
+            <label><input type="radio" name="template" value="violet"> 💜 بنفسجي (هوية المنصة)</label>
+            <label><input type="radio" name="template" value="sunny"> 🧡 أصفر وبرتقالي</label>
+        </div>
+
+        <div class="text-center" style="margin-top:28px;">
+            <button type="submit" class="btn btn-primary" style="padding:14px 50px;">حفظ وعرض التقرير</button>
+            <a href="{% url 'evaluations_list' %}" class="btn btn-outline" style="margin-right:12px;">إلغاء</a>
+        </div>
+    </form>
+</div>
+
+<script>
+const studentsData = {{ students_json|safe }};
+
+function fillStudentData(){
+    const select = document.getElementById('studentSelect');
+    const id = select.value;
+    const data = studentsData[id];
+
+    document.getElementById('studentNameInput').value = select.options[select.selectedIndex].text || '';
+
+    if(data){
+        document.getElementById('teacherNameInput').value = data.teacher || '';
+        document.getElementById('packageInput').value = data.package || '';
+        document.getElementById('lessonsInput').value = data.lessons || '';
+    }
+}
+document.addEventListener('DOMContentLoaded', fillStudentData);
+</script>
+{% endblock %}

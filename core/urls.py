@@ -53,4 +53,11 @@ urlpatterns = [
     path('add-salary/', views.add_salary_record, name='add_salary_record'),
     path('delete-salary/<int:record_id>/', views.delete_salary_record, name='delete_salary_record'),
     path('teacher/<int:teacher_id>/update-commission/', views.update_teacher_commission, name='update_teacher_commission'),
+
+    # نموذج تقييم ومتابعة الأداء الشهري
+    path('evaluations/', views.evaluations_list, name='evaluations_list'),
+    path('add-evaluation/', views.add_evaluation, name='add_evaluation'),
+    path('evaluation/<int:evaluation_id>/', views.evaluation_detail, name='evaluation_detail'),
+    path('evaluation/<int:evaluation_id>/delete/', views.delete_evaluation, name='delete_evaluation'),
+    path('report/<uuid:token>/', views.public_evaluation, name='public_evaluation'),
 ]

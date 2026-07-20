@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+{% block title %}تقييم {{ evaluation.student_name }}{% endblock %}
+{% block content %}
+<style>
+.eval-link-box{ max-width:720px; margin:0 auto 20px; background:#fff; border:1px solid var(--border); border-radius:16px; padding:18px 20px; }
+.eval-link-row{ display:flex; gap:10px; flex-wrap:wrap; }
+.eval-link-row input{ flex:1; min-width: 160px; padding:10px 14px; border-radius:10px; border:1.6px solid var(--border); font-family:monospace; font-size:0.82rem; }
+.eval-actions-row{ display:flex; justify-content:center; gap:10px; margin-bottom:22px; flex-wrap:wrap; }
+
+@media (max-width: 560px){
+    .eval-link-box{ padding:14px 16px; }
+    .eval-link-row input{ flex-basis: 100%; }
+    .eval-link-row .btn{ flex:1; justify-content:center; }
+    .eval-actions-row .btn{ width:100%; justify-content:center; }
+    .eval-actions-row form{ width:100%; }
+}
+</style>
+
+<div class="page-header">
+    <div class="page-title">📝 تقييم {{ evaluation.student_name }} - {{ evaluation.month_label }}</div>
+    <a href="{% url 'evaluations_list' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> كل التقييمات</a>
+</div>
+
+<div class="eval-link-box">
+    <label class="form-label" style="margin-bottom:8px; display:block;">🔗 رابط عام لولي الأمر (من غير تسجيل دخول) - يقدر يفتحه ويحمّل الـ PDF مباشرة:</label>
+    <div class="eval-link-row">
+        <input type="text" id="publicLinkInput" value="{{ public_url }}" readonly>
+        <button type="button" class="btn btn-primary btn-sm" onclick="copyPublicLink()">نسخ الرابط</button>
+        <a href="{{ public_url }}" target="_blank" class="btn btn-outline btn-sm">فتح</a>
+    </div>
+</div>
+
+<div class="eval-actions-row">
+    <button onclick="window.open('{{ public_url }}', '_blank')" class="btn btn-success"><i class="fas fa-file-pdf"></i> تحميل / طباعة PDF</button>
+    <form method="POST" action="{% url 'delete_evaluation' evaluation.id %}" onsubmit="return confirm('تأكيد حذف التقييم ده؟');">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> حذف التقييم</button>
+    </form>
+</div>
+
+{% include 'core/_evaluation_report.html' %}
+
+<script>
+function copyPublicLink(){
+    const input = document.getElementById('publicLinkInput');
+    input.select();
+    input.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(input.value).then(() => {
+        alert('تم نسخ الرابط ✅');
+    });
+}
+</script>
+{% endblock %}

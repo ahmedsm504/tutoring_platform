@@ -302,6 +302,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <li><a href="{% url 'expenses_list' %}" class="{% if 'expense' in request.path %}active{% endif %}"><i class="fas fa-money-bill-wave"></i> <span>المصروفات</span></a></li>
             <li><a href="{% url 'financial_reports' %}" class="{% if 'financial-reports' in request.path %}active{% endif %}"><i class="fas fa-chart-line"></i> <span>التقارير المالية</span></a></li>
             <li><a href="{% url 'salaries_list' %}" class="{% if 'salar' in request.path %}active{% endif %}"><i class="fas fa-sack-dollar"></i> <span>قائمة الرواتب</span></a></li>
+            <li><a href="{% url 'evaluations_list' %}" class="{% if 'evaluation' in request.path %}active{% endif %}"><i class="fas fa-clipboard-check"></i> <span>تقييم الطلاب الشهري</span></a></li>
             <li><a href="{% url 'add_student' %}" class="{% if 'add-student' in request.path %}active{% endif %}"><i class="fas fa-user-plus"></i> <span>إضافة طالب</span></a></li>
             <li><a href="{% url 'add_teacher' %}" class="{% if 'add-teacher' in request.path %}active{% endif %}"><i class="fas fa-plus"></i> <span>إضافة معلمة</span></a></li>
         </ul>

@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+{% block title %}التقييمات الشهرية{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="page-title">📝 نماذج التقييم الشهري</div>
+    <a href="{% url 'add_evaluation' %}" class="btn btn-primary"><i class="fas fa-plus"></i> تقييم جديد</a>
+</div>
+
+<form method="GET" class="filter-bar">
+    <input type="text" name="q" placeholder="بحث باسم الطالب..." value="{{ search }}">
+    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-search"></i> بحث</button>
+</form>
+
+<div class="table-container">
+    <table>
+        <thead><tr><th>الطالب</th><th>المعلمة</th><th>الشهر</th><th>مستوى الشهر</th><th>القالب</th><th>تاريخ الإنشاء</th><th></th></tr></thead>
+        <tbody>
+            {% for e in evaluations %}
+            <tr>
+                <td><a href="{% url 'evaluation_detail' e.id %}" style="color:#6d28d9; font-weight:700;">{{ e.student_name }}</a></td>
+                <td>{{ e.teacher_name|default:"-" }}</td>
+                <td>{{ e.month_label }}</td>
+                <td>{% if e.month_rating %}<span class="badge-neutral">{{ e.month_rating }}</span>{% else %}-{% endif %}</td>
+                <td>{{ e.get_template_display }}</td>
+                <td>{{ e.created_at|date:"Y/m/d" }}</td>
+                <td><a href="{% url 'evaluation_detail' e.id %}" class="btn btn-primary btn-sm">عرض</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" style="text-align:center;">لسه مفيش تقييمات متسجلة. ابدئي بإنشاء أول تقييم من الزرار فوق.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

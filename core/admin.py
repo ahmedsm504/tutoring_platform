@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Country, Teacher, Student, StudentNote, Expense, Payment, TeacherSalaryRecord
+from .models import Country, Teacher, Student, StudentNote, Expense, Payment, TeacherSalaryRecord, MonthlyEvaluation
 
 
 @admin.register(Country)
@@ -59,3 +59,11 @@ class ExpenseAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'amount', 'date')
     list_filter = ('category', 'date')
     search_fields = ('title',)
+
+
+@admin.register(MonthlyEvaluation)
+class MonthlyEvaluationAdmin(admin.ModelAdmin):
+    list_display = ('student_name', 'month_label', 'teacher_name', 'template', 'created_at')
+    list_filter = ('template', 'month_label')
+    search_fields = ('student_name', 'teacher_name')
+    readonly_fields = ('public_token', 'created_at')

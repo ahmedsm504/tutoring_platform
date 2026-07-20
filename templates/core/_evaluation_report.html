@@ -1,0 +1,276 @@
+<style>
+.eval-report{
+    max-width: 760px;
+    margin: 0 auto;
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    background: #fff;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* ==== الألوان حسب القالب ==== */
+.eval-report.theme-teal_pink{
+    --rpt-h1: #ABEBE0; --rpt-h2: #F4FBFA;
+    --rpt-pill-bg: #362A82; --rpt-pill-color:#fff;
+    --rpt-card-bg:#FDF2F8; --rpt-card-label:#9D2467; --rpt-card-value:#3B2E86;
+    --rpt-accent:#DB2777; --rpt-accent-soft:#FBCFE8; --rpt-section-color:#3B2E86;
+    --rpt-quote-bg:#FDF2F8; --rpt-quote-accent:#DB2777;
+    --rpt-seal-bg: linear-gradient(135deg,#DB2777,#9D2467);
+}
+.eval-report.theme-violet{
+    --rpt-h1: #D9CCF7; --rpt-h2: #F7F5FC;
+    --rpt-pill-bg:#5B21B6; --rpt-pill-color:#fff;
+    --rpt-card-bg:#F7F5FC; --rpt-card-label:#7C3AED; --rpt-card-value:#4C1D95;
+    --rpt-accent:#8B5CF6; --rpt-accent-soft:#EEE9FA; --rpt-section-color:#4C1D95;
+    --rpt-quote-bg:#F7F5FC; --rpt-quote-accent:#7C3AED;
+    --rpt-seal-bg: linear-gradient(135deg,#8B5CF6,#5B21B6);
+}
+.eval-report.theme-sunny{
+    --rpt-h1: #FBDA9E; --rpt-h2: #FFF9EC;
+    --rpt-pill-bg:#9A3412; --rpt-pill-color:#fff;
+    --rpt-card-bg:#FFF7E6; --rpt-card-label:#B45309; --rpt-card-value:#92400E;
+    --rpt-accent:#F59E0B; --rpt-accent-soft:#FEF3C7; --rpt-section-color:#9A3412;
+    --rpt-quote-bg:#FFF7E6; --rpt-quote-accent:#F59E0B;
+    --rpt-seal-bg: linear-gradient(135deg,#F59E0B,#B45309);
+}
+
+/* ===== الهيدر ===== */
+.eval-header{
+    background: linear-gradient(155deg, var(--rpt-h1) 0%, var(--rpt-h2) 100%);
+    padding: 34px 24px 40px;
+    text-align:center;
+    position: relative;
+    overflow:hidden;
+}
+.eval-header::before, .eval-header::after{
+    content:""; position:absolute; border-radius:50%;
+    background: rgba(255,255,255,0.35);
+}
+.eval-header::before{ width:120px; height:120px; top:-50px; right:-40px; }
+.eval-header::after{ width:90px; height:90px; bottom:-40px; left:-30px; }
+
+.eval-brand-pill{
+    display:inline-block; background:rgba(255,255,255,0.75); color: var(--rpt-section-color);
+    padding: 6px 20px; border-radius: 999px; font-weight:700; font-size:0.78rem;
+    position: relative; z-index:1;
+}
+.eval-title{
+    background: var(--rpt-pill-bg); color: var(--rpt-pill-color);
+    display:inline-block; padding: 15px 34px; border-radius: 18px;
+    font-size: 1.4rem; font-weight:800; margin: 16px 0 14px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.16); position:relative; z-index:1;
+}
+.eval-month-pill{
+    display:inline-block; background:#fff; color: var(--rpt-section-color);
+    padding: 7px 22px; border-radius:999px; font-weight:700; font-size:0.85rem;
+    position:relative; z-index:1; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* ===== شبكات متماثلة (بيانات الطالب / الإنجاز) ===== */
+.eval-body{ padding: 28px 26px 8px; }
+
+.eval-grid{
+    display:grid;
+    gap: 14px;
+    margin-bottom: 8px;
+}
+.eval-grid.cols-2{ grid-template-columns: repeat(2, 1fr); }
+.eval-grid.cols-3{ grid-template-columns: repeat(3, 1fr); }
+
+.eval-card{
+    background: var(--rpt-card-bg);
+    border-radius: 16px;
+    padding: 16px 14px;
+    text-align:center;
+}
+.eval-card .icon{ font-size:1.3rem; margin-bottom:6px; }
+.eval-card .label{ font-size:0.72rem; font-weight:700; color: var(--rpt-card-label); text-transform:uppercase; letter-spacing:0.3px; }
+.eval-card .value{ font-size:0.95rem; font-weight:800; color: var(--rpt-card-value); margin-top:4px; line-height:1.4; }
+
+/* ===== عناوين الأقسام ===== */
+.eval-section-title{
+    display:flex; align-items:center; gap:10px;
+    color: var(--rpt-section-color); font-size: 1.05rem; font-weight:800;
+    margin: 28px 0 14px;
+}
+.eval-section-title::before, .eval-section-title::after{
+    content:""; flex:1; height:2px; background: var(--rpt-accent-soft);
+}
+
+/* ===== كروت المهارات ===== */
+.eval-skills-grid{
+    display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px; margin-bottom: 8px;
+}
+.eval-skill-card{
+    background: var(--rpt-card-bg); border-radius:16px; padding: 16px 12px; text-align:center;
+}
+.eval-skill-card .icon{ font-size:1.3rem; margin-bottom:6px; }
+.eval-skill-card .title{ font-size:0.74rem; color: var(--rpt-card-label); font-weight:700; margin-bottom:8px; min-height: 2.4em; display:flex; align-items:center; justify-content:center; }
+.eval-skill-pill{
+    display:inline-block; background: var(--rpt-accent); color:#fff;
+    padding: 5px 16px; border-radius:999px; font-weight:800; font-size:0.8rem;
+}
+
+/* ===== كلام حر (توصيات / كلمة المعلمة) ===== */
+.eval-quotes{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin: 8px 0 4px; }
+.eval-quote{
+    background: var(--rpt-quote-bg); border-radius:16px; padding:18px 18px 16px;
+    position:relative; text-align:right;
+}
+.eval-quote .q-mark{
+    position:absolute; top:10px; left:16px; font-size:1.6rem; color: var(--rpt-quote-accent); opacity:0.35; font-family:Georgia, serif;
+}
+.eval-quote .q-title{ font-weight:800; color: var(--rpt-quote-accent); font-size:0.82rem; margin-bottom:8px; }
+.eval-quote .q-text{ font-size:0.88rem; color:#333; line-height:1.75; margin:0; }
+
+/* ===== ختم مستوى الشهر ===== */
+.eval-seal-wrap{ text-align:center; padding: 26px 20px 34px; }
+.eval-seal{
+    display:inline-flex; flex-direction:column; align-items:center; justify-content:center;
+    width: 118px; height:118px; border-radius:50%;
+    background: var(--rpt-seal-bg); color:#fff;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+    border: 4px solid #fff; outline: 2px dashed rgba(255,255,255,0.6); outline-offset:-10px;
+}
+.eval-seal .seal-label{ font-size:0.62rem; font-weight:700; opacity:0.85; }
+.eval-seal .seal-value{ font-size:1.05rem; font-weight:800; margin-top:2px; }
+
+/* ===== فوتر ===== */
+.eval-footer{
+    text-align:center; padding: 14px 20px 26px; color:#9c93b5; font-size:0.74rem;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.eval-footer .star-mark{
+    display:inline-block; width:9px; height:9px; background-color: var(--rpt-accent);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L61 39 L96 39 L68 60 L79 96 L50 74 L21 96 L32 60 L4 39 L39 39 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 L61 39 L96 39 L68 60 L79 96 L50 74 L21 96 L32 60 L4 39 L39 39 Z'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain; mask-size: contain;
+}
+
+@media print{
+    body{ background:#fff !important; }
+    .eval-report{ box-shadow:none; border:none; }
+}
+
+@media (max-width: 560px){
+    .eval-header{ padding: 26px 16px 32px; }
+    .eval-brand-pill{ font-size:0.68rem; padding:5px 14px; }
+    .eval-title{ font-size:1.1rem; padding:12px 20px; margin:12px 0 10px; }
+    .eval-body{ padding: 22px 16px 6px; }
+    .eval-grid.cols-2, .eval-grid.cols-3{ grid-template-columns: repeat(2, 1fr); }
+    .eval-quotes{ grid-template-columns: 1fr; }
+    .eval-seal{ width:96px; height:96px; }
+}
+@media (max-width: 380px){
+    .eval-grid.cols-2, .eval-grid.cols-3{ grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<div class="eval-report theme-{{ evaluation.template|default:'teal_pink' }}" id="evalReportRoot">
+    <div class="eval-header">
+        <span class="eval-brand-pill">منصة العجمي التعليمية</span><br>
+        <span class="eval-title">نموذج تقييم و متابعة الأداء</span><br>
+        <span class="eval-month-pill">شهر <span id="rpt-month">{{ evaluation.month_label|default:"-" }}</span></span>
+    </div>
+
+    <div class="eval-body">
+        <div class="eval-grid cols-2">
+            <div class="eval-card">
+                <div class="icon">🎓</div>
+                <div class="label">اسم الطالب</div>
+                <div class="value" id="rpt-student-name">{{ evaluation.student_name|default:"-" }}</div>
+            </div>
+            <div class="eval-card">
+                <div class="icon">👩‍🏫</div>
+                <div class="label">اسم المعلمة</div>
+                <div class="value" id="rpt-teacher-name">{{ evaluation.teacher_name|default:"-" }}</div>
+            </div>
+            <div class="eval-card">
+                <div class="icon">📦</div>
+                <div class="label">الباقة</div>
+                <div class="value" id="rpt-package">{{ evaluation.package_name|default:"-" }}</div>
+            </div>
+            <div class="eval-card">
+                <div class="icon">🔁</div>
+                <div class="label">عدد الحلقات</div>
+                <div class="value"><span id="rpt-lessons">{{ evaluation.lessons_count|default:"-" }}</span> حلقات شهريًا</div>
+            </div>
+        </div>
+
+        <div class="eval-section-title">ملخص الإنجاز</div>
+        <div class="eval-grid cols-3">
+            <div class="eval-card">
+                <div class="icon">📗</div>
+                <div class="label">حفظ الجديد</div>
+                <div class="value" id="rpt-memorization">{{ evaluation.memorization_progress|default:"-" }}</div>
+            </div>
+            <div class="eval-card">
+                <div class="icon">🔄</div>
+                <div class="label">المراجعة</div>
+                <div class="value" id="rpt-review">{{ evaluation.review_progress|default:"-" }}</div>
+            </div>
+            <div class="eval-card">
+                <div class="icon">📅</div>
+                <div class="label">الغياب</div>
+                <div class="value" id="rpt-absences">{{ evaluation.absences|default:"-" }}</div>
+            </div>
+        </div>
+
+        <div class="eval-section-title">تقييم المهارات</div>
+        <div class="eval-skills-grid">
+            <div class="eval-skill-card">
+                <div class="icon">🗣️</div>
+                <div class="title">النطق ومخارج الحروف</div>
+                <span class="eval-skill-pill" id="rpt-pronunciation">{{ evaluation.pronunciation_rating|default:"-" }}</span>
+            </div>
+            <div class="eval-skill-card">
+                <div class="icon">📖</div>
+                <div class="title">تطبيق أحكام التجويد</div>
+                <span class="eval-skill-pill" id="rpt-tajweed">{{ evaluation.tajweed_rating|default:"-" }}</span>
+            </div>
+            <div class="eval-skill-card">
+                <div class="icon">🤝</div>
+                <div class="title">التفاعل مع المعلمة</div>
+                <span class="eval-skill-pill" id="rpt-interaction">{{ evaluation.interaction_rating|default:"-" }}</span>
+            </div>
+            <div class="eval-skill-card">
+                <div class="icon">⚡</div>
+                <div class="title">سرعة الاستجابة والحفظ</div>
+                <span class="eval-skill-pill" id="rpt-response-speed">{{ evaluation.response_speed_rating|default:"-" }}</span>
+            </div>
+            <div class="eval-skill-card">
+                <div class="icon">⏰</div>
+                <div class="title">الالتزام بالمواعيد والآداب</div>
+                <span class="eval-skill-pill" id="rpt-commitment">{{ evaluation.commitment_rating|default:"-" }}</span>
+            </div>
+        </div>
+
+        {% if evaluation.recommendations or evaluation.teacher_comment %}
+        <div class="eval-section-title">التوصيات وكلمة المعلمة</div>
+        <div class="eval-quotes">
+            <div class="eval-quote">
+                <span class="q-mark">”</span>
+                <div class="q-title">التوصيات / المستوى العام</div>
+                <p class="q-text" id="rpt-recommendations">{{ evaluation.recommendations|default:"-" }}</p>
+            </div>
+            <div class="eval-quote">
+                <span class="q-mark">”</span>
+                <div class="q-title">كلمة المعلمة</div>
+                <p class="q-text" id="rpt-teacher-comment">{{ evaluation.teacher_comment|default:"-" }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="eval-seal-wrap">
+        <div class="eval-seal">
+            <span class="seal-label">مستوى الشهر</span>
+            <span class="seal-value" id="rpt-month-rating">{{ evaluation.month_rating|default:"-" }}</span>
+        </div>
+    </div>
+
+    <div class="eval-footer"><span class="star-mark"></span> منصة العجمي التعليمية <span class="star-mark"></span></div>
+</div>

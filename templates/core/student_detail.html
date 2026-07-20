@@ -12,6 +12,7 @@
             {% endif %}
         </a>
         <a href="{% url 'edit_student' student.id %}" class="btn btn-primary"><i class="fas fa-edit"></i> تعديل</a>
+        <a href="{% url 'add_evaluation' %}?student={{ student.id }}" class="btn btn-success"><i class="fas fa-clipboard-check"></i> تقييم شهري جديد</a>
         <a href="{% url 'country_students' student.country.id %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
     </div>
 </div>
