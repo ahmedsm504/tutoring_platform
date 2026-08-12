@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% block title %}جدولة حلقة{% endblock %}
+{% block content %}
+<div style="max-width: 550px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
+    <h2 style="color: #4a1a8a; text-align: center;">🗓️ جدولة حلقة جديدة</h2>
+    <form method="POST" style="margin-top:20px;">
+        {% csrf_token %}
+        <div class="field">
+            <label>الطالب *</label>
+            <select name="student" required>
+                <option value="">--- اختاري الطالب ---</option>
+                {% for s in students %}
+                <option value="{{ s.id }}" {% if preselected_student == s.id|stringformat:'s' %}selected{% endif %}>{{ s.name }} ({{ s.teacher.name|default:"بدون معلمة" }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="field">
+            <label>الموعد *</label>
+            <input type="datetime-local" name="scheduled_at" required>
+        </div>
+        <div class="field">
+            <label>مدة الحلقة (دقيقة)</label>
+            <input type="number" name="duration_minutes" value="30">
+        </div>
+        <div style="text-align:center; margin-top:20px;">
+            <button type="submit" class="btn btn-primary">حفظ</button>
+            <a href="{% url 'lessons_dashboard' %}" class="btn btn-outline">إلغاء</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %}
+{% block title %}الحلقات اليوم{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+    <h2 style="color:#4a1a8a;">📅 لوحة الحلقات - {{ today|date:"Y/m/d" }}</h2>
+    <div class="flex">
+        <a href="{% url 'schedule_requests_list' %}" class="btn btn-outline">
+            <i class="fas fa-clock-rotate-left"></i> طلبات المواعيد
+            {% if pending_requests_count %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">{{ pending_requests_count }}</span>{% endif %}
+        </a>
+        <a href="{% url 'add_lesson' %}" class="btn btn-primary"><i class="fas fa-plus"></i> جدولة حلقة</a>
+    </div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-box"><div class="number">{{ total_today }}</div><div class="label">🔔 حلقات مجدولة اليوم</div></div>
+    <div class="stat-box" style="border-right-color:#22c55e;"><div class="number">{{ completed }}</div><div class="label">✅ تمت</div></div>
+    <div class="stat-box"><div class="number">{{ not_due_yet }}</div><div class="label">⏳ لم يحن موعدها</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ unregistered }}</div><div class="label">⚠️ غير مسجلة</div></div>
+    <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ teacher_absent }}</div><div class="label">🟠 غياب معلمة</div></div>
+    <div class="stat-box"><div class="number">{{ cancelled }}</div><div class="label">⚪ ملغاة</div></div>
+</div>
+
+{% if due_now %}
+<h4 style="color:#dc3545; margin-top:20px;">⚠️ حلقات فات موعدها ومحتاجة تسجيل حالة</h4>
+<div class="table-container">
+    <table>
+        <thead><tr><th>الطالب</th><th>المعلمة</th><th>الموعد</th><th>تسجيل الحالة</th></tr></thead>
+        <tbody>
+            {% for l in due_now %}
+            <tr>
+                <td>{{ l.student.name }}</td>
+                <td>{{ l.teacher.name }}</td>
+                <td>{{ l.scheduled_at|date:"H:i" }}</td>
+                <td>
+                    <form method="POST" action="{% url 'mark_lesson' l.id %}" class="flex" style="gap:6px; flex-wrap:wrap;">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{% url 'lessons_dashboard' %}">
+                        <button type="submit" name="status" value="completed" class="btn btn-sm" style="background:var(--green-soft); color:var(--green);">🟢 تمت</button>
+                        <button type="submit" name="status" value="student_absent" class="btn btn-sm" style="background:var(--red-soft); color:var(--red);">🔴 غياب طالب</button>
+                        <button type="submit" name="status" value="teacher_absent" class="btn btn-sm" style="background:var(--amber-soft); color:var(--amber);">🟠 غياب معلمة</button>
+                        <button type="submit" name="status" value="cancelled" class="btn btn-outline btn-sm">⚪ ألغيت</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<h4 style="color:#4a1a8a; margin-top:20px;">جدول اليوم بالكامل</h4>
+<div class="table-container">
+    <table>
+        <thead><tr><th>الطالب</th><th>المعلمة</th><th>الموعد</th><th>الحالة</th><th></th></tr></thead>
+        <tbody>
+            {% for l in todays_lessons %}
+            <tr>
+                <td>{{ l.student.name }}</td>
+                <td>{{ l.teacher.name }}</td>
+                <td>{{ l.scheduled_at|date:"H:i" }}</td>
+                <td>
+                    {% with eff=l.effective_status %}
+                    {% if eff == 'completed' %}<span class="badge-neutral" style="background:var(--green-soft); color:var(--green);">✅ تمت</span>
+                    {% elif eff == 'student_absent' %}<span class="badge-neutral" style="background:var(--red-soft); color:var(--red);">🔴 غياب طالب</span>
+                    {% elif eff == 'teacher_absent' %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">🟠 غياب معلمة</span>
+                    {% elif eff == 'cancelled' %}<span class="badge-neutral">⚪ أُلغيت</span>
+                    {% elif eff == 'unregistered' %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">⚠️ غير مسجلة</span>
+                    {% else %}<span class="badge-neutral">مجدولة</span>{% endif %}
+                    {% endwith %}
+                </td>
+                <td>
+                    <form method="POST" action="{% url 'delete_lesson' l.id %}" onsubmit="return confirm('حذف الحلقة دي؟');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline btn-sm"><i class="fas fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center;">لا يوجد حلقات مجدولة اليوم.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h4 style="color:#4a1a8a; margin-top:20px;">👩‍🏫 المعلمات - إحصائيات الشهر الحالي</h4>
+<div class="table-container">
+    <table>
+        <thead><tr><th>المعلمة</th><th>حلقات</th><th>تمت</th><th>غير مسجلة</th><th>غياب معلمة</th><th>الالتزام</th></tr></thead>
+        <tbody>
+            {% for row in teacher_rows %}
+            <tr>
+                <td><a href="{% url 'teacher_detail' row.teacher.id %}" style="color:#6d28d9; font-weight:700;">{{ row.teacher.name }}</a></td>
+                <td>{{ row.stats.total }}</td>
+                <td>{{ row.stats.completed }}</td>
+                <td>{{ row.stats.unregistered }}</td>
+                <td>{{ row.stats.teacher_absent }}</td>
+                <td><strong>{{ row.stats.commitment_rate }}%</strong></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center;">لا يوجد معلمات.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

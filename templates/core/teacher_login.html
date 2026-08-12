@@ -1,0 +1,26 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}دخول المعلمة{% endblock %}
+{% block content %}
+<div class="card" style="max-width:400px; margin:40px auto;">
+    <h2 style="text-align:center; color:var(--violet-700);">🔐 دخول المعلمة</h2>
+    <p style="text-align:center; color:var(--ink-muted); font-size:0.85rem;">
+        الحساب ده خاص بالمعلمات بس، ومحدود الصلاحيات على بياناتك أنتِ فقط
+        (مفيش دخول للوحة إدارة الأكاديمية).
+    </p>
+    <form method="POST" style="margin-top:18px;">
+        {% csrf_token %}
+        <div class="field">
+            <label>اسم المستخدم</label>
+            <input type="text" name="username" required autofocus>
+        </div>
+        <div class="field">
+            <label>كلمة السر</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:12px;">دخول</button>
+    </form>
+    <p style="text-align:center; font-size:0.8rem; color:var(--ink-muted); margin-top:14px;">
+        نسيتي بيانات الدخول؟ كلمي الإدارة عشان تصفّرلك كلمة السر.
+    </p>
+</div>
+{% endblock %}

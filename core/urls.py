@@ -54,6 +54,31 @@ urlpatterns = [
     path('delete-salary/<int:record_id>/', views.delete_salary_record, name='delete_salary_record'),
     path('teacher/<int:teacher_id>/update-commission/', views.update_teacher_commission, name='update_teacher_commission'),
 
+    # الحلقات ومتابعة الحضور والانضباط
+    path('lessons/', views.lessons_dashboard, name='lessons_dashboard'),
+    path('lessons/add/', views.add_lesson, name='add_lesson'),
+    path('lessons/<int:lesson_id>/mark/', views.mark_lesson, name='mark_lesson'),
+    path('lessons/<int:lesson_id>/delete/', views.delete_lesson, name='delete_lesson'),
+
+    # طلبات المواعيد
+    path('schedule-requests/', views.schedule_requests_list, name='schedule_requests_list'),
+    path('schedule-requests/<int:request_id>/review/', views.review_schedule_request, name='review_schedule_request'),
+
+    # شكاوى المعلمات
+    path('teacher/<int:teacher_id>/add-complaint/', views.add_complaint, name='add_complaint'),
+
+    # إدارة حساب دخول المعلمة (من لوحة الأدمن)
+    path('teacher/<int:teacher_id>/create-login/', views.create_teacher_login, name='create_teacher_login'),
+    path('teacher/<int:teacher_id>/reset-login-password/', views.reset_teacher_login_password, name='reset_teacher_login_password'),
+    path('teacher/<int:teacher_id>/revoke-login/', views.revoke_teacher_login, name='revoke_teacher_login'),
+
+    # بورتال المعلمة (صلاحيات محدودة - مش أدمن)
+    path('teacher-portal/login/', views.teacher_login, name='teacher_login'),
+    path('teacher-portal/logout/', views.teacher_logout, name='teacher_logout'),
+    path('teacher-portal/', views.teacher_portal_home, name='teacher_portal_home'),
+    path('teacher-portal/lessons/<int:lesson_id>/mark/', views.teacher_mark_lesson, name='teacher_mark_lesson'),
+    path('teacher-portal/schedule-requests/', views.teacher_schedule_requests, name='teacher_schedule_requests'),
+
     # نموذج تقييم ومتابعة الأداء الشهري
     path('evaluations/', views.evaluations_list, name='evaluations_list'),
     path('add-evaluation/', views.add_evaluation, name='add_evaluation'),

@@ -1,0 +1,85 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}طلبات المواعيد{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="color:var(--violet-700);">🗓️ طلبات المواعيد</h2>
+    <a href="{% url 'teacher_portal_home' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> الرئيسية</a>
+</div>
+<p style="color:var(--ink-muted); font-size:0.85rem;">
+    طلبك مش بيتفعّل نافذة على طول - لازم موافقة الإدارة الأول، وهتلاقي حالة كل طلب تحت.
+</p>
+
+<div class="card">
+    <h4 style="color:var(--violet-700); margin-top:0;">طلب جديد</h4>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="field">
+            <label>نوع الطلب</label>
+            <select name="request_type" id="requestType" onchange="toggleFields()">
+                <option value="new">موعد جديد</option>
+                <option value="change">تعديل موعد قائم</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>الطالب</label>
+            <select name="student" required>
+                {% for s in students %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="field" id="lessonField" style="display:none;">
+            <label>الحلقة المطلوب تعديلها</label>
+            <select name="related_lesson">
+                <option value="">---</option>
+                {% for l in upcoming_lessons %}<option value="{{ l.id }}">{{ l.student.name }} - {{ l.scheduled_at|date:"Y/m/d H:i" }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="field">
+            <label>الموعد المقترح (تاريخ ووقت)</label>
+            <input type="datetime-local" name="proposed_datetime">
+        </div>
+        <div class="field">
+            <label>الأيام المتكررة (اختياري - مثلاً "الأحد والثلاثاء 7 مساءً")</label>
+            <input type="text" name="proposed_days">
+        </div>
+        <div class="field">
+            <label>ملاحظة</label>
+            <textarea name="teacher_note" rows="2"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">إرسال الطلب للإدارة</button>
+    </form>
+</div>
+
+<div class="card">
+    <h4 style="color:var(--violet-700); margin-top:0;">طلباتك السابقة</h4>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>الطالب</th><th>النوع</th><th>الموعد المقترح</th><th>الحالة</th><th>ملاحظة الإدارة</th></tr></thead>
+            <tbody>
+                {% for r in requests %}
+                <tr>
+                    <td>{{ r.student.name }}</td>
+                    <td>{{ r.get_request_type_display }}</td>
+                    <td>{{ r.proposed_datetime|date:"Y/m/d H:i"|default:r.proposed_days }}</td>
+                    <td>
+                        {% if r.status == 'pending' %}<span class="badge" style="background:var(--amber-soft); color:var(--amber);">قيد المراجعة</span>
+                        {% elif r.status == 'approved' %}<span class="badge" style="background:var(--green-soft); color:var(--green);">تمت الموافقة</span>
+                        {% else %}<span class="badge" style="background:var(--red-soft); color:var(--red);">مرفوض</span>{% endif %}
+                    </td>
+                    <td>{{ r.admin_note|default:"-" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" style="text-align:center;">لا يوجد طلبات بعد.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function toggleFields(){
+    const type = document.getElementById('requestType').value;
+    document.getElementById('lessonField').style.display = (type === 'change') ? 'block' : 'none';
+}
+document.addEventListener('DOMContentLoaded', toggleFields);
+</script>
+{% endblock %}

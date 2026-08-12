@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}بورتال المعلمة{% endblock %}</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+    --violet-50:  #F7F5FC;
+    --violet-100: #EEE9FA;
+    --violet-500: #8B5CF6;
+    --violet-600: #7C3AED;
+    --violet-700: #6D28D9;
+    --ink: #33195E;
+    --ink-muted: #746A93;
+    --green: #1D9A63; --green-soft: #E5F7EE;
+    --red: #DC3545; --red-soft: #FDEBEC;
+    --amber: #B87F16; --amber-soft: #FCF3DC;
+    --border: #E7E1F5;
+    --radius-md: 16px; --radius-lg: 22px;
+    --shadow-md: 0 8px 24px rgba(51, 25, 94, 0.08);
+    --font-display: 'Cairo', sans-serif;
+    --font-body: 'Tajawal', sans-serif;
+}
+*{box-sizing:border-box;}
+body{font-family:var(--font-body); background:var(--violet-50); color:var(--ink); margin:0;}
+h1,h2,h3,h4{font-family:var(--font-display);}
+.topbar{background:linear-gradient(120deg,var(--violet-700),var(--violet-500)); color:#fff; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+.topbar .brand{font-weight:800; font-size:1.1rem;}
+.topbar .brand small{display:block; font-weight:500; font-size:0.72rem; opacity:0.85;}
+.topbar a.logout{color:#fff; background:rgba(255,255,255,0.15); padding:8px 16px; border-radius:999px; text-decoration:none; font-size:0.85rem;}
+.container{max-width:980px; margin:24px auto; padding:0 16px;}
+.card{background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:22px; margin-bottom:18px; box-shadow:var(--shadow-md);}
+.stats-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:18px;}
+.stat-box{background:#fff; border:1px solid var(--border); border-right:4px solid var(--violet-500); border-radius:14px; padding:14px 16px; text-align:center;}
+.stat-box .number{font-size:1.4rem; font-weight:800; color:var(--ink);}
+.stat-box .label{font-size:0.78rem; color:var(--ink-muted); margin-top:4px;}
+.btn{display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border-radius:10px; border:none; cursor:pointer; font-family:var(--font-body); font-weight:600; font-size:0.85rem; text-decoration:none;}
+.btn-green{background:var(--green-soft); color:var(--green);}
+.btn-red{background:var(--red-soft); color:var(--red);}
+.btn-amber{background:var(--amber-soft); color:var(--amber);}
+.btn-outline{background:#fff; border:1.6px solid var(--border); color:var(--ink);}
+.btn-primary{background:var(--violet-600); color:#fff;}
+.table-container{overflow-x:auto;}
+table{width:100%; border-collapse:collapse; font-size:0.88rem;}
+th, td{padding:10px 12px; text-align:right; border-bottom:1px solid var(--border);}
+th{color:var(--ink-muted); font-weight:700; font-size:0.8rem;}
+.field{margin-bottom:14px;}
+.field label{display:block; font-weight:600; margin-bottom:5px; font-size:0.85rem;}
+.field input, .field select, .field textarea{width:100%; padding:10px 12px; border-radius:10px; border:1.6px solid var(--border); font-family:var(--font-body);}
+.alert{padding:12px 16px; border-radius:12px; margin-bottom:14px; font-size:0.88rem;}
+.alert-success{background:var(--green-soft); color:var(--green);}
+.alert-error{background:var(--red-soft); color:var(--red);}
+.alert-warning{background:var(--amber-soft); color:var(--amber);}
+.badge{display:inline-block; padding:3px 10px; border-radius:999px; font-size:0.75rem; font-weight:700;}
+</style>
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">👩‍🏫 بورتال المعلمة<small>حساب محدود الصلاحيات - بياناتك أنتِ بس</small></div>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'teacher_logout' %}" class="logout"><i class="fas fa-arrow-right-from-bracket"></i> تسجيل الخروج</a>
+    {% endif %}
+</div>
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% else %}alert-error{% endif %}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

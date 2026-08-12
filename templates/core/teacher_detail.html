@@ -4,7 +4,8 @@
 <div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
     <h2 style="color:#4a1a8a;">👩‍🏫 {{ teacher.name }}</h2>
     <div class="flex">
-        <a href="{% url 'add_salary_record' %}?teacher={{ teacher.id }}" class="btn btn-success"><i class="fas fa-sack-dollar"></i> تسجيل صرف راتب</a>
+        <a href="{% url 'add_salary_record' %}?teacher={{ teacher.id }}&salary_year={{ stat_year }}&salary_month={{ stat_month }}" class="btn btn-success"><i class="fas fa-sack-dollar"></i> تسجيل صرف راتب</a>
+        <a href="{% url 'add_lesson' %}" class="btn btn-outline"><i class="fas fa-calendar-plus"></i> جدولة حلقة</a>
         <a href="{% url 'edit_teacher' teacher.id %}" class="btn btn-primary"><i class="fas fa-edit"></i> تعديل</a>
         <a href="{% url 'teachers_list' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
     </div>
@@ -15,7 +16,26 @@
     <div><strong>المحافظة:</strong> {{ teacher.governorate|default:"-" }}</div>
     <div><strong>الهاتف:</strong> {{ teacher.phone|default:"-" }}</div>
     <div><strong>واتساب:</strong> {{ teacher.whatsapp|default:"-" }}</div>
-    <div><strong>إجمالي اشتراكات طلابها:</strong> {{ teacher.total_subscriptions|floatformat:2 }} جنيه</div>
+    <div><strong>إجمالي اشتراكات طلابها (الشهر المختار):</strong> {{ subscriptions_this_month|floatformat:2 }} جنيه</div>
+    <div><strong>تاريخ بداية العمل:</strong> {{ teacher.hire_date|date:"Y/m/d"|default:"-" }}</div>
+    <div><strong>تاريخ آخر قبض:</strong> {% if salary_records.0 %}{{ salary_records.0.payout_date|date:"Y/m/d" }}{% else %}-{% endif %}</div>
+    <div>
+        <strong>حساب دخول البورتال:</strong>
+        {% if teacher.user_id %}
+            <span class="badge-neutral" style="background:var(--green-soft); color:var(--green);">مفعّل ({{ teacher_login_display }})</span>
+            <form method="POST" action="{% url 'reset_teacher_login_password' teacher.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline btn-sm" style="margin-right:4px;">تصفير كلمة السر</button>
+            </form>
+            <form method="POST" action="{% url 'revoke_teacher_login' teacher.id %}" style="display:inline;" onsubmit="return confirm('إلغاء حساب الدخول؟ المعلمة مش هتقدر تدخل تاني.');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline btn-sm" style="color:var(--red); margin-right:4px;">إلغاء الحساب</button>
+            </form>
+        {% else %}
+            <span class="badge-neutral" style="background:var(--red-soft); color:var(--red);">لسه معملهاش حساب دخول</span>
+            <a href="{% url 'create_teacher_login' teacher.id %}" class="btn btn-primary btn-sm" style="margin-right:4px;">إنشاء حساب دخول</a>
+        {% endif %}
+    </div>
     <div><strong>نظام الراتب:</strong>
         {% if teacher.fixed_salary != None %}
             <span class="badge-neutral">راتب مثبت</span>
@@ -29,8 +49,82 @@
 <div class="stats-row">
     <div class="stat-box" style="border-right-color:#22c55e;"><div class="number">{{ current_students }}</div><div class="label">🟢 طلاب مقيدين</div></div>
     <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ previous_students }}</div><div class="label">🔴 طلاب غير مقيدين</div></div>
-    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ teacher.calculated_salary|floatformat:2 }} جنيه</div><div class="label">💵 الراتب المستحق حاليًا</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ salary_this_month|floatformat:2 }} جنيه</div><div class="label">💵 الراتب المستحق عن الشهر المختار</div></div>
 </div>
+
+<h4 style="color:#4a1a8a; margin-top:20px;">📅 الحضور والانضباط - {{ stat_month_name }} {{ stat_year }}</h4>
+<form method="GET" class="filter-bar" style="margin-bottom:10px;">
+    <select name="year">
+        {% for y in stat_years_range %}
+        <option value="{{ y }}" {% if stat_year == y %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+    <select name="month">
+        {% for m_num, m_name in arabic_months.items %}
+        <option value="{{ m_num }}" {% if stat_month == m_num %}selected{% endif %}>{{ m_name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-filter"></i> عرض</button>
+</form>
+<div class="stats-row">
+    <div class="stat-box"><div class="number">{{ monthly_stats.total }}</div><div class="label">🔔 حلقات مجدولة</div></div>
+    <div class="stat-box" style="border-right-color:#22c55e;"><div class="number">{{ monthly_stats.completed }}</div><div class="label">✅ حلقات تمت</div></div>
+    <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ monthly_stats.student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ monthly_stats.teacher_absent }}</div><div class="label">🟠 غياب المعلمة</div></div>
+    <div class="stat-box"><div class="number">{{ monthly_stats.cancelled }}</div><div class="label">⚪ حلقات أُلغيت</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ monthly_stats.unregistered }}</div><div class="label">⚠️ غير مسجلة</div></div>
+    <div class="stat-box"><div class="number">{{ monthly_stats.late }}</div><div class="label">⏰ تأخيرات</div></div>
+    <div class="stat-box"><div class="number">{{ monthly_stats.complaints }}</div><div class="label">📢 شكاوى</div></div>
+</div>
+<div class="stats-row">
+    <div class="stat-box" style="border-right-color:#8b5cf6;"><div class="number">{{ monthly_stats.commitment_rate }}%</div><div class="label">الالتزام بالمواعيد</div></div>
+    <div class="stat-box" style="border-right-color:#8b5cf6;"><div class="number">{{ monthly_stats.attendance_rate }}%</div><div class="label">الحضور</div></div>
+    <div class="stat-box" style="border-right-color:#8b5cf6;"><div class="number">{{ monthly_stats.recording_rate }}%</div><div class="label">تسجيل الحلقات</div></div>
+    <div class="stat-box" style="border-right-color:#6d28d9;"><div class="number">{{ monthly_stats.overall_rating }}%</div><div class="label">🏆 تقييم المعلمة الشهري</div></div>
+</div>
+
+<h4 style="color:#4a1a8a; margin-top:20px;">🗓️ الحلقات القادمة</h4>
+<div class="table-container">
+    <table>
+        <thead><tr><th>الطالب</th><th>الموعد</th><th>الحالة</th><th></th></tr></thead>
+        <tbody>
+            {% for l in upcoming_lessons %}
+            <tr>
+                <td>{{ l.student.name }}</td>
+                <td>{{ l.scheduled_at|date:"Y/m/d H:i" }}</td>
+                <td>
+                    {% if l.is_due_soon %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">🔔 قريب</span>
+                    {% elif l.is_overdue_unrecorded %}<span class="badge-neutral" style="background:var(--red-soft); color:var(--red);">⚠️ غير مسجلة</span>
+                    {% else %}<span class="badge-neutral">مجدولة</span>{% endif %}
+                </td>
+                <td><a href="{% url 'lessons_dashboard' %}" class="btn btn-outline btn-sm">إدارة</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" style="text-align:center;">لا يوجد حلقات قادمة مجدولة.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h4 style="color:#4a1a8a; margin-top:20px;">📢 آخر الشكاوى</h4>
+<div class="table-container">
+    <table>
+        <thead><tr><th>التاريخ</th><th>التفاصيل</th></tr></thead>
+        <tbody>
+            {% for c in recent_complaints %}
+            <tr><td>{{ c.date|date:"Y/m/d" }}</td><td>{{ c.description }}</td></tr>
+            {% empty %}
+            <tr><td colspan="2" style="text-align:center;">لا يوجد شكاوى مسجلة.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<form method="POST" action="{% url 'add_complaint' teacher.id %}" class="flex" style="gap:10px; margin-top:10px; flex-wrap:wrap;">
+    {% csrf_token %}
+    <input type="date" name="date" style="padding:8px; border-radius:8px; border:1.6px solid var(--border);">
+    <input type="text" name="description" placeholder="تفاصيل الشكوى..." style="flex:1; min-width:200px; padding:8px; border-radius:8px; border:1.6px solid var(--border);" required>
+    <button type="submit" class="btn btn-outline btn-sm">تسجيل شكوى</button>
+</form>
 
 <h4 style="color:#4a1a8a; margin-top:20px;">📚 طلاب هذه المعلمة</h4>
 <div class="table-container">

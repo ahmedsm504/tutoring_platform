@@ -3,23 +3,50 @@
 {% block content %}
 <div style="max-width: 650px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
     <h2 style="color: #4a1a8a; text-align: center;">💰 تسجيل صرف راتب</h2>
-    <form method="POST">
+
+    <form method="GET" class="flex" style="gap:10px; justify-content:center; margin-top:18px;">
+        <select name="salary_year" onchange="this.form.submit()">
+            {% for y in salary_years_range %}
+            <option value="{{ y }}" {% if salary_year == y %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+        <select name="salary_month" onchange="this.form.submit()">
+            {% for m_num, m_name in arabic_months.items %}
+            <option value="{{ m_num }}" {% if salary_month == m_num %}selected{% endif %}>{{ m_name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <p class="text-muted" style="text-align:center; margin-top:8px;">
+        ⚠️ الراتب هيتحسب من دفعات <strong>الشهر ده بس</strong> عشان ميتضاعفش لو الطالب دافع في شهور مختلفة.
+    </p>
+
+    <form method="POST" style="margin-top:10px;">
         {% csrf_token %}
+        <input type="hidden" name="salary_year" value="{{ salary_year }}">
+        <input type="hidden" name="salary_month" value="{{ salary_month }}">
+
         <div class="field" style="margin-top:20px;">
             <label>المعلمة *</label>
             <select name="teacher" id="teacherSelect" required onchange="updateBasePreview()">
                 <option value="">--- اختاري المعلمة ---</option>
-                {% for t in teachers %}
-                <option value="{{ t.id }}" data-salary="{{ t.calculated_salary }}"
-                        {% if preselected_teacher == t.id|stringformat:'s' %}selected{% endif %}>
-                    {{ t.name }}
+                {% for row in teachers_data %}
+                <option value="{{ row.teacher.id }}" data-salary="{{ row.calculated_salary }}" data-paid="{{ row.already_paid_this_month|yesno:'1,0' }}"
+                        {% if preselected_teacher == row.teacher.id|stringformat:'s' %}selected{% endif %}>
+                    {{ row.teacher.name }}{% if row.already_paid_this_month %} (اتصرف لها راتب الشهر ده بالفعل){% endif %}
                 </option>
                 {% endfor %}
             </select>
         </div>
 
         <div id="basePreview" style="background:var(--violet-50); border-radius:12px; padding:12px 16px; margin-top:14px; font-weight:700; color:var(--violet-700); display:none;">
-            الراتب الأساسي المحسوب حاليًا لها: <span id="basePreviewValue">0</span> جنيه
+            الراتب الأساسي المحسوب عن هذا الشهر: <span id="basePreviewValue">0</span> جنيه
+        </div>
+
+        <div id="alreadyPaidWarning" style="background:var(--amber-soft); color:var(--amber); border-radius:12px; padding:12px 16px; margin-top:10px; font-weight:600; display:none;">
+            ⚠️ المعلمة دي اتصرفلها راتب عن نفس الشهر ده قبل كده. لو متأكدة إنك عايزة تسجلي صرف تاني (مثلاً دفعة إضافية أو تصحيح)، فعّلي الخيار تحت.
+            <label class="flex" style="gap:6px; margin-top:8px; font-weight:400;">
+                <input type="checkbox" name="force" id="forceCheckbox"> تأكيد الصرف مرة تانية عن نفس الشهر
+            </label>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 20px;">
@@ -35,7 +62,7 @@
         </div>
 
         <p class="text-muted" style="font-size:0.8rem; margin-top:10px;">
-            💡 الراتب الأساسي بيتحسب تلقائيًا وقت الحفظ من نسبة المعلمة (أو راتبها المثبت)، والصافي النهائي = الأساسي + المكافآت - الخصومات.
+            💡 الراتب الأساسي بيتحسب تلقائيًا وقت الحفظ من دفعات الشهر المختار فقط (نسبة المعلمة أو راتبها المثبت)، والصافي النهائي = الأساسي + المكافآت - الخصومات.
         </p>
 
         <div style="text-align:center; margin-top:25px;">
@@ -51,11 +78,14 @@ function updateBasePreview(){
     const option = select.options[select.selectedIndex];
     const preview = document.getElementById('basePreview');
     const value = document.getElementById('basePreviewValue');
+    const warning = document.getElementById('alreadyPaidWarning');
     if(option && option.value){
         value.textContent = parseFloat(option.dataset.salary || 0).toFixed(2);
         preview.style.display = 'block';
+        warning.style.display = (option.dataset.paid === '1') ? 'block' : 'none';
     } else {
         preview.style.display = 'none';
+        warning.style.display = 'none';
     }
 }
 document.addEventListener('DOMContentLoaded', updateBasePreview);

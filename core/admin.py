@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Country, Teacher, Student, StudentNote, Expense, Payment, TeacherSalaryRecord, MonthlyEvaluation
+from .models import (
+    Country, Teacher, Student, StudentNote, Expense, Payment, TeacherSalaryRecord, MonthlyEvaluation,
+    Lesson, ScheduleRequest, TeacherComplaint,
+)
 
 
 @admin.register(Country)
@@ -67,3 +70,26 @@ class MonthlyEvaluationAdmin(admin.ModelAdmin):
     list_filter = ('template', 'month_label')
     search_fields = ('student_name', 'teacher_name')
     readonly_fields = ('public_token', 'created_at')
+
+
+@admin.register(Lesson)
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ('student', 'teacher', 'scheduled_at', 'status', 'was_late', 'status_recorded_at')
+    list_filter = ('status', 'teacher', 'was_late')
+    search_fields = ('student__name', 'teacher__name')
+    readonly_fields = ('created_at',)
+
+
+@admin.register(ScheduleRequest)
+class ScheduleRequestAdmin(admin.ModelAdmin):
+    list_display = ('student', 'teacher', 'request_type', 'status', 'created_at', 'reviewed_at')
+    list_filter = ('status', 'request_type', 'teacher')
+    search_fields = ('student__name', 'teacher__name')
+    readonly_fields = ('created_at', 'reviewed_at')
+
+
+@admin.register(TeacherComplaint)
+class TeacherComplaintAdmin(admin.ModelAdmin):
+    list_display = ('teacher', 'date', 'description')
+    list_filter = ('teacher', 'date')
+    search_fields = ('teacher__name', 'description')

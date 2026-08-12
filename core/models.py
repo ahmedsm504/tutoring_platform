@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 
 
@@ -23,6 +24,14 @@ class Teacher(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="رقم الهاتف")
     whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name="واتساب")
     governorate = models.CharField(max_length=100, blank=True, null=True, verbose_name="المحافظة")
+    hire_date = models.DateField(null=True, blank=True, verbose_name="تاريخ بداية العمل")
+
+    # حساب دخول المعلمة نفسها (مش أدمن، صلاحياته محدودة على بياناتها هي بس)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='teacher_profile',
+        verbose_name="حساب الدخول"
+    )
 
     commission_percent = models.DecimalField(
         max_digits=5, decimal_places=2, default=60,
@@ -47,21 +56,95 @@ class Teacher(models.Model):
     def previous_students_count(self):
         return self.students.filter(status='inactive').count()
 
-    def total_subscriptions(self):
-        """إجمالي قيمة اشتراكات كل طلابها (اللي بيتحسب عليها النسبة)"""
-        return sum(float(s.total_paid()) for s in self.students.all())
+    def total_subscriptions(self, year=None, month=None):
+        """إجمالي اللي اتحصل فعليًا (دفعات حقيقية) من طلابها *المقيدين* فقط
+        (اللي status = active).
 
-    def calculated_salary(self):
-        """الراتب المستحق لها: مثبت لو موجود، وإلا نسبة من إجمالي اشتراكات طلابها"""
+        مهم جدًا: الدالة دي بتحسب عن *شهر واحد بس* (افتراضيًا الشهر الحالي لو
+        مبعتيش year/month) وده عشان لو الطالب دفع في شهور مختلفة، كل دفعة تدخل
+        في حساب راتب شهرها هي بس، مش تتجمع مع بعض وتتحسب تاني في كل مرة
+        (وده كان سبب إن الراتب كان بيتضاعف). لو عايزة إجمالي كل العمر مرة واحدة
+        استخدمي total_subscriptions_all_time().
+        """
+        now = timezone.now()
+        year = year or now.year
+        month = month or now.month
+        active_students = self.students.filter(status='active')
+        return sum(float(s.total_paid(year=year, month=month)) for s in active_students)
+
+    def total_subscriptions_all_time(self):
+        """إجمالي كل الدفعات الفعلية من طلابها المقيدين من غير أي تحديد بشهر
+        (للعرض الإعلامي بس، متستخدمهاش لحساب الراتب عشان مش هتفرق بين الشهور)"""
+        active_students = self.students.filter(status='active')
+        return sum(float(s.total_paid()) for s in active_students)
+
+    def calculated_salary(self, year=None, month=None):
+        """الراتب المستحق عن شهر واحد بس (افتراضيًا الشهر الحالي):
+        مثبت لو موجود، وإلا نسبة من اشتراكات الشهر ده تحديدًا"""
         if self.fixed_salary is not None:
             return round(float(self.fixed_salary), 2)
-        return round(self.total_subscriptions() * (float(self.commission_percent) / 100), 2)
+        return round(self.total_subscriptions(year=year, month=month) * (float(self.commission_percent) / 100), 2)
 
-    def platform_share(self):
-        """نصيب المنصة من نفس الإجمالي"""
+    def platform_share(self, year=None, month=None):
+        """نصيب المنصة من نفس الشهر"""
         if self.fixed_salary is not None:
-            return round(self.total_subscriptions() - float(self.fixed_salary), 2)
-        return round(self.total_subscriptions() * (1 - float(self.commission_percent) / 100), 2)
+            return round(self.total_subscriptions(year=year, month=month) - float(self.fixed_salary), 2)
+        return round(self.total_subscriptions(year=year, month=month) * (1 - float(self.commission_percent) / 100), 2)
+
+    def has_salary_record_for(self, year, month):
+        """هل اتصرفلها راتب عن الشهر ده قبل كده؟ (عشان نمنع صرف راتب نفس الشهر مرتين)"""
+        return self.salary_records.filter(payout_date__year=year, payout_date__month=month).exists()
+
+    def lessons_for_period(self, year=None, month=None):
+        now = timezone.now()
+        year = year or now.year
+        month = month or now.month
+        return self.lessons.filter(scheduled_at__year=year, scheduled_at__month=month)
+
+    def monthly_lesson_stats(self, year=None, month=None):
+        """إحصائيات الحضور والانضباط عن شهر واحد (افتراضيًا الشهر الحالي):
+        عدد الحلقات، المكتملة، غياب الطالب، غياب المعلمة، الملغاة، غير المسجلة،
+        التأخيرات، ونسب الالتزام/الحضور/التسجيل"""
+        qs = self.lessons_for_period(year, month)
+        total = qs.count()
+        completed = student_absent = teacher_absent = cancelled = unregistered = late = 0
+
+        for lesson in qs:
+            eff = lesson.effective_status()
+            if eff == 'completed':
+                completed += 1
+            elif eff == 'student_absent':
+                student_absent += 1
+            elif eff == 'teacher_absent':
+                teacher_absent += 1
+            elif eff == 'cancelled':
+                cancelled += 1
+            elif eff == 'unregistered':
+                unregistered += 1
+            if lesson.was_late:
+                late += 1
+
+        countable = total - cancelled  # الملغاة مش بتتحاسب في نسبة الالتزام
+        commitment_rate = round((completed / countable * 100), 1) if countable else 100.0
+        attendance_rate = round(((countable - teacher_absent) / countable * 100), 1) if countable else 100.0
+        recording_rate = round(((total - unregistered) / total * 100), 1) if total else 100.0
+        overall_rating = round((commitment_rate + attendance_rate + recording_rate) / 3, 1)
+
+        return {
+            'total': total, 'completed': completed, 'student_absent': student_absent,
+            'teacher_absent': teacher_absent, 'cancelled': cancelled, 'unregistered': unregistered,
+            'late': late, 'complaints': self.complaints_count(year, month),
+            'commitment_rate': commitment_rate, 'attendance_rate': attendance_rate,
+            'recording_rate': recording_rate, 'overall_rating': overall_rating,
+        }
+
+    def complaints_count(self, year=None, month=None):
+        qs = self.complaints.all()
+        if year:
+            qs = qs.filter(date__year=year)
+        if month:
+            qs = qs.filter(date__month=month)
+        return qs.count()
 
 
 class TeacherSalaryRecord(models.Model):
@@ -139,8 +222,18 @@ class Student(models.Model):
         teacher_name = self.teacher.name if self.teacher else "بدون معلم"
         return f"{self.name} - {teacher_name}"
 
-    def total_paid(self):
-        return self.subscription_fee
+    def total_paid(self, year=None, month=None):
+        """إجمالي اللي دفعه الطالب فعليًا (من سجل الدفعات الحقيقي Payment)،
+        مش القيمة الاسمية للاشتراك اللي ممكن يكون لسه ماتدفعتش.
+        لو حددتي year/month، بيرجع بس دفعات الشهر ده (مهم عشان حساب راتب
+        المعلمة الشهري ميتكررش)"""
+        qs = self.payments.all()
+        if year:
+            qs = qs.filter(date__year=year)
+        if month:
+            qs = qs.filter(date__month=month)
+        total = qs.aggregate(total=models.Sum('amount'))['total']
+        return total or 0
 
 
 class Payment(models.Model):
@@ -244,3 +337,148 @@ class MonthlyEvaluation(models.Model):
 
     def __str__(self):
         return f"تقييم {self.student_name} - {self.month_label}"
+
+
+class Lesson(models.Model):
+    """حلقة واحدة (موعد) بين معلمة وطالب - العمود الفقري لمتابعة الحضور والانضباط"""
+    STATUS_CHOICES = [
+        ('scheduled', 'مجدولة'),
+        ('completed', 'تمت'),
+        ('student_absent', 'الطالب غائب'),
+        ('teacher_absent', 'المعلمة لم تتمكن من الحضور'),
+        ('cancelled', 'أُلغيت'),
+        ('unregistered', 'غير مسجلة'),
+    ]
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='lessons', verbose_name="الطالب")
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='lessons', verbose_name="المعلمة")
+
+    scheduled_at = models.DateTimeField(verbose_name="موعد الحلقة")
+    duration_minutes = models.PositiveIntegerField(default=30, verbose_name="مدة الحلقة (دقيقة)")
+
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='scheduled', verbose_name="الحالة")
+    status_recorded_at = models.DateTimeField(null=True, blank=True, verbose_name="وقت تسجيل الحالة")
+    auto_flagged = models.BooleanField(default=False, verbose_name="اتعلّمت غير مسجلة تلقائيًا")
+    was_late = models.BooleanField(default=False, verbose_name="اتأخرت المعلمة في الحضور")
+
+    notes = models.TextField(blank=True, null=True, verbose_name="ملاحظات على الحلقة")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+
+    class Meta:
+        verbose_name = "حلقة"
+        verbose_name_plural = "الحلقات"
+        ordering = ['scheduled_at']
+
+    def __str__(self):
+        return f"{self.student.name} - {self.scheduled_at:%Y-%m-%d %H:%M}"
+
+    def end_time(self):
+        return self.scheduled_at + timezone.timedelta(minutes=self.duration_minutes)
+
+    def is_due_soon(self, minutes=15):
+        """هتبدأ خلال كام دقيقة (للتنبيه قبل الحلقة)"""
+        now = timezone.now()
+        return self.status == 'scheduled' and self.scheduled_at <= now + timezone.timedelta(minutes=minutes) and now < self.scheduled_at
+
+    def is_ongoing_or_due(self):
+        """حان موعدها دلوقتي (بين بداية الحلقة ونهايتها) وبتستنى تسجيل حالة"""
+        now = timezone.now()
+        return self.status == 'scheduled' and self.scheduled_at <= now <= self.end_time()
+
+    def is_overdue_unrecorded(self):
+        """انتهى وقتها ومفيش حد سجل حالتها - دي "حلقة غير مسجلة" ⚠️"""
+        return self.status == 'scheduled' and timezone.now() > self.end_time()
+
+    def effective_status(self):
+        """الحالة الفعلية للعرض: لو لسه scheduled بس فات وقتها، بتتعرض كـ unregistered"""
+        if self.is_overdue_unrecorded():
+            return 'unregistered'
+        return self.status
+
+    def mark(self, new_status, was_late=False):
+        self.status = new_status
+        self.status_recorded_at = timezone.now()
+        self.auto_flagged = False
+        self.was_late = was_late
+        self.save(update_fields=['status', 'status_recorded_at', 'auto_flagged', 'was_late'])
+
+
+class ScheduleRequest(models.Model):
+    """طلب إضافة موعد جديد أو تعديل موعد قائم - المعلمة تقترح والإدارة توافق"""
+    REQUEST_TYPE_CHOICES = [
+        ('new', 'موعد جديد'),
+        ('change', 'تعديل موعد قائم'),
+    ]
+    STATUS_CHOICES = [
+        ('pending', 'قيد المراجعة'),
+        ('approved', 'تمت الموافقة'),
+        ('rejected', 'مرفوض'),
+    ]
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='schedule_requests', verbose_name="الطالب")
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='schedule_requests', verbose_name="المعلمة")
+    request_type = models.CharField(max_length=10, choices=REQUEST_TYPE_CHOICES, default='new', verbose_name="نوع الطلب")
+
+    related_lesson = models.ForeignKey(
+        Lesson, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='change_requests', verbose_name="الحلقة المطلوب تعديلها (لو تعديل)"
+    )
+
+    proposed_days = models.CharField(max_length=150, blank=True, null=True, verbose_name="الأيام المقترحة")
+    proposed_time = models.TimeField(null=True, blank=True, verbose_name="الوقت المقترح")
+    proposed_datetime = models.DateTimeField(null=True, blank=True, verbose_name="الموعد المقترح (لتعديل حلقة بعينها)")
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending', verbose_name="الحالة")
+    teacher_note = models.CharField(max_length=255, blank=True, null=True, verbose_name="ملاحظة المعلمة")
+    admin_note = models.CharField(max_length=255, blank=True, null=True, verbose_name="ملاحظة الإدارة")
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الطلب")
+    reviewed_at = models.DateTimeField(null=True, blank=True, verbose_name="تاريخ المراجعة")
+
+    class Meta:
+        verbose_name = "طلب موعد"
+        verbose_name_plural = "طلبات المواعيد"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"طلب {self.get_request_type_display()} - {self.student.name}"
+
+    def approve(self, admin_note=''):
+        self.status = 'approved'
+        self.admin_note = admin_note
+        self.reviewed_at = timezone.now()
+        self.save(update_fields=['status', 'admin_note', 'reviewed_at'])
+
+        if self.request_type == 'change' and self.related_lesson and self.proposed_datetime:
+            self.related_lesson.scheduled_at = self.proposed_datetime
+            self.related_lesson.status = 'scheduled'
+            self.related_lesson.status_recorded_at = None
+            self.related_lesson.save(update_fields=['scheduled_at', 'status', 'status_recorded_at'])
+        elif self.request_type == 'new' and self.proposed_datetime:
+            Lesson.objects.create(
+                student=self.student,
+                teacher=self.teacher,
+                scheduled_at=self.proposed_datetime,
+            )
+
+    def reject(self, admin_note=''):
+        self.status = 'rejected'
+        self.admin_note = admin_note
+        self.reviewed_at = timezone.now()
+        self.save(update_fields=['status', 'admin_note', 'reviewed_at'])
+
+
+class TeacherComplaint(models.Model):
+    """شكوى مسجلة على معلمة (بتدخل في تقييمها الشهري)"""
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='complaints', verbose_name="المعلمة")
+    description = models.TextField(verbose_name="تفاصيل الشكوى")
+    date = models.DateField(default=timezone.now, verbose_name="التاريخ")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ التسجيل")
+
+    class Meta:
+        verbose_name = "شكوى على معلمة"
+        verbose_name_plural = "شكاوى المعلمات"
+        ordering = ['-date']
+
+    def __str__(self):
+        return f"شكوى - {self.teacher.name} - {self.date}"

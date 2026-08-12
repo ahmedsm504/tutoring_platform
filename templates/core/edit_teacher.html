@@ -14,6 +14,7 @@
             <div><label style="font-weight:600; color:#4a1a8a;">المحافظة</label><input type="text" name="governorate" value="{{ teacher.governorate|default_if_none:'' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
             <div><label style="font-weight:600; color:#4a1a8a;">رقم الهاتف</label><input type="text" name="phone" value="{{ teacher.phone|default_if_none:'' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
             <div><label style="font-weight:600; color:#4a1a8a;">واتساب</label><input type="text" name="whatsapp" value="{{ teacher.whatsapp|default_if_none:'' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
+            <div><label style="font-weight:600; color:#4a1a8a;">تاريخ بداية العمل</label><input type="date" name="hire_date" value="{{ teacher.hire_date|date:'Y-m-d' }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;"></div>
         </div>
         <div style="text-align:center; margin-top:25px;">
             <button type="submit" class="btn btn-primary">تحديث</button>

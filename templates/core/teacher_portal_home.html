@@ -1,0 +1,89 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}أهلًا {{ teacher.name }}{% endblock %}
+{% block content %}
+<h2 style="color:var(--violet-700);">أهلًا بيكِ، {{ teacher.name }} 👋</h2>
+
+{% if due_lessons %}
+<div class="card" style="border-right:5px solid var(--red); background:var(--red-soft);">
+    <strong>🔔 حان موعد حلقتك دلوقتي!</strong>
+    {% for l in due_lessons %}
+    <div style="margin-top:10px; padding:12px; background:#fff; border-radius:12px;">
+        <div style="font-weight:700;">حان موعد الحلقة مع {{ l.student.name }} - {{ l.scheduled_at|date:"H:i" }}</div>
+        <form method="POST" action="{% url 'teacher_mark_lesson' l.id %}" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+            {% csrf_token %}
+            <label style="font-size:0.8rem; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="was_late"> اتأخرت</label>
+            <button type="submit" name="status" value="completed" class="btn btn-green">🟢 تمت الحلقة</button>
+            <button type="submit" name="status" value="student_absent" class="btn btn-red">🔴 الطالب غائب</button>
+            <button type="submit" name="status" value="teacher_absent" class="btn btn-amber">🟠 معنديش حضور</button>
+            <button type="submit" name="status" value="cancelled" class="btn btn-outline">⚪ الحلقة أُلغيت</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if overdue_unrecorded %}
+<div class="card" style="border-right:5px solid var(--amber); background:var(--amber-soft);">
+    <strong>⚠️ عندك حلقات فات وقتها ومسجلتيش حالتها</strong>
+    {% for l in overdue_unrecorded %}
+    <div style="margin-top:10px; padding:12px; background:#fff; border-radius:12px;">
+        <div style="font-weight:700;">{{ l.student.name }} - كان الموعد {{ l.scheduled_at|date:"Y/m/d H:i" }}</div>
+        <form method="POST" action="{% url 'teacher_mark_lesson' l.id %}" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+            {% csrf_token %}
+            <label style="font-size:0.8rem; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="was_late"> اتأخرت</label>
+            <button type="submit" name="status" value="completed" class="btn btn-green">🟢 تمت الحلقة</button>
+            <button type="submit" name="status" value="student_absent" class="btn btn-red">🔴 الطالب غائب</button>
+            <button type="submit" name="status" value="teacher_absent" class="btn btn-amber">🟠 معنديش حضور</button>
+            <button type="submit" name="status" value="cancelled" class="btn btn-outline">⚪ الحلقة أُلغيت</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <h4 style="margin:0; color:var(--violet-700);">إحصائيات شهرك</h4>
+        <form method="GET" style="display:flex; gap:8px;">
+            <select name="year" onchange="this.form.submit()">
+                {% for y in stat_years_range %}<option value="{{ y }}" {% if stat_year == y %}selected{% endif %}>{{ y }}</option>{% endfor %}
+            </select>
+            <select name="month" onchange="this.form.submit()">
+                {% for m_num, m_name in arabic_months.items %}<option value="{{ m_num }}" {% if stat_month == m_num %}selected{% endif %}>{{ m_name }}</option>{% endfor %}
+            </select>
+        </form>
+    </div>
+    <div class="stats-row" style="margin-top:14px;">
+        <div class="stat-box"><div class="number">{{ students.count }}</div><div class="label">👩‍🎓 طلاب مقيدين</div></div>
+        <div class="stat-box"><div class="number">{{ monthly_stats.completed }}</div><div class="label">✅ حلقات تمت</div></div>
+        <div class="stat-box"><div class="number">{{ monthly_stats.student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
+        <div class="stat-box"><div class="number">{{ monthly_stats.teacher_absent }}</div><div class="label">🟠 غياباتك</div></div>
+        <div class="stat-box"><div class="number">{{ monthly_stats.late }}</div><div class="label">⏰ تأخيراتك</div></div>
+        <div class="stat-box"><div class="number">{{ monthly_stats.unregistered }}</div><div class="label">⚠️ غير مسجلة</div></div>
+        <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ monthly_stats.overall_rating }}%</div><div class="label">🏆 تقييمك الشهري</div></div>
+    </div>
+</div>
+
+<div class="card">
+    <h4 style="color:var(--violet-700);">🗓️ حلقاتك القادمة</h4>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>الطالب</th><th>الموعد</th><th></th></tr></thead>
+            <tbody>
+                {% for l in upcoming_lessons %}
+                <tr>
+                    <td>{{ l.student.name }}</td>
+                    <td>{{ l.scheduled_at|date:"Y/m/d H:i" }}</td>
+                    <td>
+                        {% if l.is_due_soon %}<span class="badge" style="background:var(--amber-soft); color:var(--amber);">قريب</span>{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center;">لا يوجد حلقات قادمة.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{% url 'teacher_schedule_requests' %}" class="btn btn-primary" style="margin-top:12px;"><i class="fas fa-calendar-plus"></i> طلب موعد جديد / تعديل موعد</a>
+</div>
+{% endblock %}

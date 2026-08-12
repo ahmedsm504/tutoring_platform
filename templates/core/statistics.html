@@ -7,6 +7,21 @@
 </div>
 <p class="text-muted" style="margin-bottom:15px;">كل معلمة ليها نسبة أو راتب مثبت خاص بيها (افتراضيًا 40% للمنصة و60% للمعلمة). لتغيير نسبة أي حد، روحي لصفحة "قائمة الرواتب".</p>
 
+<form method="GET" class="filter-bar" style="margin-bottom:15px;">
+    <select name="year">
+        {% for y in stat_years_range %}
+        <option value="{{ y }}" {% if stat_year == y %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+    <select name="month">
+        {% for m_num, m_name in arabic_months.items %}
+        <option value="{{ m_num }}" {% if stat_month == m_num %}selected{% endif %}>{{ m_name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-filter"></i> عرض الشهر ده</button>
+</form>
+<p class="text-muted" style="margin-bottom:15px;">⚠️ الأرقام هنا خاصة بالشهر المحدد بس (مش تراكمية) عشان دفعات كل شهر تتحسب مرة واحدة بس في راتب شهرها.</p>
+
 <div class="stats-row">
     <div class="stat-box">
         <div class="number">{{ grand_total_fees|floatformat:2 }} جنيه</div>
