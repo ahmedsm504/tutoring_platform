@@ -72,7 +72,7 @@
     <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ monthly_stats.student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
     <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ monthly_stats.teacher_absent }}</div><div class="label">🟠 غياب المعلمة</div></div>
     <div class="stat-box"><div class="number">{{ monthly_stats.cancelled }}</div><div class="label">⚪ حلقات أُلغيت</div></div>
-    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ monthly_stats.unregistered }}</div><div class="label">⚠️ غير مسجلة</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ monthly_stats.unregistered }}</div><div class="label">⚠️ غياب بدون تسجيل</div></div>
     <div class="stat-box"><div class="number">{{ monthly_stats.late }}</div><div class="label">⏰ تأخيرات</div></div>
     <div class="stat-box"><div class="number">{{ monthly_stats.complaints }}</div><div class="label">📢 شكاوى</div></div>
 </div>
@@ -94,7 +94,7 @@
                 <td>{{ l.scheduled_at|date:"Y/m/d H:i" }}</td>
                 <td>
                     {% if l.is_due_soon %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">🔔 قريب</span>
-                    {% elif l.is_overdue_unrecorded %}<span class="badge-neutral" style="background:var(--red-soft); color:var(--red);">⚠️ غير مسجلة</span>
+                    {% elif l.is_overdue_unrecorded %}<span class="badge-neutral" style="background:var(--red-soft); color:var(--red);">⚠️ فات وقتها (هتتحسب غياب)</span>
                     {% else %}<span class="badge-neutral">مجدولة</span>{% endif %}
                 </td>
                 <td><a href="{% url 'lessons_dashboard' %}" class="btn btn-outline btn-sm">إدارة</a></td>

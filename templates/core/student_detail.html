@@ -23,6 +23,7 @@
     <div><strong>الشهر:</strong> {{ student.month }}</div>
     <div><strong>الباقة:</strong> {{ student.package_name|default:"-" }}</div>
     <div><strong>عدد الحلقات:</strong> {{ student.lessons_count }}</div>
+    <div><strong>الحلقات المكتملة:</strong> {{ student.lessons_progress_label }}</div>
     <div><strong>قيمة الاشتراك:</strong> {{ student.subscription_fee }} جنيه</div>
     <div><strong>السن:</strong> {{ student.age|default:"-" }}</div>
     <div><strong>الهاتف:</strong> {{ student.phone|default:"-" }}</div>
@@ -110,6 +111,35 @@
                 </tr>
                 {% empty %}
                 <tr><td colspan="3" style="text-align:center;">لسه مفيش دفعات مسجلة لهذا الطالب.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="background:white; padding:25px; border-radius:18px; border:1px solid #ede9fe; margin-top:20px;">
+    <h4 style="color:#4a1a8a;">📅 سجل الحلقات</h4>
+    <div class="table-container" style="margin-top:10px;">
+        <table>
+            <thead><tr><th>الموعد</th><th>الحالة</th></tr></thead>
+            <tbody>
+                {% for l in lessons %}
+                <tr>
+                    <td>{{ l.scheduled_at|date:"Y/m/d H:i" }}</td>
+                    <td>
+                        {% with eff=l.effective_status %}
+                        {% if eff == 'completed' %}<span class="badge-neutral" style="background:var(--green-soft); color:var(--green);">✅ تمت</span>
+                        {% elif eff == 'student_absent' %}
+                            {% if l.was_auto_defaulted %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">⚠️ غياب (بدون تسجيل)</span>
+                            {% else %}<span class="badge-neutral" style="background:var(--red-soft); color:var(--red);">🔴 غياب</span>{% endif %}
+                        {% elif eff == 'teacher_absent' %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">🟠 غياب معلمة</span>
+                        {% elif eff == 'cancelled' %}<span class="badge-neutral">⚪ أُلغيت</span>
+                        {% else %}<span class="badge-neutral">مجدولة</span>{% endif %}
+                        {% endwith %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="2" style="text-align:center;">لسه مفيش حلقات مسجلة لهذا الطالب.</td></tr>
                 {% endfor %}
             </tbody>
         </table>

@@ -58,6 +58,7 @@ urlpatterns = [
     path('lessons/', views.lessons_dashboard, name='lessons_dashboard'),
     path('lessons/add/', views.add_lesson, name='add_lesson'),
     path('lessons/<int:lesson_id>/mark/', views.mark_lesson, name='mark_lesson'),
+    path('lessons/<int:lesson_id>/mark-started/', views.mark_lesson_started, name='mark_lesson_started'),
     path('lessons/<int:lesson_id>/delete/', views.delete_lesson, name='delete_lesson'),
 
     # طلبات المواعيد
@@ -77,7 +78,9 @@ urlpatterns = [
     path('teacher-portal/logout/', views.teacher_logout, name='teacher_logout'),
     path('teacher-portal/', views.teacher_portal_home, name='teacher_portal_home'),
     path('teacher-portal/lessons/<int:lesson_id>/mark/', views.teacher_mark_lesson, name='teacher_mark_lesson'),
+    path('teacher-portal/lessons/<int:lesson_id>/mark-started/', views.teacher_mark_lesson_started, name='teacher_mark_lesson_started'),
     path('teacher-portal/schedule-requests/', views.teacher_schedule_requests, name='teacher_schedule_requests'),
+    path('teacher-portal/register-schedule/', views.teacher_register_schedule, name='teacher_register_schedule'),
 
     # نموذج تقييم ومتابعة الأداء الشهري
     path('evaluations/', views.evaluations_list, name='evaluations_list'),

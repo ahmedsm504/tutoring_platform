@@ -1,0 +1,79 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}تسجيل مواعيد الطلاب{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h2 style="color:var(--violet-700);">🗓️ تسجيل مواعيد الطلاب</h2>
+    <a href="{% url 'teacher_portal_home' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> الرئيسية</a>
+</div>
+<p style="color:var(--ink-muted); font-size:0.85rem;">
+    اختاري الطالب وحددي يوم/أيام حلقاته في الأسبوع والوقت، وهيتسجل جدوله تلقائيًا زي المنبه. لما ييجي يوم الحلقة،
+    هتلاقيها ظاهرة عندك في الرئيسية جاهزة تسجلي حالتها.
+</p>
+
+<div class="card">
+    <h4 style="color:var(--violet-700); margin-top:0;">تسجيل جدول طالب</h4>
+    {% if students %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="field">
+            <label>الطالب *</label>
+            <select name="student" required>
+                <option value="">--- اختاري الطالب ---</option>
+                {% for s in students %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="field">
+            <label>أيام الحلقة في الأسبوع *</label>
+            <div style="display:flex; flex-wrap:wrap; gap:10px; background:var(--violet-50); padding:12px; border-radius:10px;">
+                {% for w_num, w_name in weekdays %}
+                <label style="display:flex; align-items:center; gap:5px; font-size:0.85rem; font-weight:400;">
+                    <input type="checkbox" name="weekday" value="{{ w_num }}"> {{ w_name }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="field">
+            <label>وقت الحلقة *</label>
+            <input type="time" name="lesson_time" required>
+        </div>
+        <div class="field">
+            <label>مدة الحلقة (دقيقة)</label>
+            <input type="number" name="duration_minutes" value="30">
+        </div>
+        <div class="field">
+            <label>لعدد كام أسبوع نسجل الجدول ده؟</label>
+            <input type="number" name="weeks_count" value="4" min="1" max="12">
+        </div>
+        <button type="submit" class="btn btn-primary">تسجيل الجدول</button>
+    </form>
+    {% else %}
+    <p style="color:var(--ink-muted);">مفيش طلاب مقيدين عندك دلوقتي.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h4 style="color:var(--violet-700); margin-top:0;">جدول طلابك الحالي</h4>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>الطالب</th><th>الحلقات (تمت / الإجمالي)</th><th>مواعيده القادمة</th></tr></thead>
+            <tbody>
+                {% for row in students_progress %}
+                <tr>
+                    <td>{{ row.student.name }}</td>
+                    <td>{{ row.progress }}</td>
+                    <td>
+                        {% for l in row.upcoming|slice:":4" %}
+                            <span class="badge" style="background:var(--violet-100); color:var(--violet-700); margin-left:4px;">{{ l.scheduled_at|date:"D H:i" }}</span>
+                        {% empty %}
+                            <span style="color:var(--ink-muted);">لا يوجد مواعيد مسجلة</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center;">لا يوجد طلاب.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

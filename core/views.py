@@ -333,10 +333,12 @@ def student_detail(request, student_id):
 
     notes = student.notes_timeline.all()
     payments = student.payments.all()
+    lessons = student.lessons.all()[:30]
     context = {
         'student': student,
         'notes': notes,
         'payments': payments,
+        'lessons': lessons,
     }
     return render(request, 'core/student_detail.html', context)
 
@@ -1016,7 +1018,7 @@ def lessons_dashboard(request):
     student_absent = 0
     teacher_absent = 0
     cancelled = 0
-    unregistered = 0
+    unrecorded = 0  # عدد الحلقات اللي اتحسبت غياب تلقائي لأن محدش سجلها (رقم فرعي داخل غياب الطالب)
     not_due_yet = 0
     due_now = []
 
@@ -1026,12 +1028,12 @@ def lessons_dashboard(request):
             completed += 1
         elif eff == 'student_absent':
             student_absent += 1
+            if lesson.was_auto_defaulted():
+                unrecorded += 1
         elif eff == 'teacher_absent':
             teacher_absent += 1
         elif eff == 'cancelled':
             cancelled += 1
-        elif eff == 'unregistered':
-            unregistered += 1
         elif eff == 'scheduled':
             if lesson.scheduled_at > now:
                 not_due_yet += 1
@@ -1051,7 +1053,7 @@ def lessons_dashboard(request):
         'student_absent': student_absent,
         'teacher_absent': teacher_absent,
         'cancelled': cancelled,
-        'unregistered': unregistered,
+        'unregistered': unrecorded,
         'not_due_yet': not_due_yet,
         'due_now': due_now,
         'teacher_rows': teacher_rows,
@@ -1106,6 +1108,17 @@ def mark_lesson(request, lesson_id):
             lesson.mark(new_status, was_late=was_late)
             messages.success(request, f'تم تسجيل حالة الحلقة: {valid_statuses[new_status]}.')
 
+    next_url = request.POST.get('next') or request.GET.get('next') or 'lessons_dashboard'
+    return redirect(next_url)
+
+
+@staff_member_required
+def mark_lesson_started(request, lesson_id):
+    """تسجيل إن الحلقة بدأت فعليًا (زرار "بدء الحلقة")"""
+    lesson = get_object_or_404(Lesson, pk=lesson_id)
+    if request.method == 'POST':
+        lesson.mark_started()
+        messages.success(request, f'تم تسجيل بدء حلقة {lesson.student.name}.')
     next_url = request.POST.get('next') or request.GET.get('next') or 'lessons_dashboard'
     return redirect(next_url)
 
@@ -1312,9 +1325,15 @@ def teacher_portal_home(request):
     upcoming = teacher.lessons.filter(status='scheduled', scheduled_at__gte=now).order_by('scheduled_at')[:10]
     overdue_unrecorded = [l for l in teacher.lessons.filter(status='scheduled') if l.is_overdue_unrecorded()]
 
+    students_progress = [
+        {'student': s, 'progress': s.lessons_progress_label()}
+        for s in teacher.students.filter(status='active')
+    ]
+
     context = {
         'teacher': teacher,
         'students': teacher.students.filter(status='active'),
+        'students_progress': students_progress,
         'monthly_stats': teacher.monthly_lesson_stats(year=stat_year, month=stat_month),
         'stat_year': stat_year,
         'stat_month': stat_month,
@@ -1325,6 +1344,17 @@ def teacher_portal_home(request):
         'overdue_unrecorded': overdue_unrecorded,
     }
     return render(request, 'core/teacher_portal_home.html', context)
+
+
+@teacher_login_required
+def teacher_mark_lesson_started(request, lesson_id):
+    """المعلمة تضغط "بدء الحلقة" الساعة اللي بتبدأ فيها فعليًا"""
+    teacher = request.user.teacher_profile
+    lesson = get_object_or_404(Lesson, pk=lesson_id, teacher=teacher)
+    if request.method == 'POST':
+        lesson.mark_started()
+        messages.success(request, f'تم تسجيل بدء حلقة {lesson.student.name}.')
+    return redirect('teacher_portal_home')
 
 
 @teacher_login_required
@@ -1348,38 +1378,103 @@ def teacher_mark_lesson(request, lesson_id):
 
 @teacher_login_required
 def teacher_schedule_requests(request):
-    """المعلمة تشوف طلبات المواعيد بتاعتها وتقدر تبعت طلب جديد - مش بتتحط
-    نافذة على طول، لازم موافقة الإدارة زي ما اتطلب بالظبط"""
+    """المعلمة تشوف طلبات تعديل المواعيد بتاعتها وتقدر تبعت طلب تعديل جديد
+    لحلقة قائمة - مش بيتفعّل على طول، لازم موافقة الإدارة. (تسجيل مواعيد
+    جديدة بقى من صفحة "تسجيل مواعيد الطلاب" بدل ما يكون طلب هنا)"""
     teacher = request.user.teacher_profile
 
     if request.method == 'POST':
-        student_id = request.POST.get('student')
-        student = get_object_or_404(Student, pk=student_id, teacher=teacher)
-        request_type = request.POST.get('request_type', 'new')
-        proposed_datetime = _or_none(request.POST.get('proposed_datetime'))
         related_lesson_id = request.POST.get('related_lesson')
+        proposed_datetime = _or_none(request.POST.get('proposed_datetime'))
 
-        req = ScheduleRequest(
-            student=student,
+        if not related_lesson_id or not proposed_datetime:
+            messages.error(request, 'من فضلك اختاري الحلقة والموعد الجديد المقترح.')
+            return redirect('teacher_schedule_requests')
+
+        related_lesson = get_object_or_404(Lesson, pk=related_lesson_id, teacher=teacher)
+        ScheduleRequest.objects.create(
+            student=related_lesson.student,
             teacher=teacher,
-            request_type=request_type,
-            proposed_days=request.POST.get('proposed_days', '').strip(),
+            request_type='change',
+            related_lesson=related_lesson,
             proposed_datetime=proposed_datetime,
             teacher_note=request.POST.get('teacher_note', '').strip(),
         )
-        if request_type == 'change' and related_lesson_id:
-            req.related_lesson = get_object_or_404(Lesson, pk=related_lesson_id, teacher=teacher)
-        req.save()
-        messages.success(request, 'تم إرسال الطلب للإدارة، هيظهر رسميًا بعد الموافقة عليه.')
+        messages.success(request, 'تم إرسال طلب تعديل الموعد للإدارة، هيتفعّل بعد الموافقة عليه.')
         return redirect('teacher_schedule_requests')
 
     context = {
         'teacher': teacher,
         'requests': teacher.schedule_requests.all(),
-        'students': teacher.students.filter(status='active'),
         'upcoming_lessons': teacher.lessons.filter(status='scheduled').order_by('scheduled_at')[:20],
     }
     return render(request, 'core/teacher_schedule_requests.html', context)
+
+
+@teacher_login_required
+def teacher_register_schedule(request):
+    """تسجيل مواعيد الطلاب: المعلمة تحط اسم الطالب ومواعيد حلقاته المتكررة
+    (يوم/أيام الأسبوع + الوقت)، والسيستم بيولّد الحلقات تلقائيًا لعدد
+    الأسابيع المطلوبة. ده تسجيل مباشر (مش طلب محتاج موافقة) لأنه أساسًا
+    بيان بجدولها هي المعروف مسبقًا، مش تعديل على جدول متفق عليه بالفعل"""
+    teacher = request.user.teacher_profile
+    students = teacher.students.filter(status='active')
+
+    WEEKDAYS = [
+        (0, 'الإثنين'), (1, 'الثلاثاء'), (2, 'الأربعاء'), (3, 'الخميس'),
+        (4, 'الجمعة'), (5, 'السبت'), (6, 'الأحد'),
+    ]
+
+    if request.method == 'POST':
+        student_id = request.POST.get('student')
+        student = get_object_or_404(Student, pk=student_id, teacher=teacher)
+
+        weekdays = request.POST.getlist('weekday')
+        lesson_time = _or_none(request.POST.get('lesson_time'))
+        weeks_count = _to_int_or_none(request.POST.get('weeks_count')) or 4
+        duration_minutes = _to_int_or_none(request.POST.get('duration_minutes')) or 30
+
+        if not weekdays or not lesson_time:
+            messages.error(request, 'من فضلك حددي يوم/أيام الحلقة والوقت.')
+            return redirect('teacher_register_schedule')
+
+        weekdays = {int(w) for w in weekdays}
+        hour, minute = [int(x) for x in lesson_time.split(':')[:2]]
+
+        created_count = 0
+        today = timezone.localdate()
+        end_date = today + timedelta(days=weeks_count * 7)
+        current_date = today
+        while current_date <= end_date:
+            if current_date.weekday() in weekdays:
+                naive_dt = datetime.combine(current_date, datetime.min.time()).replace(hour=hour, minute=minute)
+                scheduled_at = timezone.make_aware(naive_dt) if timezone.is_naive(naive_dt) else naive_dt
+                if scheduled_at >= timezone.now() and not Lesson.objects.filter(student=student, teacher=teacher, scheduled_at=scheduled_at).exists():
+                    Lesson.objects.create(
+                        student=student, teacher=teacher,
+                        scheduled_at=scheduled_at, duration_minutes=duration_minutes,
+                    )
+                    created_count += 1
+            current_date += timedelta(days=1)
+
+        if created_count:
+            messages.success(request, f'تم تسجيل {created_count} حلقة لـ "{student.name}" في جدولك.')
+        else:
+            messages.warning(request, 'مفيش حلقات جديدة اتضافت (ممكن تكون كل المواعيد دي متسجلة قبل كده).')
+        return redirect('teacher_register_schedule')
+
+    students_progress = [
+        {'student': s, 'progress': s.lessons_progress_label(), 'upcoming': s.lessons.filter(status='scheduled', scheduled_at__gte=timezone.now()).order_by('scheduled_at')}
+        for s in students
+    ]
+
+    context = {
+        'teacher': teacher,
+        'students': students,
+        'students_progress': students_progress,
+        'weekdays': WEEKDAYS,
+    }
+    return render(request, 'core/teacher_register_schedule.html', context)
 
 
 # =======================

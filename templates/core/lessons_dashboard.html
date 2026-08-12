@@ -5,7 +5,7 @@
     <h2 style="color:#4a1a8a;">📅 لوحة الحلقات - {{ today|date:"Y/m/d" }}</h2>
     <div class="flex">
         <a href="{% url 'schedule_requests_list' %}" class="btn btn-outline">
-            <i class="fas fa-clock-rotate-left"></i> طلبات المواعيد
+            <i class="fas fa-clock-rotate-left"></i> طلبات تعديل المواعيد
             {% if pending_requests_count %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">{{ pending_requests_count }}</span>{% endif %}
         </a>
         <a href="{% url 'add_lesson' %}" class="btn btn-primary"><i class="fas fa-plus"></i> جدولة حلقة</a>
@@ -16,11 +16,14 @@
     <div class="stat-box"><div class="number">{{ total_today }}</div><div class="label">🔔 حلقات مجدولة اليوم</div></div>
     <div class="stat-box" style="border-right-color:#22c55e;"><div class="number">{{ completed }}</div><div class="label">✅ تمت</div></div>
     <div class="stat-box"><div class="number">{{ not_due_yet }}</div><div class="label">⏳ لم يحن موعدها</div></div>
-    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ unregistered }}</div><div class="label">⚠️ غير مسجلة</div></div>
     <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
     <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ teacher_absent }}</div><div class="label">🟠 غياب معلمة</div></div>
     <div class="stat-box"><div class="number">{{ cancelled }}</div><div class="label">⚪ ملغاة</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ unregistered }}</div><div class="label">⚠️ غياب بدون تسجيل يدوي</div></div>
 </div>
+<p class="text-muted" style="font-size:0.8rem; margin-top:-6px;">
+    "غياب بدون تسجيل يدوي" رقم فرعي جوه "غياب طالب" - يعني حلقات فات وقتها ومحدش (لا المعلمة ولا الإدارة) سجل حالتها، فالسيستم حسبها غياب تلقائيًا.
+</p>
 
 {% if due_now %}
 <h4 style="color:#dc3545; margin-top:20px;">⚠️ حلقات فات موعدها ومحتاجة تسجيل حالة</h4>
@@ -53,7 +56,7 @@
 <h4 style="color:#4a1a8a; margin-top:20px;">جدول اليوم بالكامل</h4>
 <div class="table-container">
     <table>
-        <thead><tr><th>الطالب</th><th>المعلمة</th><th>الموعد</th><th>الحالة</th><th></th></tr></thead>
+        <thead><tr><th>الطالب</th><th>المعلمة</th><th>الموعد</th><th>بدأت؟</th><th>الحالة</th><th></th></tr></thead>
         <tbody>
             {% for l in todays_lessons %}
             <tr>
@@ -61,12 +64,17 @@
                 <td>{{ l.teacher.name }}</td>
                 <td>{{ l.scheduled_at|date:"H:i" }}</td>
                 <td>
+                    {% if l.started_at %}<span class="badge-neutral" style="background:var(--green-soft); color:var(--green);">{{ l.started_at|date:"H:i" }}</span>
+                    {% else %}<span class="text-muted">-</span>{% endif %}
+                </td>
+                <td>
                     {% with eff=l.effective_status %}
                     {% if eff == 'completed' %}<span class="badge-neutral" style="background:var(--green-soft); color:var(--green);">✅ تمت</span>
-                    {% elif eff == 'student_absent' %}<span class="badge-neutral" style="background:var(--red-soft); color:var(--red);">🔴 غياب طالب</span>
+                    {% elif eff == 'student_absent' %}
+                        {% if l.was_auto_defaulted %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">⚠️ غياب (بدون تسجيل)</span>
+                        {% else %}<span class="badge-neutral" style="background:var(--red-soft); color:var(--red);">🔴 غياب طالب</span>{% endif %}
                     {% elif eff == 'teacher_absent' %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">🟠 غياب معلمة</span>
                     {% elif eff == 'cancelled' %}<span class="badge-neutral">⚪ أُلغيت</span>
-                    {% elif eff == 'unregistered' %}<span class="badge-neutral" style="background:var(--amber-soft); color:var(--amber);">⚠️ غير مسجلة</span>
                     {% else %}<span class="badge-neutral">مجدولة</span>{% endif %}
                     {% endwith %}
                 </td>
@@ -78,7 +86,7 @@
                 </td>
             </tr>
             {% empty %}
-            <tr><td colspan="5" style="text-align:center;">لا يوجد حلقات مجدولة اليوم.</td></tr>
+            <tr><td colspan="6" style="text-align:center;">لا يوجد حلقات مجدولة اليوم.</td></tr>
             {% endfor %}
         </tbody>
     </table>
@@ -87,7 +95,7 @@
 <h4 style="color:#4a1a8a; margin-top:20px;">👩‍🏫 المعلمات - إحصائيات الشهر الحالي</h4>
 <div class="table-container">
     <table>
-        <thead><tr><th>المعلمة</th><th>حلقات</th><th>تمت</th><th>غير مسجلة</th><th>غياب معلمة</th><th>الالتزام</th></tr></thead>
+        <thead><tr><th>المعلمة</th><th>حلقات</th><th>تمت</th><th>غياب بدون تسجيل</th><th>غياب معلمة</th><th>الالتزام</th></tr></thead>
         <tbody>
             {% for row in teacher_rows %}
             <tr>

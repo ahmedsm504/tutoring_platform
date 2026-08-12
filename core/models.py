@@ -103,11 +103,12 @@ class Teacher(models.Model):
 
     def monthly_lesson_stats(self, year=None, month=None):
         """إحصائيات الحضور والانضباط عن شهر واحد (افتراضيًا الشهر الحالي):
-        عدد الحلقات، المكتملة، غياب الطالب، غياب المعلمة، الملغاة، غير المسجلة،
-        التأخيرات، ونسب الالتزام/الحضور/التسجيل"""
+        عدد الحلقات، المكتملة، غياب الطالب (وضمنها اللي محدش سجلها فعتُبرت
+        غياب تلقائي)، غياب المعلمة، الملغاة، التأخيرات، ونسب الالتزام/الحضور/التسجيل"""
         qs = self.lessons_for_period(year, month)
         total = qs.count()
-        completed = student_absent = teacher_absent = cancelled = unregistered = late = 0
+        completed = student_absent = teacher_absent = cancelled = late = 0
+        unrecorded = 0  # عدد الحلقات اللي محدش سجلها يدويًا (اتحسبت غياب تلقائي) - رقم فرعي داخل student_absent
 
         for lesson in qs:
             eff = lesson.effective_status()
@@ -115,24 +116,24 @@ class Teacher(models.Model):
                 completed += 1
             elif eff == 'student_absent':
                 student_absent += 1
+                if lesson.was_auto_defaulted():
+                    unrecorded += 1
             elif eff == 'teacher_absent':
                 teacher_absent += 1
             elif eff == 'cancelled':
                 cancelled += 1
-            elif eff == 'unregistered':
-                unregistered += 1
             if lesson.was_late:
                 late += 1
 
         countable = total - cancelled  # الملغاة مش بتتحاسب في نسبة الالتزام
         commitment_rate = round((completed / countable * 100), 1) if countable else 100.0
         attendance_rate = round(((countable - teacher_absent) / countable * 100), 1) if countable else 100.0
-        recording_rate = round(((total - unregistered) / total * 100), 1) if total else 100.0
+        recording_rate = round(((total - unrecorded) / total * 100), 1) if total else 100.0
         overall_rating = round((commitment_rate + attendance_rate + recording_rate) / 3, 1)
 
         return {
             'total': total, 'completed': completed, 'student_absent': student_absent,
-            'teacher_absent': teacher_absent, 'cancelled': cancelled, 'unregistered': unregistered,
+            'teacher_absent': teacher_absent, 'cancelled': cancelled, 'unregistered': unrecorded,
             'late': late, 'complaints': self.complaints_count(year, month),
             'commitment_rate': commitment_rate, 'attendance_rate': attendance_rate,
             'recording_rate': recording_rate, 'overall_rating': overall_rating,
@@ -234,6 +235,14 @@ class Student(models.Model):
             qs = qs.filter(date__month=month)
         total = qs.aggregate(total=models.Sum('amount'))['total']
         return total or 0
+
+    def lessons_completed_count(self):
+        """كام حلقة اتعملت فعلًا للطالب ده من كل حلقاته المسجلة في السيستم"""
+        return self.lessons.filter(status='completed').count()
+
+    def lessons_progress_label(self):
+        """عدد الحلقات المطلوبة (من الباقة) مقابل اللي تمت فعلًا - '3 من 8' مثلًا"""
+        return f"{self.lessons_completed_count()} من {self.lessons_count}"
 
 
 class Payment(models.Model):
@@ -358,7 +367,8 @@ class Lesson(models.Model):
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='scheduled', verbose_name="الحالة")
     status_recorded_at = models.DateTimeField(null=True, blank=True, verbose_name="وقت تسجيل الحالة")
-    auto_flagged = models.BooleanField(default=False, verbose_name="اتعلّمت غير مسجلة تلقائيًا")
+    started_at = models.DateTimeField(null=True, blank=True, verbose_name="وقت بدء الحلقة فعليًا")
+    auto_flagged = models.BooleanField(default=False, verbose_name="اتحسبت غياب تلقائيًا من غير ما تتسجل")
     was_late = models.BooleanField(default=False, verbose_name="اتأخرت المعلمة في الحضور")
 
     notes = models.TextField(blank=True, null=True, verbose_name="ملاحظات على الحلقة")
@@ -386,14 +396,26 @@ class Lesson(models.Model):
         return self.status == 'scheduled' and self.scheduled_at <= now <= self.end_time()
 
     def is_overdue_unrecorded(self):
-        """انتهى وقتها ومفيش حد سجل حالتها - دي "حلقة غير مسجلة" ⚠️"""
+        """انتهى وقتها ومفيش حد سجل حالتها"""
         return self.status == 'scheduled' and timezone.now() > self.end_time()
 
     def effective_status(self):
-        """الحالة الفعلية للعرض: لو لسه scheduled بس فات وقتها، بتتعرض كـ unregistered"""
+        """الحالة الفعلية للعرض والحساب: لو الوقت فات ومفيش حد سجل حالتها،
+        بتتحسب غياب تلقائيًا (مش حالة منفصلة اسمها "غير مسجلة") - زي ما
+        اتفقنا: أي حلقة محدش سجلها = غياب"""
         if self.is_overdue_unrecorded():
-            return 'unregistered'
+            return 'student_absent'
         return self.status
+
+    def was_auto_defaulted(self):
+        """هل الحالة دي طالعة تلقائي كغياب لأن محدش سجلها (مش تسجيل يدوي فعلي)؟
+        مفيد للإدارة عشان تفرق بين غياب متسجل فعلًا وغياب افتراضي محتاج متابعة"""
+        return self.is_overdue_unrecorded()
+
+    def mark_started(self):
+        """المعلمة بتضغط "بدء الحلقة" الساعة اللي بتبدأ فيها فعليًا"""
+        self.started_at = timezone.now()
+        self.save(update_fields=['started_at'])
 
     def mark(self, new_status, was_late=False):
         self.status = new_status

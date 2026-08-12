@@ -1,7 +1,10 @@
 {% extends 'core/teacher_portal_base.html' %}
 {% block title %}أهلًا {{ teacher.name }}{% endblock %}
 {% block content %}
-<h2 style="color:var(--violet-700);">أهلًا بيكِ، {{ teacher.name }} 👋</h2>
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h2 style="color:var(--violet-700); margin:0;">أهلًا بيكِ، {{ teacher.name }} 👋</h2>
+    <a href="{% url 'teacher_register_schedule' %}" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> تسجيل مواعيد الطلاب</a>
+</div>
 
 {% if due_lessons %}
 <div class="card" style="border-right:5px solid var(--red); background:var(--red-soft);">
@@ -9,14 +12,21 @@
     {% for l in due_lessons %}
     <div style="margin-top:10px; padding:12px; background:#fff; border-radius:12px;">
         <div style="font-weight:700;">حان موعد الحلقة مع {{ l.student.name }} - {{ l.scheduled_at|date:"H:i" }}</div>
+        {% if not l.started_at %}
+        <form method="POST" action="{% url 'teacher_mark_lesson_started' l.id %}" style="margin-top:10px;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">▶️ بدء الحلقة</button>
+        </form>
+        {% else %}
+        <div style="margin-top:8px; font-size:0.8rem; color:var(--ink-muted);">بدأت الساعة {{ l.started_at|date:"H:i" }} - سجلي حالتها لما تخلصي:</div>
         <form method="POST" action="{% url 'teacher_mark_lesson' l.id %}" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
             {% csrf_token %}
-            <label style="font-size:0.8rem; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="was_late"> اتأخرت</label>
             <button type="submit" name="status" value="completed" class="btn btn-green">🟢 تمت الحلقة</button>
             <button type="submit" name="status" value="student_absent" class="btn btn-red">🔴 الطالب غائب</button>
             <button type="submit" name="status" value="teacher_absent" class="btn btn-amber">🟠 معنديش حضور</button>
             <button type="submit" name="status" value="cancelled" class="btn btn-outline">⚪ الحلقة أُلغيت</button>
         </form>
+        {% endif %}
     </div>
     {% endfor %}
 </div>
@@ -24,13 +34,12 @@
 
 {% if overdue_unrecorded %}
 <div class="card" style="border-right:5px solid var(--amber); background:var(--amber-soft);">
-    <strong>⚠️ عندك حلقات فات وقتها ومسجلتيش حالتها</strong>
+    <strong>⚠️ عندك حلقات فات وقتها ومسجلتيش حالتها (هتتحسب غياب لو سبتيها من غير تسجيل)</strong>
     {% for l in overdue_unrecorded %}
     <div style="margin-top:10px; padding:12px; background:#fff; border-radius:12px;">
         <div style="font-weight:700;">{{ l.student.name }} - كان الموعد {{ l.scheduled_at|date:"Y/m/d H:i" }}</div>
         <form method="POST" action="{% url 'teacher_mark_lesson' l.id %}" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
             {% csrf_token %}
-            <label style="font-size:0.8rem; display:flex; align-items:center; gap:5px;"><input type="checkbox" name="was_late"> اتأخرت</label>
             <button type="submit" name="status" value="completed" class="btn btn-green">🟢 تمت الحلقة</button>
             <button type="submit" name="status" value="student_absent" class="btn btn-red">🔴 الطالب غائب</button>
             <button type="submit" name="status" value="teacher_absent" class="btn btn-amber">🟠 معنديش حضور</button>
@@ -58,9 +67,23 @@
         <div class="stat-box"><div class="number">{{ monthly_stats.completed }}</div><div class="label">✅ حلقات تمت</div></div>
         <div class="stat-box"><div class="number">{{ monthly_stats.student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
         <div class="stat-box"><div class="number">{{ monthly_stats.teacher_absent }}</div><div class="label">🟠 غياباتك</div></div>
-        <div class="stat-box"><div class="number">{{ monthly_stats.late }}</div><div class="label">⏰ تأخيراتك</div></div>
-        <div class="stat-box"><div class="number">{{ monthly_stats.unregistered }}</div><div class="label">⚠️ غير مسجلة</div></div>
         <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ monthly_stats.overall_rating }}%</div><div class="label">🏆 تقييمك الشهري</div></div>
+    </div>
+</div>
+
+<div class="card">
+    <h4 style="color:var(--violet-700); margin-top:0;">👩‍🎓 طلابك - عدد الحلقات</h4>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>الطالب</th><th>الحلقات (تمت / الإجمالي)</th></tr></thead>
+            <tbody>
+                {% for row in students_progress %}
+                <tr><td>{{ row.student.name }}</td><td>{{ row.progress }}</td></tr>
+                {% empty %}
+                <tr><td colspan="2" style="text-align:center;">لا يوجد طلاب.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -84,6 +107,6 @@
             </tbody>
         </table>
     </div>
-    <a href="{% url 'teacher_schedule_requests' %}" class="btn btn-primary" style="margin-top:12px;"><i class="fas fa-calendar-plus"></i> طلب موعد جديد / تعديل موعد</a>
+    <a href="{% url 'teacher_schedule_requests' %}" class="btn btn-outline" style="margin-top:12px;"><i class="fas fa-pen"></i> طلب تعديل موعد قائم</a>
 </div>
 {% endblock %}
