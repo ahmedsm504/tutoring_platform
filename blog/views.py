@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q, Count, Sum
 from django.core.paginator import Paginator
 from django.contrib import messages
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, PostVideo
 
 def blog_list(request):
     """عرض قائمة المقالات مع البحث والفلترة"""
@@ -52,6 +52,11 @@ def blog_list(request):
         total=Sum('views_count')
     )['total'] or 0
 
+    # ✅ جديد: أحدث الفيديوهات من كل المقالات المنشورة (لعرضها في الشريط الجانبي)
+    recent_videos = PostVideo.objects.filter(
+        post__status='published'
+    ).select_related('post').order_by('-id')[:4]
+
     context = {
         'posts': posts,
         'featured_posts': featured_posts,
@@ -61,6 +66,7 @@ def blog_list(request):
         'current_category': category_slug,
         'current_sort': sort_by,
         'total_views': total_views,
+        'recent_videos': recent_videos,
     }
     
     return render(request, 'blog/blog_list.html', context)
@@ -81,6 +87,10 @@ def blog_detail(request, slug):
         status='published',
         category=post.category
     ).exclude(id=post.id)[:3]
+
+    # ✅ جديد: معرض الصور وفيديوهات المقال
+    gallery_images = post.gallery_images.all()
+    videos = post.videos.all()
     
     # معالجة إرسال التعليق
     if request.method == 'POST' and post.allow_comments:
@@ -105,6 +115,8 @@ def blog_detail(request, slug):
         'comments': comments,
         'comments_count': comments.count(),
         'related_posts': related_posts,
+        'gallery_images': gallery_images,
+        'videos': videos,
     }
     
     return render(request, 'blog/blog_detail.html', context)

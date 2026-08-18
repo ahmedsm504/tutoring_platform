@@ -713,6 +713,24 @@ body {
     transform: scale(1.15);
 }
 
+/* ✅ جديد: أيقونة تشغيل فوق صور ودجت الفيديوهات */
+.video-thumb {
+    position: relative;
+}
+
+.video-play-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFD700;
+    font-size: 1.4em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    background: rgba(10, 14, 26, 0.25);
+    pointer-events: none;
+}
+
 .popular-post-info {
     flex: 1;
     display: flex;
@@ -925,7 +943,8 @@ a:focus, button:focus, input:focus {
                             <img src="{% static 'images/default_post.webp' %}"
                                  alt="صورة افتراضية"
                                  class="post-image"
-                                 loading="lazy">
+                                 loading="lazy"
+                                 decoding="async">
                             {% endif %}
                         </div>
                         <div class="post-content">
@@ -974,7 +993,8 @@ a:focus, button:focus, input:focus {
                                 <img src="{% static 'images/default_post.webp' %}"
                                      alt="صورة افتراضية"
                                      class="post-image"
-                                     loading="lazy">
+                                     loading="lazy"
+                                 decoding="async">
                                 {% endif %}
                             </div>
                             <div class="post-content">
@@ -1052,7 +1072,8 @@ a:focus, button:focus, input:focus {
                             {% if post.image %}
                             <img src="{{ post.cloud_url }}"
                                  alt="{{ post.title }}"
-                                 loading="lazy">
+                                 loading="lazy"
+                                 decoding="async">
                             {% else %}
                             <span style="font-size: 2em;">📝</span>
                             {% endif %}
@@ -1061,6 +1082,34 @@ a:focus, button:focus, input:focus {
                             <!-- ✅ تم التغيير: من h4 إلى p لأن اسم المقال هنا ليس عنواناً هيكلياً -->
                             <p class="post-name">{{ post.title|truncatewords:6 }}</p>
                             <small>👁 {{ post.views_count }} مشاهدة</small>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Recent Videos Widget (✅ جديد) -->
+                {% if recent_videos %}
+                <div class="widget">
+                    <h3 class="widget-title">🎬 أحدث الفيديوهات</h3>
+                    {% for video in recent_videos %}
+                    <a href="{% url 'blog_detail' video.post.slug %}#videos"
+                       class="popular-post-item"
+                       aria-label="شاهد فيديو من مقال: {{ video.post.title }}">
+                        <div class="popular-post-image video-thumb">
+                            {% if video.thumbnail_url %}
+                            <img src="{{ video.thumbnail_url }}"
+                                 alt="{{ video.title|default:video.post.title }}"
+                                 loading="lazy"
+                                 decoding="async">
+                            {% else %}
+                            <span style="font-size: 2em;">🎬</span>
+                            {% endif %}
+                            <span class="video-play-icon" aria-hidden="true">▶</span>
+                        </div>
+                        <div class="popular-post-info">
+                            <p class="post-name">{{ video.title|default:video.post.title|truncatewords:6 }}</p>
+                            <small>{% if video.platform == 'tiktok' %}تيك توك{% else %}يوتيوب{% endif %} · من مقال {{ video.post.title|truncatewords:4 }}</small>
                         </div>
                     </a>
                     {% endfor %}

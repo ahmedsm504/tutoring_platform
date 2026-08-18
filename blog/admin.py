@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.db.models import Count
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, PostImage, PostVideo
 
 # ------------------ Category Admin ------------------
 @admin.register(Category)
@@ -20,10 +20,32 @@ class CategoryAdmin(admin.ModelAdmin):
     posts_count.short_description = 'عدد المقالات'
 
 
+# ------------------ Gallery Images Inline (✅ جديد) ------------------
+class PostImageInline(admin.TabularInline):
+    model = PostImage
+    extra = 1
+    fields = ('image', 'image_preview', 'caption', 'order')
+    readonly_fields = ('image_preview',)
+
+    def image_preview(self, obj):
+        if obj and obj.cloud_url:
+            return format_html('<img src="{}" style="max-width:110px;max-height:80px;border-radius:8px;object-fit:cover;"/>', obj.cloud_url)
+        return 'سيتم رفع الصورة عند الحفظ'
+    image_preview.short_description = 'معاينة'
+
+
+# ------------------ Videos Inline (✅ جديد) ------------------
+class PostVideoInline(admin.TabularInline):
+    model = PostVideo
+    extra = 1
+    fields = ('url', 'platform', 'title', 'order')
+    help_text = 'الصق رابط يوتيوب أو تيك توك عادي، وسيتم التعرف على المنصة تلقائياً'
+
+
 # ------------------ Post Admin ------------------
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'category_badge', 'status_badge', 'views_badge', 'reading_time_badge', 'featured_badge', 'published_at')
+    list_display = ('title', 'author', 'category_badge', 'status_badge', 'views_badge', 'reading_time_badge', 'featured_badge', 'media_badge', 'published_at')
     list_filter = ('status', 'category', 'is_featured', 'created_at', 'published_at')
     search_fields = ('title', 'content', 'author__username')
     prepopulated_fields = {'slug': ('title',)}
@@ -31,13 +53,15 @@ class PostAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
     
     readonly_fields = ('views_count', 'reading_time', 'created_at', 'updated_at', 'image_preview')
+
+    inlines = [PostImageInline, PostVideoInline]
     
     fieldsets = (
         ('المعلومات الأساسية', {
             'fields': ('title', 'slug', 'author', 'category', 'status', 'is_featured')
         }),
         ('المحتوى', {
-            'fields': ('excerpt', 'content', 'image', 'image_preview')
+            'fields': ('excerpt', 'content', 'image', 'image_alt', 'image_preview')
         }),
         ('التواريخ', {
             'fields': ('published_at', 'created_at', 'updated_at'),
@@ -103,6 +127,18 @@ class PostAdmin(admin.ModelAdmin):
             return format_html('<span style="color: #f39c12; font-size: 18px;">⭐</span>')
         return ''
     featured_badge.short_description = 'مميز'
+
+    def media_badge(self, obj):
+        """✅ جديد: عدد الصور والفيديوهات الإضافية بنظرة واحدة"""
+        images_count = obj.gallery_images.count()
+        videos_count = obj.videos.count()
+        if not images_count and not videos_count:
+            return format_html('<span style="color: #95a5a6;">—</span>')
+        return format_html(
+            '<span style="color:#16a085;">📷 {}</span>&nbsp;&nbsp;<span style="color:#e67e22;">🎬 {}</span>',
+            images_count, videos_count
+        )
+    media_badge.short_description = 'الوسائط'
     
     def image_preview(self, obj):
         if obj.image:
