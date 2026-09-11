@@ -42,6 +42,11 @@ class Teacher(models.Model):
         verbose_name="راتب مثبت (بدل النسبة)"
     )
 
+    supervisor = models.ForeignKey(
+        'Supervisor', null=True, blank=True, on_delete=models.SET_NULL,
+        related_name='teachers', verbose_name="المشرفة المسؤولة"
+    )
+
     class Meta:
         verbose_name = "معلمة"
         verbose_name_plural = "المعلمات"
@@ -146,6 +151,53 @@ class Teacher(models.Model):
         if month:
             qs = qs.filter(date__month=month)
         return qs.count()
+
+
+class Supervisor(models.Model):
+    """مشرفة مسؤولة عن مجموعة معلمات (بحد أقصى مقترح 5) - بتتابع حلقاتهم وطلابهم يوميًا"""
+    name = models.CharField(max_length=255, verbose_name="اسم المشرفة")
+    phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="رقم الهاتف")
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='supervisor_profile',
+        verbose_name="حساب الدخول"
+    )
+    is_active = models.BooleanField(default=True, verbose_name="نشطة")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإضافة")
+
+    class Meta:
+        verbose_name = "مشرفة"
+        verbose_name_plural = "المشرفات"
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def teachers_count(self):
+        return self.teachers.count()
+
+    def today_lessons(self):
+        today = timezone.localdate()
+        return Lesson.objects.filter(teacher__supervisor=self, scheduled_at__date=today).order_by('scheduled_at')
+
+
+class CurriculumDocument(models.Model):
+    """ملفات المنهج (بي دي إف) اللي بتشوفها المعلمة جوه بورتالها بس - زي منهج الحفظ أو المصحف"""
+    title = models.CharField(max_length=255, verbose_name="عنوان الملف")
+    file = models.FileField(upload_to='curriculum/%Y/%m/', verbose_name="ملف PDF")
+    is_quran = models.BooleanField(default=False, verbose_name="هل هو المصحف؟")
+    order = models.PositiveIntegerField(default=0, verbose_name="الترتيب")
+    is_active = models.BooleanField(default=True, verbose_name="نشط (ظاهر للمعلمات)")
+    uploaded_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الرفع")
+
+    class Meta:
+        verbose_name = "ملف منهج"
+        verbose_name_plural = "ملفات المنهج"
+        ordering = ['order', 'title']
+
+    def __str__(self):
+        return self.title
 
 
 class TeacherSalaryRecord(models.Model):
@@ -354,8 +406,9 @@ class Lesson(models.Model):
         ('scheduled', 'مجدولة'),
         ('completed', 'تمت'),
         ('student_absent', 'الطالب غائب'),
+        ('excused', 'عذر'),
         ('teacher_absent', 'المعلمة لم تتمكن من الحضور'),
-        ('cancelled', 'أُلغيت'),
+        ('cancelled', 'مؤجلة'),
         ('unregistered', 'غير مسجلة'),
     ]
 

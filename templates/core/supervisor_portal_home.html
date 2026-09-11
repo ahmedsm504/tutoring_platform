@@ -1,0 +1,51 @@
+{% extends 'core/supervisor_portal_base.html' %}
+{% block title %}أهلًا {{ supervisor.name }}{% endblock %}
+{% block content %}
+<h2 style="color:var(--violet-700); margin:0 0 14px;">أهلًا بيكِ، {{ supervisor.name }} 👋</h2>
+
+<div style="display:flex; gap:18px; flex-wrap:wrap;">
+    <div style="flex:2; min-width:300px;">
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--violet-700);">🗓️ مواعيد اليوم ({{ today|date:"Y/m/d" }}) لكل معلماتك</h4>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>المعلمة</th><th>الطالب</th><th>الموعد</th><th>الحالة</th></tr></thead>
+                    <tbody>
+                        {% for l in today_lessons %}
+                        <tr>
+                            <td><a href="{% url 'supervisor_teacher_detail' l.teacher_id %}">{{ l.teacher.name }}</a></td>
+                            <td>{{ l.student.name }}</td>
+                            <td>{{ l.scheduled_at|date:"H:i" }}</td>
+                            <td>
+                                {% if l.status == 'completed' %}<span class="badge" style="background:var(--green-soft); color:var(--green);">تمت</span>
+                                {% elif l.status == 'scheduled' %}<span class="badge" style="background:var(--amber-soft); color:var(--amber);">مجدولة</span>
+                                {% else %}<span class="badge" style="background:var(--red-soft); color:var(--red);">{{ l.get_status_display }}</span>{% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" style="text-align:center;">لا يوجد حلقات اليوم.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div style="flex:1; min-width:260px;">
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--violet-700);">👩‍🏫 معلماتك</h4>
+            {% for row in teachers_summary %}
+            <a href="{% url 'supervisor_teacher_detail' row.teacher.id %}" style="display:block; text-decoration:none; color:var(--ink); background:var(--violet-50); border-radius:14px; padding:12px 14px; margin-bottom:10px;">
+                <div style="font-weight:700;">{{ row.teacher.name }}</div>
+                <div style="font-size:0.8rem; color:var(--ink-muted); margin-top:4px;">
+                    👩‍🎓 {{ row.students_count }} طالب &nbsp;|&nbsp; 🗓️ {{ row.lessons_today_count }} حلقة اليوم
+                    {% if row.unrecorded_count %}<br>⚠️ {{ row.unrecorded_count }} حلقة فاتها الوقت من غير تسجيل{% endif %}
+                </div>
+            </a>
+            {% empty %}
+            <p style="color:var(--ink-muted); text-align:center;">لسه مفيش معلمات متعينة عليكِ.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

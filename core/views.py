@@ -18,7 +18,7 @@ import secrets
 
 from .models import (
     Teacher, Student, Country, StudentNote, Expense, Payment, TeacherSalaryRecord, MonthlyEvaluation,
-    Lesson, ScheduleRequest, TeacherComplaint,
+    Lesson, ScheduleRequest, TeacherComplaint, Supervisor, CurriculumDocument,
 )
 
 
@@ -32,6 +32,19 @@ def teacher_login_required(view_func):
         if not request.user.is_authenticated or not hasattr(request.user, 'teacher_profile'):
             messages.error(request, 'من فضلك سجلي الدخول بحساب المعلمة الخاص بيكِ.')
             return redirect('teacher_login')
+        return view_func(request, *args, **kwargs)
+    return _wrapped
+
+
+def supervisor_login_required(view_func):
+    """نفس فكرة teacher_login_required بالظبط، بس لحساب المشرفة: بتشوف بس
+    المعلمات المربوطين بيها (Teacher.supervisor) وبياناتهم، ومش بتدخل لوحة
+    الأدمن ولا بورتال المعلمة خالص"""
+    @wraps(view_func)
+    def _wrapped(request, *args, **kwargs):
+        if not request.user.is_authenticated or not hasattr(request.user, 'supervisor_profile'):
+            messages.error(request, 'من فضلك سجلي الدخول بحساب المشرفة الخاص بيكِ.')
+            return redirect('supervisor_login')
         return view_func(request, *args, **kwargs)
     return _wrapped
 
@@ -1588,3 +1601,272 @@ def public_evaluation(request, token):
     """صفحة عامة بدون تسجيل دخول - عشان تُبعت كلينك لولي الأمر مباشرة"""
     evaluation = get_object_or_404(MonthlyEvaluation, public_token=token)
     return render(request, 'core/evaluation_public.html', {'evaluation': evaluation})
+
+# =======================
+# إدارة المشرفات (من لوحة الأدمن)
+# =======================
+@staff_member_required
+def supervisors_list(request):
+    supervisors = Supervisor.objects.all()
+    unassigned_teachers = Teacher.objects.filter(supervisor__isnull=True)
+
+    if request.method == 'POST':
+        # تعيين/تغيير المعلمات المربوطة بمشرفة معينة
+        supervisor_id = request.POST.get('supervisor_id')
+        teacher_ids = request.POST.getlist('teacher_ids')
+        supervisor = get_object_or_404(Supervisor, pk=supervisor_id)
+
+        if len(teacher_ids) > 5:
+            messages.error(request, 'المفروض كل مشرفة متبقاش مسؤولة عن أكتر من 5 معلمات.')
+        else:
+            Teacher.objects.filter(supervisor=supervisor).update(supervisor=None)
+            Teacher.objects.filter(id__in=teacher_ids).update(supervisor=supervisor)
+            messages.success(request, f'تم تحديث معلمات "{supervisor.name}".')
+        return redirect('supervisors_list')
+
+    context = {
+        'supervisors': supervisors,
+        'unassigned_teachers': unassigned_teachers,
+        'all_teachers': Teacher.objects.all(),
+    }
+    return render(request, 'core/supervisors_list.html', context)
+
+
+@staff_member_required
+def add_supervisor(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', '').strip()
+        if not name:
+            messages.error(request, 'من فضلك أدخلي اسم المشرفة.')
+        else:
+            Supervisor.objects.create(name=name, phone=_or_none(request.POST.get('phone')))
+            messages.success(request, 'تم إضافة المشرفة بنجاح.')
+            return redirect('supervisors_list')
+    return render(request, 'core/add_supervisor.html')
+
+
+@staff_member_required
+def create_supervisor_login(request, supervisor_id):
+    """نفس فكرة create_teacher_login بالظبط بس لحساب مشرفة"""
+    supervisor = get_object_or_404(Supervisor, pk=supervisor_id)
+    username_field = User.USERNAME_FIELD
+    user_field_names = {f.name for f in User._meta.get_fields()}
+
+    if supervisor.user_id:
+        messages.error(request, f'"{supervisor.name}" عندها حساب دخول بالفعل ({getattr(supervisor.user, username_field)}).')
+        return redirect('supervisors_list')
+
+    if request.method == 'POST':
+        base_username = request.POST.get('username', '').strip()
+        if not base_username:
+            base_username = 'supervisor_' + str(supervisor.id)
+            if username_field == 'email' and '@' not in base_username:
+                base_username = f'supervisor{supervisor.id}@example.com'
+
+        if User.objects.filter(**{username_field: base_username}).exists():
+            messages.error(request, f'"{base_username}" مستخدم قبل كده، اختاري قيمة تانية.')
+            return redirect('create_supervisor_login', supervisor_id=supervisor.id)
+
+        temp_password = secrets.token_urlsafe(6)
+        create_kwargs = {
+            username_field: base_username,
+            'is_staff': False,
+            'is_superuser': False,
+        }
+        if 'first_name' in user_field_names:
+            create_kwargs['first_name'] = supervisor.name
+        user = User(**create_kwargs)
+        user.set_password(temp_password)
+        user.save()
+
+        supervisor.user = user
+        supervisor.save(update_fields=['user'])
+
+        messages.success(
+            request,
+            f'تم إنشاء حساب دخول لـ "{supervisor.name}". {username_field}: {base_username} - كلمة السر: {temp_password} '
+            '(احفظيها وابعتيها للمشرفة دلوقتي، مش هتتعرض تاني).'
+        )
+        return redirect('supervisors_list')
+
+    return render(request, 'core/create_supervisor_login.html', {'supervisor': supervisor})
+
+
+@staff_member_required
+def reset_supervisor_login_password(request, supervisor_id):
+    supervisor = get_object_or_404(Supervisor, pk=supervisor_id)
+    if not supervisor.user_id:
+        messages.error(request, 'المشرفة دي معندهاش حساب دخول أصلًا.')
+        return redirect('supervisors_list')
+
+    if request.method == 'POST':
+        temp_password = secrets.token_urlsafe(6)
+        supervisor.user.password = make_password(temp_password)
+        supervisor.user.save(update_fields=['password'])
+        messages.success(request, f'كلمة السر الجديدة لـ "{supervisor.name}": {temp_password}')
+    return redirect('supervisors_list')
+
+
+@staff_member_required
+def revoke_supervisor_login(request, supervisor_id):
+    supervisor = get_object_or_404(Supervisor, pk=supervisor_id)
+    if request.method == 'POST' and supervisor.user_id:
+        old_user = supervisor.user
+        supervisor.user = None
+        supervisor.save(update_fields=['user'])
+        old_user.is_active = False
+        old_user.save(update_fields=['is_active'])
+        messages.success(request, f'تم إلغاء حساب دخول "{supervisor.name}".')
+    return redirect('supervisors_list')
+
+
+# =======================
+# بورتال المشرفة (تسجيل دخول محدود - بتشوف بس معلماتها الخمسة وطلابهم)
+# =======================
+def supervisor_login(request):
+    if request.user.is_authenticated and hasattr(request.user, 'supervisor_profile'):
+        return redirect('supervisor_portal_home')
+
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '')
+        user = authenticate(request, username=username, password=password)
+
+        if user is None:
+            messages.error(request, 'اسم المستخدم أو كلمة السر غلط.')
+        elif not hasattr(user, 'supervisor_profile'):
+            messages.error(request, 'الحساب ده مش حساب مشرفة.')
+        elif not user.is_active:
+            messages.error(request, 'الحساب ده متوقف، كلمي الإدارة.')
+        else:
+            auth_login(request, user)
+            return redirect('supervisor_portal_home')
+
+    return render(request, 'core/supervisor_login.html')
+
+
+def supervisor_logout(request):
+    auth_logout(request)
+    return redirect('supervisor_login')
+
+
+@supervisor_login_required
+def supervisor_portal_home(request):
+    """أول ما المشرفة تدخل: مواعيد معلماتها اليوم + قائمة جانبية بأسماء
+    معلماتها وعدد طلاب وحلقات كل واحدة"""
+    supervisor = request.user.supervisor_profile
+    teachers = supervisor.teachers.all()
+    today = timezone.localdate()
+
+    today_lessons = Lesson.objects.filter(
+        teacher__in=teachers, scheduled_at__date=today
+    ).select_related('teacher', 'student').order_by('scheduled_at')
+
+    teachers_summary = []
+    for t in teachers:
+        teachers_summary.append({
+            'teacher': t,
+            'students_count': t.students.filter(status='active').count(),
+            'lessons_today_count': today_lessons.filter(teacher=t).count(),
+            'unrecorded_count': len([l for l in t.lessons.filter(status='scheduled') if l.is_overdue_unrecorded()]),
+        })
+
+    context = {
+        'supervisor': supervisor,
+        'teachers_summary': teachers_summary,
+        'today_lessons': today_lessons,
+        'today': today,
+    }
+    return render(request, 'core/supervisor_portal_home.html', context)
+
+
+@supervisor_login_required
+def supervisor_teacher_detail(request, teacher_id):
+    """المشرفة تدخل على معلمة معينة (لازم تكون من ضمن معلماتها) وتشوف
+    طلابها وحلقاتهم وتسجل حالة كل حلقة (تمت / لم تتم + السبب) + ملاحظات"""
+    supervisor = request.user.supervisor_profile
+    teacher = get_object_or_404(Teacher, pk=teacher_id, supervisor=supervisor)
+
+    lessons = teacher.lessons.select_related('student').order_by('-scheduled_at')[:60]
+
+    context = {
+        'supervisor': supervisor,
+        'teacher': teacher,
+        'students': teacher.students.filter(status='active'),
+        'lessons': lessons,
+        'status_choices': Lesson.STATUS_CHOICES,
+    }
+    return render(request, 'core/supervisor_teacher_detail.html', context)
+
+
+@supervisor_login_required
+def supervisor_mark_lesson(request, lesson_id):
+    """المشرفة تسجل حالة حلقة معلمة من معلماتها هي بس (مش أي معلمة تانية)
+    مع السبب (غياب / عذر / مؤجلة) والملاحظات"""
+    supervisor = request.user.supervisor_profile
+    lesson = get_object_or_404(Lesson, pk=lesson_id, teacher__supervisor=supervisor)
+
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        note = request.POST.get('notes', '').strip()
+        valid_statuses = dict(Lesson.STATUS_CHOICES)
+
+        if new_status not in valid_statuses or new_status == 'unregistered':
+            messages.error(request, 'حالة غير صحيحة.')
+        else:
+            lesson.status = new_status
+            lesson.status_recorded_at = timezone.now()
+            if note:
+                lesson.notes = note
+            lesson.save(update_fields=['status', 'status_recorded_at', 'notes'])
+            messages.success(request, f'تم تسجيل حالة حلقة {lesson.student.name}: {valid_statuses[new_status]}.')
+
+    return redirect('supervisor_teacher_detail', teacher_id=lesson.teacher_id)
+
+
+# =======================
+# بورتال المعلمة: المنهج / السبورة التفاعلية / الألعاب
+# =======================
+@teacher_login_required
+def teacher_curriculum(request):
+    """قائمة ملفات المنهج (والمصحف) - بتتفتح جوه البورتال بس ومفيهاش لينك
+    مباشر للملف يتشارك برا؛ كل عرض بيمر على teacher_curriculum_view اللي
+    بتتأكد إن اللي بيفتح فعلًا معلمة مسجلة دخول"""
+    documents = CurriculumDocument.objects.filter(is_active=True)
+    return render(request, 'core/teacher_curriculum.html', {
+        'documents': documents,
+        'teacher': request.user.teacher_profile,
+    })
+
+
+@teacher_login_required
+def teacher_curriculum_view(request, doc_id):
+    """فتح ملف منهج معين جوه إطار محمي (بدون إظهار رابط الملف الأصلي في
+    الصفحة، ومع علامة مائية باسم المعلمة عشان لو اتصور تتعرف مين بعته)"""
+    document = get_object_or_404(CurriculumDocument, pk=doc_id, is_active=True)
+    return render(request, 'core/teacher_curriculum_view.html', {
+        'document': document,
+        'teacher': request.user.teacher_profile,
+    })
+
+
+@teacher_login_required
+def teacher_curriculum_stream(request, doc_id):
+    """بتبعت محتوى ملف الـ PDF نفسه (bytes) للمعلمة اللي عاملة تسجيل دخول
+    بس، من غير ما تحتاج تعرف رابط الملف الأصلي في storage. الصفحة بتحول
+    الناتج لـ blob محلي جوه المتصفح، فمينفعش يتشارك كلينك زي ملف عادي"""
+    from django.http import FileResponse, Http404
+    document = get_object_or_404(CurriculumDocument, pk=doc_id, is_active=True)
+    if not document.file:
+        raise Http404
+    return FileResponse(document.file.open('rb'), content_type='application/pdf')
+
+
+@teacher_login_required
+def teacher_whiteboard(request):
+    return render(request, 'core/teacher_whiteboard.html', {'teacher': request.user.teacher_profile})
+
+
+@teacher_login_required
+def teacher_games(request):
+    return render(request, 'core/teacher_games.html', {'teacher': request.user.teacher_profile})

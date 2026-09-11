@@ -81,6 +81,25 @@ urlpatterns = [
     path('teacher-portal/lessons/<int:lesson_id>/mark-started/', views.teacher_mark_lesson_started, name='teacher_mark_lesson_started'),
     path('teacher-portal/schedule-requests/', views.teacher_schedule_requests, name='teacher_schedule_requests'),
     path('teacher-portal/register-schedule/', views.teacher_register_schedule, name='teacher_register_schedule'),
+    path('teacher-portal/curriculum/', views.teacher_curriculum, name='teacher_curriculum'),
+    path('teacher-portal/curriculum/<int:doc_id>/', views.teacher_curriculum_view, name='teacher_curriculum_view'),
+    path('teacher-portal/curriculum/<int:doc_id>/stream/', views.teacher_curriculum_stream, name='teacher_curriculum_stream'),
+    path('teacher-portal/whiteboard/', views.teacher_whiteboard, name='teacher_whiteboard'),
+    path('teacher-portal/games/', views.teacher_games, name='teacher_games'),
+
+    # إدارة المشرفات (من لوحة الأدمن)
+    path('supervisors/', views.supervisors_list, name='supervisors_list'),
+    path('supervisors/add/', views.add_supervisor, name='add_supervisor'),
+    path('supervisor/<int:supervisor_id>/create-login/', views.create_supervisor_login, name='create_supervisor_login'),
+    path('supervisor/<int:supervisor_id>/reset-login-password/', views.reset_supervisor_login_password, name='reset_supervisor_login_password'),
+    path('supervisor/<int:supervisor_id>/revoke-login/', views.revoke_supervisor_login, name='revoke_supervisor_login'),
+
+    # بورتال المشرفة (صلاحيات محدودة - معلماتها بس)
+    path('supervisor-portal/login/', views.supervisor_login, name='supervisor_login'),
+    path('supervisor-portal/logout/', views.supervisor_logout, name='supervisor_logout'),
+    path('supervisor-portal/', views.supervisor_portal_home, name='supervisor_portal_home'),
+    path('supervisor-portal/teacher/<int:teacher_id>/', views.supervisor_teacher_detail, name='supervisor_teacher_detail'),
+    path('supervisor-portal/lessons/<int:lesson_id>/mark/', views.supervisor_mark_lesson, name='supervisor_mark_lesson'),
 
     # نموذج تقييم ومتابعة الأداء الشهري
     path('evaluations/', views.evaluations_list, name='evaluations_list'),

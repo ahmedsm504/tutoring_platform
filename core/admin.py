@@ -1,8 +1,22 @@
 from django.contrib import admin
 from .models import (
     Country, Teacher, Student, StudentNote, Expense, Payment, TeacherSalaryRecord, MonthlyEvaluation,
-    Lesson, ScheduleRequest, TeacherComplaint,
+    Lesson, ScheduleRequest, TeacherComplaint, Supervisor, CurriculumDocument,
 )
+
+
+@admin.register(Supervisor)
+class SupervisorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'phone', 'teachers_count', 'is_active')
+    search_fields = ('name', 'phone')
+    list_editable = ('is_active',)
+
+
+@admin.register(CurriculumDocument)
+class CurriculumDocumentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_quran', 'order', 'is_active', 'uploaded_at')
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_quran', 'is_active')
 
 
 @admin.register(Country)
@@ -19,7 +33,8 @@ class SalaryRecordInline(admin.TabularInline):
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone', 'governorate', 'commission_percent', 'fixed_salary', 'calculated_salary', 'current_students_count', 'previous_students_count')
+    list_display = ('name', 'phone', 'supervisor', 'governorate', 'commission_percent', 'fixed_salary', 'calculated_salary', 'current_students_count', 'previous_students_count')
+    list_filter = ('supervisor',)
     search_fields = ('name', 'phone')
     inlines = [SalaryRecordInline]
 

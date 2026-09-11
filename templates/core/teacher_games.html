@@ -1,0 +1,465 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}الألعاب{% endblock %}
+{% block extra_css %}
+<style>
+.tabs{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+.tab-btn{padding:9px 14px; border-radius:10px; border:1.6px solid var(--border); background:#fff; cursor:pointer; font-weight:700; font-size:0.85rem; font-family:var(--font-body);}
+.tab-btn.active{background:var(--violet-600); color:#fff; border-color:var(--violet-600);}
+.game-panel{display:none;}
+.game-panel.active{display:block;}
+.g-btn{padding:8px 14px; border-radius:10px; border:none; background:var(--violet-100); color:var(--violet-700); font-weight:700; cursor:pointer; font-size:0.85rem;}
+/* XO */
+.xo-grid{display:grid; grid-template-columns:repeat(3,90px); gap:8px; justify-content:center; margin:16px auto;}
+.xo-cell{width:90px; height:90px; background:var(--violet-50); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:2.4rem; font-weight:800; cursor:pointer; border:1px solid var(--border);}
+/* Differences */
+.diff-boards{display:flex; gap:20px; justify-content:center; flex-wrap:wrap;}
+.diff-grid{display:grid; grid-template-columns:repeat(5,52px); gap:6px;}
+.diff-cell{width:52px; height:52px; background:#fff; border:1px solid var(--border); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; cursor:pointer;}
+.diff-cell.found{background:var(--green-soft); box-shadow:0 0 0 2px var(--green);}
+/* Coloring */
+.palette{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;}
+.palette span{width:30px; height:30px; border-radius:50%; cursor:pointer; border:2px solid #fff; box-shadow:0 0 0 1.5px var(--border);}
+.palette span.active{box-shadow:0 0 0 3px var(--violet-600);}
+.color-shapes{display:flex; gap:30px; justify-content:center; flex-wrap:wrap;}
+/* Wheel */
+.wheel-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+#wheel-canvas{cursor:pointer;}
+/* Guess character */
+.hint-card{background:var(--violet-50); border-radius:16px; padding:24px; min-height:120px; text-align:center; font-size:1.1rem; font-weight:700; margin-bottom:14px;}
+/* Memory */
+.memo-grid{display:grid; grid-template-columns:repeat(4,74px); gap:8px; justify-content:center; margin:16px auto;}
+.memo-card{width:74px; height:74px; border-radius:12px; background:var(--violet-600); display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; color:#fff;}
+.memo-card.flipped{background:#fff; border:1px solid var(--border); color:#000;}
+.memo-card.matched{background:var(--green-soft); border:2px solid var(--green);}
+/* Maze */
+#maze-grid{display:grid; gap:2px; justify-content:center; margin:16px auto; width:max-content;}
+.maze-cell{width:34px; height:34px; background:#fff; border-radius:4px;}
+.maze-cell.wall{background:var(--ink);}
+.maze-cell.start{background:var(--green-soft);}
+.maze-cell.end{background:var(--amber-soft);}
+.maze-cell.player{position:relative;}
+.maze-cell.player::after{content:'🧒'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem;}
+</style>
+{% endblock %}
+{% block content %}
+<h2 style="color:var(--violet-700); margin-top:0;">🎮 الألعاب</h2>
+
+<div class="tabs">
+    <button class="tab-btn active" data-tab="xo">❌⭕ إكس أو</button>
+    <button class="tab-btn" data-tab="diff">🔍 الاختلافات</button>
+    <button class="tab-btn" data-tab="color">🎨 التلوين</button>
+    <button class="tab-btn" data-tab="wheel">🎡 عجلة الحظ</button>
+    <button class="tab-btn" data-tab="guess">🧩 خمن الشخصية</button>
+    <button class="tab-btn" data-tab="memo">🃏 مطابقة الأزواج</button>
+    <button class="tab-btn" data-tab="maze">🧭 المتاهة</button>
+</div>
+
+<div class="card">
+
+<!-- XO -->
+<div class="game-panel active" id="panel-xo">
+    <div style="text-align:center;">
+        <div id="xo-status" style="font-weight:700; margin-bottom:8px;">دور: ❌</div>
+        <div class="xo-grid" id="xo-grid"></div>
+        <button class="g-btn" id="xo-reset">إعادة اللعبة</button>
+    </div>
+</div>
+
+<!-- Differences -->
+<div class="game-panel" id="panel-diff">
+    <div style="text-align:center; margin-bottom:10px;">
+        <span id="diff-status" style="font-weight:700;">دورك: دوسي على المربع المختلف بين اللوحتين</span>
+    </div>
+    <div class="diff-boards">
+        <div class="diff-grid" id="diff-grid-a"></div>
+        <div class="diff-grid" id="diff-grid-b"></div>
+    </div>
+    <div style="text-align:center; margin-top:14px;"><button class="g-btn" id="diff-reset">لوحة جديدة</button></div>
+</div>
+
+<!-- Coloring -->
+<div class="game-panel" id="panel-color">
+    <div class="palette" id="palette"></div>
+    <div class="color-shapes">
+        <svg viewBox="0 0 120 160" width="150" height="200" id="shape-icecream">
+            <path class="colorable" d="M60 150 L30 70 L90 70 Z" fill="#F3D9B1" stroke="#8a5a2b" stroke-width="2"/>
+            <line x1="35" y1="82" x2="85" y2="82" stroke="#8a5a2b" stroke-width="2"/>
+            <line x1="40" y1="100" x2="80" y2="100" stroke="#8a5a2b" stroke-width="2"/>
+            <line x1="45" y1="118" x2="75" y2="118" stroke="#8a5a2b" stroke-width="2"/>
+            <circle class="colorable" cx="60" cy="45" r="30" fill="#FFC1D9" stroke="#7a2b46" stroke-width="2"/>
+            <circle class="colorable" cx="60" cy="18" r="9" fill="#E8483C" stroke="#7a2b46" stroke-width="2"/>
+        </svg>
+        <svg viewBox="0 0 120 120" width="150" height="150" id="shape-star">
+            <polygon class="colorable" points="60,8 74,42 112,42 80,64 92,104 60,80 28,104 40,64 8,42 46,42" fill="#FFE29A" stroke="#8a6a10" stroke-width="2"/>
+        </svg>
+        <svg viewBox="0 0 120 120" width="150" height="150" id="shape-bat">
+            <path class="colorable" d="M60 30 C40 10 10 20 5 45 C20 40 30 45 35 55 C15 60 10 80 20 95 C30 85 45 78 60 90 C75 78 90 85 100 95 C110 80 105 60 85 55 C90 45 100 40 115 45 C110 20 80 10 60 30 Z" fill="#C9C9E8" stroke="#3a3a5e" stroke-width="2"/>
+        </svg>
+    </div>
+</div>
+
+<!-- Wheel -->
+<div class="game-panel" id="panel-wheel">
+    <div class="wheel-wrap">
+        <canvas id="wheel-canvas" width="300" height="300"></canvas>
+        <button class="g-btn" id="wheel-spin">🎡 دوّري العجلة</button>
+        <div id="wheel-result" style="font-weight:800; font-size:1.1rem; color:var(--violet-700);"></div>
+        <textarea id="wheel-edit" rows="8" style="width:100%; max-width:420px; border-radius:12px; border:1.6px solid var(--border); padding:10px;"></textarea>
+        <button class="g-btn" id="wheel-save">حفظ الأحكام</button>
+    </div>
+</div>
+
+<!-- Guess character -->
+<div class="game-panel" id="panel-guess">
+    <div class="hint-card" id="guess-card">دوسي "شخصية جديدة" للبدء</div>
+    <div style="text-align:center; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+        <button class="g-btn" id="guess-hint">تلميح جديد</button>
+        <button class="g-btn" id="guess-reveal">اظهار الإجابة</button>
+        <button class="g-btn" id="guess-next">شخصية جديدة</button>
+    </div>
+</div>
+
+<!-- Memory match -->
+<div class="game-panel" id="panel-memo">
+    <div style="text-align:center;">
+        <div class="memo-grid" id="memo-grid"></div>
+        <button class="g-btn" id="memo-reset" style="margin-top:12px;">إعادة اللعبة</button>
+    </div>
+</div>
+
+<!-- Maze -->
+<div class="game-panel" id="panel-maze">
+    <div style="text-align:center;">
+        <div id="maze-grid"></div>
+        <div style="margin-top:12px; display:flex; gap:6px; justify-content:center;">
+            <button class="g-btn" data-dir="up">⬆️</button>
+            <button class="g-btn" data-dir="left">⬅️</button>
+            <button class="g-btn" data-dir="right">➡️</button>
+            <button class="g-btn" data-dir="down">⬇️</button>
+            <button class="g-btn" id="maze-reset">إعادة</button>
+        </div>
+        <div id="maze-msg" style="margin-top:8px; font-weight:700; color:var(--green);"></div>
+    </div>
+</div>
+
+</div>
+
+<script>
+// ===== تبديل التابات =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+});
+
+// ===== XO =====
+(function(){
+    let board, turn;
+    const grid = document.getElementById('xo-grid');
+    const status = document.getElementById('xo-status');
+    function reset(){
+        board = Array(9).fill('');
+        turn = '❌';
+        status.textContent = 'دور: ' + turn;
+        grid.innerHTML = '';
+        board.forEach((v,i) => {
+            const c = document.createElement('div');
+            c.className = 'xo-cell';
+            c.dataset.i = i;
+            c.addEventListener('click', () => play(i));
+            grid.appendChild(c);
+        });
+    }
+    function winner(){
+        const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+        for(const l of lines){
+            if(board[l[0]] && board[l[0]]===board[l[1]] && board[l[1]]===board[l[2]]) return board[l[0]];
+        }
+        return board.every(x=>x) ? 'تعادل' : null;
+    }
+    function play(i){
+        if(board[i]) return;
+        board[i] = turn;
+        grid.children[i].textContent = turn;
+        const w = winner();
+        if(w){
+            status.textContent = w === 'تعادل' ? '🤝 تعادل!' : ('🎉 فاز ' + w);
+            return;
+        }
+        turn = turn === '❌' ? '⭕' : '❌';
+        status.textContent = 'دور: ' + turn;
+    }
+    document.getElementById('xo-reset').addEventListener('click', reset);
+    reset();
+})();
+
+// ===== الاختلافات =====
+(function(){
+    const EMOJIS = ['🍎','🍌','🍇','🍉','🍓','🍒','🍍','🥝'];
+    let diffSet = new Set();
+    let found = new Set();
+    const ga = document.getElementById('diff-grid-a');
+    const gb = document.getElementById('diff-grid-b');
+    const status = document.getElementById('diff-status');
+    function build(){
+        ga.innerHTML=''; gb.innerHTML=''; found = new Set();
+        const base = Array.from({length:25}, () => EMOJIS[Math.floor(Math.random()*EMOJIS.length)]);
+        const variant = [...base];
+        diffSet = new Set();
+        while(diffSet.size < 3){
+            diffSet.add(Math.floor(Math.random()*25));
+        }
+        diffSet.forEach(i => {
+            let e;
+            do { e = EMOJIS[Math.floor(Math.random()*EMOJIS.length)]; } while(e === base[i]);
+            variant[i] = e;
+        });
+        base.forEach((e,i) => {
+            const c = document.createElement('div'); c.className='diff-cell'; c.textContent=e;
+            ga.appendChild(c);
+        });
+        variant.forEach((e,i) => {
+            const c = document.createElement('div'); c.className='diff-cell'; c.textContent=e;
+            c.addEventListener('click', () => {
+                if(diffSet.has(i)){
+                    if(!found.has(i)){ found.add(i); c.classList.add('found'); ga.children[i].classList.add('found'); }
+                    status.textContent = 'لقيتي ' + found.size + ' من 3';
+                    if(found.size === 3) status.textContent = '🎉 برافو! لقيتي كل الاختلافات';
+                }
+            });
+            gb.appendChild(c);
+        });
+        status.textContent = 'دورك: دوسي على المربع المختلف بين اللوحتين';
+    }
+    document.getElementById('diff-reset').addEventListener('click', build);
+    build();
+})();
+
+// ===== التلوين =====
+(function(){
+    const colors = ['#E8483C','#F59E0B','#FFE066','#1D9A63','#3B82F6','#8B5CF6','#EC4899','#8a5a2b','#ffffff','#000000'];
+    let current = colors[0];
+    const pal = document.getElementById('palette');
+    colors.forEach((c,i) => {
+        const s = document.createElement('span');
+        s.style.background = c;
+        if(i===0) s.classList.add('active');
+        s.addEventListener('click', () => {
+            pal.querySelectorAll('span').forEach(x=>x.classList.remove('active'));
+            s.classList.add('active');
+            current = c;
+        });
+        pal.appendChild(s);
+    });
+    document.querySelectorAll('.colorable').forEach(shape => {
+        shape.addEventListener('click', () => shape.setAttribute('fill', current));
+    });
+})();
+
+// ===== عجلة الحظ =====
+(function(){
+    const canvas = document.getElementById('wheel-canvas');
+    const ctx = canvas.getContext('2d');
+    const cx = 150, cy = 150, r = 140;
+    const colors = ['#EC4899','#8B5CF6','#3B82F6','#1D9A63','#F59E0B','#E8483C','#06B6D4','#F472B6'];
+    const defaultSegments = [
+        'خمّني كلمة بحرف التاء','دوري على شيء لونه أخضر','قولي آية تحفظيها',
+        'صفقي 3 مرات','ابتسمي وقولي بسملة','خمني اسم حيوان',
+        'عدي من 1 إلى 10','قولي اسم نبي تعرفيه'
+    ];
+    let segments = [...defaultSegments];
+    let rotation = 0;
+
+    function draw(){
+        ctx.clearRect(0,0,300,300);
+        const n = segments.length;
+        const arc = (2*Math.PI)/n;
+        for(let i=0;i<n;i++){
+            ctx.beginPath();
+            ctx.moveTo(cx,cy);
+            ctx.arc(cx,cy,r, rotation + i*arc, rotation + (i+1)*arc);
+            ctx.closePath();
+            ctx.fillStyle = colors[i % colors.length];
+            ctx.fill();
+            ctx.save();
+            ctx.translate(cx,cy);
+            ctx.rotate(rotation + i*arc + arc/2);
+            ctx.fillStyle = '#fff';
+            ctx.font = '11px Tajawal, sans-serif';
+            ctx.textAlign = 'right';
+            const label = segments[i].length > 16 ? segments[i].slice(0,15)+'…' : segments[i];
+            ctx.fillText(label, r - 8, 4);
+            ctx.restore();
+        }
+        ctx.beginPath();
+        ctx.moveTo(cx + r + 6, cy - 10);
+        ctx.lineTo(cx + r + 6, cy + 10);
+        ctx.lineTo(cx + r - 6, cy);
+        ctx.fillStyle = '#33195E';
+        ctx.fill();
+    }
+    document.getElementById('wheel-edit').value = segments.join('\n');
+    document.getElementById('wheel-save').addEventListener('click', () => {
+        const lines = document.getElementById('wheel-edit').value.split('\n').map(s=>s.trim()).filter(Boolean);
+        if(lines.length >= 3){ segments = lines; draw(); }
+    });
+    document.getElementById('wheel-spin').addEventListener('click', () => {
+        const n = segments.length;
+        const arc = (2*Math.PI)/n;
+        const extraTurns = 5 + Math.random()*3;
+        const targetIndex = Math.floor(Math.random()*n);
+        const finalRotation = extraTurns*2*Math.PI + (2*Math.PI - (targetIndex*arc + arc/2));
+        const duration = 2200;
+        const start = performance.now();
+        const startRot = rotation % (2*Math.PI);
+        function animate(now){
+            const t = Math.min(1, (now-start)/duration);
+            const ease = 1 - Math.pow(1-t, 3);
+            rotation = startRot + ease*finalRotation;
+            draw();
+            if(t < 1) requestAnimationFrame(animate);
+            else document.getElementById('wheel-result').textContent = '🎯 ' + segments[targetIndex];
+        }
+        requestAnimationFrame(animate);
+    });
+    draw();
+})();
+
+// ===== خمن الشخصية =====
+(function(){
+    const bank = [
+        {answer:'المصحف الشريف', hints:['بنقرأ فيه', 'فيه القرآن الكريم', 'له غلاف وصفحات كتير', 'بنحفظ منه في الحلقة']},
+        {answer:'الكعبة المشرفة', hints:['موجودة في مكة', 'شكلها مكعب', 'لونها أسود', 'المسلمين بيتوجهوا ليها في الصلاة']},
+        {answer:'المسجد النبوي', hints:['موجود في المدينة المنورة', 'فيه قبة خضراء مشهورة', 'يتردد عليه ملايين الزوار', 'اتبنى زمن النبي ﷺ']},
+        {answer:'هلال رمضان', hints:['بيظهر في السما بالليل', 'شكله زي نصف دايرة', 'بيبان بداية شهر مبارك', 'بعد رؤيته الصيام يبدأ']},
+        {answer:'سجادة الصلاة', hints:['بنقف عليها في الصلاة', 'ليها زخارف حلوة', 'بتتحط على الأرض', 'مرتبطة بالمحراب']},
+        {answer:'تمر', hints:['فاكهة حلوة المذاق', 'بنفطر بيه في رمضان', 'بتيجي من نخلة', 'ذكرها القرآن الكريم']},
+    ];
+    let idx = -1, hintIndex = 0, order = [];
+    const card = document.getElementById('guess-card');
+    function shuffle(){ order = bank.map((_,i)=>i).sort(()=>Math.random()-0.5); idx=-1; }
+    function next(){
+        idx++;
+        if(idx >= order.length){ shuffle(); idx = 0; }
+        hintIndex = 0;
+        card.textContent = '🧩 شخصية/شيء جديد.. دوسي "تلميح جديد"';
+    }
+    document.getElementById('guess-hint').addEventListener('click', () => {
+        if(idx === -1) return next();
+        const item = bank[order[idx]];
+        if(hintIndex < item.hints.length){
+            card.textContent = '💡 ' + item.hints[hintIndex];
+            hintIndex++;
+        } else {
+            card.textContent = '🔚 خلصت التلميحات! جربي تخمني أو دوسي "إظهار الإجابة"';
+        }
+    });
+    document.getElementById('guess-reveal').addEventListener('click', () => {
+        if(idx === -1) return next();
+        card.textContent = '✅ الإجابة: ' + bank[order[idx]].answer;
+    });
+    document.getElementById('guess-next').addEventListener('click', next);
+    shuffle();
+})();
+
+// ===== مطابقة الأزواج =====
+(function(){
+    const emojis = ['🌙','⭐','🌸','🍎','⚽','🎈','🐟','🦋'];
+    const grid = document.getElementById('memo-grid');
+    let cards, flipped, matched, lock;
+    function build(){
+        const deck = [...emojis, ...emojis].sort(() => Math.random()-0.5);
+        grid.innerHTML = ''; flipped = []; matched = new Set(); lock = false;
+        cards = deck.map((e,i) => {
+            const c = document.createElement('div');
+            c.className = 'memo-card';
+            c.dataset.i = i; c.dataset.e = e;
+            c.textContent = '❓';
+            c.addEventListener('click', () => flip(c));
+            grid.appendChild(c);
+            return c;
+        });
+    }
+    function flip(c){
+        if(lock || c.classList.contains('flipped') || c.classList.contains('matched')) return;
+        c.classList.add('flipped'); c.textContent = c.dataset.e;
+        flipped.push(c);
+        if(flipped.length === 2){
+            lock = true;
+            const [a,b] = flipped;
+            if(a.dataset.e === b.dataset.e){
+                a.classList.add('matched'); b.classList.add('matched');
+                flipped = []; lock = false;
+            } else {
+                setTimeout(() => {
+                    a.classList.remove('flipped'); a.textContent = '❓';
+                    b.classList.remove('flipped'); b.textContent = '❓';
+                    flipped = []; lock = false;
+                }, 700);
+            }
+        }
+    }
+    document.getElementById('memo-reset').addEventListener('click', build);
+    build();
+})();
+
+// ===== المتاهة =====
+(function(){
+    // 0 = ممر، 1 = حيطة
+    const layout = [
+        [0,0,1,0,0,0,1,0],
+        [1,0,1,0,1,0,1,0],
+        [1,0,0,0,1,0,0,0],
+        [1,1,1,0,1,1,1,0],
+        [0,0,1,0,0,0,1,0],
+        [0,1,1,1,1,0,1,0],
+        [0,0,0,0,1,0,0,0],
+        [1,1,1,0,1,0,1,0],
+    ];
+    const rows = layout.length, cols = layout[0].length;
+    const start = {r:0,c:0}, end = {r:7,c:7};
+    let pos;
+    const gridEl = document.getElementById('maze-grid');
+    const msg = document.getElementById('maze-msg');
+    function render(){
+        gridEl.style.gridTemplateColumns = `repeat(${cols}, 34px)`;
+        gridEl.innerHTML = '';
+        for(let r=0;r<rows;r++){
+            for(let c=0;c<cols;c++){
+                const cell = document.createElement('div');
+                cell.className = 'maze-cell';
+                if(layout[r][c]===1) cell.classList.add('wall');
+                if(r===start.r && c===start.c) cell.classList.add('start');
+                if(r===end.r && c===end.c) cell.classList.add('end');
+                if(pos.r===r && pos.c===c) cell.classList.add('player');
+                gridEl.appendChild(cell);
+            }
+        }
+    }
+    function reset(){ pos = {...start}; msg.textContent=''; render(); }
+    function move(dir){
+        let {r,c} = pos;
+        if(dir==='up') r--; if(dir==='down') r++; if(dir==='left') c++; if(dir==='right') c--;
+        // ملحوظة: الشبكة RTL بصريًا، اليسار/اليمين معكوسين بالنسبة للعرض
+        if(r<0||r>=rows||c<0||c>=cols) return;
+        if(layout[r][c]===1) return;
+        pos = {r,c};
+        render();
+        if(pos.r===end.r && pos.c===end.c){ msg.textContent = '🎉 وصلتِ! برافو'; }
+    }
+    document.querySelectorAll('[data-dir]').forEach(b => {
+        if(b.id) return;
+        b.addEventListener('click', () => move(b.dataset.dir));
+    });
+    document.getElementById('maze-reset').addEventListener('click', reset);
+    document.addEventListener('keydown', e => {
+        const map = {ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
+        if(map[e.key] && document.getElementById('panel-maze').classList.contains('active')) move(map[e.key]);
+    });
+    reset();
+})();
+</script>
+{% endblock %}

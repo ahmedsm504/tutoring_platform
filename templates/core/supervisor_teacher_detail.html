@@ -1,0 +1,51 @@
+{% extends 'core/supervisor_portal_base.html' %}
+{% block title %}{{ teacher.name }}{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+    <h2 style="color:var(--violet-700); margin:0;">👩‍🏫 {{ teacher.name }}</h2>
+    <a href="{% url 'supervisor_portal_home' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> رجوع لمعلماتي</a>
+</div>
+
+<div class="stats-row">
+    <div class="stat-box"><div class="number">{{ students.count }}</div><div class="label">👩‍🎓 طلاب مقيدين</div></div>
+</div>
+
+<div class="card">
+    <h4 style="margin-top:0; color:var(--violet-700);">📋 حلقات {{ teacher.name }} - تسجيل الحالة والسبب والملاحظات</h4>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>الطالب</th><th>الموعد</th><th>الحالة الحالية</th><th>تسجيل / تعديل الحالة</th></tr></thead>
+            <tbody>
+                {% for l in lessons %}
+                <tr>
+                    <td>{{ l.student.name }}</td>
+                    <td>{{ l.scheduled_at|date:"Y/m/d H:i" }}</td>
+                    <td>
+                        {% if l.status == 'completed' %}<span class="badge" style="background:var(--green-soft); color:var(--green);">تمت</span>
+                        {% elif l.status == 'scheduled' %}<span class="badge" style="background:var(--amber-soft); color:var(--amber);">مجدولة</span>
+                        {% else %}<span class="badge" style="background:var(--red-soft); color:var(--red);">{{ l.get_status_display }}</span>{% endif %}
+                        {% if l.notes %}<div style="font-size:0.75rem; color:var(--ink-muted); margin-top:4px;">📝 {{ l.notes }}</div>{% endif %}
+                    </td>
+                    <td>
+                        <form method="POST" action="{% url 'supervisor_mark_lesson' l.id %}" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+                            {% csrf_token %}
+                            <select name="status" style="padding:6px 8px; border-radius:8px; border:1.6px solid var(--border); font-size:0.8rem;">
+                                <option value="completed" {% if l.status == 'completed' %}selected{% endif %}>✅ تمت</option>
+                                <option value="student_absent" {% if l.status == 'student_absent' %}selected{% endif %}>🔴 غياب</option>
+                                <option value="excused" {% if l.status == 'excused' %}selected{% endif %}>🟡 عذر</option>
+                                <option value="cancelled" {% if l.status == 'cancelled' %}selected{% endif %}>⚪ مؤجلة</option>
+                                <option value="teacher_absent" {% if l.status == 'teacher_absent' %}selected{% endif %}>🟠 غياب المعلمة</option>
+                            </select>
+                            <input type="text" name="notes" placeholder="ملاحظات..." value="{{ l.notes|default:'' }}" style="padding:6px 8px; border-radius:8px; border:1.6px solid var(--border); font-size:0.8rem; width:140px;">
+                            <button type="submit" class="btn btn-primary" style="padding:6px 12px; font-size:0.8rem;">حفظ</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;">لا يوجد حلقات مسجلة.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

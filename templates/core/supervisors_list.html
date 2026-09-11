@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% block title %}المشرفات{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+    <h2 style="color:#4a1a8a; margin:0;">🧑‍💼 المشرفات</h2>
+    <a href="{% url 'add_supervisor' %}" class="btn btn-primary"><i class="fas fa-plus"></i> إضافة مشرفة</a>
+</div>
+
+{% for s in supervisors %}
+<div class="card" style="background:#fff; border:1px solid #ede9fe; border-radius:20px; padding:22px; margin-bottom:16px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div>
+            <h3 style="margin:0; color:#4a1a8a;">{{ s.name }}</h3>
+            <div style="font-size:0.85rem; color:#7c6a99; margin-top:4px;">
+                {{ s.phone|default:"بدون هاتف" }} &nbsp;|&nbsp; {{ s.teachers_count }} من 5 معلمات متعينة
+                {% if s.user_id %} &nbsp;|&nbsp; <span style="color:#1D9A63;">✅ حساب دخول: {{ s.user.username|default:s.user.email }}</span>
+                {% else %} &nbsp;|&nbsp; <span style="color:#B87F16;">لا يوجد حساب دخول</span>{% endif %}
+            </div>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            {% if s.user_id %}
+            <form method="POST" action="{% url 'reset_supervisor_login_password' s.id %}" style="display:inline;">{% csrf_token %}<button class="btn btn-outline" style="color:#B87F16; border-color:#B87F16;">تصفير كلمة السر</button></form>
+            <form method="POST" action="{% url 'revoke_supervisor_login' s.id %}" style="display:inline;" onsubmit="return confirm('تأكيد إلغاء حساب الدخول؟');">{% csrf_token %}<button class="btn btn-danger">إلغاء الحساب</button></form>
+            {% else %}
+            <a href="{% url 'create_supervisor_login' s.id %}" class="btn btn-success">إنشاء حساب دخول</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <form method="POST" style="margin-top:16px; background:#F7F5FC; border-radius:14px; padding:14px;">
+        {% csrf_token %}
+        <input type="hidden" name="supervisor_id" value="{{ s.id }}">
+        <div style="font-size:0.82rem; font-weight:700; color:#4a1a8a; margin-bottom:8px;">المعلمات المتعينات على {{ s.name }} (5 كحد أقصى):</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:6px;">
+            {% for t in all_teachers %}
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem;">
+                <input type="checkbox" name="teacher_ids" value="{{ t.id }}" {% if t.supervisor_id == s.id %}checked{% endif %}>
+                {{ t.name }} {% if t.supervisor_id and t.supervisor_id != s.id %}<span style="color:#B87F16; font-size:0.72rem;">(عند {{ t.supervisor.name }})</span>{% endif %}
+            </label>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:10px;">حفظ المعلمات المتعينات</button>
+    </form>
+</div>
+{% empty %}
+<p style="text-align:center; color:#7c6a99;">لا يوجد مشرفات مضافة حتى الآن.</p>
+{% endfor %}
+{% endblock %}

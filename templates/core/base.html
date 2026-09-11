@@ -72,6 +72,15 @@ a { color: inherit; }
     -webkit-mask-size: contain; mask-size: contain;
 }
 
+.quick-link-box{background:rgba(255,255,255,0.08); border-radius:10px; padding:8px 10px; margin-bottom:8px;}
+.quick-link-box span{display:block; font-size:0.7rem; color:#E9D5FF; margin-bottom:4px;}
+.quick-link-box{display:flex; flex-direction:column;}
+.quick-link-box > div{display:flex; gap:6px;}
+.quick-link-row{display:flex; gap:6px; align-items:center;}
+.quick-link-box input{flex:1; min-width:0; background:rgba(255,255,255,0.1); border:none; color:#fff; font-size:0.68rem; padding:6px 8px; border-radius:8px;}
+.quick-link-box button{background:rgba(255,255,255,0.18); border:none; color:#fff; border-radius:8px; padding:6px 9px; cursor:pointer; flex-shrink:0;}
+.quick-link-box button:hover{background:rgba(255,255,255,0.3);}
+
 /* =========================================================
    1. الشريط الجانبي
    ========================================================= */
@@ -297,6 +306,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <li><a href="{% url 'countries_list' %}" class="{% if 'countries' in request.path or 'country' in request.path %}active{% endif %}"><i class="fas fa-earth-africa"></i> <span>الدول</span></a></li>
             <li><a href="{% url 'years_list' %}" class="{% if '/years/' in request.path %}active{% endif %}"><i class="fas fa-calendar-days"></i> <span>السنوات</span></a></li>
             <li><a href="{% url 'teachers_list' %}" class="{% if 'teacher' in request.path %}active{% endif %}"><i class="fas fa-chalkboard-user"></i> <span>المعلمات</span></a></li>
+            <li><a href="{% url 'supervisors_list' %}" class="{% if 'supervisor' in request.path %}active{% endif %}"><i class="fas fa-user-tie"></i> <span>المشرفات</span></a></li>
             <li><a href="{% url 'all_students' %}" class="{% if 'all-students' in request.path %}active{% endif %}"><i class="fas fa-users"></i> <span>جميع الطلاب</span></a></li>
             <li><a href="{% url 'statistics' %}" class="{% if 'statistics' in request.path %}active{% endif %}"><i class="fas fa-chart-pie"></i> <span>النسب</span></a></li>
             <li><a href="{% url 'expenses_list' %}" class="{% if 'expense' in request.path %}active{% endif %}"><i class="fas fa-money-bill-wave"></i> <span>المصروفات</span></a></li>
@@ -308,6 +318,24 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <li><a href="{% url 'add_student' %}" class="{% if 'add-student' in request.path %}active{% endif %}"><i class="fas fa-user-plus"></i> <span>إضافة طالب</span></a></li>
             <li><a href="{% url 'add_teacher' %}" class="{% if 'add-teacher' in request.path %}active{% endif %}"><i class="fas fa-plus"></i> <span>إضافة معلمة</span></a></li>
         </ul>
+
+        <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.14);">
+            <div style="font-size:0.72rem; color:#E9D5FF; font-weight:700; margin-bottom:10px; padding:0 6px;">🔗 روابط البورتالات (للنسخ والإرسال)</div>
+            <div class="quick-link-box">
+                <span>بورتال المعلمة</span>
+                <div class="quick-link-row">
+                    <input type="text" readonly id="ql-teacher" value="{{ request.scheme }}://{{ request.get_host }}{% url 'teacher_login' %}">
+                    <button type="button" onclick="quickCopy('ql-teacher', this)"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+            <div class="quick-link-box">
+                <span>بورتال المشرفة</span>
+                <div class="quick-link-row">
+                    <input type="text" readonly id="ql-supervisor" value="{{ request.scheme }}://{{ request.get_host }}{% url 'supervisor_login' %}">
+                    <button type="button" onclick="quickCopy('ql-supervisor', this)"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="main-content">
@@ -326,6 +354,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
         setTimeout(() => {
             document.querySelectorAll('.alert').forEach(el => { el.style.display = 'none'; });
         }, 5000);
+
+        function quickCopy(inputId, btn){
+            const input = document.getElementById(inputId);
+            navigator.clipboard.writeText(input.value).then(() => {
+                const icon = btn.querySelector('i');
+                icon.className = 'fas fa-check';
+                setTimeout(() => { icon.className = 'fas fa-copy'; }, 1500);
+            });
+        }
     </script>
 </body>
 </html>
