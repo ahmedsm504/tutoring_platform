@@ -1,0 +1,42 @@
+{% extends 'core/supervisor_portal_base.html' %}
+{% block title %}تسجيل جدول {{ student.name }}{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h2 style="color:var(--violet-700);">🗓️ تسجيل جدول مواعيد - {{ student.name }}</h2>
+    <a href="{% url 'supervisor_teacher_detail' teacher.id %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> رجوع لـ {{ teacher.name }}</a>
+</div>
+<p style="color:var(--ink-muted); font-size:0.85rem;">
+    حددي يوم/أيام حلقات {{ student.name }} الأسبوعية والوقت، وهيتسجل الجدول تلقائيًا كحلقات مجدولة للمعلمة {{ teacher.name }}.
+</p>
+
+<div class="card">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="field">
+            <label>أيام الحلقة في الأسبوع *</label>
+            <div style="display:flex; flex-wrap:wrap; gap:10px; background:var(--violet-50); padding:12px; border-radius:10px;">
+                {% for w_num, w_name in weekdays %}
+                <label style="display:flex; align-items:center; gap:5px; font-size:0.85rem; font-weight:400;">
+                    <input type="checkbox" name="weekday" value="{{ w_num }}"> {{ w_name }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="field">
+            <label>وقت الحلقة *</label>
+            <input type="time" name="lesson_time" required>
+        </div>
+        <div class="field">
+            <label>مدة الحلقة (دقيقة)</label>
+            <input type="number" name="duration_minutes" value="30">
+        </div>
+        <div class="field">
+            <label>لعدد كام أسبوع نسجل الجدول ده؟</label>
+            <input type="number" name="weeks_count" value="4" min="1" max="12">
+        </div>
+        <button type="submit" class="btn btn-primary">تسجيل الجدول</button>
+    </form>
+</div>
+
+<a href="{% url 'supervisor_student_schedule_view' student.id %}" class="btn btn-outline"><i class="fas fa-calendar"></i> عرض جدول {{ student.name }} الحالي</a>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'core/supervisor_portal_base.html' %}
+{% block title %}طلبات المواعيد{% endblock %}
+{% block content %}
+<h2 style="color:var(--violet-700); margin-top:0;">🗓️ طلبات المواعيد من معلماتك</h2>
+
+<form method="GET" style="margin-bottom:15px;">
+    <select name="status" onchange="this.form.submit()" style="padding:8px 12px; border-radius:10px; border:1.6px solid var(--border); background:var(--surface); color:var(--ink);">
+        <option value="pending" {% if selected_status == 'pending' %}selected{% endif %}>قيد المراجعة</option>
+        <option value="approved" {% if selected_status == 'approved' %}selected{% endif %}>تمت الموافقة</option>
+        <option value="rejected" {% if selected_status == 'rejected' %}selected{% endif %}>مرفوض</option>
+        <option value="all" {% if selected_status == 'all' %}selected{% endif %}>الكل</option>
+    </select>
+</form>
+
+<div class="card">
+    <div class="table-container">
+        <table>
+            <thead><tr><th>الطالب</th><th>المعلمة</th><th>النوع</th><th>الموعد المقترح</th><th>ملاحظة المعلمة</th><th>الحالة</th><th>إجراء</th></tr></thead>
+            <tbody>
+                {% for r in requests %}
+                <tr>
+                    <td>{{ r.student.name }}</td>
+                    <td>{{ r.teacher.name }}</td>
+                    <td>{{ r.get_request_type_display }}</td>
+                    <td>{{ r.proposed_datetime|date:"Y/m/d H:i"|default:r.proposed_days|default:"-" }}</td>
+                    <td>{{ r.teacher_note|default:"-" }}</td>
+                    <td>
+                        {% if r.status == 'pending' %}<span class="badge" style="background:var(--amber-soft); color:var(--amber);">قيد المراجعة</span>
+                        {% elif r.status == 'approved' %}<span class="badge" style="background:var(--green-soft); color:var(--green);">تمت الموافقة</span>
+                        {% else %}<span class="badge" style="background:var(--red-soft); color:var(--red);">مرفوض</span>{% endif %}
+                    </td>
+                    <td>
+                        {% if r.status == 'pending' %}
+                        <form method="POST" action="{% url 'supervisor_review_schedule_request' r.id %}" style="display:flex; gap:6px; flex-wrap:wrap;">
+                            {% csrf_token %}
+                            <input type="text" name="admin_note" placeholder="ملاحظة (اختياري)" style="width:120px; padding:6px 8px; border-radius:8px; border:1.6px solid var(--border); font-size:0.78rem; background:var(--surface); color:var(--ink);">
+                            <button type="submit" name="action" value="approve" class="btn btn-green" style="padding:6px 10px; font-size:0.78rem;">✅ موافقة</button>
+                            <button type="submit" name="action" value="reject" class="btn btn-red" style="padding:6px 10px; font-size:0.78rem;">❌ رفض</button>
+                        </form>
+                        {% else %}
+                        <span style="font-size:0.78rem; color:var(--ink-muted);">{{ r.admin_note|default:"-" }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7" style="text-align:center;">لا يوجد طلبات.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

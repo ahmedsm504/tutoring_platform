@@ -8,6 +8,32 @@
 
 <div class="stats-row">
     <div class="stat-box"><div class="number">{{ students.count }}</div><div class="label">👩‍🎓 طلاب مقيدين</div></div>
+    <div class="stat-box"><div class="number">{{ attendance_stats.completed }}</div><div class="label">✅ حلقات تمت</div></div>
+    <div class="stat-box" style="border-right-color:var(--amber);"><div class="number">{{ attendance_stats.teacher_absent }}</div><div class="label">🟠 غياب المعلمة</div></div>
+    <div class="stat-box" style="border-right-color:#B87F16;"><div class="number">{{ attendance_stats.excused }}</div><div class="label">🟡 اعتذارات المعلمة</div></div>
+    <div class="stat-box" style="border-right-color:var(--red);"><div class="number">{{ attendance_stats.student_absent }}</div><div class="label">🔴 غياب الطلاب</div></div>
+</div>
+
+<div class="card">
+    <h4 style="margin-top:0; color:var(--violet-700);">👩‍🎓 طلاب {{ teacher.name }} - جدول ومتابعة</h4>
+    <div class="table-container">
+        <table>
+            <thead><tr><th>الطالب</th><th></th></tr></thead>
+            <tbody>
+                {% for s in students %}
+                <tr>
+                    <td>{{ s.name }}</td>
+                    <td style="display:flex; gap:6px; flex-wrap:wrap;">
+                        <a href="{% url 'supervisor_student_schedule_view' s.id %}" class="btn btn-outline" style="padding:6px 12px; font-size:0.78rem;"><i class="fas fa-calendar"></i> جدول المواعيد</a>
+                        <a href="{% url 'supervisor_add_evaluation' s.id %}" class="btn btn-outline" style="padding:6px 12px; font-size:0.78rem;"><i class="fas fa-file-lines"></i> تقرير شهري جديد</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="2" style="text-align:center;">لا يوجد طلاب.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="card">
@@ -29,7 +55,8 @@
                     <td>
                         <form method="POST" action="{% url 'supervisor_mark_lesson' l.id %}" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
                             {% csrf_token %}
-                            <select name="status" style="padding:6px 8px; border-radius:8px; border:1.6px solid var(--border); font-size:0.8rem;">
+                            <select name="status" required style="padding:6px 8px; border-radius:8px; border:1.6px solid var(--border); font-size:0.8rem;">
+                                {% if l.status == 'scheduled' %}<option value="" disabled selected>سجلي الحالة...</option>{% endif %}
                                 <option value="completed" {% if l.status == 'completed' %}selected{% endif %}>✅ تمت</option>
                                 <option value="student_absent" {% if l.status == 'student_absent' %}selected{% endif %}>🔴 غياب</option>
                                 <option value="excused" {% if l.status == 'excused' %}selected{% endif %}>🟡 عذر</option>

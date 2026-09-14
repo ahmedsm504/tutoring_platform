@@ -1,21 +1,31 @@
 {% extends 'core/teacher_portal_base.html' %}
 {% block title %}السبورة التفاعلية{% endblock %}
 {% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
 <style>
 .wb-toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px;}
-.wb-group{background:#fff; border:1px solid var(--border); border-radius:14px; padding:8px 10px; display:flex; gap:6px; align-items:center; flex-wrap:wrap;}
+.wb-group{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:8px 10px; display:flex; gap:6px; align-items:center; flex-wrap:wrap;}
 .wb-group span.lbl{font-size:0.75rem; color:var(--ink-muted); font-weight:700; margin-left:4px;}
-.wb-color{width:26px; height:26px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1.5px var(--border); cursor:pointer;}
-.wb-color.active{box-shadow:0 0 0 2.5px var(--violet-600);}
-.wb-btn{width:38px; height:38px; border-radius:10px; border:1.6px solid var(--border); background:#fff; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center;}
+.wb-color{width:26px; height:26px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1.5px var(--border); cursor:pointer; transition:transform .15s;}
+.wb-color:hover{transform:scale(1.15);}
+.wb-color.active{box-shadow:0 0 0 2.5px var(--violet-600); transform:scale(1.1);}
+.wb-btn{width:clamp(34px,8vw,40px); height:clamp(34px,8vw,40px); border-radius:12px; border:1.6px solid var(--border); background:var(--surface); cursor:pointer; font-size:clamp(1rem,3.6vw,1.15rem); display:flex; align-items:center; justify-content:center; transition:transform .15s, box-shadow .15s;}
+.wb-btn:hover{transform:translateY(-2px) scale(1.06); box-shadow:0 6px 14px rgba(109,40,217,0.18);}
+.wb-btn:active{transform:scale(0.94);}
 .wb-btn.active{background:var(--violet-600); color:#fff; border-color:var(--violet-600);}
-.wb-phrase-btn{padding:7px 12px; border-radius:10px; border:none; background:var(--green-soft); color:var(--green); font-weight:700; cursor:pointer; font-size:0.82rem;}
-.wb-stage-wrap{position:relative; border-radius:20px; overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow-md); height:70vh;}
+.wb-phrase-btn{padding:8px 14px; border-radius:999px; border:none; background:var(--green-soft); color:var(--green); font-weight:700; cursor:pointer; font-size:clamp(0.75rem,3vw,0.85rem); transition:transform .15s;}
+.wb-phrase-btn:hover{transform:translateY(-2px) scale(1.04);}
+.wb-stage-wrap{position:relative; border-radius:20px; overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow-md); height:min(70vh, 560px);}
 .wb-bg{position:absolute; inset:0; z-index:0;}
 .bg-rainbow{background:linear-gradient(120deg,#FFADAD,#FFD6A5,#FDFFB6,#CAFFBF,#9BF6FF,#A0C4FF,#BDB2FF);}
 .bg-space{background:radial-gradient(circle at 20% 30%, #ffffff 1px, transparent 1.5px) 0 0/40px 40px, radial-gradient(circle at 60% 70%, #ffffff 1px, transparent 1.5px) 0 0/60px 60px, linear-gradient(160deg,#0B1030,#241B5E,#3C1E70);}
 .bg-cartoon{background:linear-gradient(180deg,#7FDBFF 0%,#39A6FF 40%,#0B6FCB 100%);}
 .bg-cartoon::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,#fff3 10px,transparent 11px);background-size:70px 70px;}
+.bg-forest{background:linear-gradient(180deg,#BEEFA0 0%,#6FCF7A 55%,#2E8B4E 100%);}
+.bg-farm{background:linear-gradient(180deg,#BEE7FF 0%,#BEE7FF 55%,#D9C08A 55%,#D9C08A 100%);}
+.bg-candy{background:repeating-linear-gradient(45deg,#FFD1E8 0 24px,#FFF0F6 24px 48px);}
+.bg-clouds{background:linear-gradient(180deg,#AEE4FF,#E7F7FF);}
+.bg-clouds::after{content:'';position:absolute;inset:0;background-image:radial-gradient(ellipse 40px 20px at 20% 30%, #fff 90%, transparent 100%), radial-gradient(ellipse 50px 24px at 65% 55%, #fff 90%, transparent 100%), radial-gradient(ellipse 35px 18px at 40% 75%, #fff 90%, transparent 100%);}
 .bg-pink{background:#FFD6EC;}
 .bg-blue{background:#D6ECFF;}
 .bg-yellow{background:#FFF6D6;}
@@ -26,13 +36,35 @@
 .sticky .del{position:absolute; top:-10px; left:-10px; background:#DC3545; color:#fff; border-radius:50%; width:20px; height:20px; font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer;}
 .sticky-square{background:#FFF7A8; transform:rotate(-1deg);}
 .sticky-star{background:#FFD6E8; clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
-.cheer-text{position:absolute; z-index:10; top:40%; left:50%; transform:translate(-50%,-50%) scale(0.5); font-family:var(--font-display); font-weight:800; font-size:2.6rem; color:#fff; text-shadow:0 4px 0 rgba(0,0,0,0.15); opacity:0; pointer-events:none; transition:all .35s ease-out;}
+.word-sticker{position:absolute; z-index:6; padding:10px 18px; border-radius:14px; background:linear-gradient(120deg,#8B5CF6,#EC4899); color:#fff; font-weight:800; font-family:var(--font-display); box-shadow:0 6px 16px rgba(0,0,0,0.2); cursor:move; white-space:nowrap;}
+.word-sticker .del{position:absolute; top:-10px; left:-10px; background:#DC3545; color:#fff; border-radius:50%; width:20px; height:20px; font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer;}
+.shape-sticker{position:absolute; z-index:6; width:64px; height:64px; font-size:44px; display:flex; align-items:center; justify-content:center; cursor:move; transform:translate(-50%,-50%); filter:drop-shadow(0 4px 8px rgba(0,0,0,0.25));}
+.shape-sticker .del{position:absolute; top:-4px; left:-4px; background:#DC3545; color:#fff; border-radius:50%; width:20px; height:20px; font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:2;}
+.quran-panel{display:none; opacity:0; transform:scale(0.94); transition:opacity .2s, transform .2s;}
+.quran-panel.open{display:flex; opacity:1; transform:scale(1);}
+.cheer-text{position:absolute; z-index:10; top:40%; left:50%; transform:translate(-50%,-50%) scale(0.5); font-family:var(--font-display); font-weight:800; font-size:clamp(1.3rem,6vw,2.6rem); color:#fff; text-shadow:0 4px 0 rgba(0,0,0,0.15); opacity:0; pointer-events:none; transition:all .35s ease-out; text-align:center; max-width:90%;}
 .cheer-text.show{opacity:1; transform:translate(-50%,-50%) scale(1);}
-#timer-display{position:absolute; z-index:8; top:14px; left:14px; background:rgba(255,255,255,0.9); border-radius:14px; padding:8px 16px; font-weight:800; font-size:1.3rem; display:none;}
+#timer-display{position:absolute; z-index:8; top:14px; left:14px; background:rgba(255,255,255,0.9); border-radius:14px; padding:8px 16px; font-weight:800; font-size:clamp(1rem,4vw,1.3rem); display:none;}
+@media (max-width:600px){
+    .wb-stage-wrap{height:52vh;}
+    .wb-group{padding:6px 8px; gap:4px;}
+    .wb-group span.lbl{display:none;}
+    .sticky{min-width:80px; min-height:70px; font-size:0.75rem;}
+    .word-sticker{padding:7px 12px; font-size:0.8rem;}
+}
+@keyframes wb-bob{0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-8px) rotate(4deg);}}
+@keyframes wb-wiggle{0%,100%{transform:rotate(0deg);} 25%{transform:rotate(-8deg);} 75%{transform:rotate(8deg);}}
+.wb-btn:hover{animation:wb-wiggle .3s ease-in-out;}
+.wb-phrase-btn:hover{animation:wb-wiggle .3s ease-in-out;}
+.wb-color:hover{animation:wb-wiggle .3s ease-in-out;}
 </style>
 {% endblock %}
 {% block content %}
-<h2 style="color:var(--violet-700); margin-top:0;">🖍️ السبورة التفاعلية</h2>
+<h2 style="color:var(--violet-700); margin-top:0; display:flex; align-items:center; gap:10px;">
+    🖍️ السبورة التفاعلية
+    <span style="font-size:1.5rem; display:inline-block; animation:wb-bob 1.6s ease-in-out infinite;">🐻</span>
+    <span style="font-size:1.3rem; display:inline-block; animation:wb-bob 1.6s ease-in-out infinite .3s;">🐥</span>
+</h2>
 
 <div class="wb-toolbar">
     <div class="wb-group">
@@ -55,6 +87,21 @@
         <button class="wb-btn shape-btn" data-shape="crown">👑</button>
         <button class="wb-btn shape-btn" data-shape="flower">🌸</button>
         <button class="wb-btn shape-btn" data-shape="square">🟪</button>
+        <button class="wb-btn shape-btn" data-shape="clock">🕐</button>
+        <button class="wb-btn shape-btn" data-shape="lion">🦁</button>
+        <button class="wb-btn shape-btn" data-shape="doll">🪆</button>
+        <button class="wb-btn shape-btn" data-shape="cloud">☁️</button>
+    </div>
+
+    <div class="wb-group">
+        <span class="lbl">ملصقات كلمات</span>
+        <button class="wb-btn sticker-btn" data-sticker="🎉 واو، انتِ رائعة! 🎉" title="واو انتِ رائعة">🎉</button>
+        <button class="wb-btn sticker-btn" data-sticker="THE END ✨" title="The End">🔚</button>
+        <button class="wb-btn sticker-btn" data-sticker="⭐ سوبر ستار ⭐" title="سوبر ستار">🌟</button>
+    </div>
+
+    <div class="wb-group">
+        <button class="wb-btn" id="toggle-quran" title="فتح المصحف على السبورة">📖</button>
     </div>
 
     <div class="wb-group">
@@ -69,6 +116,10 @@
         <button class="wb-btn bg-btn" data-bg="rainbow">🌈</button>
         <button class="wb-btn bg-btn" data-bg="space">🌌</button>
         <button class="wb-btn bg-btn" data-bg="cartoon">🐠</button>
+        <button class="wb-btn bg-btn" data-bg="forest">🌳</button>
+        <button class="wb-btn bg-btn" data-bg="farm">🐄</button>
+        <button class="wb-btn bg-btn" data-bg="candy">🍭</button>
+        <button class="wb-btn bg-btn" data-bg="clouds">☁️</button>
         <button class="wb-btn bg-btn" data-bg="pink">🌸</button>
         <button class="wb-btn bg-btn" data-bg="blue">💙</button>
         <button class="wb-btn bg-btn" data-bg="yellow">💛</button>
@@ -77,6 +128,8 @@
     <div class="wb-group">
         <span class="lbl">أصوات</span>
         <button class="wb-btn" id="sound-clap" title="تصفيق">👏</button>
+        <button class="wb-btn" id="sound-bird" title="صوت عصفور">🐦</button>
+        <button class="wb-btn" id="sound-truck" title="صوت شاحنة">🚚</button>
         <button class="wb-btn" id="sound-timer" title="تايمر 30 ثانية">⏱️</button>
     </div>
 
@@ -90,14 +143,63 @@
     <button class="wb-phrase-btn" data-phrase="🏆 بطل الحلقة 🏆">بطل الحلقة</button>
     <button class="wb-phrase-btn" data-phrase="🌟 ما شاء الله 🌟">ما شاء الله</button>
     <button class="wb-phrase-btn" data-phrase="💪 استمر كذلك 💪">استمر كذلك</button>
+    <button class="wb-phrase-btn" data-phrase="👀 انتبه/ي 👀">انتبه/ي</button>
+    <button class="wb-phrase-btn" data-phrase="🚀 هيا استمر 🚀">هيا استمر</button>
+    <button class="wb-phrase-btn" data-phrase="🌈 انت رائع 🌈">انت رائع</button>
 </div>
 
 <div class="wb-stage-wrap" id="stage">
     <div class="wb-bg bg-white" id="wb-bg"></div>
     <canvas class="wb-canvas" id="board"></canvas>
     <div id="timer-display">30</div>
+
+    <div id="quran-backdrop" style="display:none; position:absolute; inset:0; z-index:8; background:rgba(0,0,0,0.25);"></div>
+    <div id="quran-panel" class="quran-panel" style="position:absolute; z-index:9; top:3%; left:8%; width:84%; height:94%; background:#FBF7EC; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.25); overflow:hidden; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--violet-600); color:#fff; padding:6px 10px; cursor:move; flex-wrap:wrap; gap:6px;" id="quran-drag-handle">
+            <span style="font-weight:700; font-size:0.85rem; white-space:nowrap;">📖 المصحف الشريف</span>
+            <select id="surah-select" style="border-radius:8px; border:none; padding:5px 8px; font-family:var(--font-body); font-weight:700; font-size:0.8rem; max-width:40vw;"></select>
+            <div style="display:flex; align-items:center; gap:4px;">
+                <button id="quran-next-page" style="background:rgba(255,255,255,0.2); border:none; color:#fff; border-radius:8px; width:28px; height:28px; cursor:pointer;">‹</button>
+                <span id="quran-page-label" style="font-size:0.75rem; min-width:70px; text-align:center;">صفحة 1</span>
+                <button id="quran-prev-page" style="background:rgba(255,255,255,0.2); border:none; color:#fff; border-radius:8px; width:28px; height:28px; cursor:pointer;">›</button>
+            </div>
+            <button id="close-quran" style="background:none; border:none; color:#fff; font-size:1.1rem; cursor:pointer;">×</button>
+        </div>
+        <div id="quran-content" style="flex:1; overflow-y:auto; padding:20px 26px; font-family:'Amiri Quran', serif; color:#2a1a08; line-height:2.6; text-align:center; font-size:clamp(1.05rem, 2.6vw, 1.5rem);">
+            <div style="text-align:center; color:#8a7a5a; font-family:var(--font-body); font-size:0.9rem;">جاري تحميل الصفحة...</div>
+        </div>
+    </div>
 </div>
 
+
+<script>
+// قائمة السور الـ114 مع رقم أول صفحة لها في المصحف المعياري (604 صفحة) - لتسهيل الانتقال المباشر
+const SURAHS = [
+[1,"الفاتحة",1],[2,"البقرة",2],[3,"آل عمران",50],[4,"النساء",77],[5,"المائدة",106],
+[6,"الأنعام",128],[7,"الأعراف",151],[8,"الأنفال",177],[9,"التوبة",187],[10,"يونس",208],
+[11,"هود",221],[12,"يوسف",235],[13,"الرعد",249],[14,"إبراهيم",255],[15,"الحجر",262],
+[16,"النحل",267],[17,"الإسراء",282],[18,"الكهف",293],[19,"مريم",305],[20,"طه",312],
+[21,"الأنبياء",322],[22,"الحج",332],[23,"المؤمنون",342],[24,"النور",350],[25,"الفرقان",359],
+[26,"الشعراء",367],[27,"النمل",377],[28,"القصص",385],[29,"العنكبوت",396],[30,"الروم",404],
+[31,"لقمان",411],[32,"السجدة",415],[33,"الأحزاب",418],[34,"سبأ",428],[35,"فاطر",434],
+[36,"يس",440],[37,"الصافات",446],[38,"ص",453],[39,"الزمر",458],[40,"غافر",467],
+[41,"فصلت",477],[42,"الشورى",483],[43,"الزخرف",489],[44,"الدخان",496],[45,"الجاثية",499],
+[46,"الأحقاف",502],[47,"محمد",507],[48,"الفتح",511],[49,"الحجرات",515],[50,"ق",518],
+[51,"الذاريات",520],[52,"الطور",523],[53,"النجم",526],[54,"القمر",528],[55,"الرحمن",531],
+[56,"الواقعة",534],[57,"الحديد",537],[58,"المجادلة",542],[59,"الحشر",545],[60,"الممتحنة",549],
+[61,"الصف",551],[62,"الجمعة",553],[63,"المنافقون",554],[64,"التغابن",556],[65,"الطلاق",558],
+[66,"التحريم",560],[67,"الملك",562],[68,"القلم",564],[69,"الحاقة",566],[70,"المعارج",568],
+[71,"نوح",570],[72,"الجن",572],[73,"المزمل",574],[74,"المدثر",575],[75,"القيامة",577],
+[76,"الإنسان",578],[77,"المرسلات",580],[78,"النبأ",582],[79,"النازعات",583],[80,"عبس",585],
+[81,"التكوير",586],[82,"الانفطار",587],[83,"المطففين",587],[84,"الانشقاق",589],[85,"البروج",590],
+[86,"الطارق",591],[87,"الأعلى",591],[88,"الغاشية",592],[89,"الفجر",593],[90,"البلد",594],
+[91,"الشمس",595],[92,"الليل",595],[93,"الضحى",596],[94,"الشرح",596],[95,"التين",597],
+[96,"العلق",597],[97,"القدر",598],[98,"البينة",598],[99,"الزلزلة",599],[100,"العاديات",599],
+[101,"القارعة",600],[102,"التكاثر",600],[103,"العصر",601],[104,"الهمزة",601],[105,"الفيل",601],
+[106,"قريش",602],[107,"الماعون",602],[108,"الكوثر",602],[109,"الكافرون",603],[110,"النصر",603],
+[111,"المسد",603],[112,"الإخلاص",604],[113,"الفلق",604],[114,"الناس",604]
+];
+</script>
 <script>
 (function(){
     const stage = document.getElementById('stage');
@@ -108,6 +210,7 @@
     let currentShape = null;
     let drawing = false;
     let last = null;
+    let last2 = null;
 
     function resize(){
         const rect = stage.getBoundingClientRect();
@@ -127,31 +230,51 @@
         return {x: t.clientX - rect.left, y: t.clientY - rect.top};
     }
 
-    const SHAPE_EMOJI = {heart:'❤️', star:'⭐', crown:'👑', flower:'🌸', square:'🟪'};
+    const SHAPE_EMOJI = {heart:'❤️', star:'⭐', crown:'👑', flower:'🌸', square:'🟪', clock:'🕐', lion:'🦁', doll:'🪆', cloud:'☁️'};
 
     function stampShape(p, shape){
-        ctx.font = '52px serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(SHAPE_EMOJI[shape], p.x, p.y);
+        // الأشكال بقت ملصقات قابلة للسحب والحذف بدل ما تترسم دايمة على اللوح
+        const el = document.createElement('div');
+        el.className = 'shape-sticker';
+        el.style.left = p.x + 'px';
+        el.style.top = p.y + 'px';
+        el.style.zIndex = ++dragZ;
+        el.innerHTML = '<div class="del">×</div><span>' + SHAPE_EMOJI[shape] + '</span>';
+        stage.appendChild(el);
+        el.querySelector('.del').addEventListener('click', () => el.remove());
+        makeDraggable(el);
+        gamePopIn(el);
+    }
+    function gamePopIn(el){
+        el.style.transform = 'translate(-50%,-50%) scale(0.3)';
+        el.style.opacity = '0';
+        requestAnimationFrame(() => {
+            el.style.transition = 'transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s';
+            el.style.transform = 'translate(-50%,-50%) scale(1)';
+            el.style.opacity = '1';
+        });
     }
 
     canvas.addEventListener('pointerdown', e => {
         const p = pos(e);
         if(tool === 'shape'){ stampShape(p, currentShape); return; }
-        drawing = true; last = p;
+        drawing = true; last = p; last2 = p;
     });
     canvas.addEventListener('pointermove', e => {
         if(!drawing) return;
         const p = pos(e);
         ctx.lineWidth = tool === 'eraser' ? 26 : 5;
         ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
         ctx.strokeStyle = tool === 'eraser' ? '#FFFFFF' : color;
         ctx.globalCompositeOperation = tool === 'eraser' ? 'destination-out' : 'source-over';
+        // تنعيم الخط برسم منحنى بسيط بدل خط مستقيم (إحساس كتابة أنعم)
+        const mid = { x: (last.x + p.x) / 2, y: (last.y + p.y) / 2 };
         ctx.beginPath();
-        ctx.moveTo(last.x, last.y);
-        ctx.lineTo(p.x, p.y);
+        ctx.moveTo(last2.x, last2.y);
+        ctx.quadraticCurveTo(last.x, last.y, mid.x, mid.y);
         ctx.stroke();
+        last2 = mid;
         last = p;
     });
     ['pointerup','pointerleave'].forEach(ev => canvas.addEventListener(ev, () => drawing = false));
@@ -192,37 +315,56 @@
     // مسح الكل
     document.getElementById('clear-board').addEventListener('click', () => {
         ctx.clearRect(0,0,canvas.width, canvas.height);
-        document.querySelectorAll('.sticky').forEach(n => n.remove());
+        document.querySelectorAll('.sticky, .word-sticker').forEach(n => n.remove());
     });
 
-    // ملاحظات لاصقة قابلة للسحب
-    let noteZ = 6;
-    function addNote(kind){
-        const note = document.createElement('div');
-        note.className = 'sticky sticky-' + kind;
-        note.style.top = '30%'; note.style.left = '40%';
-        note.style.zIndex = ++noteZ;
-        note.innerHTML = '<div class="del">×</div><textarea placeholder="اكتب هنا..."></textarea>';
-        stage.appendChild(note);
-        note.querySelector('.del').addEventListener('click', () => note.remove());
-
+    // دالة عامة لجعل أي عنصر قابل للسحب
+    let dragZ = 6;
+    function makeDraggable(el){
         let dragging = false, offX=0, offY=0;
-        note.addEventListener('pointerdown', e => {
-            if(e.target.tagName === 'TEXTAREA') return;
-            dragging = true; note.style.zIndex = ++noteZ;
-            const r = note.getBoundingClientRect();
+        el.addEventListener('pointerdown', e => {
+            if(['TEXTAREA','BUTTON'].includes(e.target.tagName)) return;
+            dragging = true; el.style.zIndex = ++dragZ;
+            const r = el.getBoundingClientRect();
             offX = e.clientX - r.left; offY = e.clientY - r.top;
         });
         document.addEventListener('pointermove', e => {
             if(!dragging) return;
             const r = stage.getBoundingClientRect();
-            note.style.left = (e.clientX - r.left - offX) + 'px';
-            note.style.top = (e.clientY - r.top - offY) + 'px';
+            el.style.left = (e.clientX - r.left - offX) + 'px';
+            el.style.top = (e.clientY - r.top - offY) + 'px';
         });
         document.addEventListener('pointerup', () => dragging = false);
     }
+
+    // ملاحظات لاصقة قابلة للسحب
+    function addNote(kind){
+        const note = document.createElement('div');
+        note.className = 'sticky sticky-' + kind;
+        note.style.top = '30%'; note.style.left = '40%';
+        note.style.zIndex = ++dragZ;
+        note.innerHTML = '<div class="del">×</div><textarea placeholder="اكتب هنا..."></textarea>';
+        stage.appendChild(note);
+        note.querySelector('.del').addEventListener('click', () => note.remove());
+        makeDraggable(note);
+    }
     document.getElementById('add-note-square').addEventListener('click', () => addNote('square'));
     document.getElementById('add-note-star').addEventListener('click', () => addNote('star'));
+
+    // ملصقات كلمات جاهزة قابلة للسحب
+    function addWordSticker(text){
+        const el = document.createElement('div');
+        el.className = 'word-sticker';
+        el.style.top = '20%'; el.style.left = '30%';
+        el.style.zIndex = ++dragZ;
+        el.innerHTML = '<div class="del">×</div><span>' + text + '</span>';
+        stage.appendChild(el);
+        el.querySelector('.del').addEventListener('click', () => el.remove());
+        makeDraggable(el);
+    }
+    document.querySelectorAll('.sticker-btn').forEach(b => {
+        b.addEventListener('click', () => addWordSticker(b.dataset.sticker));
+    });
 
     // أصوات مُولّدة بدون ملفات خارجية
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -245,8 +387,19 @@
     function playTada(){ beep(523,0.15,0); beep(659,0.15,0.15); beep(784,0.3,0.3); }
     function playTick(){ beep(880,0.05,0,'square'); }
     function playRing(){ beep(1046,0.5,0); beep(1318,0.5,0.15); }
+    function playBird(){
+        // تغريد سريع بترددات متذبذبة يحاكي صوت عصفور
+        for(let i=0;i<5;i++) beep(1800 + Math.random()*900, 0.08, i*0.11, 'sine');
+    }
+    function playTruck(){
+        // نغمة منخفضة طويلة تحاكي بوق شاحنة
+        beep(140, 0.5, 0, 'sawtooth');
+        beep(140, 0.5, 0.55, 'sawtooth');
+    }
 
     document.getElementById('sound-clap').addEventListener('click', playClap);
+    document.getElementById('sound-bird').addEventListener('click', playBird);
+    document.getElementById('sound-truck').addEventListener('click', playTruck);
 
     let timerInterval = null;
     document.getElementById('sound-timer').addEventListener('click', () => {
@@ -262,6 +415,7 @@
                 clearInterval(timerInterval); timerInterval = null;
                 disp.style.display = 'none';
                 playRing();
+                if(window.fireConfetti) window.fireConfetti({ particleCount: 60, spread: 70 });
             }
         }, 1000);
     });
@@ -271,16 +425,109 @@
     document.querySelectorAll('.wb-phrase-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const el = document.createElement('div');
-            el.className = 'cheer-text';
+            el.className = 'cheer-text animate__animated animate__bounceIn';
             el.textContent = btn.dataset.phrase;
             el.style.color = cheerColors[Math.floor(Math.random()*cheerColors.length)];
             stage.appendChild(el);
             requestAnimationFrame(() => el.classList.add('show'));
             playTada();
+            if(window.fireConfetti) window.fireConfetti({ particleCount: 70, spread: 65, origin: {x:0.5, y:0.5} });
             setTimeout(() => { el.style.opacity = 0; }, 1800);
             setTimeout(() => el.remove(), 2200);
         });
     });
+
+    // فتح المصحف فوق السبورة - بيجيب صفحات المصحف مباشرة من مصدر مفتوح وموثوق
+    // على الإنترنت (مصحف حفص عن عاصم بالرسم العثماني، 604 صفحة) فمش محتاجة
+    // ترفعي أي ملف؛ يكفي إن جهاز المعلمة يكون متصل بالإنترنت وقت الحلقة.
+    const MUSHAF_BASE = 'https://raw.githubusercontent.com/zonetecde/mushaf-layout/refs/heads/main/mushaf/page-';
+    const toggleQuranBtn = document.getElementById('toggle-quran');
+    if(toggleQuranBtn){
+        const panel = document.getElementById('quran-panel');
+        const surahSelect = document.getElementById('surah-select');
+        const content = document.getElementById('quran-content');
+        const pageLabel = document.getElementById('quran-page-label');
+        let currentPage = 1;
+        const pageCache = {};
+
+        SURAHS.forEach(([num, name, page]) => {
+            const opt = document.createElement('option');
+            opt.value = page;
+            opt.textContent = num + '. ' + name;
+            surahSelect.appendChild(opt);
+        });
+
+        function renderPage(data){
+            let html = '';
+            data.lines.forEach(line => {
+                if(line.type === 'surah-header'){
+                    html += `<div style="border:2px solid #b08d3f; border-radius:10px; padding:6px 14px; display:inline-block; margin:10px auto; font-weight:700; font-size:1.15rem; color:#7a5a1e; background:#FFF8E7;">${line.text}</div><br>`;
+                } else if(line.type === 'basmala'){
+                    html += `<div style="margin:6px 0; font-size:1.3rem;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>`;
+                } else if(line.type === 'text'){
+                    html += `<div>${line.text}</div>`;
+                }
+            });
+            content.innerHTML = html || '<div>صفحة فارغة</div>';
+            pageLabel.textContent = 'صفحة ' + data.page;
+        }
+
+        async function goToPage(page){
+            page = Math.max(1, Math.min(604, parseInt(page, 10) || 1));
+            currentPage = page;
+            content.innerHTML = '<div style="color:#8a7a5a; font-family:var(--font-body); font-size:0.9rem;">جاري تحميل الصفحة...</div>';
+            try{
+                if(!pageCache[page]){
+                    const padded = String(page).padStart(3, '0');
+                    const res = await fetch(MUSHAF_BASE + padded + '.json');
+                    if(!res.ok) throw new Error('fetch failed');
+                    pageCache[page] = await res.json();
+                }
+                renderPage(pageCache[page]);
+            }catch(e){
+                content.innerHTML = '<div style="color:#DC3545; font-family:var(--font-body); font-size:0.9rem;">تعذر تحميل الصفحة - تأكدي إن الجهاز متصل بالإنترنت وحاولي تاني.</div>';
+            }
+        }
+
+        surahSelect.addEventListener('change', () => goToPage(surahSelect.value));
+        surahSelect.addEventListener('click', e => e.stopPropagation());
+        surahSelect.addEventListener('pointerdown', e => e.stopPropagation());
+        document.getElementById('quran-next-page').addEventListener('click', () => goToPage(currentPage + 1));
+        document.getElementById('quran-prev-page').addEventListener('click', () => goToPage(currentPage - 1));
+
+        let quranOpened = false;
+        const backdrop = document.getElementById('quran-backdrop');
+        function openQuran(){
+            panel.classList.add('open');
+            backdrop.style.display = 'block';
+            if(!quranOpened){ quranOpened = true; goToPage(1); }
+        }
+        function closeQuran(){
+            panel.classList.remove('open');
+            backdrop.style.display = 'none';
+        }
+        toggleQuranBtn.addEventListener('click', () => {
+            if(panel.classList.contains('open')) closeQuran(); else openQuran();
+        });
+        document.getElementById('close-quran').addEventListener('click', closeQuran);
+        backdrop.addEventListener('click', closeQuran);
+
+        // سحب لوحة المصحف من العنوان
+        let qDrag=false, qOffX=0, qOffY=0;
+        const handle = document.getElementById('quran-drag-handle');
+        handle.addEventListener('pointerdown', e => {
+            qDrag = true; panel.style.zIndex = ++dragZ;
+            const r = panel.getBoundingClientRect();
+            qOffX = e.clientX - r.left; qOffY = e.clientY - r.top;
+        });
+        document.addEventListener('pointermove', e => {
+            if(!qDrag) return;
+            const r = stage.getBoundingClientRect();
+            panel.style.left = (e.clientX - r.left - qOffX) + 'px';
+            panel.style.top = (e.clientY - r.top - qOffY) + 'px';
+        });
+        document.addEventListener('pointerup', () => qDrag = false);
+    }
 })();
 </script>
 {% endblock %}

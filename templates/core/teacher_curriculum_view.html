@@ -3,11 +3,16 @@
 {% block content %}
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
     <h2 style="color:var(--violet-700); margin:0;">{% if document.is_quran %}📖{% else %}📄{% endif %} {{ document.title }}</h2>
-    <a href="{% url 'teacher_curriculum' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> رجوع للمنهج</a>
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        {% if document.is_quran %}
+        <select id="surah-select" style="border-radius:10px; border:1.6px solid var(--border); padding:8px 10px; font-family:var(--font-body); font-weight:700; font-size:0.85rem;"></select>
+        {% endif %}
+        <a href="{% url 'teacher_curriculum' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> رجوع للمنهج</a>
+    </div>
 </div>
 
 <div class="card" style="padding:0; overflow:hidden;">
-    <div id="pdf-wrap" style="position:relative; height:78vh; background:#EDEAF6;" oncontextmenu="return false;">
+    <div id="pdf-wrap" style="position:relative; height:78vh; background:var(--violet-100);" oncontextmenu="return false;">
         <iframe id="pdf-frame" style="width:100%; height:100%; border:0;"></iframe>
         <div id="watermark" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; overflow:hidden;">
         </div>
@@ -49,8 +54,45 @@
         .then(r => r.blob())
         .then(blob => {
             const url = URL.createObjectURL(blob);
-            document.getElementById('pdf-frame').src = url;
+            const frame = document.getElementById('pdf-frame');
             document.getElementById('loading').style.display = 'none';
+            {% if document.is_quran %}
+            const SURAHS = [
+                [1,"الفاتحة",1],[2,"البقرة",2],[3,"آل عمران",50],[4,"النساء",77],[5,"المائدة",106],
+                [6,"الأنعام",128],[7,"الأعراف",151],[8,"الأنفال",177],[9,"التوبة",187],[10,"يونس",208],
+                [11,"هود",221],[12,"يوسف",235],[13,"الرعد",249],[14,"إبراهيم",255],[15,"الحجر",262],
+                [16,"النحل",267],[17,"الإسراء",282],[18,"الكهف",293],[19,"مريم",305],[20,"طه",312],
+                [21,"الأنبياء",322],[22,"الحج",332],[23,"المؤمنون",342],[24,"النور",350],[25,"الفرقان",359],
+                [26,"الشعراء",367],[27,"النمل",377],[28,"القصص",385],[29,"العنكبوت",396],[30,"الروم",404],
+                [31,"لقمان",411],[32,"السجدة",415],[33,"الأحزاب",418],[34,"سبأ",428],[35,"فاطر",434],
+                [36,"يس",440],[37,"الصافات",446],[38,"ص",453],[39,"الزمر",458],[40,"غافر",467],
+                [41,"فصلت",477],[42,"الشورى",483],[43,"الزخرف",489],[44,"الدخان",496],[45,"الجاثية",499],
+                [46,"الأحقاف",502],[47,"محمد",507],[48,"الفتح",511],[49,"الحجرات",515],[50,"ق",518],
+                [51,"الذاريات",520],[52,"الطور",523],[53,"النجم",526],[54,"القمر",528],[55,"الرحمن",531],
+                [56,"الواقعة",534],[57,"الحديد",537],[58,"المجادلة",542],[59,"الحشر",545],[60,"الممتحنة",549],
+                [61,"الصف",551],[62,"الجمعة",553],[63,"المنافقون",554],[64,"التغابن",556],[65,"الطلاق",558],
+                [66,"التحريم",560],[67,"الملك",562],[68,"القلم",564],[69,"الحاقة",566],[70,"المعارج",568],
+                [71,"نوح",570],[72,"الجن",572],[73,"المزمل",574],[74,"المدثر",575],[75,"القيامة",577],
+                [76,"الإنسان",578],[77,"المرسلات",580],[78,"النبأ",582],[79,"النازعات",583],[80,"عبس",585],
+                [81,"التكوير",586],[82,"الانفطار",587],[83,"المطففين",587],[84,"الانشقاق",589],[85,"البروج",590],
+                [86,"الطارق",591],[87,"الأعلى",591],[88,"الغاشية",592],[89,"الفجر",593],[90,"البلد",594],
+                [91,"الشمس",595],[92,"الليل",595],[93,"الضحى",596],[94,"الشرح",596],[95,"التين",597],
+                [96,"العلق",597],[97,"القدر",598],[98,"البينة",598],[99,"الزلزلة",599],[100,"العاديات",599],
+                [101,"القارعة",600],[102,"التكاثر",600],[103,"العصر",601],[104,"الهمزة",601],[105,"الفيل",601],
+                [106,"قريش",602],[107,"الماعون",602],[108,"الكوثر",602],[109,"الكافرون",603],[110,"النصر",603],
+                [111,"المسد",603],[112,"الإخلاص",604],[113,"الفلق",604],[114,"الناس",604]
+            ];
+            const sel = document.getElementById('surah-select');
+            SURAHS.forEach(([num, name, page]) => {
+                const opt = document.createElement('option');
+                opt.value = page; opt.textContent = num + '. ' + name;
+                sel.appendChild(opt);
+            });
+            sel.addEventListener('change', () => { frame.src = url + '#page=' + sel.value; });
+            frame.src = url;
+            {% else %}
+            frame.src = url;
+            {% endif %}
         })
         .catch(() => {
             document.getElementById('loading').innerHTML = 'حدث خطأ في تحميل الملف.';

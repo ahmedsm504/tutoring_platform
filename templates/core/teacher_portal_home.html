@@ -3,14 +3,13 @@
 {% block content %}
 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
     <h2 style="color:var(--violet-700); margin:0;">أهلًا بيكِ، {{ teacher.name }} 👋</h2>
-    <a href="{% url 'teacher_register_schedule' %}" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> تسجيل مواعيد الطلاب</a>
 </div>
 
 {% if due_lessons %}
 <div class="card" style="border-right:5px solid var(--red); background:var(--red-soft);">
     <strong>🔔 حان موعد حلقتك دلوقتي!</strong>
     {% for l in due_lessons %}
-    <div style="margin-top:10px; padding:12px; background:#fff; border-radius:12px;">
+    <div style="margin-top:10px; padding:12px; background:var(--surface); border-radius:12px;">
         <div style="font-weight:700;">حان موعد الحلقة مع {{ l.student.name }} - {{ l.scheduled_at|date:"H:i" }}</div>
         {% if not l.started_at %}
         <form method="POST" action="{% url 'teacher_mark_lesson_started' l.id %}" style="margin-top:10px;">
@@ -18,14 +17,7 @@
             <button type="submit" class="btn btn-primary">▶️ بدء الحلقة</button>
         </form>
         {% else %}
-        <div style="margin-top:8px; font-size:0.8rem; color:var(--ink-muted);">بدأت الساعة {{ l.started_at|date:"H:i" }} - سجلي حالتها لما تخلصي:</div>
-        <form method="POST" action="{% url 'teacher_mark_lesson' l.id %}" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
-            {% csrf_token %}
-            <button type="submit" name="status" value="completed" class="btn btn-green">🟢 تمت الحلقة</button>
-            <button type="submit" name="status" value="student_absent" class="btn btn-red">🔴 الطالب غائب</button>
-            <button type="submit" name="status" value="teacher_absent" class="btn btn-amber">🟠 معنديش حضور</button>
-            <button type="submit" name="status" value="cancelled" class="btn btn-outline">⚪ الحلقة أُلغيت</button>
-        </form>
+        <div style="margin-top:8px; font-size:0.8rem; color:var(--ink-muted);">بدأت الساعة {{ l.started_at|date:"H:i" }} - مشرفتك هي اللي هتسجل حالة الحلقة بعد كده.</div>
         {% endif %}
     </div>
     {% endfor %}
@@ -36,15 +28,9 @@
 <div class="card" style="border-right:5px solid var(--amber); background:var(--amber-soft);">
     <strong>⚠️ عندك حلقات فات وقتها ومسجلتيش حالتها (هتتحسب غياب لو سبتيها من غير تسجيل)</strong>
     {% for l in overdue_unrecorded %}
-    <div style="margin-top:10px; padding:12px; background:#fff; border-radius:12px;">
+    <div style="margin-top:10px; padding:12px; background:var(--surface); border-radius:12px;">
         <div style="font-weight:700;">{{ l.student.name }} - كان الموعد {{ l.scheduled_at|date:"Y/m/d H:i" }}</div>
-        <form method="POST" action="{% url 'teacher_mark_lesson' l.id %}" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
-            {% csrf_token %}
-            <button type="submit" name="status" value="completed" class="btn btn-green">🟢 تمت الحلقة</button>
-            <button type="submit" name="status" value="student_absent" class="btn btn-red">🔴 الطالب غائب</button>
-            <button type="submit" name="status" value="teacher_absent" class="btn btn-amber">🟠 معنديش حضور</button>
-            <button type="submit" name="status" value="cancelled" class="btn btn-outline">⚪ الحلقة أُلغيت</button>
-        </form>
+        <div style="margin-top:8px; font-size:0.8rem; color:var(--ink-muted);">هتتسجل حالتها من المشرفة، بس لو محتاجة توضحي سبب كلمي مشرفتك مباشرة.</div>
     </div>
     {% endfor %}
 </div>

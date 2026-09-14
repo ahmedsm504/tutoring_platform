@@ -1,0 +1,32 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}تقييم {{ evaluation.student_name }}{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h2 style="color:var(--violet-700);">📊 تقييم {{ evaluation.student_name }} - {{ evaluation.month_label }}</h2>
+    <a href="{% url 'teacher_evaluations_list' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> رجوع</a>
+</div>
+
+<div class="stats-row">
+    <div class="stat-box"><div class="number">{{ evaluation.lessons_count }}</div><div class="label">عدد الحلقات</div></div>
+    <div class="stat-box"><div class="number">{{ evaluation.month_rating|default:"–" }}</div><div class="label">مستوى الشهر</div></div>
+    <div class="stat-box"><div class="number">{{ evaluation.absences|default:"–" }}</div><div class="label">الغياب</div></div>
+</div>
+
+<div class="card">
+    <table style="width:100%;">
+        <tr><td style="padding:8px; color:var(--ink-muted);">حفظ الجديد</td><td style="padding:8px; font-weight:700;">{{ evaluation.memorization_progress|default:"–" }}</td></tr>
+        <tr><td style="padding:8px; color:var(--ink-muted);">المراجعة</td><td style="padding:8px; font-weight:700;">{{ evaluation.review_progress|default:"–" }}</td></tr>
+        <tr><td style="padding:8px; color:var(--ink-muted);">النطق والتجويد</td><td style="padding:8px; font-weight:700;">{{ evaluation.pronunciation_rating|default:"–" }} / {{ evaluation.tajweed_rating|default:"–" }}</td></tr>
+        <tr><td style="padding:8px; color:var(--ink-muted);">التوصيات</td><td style="padding:8px; font-weight:700;">{{ evaluation.recommendations|default:"–" }}</td></tr>
+        <tr><td style="padding:8px; color:var(--ink-muted);">كلمة المعلمة</td><td style="padding:8px; font-weight:700;">{{ evaluation.teacher_comment|default:"–" }}</td></tr>
+    </table>
+</div>
+
+<div class="card">
+    <h4 style="margin-top:0; color:var(--violet-700);">🔗 رابط المشاركة مع ولي الأمر</h4>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <input type="text" readonly id="public-link" value="{{ public_url }}" style="flex:1; min-width:220px; padding:10px 12px; border-radius:10px; border:1.6px solid var(--border); background:var(--surface); color:var(--ink);">
+        <button type="button" class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('public-link').value); this.textContent='✅ اتنسخ';">📋 نسخ الرابط</button>
+    </div>
+</div>
+{% endblock %}

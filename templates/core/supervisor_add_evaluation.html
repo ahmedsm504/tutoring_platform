@@ -1,0 +1,67 @@
+{% extends 'core/supervisor_portal_base.html' %}
+{% block title %}تقرير شهري - {{ student.name }}{% endblock %}
+{% block extra_css %}
+<style>
+.eval-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+.eval-span-2{grid-column:span 2;}
+@media (max-width:600px){ .eval-grid{grid-template-columns:1fr;} .eval-span-2{grid-column:span 1;} }
+</style>
+{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h2 style="color:var(--violet-700);">📊 تقرير شهري - {{ student.name }}</h2>
+    <a href="{% url 'supervisor_teacher_detail' student.teacher.id %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> رجوع</a>
+</div>
+
+<datalist id="ratingSuggestions">
+    <option value="ممتاز"><option value="جيد جدًا"><option value="جيد"><option value="متوسط"><option value="يحتاج متابعة">
+</datalist>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="card">
+        <h4 style="margin-top:0; color:var(--violet-700);">بيانات أساسية</h4>
+        <div class="eval-grid">
+            <div class="field"><label>اسم الطالب (يظهر في التقرير)</label><input type="text" name="student_name" value="{{ student.name }}"></div>
+            <div class="field"><label>اسم المعلمة</label><input type="text" name="teacher_name" value="{{ student.teacher.name }}"></div>
+            <div class="field"><label>الباقة</label><input type="text" name="package_name" value="{{ student.package_name|default:'' }}"></div>
+            <div class="field"><label>عدد الحلقات (شهريًا)</label><input type="number" name="lessons_count" value="{{ student.lessons_count }}"></div>
+            <div class="field eval-span-2"><label>الشهر *</label><input type="text" name="month_label" value="{{ default_month }}" required></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 style="margin-top:0; color:var(--violet-700);">ملخص الإنجاز</h4>
+        <div class="eval-grid">
+            <div class="field eval-span-2"><label>مقدار حفظ الجديد</label><input type="text" name="memorization_progress" placeholder="مثلاً: من الفاتحة الي المسد"></div>
+            <div class="field eval-span-2"><label>مقدار المراجعة</label><input type="text" name="review_progress" placeholder="مثلاً: تم مراجعة المحفوظ كامل"></div>
+            <div class="field eval-span-2"><label>عدد مرات الغياب</label><input type="text" name="absences" placeholder="مثلاً: لا يوجد غياب / غاب مرة واحدة"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 style="margin-top:0; color:var(--violet-700);">تقييم المهارات</h4>
+        <div class="eval-grid">
+            <div class="field"><label>النطق ومخارج الحروف</label><input type="text" name="pronunciation_rating" list="ratingSuggestions"></div>
+            <div class="field"><label>تطبيق أحكام التجويد</label><input type="text" name="tajweed_rating" list="ratingSuggestions"></div>
+            <div class="field"><label>التفاعل مع المعلمة</label><input type="text" name="interaction_rating" list="ratingSuggestions"></div>
+            <div class="field"><label>سرعة الاستجابة والحفظ</label><input type="text" name="response_speed_rating" list="ratingSuggestions"></div>
+            <div class="field eval-span-2"><label>الالتزام بالمواعيد والآداب</label><input type="text" name="commitment_rating" list="ratingSuggestions"></div>
+        </div>
+        <div class="field" style="margin-top:14px;"><label>التوصيات / المستوى العام</label><textarea name="recommendations" rows="2"></textarea></div>
+        <div class="field" style="margin-top:14px;"><label>كلمة المعلمة</label><textarea name="teacher_comment" rows="2"></textarea></div>
+        <div class="field" style="margin-top:14px; max-width:260px;"><label>مستوى الشهر</label><input type="text" name="month_rating" list="ratingSuggestions" placeholder="ممتاز"></div>
+    </div>
+
+    <div class="card">
+        <h4 style="margin-top:0; color:var(--violet-700);">شكل النموذج</h4>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <label><input type="radio" name="template" value="teal_pink" checked> 🩵 تركواز ووردي</label>
+            <label><input type="radio" name="template" value="violet"> 💜 بنفسجي</label>
+            <label><input type="radio" name="template" value="sunny"> 🧡 أصفر وبرتقالي</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="padding:12px 24px;">إنشاء التقرير</button>
+</form>
+{% endblock %}

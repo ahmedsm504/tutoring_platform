@@ -1,15 +1,32 @@
 {% extends 'core/supervisor_portal_base.html' %}
 {% block title %}أهلًا {{ supervisor.name }}{% endblock %}
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+{% endblock %}
 {% block content %}
-<h2 style="color:var(--violet-700); margin:0 0 14px;">أهلًا بيكِ، {{ supervisor.name }} 👋</h2>
+<h2 style="color:var(--violet-700); margin:0 0 14px;">📊 داشبورد المشرفة - أهلًا بيكِ {{ supervisor.name }} 👋</h2>
+
+<div class="stats-row">
+    <div class="stat-box"><div class="number">{{ total_teachers }}</div><div class="label">👩‍🏫 معلمات</div></div>
+    <div class="stat-box"><div class="number">{{ total_students }}</div><div class="label">👩‍🎓 طلاب نشطين</div></div>
+    <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ week_completed }}</div><div class="label">✅ حلقات تمت (٧ أيام)</div></div>
+    <div class="stat-box" style="border-right-color:var(--red);"><div class="number">{{ week_absent }}</div><div class="label">🔴 غياب (٧ أيام)</div></div>
+    <div class="stat-box" style="border-right-color:#B87F16;"><div class="number">{{ week_excused }}</div><div class="label">🟡 اعتذارات (٧ أيام)</div></div>
+    <div class="stat-box" style="border-right-color:var(--amber);"><div class="number">{{ pending_requests_count }}</div><div class="label">🗓️ طلبات مواعيد معلقة</div></div>
+</div>
 
 <div style="display:flex; gap:18px; flex-wrap:wrap;">
-    <div style="flex:2; min-width:300px;">
+    <div style="flex:2; min-width:320px;">
         <div class="card">
-            <h4 style="margin-top:0; color:var(--violet-700);">🗓️ مواعيد اليوم ({{ today|date:"Y/m/d" }}) لكل معلماتك</h4>
+            <h4 style="margin-top:0; color:var(--violet-700);">📈 أداء الأسبوع (كل معلماتك)</h4>
+            <canvas id="weekChart" height="110"></canvas>
+        </div>
+
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--violet-700);">🗓️ مواعيد اليوم ({{ today|date:"Y/m/d" }})</h4>
             <div class="table-container">
                 <table>
-                    <thead><tr><th>المعلمة</th><th>الطالب</th><th>الموعد</th><th>الحالة</th></tr></thead>
+                    <thead><tr><th>المعلمة</th><th>الطالب</th><th>الموعد</th><th>الحالة</th><th>تسجيل سريع</th></tr></thead>
                     <tbody>
                         {% for l in today_lessons %}
                         <tr>
@@ -21,17 +38,51 @@
                                 {% elif l.status == 'scheduled' %}<span class="badge" style="background:var(--amber-soft); color:var(--amber);">مجدولة</span>
                                 {% else %}<span class="badge" style="background:var(--red-soft); color:var(--red);">{{ l.get_status_display }}</span>{% endif %}
                             </td>
+                            <td>
+                                {% if l.status == 'scheduled' %}
+                                <form method="POST" action="{% url 'supervisor_mark_lesson' l.id %}" style="display:flex; gap:4px;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="home">
+                                    <select name="status" required style="padding:5px 6px; border-radius:8px; border:1.6px solid var(--border); font-size:0.75rem; background:var(--surface); color:var(--ink);">
+                                        <option value="" disabled selected>سجلي...</option>
+                                        <option value="completed">✅ تمت</option>
+                                        <option value="student_absent">🔴 غياب</option>
+                                        <option value="excused">🟡 عذر</option>
+                                        <option value="cancelled">⚪ مؤجلة</option>
+                                        <option value="teacher_absent">🟠 غياب المعلمة</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" style="padding:5px 10px; font-size:0.75rem;">حفظ</button>
+                                </form>
+                                {% else %}
+                                <span style="font-size:0.75rem; color:var(--ink-muted);">-</span>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% empty %}
-                        <tr><td colspan="4" style="text-align:center;">لا يوجد حلقات اليوم.</td></tr>
+                        <tr><td colspan="5" style="text-align:center;">لا يوجد حلقات اليوم.</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
+
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h4 style="margin-top:0; color:var(--violet-700);">🗓️ طلبات مواعيد معلقة</h4>
+                <a href="{% url 'supervisor_schedule_requests_list' %}" class="btn btn-outline" style="padding:6px 12px; font-size:0.78rem;">عرض الكل</a>
+            </div>
+            {% for r in pending_requests %}
+            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--amber-soft); border-radius:12px; padding:10px 14px; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                <span style="font-size:0.85rem;"><strong>{{ r.student.name }}</strong> - {{ r.teacher.name }} - {{ r.get_request_type_display }}</span>
+                <a href="{% url 'supervisor_schedule_requests_list' %}" style="font-size:0.78rem; color:var(--amber); font-weight:700;">راجعي الطلب →</a>
+            </div>
+            {% empty %}
+            <p style="color:var(--ink-muted); text-align:center; font-size:0.85rem;">لا يوجد طلبات معلقة حاليًا 🎉</p>
+            {% endfor %}
+        </div>
     </div>
 
-    <div style="flex:1; min-width:260px;">
+    <div style="flex:1; min-width:280px;">
         <div class="card">
             <h4 style="margin-top:0; color:var(--violet-700);">👩‍🏫 معلماتك</h4>
             {% for row in teachers_summary %}
@@ -46,6 +97,46 @@
             <p style="color:var(--ink-muted); text-align:center;">لسه مفيش معلمات متعينة عليكِ.</p>
             {% endfor %}
         </div>
+
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--violet-700);">📊 آخر التقارير الشهرية</h4>
+            {% for ev in recent_evaluations %}
+            <a href="{% url 'supervisor_evaluation_detail' ev.id %}" style="display:block; text-decoration:none; color:var(--ink); background:var(--violet-50); border-radius:12px; padding:10px 14px; margin-bottom:8px;">
+                <div style="font-weight:700; font-size:0.88rem;">{{ ev.student_name }}</div>
+                <div style="font-size:0.75rem; color:var(--ink-muted);">{{ ev.month_label }} - {{ ev.month_rating|default:"–" }}</div>
+            </a>
+            {% empty %}
+            <p style="color:var(--ink-muted); text-align:center; font-size:0.85rem;">لسه مفيش تقارير شهرية.</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
+
+<script>
+(function(){
+    if(typeof Chart === 'undefined') return;
+    const ctx = document.getElementById('weekChart');
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+    const textColor = isDark ? '#9BC0B7' : '#5E7B75';
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ week_chart_labels|safe }},
+            datasets: [
+                { label: 'حلقات تمت', data: {{ week_chart_completed|safe }}, backgroundColor: '#1D9A63', borderRadius: 6 },
+                { label: 'غياب', data: {{ week_chart_absent|safe }}, backgroundColor: '#DC3545', borderRadius: 6 }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: textColor } } },
+            scales: {
+                x: { ticks: { color: textColor }, grid: { color: gridColor } },
+                y: { ticks: { color: textColor, precision: 0 }, grid: { color: gridColor }, beginAtZero: true }
+            }
+        }
+    });
+})();
+</script>
 {% endblock %}

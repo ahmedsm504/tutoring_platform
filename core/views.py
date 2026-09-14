@@ -1372,28 +1372,20 @@ def teacher_mark_lesson_started(request, lesson_id):
 
 @teacher_login_required
 def teacher_mark_lesson(request, lesson_id):
-    """المعلمة تسجل حالة حلقتها هي بس - مينفعش تلمس حلقة معلمة تانية"""
+    """تسجيل حالة الحلقة بقت مسؤولية المشرفة بس دلوقتي (تمت/غياب/عذر/مؤجلة)
+    عشان تبقى المتابعة والتقييم من جهة محايدة. المعلمة تقدر تبدأ الحلقة بس
+    (teacher_mark_lesson_started) ولو حصل خطأ في التسجيل تكلم مشرفتها."""
     teacher = request.user.teacher_profile
     lesson = get_object_or_404(Lesson, pk=lesson_id, teacher=teacher)
-
-    if request.method == 'POST':
-        new_status = request.POST.get('status')
-        was_late = request.POST.get('was_late') == 'on'
-        valid_statuses = dict(Lesson.STATUS_CHOICES)
-        if new_status not in valid_statuses or new_status == 'unregistered':
-            messages.error(request, 'حالة غير صحيحة.')
-        else:
-            lesson.mark(new_status, was_late=was_late)
-            messages.success(request, f'تم تسجيل حالة الحلقة: {valid_statuses[new_status]}.')
-
+    messages.warning(request, 'تسجيل حالة الحلقة (تمت/غياب/عذر) بقى مسؤولية المشرفة المتابعة لكِ. لو فيه خطأ كلمي مشرفتك.')
     return redirect('teacher_portal_home')
 
 
 @teacher_login_required
 def teacher_schedule_requests(request):
     """المعلمة تشوف طلبات تعديل المواعيد بتاعتها وتقدر تبعت طلب تعديل جديد
-    لحلقة قائمة - مش بيتفعّل على طول، لازم موافقة الإدارة. (تسجيل مواعيد
-    جديدة بقى من صفحة "تسجيل مواعيد الطلاب" بدل ما يكون طلب هنا)"""
+    لحلقة قائمة - مش بيتفعّل على طول، لازم موافقة مشرفتها. (تسجيل مواعيد
+    جديدة بقى بتتم من خلال المشرفة)"""
     teacher = request.user.teacher_profile
 
     if request.method == 'POST':
@@ -1413,7 +1405,7 @@ def teacher_schedule_requests(request):
             proposed_datetime=proposed_datetime,
             teacher_note=request.POST.get('teacher_note', '').strip(),
         )
-        messages.success(request, 'تم إرسال طلب تعديل الموعد للإدارة، هيتفعّل بعد الموافقة عليه.')
+        messages.success(request, 'تم إرسال طلب تعديل الموعد لمشرفتك، هيتفعّل بعد الموافقة عليه.')
         return redirect('teacher_schedule_requests')
 
     context = {
@@ -1425,69 +1417,33 @@ def teacher_schedule_requests(request):
 
 
 @teacher_login_required
-def teacher_register_schedule(request):
-    """تسجيل مواعيد الطلاب: المعلمة تحط اسم الطالب ومواعيد حلقاته المتكررة
-    (يوم/أيام الأسبوع + الوقت)، والسيستم بيولّد الحلقات تلقائيًا لعدد
-    الأسابيع المطلوبة. ده تسجيل مباشر (مش طلب محتاج موافقة) لأنه أساسًا
-    بيان بجدولها هي المعروف مسبقًا، مش تعديل على جدول متفق عليه بالفعل"""
+def teacher_evaluations_list(request):
+    """المعلمة تشوف (بس تشوف - من غير تعديل) كل التقييمات الشهرية اللي
+    اتعملت لطلابها، سواء من الإدارة أو من مشرفتها"""
     teacher = request.user.teacher_profile
-    students = teacher.students.filter(status='active')
+    evaluations = MonthlyEvaluation.objects.filter(student__teacher=teacher).select_related('student').order_by('-created_at')
+    return render(request, 'core/teacher_evaluations_list.html', {
+        'teacher': teacher, 'evaluations': evaluations,
+    })
 
-    WEEKDAYS = [
-        (0, 'الإثنين'), (1, 'الثلاثاء'), (2, 'الأربعاء'), (3, 'الخميس'),
-        (4, 'الجمعة'), (5, 'السبت'), (6, 'الأحد'),
-    ]
 
-    if request.method == 'POST':
-        student_id = request.POST.get('student')
-        student = get_object_or_404(Student, pk=student_id, teacher=teacher)
+@teacher_login_required
+def teacher_evaluation_detail(request, evaluation_id):
+    teacher = request.user.teacher_profile
+    evaluation = get_object_or_404(MonthlyEvaluation, pk=evaluation_id, student__teacher=teacher)
+    public_url = request.build_absolute_uri(reverse('public_evaluation', args=[evaluation.public_token]))
+    return render(request, 'core/teacher_evaluation_detail.html', {
+        'teacher': teacher, 'evaluation': evaluation, 'public_url': public_url,
+    })
 
-        weekdays = request.POST.getlist('weekday')
-        lesson_time = _or_none(request.POST.get('lesson_time'))
-        weeks_count = _to_int_or_none(request.POST.get('weeks_count')) or 4
-        duration_minutes = _to_int_or_none(request.POST.get('duration_minutes')) or 30
 
-        if not weekdays or not lesson_time:
-            messages.error(request, 'من فضلك حددي يوم/أيام الحلقة والوقت.')
-            return redirect('teacher_register_schedule')
+@teacher_login_required
+def teacher_register_schedule(request):
+    """تسجيل جدول المواعيد بقى مسؤولية المشرفة دلوقتي (بدل ما تسجله المعلمة
+    بنفسها) عشان يبقى فيه تنسيق ومتابعة موحدة من جهة محايدة."""
+    messages.info(request, 'تسجيل جدول مواعيد الطلاب بقى بيتم من خلال المشرفة المتابعة لكِ الآن.')
+    return redirect('teacher_portal_home')
 
-        weekdays = {int(w) for w in weekdays}
-        hour, minute = [int(x) for x in lesson_time.split(':')[:2]]
-
-        created_count = 0
-        today = timezone.localdate()
-        end_date = today + timedelta(days=weeks_count * 7)
-        current_date = today
-        while current_date <= end_date:
-            if current_date.weekday() in weekdays:
-                naive_dt = datetime.combine(current_date, datetime.min.time()).replace(hour=hour, minute=minute)
-                scheduled_at = timezone.make_aware(naive_dt) if timezone.is_naive(naive_dt) else naive_dt
-                if scheduled_at >= timezone.now() and not Lesson.objects.filter(student=student, teacher=teacher, scheduled_at=scheduled_at).exists():
-                    Lesson.objects.create(
-                        student=student, teacher=teacher,
-                        scheduled_at=scheduled_at, duration_minutes=duration_minutes,
-                    )
-                    created_count += 1
-            current_date += timedelta(days=1)
-
-        if created_count:
-            messages.success(request, f'تم تسجيل {created_count} حلقة لـ "{student.name}" في جدولك.')
-        else:
-            messages.warning(request, 'مفيش حلقات جديدة اتضافت (ممكن تكون كل المواعيد دي متسجلة قبل كده).')
-        return redirect('teacher_register_schedule')
-
-    students_progress = [
-        {'student': s, 'progress': s.lessons_progress_label(), 'upcoming': s.lessons.filter(status='scheduled', scheduled_at__gte=timezone.now()).order_by('scheduled_at')}
-        for s in students
-    ]
-
-    context = {
-        'teacher': teacher,
-        'students': students,
-        'students_progress': students_progress,
-        'weekdays': WEEKDAYS,
-    }
-    return render(request, 'core/teacher_register_schedule.html', context)
 
 
 # =======================
@@ -1752,15 +1708,19 @@ def supervisor_logout(request):
 
 @supervisor_login_required
 def supervisor_portal_home(request):
-    """أول ما المشرفة تدخل: مواعيد معلماتها اليوم + قائمة جانبية بأسماء
-    معلماتها وعدد طلاب وحلقات كل واحدة"""
+    """داشبورد المشرفة الرئيسية: نظرة شاملة على كل معلماتها - مواعيد اليوم،
+    إحصائيات الحضور/الغياب، طلبات المواعيد المعلقة، آخر التقارير الشهرية،
+    ورسم بياني لأداء الأسبوع"""
     supervisor = request.user.supervisor_profile
     teachers = supervisor.teachers.all()
     today = timezone.localdate()
+    week_ago = today - timedelta(days=6)
 
     today_lessons = Lesson.objects.filter(
         teacher__in=teachers, scheduled_at__date=today
     ).select_related('teacher', 'student').order_by('scheduled_at')
+
+    week_lessons = Lesson.objects.filter(teacher__in=teachers, scheduled_at__date__gte=week_ago, scheduled_at__date__lte=today)
 
     teachers_summary = []
     for t in teachers:
@@ -1771,23 +1731,91 @@ def supervisor_portal_home(request):
             'unrecorded_count': len([l for l in t.lessons.filter(status='scheduled') if l.is_overdue_unrecorded()]),
         })
 
+    # إحصائيات عامة للأسبوع الحالي (لرسم بياني بسيط في الداشبورد)
+    ARABIC_DAY_ABBR = ['اثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت', 'أحد']
+    week_chart_labels = []
+    week_chart_completed = []
+    week_chart_absent = []
+    for i in range(6, -1, -1):
+        day = today - timedelta(days=i)
+        day_lessons = week_lessons.filter(scheduled_at__date=day)
+        week_chart_labels.append(ARABIC_DAY_ABBR[day.weekday()])
+        week_chart_completed.append(day_lessons.filter(status='completed').count())
+        week_chart_absent.append(day_lessons.filter(status__in=['student_absent', 'teacher_absent']).count())
+
+    total_students = sum(row['students_count'] for row in teachers_summary)
+    pending_requests = ScheduleRequest.objects.filter(teacher__in=teachers, status='pending').select_related('student', 'teacher').order_by('-created_at')
+    recent_evaluations = MonthlyEvaluation.objects.filter(student__teacher__in=teachers).select_related('student').order_by('-created_at')[:6]
+
     context = {
         'supervisor': supervisor,
         'teachers_summary': teachers_summary,
         'today_lessons': today_lessons,
         'today': today,
+        'total_teachers': teachers.count(),
+        'total_students': total_students,
+        'week_completed': week_lessons.filter(status='completed').count(),
+        'week_absent': week_lessons.filter(status__in=['student_absent', 'teacher_absent']).count(),
+        'week_excused': week_lessons.filter(status='excused').count(),
+        'pending_requests_count': pending_requests.count(),
+        'pending_requests': pending_requests[:5],
+        'recent_evaluations': recent_evaluations,
+        'week_chart_labels': json.dumps(week_chart_labels, ensure_ascii=False),
+        'week_chart_completed': json.dumps(week_chart_completed),
+        'week_chart_absent': json.dumps(week_chart_absent),
     }
     return render(request, 'core/supervisor_portal_home.html', context)
 
 
 @supervisor_login_required
+def supervisor_schedule_requests_list(request):
+    """طلبات تعديل/إضافة مواعيد من معلمات المشرفة - بتراجعها وتوافق أو ترفض"""
+    supervisor = request.user.supervisor_profile
+    teachers = supervisor.teachers.all()
+    status = request.GET.get('status', 'pending')
+    requests_qs = ScheduleRequest.objects.filter(teacher__in=teachers).select_related('student', 'teacher')
+    if status in ('pending', 'approved', 'rejected'):
+        requests_qs = requests_qs.filter(status=status)
+    return render(request, 'core/supervisor_schedule_requests.html', {
+        'supervisor': supervisor, 'requests': requests_qs, 'selected_status': status,
+    })
+
+
+@supervisor_login_required
+def supervisor_review_schedule_request(request, request_id):
+    supervisor = request.user.supervisor_profile
+    req = get_object_or_404(ScheduleRequest, pk=request_id, teacher__supervisor=supervisor)
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        note = request.POST.get('admin_note', '').strip()
+        if action == 'approve':
+            req.approve(admin_note=note)
+            messages.success(request, f'تمت الموافقة على طلب "{req.student.name}".')
+        elif action == 'reject':
+            req.reject(admin_note=note)
+            messages.warning(request, f'تم رفض طلب "{req.student.name}".')
+    return redirect('supervisor_schedule_requests_list')
+
+
+@supervisor_login_required
 def supervisor_teacher_detail(request, teacher_id):
     """المشرفة تدخل على معلمة معينة (لازم تكون من ضمن معلماتها) وتشوف
-    طلابها وحلقاتهم وتسجل حالة كل حلقة (تمت / لم تتم + السبب) + ملاحظات"""
+    طلابها وحلقاتهم وتسجل حالة كل حلقة (تمت / لم تتم + السبب) + ملاحظات
+    + إحصائية غياب واعتذارات المعلمة"""
     supervisor = request.user.supervisor_profile
     teacher = get_object_or_404(Teacher, pk=teacher_id, supervisor=supervisor)
 
     lessons = teacher.lessons.select_related('student').order_by('-scheduled_at')[:60]
+
+    all_lessons = teacher.lessons.all()
+    attendance_stats = {
+        'total': all_lessons.count(),
+        'completed': all_lessons.filter(status='completed').count(),
+        'teacher_absent': all_lessons.filter(status='teacher_absent').count(),
+        'excused': all_lessons.filter(status='excused').count(),
+        'student_absent': all_lessons.filter(status='student_absent').count(),
+        'cancelled': all_lessons.filter(status='cancelled').count(),
+    }
 
     context = {
         'supervisor': supervisor,
@@ -1795,6 +1823,7 @@ def supervisor_teacher_detail(request, teacher_id):
         'students': teacher.students.filter(status='active'),
         'lessons': lessons,
         'status_choices': Lesson.STATUS_CHOICES,
+        'attendance_stats': attendance_stats,
     }
     return render(request, 'core/supervisor_teacher_detail.html', context)
 
@@ -1811,17 +1840,153 @@ def supervisor_mark_lesson(request, lesson_id):
         note = request.POST.get('notes', '').strip()
         valid_statuses = dict(Lesson.STATUS_CHOICES)
 
-        if new_status not in valid_statuses or new_status == 'unregistered':
-            messages.error(request, 'حالة غير صحيحة.')
+        if not new_status or new_status not in valid_statuses or new_status == 'unregistered':
+            messages.error(request, 'من فضلك اختاري حالة صحيحة قبل الحفظ.')
         else:
-            lesson.status = new_status
-            lesson.status_recorded_at = timezone.now()
+            lesson.mark(new_status)
             if note:
                 lesson.notes = note
-            lesson.save(update_fields=['status', 'status_recorded_at', 'notes'])
+                lesson.save(update_fields=['notes'])
             messages.success(request, f'تم تسجيل حالة حلقة {lesson.student.name}: {valid_statuses[new_status]}.')
 
+    next_url = request.POST.get('next')
+    if next_url == 'home':
+        return redirect('supervisor_portal_home')
     return redirect('supervisor_teacher_detail', teacher_id=lesson.teacher_id)
+
+
+@supervisor_login_required
+def supervisor_register_student_schedule(request, student_id):
+    """المشرفة تسجل جدول مواعيد أسبوعي متكرر لطالب معين عند إحدى معلماتها
+    (بديل عن كون المعلمة هي اللي بتسجل مواعيدها بنفسها)"""
+    supervisor = request.user.supervisor_profile
+    student = get_object_or_404(Student, pk=student_id, teacher__supervisor=supervisor)
+    teacher = student.teacher
+
+    WEEKDAYS = [
+        (0, 'الإثنين'), (1, 'الثلاثاء'), (2, 'الأربعاء'), (3, 'الخميس'),
+        (4, 'الجمعة'), (5, 'السبت'), (6, 'الأحد'),
+    ]
+
+    if request.method == 'POST':
+        weekdays = request.POST.getlist('weekday')
+        lesson_time = _or_none(request.POST.get('lesson_time'))
+        weeks_count = _to_int_or_none(request.POST.get('weeks_count')) or 4
+        duration_minutes = _to_int_or_none(request.POST.get('duration_minutes')) or 30
+
+        if not weekdays or not lesson_time:
+            messages.error(request, 'من فضلك حددي يوم/أيام الحلقة والوقت.')
+            return redirect('supervisor_register_student_schedule', student_id=student.id)
+
+        weekdays = {int(w) for w in weekdays}
+        hour, minute = [int(x) for x in lesson_time.split(':')[:2]]
+
+        created_count = 0
+        today = timezone.localdate()
+        end_date = today + timedelta(days=weeks_count * 7)
+        current_date = today
+        while current_date <= end_date:
+            if current_date.weekday() in weekdays:
+                naive_dt = datetime.combine(current_date, datetime.min.time()).replace(hour=hour, minute=minute)
+                scheduled_at = timezone.make_aware(naive_dt) if timezone.is_naive(naive_dt) else naive_dt
+                if scheduled_at >= timezone.now() and not Lesson.objects.filter(student=student, teacher=teacher, scheduled_at=scheduled_at).exists():
+                    Lesson.objects.create(student=student, teacher=teacher, scheduled_at=scheduled_at, duration_minutes=duration_minutes)
+                    created_count += 1
+            current_date += timedelta(days=1)
+
+        if created_count:
+            messages.success(request, f'تم تسجيل {created_count} حلقة لـ "{student.name}".')
+        else:
+            messages.warning(request, 'مفيش حلقات جديدة اتضافت (ممكن تكون كل المواعيد دي متسجلة قبل كده).')
+        return redirect('supervisor_student_schedule_view', student_id=student.id)
+
+    return render(request, 'core/supervisor_register_student_schedule.html', {
+        'supervisor': supervisor, 'student': student, 'teacher': teacher, 'weekdays': WEEKDAYS,
+    })
+
+
+def _format_arabic_time(dt):
+    """تنسيق الوقت بصيغة عربية (12 ساعة) بدون الاعتماد على %-I اللي مش
+    شغالة على ويندوز - بنحسبها يدويًا عشان تشتغل على أي سيرفر"""
+    local_dt = timezone.localtime(dt) if timezone.is_aware(dt) else dt
+    hour24 = local_dt.hour
+    period = 'صباحًا' if hour24 < 12 else 'مساءً'
+    hour12 = hour24 % 12
+    if hour12 == 0:
+        hour12 = 12
+    return f"{hour12}:{local_dt.minute:02d} {period}"
+
+
+@supervisor_login_required
+def supervisor_student_schedule_view(request, student_id):
+    """عرض جدول مواعيد الطالب الأسبوعي بشكل بصري (يوم/وقت) - مبني على
+    الحلقات الفعلية المسجلة للطالب، مش جدول منفصل"""
+    supervisor = request.user.supervisor_profile
+    student = get_object_or_404(Student, pk=student_id, teacher__supervisor=supervisor)
+
+    DAY_ORDER = [(5, 'السبت', '#FADCE3'), (6, 'الأحد', '#D6E8FA'), (0, 'الاثنين', '#DCF3DD'),
+                 (1, 'الثلاثاء', '#E7DEF7'), (2, 'الأربعاء', '#D6E8FA'), (3, 'الخميس', '#FADCE3'),
+                 (4, 'الجمعة', '#E7DEF7')]
+
+    upcoming = list(student.lessons.filter(scheduled_at__gte=timezone.now() - timedelta(days=1)).order_by('scheduled_at'))
+    schedule_rows = []
+    for weekday_num, day_name, color in DAY_ORDER:
+        match = next((l for l in upcoming if l.scheduled_at.weekday() == weekday_num), None)
+        schedule_rows.append({
+            'day': day_name, 'color': color,
+            'time': _format_arabic_time(match.scheduled_at) if match else None,
+        })
+
+    return render(request, 'core/supervisor_student_schedule_view.html', {
+        'supervisor': supervisor, 'student': student, 'schedule_rows': schedule_rows,
+    })
+
+
+@supervisor_login_required
+def supervisor_add_evaluation(request, student_id):
+    """المشرفة تنشئ تقرير/تقييم شهري لطالب عند إحدى معلماتها - بيستخدم نفس
+    نموذج التقييم اللي الإدارة بتستخدمه"""
+    supervisor = request.user.supervisor_profile
+    student = get_object_or_404(Student, pk=student_id, teacher__supervisor=supervisor)
+    default_month = timezone.localdate().strftime('%Y-%m')
+
+    if request.method == 'POST':
+        evaluation = MonthlyEvaluation.objects.create(
+            student=student,
+            student_name=request.POST.get('student_name', '').strip() or student.name,
+            teacher_name=request.POST.get('teacher_name', '').strip() or (student.teacher.name if student.teacher else ''),
+            package_name=request.POST.get('package_name', '').strip() or student.package_name,
+            lessons_count=_to_int_or_none(request.POST.get('lessons_count')) or student.lessons_count,
+            month_label=request.POST.get('month_label', '').strip() or default_month,
+            memorization_progress=request.POST.get('memorization_progress', '').strip(),
+            review_progress=request.POST.get('review_progress', '').strip(),
+            absences=request.POST.get('absences', '').strip(),
+            pronunciation_rating=request.POST.get('pronunciation_rating', '').strip(),
+            tajweed_rating=request.POST.get('tajweed_rating', '').strip(),
+            interaction_rating=request.POST.get('interaction_rating', '').strip(),
+            response_speed_rating=request.POST.get('response_speed_rating', '').strip(),
+            commitment_rating=request.POST.get('commitment_rating', '').strip(),
+            recommendations=request.POST.get('recommendations', '').strip(),
+            teacher_comment=request.POST.get('teacher_comment', '').strip(),
+            month_rating=request.POST.get('month_rating', '').strip(),
+            template=request.POST.get('template', 'teal_pink'),
+        )
+        messages.success(request, f'تم إنشاء تقرير "{evaluation.student_name}" الشهري بنجاح.')
+        return redirect('supervisor_evaluation_detail', evaluation_id=evaluation.id)
+
+    return render(request, 'core/supervisor_add_evaluation.html', {
+        'supervisor': supervisor, 'student': student, 'default_month': default_month,
+    })
+
+
+@supervisor_login_required
+def supervisor_evaluation_detail(request, evaluation_id):
+    supervisor = request.user.supervisor_profile
+    evaluation = get_object_or_404(MonthlyEvaluation, pk=evaluation_id, student__teacher__supervisor=supervisor)
+    public_url = request.build_absolute_uri(reverse('public_evaluation', args=[evaluation.public_token]))
+    return render(request, 'core/supervisor_evaluation_detail.html', {
+        'supervisor': supervisor, 'evaluation': evaluation, 'public_url': public_url,
+    })
 
 
 # =======================
@@ -1837,6 +2002,13 @@ def teacher_curriculum(request):
         'documents': documents,
         'teacher': request.user.teacher_profile,
     })
+
+
+@teacher_login_required
+def teacher_quran_reader(request):
+    """المصحف الشريف - بيتجاب مباشرة من مصدر مفتوح وموثوق على الإنترنت
+    (صفحة بصفحة حسب السورة المختارة)، فمش محتاج رفع ملف من الإدارة خالص"""
+    return render(request, 'core/teacher_quran_reader.html', {'teacher': request.user.teacher_profile})
 
 
 @teacher_login_required

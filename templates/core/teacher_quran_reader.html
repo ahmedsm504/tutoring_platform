@@ -1,0 +1,109 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}المصحف الشريف{% endblock %}
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
+<style>
+.quran-toolbar{display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:10px 14px; margin-bottom:14px; box-shadow:var(--shadow-md);}
+.quran-toolbar select, .quran-toolbar input{border-radius:10px; border:1.6px solid var(--border); padding:8px 10px; font-family:var(--font-body); font-weight:700; font-size:0.85rem; background:var(--surface); color:var(--ink);}
+.quran-nav-btn{background:var(--violet-600); color:#fff; border:none; border-radius:10px; width:36px; height:36px; cursor:pointer; font-size:1.1rem;}
+.quran-page{background:#FBF7EC; border-radius:20px; box-shadow:var(--shadow-md); padding:clamp(20px,5vw,40px); font-family:'Amiri Quran', serif; color:#2a1a08; line-height:2.7; text-align:center; font-size:clamp(1.1rem,2.8vw,1.6rem); min-height:60vh;}
+html[data-theme="dark"] .quran-page{background:#241C36; color:#EDE9F7;}
+</style>
+{% endblock %}
+{% block content %}
+<h2 style="color:var(--violet-700); margin-top:0;">📖 المصحف الشريف</h2>
+
+<div class="quran-toolbar">
+    <select id="surah-select"></select>
+    <button class="quran-nav-btn" id="quran-next-page">‹</button>
+    <input type="number" id="quran-page-input" min="1" max="604" value="1" style="width:70px; text-align:center;">
+    <span style="font-size:0.85rem; color:var(--ink-muted);">من 604</span>
+    <button class="quran-nav-btn" id="quran-prev-page">›</button>
+</div>
+
+<div class="quran-page" id="quran-content">
+    <div style="font-family:var(--font-body); font-size:0.9rem; color:var(--ink-muted);">جاري تحميل الصفحة...</div>
+</div>
+
+<script>
+const SURAHS = [
+[1,"الفاتحة",1],[2,"البقرة",2],[3,"آل عمران",50],[4,"النساء",77],[5,"المائدة",106],
+[6,"الأنعام",128],[7,"الأعراف",151],[8,"الأنفال",177],[9,"التوبة",187],[10,"يونس",208],
+[11,"هود",221],[12,"يوسف",235],[13,"الرعد",249],[14,"إبراهيم",255],[15,"الحجر",262],
+[16,"النحل",267],[17,"الإسراء",282],[18,"الكهف",293],[19,"مريم",305],[20,"طه",312],
+[21,"الأنبياء",322],[22,"الحج",332],[23,"المؤمنون",342],[24,"النور",350],[25,"الفرقان",359],
+[26,"الشعراء",367],[27,"النمل",377],[28,"القصص",385],[29,"العنكبوت",396],[30,"الروم",404],
+[31,"لقمان",411],[32,"السجدة",415],[33,"الأحزاب",418],[34,"سبأ",428],[35,"فاطر",434],
+[36,"يس",440],[37,"الصافات",446],[38,"ص",453],[39,"الزمر",458],[40,"غافر",467],
+[41,"فصلت",477],[42,"الشورى",483],[43,"الزخرف",489],[44,"الدخان",496],[45,"الجاثية",499],
+[46,"الأحقاف",502],[47,"محمد",507],[48,"الفتح",511],[49,"الحجرات",515],[50,"ق",518],
+[51,"الذاريات",520],[52,"الطور",523],[53,"النجم",526],[54,"القمر",528],[55,"الرحمن",531],
+[56,"الواقعة",534],[57,"الحديد",537],[58,"المجادلة",542],[59,"الحشر",545],[60,"الممتحنة",549],
+[61,"الصف",551],[62,"الجمعة",553],[63,"المنافقون",554],[64,"التغابن",556],[65,"الطلاق",558],
+[66,"التحريم",560],[67,"الملك",562],[68,"القلم",564],[69,"الحاقة",566],[70,"المعارج",568],
+[71,"نوح",570],[72,"الجن",572],[73,"المزمل",574],[74,"المدثر",575],[75,"القيامة",577],
+[76,"الإنسان",578],[77,"المرسلات",580],[78,"النبأ",582],[79,"النازعات",583],[80,"عبس",585],
+[81,"التكوير",586],[82,"الانفطار",587],[83,"المطففين",587],[84,"الانشقاق",589],[85,"البروج",590],
+[86,"الطارق",591],[87,"الأعلى",591],[88,"الغاشية",592],[89,"الفجر",593],[90,"البلد",594],
+[91,"الشمس",595],[92,"الليل",595],[93,"الضحى",596],[94,"الشرح",596],[95,"التين",597],
+[96,"العلق",597],[97,"القدر",598],[98,"البينة",598],[99,"الزلزلة",599],[100,"العاديات",599],
+[101,"القارعة",600],[102,"التكاثر",600],[103,"العصر",601],[104,"الهمزة",601],[105,"الفيل",601],
+[106,"قريش",602],[107,"الماعون",602],[108,"الكوثر",602],[109,"الكافرون",603],[110,"النصر",603],
+[111,"المسد",603],[112,"الإخلاص",604],[113,"الفلق",604],[114,"الناس",604]
+];
+
+(function(){
+    const MUSHAF_BASE = 'https://raw.githubusercontent.com/zonetecde/mushaf-layout/refs/heads/main/mushaf/page-';
+    const select = document.getElementById('surah-select');
+    const content = document.getElementById('quran-content');
+    const pageInput = document.getElementById('quran-page-input');
+    let currentPage = 1;
+    const cache = {};
+
+    SURAHS.forEach(([num, name, page]) => {
+        const opt = document.createElement('option');
+        opt.value = page; opt.textContent = num + '. ' + name;
+        select.appendChild(opt);
+    });
+
+    function renderPage(data){
+        let html = '';
+        data.lines.forEach(line => {
+            if(line.type === 'surah-header'){
+                html += `<div style="border:2px solid #b08d3f; border-radius:10px; padding:8px 18px; display:inline-block; margin:12px auto; font-weight:700; font-size:1.3rem; color:#7a5a1e; background:#FFF8E7;">${line.text}</div><br>`;
+            } else if(line.type === 'basmala'){
+                html += `<div style="margin:8px 0; font-size:1.5rem;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>`;
+            } else if(line.type === 'text'){
+                html += `<div>${line.text}</div>`;
+            }
+        });
+        content.innerHTML = html || '<div>صفحة فارغة</div>';
+        pageInput.value = data.page;
+    }
+
+    async function goToPage(page){
+        page = Math.max(1, Math.min(604, parseInt(page, 10) || 1));
+        currentPage = page;
+        content.innerHTML = '<div style="font-family:var(--font-body); font-size:0.9rem; color:var(--ink-muted);">جاري تحميل الصفحة...</div>';
+        try{
+            if(!cache[page]){
+                const padded = String(page).padStart(3, '0');
+                const res = await fetch(MUSHAF_BASE + padded + '.json');
+                if(!res.ok) throw new Error('fetch failed');
+                cache[page] = await res.json();
+            }
+            renderPage(cache[page]);
+        }catch(e){
+            content.innerHTML = '<div style="font-family:var(--font-body); color:#DC3545;">تعذر تحميل الصفحة - تأكدي من الاتصال بالإنترنت وحاولي تاني.</div>';
+        }
+    }
+
+    select.addEventListener('change', () => goToPage(select.value));
+    document.getElementById('quran-next-page').addEventListener('click', () => goToPage(currentPage + 1));
+    document.getElementById('quran-prev-page').addEventListener('click', () => goToPage(currentPage - 1));
+    pageInput.addEventListener('change', () => goToPage(pageInput.value));
+
+    goToPage(1);
+})();
+</script>
+{% endblock %}

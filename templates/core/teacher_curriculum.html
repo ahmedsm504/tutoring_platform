@@ -7,13 +7,17 @@
 </div>
 
 <div class="card" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px;">
+    <a href="{% url 'teacher_quran_reader' %}" style="text-decoration:none; color:var(--ink); background:linear-gradient(135deg,#FFF8E7,var(--violet-50)); border:2px solid #d9b96b; border-radius:16px; padding:20px; text-align:center; display:block;">
+        <div style="font-size:2.2rem;">📖</div>
+        <div style="font-weight:700; margin-top:8px;">المصحف الشريف</div>
+    </a>
     {% for doc in documents %}
     <a href="{% url 'teacher_curriculum_view' doc.id %}" style="text-decoration:none; color:var(--ink); background:var(--violet-50); border:1px solid var(--border); border-radius:16px; padding:20px; text-align:center; display:block;">
-        <div style="font-size:2.2rem;">{% if doc.is_quran %}📖{% else %}📄{% endif %}</div>
+        <div style="font-size:2.2rem;">📄</div>
         <div style="font-weight:700; margin-top:8px;">{{ doc.title }}</div>
     </a>
     {% empty %}
-    <div style="grid-column:1/-1; text-align:center; color:var(--ink-muted); padding:20px;">لا يوجد ملفات منهج مرفوعة حاليًا.</div>
+    <div style="text-align:center; color:var(--ink-muted); padding:20px;">لا يوجد ملفات منهج إضافية مرفوعة حاليًا.</div>
     {% endfor %}
 </div>
 {% endblock %}
