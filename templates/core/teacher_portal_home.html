@@ -5,6 +5,25 @@
     <h2 style="color:var(--violet-700); margin:0;">أهلًا بيكِ، {{ teacher.name }} 👋</h2>
 </div>
 
+<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin:16px 0;">
+    <a href="{% url 'teacher_whiteboard' %}" class="quick-action-card" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9);">
+        <span style="font-size:1.8rem;">🖍️</span>
+        <span>السبورة التفاعلية</span>
+    </a>
+    <a href="{% url 'teacher_games' %}" class="quick-action-card" style="background:linear-gradient(135deg,#EC4899,#BE185D);">
+        <span style="font-size:1.8rem;">🎮</span>
+        <span>الألعاب</span>
+    </a>
+    <a href="{% url 'teacher_quran_reader' %}" class="quick-action-card" style="background:linear-gradient(135deg,#D9B96B,#B08D3F);">
+        <span style="font-size:1.8rem;">📖</span>
+        <span>المصحف</span>
+    </a>
+    <a href="{% url 'teacher_evaluations_list' %}" class="quick-action-card" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);">
+        <span style="font-size:1.8rem;">📊</span>
+        <span>التقييمات الشهرية</span>
+    </a>
+</div>
+
 {% if due_lessons %}
 <div class="card" style="border-right:5px solid var(--red); background:var(--red-soft);">
     <strong>🔔 حان موعد حلقتك دلوقتي!</strong>
@@ -25,7 +44,8 @@
 {% endif %}
 
 {% if overdue_unrecorded %}
-<div class="card" style="border-right:5px solid var(--amber); background:var(--amber-soft);">
+<div class="card dismissible-alert" id="overdue-banner" data-key="overdue-{% for l in overdue_unrecorded %}{{ l.id }}-{% endfor %}" style="border-right:5px solid var(--amber); background:var(--amber-soft); position:relative; display:none;">
+    <button type="button" class="alert-close-btn" onclick="dismissBanner()">×</button>
     <strong>⚠️ عندك حلقات فات وقتها ومسجلتيش حالتها (هتتحسب غياب لو سبتيها من غير تسجيل)</strong>
     {% for l in overdue_unrecorded %}
     <div style="margin-top:10px; padding:12px; background:var(--surface); border-radius:12px;">
@@ -34,6 +54,19 @@
     </div>
     {% endfor %}
 </div>
+<script>
+(function(){
+    const banner = document.getElementById('overdue-banner');
+    const key = 'dismissed:' + banner.dataset.key;
+    try{
+        if(sessionStorage.getItem(key) !== '1'){ banner.style.display = 'block'; }
+    }catch(e){ banner.style.display = 'block'; }
+    window.dismissBanner = function(){
+        banner.style.display = 'none';
+        try{ sessionStorage.setItem(key, '1'); }catch(e){}
+    };
+})();
+</script>
 {% endif %}
 
 <div class="card">

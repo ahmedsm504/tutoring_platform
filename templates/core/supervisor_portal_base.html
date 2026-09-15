@@ -86,6 +86,10 @@ th{color:var(--ink-muted); font-weight:700; font-size:0.8rem;}
 .alert-error{background:var(--red-soft); color:var(--red);}
 .alert-warning{background:var(--amber-soft); color:var(--amber);}
 .badge{display:inline-block; padding:3px 10px; border-radius:999px; font-size:0.75rem; font-weight:700;}
+.quick-action-card{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:18px 10px; border-radius:18px; color:#fff; text-decoration:none; font-weight:700; font-size:0.85rem; text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.15); transition:transform .2s, box-shadow .2s;}
+.quick-action-card:hover{transform:translateY(-4px) scale(1.03); box-shadow:0 10px 22px rgba(0,0,0,0.22);}
+.alert-close-btn{position:absolute; top:10px; left:12px; background:rgba(0,0,0,0.08); border:none; border-radius:50%; width:24px; height:24px; cursor:pointer; font-size:1rem; line-height:1; color:inherit;}
+.alert{position:relative;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.4/confetti.browser.min.js"></script>
@@ -111,7 +115,10 @@ th{color:var(--ink-muted); font-weight:700; font-size:0.8rem;}
 <div class="container">
     {% if messages %}
         {% for message in messages %}
-            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% else %}alert-error{% endif %}">{{ message }}</div>
+            <div class="alert js-auto-alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% else %}alert-error{% endif %}">
+                <button type="button" class="alert-close-btn" onclick="this.parentElement.remove()">×</button>
+                {{ message }}
+            </div>
         {% endfor %}
     {% endif %}
     {% block content %}{% endblock %}
@@ -125,6 +132,16 @@ th{color:var(--ink-muted); font-weight:700; font-size:0.8rem;}
             colors: ['#14A085','#0E8B72','#F59E0B','#1D9A63','#3B82F6']
         }, opts || {}));
     };
+
+    document.querySelectorAll('.js-auto-alert').forEach(el => {
+        setTimeout(() => {
+            el.style.transition = 'opacity .4s, max-height .4s';
+            el.style.opacity = '0';
+            el.style.maxHeight = '0';
+            el.style.overflow = 'hidden';
+            setTimeout(() => el.remove(), 450);
+        }, 6000);
+    });
 
     (function(){
         const toggle = document.getElementById('theme-toggle');

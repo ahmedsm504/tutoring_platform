@@ -57,6 +57,49 @@
 .wb-btn:hover{animation:wb-wiggle .3s ease-in-out;}
 .wb-phrase-btn:hover{animation:wb-wiggle .3s ease-in-out;}
 .wb-color:hover{animation:wb-wiggle .3s ease-in-out;}
+
+/* عناصر قابلة للتحريك والتحجيم (صور وأشكال) */
+.resizable-el{position:absolute; z-index:6; cursor:move;}
+.image-sticker{width:180px; height:140px;}
+.image-sticker img{width:100%; height:100%; object-fit:contain; border-radius:8px; box-shadow:0 6px 16px rgba(0,0,0,0.25); pointer-events:none; background:rgba(255,255,255,0.6);}
+.resizable-el .del{position:absolute; top:-10px; left:-10px; background:#DC3545; color:#fff; border-radius:50%; width:22px; height:22px; font-size:12px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:2;}
+.resize-handle{position:absolute; bottom:-8px; right:-8px; width:20px; height:20px; border-radius:50%; background:var(--violet-600); border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.3); cursor:nwse-resize; z-index:2;}
+.shape-sticker{width:64px; height:64px;}
+.shape-sticker span{font-size:44px; display:flex; align-items:center; justify-content:center; width:100%; height:100%;}
+
+/* لوحة المصحف القابلة للتحجيم */
+.quran-panel .resize-handle{position:absolute; bottom:2px; right:2px; width:24px; height:24px; border-radius:6px; background:rgba(0,0,0,0.15); cursor:nwse-resize; z-index:5; display:flex; align-items:center; justify-content:center; color:#7a5a1e; font-size:13px;}
+.quran-float-toolbar{position:absolute; z-index:30; top:1%; left:50%; transform:translateX(-50%); display:none; gap:6px; background:rgba(20,20,30,0.85); padding:6px 10px; border-radius:999px; box-shadow:0 6px 16px rgba(0,0,0,0.3);}
+.quran-float-toolbar.show{display:flex;}
+.quran-float-toolbar button{background:rgba(255,255,255,0.15); color:#fff; border:none; border-radius:999px; padding:6px 12px; font-size:0.78rem; font-weight:700; cursor:pointer; white-space:nowrap;}
+.quran-float-toolbar button.active{background:#EC4899;}
+
+/* أداة النص */
+.text-sticker{position:absolute; z-index:6; min-width:60px; min-height:30px; cursor:move;}
+.text-sticker .text-body{width:100%; height:100%; outline:none; font-family:var(--font-body); font-weight:700; font-size:28px; line-height:1.3; padding:4px 8px; background:transparent; overflow:hidden;}
+.text-sticker .del{position:absolute; top:-12px; left:-12px; background:#DC3545; color:#fff; border-radius:50%; width:20px; height:20px; font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:2;}
+.text-sticker .drag-grip{position:absolute; top:-12px; right:-12px; background:var(--violet-600); color:#fff; border-radius:50%; width:22px; height:22px; font-size:12px; display:flex; align-items:center; justify-content:center; cursor:move; z-index:2;}
+.text-sticker .resize-handle{bottom:-6px; right:-6px;}
+.text-sticker .text-colors{position:absolute; top:-14px; right:-4px; display:flex; gap:3px; background:rgba(0,0,0,0.75); padding:3px 5px; border-radius:8px; opacity:0; pointer-events:none; transition:opacity .15s;}
+.text-sticker:hover .text-colors, .text-sticker.editing .text-colors{opacity:1; pointer-events:auto;}
+.text-sticker .text-colors span{width:14px; height:14px; border-radius:50%; cursor:pointer; border:1.5px solid #fff;}
+
+/* أدوات الفصل: إشارة الهدوء، الساعة */
+.traffic-light-widget{position:absolute; z-index:6; cursor:move; background:#2b2b3a; border-radius:14px; padding:10px 8px; display:flex; flex-direction:column; gap:6px; box-shadow:0 6px 16px rgba(0,0,0,0.3);}
+.traffic-light-widget .bulb{width:30px; height:30px; border-radius:50%; cursor:pointer; opacity:0.25; transition:opacity .15s, box-shadow .15s;}
+.traffic-light-widget .bulb.red{background:#EF4444;} .traffic-light-widget .bulb.yellow{background:#FACC15;} .traffic-light-widget .bulb.green{background:#22C55E;}
+.traffic-light-widget .bulb.active{opacity:1; box-shadow:0 0 14px 3px currentColor;}
+.traffic-light-widget .del{position:absolute; top:-10px; left:-10px; background:#DC3545; color:#fff; border-radius:50%; width:20px; height:20px; font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer;}
+.clock-widget{position:absolute; z-index:6; cursor:move; background:rgba(20,20,30,0.85); color:#fff; border-radius:14px; padding:12px 18px; font-family:var(--font-display); font-weight:800; font-size:1.6rem; box-shadow:0 6px 16px rgba(0,0,0,0.3); text-align:center;}
+.clock-widget .del{position:absolute; top:-10px; left:-10px; background:#DC3545; color:#fff; border-radius:50%; width:20px; height:20px; font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer;}
+.clock-widget .clock-date{font-size:0.7rem; font-weight:500; font-family:var(--font-body); opacity:0.8; margin-top:2px;}
+
+/* اختيار طالب عشوائي */
+.picker-overlay{display:none; position:absolute; inset:0; z-index:40; background:rgba(0,0,0,0.55); align-items:center; justify-content:center;}
+.picker-overlay.show{display:flex;}
+.picker-box{background:var(--surface); color:var(--ink); border-radius:20px; padding:24px; max-width:90%; width:380px; text-align:center; box-shadow:0 12px 32px rgba(0,0,0,0.4);}
+.picker-box textarea{width:100%; min-height:80px; border-radius:10px; border:1.6px solid var(--border); padding:8px; font-family:var(--font-body); background:var(--surface); color:var(--ink); margin:10px 0;}
+.picker-result{font-family:var(--font-display); font-weight:800; font-size:1.8rem; color:var(--violet-700); min-height:50px; display:flex; align-items:center; justify-content:center;}
 </style>
 {% endblock %}
 {% block content %}
@@ -78,6 +121,22 @@
         <div class="wb-color" style="background:#EC4899" data-color="#EC4899"></div>
         <button class="wb-btn active" id="tool-pen" title="قلم"><i class="fas fa-pen"></i></button>
         <button class="wb-btn" id="tool-eraser" title="ممحاة"><i class="fas fa-eraser"></i></button>
+        <select id="pen-size" title="سُمك القلم" style="border-radius:10px; border:1.6px solid var(--border); padding:6px 4px; font-size:0.78rem; background:var(--surface); color:var(--ink);">
+            <option value="3">رفيع</option>
+            <option value="5" selected>عادي</option>
+            <option value="9">سميك</option>
+            <option value="16">فرشاة</option>
+        </select>
+    </div>
+
+    <div class="wb-group">
+        <button class="wb-btn" id="tool-undo" title="تراجع"><i class="fas fa-rotate-left"></i></button>
+        <button class="wb-btn" id="tool-fullscreen" title="ملء الشاشة"><i class="fas fa-expand"></i></button>
+    </div>
+
+    <div class="wb-group">
+        <span class="lbl">نص</span>
+        <button class="wb-btn" id="tool-text" title="إضافة نص اكتبيه"><i class="fas fa-font"></i></button>
     </div>
 
     <div class="wb-group">
@@ -101,7 +160,22 @@
     </div>
 
     <div class="wb-group">
+        <span class="lbl">أدوات الفصل</span>
+        <button class="wb-btn" id="add-traffic-light" title="إشارة الهدوء">🚦</button>
+        <button class="wb-btn" id="add-clock" title="ساعة حية">🕒</button>
+        <button class="wb-btn" id="add-random-picker" title="اختيار طالب عشوائي">🎲</button>
+        <button class="wb-btn sticker-btn" data-sticker="🤫 عمل فردي بصمت" title="عمل فردي">🧍</button>
+        <button class="wb-btn sticker-btn" data-sticker="👥 عمل في مجموعات" title="عمل جماعي">👥</button>
+    </div>
+
+    <div class="wb-group">
         <button class="wb-btn" id="toggle-quran" title="فتح المصحف على السبورة">📖</button>
+    </div>
+
+    <div class="wb-group">
+        <span class="lbl">صور</span>
+        <button class="wb-btn" id="add-image-btn" title="إضافة صورة تشرحي عليها">🖼️</button>
+        <input type="file" id="image-input" accept="image/*" style="display:none;">
     </div>
 
     <div class="wb-group">
@@ -153,8 +227,24 @@
     <canvas class="wb-canvas" id="board"></canvas>
     <div id="timer-display">30</div>
 
+    <div class="picker-overlay" id="picker-overlay">
+        <div class="picker-box">
+            <h3 style="margin-top:0; color:var(--violet-700);">🎲 اختيار طالب عشوائي</h3>
+            <textarea id="picker-names" placeholder="اكتبي أسماء الطلاب، اسم في كل سطر أو مفصولين بفاصلة"></textarea>
+            <div class="picker-result" id="picker-result">؟</div>
+            <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
+                <button class="g-btn" id="picker-spin" style="background:var(--violet-600); color:#fff; border:none; border-radius:999px; padding:9px 18px; font-weight:700; cursor:pointer;">🎲 اختاري</button>
+                <button class="g-btn" id="picker-close" style="background:var(--violet-100); color:var(--ink); border:none; border-radius:999px; padding:9px 18px; font-weight:700; cursor:pointer;">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
     <div id="quran-backdrop" style="display:none; position:absolute; inset:0; z-index:8; background:rgba(0,0,0,0.25);"></div>
-    <div id="quran-panel" class="quran-panel" style="position:absolute; z-index:9; top:3%; left:8%; width:84%; height:94%; background:#FBF7EC; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.25); overflow:hidden; flex-direction:column;">
+    <div class="quran-float-toolbar" id="quran-float-toolbar">
+        <button id="quran-draw-toggle">✏️ ارسمي واشرحي على الصفحة</button>
+        <button id="quran-float-close">✖️ قفلي المصحف</button>
+    </div>
+    <div id="quran-panel" class="quran-panel" style="position:absolute; z-index:9; top:3%; left:8%; width:84%; height:94%; min-width:280px; min-height:220px; background:#FBF7EC; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.25); overflow:hidden; flex-direction:column;">
         <div style="display:flex; justify-content:space-between; align-items:center; background:var(--violet-600); color:#fff; padding:6px 10px; cursor:move; flex-wrap:wrap; gap:6px;" id="quran-drag-handle">
             <span style="font-weight:700; font-size:0.85rem; white-space:nowrap;">📖 المصحف الشريف</span>
             <select id="surah-select" style="border-radius:8px; border:none; padding:5px 8px; font-family:var(--font-body); font-weight:700; font-size:0.8rem; max-width:40vw;"></select>
@@ -163,13 +253,19 @@
                 <span id="quran-page-label" style="font-size:0.75rem; min-width:70px; text-align:center;">صفحة 1</span>
                 <button id="quran-prev-page" style="background:rgba(255,255,255,0.2); border:none; color:#fff; border-radius:8px; width:28px; height:28px; cursor:pointer;">›</button>
             </div>
+            <div style="display:flex; align-items:center; gap:2px;">
+                <button id="quran-zoom-out" title="تصغير الخط" style="background:rgba(255,255,255,0.2); border:none; color:#fff; border-radius:8px; width:26px; height:26px; cursor:pointer;">－</button>
+                <button id="quran-zoom-in" title="تكبير الخط" style="background:rgba(255,255,255,0.2); border:none; color:#fff; border-radius:8px; width:26px; height:26px; cursor:pointer;">＋</button>
+            </div>
             <button id="close-quran" style="background:none; border:none; color:#fff; font-size:1.1rem; cursor:pointer;">×</button>
         </div>
         <div id="quran-content" style="flex:1; overflow-y:auto; padding:20px 26px; font-family:'Amiri Quran', serif; color:#2a1a08; line-height:2.6; text-align:center; font-size:clamp(1.05rem, 2.6vw, 1.5rem);">
             <div style="text-align:center; color:#8a7a5a; font-family:var(--font-body); font-size:0.9rem;">جاري تحميل الصفحة...</div>
         </div>
+        <div class="resize-handle" id="quran-resize-handle" title="كبّري أو صغّري اللوحة">⤡</div>
     </div>
 </div>
+
 
 
 <script>
@@ -211,6 +307,29 @@ const SURAHS = [
     let drawing = false;
     let last = null;
     let last2 = null;
+    let penSize = 5;
+    const history = [];
+    const MAX_HISTORY = 25;
+
+    function pushHistory(){
+        try{
+            history.push(canvas.toDataURL());
+            if(history.length > MAX_HISTORY) history.shift();
+        }catch(e){}
+    }
+    function undo(){
+        if(!history.length) return;
+        const dataUrl = history.pop();
+        const img = new Image();
+        img.onload = () => { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.drawImage(img, 0, 0); };
+        img.src = dataUrl;
+    }
+    document.getElementById('pen-size').addEventListener('change', e => { penSize = parseInt(e.target.value, 10); });
+    document.getElementById('tool-undo').addEventListener('click', undo);
+    document.getElementById('tool-fullscreen').addEventListener('click', () => {
+        if(!document.fullscreenElement){ stage.requestFullscreen ? stage.requestFullscreen() : null; }
+        else { document.exitFullscreen(); }
+    });
 
     function resize(){
         const rect = stage.getBoundingClientRect();
@@ -233,9 +352,9 @@ const SURAHS = [
     const SHAPE_EMOJI = {heart:'❤️', star:'⭐', crown:'👑', flower:'🌸', square:'🟪', clock:'🕐', lion:'🦁', doll:'🪆', cloud:'☁️'};
 
     function stampShape(p, shape){
-        // الأشكال بقت ملصقات قابلة للسحب والحذف بدل ما تترسم دايمة على اللوح
+        // الأشكال بقت ملصقات قابلة للسحب والحذف والتكبير/التصغير بدل ما تترسم دايمة على اللوح
         const el = document.createElement('div');
-        el.className = 'shape-sticker';
+        el.className = 'resizable-el shape-sticker';
         el.style.left = p.x + 'px';
         el.style.top = p.y + 'px';
         el.style.zIndex = ++dragZ;
@@ -243,6 +362,10 @@ const SURAHS = [
         stage.appendChild(el);
         el.querySelector('.del').addEventListener('click', () => el.remove());
         makeDraggable(el);
+        makeResizable(el, { minSize: 32, maxSize: 220, keepAspect: true, onResize: (w) => {
+            const span = el.querySelector('span');
+            if(span) span.style.fontSize = Math.round(w * 0.68) + 'px';
+        }});
         gamePopIn(el);
     }
     function gamePopIn(el){
@@ -257,13 +380,15 @@ const SURAHS = [
 
     canvas.addEventListener('pointerdown', e => {
         const p = pos(e);
-        if(tool === 'shape'){ stampShape(p, currentShape); return; }
+        if(tool === 'shape'){ pushHistory(); stampShape(p, currentShape); return; }
+        if(tool === 'text'){ addTextSticker(p); setTool('pen'); return; }
+        pushHistory();
         drawing = true; last = p; last2 = p;
     });
     canvas.addEventListener('pointermove', e => {
         if(!drawing) return;
         const p = pos(e);
-        ctx.lineWidth = tool === 'eraser' ? 26 : 5;
+        ctx.lineWidth = tool === 'eraser' ? 26 : penSize;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.strokeStyle = tool === 'eraser' ? '#FFFFFF' : color;
@@ -295,6 +420,7 @@ const SURAHS = [
         if(t === 'pen') document.getElementById('tool-pen').classList.add('active');
         if(t === 'eraser') document.getElementById('tool-eraser').classList.add('active');
         if(t === 'shape') document.querySelector('.shape-btn[data-shape="'+shape+'"]').classList.add('active');
+        if(t === 'text') document.getElementById('tool-text').classList.add('active');
     }
     document.getElementById('tool-pen').addEventListener('click', () => setTool('pen'));
     document.getElementById('tool-eraser').addEventListener('click', () => setTool('eraser'));
@@ -314,8 +440,9 @@ const SURAHS = [
 
     // مسح الكل
     document.getElementById('clear-board').addEventListener('click', () => {
+        pushHistory();
         ctx.clearRect(0,0,canvas.width, canvas.height);
-        document.querySelectorAll('.sticky, .word-sticker').forEach(n => n.remove());
+        document.querySelectorAll('.sticky, .word-sticker, .shape-sticker').forEach(n => n.remove());
     });
 
     // دالة عامة لجعل أي عنصر قابل للسحب
@@ -323,7 +450,7 @@ const SURAHS = [
     function makeDraggable(el){
         let dragging = false, offX=0, offY=0;
         el.addEventListener('pointerdown', e => {
-            if(['TEXTAREA','BUTTON'].includes(e.target.tagName)) return;
+            if(['TEXTAREA','BUTTON'].includes(e.target.tagName) || e.target.classList.contains('resize-handle') || e.target.classList.contains('text-body') || e.target.isContentEditable) return;
             dragging = true; el.style.zIndex = ++dragZ;
             const r = el.getBoundingClientRect();
             offX = e.clientX - r.left; offY = e.clientY - r.top;
@@ -335,6 +462,33 @@ const SURAHS = [
             el.style.top = (e.clientY - r.top - offY) + 'px';
         });
         document.addEventListener('pointerup', () => dragging = false);
+    }
+
+    // دالة عامة لإضافة مقبض تحجيم (تكبير/تصغير) لأي عنصر - عشان الصور والأشكال
+    function makeResizable(el, opts){
+        opts = opts || {};
+        const handle = document.createElement('div');
+        handle.className = 'resize-handle';
+        el.appendChild(handle);
+        let resizing = false, startX=0, startY=0, startW=0, startH=0;
+        handle.addEventListener('pointerdown', e => {
+            e.stopPropagation();
+            resizing = true;
+            startX = e.clientX; startY = e.clientY;
+            const rect = el.getBoundingClientRect();
+            startW = rect.width; startH = rect.height;
+        });
+        document.addEventListener('pointermove', e => {
+            if(!resizing) return;
+            const dx = e.clientX - startX, dy = e.clientY - startY;
+            const minS = opts.minSize || 40, maxS = opts.maxSize || 600;
+            let newW = Math.min(maxS, Math.max(minS, startW + dx));
+            let newH = opts.keepAspect ? newW * (startH / startW) : Math.min(maxS, Math.max(minS, startH + dy));
+            el.style.width = newW + 'px';
+            el.style.height = newH + 'px';
+            if(opts.onResize) opts.onResize(newW, newH);
+        });
+        document.addEventListener('pointerup', () => resizing = false);
     }
 
     // ملاحظات لاصقة قابلة للسحب
@@ -365,6 +519,127 @@ const SURAHS = [
     document.querySelectorAll('.sticker-btn').forEach(b => {
         b.addEventListener('click', () => addWordSticker(b.dataset.sticker));
     });
+
+    // إضافة صورة تشرحي عليها - قابلة للسحب والتكبير/التصغير، وترسمي فوقها بالقلم
+    const imageInput = document.getElementById('image-input');
+    document.getElementById('add-image-btn').addEventListener('click', () => imageInput.click());
+    imageInput.addEventListener('change', () => {
+        const file = imageInput.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            const el = document.createElement('div');
+            el.className = 'resizable-el image-sticker';
+            el.style.top = '15%'; el.style.left = '20%';
+            el.style.zIndex = ++dragZ;
+            el.innerHTML = '<div class="del">×</div><img src="' + reader.result + '">';
+            stage.appendChild(el);
+            el.querySelector('.del').addEventListener('click', () => el.remove());
+            makeDraggable(el);
+            makeResizable(el, { minSize: 60, maxSize: 700 });
+        };
+        reader.readAsDataURL(file);
+        imageInput.value = '';
+    });
+
+    // أداة النص: دوسي على السبورة واكتبي، تقدري تسحبيه وتكبريه/تصغريه وتلوّنيه
+    const TEXT_COLORS = ['#1A1A2E','#DC3545','#1D9A63','#3B82F6','#F59E0B','#8B5CF6','#EC4899','#ffffff'];
+    document.getElementById('tool-text').addEventListener('click', () => setTool('text'));
+    function addTextSticker(p){
+        const el = document.createElement('div');
+        el.className = 'text-sticker resizable-el';
+        el.style.left = p.x + 'px';
+        el.style.top = p.y + 'px';
+        el.style.zIndex = ++dragZ;
+        const colorsHtml = TEXT_COLORS.map(c => `<span style="background:${c}" data-c="${c}"></span>`).join('');
+        el.innerHTML = '<div class="del">×</div><div class="drag-grip" title="اسحبي من هنا لتحريك النص">✥</div><div class="text-colors">' + colorsHtml + '</div><div class="text-body" contenteditable="true" data-placeholder="اكتبي هنا...">اكتبي هنا...</div>';
+        stage.appendChild(el);
+        const body = el.querySelector('.text-body');
+        el.querySelector('.del').addEventListener('click', () => el.remove());
+        el.querySelectorAll('.text-colors span').forEach(sw => {
+            sw.addEventListener('click', e => { e.stopPropagation(); body.style.color = sw.dataset.c; });
+        });
+        makeDraggable(el);
+        makeResizable(el, { minSize: 50, maxSize: 900, onResize: (w) => {
+            body.style.fontSize = Math.max(14, Math.round(w * 0.11)) + 'px';
+        }});
+        // أول ما تفتح تتحدد كل النص التلقائي عشان تكتب فورًا فوقه
+        setTimeout(() => {
+            body.focus();
+            const range = document.createRange();
+            range.selectNodeContents(body);
+            const sel = window.getSelection();
+            sel.removeAllRanges(); sel.addRange(range);
+        }, 30);
+        body.addEventListener('focus', () => el.classList.add('editing'));
+        body.addEventListener('blur', () => el.classList.remove('editing'));
+        body.addEventListener('pointerdown', e => e.stopPropagation());
+        return el;
+    }
+
+    // إشارة الهدوء (Traffic light) - دوسي على أي لون تفعّليه
+    document.getElementById('add-traffic-light').addEventListener('click', () => {
+        const el = document.createElement('div');
+        el.className = 'traffic-light-widget';
+        el.style.top = '20%'; el.style.left = '10%';
+        el.style.zIndex = ++dragZ;
+        el.innerHTML = '<div class="del">×</div><div class="bulb red active"></div><div class="bulb yellow"></div><div class="bulb green"></div>';
+        stage.appendChild(el);
+        el.querySelector('.del').addEventListener('click', () => el.remove());
+        el.querySelectorAll('.bulb').forEach(b => {
+            b.addEventListener('click', e => {
+                e.stopPropagation();
+                el.querySelectorAll('.bulb').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+            });
+        });
+        makeDraggable(el);
+    });
+
+    // ساعة حية
+    document.getElementById('add-clock').addEventListener('click', () => {
+        const el = document.createElement('div');
+        el.className = 'clock-widget';
+        el.style.top = '10%'; el.style.left = '75%';
+        el.style.zIndex = ++dragZ;
+        el.innerHTML = '<div class="del">×</div><div class="clock-time">--:--</div><div class="clock-date"></div>';
+        stage.appendChild(el);
+        el.querySelector('.del').addEventListener('click', () => { clearInterval(timerId); el.remove(); });
+        makeDraggable(el);
+        function tick(){
+            const now = new Date();
+            el.querySelector('.clock-time').textContent = now.toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+            el.querySelector('.clock-date').textContent = now.toLocaleDateString('ar-EG', {weekday:'long', day:'numeric', month:'long'});
+        }
+        tick();
+        const timerId = setInterval(tick, 1000);
+    });
+
+    // اختيار طالب عشوائي
+    (function(){
+        const overlay = document.getElementById('picker-overlay');
+        const namesArea = document.getElementById('picker-names');
+        const resultEl = document.getElementById('picker-result');
+        document.getElementById('add-random-picker').addEventListener('click', () => overlay.classList.add('show'));
+        document.getElementById('picker-close').addEventListener('click', () => overlay.classList.remove('show'));
+        document.getElementById('picker-spin').addEventListener('click', () => {
+            const names = namesArea.value.split(/[\n,]/).map(s => s.trim()).filter(Boolean);
+            if(names.length < 2){ resultEl.textContent = 'اكتبي اسمين على الأقل'; return; }
+            let count = 0;
+            const spins = 14 + Math.floor(Math.random()*8);
+            const interval = setInterval(() => {
+                resultEl.textContent = names[Math.floor(Math.random()*names.length)];
+                count++;
+                if(count >= spins){
+                    clearInterval(interval);
+                    const winner = names[Math.floor(Math.random()*names.length)];
+                    resultEl.textContent = '🎉 ' + winner;
+                    if(typeof playTada === 'function') playTada();
+                    if(window.fireConfetti) window.fireConfetti();
+                }
+            }, 90);
+        });
+    })();
 
     // أصوات مُولّدة بدون ملفات خارجية
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -497,20 +772,42 @@ const SURAHS = [
 
         let quranOpened = false;
         const backdrop = document.getElementById('quran-backdrop');
+        const floatToolbar = document.getElementById('quran-float-toolbar');
+        const drawToggleBtn = document.getElementById('quran-draw-toggle');
+        let drawOverMode = false;
+
+        function setDrawOverMode(on){
+            drawOverMode = on;
+            if(on){
+                canvas.style.zIndex = 15;
+                drawToggleBtn.classList.add('active');
+                drawToggleBtn.textContent = '✅ رجّعي المصحف فوق (وقف الرسم)';
+                setTool('pen');
+            } else {
+                canvas.style.zIndex = 1;
+                drawToggleBtn.classList.remove('active');
+                drawToggleBtn.textContent = '✏️ ارسمي واشرحي على الصفحة';
+            }
+        }
         function openQuran(){
             panel.classList.add('open');
             backdrop.style.display = 'block';
+            floatToolbar.classList.add('show');
             if(!quranOpened){ quranOpened = true; goToPage(1); }
         }
         function closeQuran(){
             panel.classList.remove('open');
             backdrop.style.display = 'none';
+            floatToolbar.classList.remove('show');
+            setDrawOverMode(false);
         }
         toggleQuranBtn.addEventListener('click', () => {
             if(panel.classList.contains('open')) closeQuran(); else openQuran();
         });
         document.getElementById('close-quran').addEventListener('click', closeQuran);
-        backdrop.addEventListener('click', closeQuran);
+        backdrop.addEventListener('click', () => { if(!drawOverMode) closeQuran(); });
+        drawToggleBtn.addEventListener('click', () => setDrawOverMode(!drawOverMode));
+        document.getElementById('quran-float-close').addEventListener('click', closeQuran);
 
         // سحب لوحة المصحف من العنوان
         let qDrag=false, qOffX=0, qOffY=0;
@@ -527,6 +824,38 @@ const SURAHS = [
             panel.style.top = (e.clientY - r.top - qOffY) + 'px';
         });
         document.addEventListener('pointerup', () => qDrag = false);
+
+        // تكبير/تصغير خط المصحف
+        let quranFontScale = 1;
+        function applyQuranFontScale(){
+            content.style.fontSize = 'calc(clamp(1.05rem, 2.6vw, 1.5rem) * ' + quranFontScale + ')';
+        }
+        document.getElementById('quran-zoom-in').addEventListener('click', () => {
+            quranFontScale = Math.min(2.2, quranFontScale + 0.15);
+            applyQuranFontScale();
+        });
+        document.getElementById('quran-zoom-out').addEventListener('click', () => {
+            quranFontScale = Math.max(0.6, quranFontScale - 0.15);
+            applyQuranFontScale();
+        });
+
+        // تكبير/تصغير لوحة المصحف كلها بالسحب من المقبض
+        const quranResizeHandle = document.getElementById('quran-resize-handle');
+        let qResizing = false, qrStartX=0, qrStartY=0, qrStartW=0, qrStartH=0;
+        quranResizeHandle.addEventListener('pointerdown', e => {
+            e.stopPropagation();
+            qResizing = true;
+            qrStartX = e.clientX; qrStartY = e.clientY;
+            const rect = panel.getBoundingClientRect();
+            qrStartW = rect.width; qrStartH = rect.height;
+        });
+        document.addEventListener('pointermove', e => {
+            if(!qResizing) return;
+            const dx = e.clientX - qrStartX, dy = e.clientY - qrStartY;
+            panel.style.width = Math.max(320, qrStartW + dx) + 'px';
+            panel.style.height = Math.max(240, qrStartH + dy) + 'px';
+        });
+        document.addEventListener('pointerup', () => qResizing = false);
     }
 })();
 </script>

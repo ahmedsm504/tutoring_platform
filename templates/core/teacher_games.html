@@ -3,7 +3,12 @@
 {% block extra_css %}
 <style>
 .tabs{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+.game-tabs{display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px;}
+.tab-icon{font-size:1.6rem; display:block; margin-bottom:4px;}
 .tab-btn{padding:9px 14px; border-radius:12px; border:1.6px solid var(--border); background:var(--surface); cursor:pointer; font-weight:700; font-size:clamp(0.78rem,3vw,0.85rem); font-family:var(--font-body); transition:transform .15s, box-shadow .15s;}
+.game-tabs .tab-btn{display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px 8px; border:none; background:var(--tab-grad, var(--violet-100)); color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.25); box-shadow:0 4px 12px rgba(0,0,0,0.12); opacity:0.72;}
+.game-tabs .tab-btn.active{opacity:1; box-shadow:0 8px 20px rgba(0,0,0,0.22); transform:translateY(-2px) scale(1.04); background:var(--tab-grad, var(--violet-600)); border-color:transparent;}
+.game-tabs .tab-btn:hover{opacity:1;}
 .tab-btn:hover{transform:translateY(-2px); box-shadow:0 6px 14px rgba(109,40,217,0.15);}
 .tab-btn.active{background:var(--violet-600); color:#fff; border-color:var(--violet-600);}
 .game-panel{display:none;}
@@ -74,16 +79,16 @@
     <span class="mascot-bob" style="font-size:1.4rem; animation-delay:.3s;">🐥</span>
 </h2>
 
-<div class="tabs">
-    <button class="tab-btn active" data-tab="xo">❌⭕ إكس أو</button>
-    <button class="tab-btn" data-tab="diff">🔍 الاختلافات</button>
-    <button class="tab-btn" data-tab="color">🎨 التلوين</button>
-    <button class="tab-btn" data-tab="wheel">🎡 عجلة الحظ</button>
-    <button class="tab-btn" data-tab="guess">🧩 خمن الشخصية</button>
-    <button class="tab-btn" data-tab="memo">🃏 مطابقة الأزواج</button>
-    <button class="tab-btn" data-tab="maze">🧭 المتاهة</button>
-    <button class="tab-btn" data-tab="bubbles">🫧 فقاعات الحروف</button>
-    <button class="tab-btn" data-tab="numbers">🔢 رتب الأرقام</button>
+<div class="tabs game-tabs">
+    <button class="tab-btn active" data-tab="xo" style="--tab-grad:linear-gradient(135deg,#FF8FB1,#EC4899);"><span class="tab-icon">❌⭕</span><span>إكس أو</span></button>
+    <button class="tab-btn" data-tab="diff" style="--tab-grad:linear-gradient(135deg,#7DD3FC,#3B82F6);"><span class="tab-icon">🔍</span><span>الاختلافات</span></button>
+    <button class="tab-btn" data-tab="color" style="--tab-grad:linear-gradient(135deg,#FDE68A,#F59E0B);"><span class="tab-icon">🎨</span><span>التلوين</span></button>
+    <button class="tab-btn" data-tab="wheel" style="--tab-grad:linear-gradient(135deg,#C4B5FD,#8B5CF6);"><span class="tab-icon">🎡</span><span>عجلة الحظ</span></button>
+    <button class="tab-btn" data-tab="guess" style="--tab-grad:linear-gradient(135deg,#6EE7B7,#1D9A63);"><span class="tab-icon">🧩</span><span>خمن الشخصية</span></button>
+    <button class="tab-btn" data-tab="memo" style="--tab-grad:linear-gradient(135deg,#FDBA74,#EA580C);"><span class="tab-icon">🃏</span><span>مطابقة الأزواج</span></button>
+    <button class="tab-btn" data-tab="maze" style="--tab-grad:linear-gradient(135deg,#93C5FD,#1D4ED8);"><span class="tab-icon">🧭</span><span>المتاهة</span></button>
+    <button class="tab-btn" data-tab="bubbles" style="--tab-grad:linear-gradient(135deg,#A5F3FC,#06B6D4);"><span class="tab-icon">🫧</span><span>فقاعات الحروف</span></button>
+    <button class="tab-btn" data-tab="numbers" style="--tab-grad:linear-gradient(135deg,#FCA5A5,#DC2626);"><span class="tab-icon">🔢</span><span>رتب الأرقام</span></button>
 </div>
 
 <div class="card">
