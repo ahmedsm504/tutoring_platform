@@ -17,6 +17,7 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-RNXPQQNRNP');
+      gtag('config', 'AW-18213459162');
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253419170065458"
      crossorigin="anonymous"></script>
@@ -71,53 +72,41 @@
       });
     </script>
 
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18213459162"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-18213459162');
-</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
 
-    <title>{% block title %}مؤسسة العجمي | تحفيظ القرآن أونلاين من 7 ريال{% endblock %}</title>
+    <title>{% block title %}مؤسسة العجمي | تحفيظ القرآن الكريم أونلاين لجميع الدول{% endblock %}</title>
     <meta name="yandex-verification" content="2e1b6302af7d6340" />
     <meta name="6ccf56db95ea081a7d94b3dce02408c2179346ca" content="6ccf56db95ea081a7d94b3dce02408c2179346ca" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <meta name="description" content="{% block meta_description %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن عن بُعد بأسعار تبدأ من 7 ريال. معلمون متقنون للأطفال والكبار في مصر والخليج. جرب حصة مجانية الآن.{% endblock %}">
+    <meta name="description" content="{% block meta_description %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين للأطفال والكبار، من أي دولة وبتوقيت يناسبك. احجز حلقتك التجريبية المجانية الآن.{% endblock %}">
     <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endblock %}">
     <meta name="author" content="مؤسسة العجمي">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock %}">
     <meta name="googlebot" content="index, follow">
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <link rel="canonical" href="{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}">
+    <link rel="alternate" hreflang="ar" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <link rel="alternate" hreflang="x-default" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
 
-    <meta property="og:locale" content="ar_EG">
+    <meta property="og:locale" content="ar_AR">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد | حصص من 7 ريال{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين. أسعار تبدأ من 7 ريال. برامج للأطفال والكبار. حلقة تجريبية مجانية.{% endblock %}">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد لجميع الدول{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين. برامج للأطفال والكبار، والحجز متاح من أي دولة. حلقة تجريبية مجانية.{% endblock %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     <meta property="og:site_name" content="مؤسسة العجمي">
-    <meta property="og:image" content="{% static 'images/logo.jpeg' %}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% block og_image %}{% static 'images/logo.jpeg' %}{% endblock %}">
+    <meta property="og:image:alt" content="مؤسسة العجمي - تحفيظ القرآن الكريم أونلاين">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block twitter_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}حصص فردية لتحفيظ القرآن من 7 ريال. معلمون متقنون. حلقة تجريبية مجانية.{% endblock %}">
-    <meta name="twitter:image" content="{% static 'images/logo.jpeg' %}">
+    <meta name="twitter:description" content="{% block twitter_description %}حصص فردية لتحفيظ القرآن عن بُعد من أي دولة. معلمون متقنون. حلقة تجريبية مجانية.{% endblock %}">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% block twitter_image %}{% static 'images/logo.jpeg' %}{% endblock %}">
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="العجمي">
-
-    <meta name="geo.region" content="EG">
-    <meta name="geo.placename" content="Egypt">
 
     <link rel="preload" as="image" href="{% static 'images/logo.jpeg' %}">
     <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpeg' %}">
@@ -132,78 +121,41 @@
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <!-- ✅ Schema 1: EducationalOrganization - مصحح مع url كامل وليس relative -->
+    <!-- Schema: منظمة تعليمية أونلاين تخدم طلاب جميع الدول -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
       "name": "مؤسسة العجمي",
-      "alternateName": "Al-Agmi Foundation",
+      "alternateName": ["Al-Agmi Foundation", "Alagme"],
       "url": "{{ request.scheme }}://{{ request.get_host }}/",
       "logo": {
         "@type": "ImageObject",
-        "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
-        "width": 200,
-        "height": 200
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}"
       },
       "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
-      "description": "مؤسسة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار تبدأ من 7 ريال",
+      "description": "مؤسسة تعليمية متخصصة في تحفيظ القرآن الكريم وتعليم التجويد عن بُعد (أونلاين) لطلاب من جميع الدول، بحصص فردية ومعلمين متقنين.",
+      "areaServed": "Worldwide",
+      "knowsLanguage": "ar",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "EG",
-        "addressRegion": "مصر",
-        "addressLocality": "القاهرة",
-        "streetAddress": "جمهورية مصر العربية",
-        "postalCode": "11511"
+        "addressLocality": "القاهرة"
       },
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+20-104-456-8181",
         "contactType": "customer service",
-        "availableLanguage": ["ar", "Arabic"]
-      },
-      "sameAs": [
-        "https://www.facebook.com/profile.php?id=61587497605651",
-        "https://www.instagram.com/ala.gme/",
-        "https://www.tiktok.com/@alagme_12",
-        "https://x.com/alagme_12",
-        "https://youtube.com/@alagme-c5h"
-      ]
-    }
-    </script>
-
-    <!-- ✅ Schema 2: LocalBusiness - مصحح بإضافة name وimage وurl كاملة -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "مؤسسة العجمي - تحفيظ القرآن الكريم",
-      "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
-      "url": "{{ request.scheme }}://{{ request.get_host }}/",
-      "telephone": "+20-104-456-8181",
-      "priceRange": "7-15 ريال",
-      "description": "مؤسسة متخصصة في تحفيظ القرآن الكريم عن بُعد بأسعار تبدأ من 7 ريال",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "EG",
-        "addressRegion": "مصر",
-        "addressLocality": "القاهرة",
-        "streetAddress": "جمهورية مصر العربية",
-        "postalCode": "11511"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 30.0444,
-        "longitude": 31.2357
-      },
-      "openingHoursSpecification": [
-        {
+        "areaServed": "Worldwide",
+        "availableLanguage": ["ar"],
+        "hoursAvailable": {
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
           "opens": "09:00",
-          "closes": "24:00"
+          "closes": "23:59"
         }
-      ],
+      },
       "sameAs": [
         "https://www.facebook.com/profile.php?id=61587497605651",
         "https://www.instagram.com/ala.gme/",
@@ -230,7 +182,7 @@
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="{% url 'home' %}" aria-label="الصفحة الرئيسية - مؤسسة العجمي">
-                    <img src="{% static 'images/logo.jpeg' %}" alt="شعار مؤسسة العجمي لتحفيظ القرآن الكريم" width="60" height="60" loading="lazy">
+                    <img src="{% static 'images/logo.jpeg' %}" alt="شعار مؤسسة العجمي لتحفيظ القرآن الكريم" width="60" height="60" fetchpriority="high">
                     <span>العجمي</span>
                 </a>
             </div>
@@ -258,7 +210,7 @@
                 <a href="{% url 'qna:question_list' %}" {% if 'qna' in request.path %}class="active" aria-current="page"{% endif %} aria-label="أسئلة وأجوبة">
                     <i class="fas fa-question-circle"></i> أسئلة وأجوبة
                 </a>
-                <a href="{% url 'pricing' %}" {% if request.resolver_match.url_name == 'pricing' %}class="active" aria-current="page"{% endif %} aria-label="الباقات والأسعار">
+                <a href="{% url 'pricing' %}" {% if request.resolver_match.url_name == 'pricing' %}class="active" aria-current="page"{% endif %} aria-label="الباقات المتاحة">
                     <i class="fas fa-tags"></i> الباقات
                 </a>
 
@@ -318,7 +270,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3><i class="fas fa-graduation-cap"></i> عن المنصة</h3>
-                <p>منصة تعليمية متميزة متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية وأسعار مناسبة للجميع.</p>
+                <p>منصة تعليمية متميزة متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية ومتاحة لطلاب جميع الدول والأعمار.</p>
                 <div class="social-links">
                     <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="me noopener noreferrer" title="فيسبوك" aria-label="فيسبوك">
                         <i class="fab fa-facebook-f"></i>
@@ -366,7 +318,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2025 منصة العجمي. جميع الحقوق محفوظة.</p>
+            <p>&copy; {% now "Y" %} منصة العجمي. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
