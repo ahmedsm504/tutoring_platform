@@ -27,8 +27,8 @@
     "name": "مؤسسة العجمي",
     "alternateName": "Al-Agmi Foundation",
     "description": "منصة قرآنية تعنى بالفهم قبل الحفظ، وتقديم تعليم متقن للتلاوة والتجويد بأسلوب متدرج.",
-    "url": "{{ request.build_absolute_uri }}",
-    "logo": "{% static 'images/logo.jpeg' %}",
+    "url": "{{ request.scheme }}://{{ request.get_host }}/",
+    "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
     "foundingDate": "2024",
     "founder": [
       {
@@ -279,12 +279,7 @@
 {% endblock %}
 
 {% block content %}
-<main role="main">
-    <!-- Hidden H1 for SEO (already present, but ensuring structure) -->
-    <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
-        منصة العجمي لتحفيظ القرآن الكريم - رؤيتنا ورسالتنا وفريق العمل
-    </h1>
-
+<div>
     <article itemscope itemtype="https://schema.org/AboutPage" aria-labelledby="about-heading">
         <h1 id="about-heading" itemprop="name">منصة العجمي</h1>
         
@@ -358,12 +353,12 @@
                 <li>معلمون مؤهلون وحاصلون على إجازات في القرآن الكريم</li>
                 <li>حصص فردية مخصصة لكل طالب</li>
                 <li>مرونة في اختيار الأوقات المناسبة</li>
-                <li>أسعار تنافسية تبدأ من 7 ريال</li>
+                <li>حصص أونلاين متاحة لطلاب جميع الدول</li>
                 <li>متابعة مستمرة وتقييم دوري</li>
                 <li>حلقة تجريبية مجانية</li>
                 <li>برامج متنوعة تناسب جميع الأعمار والمستويات</li>
             </ul>
         </section>
     </article>
-</main>
+</div>
 {% endblock %}

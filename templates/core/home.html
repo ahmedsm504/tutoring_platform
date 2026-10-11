@@ -1,58 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}تحفيظ القرآن الكريم عن بعد | حصص فردية من 7 ريال | معلمون متقنون | Alagme.com{% endblock %}
+{% block title %}تحفيظ القرآن أونلاين | حلقة تجريبية مجانية لجميع الدول | العجمي{% endblock %}
 
-{% block meta_description %}احجز الآن حصص تحفيظ القرآن الكريم عن بعد للأطفال والكبار. حصص فردية 100% مع معلمين متقنين. أسعار تبدأ من 7 ريال. حلقة تجريبية مجانية. مواعيد مرنة. دورات نور البيان والأربعون النووية.{% endblock %}
+{% block meta_description %}احجز حلقة تجريبية مجانية لتحفيظ القرآن الكريم عن بُعد من أي دولة. حصص فردية مع معلمين متقنين للأطفال والكبار ومواعيد مرنة بتوقيت بلدك.{% endblock %}
 
-{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ القرآن اونلاين, حفظ القرآن للأطفال, معلم قرآن عن بعد, معلمة قرآن, دروس تجويد, تحفيظ قرآن رخيص, حصص قرآن فردية, تعليم القرآن للكبار, منصة تحفيظ قرآن, حفظ القرآن بالتجويد, نور البيان, الأربعون النووية, alagme, العجمي, قرآن كريم, تحفيظ قرآن للصغار, تحفيظ قرآن للكبار, تعليم تجويد القرآن{% endblock %}
+{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ القرآن اونلاين, حفظ القرآن للأطفال, معلم قرآن عن بعد, معلمة قرآن, دروس تجويد, حصص قرآن فردية, تعليم القرآن للكبار, تحفيظ قرآن لجميع الدول, منصة تحفيظ قرآن, حفظ القرآن بالتجويد, نور البيان, الأربعون النووية, alagme{% endblock %}
 
-{% block og_title %}تحفيظ القرآن الكريم عن بُعد - حصص فردية من 7 ريال | Alagme{% endblock %}
+{% block og_title %}تحفيظ القرآن الكريم عن بُعد - حلقة تجريبية مجانية | العجمي{% endblock %}
 
-{% block og_description %}منصة Alagme لتحفيظ القرآن الكريم عن بعد. معلمون متقنون حاصلون على إجازات. حصص فردية 100%. أسعار مناسبة تبدأ من 7 ريال. حلقة تجريبية مجانية. مواعيد مرنة 24/7.{% endblock %}
+{% block og_description %}منصة العجمي لتحفيظ القرآن الكريم عن بعد. معلمون متقنون حاصلون على إجازات، حصص فردية 100%، والحجز متاح من أي دولة. احجز حلقتك التجريبية المجانية.{% endblock %}
 
 {% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}
+{% block twitter_image %}{% static 'images/og-image.jpg' %}{% endblock %}
+{% block canonical_url %}https://alagme.com/{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
-<!-- Canonical URL -->
-<link rel="canonical" href="https://alagme.com/">
-
-<!-- Structured Data for SEO -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "name": "Alagme",
-  "description": "منصة تعليمية متخصصة في تحفيظ القرآن الكريم عن بُعد",
-  "url": "https://alagme.com",
-  "logo": "https://alagme.com{% static 'images/logo.png' %}",
-  "telephone": "+201044568181",
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "EG",
-    "addressLocality": "مصر"
-  },
-  "sameAs": [
-    "https://www.facebook.com/profile.php?id=61587497605651",
-    "https://www.instagram.com/ala.gme/",
-    "https://www.tiktok.com/@alagme_12",
-    "https://x.com/alagme_12"
-  ]
-}
-</script>
-
+<!-- Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Alagme - تحفيظ القرآن الكريم",
-  "url": "https://alagme.com",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://alagme.com/search?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
+  "name": "العجمي - تحفيظ القرآن الكريم أونلاين",
+  "url": "https://alagme.com/",
+  "inLanguage": "ar",
+  "publisher": {"@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"}
 }
 </script>
 
@@ -63,10 +36,10 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "كم سعر حصة تحفيظ القرآن الكريم؟",
+      "name": "هل يمكنني الحجز من خارج مصر؟",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "تبدأ أسعار حصص تحفيظ القرآن من 7 ريال سعودي لحلقة 30 دقيقة، و10 ريال لحلقة 40 دقيقة، و15 ريال لحلقة 60 دقيقة. نوفر أيضاً حلقة تجريبية مجانية."
+        "text": "نعم. التحفيظ أونلاين بالكامل، ويمكن لأي طالب من أي دولة حجز حلقته التجريبية المجانية، واختيار موعد يناسب توقيت بلده بالتنسيق مع فريقنا."
       }
     },
     {
@@ -75,6 +48,22 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "نعم، نوفر حلقة تجريبية مجانية بالكامل لجميع الطلاب الجدد لتجربة الخدمة قبل الاشتراك."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "كيف أحجز حلقتي؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "اضغط على زر «احجز الآن» أو تواصل معنا عبر صفحة التواصل أو واتساب، وسنحدد معك الباقة والموعد المناسبين."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "لمن تناسب الباقات؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "لدينا باقات للأطفال من سن 6 سنوات، وللطلاب من 10 إلى 15 سنة، وللبالغين، إضافة إلى دورات متخصصة مثل نور البيان والأربعون النووية."
       }
     },
     {
@@ -89,19 +78,17 @@
 }
 </script>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-    "@type": "ListItem",
-    "position": 1,
-    "name": "الرئيسية",
-    "item": "https://alagme.com"
-  }]
-}
-</script>
-
+<style>
+  /* ===== الأسئلة الشائعة ===== */
+  .faq-section { max-width: 900px; margin: 40px auto; padding: 0 16px; }
+  .faq-list details {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 12px; margin-bottom: 10px; padding: 0 16px; color: inherit;
+  }
+  .faq-list summary { cursor: pointer; padding: 14px 0; font-weight: 700; list-style-position: inside; }
+  .faq-list details[open] summary { border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 10px; }
+  .faq-list p { margin: 0 0 14px; line-height: 1.9; }
+</style>
 
 <style>
   /* منع تقطع عناوين الكروت */
@@ -390,9 +377,9 @@
                 </div>
 
                 <div class="carousel-card">
-                    <i class="fa-solid fa-money-bill-wave"></i>
-                    <h3>أسعار مناسبة</h3>
-                    <p>تبدأ الأسعار من 7 ريال فقط لتناسب الجميع</p>
+                    <i class="fa-solid fa-globe"></i>
+                    <h3>متاح لكل الدول</h3>
+                    <p>احجز من أي بلد في العالم وحدد موعدًا يناسب توقيتك</p>
                 </div>
 
                 <div class="carousel-card">
@@ -493,14 +480,14 @@
                 </p>
                 <div class="table-container">
                     <table>
-                        <caption class="sr-only">أسعار باقة البداية النورانية الشهرية</caption>
+                        <caption class="sr-only">خيارات باقة البداية النورانية الشهرية (عدد الحصص ومدة الحلقة)</caption>
                         <tr>
-                            <th scope="col">الباقة الشهرية</th>
-                            <th scope="col">السعر / شهر</th>
+                            <th scope="col">عدد الحصص شهريًا</th>
+                            <th scope="col">مدة الحلقة</th>
                         </tr>
-                        <tr><td>8 حصص (30 دقيقة)</td><td class="price">56 ريال</td></tr>
-                        <tr><td>12 حصة (30 دقيقة)</td><td class="price">84 ريال</td></tr>
-                        <tr><td>8 حصص (60 دقيقة)</td><td class="price">120 ريال</td></tr>
+                        <tr><td>8 حصص</td><td>30 دقيقة</td></tr>
+                        <tr><td>12 حصة</td><td>30 دقيقة</td></tr>
+                        <tr><td>8 حصص</td><td>60 دقيقة</td></tr>
                     </table>
                     <p class="table-note">يمكنك اختيار الباقة ونوع البرنامج والوقت المناسب لك</p>
                 </div>
@@ -528,14 +515,14 @@
                 </ul>
                 <div class="table-container">
                     <table>
-                        <caption class="sr-only">أسعار باقة الغراس الطيب الشهرية</caption>
+                        <caption class="sr-only">خيارات باقة الغراس الطيب الشهرية (عدد الحصص ومدة الحلقة)</caption>
                         <tr>
-                            <th scope="col">الباقة الشهرية</th>
-                            <th scope="col">السعر / شهر</th>
+                            <th scope="col">عدد الحصص شهريًا</th>
+                            <th scope="col">مدة الحلقة</th>
                         </tr>
-                        <tr><td>8 حصص (30 دقيقة)</td><td class="price">56 ريال</td></tr>
-                        <tr><td>12 حصة (30 دقيقة)</td><td class="price">84 ريال</td></tr>
-                        <tr><td>8 حصص (60 دقيقة)</td><td class="price">120 ريال</td></tr>
+                        <tr><td>8 حصص</td><td>30 دقيقة</td></tr>
+                        <tr><td>12 حصة</td><td>30 دقيقة</td></tr>
+                        <tr><td>8 حصص</td><td>60 دقيقة</td></tr>
                     </table>
                     <p class="table-note">يمكنك اختيار الباقة ونوع البرنامج والوقت المناسب لك</p>
                 </div>
@@ -560,14 +547,14 @@
                 </ul>
                 <div class="table-container">
                     <table>
-                        <caption class="sr-only">أسعار باقة الهمة العالية الشهرية</caption>
+                        <caption class="sr-only">خيارات باقة الهمة العالية الشهرية (عدد الحصص ومدة الحلقة)</caption>
                         <tr>
-                            <th scope="col">الباقة الشهرية</th>
-                            <th scope="col">السعر / شهر</th>
+                            <th scope="col">عدد الحصص شهريًا</th>
+                            <th scope="col">مدة الحلقة</th>
                         </tr>
-                        <tr><td>8 حصص (30 دقيقة)</td><td class="price">56 ريال</td></tr>
-                        <tr><td>12 حصة (30 دقيقة)</td><td class="price">84 ريال</td></tr>
-                        <tr><td>8 حصص (60 دقيقة)</td><td class="price">120 ريال</td></tr>
+                        <tr><td>8 حصص</td><td>30 دقيقة</td></tr>
+                        <tr><td>12 حصة</td><td>30 دقيقة</td></tr>
+                        <tr><td>8 حصص</td><td>60 دقيقة</td></tr>
                     </table>
                     <p class="table-note">يمكنك اختيار الباقة ونوع البرنامج والوقت المناسب لك</p>
                 </div>
@@ -596,14 +583,14 @@
                 </ul>
                 <div class="table-container">
                     <table>
-                        <caption class="sr-only">أسعار باقة سفراء القرآن الشهرية</caption>
+                        <caption class="sr-only">خيارات باقة سفراء القرآن الشهرية (عدد الحصص ومدة الحلقة)</caption>
                         <tr>
-                            <th scope="col">الباقة الشهرية</th>
-                            <th scope="col">السعر / شهر</th>
+                            <th scope="col">عدد الحصص شهريًا</th>
+                            <th scope="col">مدة الحلقة</th>
                         </tr>
-                        <tr><td>8 حصص (30 دقيقة)</td><td class="price">56 ريال</td></tr>
-                        <tr><td>12 حصة (30 دقيقة)</td><td class="price">84 ريال</td></tr>
-                        <tr><td>8 حصص (60 دقيقة)</td><td class="price">120 ريال</td></tr>
+                        <tr><td>8 حصص</td><td>30 دقيقة</td></tr>
+                        <tr><td>12 حصة</td><td>30 دقيقة</td></tr>
+                        <tr><td>8 حصص</td><td>60 دقيقة</td></tr>
                     </table>
                     <p class="table-note">يمكنك اختيار الباقة ونوع البرنامج والوقت المناسب لك</p>
                 </div>
@@ -643,12 +630,12 @@
                 </ul>
                 <div class="table-container">
                     <table>
-                        <caption class="sr-only">أسعار دورة نور البيان</caption>
+                        <caption class="sr-only">مدة حلقات دورة نور البيان</caption>
                         <tr>
-                            <th scope="col">المدة</th>
-                            <th scope="col">السعر للحلقة</th>
+                            <th scope="col">مدة الحلقة</th>
+                            <th scope="col">الحجز</th>
                         </tr>
-                        <tr><td>40 دقيقة</td><td class="price">13 ريال</td></tr>
+                        <tr><td>40 دقيقة</td><td>احجز حلقتك التجريبية المجانية</td></tr>
                     </table>
                     <p class="table-note">دورة متخصصة بمنهج علمي مدروس لتأسيس قوي في القراءة العربية</p>
                 </div>
@@ -685,12 +672,12 @@
                 </ul>
                 <div class="table-container">
                     <table>
-                        <caption class="sr-only">أسعار دورة الأربعين النووية</caption>
+                        <caption class="sr-only">مدة حلقات دورة الأربعين النووية</caption>
                         <tr>
-                            <th scope="col">المدة</th>
-                            <th scope="col">السعر للحلقة</th>
+                            <th scope="col">مدة الحلقة</th>
+                            <th scope="col">الحجز</th>
                         </tr>
-                        <tr><td>40 دقيقة</td><td class="price">13 ريال</td></tr>
+                        <tr><td>40 دقيقة</td><td>احجز حلقتك التجريبية المجانية</td></tr>
                     </table>
                     <p class="table-note">دورة علمية متخصصة في دراسة الأحاديث النبوية الصحيحة</p>
                 </div>
@@ -743,6 +730,33 @@
         </button>
     </div>
     <div class="carousel-indicators" id="support-indicators"></div>
+</section>
+
+<!-- FAQ Section (مطابق لبيانات FAQPage المنظمة) -->
+<section class="faq-section" aria-labelledby="faq-heading">
+    <h2 class="section-title" id="faq-heading">❓ أسئلة شائعة</h2>
+    <div class="faq-list">
+        <details>
+            <summary>هل يمكنني الحجز من خارج مصر؟</summary>
+            <p>نعم. التحفيظ أونلاين بالكامل، ويمكن لأي طالب من أي دولة حجز حلقته التجريبية المجانية، واختيار موعد يناسب توقيت بلده بالتنسيق مع فريقنا.</p>
+        </details>
+        <details>
+            <summary>هل الحلقة الأولى مجانية؟</summary>
+            <p>نعم، نوفر حلقة تجريبية مجانية بالكامل لجميع الطلاب الجدد لتجربة الخدمة قبل الاشتراك.</p>
+        </details>
+        <details>
+            <summary>كيف أحجز حلقتي؟</summary>
+            <p>اضغط على زر «احجز الآن» أو تواصل معنا عبر صفحة التواصل أو واتساب، وسنحدد معك الباقة والموعد المناسبين.</p>
+        </details>
+        <details>
+            <summary>لمن تناسب الباقات؟</summary>
+            <p>لدينا باقات للأطفال من سن 6 سنوات، وللطلاب من 10 إلى 15 سنة، وللبالغين، إضافة إلى دورات متخصصة مثل نور البيان والأربعون النووية.</p>
+        </details>
+        <details>
+            <summary>هل المعلمون مؤهلون؟</summary>
+            <p>جميع معلمينا حاصلون على إجازات في القرآن الكريم ولديهم خبرة واسعة في تحفيظ القرآن للأطفال والكبار.</p>
+        </details>
+    </div>
 </section>
 
 <!-- Contact Info Section -->
