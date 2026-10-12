@@ -3,6 +3,9 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
+# سعر الحصة الافتراضي (جنيه) - بيتحدد لكل معلمة في حقل Teacher.lesson_rate
+DEFAULT_LESSON_RATE = 20
+
 
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="اسم الدولة")
@@ -40,6 +43,12 @@ class Teacher(models.Model):
     fixed_salary = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True,
         verbose_name="راتب مثبت (بدل النسبة)"
+    )
+    # الراتب بقى بالحلقة: عدد الحلقات اللي *تمت* × سعر الحصة
+    # (commission_percent و fixed_salary فاضلين في الجدول للتوثيق بس ومبقوش بيتحسبوا)
+    lesson_rate = models.DecimalField(
+        max_digits=8, decimal_places=2, default=DEFAULT_LESSON_RATE,
+        verbose_name="سعر الحصة"
     )
 
     supervisor = models.ForeignKey(
@@ -83,18 +92,45 @@ class Teacher(models.Model):
         active_students = self.students.filter(status='active')
         return sum(float(s.total_paid()) for s in active_students)
 
+    def completed_lessons_count(self, year=None, month=None):
+        """عدد الحلقات اللي *تمت فعلًا* في الشهر (دي الوحيدة اللي بتتحسب في الراتب)"""
+        return self.lessons_for_period(year, month).filter(status='completed').count()
+
     def calculated_salary(self, year=None, month=None):
-        """الراتب المستحق عن شهر واحد بس (افتراضيًا الشهر الحالي):
-        مثبت لو موجود، وإلا نسبة من اشتراكات الشهر ده تحديدًا"""
-        if self.fixed_salary is not None:
-            return round(float(self.fixed_salary), 2)
-        return round(self.total_subscriptions(year=year, month=month) * (float(self.commission_percent) / 100), 2)
+        """الراتب المستحق عن شهر واحد (افتراضيًا الشهر الحالي) =
+        عدد الحلقات اللي تمت × سعر الحصة.
+
+        غياب الطالب / عذر / مؤجلة / ملغاة / غياب المعلمة / لسه مجدولة = مفيش أجر.
+        (نسبة المعلمة والراتب المثبت القدام مبقوش بيدخلوا في الحساب)"""
+        return round(self.completed_lessons_count(year, month) * float(self.lesson_rate), 2)
 
     def platform_share(self, year=None, month=None):
-        """نصيب المنصة من نفس الشهر"""
-        if self.fixed_salary is not None:
-            return round(self.total_subscriptions(year=year, month=month) - float(self.fixed_salary), 2)
-        return round(self.total_subscriptions(year=year, month=month) * (1 - float(self.commission_percent) / 100), 2)
+        """نصيب المنصة من اشتراكات الشهر بعد مستحق المعلمة"""
+        return round(self.total_subscriptions(year=year, month=month) - self.calculated_salary(year, month), 2)
+
+    def salary_records_for(self, year=None, month=None):
+        """سجلات الصرف الفعلية اللي تاريخ صرفها في الشهر ده"""
+        now = timezone.now()
+        year = year or now.year
+        month = month or now.month
+        return self.salary_records.filter(payout_date__year=year, payout_date__month=month)
+
+    def paid_salary(self, year=None, month=None):
+        """اللي اتدفع لها *فعليًا* في الشهر ده (الصافي = أساسي + مكافآت - خصومات)"""
+        return round(sum(r.net_amount() for r in self.salary_records_for(year, month)), 2)
+
+    def paid_base_salary(self, year=None, month=None):
+        """الجزء الأساسي (من الحلقات) اللي اتصرف في الشهر ده من غير المكافآت والخصومات"""
+        return round(sum(float(r.base_amount) for r in self.salary_records_for(year, month)), 2)
+
+    def remaining_salary(self, year=None, month=None):
+        """المتبقي للصرف عن الشهر = المستحق من الحلقات - الأساسي اللي اتصرف قبل كده"""
+        return round(max(self.calculated_salary(year, month) - self.paid_base_salary(year, month), 0), 2)
+
+    def deductions_summary(self, year=None, month=None):
+        """عدد الخصومات المسجلة في الشهر (سجلات صرف فيها خصم > 0) وإجماليها"""
+        recs = [r for r in self.salary_records_for(year, month) if r.deduction and float(r.deduction) > 0]
+        return {'count': len(recs), 'total': round(sum(float(r.deduction) for r in recs), 2)}
 
     def has_salary_record_for(self, year, month):
         """هل اتصرفلها راتب عن الشهر ده قبل كده؟ (عشان نمنع صرف راتب نفس الشهر مرتين)"""
@@ -112,7 +148,7 @@ class Teacher(models.Model):
         غياب تلقائي)، غياب المعلمة، الملغاة، التأخيرات، ونسب الالتزام/الحضور/التسجيل"""
         qs = self.lessons_for_period(year, month)
         total = qs.count()
-        completed = student_absent = teacher_absent = cancelled = late = 0
+        completed = student_absent = teacher_absent = cancelled = late = excused = 0
         unrecorded = 0  # عدد الحلقات اللي محدش سجلها يدويًا (اتحسبت غياب تلقائي) - رقم فرعي داخل student_absent
 
         for lesson in qs:
@@ -127,6 +163,8 @@ class Teacher(models.Model):
                 teacher_absent += 1
             elif eff == 'cancelled':
                 cancelled += 1
+            elif eff == 'excused':
+                excused += 1
             if lesson.was_late:
                 late += 1
 
@@ -136,7 +174,15 @@ class Teacher(models.Model):
         recording_rate = round(((total - unrecorded) / total * 100), 1) if total else 100.0
         overall_rating = round((commitment_rate + attendance_rate + recording_rate) / 3, 1)
 
+        ded = self.deductions_summary(year, month)
+
         return {
+            'excused': excused, 'postponed': cancelled,
+            'absent_total': student_absent + excused + teacher_absent,
+            'lesson_rate': float(self.lesson_rate),
+            'salary_due': round(completed * float(self.lesson_rate), 2),
+            'salary_paid': self.paid_salary(year, month),
+            'deductions_count': ded['count'], 'deductions_total': ded['total'],
             'total': total, 'completed': completed, 'student_absent': student_absent,
             'teacher_absent': teacher_absent, 'cancelled': cancelled, 'unregistered': unrecorded,
             'late': late, 'complaints': self.complaints_count(year, month),
@@ -287,6 +333,12 @@ class Student(models.Model):
             qs = qs.filter(date__month=month)
         total = qs.aggregate(total=models.Sum('amount'))['total']
         return total or 0
+
+    def is_paid_for(self, year=None, month=None):
+        """هل دفع فعليًا (فيه دفعة مسجلة) في الشهر ده؟ - الأدق من حقل payment_status
+        اللي بيفضل 'مدفوع' بعد أول دفعة ومبيرجعش لـ 'مستحق' لما شهر جديد يبدأ"""
+        now = timezone.now()
+        return float(self.total_paid(year=year or now.year, month=month or now.month)) > 0
 
     def lessons_completed_count(self):
         """كام حلقة اتعملت فعلًا للطالب ده من كل حلقاته المسجلة في السيستم"""
@@ -464,6 +516,27 @@ class Lesson(models.Model):
         """هل الحالة دي طالعة تلقائي كغياب لأن محدش سجلها (مش تسجيل يدوي فعلي)؟
         مفيد للإدارة عشان تفرق بين غياب متسجل فعلًا وغياب افتراضي محتاج متابعة"""
         return self.is_overdue_unrecorded()
+
+    def earned_amount(self):
+        """أجر الحلقة دي للمعلمة: سعر الحصة لو *تمت* فعلًا، وصفر لأي حالة تانية"""
+        return float(self.teacher.lesson_rate) if self.status == 'completed' else 0.0
+
+    def table_group(self):
+        """تصنيف الحلقة في جدول المعلمة: completed / absent / postponed / upcoming"""
+        eff = self.effective_status()
+        if eff == 'completed':
+            return 'completed'
+        if eff in ('student_absent', 'excused', 'teacher_absent', 'unregistered'):
+            return 'absent'
+        if eff == 'cancelled':
+            return 'postponed'
+        return 'upcoming'
+
+    def status_label(self):
+        """اسم الحالة بالتفصيل للعرض في الجدول"""
+        if self.was_auto_defaulted():
+            return 'غياب (لم تُسجَّل)'
+        return self.get_status_display()
 
     def mark_started(self):
         """المعلمة بتضغط "بدء الحلقة" الساعة اللي بتبدأ فيها فعليًا"""

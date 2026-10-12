@@ -33,7 +33,7 @@ class SalaryRecordInline(admin.TabularInline):
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone', 'supervisor', 'governorate', 'commission_percent', 'fixed_salary', 'calculated_salary', 'current_students_count', 'previous_students_count')
+    list_display = ('name', 'phone', 'supervisor', 'governorate', 'lesson_rate', 'calculated_salary', 'current_students_count', 'previous_students_count')
     list_filter = ('supervisor',)
     search_fields = ('name', 'phone')
     inlines = [SalaryRecordInline]

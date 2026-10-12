@@ -12,7 +12,7 @@
 <div class="table-container">
     <table>
         <thead>
-            <tr><th>الاسم</th><th>السن</th><th>المحافظة</th><th>الهاتف</th><th>الراتب الحالي</th><th>طلاب حاليين</th><th>طلاب سابقين</th><th></th></tr>
+            <tr><th>الاسم</th><th>السن</th><th>المحافظة</th><th>الهاتف</th><th>المستحق (الشهر الحالي)</th><th>طلاب حاليين</th><th>طلاب سابقين</th><th></th></tr>
         </thead>
         <tbody>
             {% for teacher in teachers %}
@@ -23,11 +23,7 @@
                 <td>{{ teacher.phone|default:"-" }}</td>
                 <td>
                     {{ teacher.calculated_salary|floatformat:2 }} جنيه
-                    {% if teacher.fixed_salary != None %}
-                        <span class="badge-neutral" style="margin-right:4px;">مثبت</span>
-                    {% else %}
-                        <span class="badge-neutral" style="margin-right:4px;">{{ teacher.commission_percent }}%</span>
-                    {% endif %}
+                    <span class="badge-neutral" style="margin-right:4px;">{{ teacher.lesson_rate|floatformat:"-2" }} جنيه/حلقة</span>
                 </td>
                 <td><span class="status-active">{{ teacher.current_students_count }}</span></td>
                 <td><span class="status-inactive">{{ teacher.previous_students_count }}</span></td>

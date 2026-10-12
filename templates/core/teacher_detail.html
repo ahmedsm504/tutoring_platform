@@ -36,12 +36,7 @@
             <a href="{% url 'create_teacher_login' teacher.id %}" class="btn btn-primary btn-sm" style="margin-right:4px;">إنشاء حساب دخول</a>
         {% endif %}
     </div>
-    <div><strong>نظام الراتب:</strong>
-        {% if teacher.fixed_salary != None %}
-            <span class="badge-neutral">راتب مثبت</span>
-        {% else %}
-            <span class="badge-neutral">نسبة {{ teacher.commission_percent }}%</span>
-        {% endif %}
+    <div><strong>سعر الحصة:</strong> <span class="badge-neutral">{{ teacher.lesson_rate|floatformat:"-2" }} جنيه / حلقة تمت</span>
         <a href="{% url 'salaries_list' %}" style="font-size:0.8rem; color:var(--violet-600); margin-right:8px;">(تعديل)</a>
     </div>
 </div>
@@ -49,7 +44,9 @@
 <div class="stats-row">
     <div class="stat-box" style="border-right-color:#22c55e;"><div class="number">{{ current_students }}</div><div class="label">🟢 طلاب مقيدين</div></div>
     <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ previous_students }}</div><div class="label">🔴 طلاب غير مقيدين</div></div>
-    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ salary_this_month|floatformat:2 }} جنيه</div><div class="label">💵 الراتب المستحق عن الشهر المختار</div></div>
+    <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ salary_this_month|floatformat:2 }} جنيه</div><div class="label">💵 الراتب المستحق عن الشهر المختار (حلقات تمت)</div></div>
+    <div class="stat-box" style="border-right-color:#22c55e;"><div class="number">{{ salary_paid_this_month|floatformat:2 }} جنيه</div><div class="label">✅ اتصرف فعليًا عن الشهر</div></div>
+    <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ salary_remaining|floatformat:2 }} جنيه</div><div class="label">⏳ متبقي للصرف</div></div>
 </div>
 
 <h4 style="color:#4a1a8a; margin-top:20px;">📅 الحضور والانضباط - {{ stat_month_name }} {{ stat_year }}</h4>
@@ -71,10 +68,12 @@
     <div class="stat-box" style="border-right-color:#22c55e;"><div class="number">{{ monthly_stats.completed }}</div><div class="label">✅ حلقات تمت</div></div>
     <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ monthly_stats.student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
     <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ monthly_stats.teacher_absent }}</div><div class="label">🟠 غياب المعلمة</div></div>
-    <div class="stat-box"><div class="number">{{ monthly_stats.cancelled }}</div><div class="label">⚪ حلقات أُلغيت</div></div>
+    <div class="stat-box"><div class="number">{{ monthly_stats.cancelled }}</div><div class="label">⚪ حلقات مؤجلة</div></div>
     <div class="stat-box" style="border-right-color:#f59e0b;"><div class="number">{{ monthly_stats.unregistered }}</div><div class="label">⚠️ غياب بدون تسجيل</div></div>
     <div class="stat-box"><div class="number">{{ monthly_stats.late }}</div><div class="label">⏰ تأخيرات</div></div>
     <div class="stat-box"><div class="number">{{ monthly_stats.complaints }}</div><div class="label">📢 شكاوى</div></div>
+    <div class="stat-box"><div class="number">{{ monthly_stats.excused }}</div><div class="label">📝 حلقات بعذر</div></div>
+    <div class="stat-box" style="border-right-color:#ef4444;"><div class="number">{{ monthly_stats.deductions_count }}</div><div class="label">➖ عدد الخصومات ({{ monthly_stats.deductions_total|floatformat:"-2" }} جنيه)</div></div>
 </div>
 <div class="stats-row">
     <div class="stat-box" style="border-right-color:#8b5cf6;"><div class="number">{{ monthly_stats.commitment_rate }}%</div><div class="label">الالتزام بالمواعيد</div></div>
@@ -129,18 +128,19 @@
 <h4 style="color:#4a1a8a; margin-top:20px;">📚 طلاب هذه المعلمة</h4>
 <div class="table-container">
     <table>
-        <thead><tr><th>الاسم</th><th>الدولة</th><th>الشهر</th><th>الحالة</th><th></th></tr></thead>
+        <thead><tr><th>الاسم</th><th>الدولة</th><th>الشهر</th><th>الحالة</th><th>الدفع ({{ stat_month_name }})</th><th></th></tr></thead>
         <tbody>
             {% for s in students %}
-            <tr class="{% if s.status == 'inactive' %}status-inactive-row{% endif %}">
+            <tr class="{% if s.status == 'inactive' %}status-inactive-row{% elif s.paid_this_month %}paid-row{% endif %}">
                 <td>{{ s.name }}</td>
                 <td>{{ s.country.flag_icon }} {{ s.country.name }}</td>
                 <td>{{ s.month }}</td>
                 <td>{% if s.status == 'active' %}<span class="status-active">مقيد</span>{% else %}<span class="status-inactive">غير مقيد</span>{% endif %}</td>
+                <td>{% if s.paid_this_month %}<span class="badge-paid">💵 دفع {{ s.paid_this_month|floatformat:"-2" }}</span>{% else %}<span class="badge-unpaid">⏳ لم يدفع</span>{% endif %}</td>
                 <td><a href="{% url 'student_detail' s.id %}" class="btn btn-primary btn-sm">عرض</a></td>
             </tr>
             {% empty %}
-            <tr><td colspan="5" style="text-align:center;">لا يوجد طلاب لهذه المعلمة.</td></tr>
+            <tr><td colspan="6" style="text-align:center;">لا يوجد طلاب لهذه المعلمة.</td></tr>
             {% endfor %}
         </tbody>
     </table>

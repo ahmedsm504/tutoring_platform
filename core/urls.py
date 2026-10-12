@@ -52,7 +52,7 @@ urlpatterns = [
     path('salaries/', views.salaries_list, name='salaries_list'),
     path('add-salary/', views.add_salary_record, name='add_salary_record'),
     path('delete-salary/<int:record_id>/', views.delete_salary_record, name='delete_salary_record'),
-    path('teacher/<int:teacher_id>/update-commission/', views.update_teacher_commission, name='update_teacher_commission'),
+    path('teacher/<int:teacher_id>/update-rate/', views.update_teacher_rate, name='update_teacher_rate'),
 
     # الحلقات ومتابعة الحضور والانضباط
     path('lessons/', views.lessons_dashboard, name='lessons_dashboard'),
@@ -77,6 +77,7 @@ urlpatterns = [
     path('teacher-portal/login/', views.teacher_login, name='teacher_login'),
     path('teacher-portal/logout/', views.teacher_logout, name='teacher_logout'),
     path('teacher-portal/', views.teacher_portal_home, name='teacher_portal_home'),
+    path('teacher-portal/my-lessons/', views.teacher_lessons_table, name='teacher_lessons_table'),
     path('teacher-portal/lessons/<int:lesson_id>/mark/', views.teacher_mark_lesson, name='teacher_mark_lesson'),
     path('teacher-portal/lessons/<int:lesson_id>/mark-started/', views.teacher_mark_lesson_started, name='teacher_mark_lesson_started'),
     path('teacher-portal/schedule-requests/', views.teacher_schedule_requests, name='teacher_schedule_requests'),

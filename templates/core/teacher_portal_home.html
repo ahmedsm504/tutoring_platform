@@ -22,6 +22,10 @@
         <span style="font-size:1.8rem;">📊</span>
         <span>التقييمات الشهرية</span>
     </a>
+    <a href="{% url 'teacher_lessons_table' %}" class="quick-action-card" style="background:linear-gradient(135deg,#10B981,#047857);">
+        <span style="font-size:1.8rem;">🗂️</span>
+        <span>جدول حلقاتي</span>
+    </a>
 </div>
 
 {% if due_lessons %}
@@ -83,11 +87,19 @@
     </div>
     <div class="stats-row" style="margin-top:14px;">
         <div class="stat-box"><div class="number">{{ students.count }}</div><div class="label">👩‍🎓 طلاب مقيدين</div></div>
-        <div class="stat-box"><div class="number">{{ monthly_stats.completed }}</div><div class="label">✅ حلقات تمت</div></div>
-        <div class="stat-box"><div class="number">{{ monthly_stats.student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
-        <div class="stat-box"><div class="number">{{ monthly_stats.teacher_absent }}</div><div class="label">🟠 غياباتك</div></div>
+        <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ monthly_stats.completed }}</div><div class="label">✅ حلقات أنجزتيها</div></div>
+        <div class="stat-box" style="border-right-color:var(--red);"><div class="number">{{ monthly_stats.student_absent }}</div><div class="label">🔴 غياب طالب</div></div>
+        <div class="stat-box" style="border-right-color:var(--amber);"><div class="number">{{ monthly_stats.teacher_absent }}</div><div class="label">🟠 غياباتك</div></div>
+        <div class="stat-box"><div class="number">{{ monthly_stats.postponed }}</div><div class="label">⏸ حلقات مؤجلة</div></div>
+        <div class="stat-box" style="border-right-color:var(--red);"><div class="number">{{ monthly_stats.deductions_count }}</div><div class="label">➖ عدد الخصومات ({{ monthly_stats.deductions_total|floatformat:"-2" }} جنيه)</div></div>
+        <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ monthly_stats.salary_due|floatformat:"-2" }}</div><div class="label">💵 مستحقك عن الشهر (جنيه)</div></div>
+        <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ monthly_stats.salary_paid|floatformat:"-2" }}</div><div class="label">✔ اتصرف لكِ (جنيه)</div></div>
         <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ monthly_stats.overall_rating }}%</div><div class="label">🏆 تقييمك الشهري</div></div>
     </div>
+    <p style="font-size:0.82rem; color:var(--ink-muted); margin:10px 0 0;">
+        💡 أجرك = الحلقات اللي <strong>تمت</strong> × {{ monthly_stats.lesson_rate|floatformat:"-2" }} جنيه. الحلقة اللي الطالب غاب فيها أو اتأجلت مش بتتحسب.
+        <a href="{% url 'teacher_lessons_table' %}?year={{ stat_year }}&month={{ stat_month }}" style="color:var(--violet-600); font-weight:700;">شوفي جدول حلقاتك بالتفصيل ←</a>
+    </p>
 </div>
 
 <div class="card">

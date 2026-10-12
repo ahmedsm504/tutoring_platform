@@ -1,0 +1,72 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}جدول حلقاتي{% endblock %}
+{% block extra_css %}
+<style>
+  .lt-chip{display:block; text-decoration:none; color:inherit;}
+  .lt-chip.active{outline:2px solid var(--violet-500);}
+  .lt-table .badge{white-space:normal; line-height:1.5; max-width:260px; text-align:right;}
+  .lt-table td.lt-date{white-space:nowrap;}
+  .lt-badge-completed{background:var(--green-soft); color:var(--green);}
+  .lt-badge-absent{background:var(--red-soft); color:var(--red);}
+  .lt-badge-postponed{background:var(--amber-soft); color:var(--amber);}
+  .lt-badge-upcoming{background:var(--surface-2, #F3F0FB); color:var(--ink-muted);}
+  tr.lt-row-completed td{background:var(--green-soft);}
+  table.lt-table{width:100%; border-collapse:collapse;}
+  table.lt-table th, table.lt-table td{padding:11px 10px; text-align:right; border-bottom:1px solid var(--border);}
+  table.lt-table tfoot td{font-weight:800; border-bottom:none;}
+</style>
+{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h2 style="color:var(--violet-700); margin:0;">🗂️ جدول حلقاتي - {{ stat_month_name }} {{ stat_year }}</h2>
+    <a href="{% url 'teacher_portal_home' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> الرئيسية</a>
+</div>
+
+<form method="GET" style="display:flex; gap:8px; margin:14px 0;">
+    <select name="year" onchange="this.form.submit()">
+        {% for y in stat_years_range %}<option value="{{ y }}" {% if stat_year == y %}selected{% endif %}>{{ y }}</option>{% endfor %}
+    </select>
+    <select name="month" onchange="this.form.submit()">
+        {% for m_num, m_name in arabic_months.items %}<option value="{{ m_num }}" {% if stat_month == m_num %}selected{% endif %}>{{ m_name }}</option>{% endfor %}
+    </select>
+</form>
+
+<div class="stats-row">
+    <a class="stat-box lt-chip {% if not group %}active{% endif %}" href="?year={{ stat_year }}&month={{ stat_month }}"><div class="number">{{ total_all }}</div><div class="label">🔔 كل الحلقات</div></a>
+    <a class="stat-box lt-chip {% if group == 'completed' %}active{% endif %}" style="border-right-color:var(--green);" href="?year={{ stat_year }}&month={{ stat_month }}&group=completed"><div class="number">{{ counts.completed }}</div><div class="label">✅ تمت</div></a>
+    <a class="stat-box lt-chip {% if group == 'absent' %}active{% endif %}" style="border-right-color:var(--red);" href="?year={{ stat_year }}&month={{ stat_month }}&group=absent"><div class="number">{{ counts.absent }}</div><div class="label">🔴 غياب</div></a>
+    <a class="stat-box lt-chip {% if group == 'postponed' %}active{% endif %}" style="border-right-color:var(--amber);" href="?year={{ stat_year }}&month={{ stat_month }}&group=postponed"><div class="number">{{ counts.postponed }}</div><div class="label">⏸ مؤجلة</div></a>
+    <a class="stat-box lt-chip {% if group == 'upcoming' %}active{% endif %}" href="?year={{ stat_year }}&month={{ stat_month }}&group=upcoming"><div class="number">{{ counts.upcoming }}</div><div class="label">🗓️ قادمة</div></a>
+    <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ total_earned|floatformat:"-2" }}</div><div class="label">💵 مستحقك عن الشهر (جنيه)</div></div>
+</div>
+
+<div class="card">
+    <div class="table-container">
+        <table class="lt-table">
+            <thead><tr><th>#</th><th>الموعد</th><th>الطالب</th><th>الحالة</th><th>الأجر (جنيه)</th></tr></thead>
+            <tbody>
+                {% for row in rows %}
+                <tr class="lt-row-{{ row.group }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td class="lt-date">{{ row.lesson.scheduled_at|date:"l Y/m/d H:i" }}</td>
+                    <td>{{ row.lesson.student.name }}</td>
+                    <td><span class="badge lt-badge-{{ row.group }}">
+                        {% if row.group == 'completed' %}✅ {% elif row.group == 'absent' %}🔴 {% elif row.group == 'postponed' %}⏸ {% else %}🗓️ {% endif %}{{ row.label }}
+                    </span></td>
+                    <td>{% if row.earned %}<strong>{{ row.earned|floatformat:"-2" }}</strong>{% else %}<span style="color:var(--ink-muted);">0</span>{% endif %}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" style="text-align:center;">لا توجد حلقات في هذا الشهر.</td></tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr><td colspan="4">إجمالي أجر الحلقات المعروضة</td><td>{{ shown_earned|floatformat:"-2" }}</td></tr>
+            </tfoot>
+        </table>
+    </div>
+    <p style="font-size:0.82rem; color:var(--ink-muted); margin:12px 0 0;">
+        💡 الأجر = {{ lesson_rate|floatformat:"-2" }} جنيه لكل حلقة <strong>تمت</strong>. غياب الطالب (حتى لو متسجلش) والحلقات المؤجلة والمجدولة بدون إنجاز = 0.
+        {% if monthly_stats.deductions_count %}<br>➖ فيه {{ monthly_stats.deductions_count }} خصم مسجل عليكِ الشهر ده بإجمالي {{ monthly_stats.deductions_total|floatformat:"-2" }} جنيه.{% endif %}
+    </p>
+</div>
+{% endblock %}

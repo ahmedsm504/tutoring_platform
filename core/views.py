@@ -10,7 +10,8 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 from django.contrib.auth.hashers import make_password
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Value, DecimalField
+from django.db.models.functions import Coalesce
 from functools import wraps
 import json
 import calendar
@@ -137,12 +138,44 @@ def _monthly_expenses(year, month):
     return total or Decimal('0')
 
 
-def _total_salaries():
-    """إجمالي الرواتب الشهرية المحسوبة (نسبة من الاشتراكات أو راتب مثبت) لكل المعلمات"""
+def _paid_salaries(year, month):
+    """إجمالي الرواتب *المصروفة فعليًا* في شهر معيّن (حسب تاريخ الصرف):
+    الصافي = الأساسي + المكافآت - الخصومات من سجل الصرف. مفيش علاقة بالمستحق:
+    لو لسه ما اتصرفش حاجة بيرجع صفر."""
     total = Decimal('0')
-    for t in Teacher.objects.all():
-        total += Decimal(str(t.calculated_salary()))
+    for r in TeacherSalaryRecord.objects.filter(payout_date__year=year, payout_date__month=month):
+        total += r.base_amount + r.bonus - r.deduction
     return total
+
+
+def _pay_period(request):
+    """الشهر اللي بنفحص الدفع فيه للطلاب (افتراضيًا الشهر الحالي)"""
+    now = timezone.now()
+    year = _to_int_or_none(request.GET.get('pay_year')) or now.year
+    month = _to_int_or_none(request.GET.get('pay_month')) or now.month
+    if not 1 <= month <= 12:
+        month = now.month
+    return year, month
+
+
+def _annotate_paid(qs, year, month):
+    """يضيف لكل طالب paid_this_month = إجمالي اللي دفعه فعليًا في الشهر ده (0 لو ما دفعش)"""
+    return qs.annotate(paid_this_month=Coalesce(
+        Sum('payments__amount', filter=Q(payments__date__year=year, payments__date__month=month)),
+        Value(0), output_field=DecimalField(max_digits=12, decimal_places=2),
+    ))
+
+
+def _pay_context(pay_year, pay_month, pay_filter=''):
+    now = timezone.now()
+    return {
+        'pay_year': pay_year,
+        'pay_month': pay_month,
+        'pay_month_name': ARABIC_MONTHS.get(pay_month, pay_month),
+        'pay_filter': pay_filter,
+        'pay_years_range': sorted({now.year - 1, now.year, now.year + 1, pay_year}, reverse=True),
+        'arabic_months': ARABIC_MONTHS,
+    }
 
 
 # =======================
@@ -155,7 +188,7 @@ def dashboard_home(request):
     today = timezone.now().date()
     current_month_income = _monthly_income(today.year, today.month)
     current_month_expenses = _monthly_expenses(today.year, today.month)
-    current_month_salaries = _total_salaries()
+    current_month_salaries = _paid_salaries(today.year, today.month)  # المصروف فعليًا بس
     current_month_profit = current_month_income - current_month_expenses - current_month_salaries
 
     context = {
@@ -198,13 +231,27 @@ def country_students(request, country_id):
     if q:
         students = students.filter(name__icontains=q)
 
+    # تمييز الطلاب اللي دفعوا (فعليًا من سجل الدفعات) في الشهر المختار
+    pay_year, pay_month = _pay_period(request)
+    pay_filter = request.GET.get('pay', '')
+    students = _annotate_paid(students, pay_year, pay_month)
+    paid_count = students.filter(paid_this_month__gt=0).count()
+    unpaid_count = students.filter(paid_this_month=0).count()
+    if pay_filter == 'paid':
+        students = students.filter(paid_this_month__gt=0)
+    elif pay_filter == 'unpaid':
+        students = students.filter(paid_this_month=0)
+
     teachers = Teacher.objects.all()
 
     context = {
         'country': country,
         'students': students,
         'teachers': teachers,
+        'paid_count': paid_count,
+        'unpaid_count': unpaid_count,
     }
+    context.update(_pay_context(pay_year, pay_month, pay_filter))
     return render(request, 'core/country_students.html', context)
 
 
@@ -347,11 +394,15 @@ def student_detail(request, student_id):
     notes = student.notes_timeline.all()
     payments = student.payments.all()
     lessons = student.lessons.all()[:30]
+    now = timezone.now()
     context = {
         'student': student,
         'notes': notes,
         'payments': payments,
         'lessons': lessons,
+        'paid_this_month': student.total_paid(year=now.year, month=now.month),
+        'pay_month_name': ARABIC_MONTHS[now.month],
+        'pay_year': now.year,
     }
     return render(request, 'core/student_detail.html', context)
 
@@ -409,11 +460,10 @@ def teachers_list(request):
 @staff_member_required
 def teacher_detail(request, teacher_id):
     teacher = get_object_or_404(Teacher, pk=teacher_id)
-    students = teacher.students.all()
-
     now = timezone.now()
     stat_year = _to_int_or_none(request.GET.get('year')) or now.year
     stat_month = _to_int_or_none(request.GET.get('month')) or now.month
+    students = _annotate_paid(teacher.students.all(), stat_year, stat_month)
 
     context = {
         'teacher': teacher,
@@ -423,6 +473,8 @@ def teacher_detail(request, teacher_id):
         'previous_students': students.filter(status='inactive').count(),
         'salary_records': teacher.salary_records.all()[:12],
         'salary_this_month': teacher.calculated_salary(year=stat_year, month=stat_month),
+        'salary_paid_this_month': teacher.paid_salary(year=stat_year, month=stat_month),
+        'salary_remaining': teacher.remaining_salary(year=stat_year, month=stat_month),
         'subscriptions_this_month': teacher.total_subscriptions(year=stat_year, month=stat_month),
         'monthly_stats': teacher.monthly_lesson_stats(year=stat_year, month=stat_month),
         'stat_year': stat_year,
@@ -500,7 +552,19 @@ def all_students(request):
     if q:
         students = students.filter(Q(name__icontains=q) | Q(phone__icontains=q))
 
-    return render(request, 'core/all_students.html', {'students': students})
+    pay_year, pay_month = _pay_period(request)
+    pay_filter = request.GET.get('pay', '')
+    students = _annotate_paid(students, pay_year, pay_month)
+    paid_count = students.filter(paid_this_month__gt=0).count()
+    unpaid_count = students.filter(paid_this_month=0).count()
+    if pay_filter == 'paid':
+        students = students.filter(paid_this_month__gt=0)
+    elif pay_filter == 'unpaid':
+        students = students.filter(paid_this_month=0)
+
+    context = {'students': students, 'paid_count': paid_count, 'unpaid_count': unpaid_count}
+    context.update(_pay_context(pay_year, pay_month, pay_filter))
+    return render(request, 'core/all_students.html', context)
 
 
 # =======================
@@ -532,8 +596,8 @@ def statistics(request):
             'teacher': teacher,
             'student_count': teacher.students.count(),
             'total_fees': total_fees,
-            'is_fixed': teacher.fixed_salary is not None,
-            'commission_percent': teacher.commission_percent,
+            'completed_lessons': teacher.completed_lessons_count(year=stat_year, month=stat_month),
+            'lesson_rate': teacher.lesson_rate,
             'platform_share': platform_share,
             'teacher_share': teacher_share,
         })
@@ -706,9 +770,8 @@ def financial_reports(request):
     except (TypeError, ValueError):
         selected_year = timezone.now().year
 
-    total_salaries = _total_salaries()
-
     monthly_data = []
+    year_salaries = Decimal('0')
     year_income = Decimal('0')
     year_expenses = Decimal('0')
     year_profit = Decimal('0')
@@ -716,7 +779,9 @@ def financial_reports(request):
     for month in range(1, 13):
         income = _monthly_income(selected_year, month)
         expenses = _monthly_expenses(selected_year, month)
-        profit = income - expenses - total_salaries
+        salaries = _paid_salaries(selected_year, month)  # المصروف فعليًا في الشهر ده
+        profit = income - expenses - salaries
+        year_salaries += salaries
 
         year_income += income
         year_expenses += expenses
@@ -727,7 +792,7 @@ def financial_reports(request):
             'month_name': ARABIC_MONTHS[month],
             'income': income,
             'expenses': expenses,
-            'salaries': total_salaries,
+            'salaries': salaries,
             'profit': profit,
         })
 
@@ -746,10 +811,10 @@ def financial_reports(request):
         'selected_year': selected_year,
         'years_with_data': years_with_data,
         'monthly_data': monthly_data,
-        'total_salaries': total_salaries,
+        'total_salaries': year_salaries,
         'year_income': year_income,
         'year_expenses': year_expenses,
-        'year_total_salaries': total_salaries * 12,
+        'year_total_salaries': year_salaries,
         'year_profit': year_profit,
         'chart_labels': json.dumps([m['month_name'] for m in monthly_data], ensure_ascii=False),
         'chart_income': json.dumps([float(m['income']) for m in monthly_data]),
@@ -868,12 +933,23 @@ def salaries_list(request):
     salary_month = _to_int_or_none(request.GET.get('salary_month')) or now.month
 
     teachers_data = []
+    total_due = total_paid_period = total_remaining = 0
     for t in Teacher.objects.all():
+        due = t.calculated_salary(year=salary_year, month=salary_month)
+        paid = t.paid_salary(year=salary_year, month=salary_month)
+        remaining = t.remaining_salary(year=salary_year, month=salary_month)
+        has_record = t.has_salary_record_for(salary_year, salary_month)
+        total_due += due
+        total_paid_period += paid
+        total_remaining += remaining
         teachers_data.append({
             'teacher': t,
-            'total_subscriptions': t.total_subscriptions(year=salary_year, month=salary_month),
-            'calculated_salary': t.calculated_salary(year=salary_year, month=salary_month),
-            'already_paid_this_month': t.has_salary_record_for(salary_year, salary_month),
+            'completed': t.completed_lessons_count(year=salary_year, month=salary_month),
+            'calculated_salary': due,
+            'paid': paid,
+            'remaining': remaining,
+            'already_paid_this_month': has_record,
+            'fully_paid': has_record and remaining <= 0,
         })
 
     q = request.GET.get('q', '').strip()
@@ -896,6 +972,9 @@ def salaries_list(request):
 
     context = {
         'teachers_data': teachers_data,
+        'total_due': round(total_due, 2),
+        'total_paid_period': round(total_paid_period, 2),
+        'total_remaining': round(total_remaining, 2),
         'salary_year': salary_year,
         'salary_month': salary_month,
         'salary_years_range': sorted({now.year - 1, now.year, now.year + 1}, reverse=True),
@@ -911,24 +990,19 @@ def salaries_list(request):
 
 
 @staff_member_required
-def update_teacher_commission(request, teacher_id):
-    """تعديل سريع لنسبة معلمة أو تثبيت راتب لها بدل النسبة"""
+def update_teacher_rate(request, teacher_id):
+    """تعديل سعر الحصة لمعلمة (الراتب = حلقات تمت × سعر الحصة).
+    ملحوظة: التعديل بيسري على الحساب كله (المستحق غير المصروف) - اللي اتصرف قبل كده بيفضل زي ما اتسجل."""
     teacher = get_object_or_404(Teacher, pk=teacher_id)
 
     if request.method == 'POST':
-        use_fixed = request.POST.get('use_fixed') == 'on'
-        if use_fixed:
-            teacher.fixed_salary = _to_decimal_or_zero(request.POST.get('fixed_salary'))
+        rate = _to_decimal_or_zero(request.POST.get('lesson_rate'))
+        if rate < 0:
+            messages.error(request, 'سعر الحصة لازم يكون رقم موجب.')
         else:
-            teacher.fixed_salary = None
-            percent = _to_decimal_or_zero(request.POST.get('commission_percent'))
-            if 0 <= percent <= 100:
-                teacher.commission_percent = percent
-            else:
-                messages.error(request, 'النسبة لازم تكون رقم بين 0 و100.')
-                return redirect('salaries_list')
-        teacher.save()
-        messages.success(request, f'تم تحديث إعدادات راتب "{teacher.name}".')
+            teacher.lesson_rate = rate
+            teacher.save(update_fields=['lesson_rate'])
+            messages.success(request, f'تم تحديث سعر حصة "{teacher.name}" إلى {rate} جنيه.')
 
     return redirect('salaries_list')
 
@@ -953,17 +1027,17 @@ def add_salary_record(request):
         else:
             teacher = get_object_or_404(Teacher, pk=teacher_id)
 
-            # منع صرف راتب نفس الشهر مرتين بالغلط (إلا لو اختارت "تأكيد الصرف تاني")
-            if teacher.has_salary_record_for(salary_year, salary_month) and not force:
+            # الأساسي = حلقات تمت × سعر الحصة - اللي اتصرف قبل كده عن نفس الشهر (عشان ميتدفعش مرتين)
+            base_amount = teacher.remaining_salary(year=salary_year, month=salary_month)
+
+            # لو اتصرف المستحق كله قبل كده منسجلش تاني إلا بتأكيد صريح (مثلاً مكافأة إضافية)
+            if teacher.has_salary_record_for(salary_year, salary_month) and base_amount <= 0 and not force:
                 messages.error(
                     request,
-                    f'"{teacher.name}" اتصرفلها راتب شهر {ARABIC_MONTHS.get(salary_month, salary_month)}/{salary_year} قبل كده. '
-                    'لو متأكدة إنك عايزة تسجلي صرف تاني عن نفس الشهر (مثلاً دفعة إضافية)، فعّلي خيار "تأكيد الصرف مرة تانية".'
+                    f'"{teacher.name}" اتصرفلها مستحق شهر {ARABIC_MONTHS.get(salary_month, salary_month)}/{salary_year} بالكامل قبل كده ومفيش متبقي. '
+                    'لو عايزة تسجلي صرف إضافي (مثلاً مكافأة)، فعّلي خيار "تأكيد الصرف مرة تانية".'
                 )
                 return redirect(f"{reverse('add_salary_record')}?teacher={teacher_id}&salary_year={salary_year}&salary_month={salary_month}")
-
-            # الراتب بيتحسب من دفعات الشهر ده بس (مش تراكمي) عشان ميتضاعفش
-            base_amount = teacher.calculated_salary(year=salary_year, month=salary_month)
 
             payout_date = _or_none(request.POST.get('payout_date'))
             if not payout_date:
@@ -985,14 +1059,16 @@ def add_salary_record(request):
             )
             return redirect('salaries_list')
 
-    teachers_data = [
-        {
+    teachers_data = []
+    for t in Teacher.objects.all():
+        remaining = t.remaining_salary(year=salary_year, month=salary_month)
+        has_record = t.has_salary_record_for(salary_year, salary_month)
+        teachers_data.append({
             'teacher': t,
-            'calculated_salary': t.calculated_salary(year=salary_year, month=salary_month),
-            'already_paid_this_month': t.has_salary_record_for(salary_year, salary_month),
-        }
-        for t in Teacher.objects.all()
-    ]
+            'calculated_salary': remaining,  # اللي هيتسجل كأساسي = المتبقي
+            'already_paid_this_month': has_record,
+            'fully_paid': has_record and remaining <= 0,
+        })
 
     context = {
         'teachers_data': teachers_data,
@@ -1357,6 +1433,50 @@ def teacher_portal_home(request):
         'overdue_unrecorded': overdue_unrecorded,
     }
     return render(request, 'core/teacher_portal_home.html', context)
+
+
+@teacher_login_required
+def teacher_lessons_table(request):
+    """جدول حلقات المعلمة عن شهر: تمت / غياب / مؤجلة / قادمة + أجر كل حلقة والإجمالي.
+    الأجر = سعر الحصة للحلقات اللي *تمت* بس."""
+    teacher = request.user.teacher_profile
+    now = timezone.now()
+    stat_year = _to_int_or_none(request.GET.get('year')) or now.year
+    stat_month = _to_int_or_none(request.GET.get('month')) or now.month
+    group = request.GET.get('group', '')
+    if group not in ('completed', 'absent', 'postponed', 'upcoming'):
+        group = ''
+
+    lessons = teacher.lessons_for_period(stat_year, stat_month).select_related('student').order_by('scheduled_at')
+
+    counts = {'completed': 0, 'absent': 0, 'postponed': 0, 'upcoming': 0}
+    total_earned = 0.0
+    rows = []
+    for lesson in lessons:
+        g = lesson.table_group()
+        counts[g] += 1
+        earned = lesson.earned_amount()
+        total_earned += earned
+        if not group or group == g:
+            rows.append({'lesson': lesson, 'group': g, 'label': lesson.status_label(), 'earned': earned})
+
+    context = {
+        'teacher': teacher,
+        'rows': rows,
+        'counts': counts,
+        'total_all': sum(counts.values()),
+        'total_earned': round(total_earned, 2),
+        'shown_earned': round(sum(r['earned'] for r in rows), 2),
+        'lesson_rate': teacher.lesson_rate,
+        'group': group,
+        'monthly_stats': teacher.monthly_lesson_stats(year=stat_year, month=stat_month),
+        'stat_year': stat_year,
+        'stat_month': stat_month,
+        'stat_month_name': ARABIC_MONTHS.get(stat_month, stat_month),
+        'arabic_months': ARABIC_MONTHS,
+        'stat_years_range': sorted({now.year - 1, now.year, now.year + 1, stat_year}, reverse=True),
+    }
+    return render(request, 'core/teacher_lessons_table.html', context)
 
 
 @teacher_login_required

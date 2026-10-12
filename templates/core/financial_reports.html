@@ -29,7 +29,7 @@
     </div>
     <div class="stat-box" style="border-right-color:#f59e0b;">
         <div class="number">{{ year_total_salaries|floatformat:2 }}</div>
-        <div class="label">👥 إجمالي رواتب السنة</div>
+        <div class="label">👥 إجمالي رواتب السنة (المصروفة فعليًا)</div>
     </div>
     <div class="stat-box" style="border-right-color:#7c3aed;">
         <div class="number">{{ year_profit|floatformat:2 }}</div>
@@ -44,7 +44,7 @@
 <div class="table-container">
     <table>
         <thead>
-            <tr><th>الشهر</th><th>الإيرادات</th><th>المصروفات</th><th>رواتب المعلمات</th><th>صافي الربح/الخسارة</th></tr>
+            <tr><th>الشهر</th><th>الإيرادات</th><th>المصروفات</th><th>رواتب المعلمات (المصروفة)</th><th>صافي الربح/الخسارة</th></tr>
         </thead>
         <tbody>
             {% for m in monthly_data %}

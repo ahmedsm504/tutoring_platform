@@ -2,7 +2,9 @@
 {% block title %}{{ student.name }}{% endblock %}
 {% block content %}
 <div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
-    <h2 style="color: #4a1a8a;">👤 {{ student.name }}</h2>
+    <h2 style="color: #4a1a8a;">👤 {{ student.name }}
+        {% if paid_this_month %}<span class="badge-paid" style="margin-right:8px;">💵 دفع {{ pay_month_name }}</span>{% else %}<span class="badge-unpaid" style="margin-right:8px;">⏳ لم يدفع {{ pay_month_name }}</span>{% endif %}
+    </h2>
     <div class="flex">
         <a href="{% url 'toggle_student_status' student.id %}" class="btn {% if student.status == 'active' %}btn-danger{% else %}btn-success{% endif %}">
             {% if student.status == 'active' %}
@@ -44,14 +46,10 @@
     {% if student.enrollment_type == 'new' and student.acquisition_source %}
     <div><strong>مصدر الطالب:</strong> <span class="badge-warning">{{ student.get_acquisition_source_display }}</span></div>
     {% endif %}
-    <div><strong>حالة الدفع:</strong>
-        {% if student.payment_status == 'paid' %}
-            <span style="background:#dcfce7; color:#166534; padding:2px 14px; border-radius:30px;">مدفوع</span>
-        {% elif student.payment_status == 'pending' %}
-            <span style="background:#fef3c7; color:#92400e; padding:2px 14px; border-radius:30px;">مستحق</span>
-        {% else %}
-            <span style="background:#fee2e2; color:#991b1b; padding:2px 14px; border-radius:30px;">متأخر</span>
-        {% endif %}
+    <div><strong>الدفع عن {{ pay_month_name }} {{ pay_year }}:</strong>
+        {% if paid_this_month %}<span class="badge-paid">💵 دفع {{ paid_this_month|floatformat:"-2" }} جنيه</span>
+        {% else %}<span class="badge-unpaid">⏳ لم يدفع هذا الشهر</span>{% endif %}
+        {% if student.last_payment_date %}<div class="text-muted" style="font-size:0.8rem;">آخر دفعة: {{ student.last_payment_date|date:"Y/m/d" }}</div>{% endif %}
     </div>
 </div>
 

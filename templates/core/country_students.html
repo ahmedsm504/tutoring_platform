@@ -24,18 +24,39 @@
     </select>
     <input type="text" name="governorate" placeholder="المحافظة" value="{{ request.GET.governorate }}" style="padding: 8px 18px; border-radius: 30px; border: 2px solid #ede9fe;">
     <input type="text" name="month" placeholder="الشهر" value="{{ request.GET.month }}" style="padding: 8px 18px; border-radius: 30px; border: 2px solid #ede9fe;">
+    <select name="pay" class="btn btn-outline btn-sm" title="فلتر الدفع">
+        <option value="">الدفع: الكل</option>
+        <option value="paid" {% if pay_filter == 'paid' %}selected{% endif %}>✅ دفعوا</option>
+        <option value="unpaid" {% if pay_filter == 'unpaid' %}selected{% endif %}>⏳ لم يدفعوا</option>
+    </select>
+    <select name="pay_month" class="btn btn-outline btn-sm" title="شهر الدفع">
+        {% for m_num, m_name in arabic_months.items %}
+        <option value="{{ m_num }}" {% if pay_month == m_num %}selected{% endif %}>{{ m_name }}</option>
+        {% endfor %}
+    </select>
+    <select name="pay_year" class="btn btn-outline btn-sm" title="سنة الدفع">
+        {% for y in pay_years_range %}
+        <option value="{{ y }}" {% if pay_year == y %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
     <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-filter"></i> بحث</button>
     <a href="{% url 'country_students' country.id %}" class="btn btn-outline btn-sm">إعادة تعيين</a>
 </form>
 
+<div class="stats-row" style="margin-top:18px;">
+    <div class="stat-box" style="border-right-color:var(--green);"><div class="number">{{ paid_count }}</div><div class="label">💵 دفعوا في {{ pay_month_name }} {{ pay_year }}</div></div>
+    <div class="stat-box" style="border-right-color:var(--amber);"><div class="number">{{ unpaid_count }}</div><div class="label">⏳ لم يدفعوا في {{ pay_month_name }}</div></div>
+</div>
+<p class="text-muted" style="font-size:0.82rem; margin:8px 0 0;">التمييز مبني على <strong>الدفعات المسجلة فعليًا</strong> في الشهر المختار (الصف الأخضر = دفع).</p>
+
 <div class="table-container">
     <table>
         <thead>
-            <tr><th>#</th><th>الاسم</th><th>المعلمة</th><th>الباقة</th><th>الشهر</th><th>الحالة</th><th>ملاحظات</th><th></th></tr>
+            <tr><th>#</th><th>الاسم</th><th>المعلمة</th><th>الباقة</th><th>الشهر</th><th>الحالة</th><th>الدفع ({{ pay_month_name }})</th><th>ملاحظات</th><th></th></tr>
         </thead>
         <tbody>
             {% for student in students %}
-            <tr class="{% if student.status == 'inactive' %}status-inactive-row{% endif %}">
+            <tr class="{% if student.status == 'inactive' %}status-inactive-row{% elif student.paid_this_month %}paid-row{% endif %}">
                 <td>{{ forloop.counter }}</td>
                 <td><a href="{% url 'student_detail' student.id %}" style="color: #6d28d9; font-weight: 600;">{{ student.name }}</a></td>
                 <td>{{ student.teacher.name|default:"-" }}</td>
@@ -48,6 +69,13 @@
                         <span class="status-inactive">❌ غير مقيد</span>
                     {% endif %}
                 </td>
+                <td>
+                    {% if student.paid_this_month %}
+                        <span class="badge-paid">💵 دفع {{ student.paid_this_month|floatformat:"-2" }}</span>
+                    {% else %}
+                        <span class="badge-unpaid">⏳ لم يدفع</span>
+                    {% endif %}
+                </td>
                 <td>{{ student.notes|default:"-"|truncatechars:25 }}</td>
                 <td>
                     <a href="{% url 'edit_student' student.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
@@ -55,7 +83,7 @@
                 </td>
             </tr>
             {% empty %}
-            <tr><td colspan="8" style="text-align: center;">لا يوجد طلاب مطابقين.</td></tr>
+            <tr><td colspan="9" style="text-align: center;">لا يوجد طلاب مطابقين.</td></tr>
             {% endfor %}
         </tbody>
     </table>

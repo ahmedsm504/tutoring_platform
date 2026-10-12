@@ -3,9 +3,9 @@
 {% block content %}
 <div class="page-header">
     <div class="page-title">📊 النسب والإحصائيات</div>
-    <a href="{% url 'salaries_list' %}" class="btn btn-outline"><i class="fas fa-sliders"></i> تعديل نسبة أي معلمة</a>
+    <a href="{% url 'salaries_list' %}" class="btn btn-outline"><i class="fas fa-sliders"></i> تعديل سعر الحصة</a>
 </div>
-<p class="text-muted" style="margin-bottom:15px;">كل معلمة ليها نسبة أو راتب مثبت خاص بيها (افتراضيًا 40% للمنصة و60% للمعلمة). لتغيير نسبة أي حد، روحي لصفحة "قائمة الرواتب".</p>
+<p class="text-muted" style="margin-bottom:15px;">راتب كل معلمة = عدد الحلقات اللي <strong>تمت فعلًا</strong> × سعر الحصة (الافتراضي 20 جنيه). غياب الطالب والحلقات المؤجلة مش بتتحسب. لتغيير سعر الحصة روحي لصفحة "قائمة الرواتب".</p>
 
 <form method="GET" class="filter-bar" style="margin-bottom:15px;">
     <select name="year">
@@ -29,7 +29,7 @@
     </div>
     <div class="stat-box" style="border-right-color:#22c55e;">
         <div class="number">{{ grand_teacher_share|floatformat:2 }} جنيه</div>
-        <div class="label">👩‍🏫 نصيب المعلمات كله</div>
+        <div class="label">👩‍🏫 مستحق المعلمات (حلقات تمت)</div>
     </div>
     <div class="stat-box" style="border-right-color:#8b5cf6;">
         <div class="number">{{ grand_platform_share|floatformat:2 }} جنيه</div>
@@ -39,20 +39,14 @@
 
 <div class="table-container">
     <table>
-        <thead><tr><th>المعلمة</th><th>عدد الطلاب</th><th>إجمالي الاشتراكات</th><th>نظام الحساب</th><th>نصيب المنصة</th><th>نصيب المعلمة</th></tr></thead>
+        <thead><tr><th>المعلمة</th><th>عدد الطلاب</th><th>إجمالي الاشتراكات</th><th>حلقات تمت × سعر الحصة</th><th>نصيب المنصة</th><th>مستحق المعلمة</th></tr></thead>
         <tbody>
             {% for stat in stats %}
             <tr>
                 <td><a href="{% url 'teacher_detail' stat.teacher.id %}" style="color:#6d28d9; font-weight:700;">{{ stat.teacher.name }}</a></td>
                 <td>{{ stat.student_count }}</td>
                 <td>{{ stat.total_fees|floatformat:2 }} جنيه</td>
-                <td>
-                    {% if stat.is_fixed %}
-                        <span class="badge-neutral">راتب مثبت</span>
-                    {% else %}
-                        <span class="badge-neutral">{{ stat.commission_percent }}% معلمة</span>
-                    {% endif %}
-                </td>
+                <td><span class="badge-neutral">{{ stat.completed_lessons }} × {{ stat.lesson_rate|floatformat:"-2" }}</span></td>
                 <td>{{ stat.platform_share|floatformat:2 }} جنيه</td>
                 <td><strong>{{ stat.teacher_share|floatformat:2 }} جنيه</strong></td>
             </tr>

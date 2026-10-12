@@ -17,7 +17,7 @@
         </select>
     </form>
     <p class="text-muted" style="text-align:center; margin-top:8px;">
-        ⚠️ الراتب هيتحسب من دفعات <strong>الشهر ده بس</strong> عشان ميتضاعفش لو الطالب دافع في شهور مختلفة.
+        ⚠️ الراتب بيتحسب من <strong>الحلقات اللي تمت</strong> في الشهر ده × سعر الحصة. لو اتصرف جزء قبل كده، هيتسجل <strong>المتبقي</strong> بس.
     </p>
 
     <form method="POST" style="margin-top:10px;">
@@ -30,20 +30,20 @@
             <select name="teacher" id="teacherSelect" required onchange="updateBasePreview()">
                 <option value="">--- اختاري المعلمة ---</option>
                 {% for row in teachers_data %}
-                <option value="{{ row.teacher.id }}" data-salary="{{ row.calculated_salary }}" data-paid="{{ row.already_paid_this_month|yesno:'1,0' }}"
+                <option value="{{ row.teacher.id }}" data-salary="{{ row.calculated_salary }}" data-paid="{{ row.fully_paid|yesno:'1,0' }}"
                         {% if preselected_teacher == row.teacher.id|stringformat:'s' %}selected{% endif %}>
-                    {{ row.teacher.name }}{% if row.already_paid_this_month %} (اتصرف لها راتب الشهر ده بالفعل){% endif %}
+                    {{ row.teacher.name }}{% if row.fully_paid %} (اتصرف لها مستحق الشهر ده بالكامل){% endif %}
                 </option>
                 {% endfor %}
             </select>
         </div>
 
         <div id="basePreview" style="background:var(--violet-50); border-radius:12px; padding:12px 16px; margin-top:14px; font-weight:700; color:var(--violet-700); display:none;">
-            الراتب الأساسي المحسوب عن هذا الشهر: <span id="basePreviewValue">0</span> جنيه
+            الأساسي اللي هيتسجل (حلقات تمت × سعر الحصة − اللي اتصرف قبل كده): <span id="basePreviewValue">0</span> جنيه
         </div>
 
         <div id="alreadyPaidWarning" style="background:var(--amber-soft); color:var(--amber); border-radius:12px; padding:12px 16px; margin-top:10px; font-weight:600; display:none;">
-            ⚠️ المعلمة دي اتصرفلها راتب عن نفس الشهر ده قبل كده. لو متأكدة إنك عايزة تسجلي صرف تاني (مثلاً دفعة إضافية أو تصحيح)، فعّلي الخيار تحت.
+            ⚠️ المعلمة دي اتصرفلها مستحق الشهر ده بالكامل ومفيش متبقي. لو عايزة تسجلي صرف إضافي (مثلاً مكافأة)، فعّلي الخيار تحت.
             <label class="flex" style="gap:6px; margin-top:8px; font-weight:400;">
                 <input type="checkbox" name="force" id="forceCheckbox"> تأكيد الصرف مرة تانية عن نفس الشهر
             </label>
@@ -62,7 +62,7 @@
         </div>
 
         <p class="text-muted" style="font-size:0.8rem; margin-top:10px;">
-            💡 الراتب الأساسي بيتحسب تلقائيًا وقت الحفظ من دفعات الشهر المختار فقط (نسبة المعلمة أو راتبها المثبت)، والصافي النهائي = الأساسي + المكافآت - الخصومات.
+            💡 الراتب الأساسي بيتحسب تلقائيًا وقت الحفظ = الحلقات اللي تمت في الشهر المختار × سعر الحصة (ناقص اللي اتصرف قبل كده)، والصافي النهائي = الأساسي + المكافآت - الخصومات.
         </p>
 
         <div style="text-align:center; margin-top:25px;">
