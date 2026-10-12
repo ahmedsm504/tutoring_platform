@@ -1,0 +1,71 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}إضافة حلقات لجدولي{% endblock %}
+{% block extra_css %}
+<style>
+  .fx label{display:block; font-weight:700; font-size:0.85rem; margin-bottom:6px; color:var(--ink);}
+  .fx input, .fx select{width:100%; padding:11px 12px; border-radius:12px; border:1.6px solid var(--border); background:var(--surface); color:var(--ink); font-family:inherit; font-size:0.92rem;}
+  .fx-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px;}
+  table.lt-table{width:100%; border-collapse:collapse;}
+  table.lt-table th, table.lt-table td{padding:10px; text-align:right; border-bottom:1px solid var(--border);}
+</style>
+{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h2 style="color:var(--violet-700); margin:0;">➕ إضافة حلقات لجدولي</h2>
+    <a href="{% url 'teacher_lessons_table' %}" class="btn btn-outline">🗂️ جدول حلقاتي</a>
+</div>
+
+<div class="card" style="margin-top:14px;">
+    {% if not students %}
+        <p style="margin:0;">مفيش طلاب مقيدين مربوطين بيكِ لسه. كلمي الإدارة.</p>
+    {% else %}
+    <form method="POST" class="fx">
+        {% csrf_token %}
+        <div class="fx-grid">
+            <div><label>الطالب *</label>
+                <select name="student" required>
+                    <option value="">--- اختاري الطالب ---</option>
+                    {% for s in students %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+                </select>
+            </div>
+            <div><label>اليوم *</label><input type="date" name="date" required {% if not allow_past %}min="{{ today|date:'Y-m-d' }}"{% endif %} value="{{ today|date:'Y-m-d' }}"></div>
+            <div><label>الساعة *</label><input type="time" name="time" required></div>
+            <div><label>مدة الحلقة (دقيقة)</label><input type="number" name="duration_minutes" value="30" min="10" max="180"></div>
+            <div><label>تكرار أسبوعي (عدد الأسابيع)</label><input type="number" name="repeat_weeks" value="1" min="1" max="{{ max_weeks }}"></div>
+        </div>
+        <p style="font-size:0.82rem; color:var(--ink-muted); margin:12px 0;">
+            💡 لو اخترتي تكرار 4 أسابيع، هتتضاف نفس الحلقة في نفس اليوم والساعة 4 أسابيع ورا بعض. الإدارة بتشوف كل حلقة بتضيفيها.
+        </p>
+        <button type="submit" class="btn btn-primary" style="padding:11px 32px;">حفظ في جدولي</button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h4 style="color:var(--violet-700); margin-top:0;">🗓️ حلقاتك القادمة</h4>
+    <div class="table-container">
+        <table class="lt-table">
+            <thead><tr><th>الموعد</th><th>الطالب</th><th>المدة</th><th></th></tr></thead>
+            <tbody>
+                {% for l in upcoming %}
+                <tr>
+                    <td>{{ l.scheduled_at|date:"l Y/m/d H:i" }}</td>
+                    <td>{{ l.student.name }}</td>
+                    <td>{{ l.duration_minutes }} د</td>
+                    <td>
+                        {% if l.teacher_can_delete %}
+                        <form method="POST" action="{% url 'teacher_delete_lesson' l.id %}" onsubmit="return confirm('حذف الحلقة دي من جدولك؟');">
+                            {% csrf_token %}<input type="hidden" name="next" value="{% url 'teacher_add_lessons' %}">
+                            <button type="submit" style="border:0; border-radius:999px; padding:6px 12px; cursor:pointer; background:var(--red-soft); color:var(--red); font-family:inherit;">🗑 حذف</button>
+                        </form>
+                        {% else %}<span style="font-size:0.75rem; color:var(--ink-muted);">أضافتها الإدارة</span>{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;">مفيش حلقات قادمة في جدولك.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% comment %}أزرار تسجيل حالة الحلقة من المعلمة. المتغيرات: lesson, next_url{% endcomment %}
+{% for val, label in lesson.teacher_mark_choices %}
+<form method="POST" action="{% url 'teacher_mark_lesson' lesson.id %}" style="display:inline-block; margin:4px 0 0 6px;"
+      onsubmit="return confirm('تأكيد تسجيل حلقة {{ lesson.student.name|escapejs }}: {{ label|escapejs }} ؟ الوقت هيتسجل وهيظهر للإدارة.');">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next_url }}">
+    <button type="submit" name="status" value="{{ val }}"
+            style="border:0; border-radius:999px; padding:7px 14px; font-size:0.8rem; font-weight:700; cursor:pointer; font-family:inherit;
+                   {% if val == 'completed' %}background:var(--green-soft); color:var(--green);{% elif val == 'student_absent' %}background:var(--red-soft); color:var(--red);{% else %}background:var(--amber-soft); color:var(--amber);{% endif %}">{{ label }}</button>
+</form>
+{% endfor %}

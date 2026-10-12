@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% block title %}نشاط المعلمات{% endblock %}
+{% block content %}
+<div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+    <h2 style="color:#4a1a8a;">🔔 نشاط المعلمات - {{ day|date:"Y/m/d" }}</h2>
+    <a href="{% url 'dashboard_home' %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
+</div>
+
+<form method="GET" class="filter-bar" style="margin:14px 0;">
+    <input type="date" name="date" value="{{ day|date:'Y-m-d' }}" onchange="this.form.submit()">
+    <select name="teacher" onchange="this.form.submit()">
+        <option value="">كل المعلمات</option>
+        {% for t in teachers %}<option value="{{ t.id }}" {% if selected_teacher == t.id %}selected{% endif %}>{{ t.name }}</option>{% endfor %}
+    </select>
+    <a href="{% url 'teacher_activity' %}" class="btn btn-outline btn-sm">النهاردة</a>
+</form>
+
+<div class="table-container">
+    <table>
+        <thead><tr><th>المعلمة</th><th>حلقات أضافتها</th><th>سجلت "تمت"</th><th>الطالب غاب</th><th>عذر / مؤجلة</th></tr></thead>
+        <tbody>
+            {% for row in summary_rows %}
+            <tr>
+                <td><a href="{% url 'teacher_detail' row.teacher.id %}" style="color:#6d28d9; font-weight:700;">{{ row.teacher.name }}</a></td>
+                <td>{{ row.added }}</td><td><strong>{{ row.completed }}</strong></td><td>{{ row.absent }}</td><td>{{ row.other }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center;">مفيش نشاط في اليوم ده.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h4 style="color:#4a1a8a; margin-top:24px;">سجل النشاط بالتفصيل</h4>
+<div class="table-container">
+    <table>
+        <thead><tr><th>وقت التسجيل</th><th>المعلمة</th><th>النشاط</th><th>ملاحظة</th></tr></thead>
+        <tbody>
+            {% for e in events %}
+            <tr class="{% if e.tone == 'ok' %}paid-row{% elif e.tone == 'bad' %}status-inactive-row{% endif %}">
+                <td><strong>{{ e.created_at|date:"H:i" }}</strong> <span class="text-muted" style="font-size:0.75rem;">{{ e.created_at|date:"Y/m/d" }}</span></td>
+                <td>{{ e.teacher.name }}</td>
+                <td>{{ e.text }}</td>
+                <td>{% if e.kind == 'marked' and e.delay_label %}<span class="badge-unpaid">⚠️ {{ e.delay_label }}</span>{% else %}-{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" style="text-align:center;">لا يوجد نشاط.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<p class="text-muted" style="font-size:0.82rem; margin-top:8px;">
+    "وقت التسجيل" هو الوقت الفعلي اللي المعلمة ضغطت فيه الزر. علامة ⚠️ بتظهر لو سجلت الحلقة بعد موعدها بأكتر من ساعة.
+</p>
+{% endblock %}

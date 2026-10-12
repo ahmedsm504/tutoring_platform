@@ -11,6 +11,8 @@ urlpatterns = [
 
     # لوحة التحكم
     path('dashboard/', views.dashboard_home, name='dashboard_home'),
+    path('dashboard/activity-feed/', views.activity_feed_json, name='activity_feed_json'),
+    path('teacher-activity/', views.teacher_activity, name='teacher_activity'),
     path('country/<int:country_id>/', views.country_students, name='country_students'),
     path('add-student/', views.add_student, name='add_student'),
     path('student/<int:student_id>/', views.student_detail, name='student_detail'),
@@ -78,6 +80,8 @@ urlpatterns = [
     path('teacher-portal/logout/', views.teacher_logout, name='teacher_logout'),
     path('teacher-portal/', views.teacher_portal_home, name='teacher_portal_home'),
     path('teacher-portal/my-lessons/', views.teacher_lessons_table, name='teacher_lessons_table'),
+    path('teacher-portal/add-lessons/', views.teacher_add_lessons, name='teacher_add_lessons'),
+    path('teacher-portal/lessons/<int:lesson_id>/delete/', views.teacher_delete_lesson, name='teacher_delete_lesson'),
     path('teacher-portal/lessons/<int:lesson_id>/mark/', views.teacher_mark_lesson, name='teacher_mark_lesson'),
     path('teacher-portal/lessons/<int:lesson_id>/mark-started/', views.teacher_mark_lesson_started, name='teacher_mark_lesson_started'),
     path('teacher-portal/schedule-requests/', views.teacher_schedule_requests, name='teacher_schedule_requests'),

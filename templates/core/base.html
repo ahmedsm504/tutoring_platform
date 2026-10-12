@@ -295,6 +295,22 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     .main-content { margin-right: 74px; padding: 20px 18px; }
     .country-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
+
+/* ===== نشاط المعلمات: توست + زر الصوت + قائمة النشاط ===== */
+#act-toast-wrap{position:fixed; top:16px; left:16px; z-index:9999; display:flex; flex-direction:column; gap:8px; max-width:360px;}
+.act-toast{display:block; text-decoration:none; color:var(--ink); background:#fff; border:1px solid var(--border); border-right:5px solid var(--violet-500); border-radius:14px; padding:12px 16px; box-shadow:var(--shadow-lg); font-size:0.88rem; animation:actIn .25s ease;}
+.act-toast.act-ok{border-right-color:var(--green);} .act-toast.act-bad{border-right-color:var(--red);} .act-toast.act-warn{border-right-color:var(--amber);}
+@keyframes actIn{from{opacity:0; transform:translateY(-8px);} to{opacity:1; transform:none;}}
+#act-sound-btn{position:fixed; bottom:16px; left:16px; z-index:9998; border:1px solid var(--border); background:#fff; color:var(--ink-muted); border-radius:999px; padding:8px 16px; font-size:0.78rem; font-weight:700; cursor:pointer; box-shadow:var(--shadow-md); font-family:inherit;}
+#act-sound-btn.on{color:var(--green); border-color:var(--green);}
+.act-list{list-style:none; margin:12px 0 0; padding:0; display:flex; flex-direction:column; gap:6px;}
+.act-item{padding:10px 14px; border-radius:12px; background:var(--violet-50); border-right:4px solid var(--violet-400); font-size:0.9rem;}
+.act-item.act-ok{background:var(--green-soft); border-right-color:var(--green);}
+.act-item.act-bad{background:var(--red-soft); border-right-color:var(--red);}
+.act-item.act-warn{background:var(--amber-soft); border-right-color:var(--amber);}
+.act-time{display:inline-block; min-width:44px; color:var(--ink-muted); font-weight:700; font-size:0.8rem;}
+.act-empty{color:var(--ink-muted); padding:12px;}
+@media print{ #act-toast-wrap, #act-sound-btn{display:none !important;} }
 </style>
 {% block extra_css %}{% endblock %}
 </head>
@@ -316,6 +332,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <li><a href="{% url 'financial_reports' %}" class="{% if 'financial-reports' in request.path %}active{% endif %}"><i class="fas fa-chart-line"></i> <span>التقارير المالية</span></a></li>
             <li><a href="{% url 'salaries_list' %}" class="{% if 'salar' in request.path %}active{% endif %}"><i class="fas fa-sack-dollar"></i> <span>قائمة الرواتب</span></a></li>
             <li><a href="{% url 'lessons_dashboard' %}" class="{% if 'lessons' in request.path %}active{% endif %}"><i class="fas fa-calendar-check"></i> <span>الحلقات اليوم</span></a></li>
+            <li><a href="{% url 'teacher_activity' %}" class="{% if 'teacher-activity' in request.path %}active{% endif %}"><i class="fas fa-bell"></i> <span>نشاط المعلمات</span></a></li>
             <li><a href="{% url 'schedule_requests_list' %}" class="{% if 'schedule-requests' in request.path %}active{% endif %}"><i class="fas fa-clock-rotate-left"></i> <span>طلبات المواعيد</span></a></li>
             <li><a href="{% url 'evaluations_list' %}" class="{% if 'evaluation' in request.path %}active{% endif %}"><i class="fas fa-clipboard-check"></i> <span>تقييم الطلاب الشهري</span></a></li>
             <li><a href="{% url 'add_student' %}" class="{% if 'add-student' in request.path %}active{% endif %}"><i class="fas fa-user-plus"></i> <span>إضافة طالب</span></a></li>
@@ -353,6 +370,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
         {% block content %}{% endblock %}
     </div>
 
+    <div id="act-toast-wrap" aria-live="polite"></div>
+    <button type="button" id="act-sound-btn" title="تنبيه صوتي لما معلمة تضيف حلقة أو تسجل حالتها">🔔</button>
+
     <script>
         setTimeout(() => {
             document.querySelectorAll('.alert').forEach(el => { el.style.display = 'none'; });
@@ -366,6 +386,111 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
                 setTimeout(() => { icon.className = 'fas fa-copy'; }, 1500);
             });
         }
+    </script>
+
+    <script>
+    (function(){
+        var FEED_URL = "{% url 'activity_feed_json' %}";
+        var ACT_URL = "{% url 'teacher_activity' %}";
+        var K_ID = 'act_last_id', K_SND = 'act_sound';
+        var ctx = null, lastId = null;
+
+        function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+        function lsSet(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+        function ssGet(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }
+        function ssSet(k, v){ try { sessionStorage.setItem(k, v); } catch(e){} }
+        function soundOn(){ return lsGet(K_SND) !== '0'; }
+
+        function getCtx(){
+            if(!ctx){
+                var AC = window.AudioContext || window.webkitAudioContext;
+                if(!AC) return null;
+                ctx = new AC();
+            }
+            if(ctx.state === 'suspended'){ ctx.resume(); }
+            return ctx;
+        }
+        function tone(freq, start, dur){
+            var c = getCtx(); if(!c) return;
+            var o = c.createOscillator(), g = c.createGain();
+            o.type = 'sine'; o.frequency.value = freq;
+            g.gain.setValueAtTime(0.0001, c.currentTime + start);
+            g.gain.exponentialRampToValueAtTime(0.35, c.currentTime + start + 0.02);
+            g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + start + dur);
+            o.connect(g); g.connect(c.destination);
+            o.start(c.currentTime + start); o.stop(c.currentTime + start + dur + 0.05);
+        }
+        function chime(){ if(!soundOn()) return; tone(880, 0, 0.25); tone(1175, 0.18, 0.35); }
+
+        var btn = document.getElementById('act-sound-btn');
+        function paintBtn(){
+            btn.textContent = soundOn() ? '🔔 صوت تنبيهات المعلمات: شغال' : '🔕 صوت تنبيهات المعلمات: مقفول';
+            btn.className = soundOn() ? 'on' : '';
+        }
+        btn.addEventListener('click', function(){
+            lsSet(K_SND, soundOn() ? '0' : '1');
+            paintBtn();
+            if(soundOn()){
+                chime();
+                if(window.Notification && Notification.permission === 'default'){ Notification.requestPermission(); }
+            }
+        });
+        // المتصفحات بتمنع الصوت لحد أول ضغطة من المستخدم - أول ضغطة في الصفحة بتفتحه
+        document.addEventListener('click', function(){ if(soundOn()) getCtx(); }, {passive: true});
+
+        function toast(ev){
+            var wrap = document.getElementById('act-toast-wrap');
+            var a = document.createElement('a');
+            a.href = ACT_URL; a.className = 'act-toast act-' + ev.tone;
+            var t = document.createElement('strong'); t.textContent = ev.teacher;
+            var s = document.createElement('span'); s.textContent = ' ' + ev.text;
+            a.appendChild(t); a.appendChild(s); wrap.appendChild(a);
+            setTimeout(function(){ if(a.parentNode){ a.parentNode.removeChild(a); } }, 9000);
+        }
+        function prependFeed(ev){
+            var ul = document.getElementById('activity-feed');
+            if(!ul || ul.querySelector('[data-id="' + ev.id + '"]')) return;
+            var empty = ul.querySelector('.act-empty'); if(empty){ empty.remove(); }
+            var li = document.createElement('li');
+            li.className = 'act-item act-' + ev.tone; li.setAttribute('data-id', ev.id);
+            var tm = document.createElement('span'); tm.className = 'act-time'; tm.textContent = ev.time;
+            var st = document.createElement('strong'); st.textContent = ev.teacher;
+            li.appendChild(tm); li.appendChild(document.createTextNode(' ')); li.appendChild(st);
+            li.appendChild(document.createTextNode(' ' + ev.text));
+            ul.insertBefore(li, ul.firstChild);
+            while(ul.children.length > 15){ ul.removeChild(ul.lastChild); }
+        }
+        function osNotify(ev){
+            if(window.Notification && Notification.permission === 'granted' && document.hidden){
+                try { new Notification(ev.teacher, {body: ev.text}); } catch(e){}
+            }
+        }
+        function poll(){
+            var url = FEED_URL + (lastId !== null ? ('?after=' + lastId) : '');
+            fetch(url, {credentials: 'same-origin', headers: {'Accept': 'application/json'}})
+                .then(function(r){ if(!r.ok){ throw new Error('bad'); } return r.json(); })
+                .then(function(d){
+                    if(lastId === null){ lastId = d.last_id; ssSet(K_ID, String(lastId)); return; }
+                    if(d.events && d.events.length){
+                        d.events.forEach(function(ev){ toast(ev); prependFeed(ev); osNotify(ev); });
+                        chime();
+                    }
+                    lastId = Math.max(lastId, d.last_id); ssSet(K_ID, String(lastId));
+                })
+                .catch(function(){});
+        }
+
+        var saved = parseInt(ssGet(K_ID), 10);
+        if(!isNaN(saved)){ lastId = saved; }
+        var feed = document.getElementById('activity-feed');
+        if(feed){
+            var rendered = parseInt(feed.getAttribute('data-last-id'), 10);
+            if(!isNaN(rendered) && (lastId === null || rendered > lastId)){ lastId = rendered; }
+        }
+        paintBtn();
+        poll();
+        setInterval(poll, 15000);
+    })();
     </script>
 </body>
 </html>

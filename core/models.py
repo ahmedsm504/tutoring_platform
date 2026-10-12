@@ -6,6 +6,9 @@ from django.utils import timezone
 # سعر الحصة الافتراضي (جنيه) - بيتحدد لكل معلمة في حقل Teacher.lesson_rate
 DEFAULT_LESSON_RATE = 20
 
+# المعلمة تقدر تغيّر تسجيلها (تمت/غياب...) بنفسها لمدة كام دقيقة بعد ما تسجل - بعدها بيتقفل ويفضل للمشرفة/الإدارة
+TEACHER_REMARK_WINDOW_MINUTES = 60
+
 
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="اسم الدولة")
@@ -476,6 +479,12 @@ class Lesson(models.Model):
     auto_flagged = models.BooleanField(default=False, verbose_name="اتحسبت غياب تلقائيًا من غير ما تتسجل")
     was_late = models.BooleanField(default=False, verbose_name="اتأخرت المعلمة في الحضور")
 
+    # مين أضاف الحلقة ومين سجل حالتها (للمتابعة والتدقيق)
+    CREATOR_CHOICES = [('admin', 'الإدارة / المشرفة'), ('teacher', 'المعلمة')]
+    RECORDER_CHOICES = [('teacher', 'المعلمة'), ('supervisor', 'المشرفة'), ('admin', 'الإدارة')]
+    created_by = models.CharField(max_length=10, choices=CREATOR_CHOICES, default='admin', verbose_name="أضافها")
+    recorded_by = models.CharField(max_length=12, choices=RECORDER_CHOICES, blank=True, default='', verbose_name="سجّل الحالة")
+
     notes = models.TextField(blank=True, null=True, verbose_name="ملاحظات على الحلقة")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
 
@@ -543,12 +552,66 @@ class Lesson(models.Model):
         self.started_at = timezone.now()
         self.save(update_fields=['started_at'])
 
-    def mark(self, new_status, was_late=False):
+    def mark(self, new_status, was_late=False, by=''):
+        """تسجيل حالة الحلقة + وقت التسجيل + مين سجلها (teacher / supervisor / admin)"""
         self.status = new_status
         self.status_recorded_at = timezone.now()
         self.auto_flagged = False
         self.was_late = was_late
-        self.save(update_fields=['status', 'status_recorded_at', 'auto_flagged', 'was_late'])
+        self.recorded_by = by
+        self.save(update_fields=['status', 'status_recorded_at', 'auto_flagged', 'was_late', 'recorded_by'])
+
+    # ---------- صلاحيات المعلمة على حلقاتها ----------
+    TEACHER_MARK_LABELS = {
+        'completed': '✅ تمت',
+        'student_absent': '🔴 الطالب غاب',
+        'excused': '📝 عذر',
+        'cancelled': '⏸ مؤجلة',
+    }
+
+    def teacher_mark_options(self, now=None):
+        """الحالات اللي تقدر المعلمة تسجلها دلوقتي للحلقة دي (فاضية = مقفولة عليها).
+        - لسه ما اتسجلتش (حتى لو فات وقتها) أو هي اللي سجلتها من أقل من ساعة -> تقدر تسجل/تعدل.
+        - 'تمت' و'الطالب غاب' مينفعوش قبل موعد بداية الحلقة (عشان متسجلش حلقة لسه ما حصلتش).
+        - 'عذر' و'مؤجلة' مسموحين في أي وقت.
+        - لو المشرفة أو الإدارة سجلت الحالة بتتقفل على المعلمة."""
+        now = now or timezone.now()
+        recent_own = (
+            self.recorded_by == 'teacher' and self.status_recorded_at
+            and now - self.status_recorded_at <= timezone.timedelta(minutes=TEACHER_REMARK_WINDOW_MINUTES)
+        )
+        if not (self.status == 'scheduled' or recent_own):
+            return []
+        options = ['excused', 'cancelled']
+        if now >= self.scheduled_at:
+            options = ['completed', 'student_absent'] + options
+        return [o for o in options if o != self.status]
+
+    def teacher_mark_choices(self):
+        """(القيمة, الاسم) لعرض أزرار التسجيل في القوالب"""
+        return [(s, self.TEACHER_MARK_LABELS[s]) for s in self.teacher_mark_options()]
+
+    def teacher_can_delete(self, now=None):
+        """المعلمة تقدر تمسح بس حلقة هي اللي أضافتها ولسه مجدولة وموعدها لسه ما جاش"""
+        now = now or timezone.now()
+        return self.created_by == 'teacher' and self.status == 'scheduled' and self.scheduled_at > now
+
+    def record_delay_minutes(self):
+        """عدد الدقايق بين موعد الحلقة ووقت تسجيل حالتها (None لو لسه ما اتسجلتش)"""
+        if not self.status_recorded_at:
+            return None
+        return int((self.status_recorded_at - self.scheduled_at).total_seconds() // 60)
+
+    def record_delay_label(self):
+        """نص التأخير في التسجيل لو عدّى ساعة، وإلا فاضي"""
+        return _delay_label(self.record_delay_minutes())
+
+    def added_after_time(self):
+        """المعلمة أضافت الحلقة دي بعد ما موعدها فات (أكتر من 5 دقايق) - علامة للمتابعة"""
+        return self.created_by == 'teacher' and self.created_at and self.created_at > self.scheduled_at + timezone.timedelta(minutes=5)
+
+    def recorded_by_label(self):
+        return dict(self.RECORDER_CHOICES).get(self.recorded_by, '')
 
 
 class ScheduleRequest(models.Model):
@@ -601,7 +664,8 @@ class ScheduleRequest(models.Model):
             self.related_lesson.scheduled_at = self.proposed_datetime
             self.related_lesson.status = 'scheduled'
             self.related_lesson.status_recorded_at = None
-            self.related_lesson.save(update_fields=['scheduled_at', 'status', 'status_recorded_at'])
+            self.related_lesson.recorded_by = ''
+            self.related_lesson.save(update_fields=['scheduled_at', 'status', 'status_recorded_at', 'recorded_by'])
         elif self.request_type == 'new' and self.proposed_datetime:
             Lesson.objects.create(
                 student=self.student,
@@ -630,3 +694,85 @@ class TeacherComplaint(models.Model):
 
     def __str__(self):
         return f"شكوى - {self.teacher.name} - {self.date}"
+
+
+def _delay_label(minutes):
+    """'بعد 3 ساعات' / 'بعد يومين' للتأخير الأكبر من ساعة، وإلا نص فاضي"""
+    if not minutes or minutes <= 60:
+        return ''
+    if minutes < 24 * 60:
+        return f'بعد {minutes // 60} ساعة من موعدها'
+    return f'بعد {minutes // (24 * 60)} يوم من موعدها'
+
+
+class TeacherActivity(models.Model):
+    """سجل نشاط المعلمات (إضافة حلقات / تسجيل حالة / حذف) - بيظهر للأدمن لحظيًا مع تنبيه صوتي"""
+    KIND_CHOICES = [
+        ('added', 'أضافت حلقات'),
+        ('marked', 'سجّلت حالة حلقة'),
+        ('removed', 'حذفت حلقة'),
+    ]
+    STATUS_WORDS = {
+        'completed': '✅ تمت',
+        'student_absent': '🔴 الطالب غاب',
+        'excused': '📝 عذر',
+        'cancelled': '⏸ مؤجلة',
+    }
+
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='activities', verbose_name="المعلمة")
+    lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True, related_name='activities', verbose_name="الحلقة")
+    kind = models.CharField(max_length=10, choices=KIND_CHOICES, verbose_name="النوع")
+    status = models.CharField(max_length=20, blank=True, default='', verbose_name="الحالة المسجلة")
+    student_name = models.CharField(max_length=255, blank=True, verbose_name="الطالب")
+    lesson_at = models.DateTimeField(null=True, blank=True, verbose_name="موعد الحلقة")
+    count = models.PositiveIntegerField(default=1, verbose_name="العدد")
+    delay_minutes = models.IntegerField(null=True, blank=True, verbose_name="التسجيل بعد موعد الحلقة (دقيقة)")
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name="وقت النشاط")
+
+    class Meta:
+        verbose_name = "نشاط معلمة"
+        verbose_name_plural = "نشاط المعلمات"
+        ordering = ['-id']
+
+    def __str__(self):
+        return f"{self.teacher.name} - {self.text()}"
+
+    @classmethod
+    def log(cls, teacher, kind, lesson, status='', count=1):
+        delay = None
+        if kind == 'marked' and lesson.scheduled_at:
+            delay = int((timezone.now() - lesson.scheduled_at).total_seconds() // 60)
+        return cls.objects.create(
+            teacher=teacher, kind=kind, status=status, count=count, delay_minutes=delay,
+            lesson=None if kind == 'removed' else lesson,
+            student_name=lesson.student.name, lesson_at=lesson.scheduled_at,
+        )
+
+    def lesson_when(self):
+        if not self.lesson_at:
+            return ''
+        lt = timezone.localtime(self.lesson_at)
+        return f"{lt:%Y/%m/%d} الساعة {lt:%H:%M}"
+
+    def delay_label(self):
+        return _delay_label(self.delay_minutes)
+
+    def text(self):
+        when = self.lesson_when()
+        if self.kind == 'added':
+            if self.count > 1:
+                return f"أضافت {self.count} حلقات مع {self.student_name} ابتداءً من {when}"
+            return f"أضافت حلقة مع {self.student_name} يوم {when}"
+        if self.kind == 'removed':
+            return f"حذفت حلقة {self.student_name} ({when})"
+        s = f"سجّلت حلقة {self.student_name} ({when}): {self.STATUS_WORDS.get(self.status, self.status)}"
+        late = self.delay_label()
+        return f"{s} · {late}" if late else s
+
+    def tone(self):
+        if self.kind == 'marked':
+            return {'completed': 'ok', 'student_absent': 'bad'}.get(self.status, 'warn')
+        return 'info'
+
+    def short_time(self):
+        return f"{timezone.localtime(self.created_at):%H:%M}"

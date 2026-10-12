@@ -56,7 +56,7 @@
 <h4 style="color:#4a1a8a; margin-top:20px;">جدول اليوم بالكامل</h4>
 <div class="table-container">
     <table>
-        <thead><tr><th>الطالب</th><th>المعلمة</th><th>الموعد</th><th>بدأت؟</th><th>الحالة</th><th></th></tr></thead>
+        <thead><tr><th>الطالب</th><th>المعلمة</th><th>الموعد</th><th>بدأت؟</th><th>الحالة</th><th>سُجّلت بواسطة</th><th></th></tr></thead>
         <tbody>
             {% for l in todays_lessons %}
             <tr>
@@ -79,6 +79,14 @@
                     {% endwith %}
                 </td>
                 <td>
+                    {% if l.recorded_by %}
+                        <span class="badge-neutral">{{ l.recorded_by_label }}</span>
+                        <strong>{{ l.status_recorded_at|date:"H:i" }}</strong>
+                        {% if l.record_delay_label %}<div class="text-muted" style="font-size:0.75rem;">⚠️ {{ l.record_delay_label }}</div>{% endif %}
+                    {% else %}<span class="text-muted">-</span>{% endif %}
+                    {% if l.created_by == 'teacher' %}<div class="text-muted" style="font-size:0.75rem;">من جدول المعلمة{% if l.added_after_time %} · <span style="color:var(--red); font-weight:700;">أضافتها بعد موعدها!</span>{% endif %}</div>{% endif %}
+                </td>
+                <td>
                     <form method="POST" action="{% url 'delete_lesson' l.id %}" onsubmit="return confirm('حذف الحلقة دي؟');">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline btn-sm"><i class="fas fa-trash"></i></button>
@@ -86,7 +94,7 @@
                 </td>
             </tr>
             {% empty %}
-            <tr><td colspan="6" style="text-align:center;">لا يوجد حلقات مجدولة اليوم.</td></tr>
+            <tr><td colspan="7" style="text-align:center;">لا يوجد حلقات مجدولة اليوم.</td></tr>
             {% endfor %}
         </tbody>
     </table>

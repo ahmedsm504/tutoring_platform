@@ -121,6 +121,7 @@ th{color:var(--ink-muted); font-weight:700; font-size:0.8rem;}
     <div class="side-menu">
         <a href="{% url 'teacher_portal_home' %}" class="{% if request.path == '/teacher-portal/' %}active{% endif %}"><i class="fas fa-house"></i> مواعيدي</a>
         <a href="{% url 'teacher_lessons_table' %}" class="{% if 'my-lessons' in request.path %}active{% endif %}"><i class="fas fa-table-list"></i> جدول حلقاتي</a>
+        <a href="{% url 'teacher_add_lessons' %}" class="{% if 'add-lessons' in request.path %}active{% endif %}"><i class="fas fa-calendar-plus"></i> إضافة حلقات</a>
         <a href="{% url 'teacher_curriculum' %}" class="{% if 'curriculum' in request.path %}active{% endif %}"><i class="fas fa-book-quran"></i> المنهج</a>
         <a href="{% url 'teacher_quran_reader' %}" class="{% if 'quran' in request.path %}active{% endif %}"><i class="fas fa-book-open-reader"></i> المصحف</a>
         <a href="{% url 'teacher_evaluations_list' %}" class="{% if 'evaluations' in request.path %}active{% endif %}"><i class="fas fa-file-lines"></i> التقييمات الشهرية</a>

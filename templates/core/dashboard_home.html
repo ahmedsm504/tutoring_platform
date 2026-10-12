@@ -17,6 +17,27 @@
     <div class="stat-box" style="border-right-color: #f59e0b;"><div class="number">{{ total_teachers }}</div><div class="label">👩‍🏫 المعلمات</div></div>
 </div>
 
+<div class="table-container" id="activity-card" style="margin-bottom:20px;">
+    <div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
+        <h3 style="color:#4a1a8a; margin:0;">🔔 نشاط المعلمات (لحظي)</h3>
+        <div class="flex">
+            <span class="badge-neutral">النهاردة: تمت {{ act_today_completed }} · إجمالي النشاط {{ act_today_total }}</span>
+            <a href="{% url 'teacher_activity' %}" class="btn btn-outline btn-sm">عرض الكل</a>
+        </div>
+    </div>
+    <ul id="activity-feed" class="act-list" data-last-id="{{ last_activity_id }}">
+        {% for e in recent_activity %}
+        <li class="act-item act-{{ e.tone }}" data-id="{{ e.id }}"><span class="act-time">{{ e.created_at|date:"H:i" }}</span> <strong>{{ e.teacher.name }}</strong> {{ e.text }}</li>
+        {% empty %}
+        <li class="act-empty">لسه مفيش نشاط من المعلمات.</li>
+        {% endfor %}
+    </ul>
+    <p class="text-muted" style="font-size:0.8rem; margin:10px 0 0;">
+        أي حلقة تضيفها معلمة أو تسجل حالتها (تمت / غاب / عذر / مؤجلة) بتظهر هنا لحظيًا وبيجيلك تنبيه بصوت في أي صفحة من لوحة التحكم.
+        لو الصوت مش شغال اضغطي زر الجرس تحت الشاشة مرة واحدة (المتصفح بيطلب ضغطة قبل أي صوت).
+    </p>
+</div>
+
 <div class="table-container">
     <div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
         <h3 style="color:#4a1a8a; margin:0;">💹 نظرة مالية سريعة - {{ current_month_name }}</h3>

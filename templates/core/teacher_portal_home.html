@@ -26,6 +26,10 @@
         <span style="font-size:1.8rem;">🗂️</span>
         <span>جدول حلقاتي</span>
     </a>
+    <a href="{% url 'teacher_add_lessons' %}" class="quick-action-card" style="background:linear-gradient(135deg,#F59E0B,#B45309);">
+        <span style="font-size:1.8rem;">➕</span>
+        <span>إضافة حلقات</span>
+    </a>
 </div>
 
 {% if due_lessons %}
@@ -40,8 +44,9 @@
             <button type="submit" class="btn btn-primary">▶️ بدء الحلقة</button>
         </form>
         {% else %}
-        <div style="margin-top:8px; font-size:0.8rem; color:var(--ink-muted);">بدأت الساعة {{ l.started_at|date:"H:i" }} - مشرفتك هي اللي هتسجل حالة الحلقة بعد كده.</div>
+        <div style="margin-top:8px; font-size:0.8rem; color:var(--ink-muted);">بدأت الساعة {{ l.started_at|date:"H:i" }}.</div>
         {% endif %}
+        {% include 'core/_teacher_mark_buttons.html' with lesson=l next_url=request.get_full_path %}
     </div>
     {% endfor %}
 </div>
@@ -54,7 +59,7 @@
     {% for l in overdue_unrecorded %}
     <div style="margin-top:10px; padding:12px; background:var(--surface); border-radius:12px;">
         <div style="font-weight:700;">{{ l.student.name }} - كان الموعد {{ l.scheduled_at|date:"Y/m/d H:i" }}</div>
-        <div style="margin-top:8px; font-size:0.8rem; color:var(--ink-muted);">هتتسجل حالتها من المشرفة، بس لو محتاجة توضحي سبب كلمي مشرفتك مباشرة.</div>
+        {% include 'core/_teacher_mark_buttons.html' with lesson=l next_url=request.get_full_path %}
     </div>
     {% endfor %}
 </div>

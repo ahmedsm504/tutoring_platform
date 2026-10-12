@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta, datetime
@@ -19,7 +21,7 @@ import secrets
 
 from .models import (
     Teacher, Student, Country, StudentNote, Expense, Payment, TeacherSalaryRecord, MonthlyEvaluation,
-    Lesson, ScheduleRequest, TeacherComplaint, Supervisor, CurriculumDocument,
+    Lesson, ScheduleRequest, TeacherComplaint, Supervisor, CurriculumDocument, TeacherActivity,
 )
 
 
@@ -48,6 +50,19 @@ def supervisor_login_required(view_func):
             return redirect('supervisor_login')
         return view_func(request, *args, **kwargs)
     return _wrapped
+
+
+# المعلمة تقدر تضيف حلقات في الماضي؟ (False = من النهاردة وطالع بس؛ الحلقات الفايتة بتتسجل من المشرفة)
+TEACHER_CAN_ADD_PAST_LESSONS = False
+MAX_REPEAT_WEEKS = 12
+
+
+def _safe_next(request, default):
+    """رابط الرجوع بعد الإجراء - بنقبل بس روابط من نفس الموقع (حماية من open redirect)"""
+    nxt = request.POST.get('next') or request.GET.get('next') or ''
+    if nxt and url_has_allowed_host_and_scheme(nxt, allowed_hosts={request.get_host()}, require_https=request.is_secure()):
+        return nxt
+    return default
 
 
 ARABIC_MONTHS = {
@@ -203,6 +218,13 @@ def dashboard_home(request):
         'current_month_salaries': current_month_salaries,
         'current_month_profit': current_month_profit,
     }
+    todays_activity = TeacherActivity.objects.filter(created_at__date=timezone.localdate())
+    context.update({
+        'recent_activity': TeacherActivity.objects.select_related('teacher')[:12],
+        'last_activity_id': TeacherActivity.objects.order_by('-id').values_list('id', flat=True).first() or 0,
+        'act_today_total': todays_activity.count(),
+        'act_today_completed': todays_activity.filter(kind='marked', status='completed').count(),
+    })
     return render(request, 'core/dashboard_home.html', context)
 
 
@@ -1194,7 +1216,7 @@ def mark_lesson(request, lesson_id):
         if new_status not in valid_statuses or new_status == 'unregistered':
             messages.error(request, 'حالة غير صحيحة.')
         else:
-            lesson.mark(new_status, was_late=was_late)
+            lesson.mark(new_status, was_late=was_late, by='admin')
             messages.success(request, f'تم تسجيل حالة الحلقة: {valid_statuses[new_status]}.')
 
     next_url = request.POST.get('next') or request.GET.get('next') or 'lessons_dashboard'
@@ -1492,13 +1514,144 @@ def teacher_mark_lesson_started(request, lesson_id):
 
 @teacher_login_required
 def teacher_mark_lesson(request, lesson_id):
-    """تسجيل حالة الحلقة بقت مسؤولية المشرفة بس دلوقتي (تمت/غياب/عذر/مؤجلة)
-    عشان تبقى المتابعة والتقييم من جهة محايدة. المعلمة تقدر تبدأ الحلقة بس
-    (teacher_mark_lesson_started) ولو حصل خطأ في التسجيل تكلم مشرفتها."""
+    """المعلمة بتسجل بنفسها حالة حلقتها (تمت / الطالب غاب / عذر / مؤجلة) ووقت التسجيل بيتحفظ
+    وبيظهر للأدمن لحظيًا في الداشبورد. القواعد في Lesson.teacher_mark_options."""
     teacher = request.user.teacher_profile
     lesson = get_object_or_404(Lesson, pk=lesson_id, teacher=teacher)
-    messages.warning(request, 'تسجيل حالة الحلقة (تمت/غياب/عذر) بقى مسؤولية المشرفة المتابعة لكِ. لو فيه خطأ كلمي مشرفتك.')
-    return redirect('teacher_portal_home')
+
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        if new_status not in lesson.teacher_mark_options():
+            messages.error(request, 'مش مسموح تسجلي الحالة دي للحلقة دي دلوقتي (يمكن موعدها لسه ماجاش، أو اتسجلت من المشرفة، أو عدّت ساعة على تسجيلك).')
+        else:
+            lesson.mark(new_status, by='teacher')
+            TeacherActivity.log(teacher, 'marked', lesson, status=new_status)
+            messages.success(request, f'تم تسجيل حلقة {lesson.student.name}: {Lesson.TEACHER_MARK_LABELS[new_status]}.')
+
+    return redirect(_safe_next(request, 'teacher_lessons_table'))
+
+
+@teacher_login_required
+def teacher_add_lessons(request):
+    """المعلمة بتبني جدولها بنفسها: بتختار طالب من طلابها + اليوم + الساعة (+ تكرار أسبوعي)"""
+    teacher = request.user.teacher_profile
+    now = timezone.now()
+    students = teacher.students.filter(status='active').order_by('name')
+    today_start = timezone.localtime(now).replace(hour=0, minute=0, second=0, microsecond=0)
+
+    if request.method == 'POST':
+        student = students.filter(pk=_to_int_or_none(request.POST.get('student'))).first()
+        date_s = request.POST.get('date', '').strip()
+        time_s = request.POST.get('time', '').strip()
+        duration = min(max(_to_int_or_none(request.POST.get('duration_minutes')) or 30, 10), 180)
+        weeks = min(max(_to_int_or_none(request.POST.get('repeat_weeks')) or 1, 1), MAX_REPEAT_WEEKS)
+        try:
+            start = timezone.make_aware(datetime.strptime(f'{date_s} {time_s}', '%Y-%m-%d %H:%M'))
+        except ValueError:
+            start = None
+
+        if not student or not start:
+            messages.error(request, 'من فضلك اختاري الطالب وحددي اليوم والساعة.')
+        elif not TEACHER_CAN_ADD_PAST_LESSONS and start < today_start:
+            messages.error(request, 'مينفعش تضيفي حلقة في يوم فات. الحلقات الفايتة بتتسجل من المشرفة.')
+        else:
+            created = []
+            for w in range(weeks):
+                when = start + timedelta(weeks=w)
+                if Lesson.objects.filter(teacher=teacher, student=student, scheduled_at=when).exists():
+                    continue
+                created.append(Lesson.objects.create(
+                    student=student, teacher=teacher, scheduled_at=when,
+                    duration_minutes=duration, created_by='teacher',
+                ))
+            if created:
+                TeacherActivity.log(teacher, 'added', created[0], count=len(created))
+                messages.success(request, f'تم إضافة {len(created)} حلقة مع {student.name} لجدولك.')
+                return redirect('teacher_lessons_table')
+            messages.info(request, 'الحلقات دي موجودة بالفعل في جدولك.')
+
+    context = {
+        'teacher': teacher,
+        'students': students,
+        'today': timezone.localdate(),
+        'upcoming': teacher.lessons.filter(status='scheduled', scheduled_at__gte=now).select_related('student').order_by('scheduled_at')[:30],
+        'max_weeks': MAX_REPEAT_WEEKS,
+        'allow_past': TEACHER_CAN_ADD_PAST_LESSONS,
+    }
+    return render(request, 'core/teacher_add_lessons.html', context)
+
+
+@teacher_login_required
+def teacher_delete_lesson(request, lesson_id):
+    """المعلمة تمسح حلقة هي اللي أضافتها ولسه ما جاش موعدها (والأدمن بيشوف إنها اتمسحت)"""
+    teacher = request.user.teacher_profile
+    lesson = get_object_or_404(Lesson, pk=lesson_id, teacher=teacher)
+    if request.method == 'POST':
+        if lesson.teacher_can_delete():
+            TeacherActivity.log(teacher, 'removed', lesson)
+            lesson.delete()
+            messages.success(request, 'تم حذف الحلقة من جدولك.')
+        else:
+            messages.error(request, 'تقدري تمسحي بس حلقة إنتِ اللي أضفتيها ولسه ماجاش موعدها. غير كده كلمي المشرفة.')
+    return redirect(_safe_next(request, 'teacher_add_lessons'))
+
+
+# =======================
+# متابعة نشاط المعلمات (للأدمن): فيد لحظي + صفحة تفصيلية
+# =======================
+@staff_member_required
+def activity_feed_json(request):
+    """الداشبورد بيسأله كل ~15 ثانية: عايز أي نشاط جديد بعد آخر رقم شفته؟
+    من غير after بيرجع آخر رقم بس (عشان الصفحة تبدأ من دلوقتي وماترنش على القديم)."""
+    last_id = TeacherActivity.objects.order_by('-id').values_list('id', flat=True).first() or 0
+    after = _to_int_or_none(request.GET.get('after'))
+    events = []
+    if after is not None:
+        for e in TeacherActivity.objects.select_related('teacher').filter(id__gt=after).order_by('id')[:30]:
+            events.append({
+                'id': e.id, 'teacher': e.teacher.name, 'text': e.text(), 'tone': e.tone(),
+                'kind': e.kind, 'time': e.short_time(),
+            })
+    return JsonResponse({'last_id': last_id, 'events': events})
+
+
+@staff_member_required
+def teacher_activity(request):
+    """سجل نشاط المعلمات في يوم معيّن (افتراضيًا النهاردة) + ملخص لكل معلمة"""
+    day = timezone.localdate()
+    raw = request.GET.get('date', '').strip()
+    if raw:
+        try:
+            day = datetime.strptime(raw, '%Y-%m-%d').date()
+        except ValueError:
+            pass
+    teacher_id = _to_int_or_none(request.GET.get('teacher'))
+
+    events = TeacherActivity.objects.select_related('teacher').filter(created_at__date=day)
+    if teacher_id:
+        events = events.filter(teacher_id=teacher_id)
+
+    summary = {}
+    for e in events:
+        row = summary.setdefault(e.teacher_id, {'teacher': e.teacher, 'added': 0, 'completed': 0, 'absent': 0, 'other': 0})
+        if e.kind == 'added':
+            row['added'] += e.count
+        elif e.kind == 'marked':
+            if e.status == 'completed':
+                row['completed'] += 1
+            elif e.status == 'student_absent':
+                row['absent'] += 1
+            else:
+                row['other'] += 1
+
+    context = {
+        'events': events,
+        'day': day,
+        'teachers': Teacher.objects.all(),
+        'selected_teacher': teacher_id,
+        'summary_rows': list(summary.values()),
+    }
+    return render(request, 'core/teacher_activity.html', context)
 
 
 @teacher_login_required
@@ -1559,11 +1712,8 @@ def teacher_evaluation_detail(request, evaluation_id):
 
 @teacher_login_required
 def teacher_register_schedule(request):
-    """تسجيل جدول المواعيد بقى مسؤولية المشرفة دلوقتي (بدل ما تسجله المعلمة
-    بنفسها) عشان يبقى فيه تنسيق ومتابعة موحدة من جهة محايدة."""
-    messages.info(request, 'تسجيل جدول مواعيد الطلاب بقى بيتم من خلال المشرفة المتابعة لكِ الآن.')
-    return redirect('teacher_portal_home')
-
+    """المعلمة بتبني جدولها بنفسها - بنحوّلها لصفحة إضافة الحلقات"""
+    return redirect('teacher_add_lessons')
 
 
 # =======================
@@ -1963,7 +2113,7 @@ def supervisor_mark_lesson(request, lesson_id):
         if not new_status or new_status not in valid_statuses or new_status == 'unregistered':
             messages.error(request, 'من فضلك اختاري حالة صحيحة قبل الحفظ.')
         else:
-            lesson.mark(new_status)
+            lesson.mark(new_status, by='supervisor')
             if note:
                 lesson.notes = note
                 lesson.save(update_fields=['notes'])
