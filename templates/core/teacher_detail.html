@@ -23,10 +23,7 @@
         <strong>حساب دخول البورتال:</strong>
         {% if teacher.user_id %}
             <span class="badge-neutral" style="background:var(--green-soft); color:var(--green);">مفعّل ({{ teacher_login_display }})</span>
-            <form method="POST" action="{% url 'reset_teacher_login_password' teacher.id %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline btn-sm" style="margin-right:4px;">تصفير كلمة السر</button>
-            </form>
+            <a href="{% url 'reset_teacher_login_password' teacher.id %}" class="btn btn-outline btn-sm" style="margin-right:4px;">تغيير كلمة السر</a>
             <form method="POST" action="{% url 'revoke_teacher_login' teacher.id %}" style="display:inline;" onsubmit="return confirm('إلغاء حساب الدخول؟ المعلمة مش هتقدر تدخل تاني.');">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline btn-sm" style="color:var(--red); margin-right:4px;">إلغاء الحساب</button>

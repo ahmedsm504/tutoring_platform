@@ -11,13 +11,11 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
-from django.contrib.auth.hashers import make_password
 from django.db.models import Q, Sum, Value, DecimalField
 from django.db.models.functions import Coalesce
 from functools import wraps
 import json
 import calendar
-import secrets
 
 from .models import (
     Teacher, Student, Country, StudentNote, Expense, Payment, TeacherSalaryRecord, MonthlyEvaluation,
@@ -55,6 +53,23 @@ def supervisor_login_required(view_func):
 # المعلمة تقدر تضيف حلقات في الماضي؟ (False = من النهاردة وطالع بس؛ الحلقات الفايتة بتتسجل من المشرفة)
 TEACHER_CAN_ADD_PAST_LESSONS = False
 MAX_REPEAT_WEEKS = 12
+
+# كلمة سر حسابات المعلمات والمشرفات بتتكتب بإيد الأدمن (مش بتتولد تلقائي)
+MIN_PASSWORD_LENGTH = 6
+
+
+def _check_chosen_password(password, password2, username=''):
+    """بنتأكد بس من الكلمة اللي الأدمن كتبتها: مش فاضية، متطابقة مع التأكيد، طولها كفاية،
+    ومش نفس اسم الدخول. بترجع نص الخطأ أو None لو تمام."""
+    if not password or not password.strip():
+        return 'لازم تكتبي كلمة السر.'
+    if password != password2:
+        return 'كلمتي السر مش متطابقتين.'
+    if len(password) < MIN_PASSWORD_LENGTH:
+        return f'كلمة السر لازم تكون {MIN_PASSWORD_LENGTH} حروف/أرقام على الأقل.'
+    if username and password.strip().lower() == str(username).strip().lower():
+        return 'كلمة السر مينفعش تكون نفس اسم الدخول.'
+    return None
 
 
 def _safe_next(request, default):
@@ -1330,7 +1345,14 @@ def create_teacher_login(request, teacher_id):
             messages.error(request, f'"{base_username}" مستخدم قبل كده، اختاري قيمة تانية.')
             return redirect('create_teacher_login', teacher_id=teacher.id)
 
-        temp_password = secrets.token_urlsafe(6)  # كلمة سر عشوائية آمنة تتعرض مرة واحدة بس
+        password = request.POST.get('password', '')
+        error = _check_chosen_password(password, request.POST.get('password2', ''), base_username)
+        if error:
+            messages.error(request, error)
+            return render(request, 'core/create_teacher_login.html', {
+                'teacher': teacher, 'entered_username': request.POST.get('username', '').strip(),
+            })
+
         try:
             create_kwargs = {
                 username_field: base_username,
@@ -1340,7 +1362,7 @@ def create_teacher_login(request, teacher_id):
             if 'first_name' in user_field_names:
                 create_kwargs['first_name'] = teacher.name
             user = User(**create_kwargs)
-            user.set_password(temp_password)
+            user.set_password(password)
             user.save()
         except TypeError as e:
             messages.error(
@@ -1355,8 +1377,7 @@ def create_teacher_login(request, teacher_id):
 
         messages.success(
             request,
-            f'تم إنشاء حساب دخول لـ "{teacher.name}". {username_field}: {base_username} - كلمة السر: {temp_password} '
-            '(احفظيها وابعتيها للمعلمة دلوقتي، مش هتتعرض تاني).'
+            f'تم إنشاء حساب دخول لـ "{teacher.name}". {username_field}: {base_username} - بكلمة السر اللي كتبتيها (ابعتيها للمعلمة بنفسك).'
         )
         return redirect('teacher_detail', teacher_id=teacher.id)
 
@@ -1365,18 +1386,28 @@ def create_teacher_login(request, teacher_id):
 
 @staff_member_required
 def reset_teacher_login_password(request, teacher_id):
-    """تصفير كلمة سر المعلمة لو نسيتها (بدون ما تشوف الأدمن كلمة السر القديمة أصلًا، مش متخزنة)"""
+    """تغيير كلمة سر المعلمة لو نسيتها - الأدمن هي اللي بتكتب الكلمة الجديدة (مش بتتولد تلقائي)"""
     teacher = get_object_or_404(Teacher, pk=teacher_id)
     if not teacher.user_id:
         messages.error(request, 'المعلمة دي معندهاش حساب دخول أصلًا.')
         return redirect('teacher_detail', teacher_id=teacher.id)
 
     if request.method == 'POST':
-        temp_password = secrets.token_urlsafe(6)
-        teacher.user.password = make_password(temp_password)
-        teacher.user.save(update_fields=['password'])
-        messages.success(request, f'كلمة السر الجديدة لـ "{teacher.name}": {temp_password}')
-    return redirect('teacher_detail', teacher_id=teacher.id)
+        password = request.POST.get('password', '')
+        error = _check_chosen_password(password, request.POST.get('password2', ''), getattr(teacher.user, User.USERNAME_FIELD, ''))
+        if error:
+            messages.error(request, error)
+        else:
+            teacher.user.set_password(password)
+            teacher.user.save(update_fields=['password'])
+            messages.success(request, f'تم تغيير كلمة سر "{teacher.name}" للكلمة اللي كتبتيها (ابعتيها لها بنفسك).')
+            return redirect('teacher_detail', teacher_id=teacher.id)
+
+    return render(request, 'core/reset_login_password.html', {
+        'person': teacher.name, 'kind': 'المعلمة',
+        'login_name': getattr(teacher.user, User.USERNAME_FIELD, ''),
+        'back_url': reverse('teacher_detail', args=[teacher.id]),
+    })
 
 
 @staff_member_required
@@ -1893,7 +1924,14 @@ def create_supervisor_login(request, supervisor_id):
             messages.error(request, f'"{base_username}" مستخدم قبل كده، اختاري قيمة تانية.')
             return redirect('create_supervisor_login', supervisor_id=supervisor.id)
 
-        temp_password = secrets.token_urlsafe(6)
+        password = request.POST.get('password', '')
+        error = _check_chosen_password(password, request.POST.get('password2', ''), base_username)
+        if error:
+            messages.error(request, error)
+            return render(request, 'core/create_supervisor_login.html', {
+                'supervisor': supervisor, 'entered_username': request.POST.get('username', '').strip(),
+            })
+
         create_kwargs = {
             username_field: base_username,
             'is_staff': False,
@@ -1902,7 +1940,7 @@ def create_supervisor_login(request, supervisor_id):
         if 'first_name' in user_field_names:
             create_kwargs['first_name'] = supervisor.name
         user = User(**create_kwargs)
-        user.set_password(temp_password)
+        user.set_password(password)
         user.save()
 
         supervisor.user = user
@@ -1910,8 +1948,7 @@ def create_supervisor_login(request, supervisor_id):
 
         messages.success(
             request,
-            f'تم إنشاء حساب دخول لـ "{supervisor.name}". {username_field}: {base_username} - كلمة السر: {temp_password} '
-            '(احفظيها وابعتيها للمشرفة دلوقتي، مش هتتعرض تاني).'
+            f'تم إنشاء حساب دخول لـ "{supervisor.name}". {username_field}: {base_username} - بكلمة السر اللي كتبتيها (ابعتيها للمشرفة بنفسك).'
         )
         return redirect('supervisors_list')
 
@@ -1920,17 +1957,28 @@ def create_supervisor_login(request, supervisor_id):
 
 @staff_member_required
 def reset_supervisor_login_password(request, supervisor_id):
+    """تغيير كلمة سر المشرفة - الأدمن هي اللي بتكتب الكلمة الجديدة (مش بتتولد تلقائي)"""
     supervisor = get_object_or_404(Supervisor, pk=supervisor_id)
     if not supervisor.user_id:
         messages.error(request, 'المشرفة دي معندهاش حساب دخول أصلًا.')
         return redirect('supervisors_list')
 
     if request.method == 'POST':
-        temp_password = secrets.token_urlsafe(6)
-        supervisor.user.password = make_password(temp_password)
-        supervisor.user.save(update_fields=['password'])
-        messages.success(request, f'كلمة السر الجديدة لـ "{supervisor.name}": {temp_password}')
-    return redirect('supervisors_list')
+        password = request.POST.get('password', '')
+        error = _check_chosen_password(password, request.POST.get('password2', ''), getattr(supervisor.user, User.USERNAME_FIELD, ''))
+        if error:
+            messages.error(request, error)
+        else:
+            supervisor.user.set_password(password)
+            supervisor.user.save(update_fields=['password'])
+            messages.success(request, f'تم تغيير كلمة سر "{supervisor.name}" للكلمة اللي كتبتيها (ابعتيها لها بنفسك).')
+            return redirect('supervisors_list')
+
+    return render(request, 'core/reset_login_password.html', {
+        'person': supervisor.name, 'kind': 'المشرفة',
+        'login_name': getattr(supervisor.user, User.USERNAME_FIELD, ''),
+        'back_url': reverse('supervisors_list'),
+    })
 
 
 @staff_member_required

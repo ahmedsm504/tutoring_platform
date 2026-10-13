@@ -19,7 +19,7 @@
         </div>
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
             {% if s.user_id %}
-            <form method="POST" action="{% url 'reset_supervisor_login_password' s.id %}" style="display:inline;">{% csrf_token %}<button class="btn btn-outline" style="color:#B87F16; border-color:#B87F16;">تصفير كلمة السر</button></form>
+            <a href="{% url 'reset_supervisor_login_password' s.id %}" class="btn btn-outline" style="color:#B87F16; border-color:#B87F16;">تغيير كلمة السر</a>
             <form method="POST" action="{% url 'revoke_supervisor_login' s.id %}" style="display:inline;" onsubmit="return confirm('تأكيد إلغاء حساب الدخول؟');">{% csrf_token %}<button class="btn btn-danger">إلغاء الحساب</button></form>
             {% else %}
             <a href="{% url 'create_supervisor_login' s.id %}" class="btn btn-success">إنشاء حساب دخول</a>

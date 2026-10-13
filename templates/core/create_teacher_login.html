@@ -11,9 +11,10 @@
         {% csrf_token %}
         <div class="field">
             <label>بيانات الدخول (يوزرنيم أو إيميل حسب نظام الحسابات عندكم)</label>
-            <input type="text" name="username" placeholder="مثلاً: sara_teacher" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
+            <input type="text" name="username" value="{{ entered_username }}" placeholder="مثلاً: sara_teacher" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe;">
             <p class="text-muted" style="font-size:0.78rem; margin-top:4px;">سيبيه فاضي لو عايزة يوزرنيم تلقائي.</p>
         </div>
+        {% include 'core/_password_fields.html' %}
         <div style="text-align:center; margin-top:20px;">
             <button type="submit" class="btn btn-primary">إنشاء الحساب</button>
             <a href="{% url 'teacher_detail' teacher.id %}" class="btn btn-outline">إلغاء</a>
