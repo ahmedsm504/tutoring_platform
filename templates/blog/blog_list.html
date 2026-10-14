@@ -15,12 +15,12 @@
 {% block twitter_description %}محتوى تعليمي متميز في القرآن والتجويد{% endblock %}
 {% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/blog-twitter.jpg' %}{% endblock %}
 
+{# canonical: الصفحة المرقّمة لها canonical خاص بيها، ونتايج البحث/الترتيب/الفلتر بتشاور على /blog/ ومش بتتفهرس #}
+{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% if posts.number > 1 and not search_query and not current_category %}?page={{ posts.number }}{% endif %}{% endblock %}
+{% block robots %}{% if search_query or current_category or current_sort != 'latest' %}noindex, follow{% else %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endif %}{% endblock %}
+
 {% block extra_meta %}
 <meta name="author" content="مؤسسة العجمي">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta name="googlebot" content="index, follow">
-<link rel="canonical" href="{{ request.build_absolute_uri }}">
-<meta property="og:locale" content="ar_AR">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="مؤسسة العجمي">
 <meta name="twitter:card" content="summary_large_image">
@@ -1025,12 +1025,12 @@ a:focus, button:focus, input:focus {
                 {% if posts.has_other_pages %}
                 <nav class="pagination" role="navigation" aria-label="التنقل بين صفحات المقالات">
                     {% if posts.has_previous %}
-                    <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                    <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}"
                        aria-label="الصفحة السابقة">السابق</a>
                     {% endif %}
                     <span class="current" aria-current="page">{{ posts.number }} / {{ posts.paginator.num_pages }}</span>
                     {% if posts.has_next %}
-                    <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                    <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}"
                        aria-label="الصفحة التالية">التالي</a>
                     {% endif %}
                 </nav>
@@ -1048,7 +1048,7 @@ a:focus, button:focus, input:focus {
                     <ul class="category-list">
                         {% for category in categories %}
                         <li>
-                            <a href="?category={{ category.slug }}"
+                            <a href="{% url 'category_posts' category.slug %}"
                                aria-label="عرض مقالات تصنيف {{ category.name }}">
                                 <span>{{ category.icon }} {{ category.name }}</span>
                                 <span class="category-count">{{ category.posts_count }}</span>

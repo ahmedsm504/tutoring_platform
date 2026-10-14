@@ -1,0 +1,184 @@
+{% extends 'blog/blog_list.html' %}
+{% load static %}
+
+{% block title %}{{ category.name }} | مدونة مؤسسة العجمي{% if posts.number > 1 %} - صفحة {{ posts.number }}{% endif %}{% endblock %}
+
+{% block meta_description %}{% if category.description %}{{ category.description|striptags|truncatechars:150 }}{% else %}مقالات تصنيف {{ category.name }} في مدونة مؤسسة العجمي لتحفيظ القرآن الكريم وتعليم التجويد.{% endif %}{% endblock %}
+
+{% block meta_keywords %}{{ category.name }}, مدونة تحفيظ القرآن الكريم, مقالات قرآنية, مؤسسة العجمي{% endblock %}
+
+{% block og_title %}{{ category.name }} - مدونة العجمي لتحفيظ القرآن الكريم{% endblock %}
+{% block og_description %}{% if category.description %}{{ category.description|striptags|truncatechars:150 }}{% else %}مقالات تصنيف {{ category.name }} في مدونة مؤسسة العجمي.{% endif %}{% endblock %}
+{% block twitter_title %}{{ category.name }} - مدونة العجمي{% endblock %}
+{% block twitter_description %}مقالات تصنيف {{ category.name }} من مدونة مؤسسة العجمي لتحفيظ القرآن الكريم.{% endblock %}
+
+{# كل صفحة مرقّمة لها canonical خاص بيها (page=2 مش بتشاور على الأولى)، وتصنيف فاضي = noindex #}
+{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% if posts.number > 1 %}?page={{ posts.number }}{% endif %}{% endblock %}
+{% block robots %}{% if posts.paginator.count == 0 %}noindex, follow{% else %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endif %}{% endblock %}
+
+{# robots / canonical / og:locale بييجوا من base.html - مش بنكررهم هنا عشان مايبقاش فيه تاجين متعارضين #}
+{% block extra_meta %}
+<meta name="author" content="مؤسسة العجمي">
+{% endblock %}
+
+{% block extra_ldjson %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"},
+    {"@type": "ListItem", "position": 2, "name": "المدونة", "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_list' %}"},
+    {"@type": "ListItem", "position": 3, "name": "{{ category.name|escapejs }}", "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ category.name|escapejs }}",
+  "description": "{% if category.description %}{{ category.description|striptags|truncatechars:200|escapejs }}{% else %}مقالات تصنيف {{ category.name|escapejs }} في مدونة مؤسسة العجمي{% endif %}",
+  "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+  "inLanguage": "ar",
+  "isPartOf": {"@type": "Blog", "name": "مدونة مؤسسة العجمي لتحفيظ القرآن الكريم", "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_list' %}"},
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ posts.paginator.count }},
+    "itemListElement": [
+      {% for post in posts %}{"@type": "ListItem", "position": {{ posts.start_index|add:forloop.counter0 }}, "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}", "name": "{{ post.title|escapejs }}"}{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+{{ block.super }}
+<style>
+.cat-breadcrumb { max-width: 1200px; margin: 0 auto 16px; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.cat-breadcrumb a { text-decoration: none; color: #FFD700; }
+.cat-breadcrumb a:hover { text-decoration: underline; }
+.cat-breadcrumb span { color: #e5e7eb; }
+.category-list a.is-active { font-weight: 700; }
+</style>
+{% endblock %}
+
+{% block content %}
+{# <div> مش <main> لأن base.html فيه <main> بالفعل #}
+<div aria-labelledby="category-heading">
+    <div class="blog-container">
+
+        <nav class="cat-breadcrumb" aria-label="مسار التنقل">
+            <a href="{% url 'home' %}">الرئيسية</a>
+            <span aria-hidden="true">›</span>
+            <a href="{% url 'blog_list' %}">المدونة</a>
+            <span aria-hidden="true">›</span>
+            <span aria-current="page">{{ category.name }}</span>
+        </nav>
+
+        <header class="page-header">
+            <h1 id="category-heading">{{ category.icon }} {{ category.name }}</h1>
+            <p>{% if category.description %}{{ category.description }}{% else %}مقالات {{ category.name }} من مدونة مؤسسة العجمي لتحفيظ القرآن الكريم{% endif %}</p>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number">{{ posts.paginator.count|default:0 }}</span>
+                <span class="stat-label">مقال في هذا التصنيف</span>
+            </div>
+        </div>
+
+        <div class="layout">
+
+            <div>
+                <h2 class="section-title">📖 مقالات {{ category.name }}</h2>
+                <div class="posts-grid">
+                    {% for post in posts %}
+                    <article class="post-card" itemscope itemtype="https://schema.org/BlogPosting">
+                        <a href="{% url 'blog_detail' post.slug %}" aria-label="اقرأ المقال: {{ post.title }}">
+                            <div class="post-image-container">
+                                {% if post.cloud_url %}
+                                <img src="{{ post.cloud_url }}" alt="{{ post.display_image_alt }}" class="post-image" loading="lazy" itemprop="image">
+                                {% else %}
+                                <img src="{% static 'images/default_post.webp' %}" alt="صورة افتراضية" class="post-image" loading="lazy" decoding="async">
+                                {% endif %}
+                            </div>
+                            <div class="post-content">
+                                <div class="meta">
+                                    <span class="category-badge" itemprop="articleSection">{{ category.icon }} {{ category.name }}</span>
+                                    <span aria-label="عدد المشاهدات">👁 {{ post.views_count }}</span>
+                                    <span aria-label="وقت القراءة">⏱ {{ post.reading_time }} د</span>
+                                </div>
+                                <h3 class="post-title" itemprop="headline">{{ post.title }}</h3>
+                                <p class="post-excerpt" itemprop="description">{{ post.excerpt|truncatewords:15 }}</p>
+                                <span class="read-more" aria-hidden="true">قراءة المزيد →</span>
+                                <meta itemprop="datePublished" content="{{ post.created_at|date:'c' }}">
+                                <meta itemprop="author" content="مؤسسة العجمي">
+                            </div>
+                        </a>
+                    </article>
+                    {% empty %}
+                    <p class="no-posts" role="alert">لا توجد مقالات في هذا التصنيف حالياً 📚</p>
+                    {% endfor %}
+                </div>
+
+                {% if posts.has_other_pages %}
+                <nav class="pagination" role="navigation" aria-label="التنقل بين صفحات المقالات">
+                    {% if posts.has_previous %}
+                    <a href="?page={{ posts.previous_page_number }}" aria-label="الصفحة السابقة">السابق</a>
+                    {% endif %}
+                    <span class="current" aria-current="page">{{ posts.number }} / {{ posts.paginator.num_pages }}</span>
+                    {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}" aria-label="الصفحة التالية">التالي</a>
+                    {% endif %}
+                </nav>
+                {% endif %}
+            </div>
+
+            <aside class="sidebar" role="complementary" aria-label="الشريط الجانبي">
+                {% if categories %}
+                <div class="widget">
+                    <h3 class="widget-title">📁 التصنيفات</h3>
+                    <ul class="category-list">
+                        <li><a href="{% url 'blog_list' %}"><span>📚 كل المقالات</span></a></li>
+                        {% for cat in categories %}
+                        <li>
+                            <a href="{% url 'category_posts' cat.slug %}" {% if cat.pk == category.pk %}class="is-active" aria-current="page"{% endif %}
+                               aria-label="عرض مقالات تصنيف {{ cat.name }}">
+                                <span>{{ cat.icon }} {{ cat.name }}</span>
+                                <span class="category-count">{{ cat.posts_count }}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if popular_posts %}
+                <div class="widget">
+                    <h3 class="widget-title">🔥 الأكثر قراءة</h3>
+                    {% for post in popular_posts %}
+                    <a href="{% url 'blog_detail' post.slug %}" class="popular-post-item" aria-label="اقرأ المقال: {{ post.title }}">
+                        <div class="popular-post-image">
+                            {% if post.cloud_url %}
+                            <img src="{{ post.cloud_url }}" alt="{{ post.display_image_alt }}" loading="lazy" decoding="async">
+                            {% else %}
+                            <span style="font-size: 2em;">📝</span>
+                            {% endif %}
+                        </div>
+                        <div class="popular-post-info">
+                            <p class="post-name">{{ post.title|truncatewords:6 }}</p>
+                            <small>👁 {{ post.views_count }} مشاهدة</small>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </aside>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -127,16 +127,24 @@ def category_posts(request, slug):
     category = get_object_or_404(Category, slug=slug)
     posts_list = Post.objects.filter(
         status='published', category=category
-    ).order_by('-created_at')
+    ).select_related('category').order_by('-created_at')
     
     # Pagination
     paginator = Paginator(posts_list, 9)
     page_number = request.GET.get('page')
     posts = paginator.get_page(page_number)
+
+    # الشريط الجانبي (نفس بيانات صفحة المدونة)
+    categories = Category.objects.annotate(
+        posts_count=Count('posts', filter=Q(posts__status='published'))
+    ).filter(posts_count__gt=0)
+    popular_posts = Post.objects.filter(status='published').order_by('-views_count')[:5]
     
     context = {
         'category': category,
         'posts': posts,
+        'categories': categories,
+        'popular_posts': popular_posts,
     }
     
     return render(request, 'blog/category_posts.html', context)

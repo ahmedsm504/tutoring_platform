@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import F
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 import uuid
@@ -103,9 +104,11 @@ class Post(models.Model):
         return self.title
     
     def increment_views(self):
-        """زيادة عدد المشاهدات"""
+        """زيادة عدد المشاهدات بعملية واحدة في الداتابيز.
+        من غير save() عشان مايشغّلش post_save (كان بيبعت IndexNow ويمسح الكاش مع كل زيارة)
+        ومن غير ما نخسر زيادات لو أكتر من زائر دخلوا في نفس اللحظة."""
+        Post.objects.filter(pk=self.pk).update(views_count=F('views_count') + 1)
         self.views_count += 1
-        self.save(update_fields=['views_count'])
 
     @property
     def display_image_alt(self):
