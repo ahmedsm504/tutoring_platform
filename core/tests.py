@@ -229,3 +229,20 @@ class SiteSmokeTests(TestCase):
         self.client.force_login(other_sup)  # مش المشرف بتاع الطالب ده
         self.client.post(reverse('supervisor_dashboard'), {'delete_session': '1', 'session_id': sess.id})
         self.assertTrue(Session.objects.filter(pk=sess.pk).exists())
+
+
+@override_settings(SECURE_SSL_REDIRECT=False)
+class HardeningTests(TestCase):
+    def test_scanner_paths_get_tiny_404(self):
+        for p in ['/.env', '/.git/config', '/wp-content/debug.log', '/api/phpinfo.php', '/auth.json', '/config.json']:
+            r = self.client.get(p)
+            self.assertEqual(r.status_code, 404, p)
+            self.assertEqual(r.content, b'Not Found')
+
+    def test_real_pages_not_blocked(self):
+        self.assertEqual(self.client.get('/').status_code, 200)
+        self.assertEqual(self.client.get('/quran/18/').status_code, 200)
+
+    def test_ads_txt(self):
+        r = self.client.get('/ads.txt')
+        self.assertContains(r, 'pub-4253419170065458, DIRECT')

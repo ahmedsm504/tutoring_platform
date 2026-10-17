@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q, Count, Sum
 from django.core.paginator import Paginator
@@ -74,7 +75,14 @@ def blog_list(request):
 
 def blog_detail(request, slug):
     """عرض تفاصيل مقال واحد"""
-    post = get_object_or_404(Post, slug=slug, status='published')
+    post = Post.objects.filter(slug=slug, status='published').first()
+    if post is None:
+        # لينكات قديمة أو مقطوعة (زي /blog/waqf-and-ibtid/) -> لو في مقال واحد بيبدأ بنفس الكلام نحوّل عليه
+        if len(slug) >= 8:
+            matches = list(Post.objects.filter(slug__startswith=slug, status='published').values_list('slug', flat=True)[:2])
+            if len(matches) == 1:
+                return redirect('blog_detail', slug=matches[0], permanent=True)
+        raise Http404
     
     # زيادة عدد المشاهدات
     post.increment_views()

@@ -34,7 +34,13 @@ def sitemap_view(request, **kwargs):
     return sitemap(request, sitemaps=sitemaps)
 
 
+def ads_txt(request):
+    # مطلوب لـ Google AdSense - من غيره جوجل بيقلل الإعلانات/الأرباح
+    return HttpResponse('google.com, pub-4253419170065458, DIRECT, f08c47fec0942fa0\n', content_type='text/plain')
+
+
 urlpatterns = [
+    path('ads.txt', ads_txt),
     path('admin/', admin.site.urls),
     path('sitemap.xml', sitemap_view, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', robots_txt, name='robots'),
