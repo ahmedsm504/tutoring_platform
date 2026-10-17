@@ -1,0 +1,16 @@
+{# name, label, required, compact #}
+<div class="rec{% if compact %} rec-compact{% endif %}" data-max="{{ max|default:600 }}">
+  <div class="rec-row">
+    <button type="button" class="rec-btn" aria-label="ابدأ / أوقف التسجيل"><span class="rec-ic-mic">🎙️</span><span class="rec-ic-stop">⏹</span></button>
+    <div class="rec-body">
+      <strong class="rec-label">{{ label|default:"سجّل بصوتك" }}</strong>
+      <span class="rec-hint">اضغط على المايك وابدأ التسجيل</span>
+      <div class="rec-live"><span class="rec-dot"></span><span class="rec-time">0:00</span><span class="rec-bars" aria-hidden="true">{% for i in "123456789012345678" %}<i></i>{% endfor %}</span></div>
+    </div>
+  </div>
+  <audio class="rec-preview" controls preload="metadata"></audio>
+  <div class="rec-foot">
+    <button type="button" class="rec-redo">↺ سجّل تاني</button>
+    <label class="rec-upload">أو ارفع ملف صوتي<input type="file" name="{{ name }}" accept="audio/*" {% if required %}data-required="1"{% endif %}></label>
+  </div>
+</div>

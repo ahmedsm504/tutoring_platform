@@ -1,0 +1,24 @@
+{# مشترك بين المعلمة والإدارة والطالب: معلومات الواجب + الآيات + شرح المعلمة #}
+<div class="hw-top">
+  <h1>{{ hw.title }}</h1>
+  <div class="meta">
+    <span>{{ hw.get_kind_display }}</span>
+    {% if role != 'student' %}<span>👦 {{ hw.student.name }}</span>{% endif %}
+    {% if role != 'teacher' %}<span>👩‍🏫 {{ hw.teacher.name }}</span>{% endif %}
+    {% if hw.due_date %}<span>⏰ آخر موعد {{ hw.due_date|date:"l j F" }}</span>{% endif %}
+    <span>{{ hw.status_label }}</span>
+  </div>
+</div>
+{% if hw.instructions or hw.teacher_audio %}
+<div class="card">
+  <h3 class="hw-sec">📌 المطلوب</h3>
+  {% if hw.instructions %}<p class="hw-note">{{ hw.instructions }}</p>{% endif %}
+  {% if hw.teacher_audio %}<div><strong style="font-size:.88rem;">🎧 شرح المعلمة بصوتها:</strong><br><audio class="hw-audio" controls preload="none" src="{% url 'learning_audio' 'task' hw.pk %}"></audio></div>{% endif %}
+</div>
+{% endif %}
+{% if verses %}
+<div class="card">
+  <h3 class="hw-sec">📖 {{ hw.range_label }} — اضغط على أي آية تسمعها</h3>
+  {% include 'learning/_player.html' with surah=hw.surah from=hw.ayah_from to=hw.ayah_to %}
+</div>
+{% endif %}

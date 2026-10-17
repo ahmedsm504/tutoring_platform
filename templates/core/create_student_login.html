@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% block title %}حساب بوابة الطالب - {{ student.name }}{% endblock %}
+{% block content %}
+<div style="max-width: 550px; margin: 30px auto; background: white; padding: 35px; border-radius: 24px; border: 1px solid #ede9fe;">
+    <h2 style="color: #4a1a8a; text-align: center;">🎓 حساب بوابة الطالب لـ {{ student.name }}</h2>
+    <p class="text-muted" style="text-align:center; margin-top:8px; line-height:1.8;">
+        الطالب (أو ولي أمره) بيدخل بيه يشوف مواعيده وتقاريره ويكلم معلمته في الشات جوه المنصة.
+        الحساب مالوش أي صلاحية على لوحة التحكم.
+    </p>
+    <form method="POST" style="margin-top:20px;">
+        {% csrf_token %}
+        <div class="field">
+            <label>اسم المستخدم</label>
+            <input type="text" name="username" value="{{ entered_username|default:suggested }}" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ede9fe; direction:ltr; text-align:right;">
+        </div>
+        {% include 'core/_password_fields.html' %}
+        <div style="text-align:center; margin-top:20px;">
+            <button type="submit" class="btn btn-primary">إنشاء الحساب</button>
+            <a href="{% url 'student_detail' student.id %}" class="btn btn-outline">إلغاء</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

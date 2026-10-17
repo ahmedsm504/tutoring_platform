@@ -1,0 +1,22 @@
+{% extends 'core/student_portal_base.html' %}
+{% block title %}نجومي وأوسمتي{% endblock %}
+{% block content %}
+<div class="l-head"><div><h1>🏅 نجومي وأوسمتي</h1><p>كل واجب ولعبة واستماع بيزودوا نجومك ويرفعوا مستواك.</p></div></div>
+{% include 'learning/_level.html' %}
+<div class="card"><h3 class="hw-sec">🏅 الأوسمة</h3>
+  <div class="badges">{% for e, name, how, won in st.badges %}<div class="bdg{% if not won %} off{% endif %}"><span class="e">{{ e }}</span><strong>{{ name }}</strong><small>{{ how }}</small></div>{% endfor %}</div>
+</div>
+<div class="card"><h3 class="hw-sec">🪜 المستويات</h3>
+  <div class="chips">{% for at, name in levels %}<span class="chip" {% if name == st.level.name %}style="background:var(--violet-600); color:#fff;"{% endif %}>{{ name }} · {{ at }}</span>{% endfor %}</div>
+</div>
+<div class="card"><h3 class="hw-sec">✨ آخر نجوم كسبتها</h3>
+  {% for a in recent %}<div class="sp-li" style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);"><span>{% if a.kind == 'homework' %}🎙️ واجب{% elif a.kind == 'game' %}🎮 لعبة{% else %}🎧 استماع{% endif %} · <small style="color:var(--ink-muted);">{{ a.created_at|timesince }}</small></span><strong>+{{ a.points }} ⭐</strong></div>
+  {% empty %}<p class="l-empty">لسه مفيش — ابدأ بلعبة أو واجب!</p>{% endfor %}
+</div>
+<h3 class="hw-sec">💡 إزاي تكسب نجوم؟</h3>
+<div class="tiles">
+  <a class="tile t1" href="{% url 'learning_student_list' %}"><span class="e">🎙️</span><strong>سلّم واجب</strong><small>+10، وكل نجمة من المعلمة بـ +4</small></a>
+  <a class="tile t3" href="{% url 'learning_student_games' %}"><span class="e">🎮</span><strong>العب</strong><small>لحد +10 في اللعبة</small></a>
+  <a class="tile t2" href="{% url 'learning_student_listen' %}"><span class="e">🎧</span><strong>اسمع لآخر المقطع</strong><small>+2</small></a>
+</div>
+{% endblock %}

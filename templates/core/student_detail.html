@@ -6,16 +6,44 @@
         {% if paid_this_month %}<span class="badge-paid" style="margin-right:8px;">💵 دفع {{ pay_month_name }}</span>{% else %}<span class="badge-unpaid" style="margin-right:8px;">⏳ لم يدفع {{ pay_month_name }}</span>{% endif %}
     </h2>
     <div class="flex">
-        <a href="{% url 'toggle_student_status' student.id %}" class="btn {% if student.status == 'active' %}btn-danger{% else %}btn-success{% endif %}">
+        <form method="post" action="{% url 'toggle_student_status' student.id %}" style="display:inline;">{% csrf_token %}
+        <button type="submit" class="btn {% if student.status == 'active' %}btn-danger{% else %}btn-success{% endif %}">
             {% if student.status == 'active' %}
                 <i class="fas fa-times"></i> تعيين غير مقيد
             {% else %}
                 <i class="fas fa-check"></i> تعيين مقيد
             {% endif %}
-        </a>
+        </button>
+        </form>
         <a href="{% url 'edit_student' student.id %}" class="btn btn-primary"><i class="fas fa-edit"></i> تعديل</a>
         <a href="{% url 'add_evaluation' %}?student={{ student.id }}" class="btn btn-success"><i class="fas fa-clipboard-check"></i> تقييم شهري جديد</a>
         <a href="{% url 'country_students' student.country.id %}" class="btn btn-outline"><i class="fas fa-arrow-right"></i> العودة</a>
+    </div>
+</div>
+
+<div style="background:#F5F3FF; border:1px solid #DDD6FE; border-radius:18px; padding:18px 22px; margin:20px 0;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+        <strong style="color:#5B21B6;"><i class="fas fa-comments"></i> بوابة الطالب والشات مع المعلمة (تحت إشراف الإدارة)</strong>
+        <span style="display:flex; gap:8px; flex-wrap:wrap;">
+            <a class="btn btn-primary btn-sm" href="{% url 'chat_admin_thread' student.id %}">💬 فتح الشات{% if student_conv.admin_unread %} ({{ student_conv.admin_unread }}){% endif %}{% if student_conv.is_flagged %} 🚩{% endif %}</a>
+            {% if student.user_id %}
+                <a class="btn btn-outline btn-sm" href="{% url 'reset_student_login_password' student.id %}">🔑 تغيير كلمة السر</a>
+                <form method="post" action="{% url 'revoke_student_login' student.id %}" style="display:inline;" onsubmit="return confirm('إلغاء حساب الطالب؟');">{% csrf_token %}<button class="btn btn-danger btn-sm" type="submit">إلغاء الحساب</button></form>
+            {% else %}
+                <a class="btn btn-success btn-sm" href="{% url 'create_student_login' student.id %}">➕ إنشاء حساب بوابة الطالب</a>
+            {% endif %}
+        </span>
+    </div>
+    <div style="font-size:0.86rem; color:#5B21B6; margin-top:10px; line-height:1.9;">
+        {% if student.user_id %}
+            اسم المستخدم: <strong dir="ltr">{{ student_login_display }}</strong> · رابط الدخول:
+            <span class="quick-link-row" style="display:inline-flex; gap:6px; vertical-align:middle;">
+                <input type="text" readonly id="sp-link" value="{{ student_portal_url }}" style="min-width:260px; padding:6px 10px; border-radius:10px; border:1px solid #DDD6FE; direction:ltr; font-size:0.8rem;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('sp-link').value); this.textContent='✔';">نسخ</button>
+            </span>
+        {% else %}
+            الطالب لسه معندوش حساب، فمش هيقدر يكلم معلمته جوه المنصة. اعمليله حساب وابعتيله اسم المستخدم وكلمة السر.
+        {% endif %}
     </div>
 </div>
 
@@ -29,6 +57,7 @@
     <div><strong>قيمة الاشتراك:</strong> {{ student.subscription_fee }} جنيه</div>
     <div><strong>السن:</strong> {{ student.age|default:"-" }}</div>
     <div><strong>الهاتف:</strong> {{ student.phone|default:"-" }}</div>
+    <div><strong>هاتف ولي الأمر:</strong> {{ student.guardian_phone|default:"-" }}</div>
     <div><strong>المحافظة:</strong> {{ student.governorate|default:"-" }}</div>
     <div><strong>تاريخ التسجيل:</strong> {{ student.join_date|date:"Y/m/d" }}</div>
     <div><strong>بداية الاشتراك:</strong> {{ student.start_date|date:"Y/m/d" }}</div>

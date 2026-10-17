@@ -1,0 +1,9 @@
+<div class="card lvl">
+  <div class="lvl-badge">⭐</div>
+  <div style="flex:1; min-width:200px;">
+    <div style="display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;"><strong style="font-size:1.1rem;">{{ st.level.name }}</strong><span><b class="js-total">{{ st.points }}</b> نجمة</span></div>
+    <div class="lvl-bar"><i style="width:{{ st.level.pct }}%"></i></div>
+    <small style="color:var(--ink-muted);">{% if st.level.next_at %}فاضلك {{ st.level.to_next }} نجمة وتبقى «{{ st.level.next_name }}»{% else %}وصلت لأعلى مستوى، ما شاء الله! 👑{% endif %}</small>
+  </div>
+  <div class="chips"><span class="chip">🔥 {{ st.streak }} يوم ورا بعض</span><span class="chip">🏅 {{ st.badges_won }} وسام</span></div>
+</div>

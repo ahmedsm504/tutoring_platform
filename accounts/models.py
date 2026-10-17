@@ -13,6 +13,7 @@ class User(AbstractUser):
     """
     USER_TYPES = (
         ('student', 'طالب'),
+        ('teacher', 'معلمة'),
         ('supervisor', 'مشرف'),
         ('admin', 'مدير'),
     )
@@ -319,6 +320,11 @@ class TrialBooking(models.Model):
 class FCMToken(models.Model):
     token = models.TextField(unique=True)
     is_admin = models.BooleanField(default=False)
+    # صاحب المتصفح (لو كان عامل دخول) - عشان نبعتله إشعارات الرسايل الخاصة بيه بس
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE,
+        related_name='fcm_tokens', verbose_name="المستخدم",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -1,0 +1,276 @@
+<style>
+.cb-shell{width:100%; max-width:100%; min-width:0; box-sizing:border-box; display:flex; flex-direction:column; height:min(calc(100vh - 150px), 780px); min-height:480px; background:var(--surface,#fff); border:1px solid var(--border,#E7E1F5); border-radius:22px; overflow:hidden; box-shadow:0 10px 30px rgba(51,25,94,.08);}
+.cb-top{display:flex; align-items:center; gap:12px; padding:14px 18px; background:linear-gradient(120deg,#6D28D9,#8B5CF6); color:#fff;}
+.cb-avatar{width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; position:relative;}
+.cb-dot{position:absolute; bottom:1px; left:1px; width:12px; height:12px; border-radius:50%; background:#9CA3AF; border:2px solid #7C3AED;}
+.cb-dot.on{background:#22C55E;}
+.cb-title{font-weight:800; font-size:1.02rem; line-height:1.3;}
+.cb-status{font-size:0.78rem; opacity:.9; min-height:1.1em;}
+.cb-top-actions{margin-inline-start:auto; display:flex; gap:8px; align-items:center;}
+.cb-top-actions a, .cb-top-actions button{color:#fff; background:rgba(255,255,255,.16); border:none; border-radius:999px; padding:7px 13px; font-size:0.8rem; text-decoration:none; cursor:pointer; font-family:inherit; font-weight:700;}
+.cb-banner{padding:9px 16px; font-size:0.82rem; font-weight:700; background:#FEF3C7; color:#92400E; border-bottom:1px solid #FDE68A;}
+.cb-banner.red{background:#FEE2E2; color:#991B1B; border-color:#FECACA;}
+.cb-list{flex:1; overflow-y:auto; padding:18px 16px; display:flex; flex-direction:column; gap:6px; background:#EFEAE2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 4 L34 26 L56 30 L34 34 L30 56 L26 34 L4 30 L26 26 Z' fill='%23d9cfee' fill-opacity='.35'/%3E%3C/svg%3E");}
+html[data-theme="dark"] .cb-list{background-color:#0f0a18;}
+.cb-row{display:flex;}
+.cb-in{justify-content:flex-start;}
+.cb-out{justify-content:flex-end;}
+.cb-bubble{max-width:min(78%,560px); padding:8px 12px 5px; border-radius:16px; background:#fff; color:#1f1633; box-shadow:0 1px 1.5px rgba(0,0,0,.12); overflow-wrap:anywhere; position:relative; animation:cbIn .18s ease-out;}
+@keyframes cbIn{from{transform:translateY(6px); opacity:0;} to{transform:none; opacity:1;}}
+.cb-in .cb-bubble{border-top-right-radius:4px;}
+.cb-out .cb-bubble{background:#D9FDD3; border-top-left-radius:4px;}
+.cb-admin .cb-bubble{background:#EDE9FE;}
+.cb-blocked .cb-bubble{background:#FEE2E2; outline:1.5px dashed #DC2626;}
+.cb-flagged{outline:2px solid #D97706;}
+html[data-theme="dark"] .cb-bubble{background:#241C36; color:#EDE9F7;}
+html[data-theme="dark"] .cb-out .cb-bubble{background:#1f3b2c;}
+.cb-who{font-size:0.72rem; font-weight:800; color:#7C3AED; margin-bottom:2px;}
+.cb-text{font-size:0.95rem; line-height:1.75;}
+.cb-text a{color:#2563EB;}
+.cb-note{font-size:0.78rem; padding:5px 8px; border-radius:8px; background:rgba(0,0,0,.05);}
+.cb-alert{font-size:0.76rem; color:#B91C1C; font-weight:700; margin-top:4px;}
+.cb-flag{font-size:0.74rem; color:#B45309; font-weight:700; margin-top:4px;}
+.cb-meta{display:flex; gap:6px; justify-content:flex-end; align-items:center; font-size:0.66rem; opacity:.6; margin-top:2px; direction:ltr;}
+.cb-tick{font-weight:800; letter-spacing:-2px;}
+.cb-tick.read{color:#0EA5E9; opacity:1;}
+.cb-img{max-width:100%; max-height:300px; border-radius:10px; display:block; margin-bottom:4px;}
+.cb-audio{width:270px; max-width:100%; height:40px;}
+.cb-video{max-width:100%; max-height:300px; border-radius:10px;}
+.cb-file{font-weight:700; color:#6D28D9; text-decoration:none;}
+.cb-mini button{margin-top:4px; border:none; background:rgba(0,0,0,.07); border-radius:8px; padding:3px 9px; cursor:pointer; font-family:inherit; font-size:0.72rem;}
+.cb-day{align-self:center; background:rgba(255,255,255,.85); color:#5b4a7a; font-size:0.72rem; font-weight:700; padding:3px 12px; border-radius:999px; margin:6px 0;}
+.cb-typing{align-self:flex-start; background:#fff; border-radius:16px; padding:10px 14px; display:none; box-shadow:0 1px 1.5px rgba(0,0,0,.12);}
+.cb-typing span{display:inline-block; width:7px; height:7px; margin:0 2px; background:#A78BFA; border-radius:50%; animation:cbT 1.2s infinite;}
+.cb-typing span:nth-child(2){animation-delay:.15s;} .cb-typing span:nth-child(3){animation-delay:.3s;}
+@keyframes cbT{0%,60%,100%{transform:translateY(0); opacity:.5;} 30%{transform:translateY(-5px); opacity:1;}}
+.cb-jump{position:absolute; left:18px; bottom:96px; display:none; background:#7C3AED; color:#fff; border:none; border-radius:999px; padding:8px 14px; font-weight:800; cursor:pointer; box-shadow:0 6px 16px rgba(0,0,0,.2); font-family:inherit; z-index:3;}
+.cb-compose{border-top:1px solid var(--border,#E7E1F5); padding:10px 12px; background:var(--surface,#fff);}
+.cb-preview{display:none; align-items:center; gap:10px; padding:8px 10px; margin-bottom:8px; border-radius:12px; background:var(--violet-50,#F7F5FC); font-size:0.82rem;}
+.cb-preview img{max-height:60px; border-radius:8px;}
+.cb-preview button{margin-inline-start:auto; border:none; background:none; font-size:1.1rem; cursor:pointer;}
+.cb-row-input{display:flex; align-items:flex-end; gap:8px;}
+.cb-row-input textarea{flex:1; min-width:0; width:100%; resize:none; max-height:140px; min-height:46px; border-radius:22px; border:1.6px solid var(--border,#E7E1F5); padding:11px 16px; font-family:inherit; font-size:0.95rem; background:var(--surface,#fff); color:var(--ink,#33195E); line-height:1.5;}
+.cb-row-input textarea:focus{outline:none; border-color:#8B5CF6;}
+.cb-icon{width:46px; height:46px; flex-shrink:0; border-radius:50%; border:none; cursor:pointer; font-size:1.15rem; display:flex; align-items:center; justify-content:center; background:var(--violet-100,#EEE9FA); color:#6D28D9;}
+.cb-send{background:#7C3AED; color:#fff;}
+.cb-send:disabled{opacity:.5; cursor:default;}
+.cb-rec.on{background:#DC2626; color:#fff; animation:cbPulse 1s infinite;}
+@keyframes cbPulse{50%{box-shadow:0 0 0 8px rgba(220,38,38,.15);}}
+.cb-recinfo{display:none; flex:1; align-items:center; gap:10px; padding:0 14px; height:46px; border-radius:22px; background:#FEE2E2; color:#991B1B; font-weight:800;}
+.cb-warn{display:none; margin-top:6px; font-size:0.78rem; font-weight:700; color:#DC2626;}
+.cb-hint{font-size:0.72rem; color:var(--ink-muted,#746A93); margin-top:6px;}
+.cb-ro{padding:14px; text-align:center; font-weight:700; color:#92400E; background:#FEF3C7;}
+@media (max-width:640px){ .cb-shell{height:calc(100vh - 170px); border-radius:16px;} .cb-bubble{max-width:88%;} .cb-top-actions a span{display:none;} .cb-icon{width:42px; height:42px;} .cb-row-input{gap:6px;} .cb-list{padding:12px 10px;} .cb-audio{width:220px;} }
+</style>
+
+<div class="cb-shell" style="position:relative;">
+  <div class="cb-top">
+    <div class="cb-avatar">{% if role == 'student' %}👩‍🏫{% else %}🎓{% endif %}<span class="cb-dot{% if other_online %} on{% endif %}" id="cb-dot"></span></div>
+    <div style="min-width:0;">
+      <div class="cb-title">{% if role == 'student' %}{% if teacher %}المعلمة {{ teacher.name }}{% else %}المعلمة{% endif %}{% else %}{{ student.name }}{% endif %}</div>
+      <div class="cb-status" id="cb-status">{% if other_online %}متصل الآن{% elif role != 'student' %}{% if teacher %}المعلمة: {{ teacher.name }}{% endif %}{% else %}الرسايل هنا بتوصل للمعلمة والإدارة متابعة{% endif %}</div>
+    </div>
+    <div class="cb-top-actions">
+      {% if back_url %}<a href="{{ back_url }}">→ <span>رجوع</span></a>{% endif %}
+    </div>
+  </div>
+
+  {% if conv.is_locked %}<div class="cb-banner red" id="cb-locked">🔒 المحادثة مقفولة مؤقتًا من الإدارة.</div>{% endif %}
+  {% if role != 'student' and not student_has_account %}<div class="cb-banner">ℹ️ الطالب لسه معندوش حساب في بوابة الطالب، فمش هيشوف الرسايل غير لما الإدارة تعمله حساب.</div>{% endif %}
+  {% if role != 'student' and not teacher %}<div class="cb-banner">ℹ️ الطالب ملوش معلمة حاليًا.</div>{% endif %}
+
+  <div class="cb-list" id="cb-list" data-last-id="{{ last_id }}">
+    {% for m in chat_messages %}
+      {% ifchanged m.created_at.date %}<div class="cb-day">{{ m.created_at|date:"l j F" }}</div>{% endifchanged %}
+      {% include 'chat/_bubble.html' %}
+    {% empty %}
+      <div class="cb-day" id="cb-empty">👋 ابدأ المحادثة - {% if role == 'student' %}اسأل معلمتك عن أي حاجة في الحفظ أو المواعيد{% else %}ابعتي أول رسالة{% endif %}</div>
+    {% endfor %}
+    <div class="cb-typing" id="cb-typing"><span></span><span></span><span></span></div>
+  </div>
+  <button type="button" class="cb-jump" id="cb-jump">⬇ رسايل جديدة</button>
+
+  {% if can_send %}
+  <form class="cb-compose" id="cb-form" method="post" enctype="multipart/form-data" action="{% url 'chat_send' conv.id %}">
+    {% csrf_token %}
+    <div class="cb-preview" id="cb-preview"><span id="cb-preview-body"></span><button type="button" id="cb-preview-x" title="إلغاء">✕</button></div>
+    <div class="cb-row-input">
+      <label class="cb-icon" title="صورة / ملف / فيديو">📎<input type="file" name="file" id="cb-file" hidden accept="image/*,audio/*,video/mp4,video/webm,application/pdf"></label>
+      <textarea name="text" id="cb-text" rows="1" maxlength="4000" placeholder="{% if role == 'admin' %}اكتب رسالة باسم الإدارة...{% else %}اكتب رسالة...{% endif %}"></textarea>
+      <div class="cb-recinfo" id="cb-recinfo">🔴 بيسجل... <span id="cb-rectime">0:00</span></div>
+      <button type="button" class="cb-icon cb-rec" id="cb-rec" title="رسالة صوتية">🎙️</button>
+      <button type="submit" class="cb-icon cb-send" id="cb-send" title="إرسال">➤</button>
+    </div>
+    <div class="cb-warn" id="cb-warn">⛔ الرسالة شكلها فيها رقم أو رابط أو حساب، فهتتمنع ومش هتتبعت. الكلام بيكون هنا على المنصة بس.</div>
+    <div class="cb-hint">{% if role == 'admin' %}رسالتك هتظهر للطالب والمعلمة باسم الإدارة.{% else %}🔒 المحادثة تحت إشراف الإدارة. ممنوع تبادل أرقام أو روابط أو حسابات تواصل خاصة.{% endif %}</div>
+  </form>
+  {% elif role == 'supervisor' %}
+    <div class="cb-ro">👁️ وضع المتابعة (قراءة بس)</div>
+  {% endif %}
+</div>
+
+<script>
+(function(){
+  var list = document.getElementById('cb-list');
+  var lastId = parseInt(list.getAttribute('data-last-id'), 10) || 0;
+  var POLL = "{% url 'chat_poll' conv.id %}", TYPING = "{% url 'chat_typing' conv.id %}";
+  var ROLE = "{{ role }}";
+  var CSRF = (document.querySelector('#cb-form [name=csrfmiddlewaretoken]') || {}).value || '';
+  var typingEl = document.getElementById('cb-typing');
+  var jump = document.getElementById('cb-jump');
+  var statusEl = document.getElementById('cb-status'), dot = document.getElementById('cb-dot');
+  var defaultStatus = statusEl.textContent;
+
+  function atBottom(){ return list.scrollHeight - list.scrollTop - list.clientHeight < 140; }
+  function toBottom(){ list.scrollTop = list.scrollHeight; jump.style.display = 'none'; }
+  toBottom();
+  window.addEventListener('load', toBottom);
+  list.addEventListener('scroll', function(){ if(atBottom()) jump.style.display = 'none'; });
+  jump.addEventListener('click', toBottom);
+  list.addEventListener('load', function(e){ if(e.target.tagName === 'IMG' && atBottom()) toBottom(); }, true);
+
+  function appendHTML(html, mine){
+    if(!html) return;
+    var stick = mine || atBottom();
+    var empty = document.getElementById('cb-empty'); if(empty) empty.remove();
+    var tmp = document.createElement('div'); tmp.innerHTML = html;
+    var added = 0;
+    Array.prototype.slice.call(tmp.children).forEach(function(el){
+      var id = el.getAttribute('data-mid');
+      if(id && list.querySelector('.cb-row[data-mid="' + id + '"]')) return;
+      list.insertBefore(el, typingEl); added++;
+      lastId = Math.max(lastId, parseInt(id, 10) || 0);
+    });
+    if(stick) toBottom(); else if(added) jump.style.display = 'block';
+    return added;
+  }
+
+  // صوت خفيف للرسالة الجديدة
+  var actx = null;
+  function ding(){
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      [[660,0],[880,.12]].forEach(function(n){
+        var o = actx.createOscillator(), g = actx.createGain();
+        o.frequency.value = n[0]; o.connect(g); g.connect(actx.destination);
+        g.gain.setValueAtTime(.0001, actx.currentTime + n[1]);
+        g.gain.exponentialRampToValueAtTime(.25, actx.currentTime + n[1] + .02);
+        g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + n[1] + .25);
+        o.start(actx.currentTime + n[1]); o.stop(actx.currentTime + n[1] + .3);
+      });
+    } catch(e){}
+  }
+  document.addEventListener('click', function(){ try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} }, {once:true});
+
+  var busy = false, timer = null;
+  function poll(){
+    if(busy) return; busy = true;
+    fetch(POLL + '?after=' + lastId + (document.hidden ? '&passive=1' : ''), {credentials:'same-origin', headers:{'Accept':'application/json'}})
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(d){
+        var n = appendHTML(d.html, false);
+        if(n){ ding(); if(document.hidden && window.Notification && Notification.permission === 'granted'){ try { new Notification('💬 رسالة جديدة', {body: list.querySelector('.cb-row:last-of-type .cb-text') ? list.querySelector('.cb-row:last-of-type .cb-text').textContent.slice(0,100) : '', tag:'chat-{{ conv.id }}'}); } catch(e){} } }
+        (d.read_ids || []).forEach(function(id){
+          var t = list.querySelector('.cb-row[data-mid="' + id + '"] .cb-tick');
+          if(t && !t.classList.contains('read')){ t.classList.add('read'); t.textContent = '✓✓'; t.title = 'اتقرت'; }
+        });
+        typingEl.style.display = d.typing ? 'block' : 'none';
+        if(d.typing && atBottom()) toBottom();
+        if(dot) dot.classList.toggle('on', !!d.online);
+        statusEl.textContent = d.typing ? 'بيكتب الآن...' : (d.online ? 'متصل الآن' : defaultStatus);
+      })
+      .catch(function(){})
+      .finally(function(){ busy = false; schedule(); });
+  }
+  function schedule(){ clearTimeout(timer); timer = setTimeout(poll, document.hidden ? 12000 : 2500); }
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) poll(); });
+  schedule();
+
+  var form = document.getElementById('cb-form');
+  if(!form) return;
+  var ta = document.getElementById('cb-text'), sendBtn = document.getElementById('cb-send');
+  var fileIn = document.getElementById('cb-file'), warn = document.getElementById('cb-warn');
+  var prev = document.getElementById('cb-preview'), prevBody = document.getElementById('cb-preview-body');
+
+  function grow(){ ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight, 140) + 'px'; }
+  var AR = '٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹';
+  function risky(s){
+    if(ROLE === 'admin') return false;
+    s = s.replace(/[٠-٩۰-۹]/g, function(c){ return String(AR.indexOf(c) % 10); });
+    var phone = (s.match(/\+?\d(?:[\s\-\.\(\)_]{0,3}\d){7,}/g) || []).some(function(m){
+      return !/^\s*(\d{1,2}[\-\.]\d{1,2}[\-\.]\d{2,4}|\d{4}[\-\.]\d{1,2}[\-\.]\d{1,2})\s*$/.test(m) && m.replace(/\D/g,'').length >= 8;
+    });
+    return phone || /(https?:\/\/|www\.)/i.test(s) || /[\w.+\-]+\s*@\s*[\w\-]+\s*\.\s*[a-z]{2,}/i.test(s) || /(^|[^\w.])@[a-z0-9_.]{3,}/i.test(s) || /wa\.me|t\.me|instagram|facebook|fb\.com|tiktok|snapchat/i.test(s);
+  }
+  var lastTyping = 0;
+  ta.addEventListener('input', function(){
+    grow();
+    warn.style.display = risky(ta.value) ? 'block' : 'none';
+    if(ROLE !== 'admin' && Date.now() - lastTyping > 3000 && ta.value.trim()){
+      lastTyping = Date.now();
+      fetch(TYPING, {method:'POST', credentials:'same-origin', headers:{'X-CSRFToken': CSRF}}).catch(function(){});
+    }
+  });
+  var mobile = window.matchMedia('(pointer:coarse)').matches;
+  ta.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.shiftKey && !mobile){ e.preventDefault(); submit(); }
+  });
+
+  function clearFile(){ fileIn.value = ''; prev.style.display = 'none'; prevBody.innerHTML = ''; }
+  document.getElementById('cb-preview-x').addEventListener('click', clearFile);
+  function showPreview(file){
+    prevBody.innerHTML = '';
+    if(file.type.indexOf('image') === 0){ var img = new Image(); img.src = URL.createObjectURL(file); prevBody.appendChild(img); }
+    else if(file.type.indexOf('audio') === 0){ var au = document.createElement('audio'); au.controls = true; au.src = URL.createObjectURL(file); prevBody.appendChild(au); }
+    else { prevBody.textContent = '📄 ' + file.name; }
+    prev.style.display = 'flex';
+  }
+  fileIn.addEventListener('change', function(){ if(fileIn.files.length) showPreview(fileIn.files[0]); });
+
+  function submit(blobFile){
+    var text = ta.value.trim();
+    var file = blobFile || (fileIn.files.length ? fileIn.files[0] : null);
+    if(!text && !file) return;
+    var fd = new FormData();
+    fd.append('csrfmiddlewaretoken', CSRF);
+    fd.append('text', text);
+    if(file) fd.append('file', file, file.name);
+    sendBtn.disabled = true;
+    fetch(form.action, {method:'POST', body:fd, credentials:'same-origin', headers:{'X-Requested-With':'XMLHttpRequest'}})
+      .then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+      .then(function(res){
+        if(!res.ok){ alert(res.d.error || 'حصلت مشكلة، حاول تاني.'); return; }
+        appendHTML(res.d.html, true);
+        if(res.d.warning) alert(res.d.warning);
+        ta.value = ''; grow(); warn.style.display = 'none'; clearFile();
+      })
+      .catch(function(){ alert('مفيش اتصال بالإنترنت، حاول تاني.'); })
+      .finally(function(){ sendBtn.disabled = false; ta.focus(); });
+  }
+  form.addEventListener('submit', function(e){ e.preventDefault(); submit(); });
+
+  // ===== رسالة صوتية =====
+  var recBtn = document.getElementById('cb-rec'), recInfo = document.getElementById('cb-recinfo'), recTime = document.getElementById('cb-rectime');
+  var types = ['audio/webm;codecs=opus', 'audio/ogg;codecs=opus', 'audio/mp4', 'audio/webm'];
+  var mime = window.MediaRecorder ? types.filter(function(t){ try { return MediaRecorder.isTypeSupported(t); } catch(e){ return false; } })[0] : null;
+  if(!mime || !navigator.mediaDevices){ recBtn.style.display = 'none'; return; }
+  var rec = null, chunks = [], t0 = 0, tick = null;
+  function stopUI(){ recBtn.classList.remove('on'); recBtn.textContent = '🎙️'; recInfo.style.display = 'none'; ta.style.display = ''; clearInterval(tick); }
+  recBtn.addEventListener('click', function(){
+    if(rec && rec.state === 'recording'){ rec.stop(); return; }
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+      chunks = []; rec = new MediaRecorder(stream, {mimeType: mime});
+      rec.ondataavailable = function(e){ if(e.data.size) chunks.push(e.data); };
+      rec.onstop = function(){
+        stream.getTracks().forEach(function(t){ t.stop(); }); stopUI();
+        if(Date.now() - t0 < 700) return;  // ضغطة بالغلط
+        var base = mime.split(';')[0], ext = base === 'audio/mp4' ? 'm4a' : base.split('/')[1];
+        submit(new File(chunks, 'voice-' + Date.now() + '.' + ext, {type: base}));
+      };
+      rec.start(); t0 = Date.now();
+      recBtn.classList.add('on'); recBtn.textContent = '⏹'; ta.style.display = 'none'; recInfo.style.display = 'flex';
+      tick = setInterval(function(){ var s = Math.floor((Date.now() - t0) / 1000); recTime.textContent = Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); if(s >= 300) rec.stop(); }, 250);
+    }).catch(function(){ alert('مش قادرين نوصل للمايك - اسمح للمتصفح باستخدامه.'); });
+  });
+})();
+</script>

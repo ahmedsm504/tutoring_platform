@@ -1,0 +1,27 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}الواجبات الصوتية{% endblock %}
+{% block content %}
+<div class="l-head">
+  <div><h1>🎙️ الواجبات الصوتية</h1><p>ابعتي واجب لطلابك، وهم يسجلوه بصوتهم وتسمعيه وتصححيه من هنا.</p></div>
+  <a class="btn btn-primary btn-big" href="{% url 'learning_teacher_new' %}"><i class="fas fa-plus"></i> واجب جديد</a>
+</div>
+<div class="l-tabs">
+  <a href="?f=review{% if sid %}&student={{ sid }}{% endif %}" class="{% if f == 'review' %}on{% endif %}">مستني تصحيحك{% if pending_count %} ({{ pending_count }}){% endif %}</a>
+  <a href="?f=open{% if sid %}&student={{ sid }}{% endif %}" class="{% if f == 'open' %}on{% endif %}">لسه متسلمش</a>
+  <a href="?f=all{% if sid %}&student={{ sid }}{% endif %}" class="{% if f == 'all' %}on{% endif %}">الكل</a>
+  <form method="get" style="margin-inline-start:auto;">
+    <input type="hidden" name="f" value="{{ f }}">
+    <select name="student" onchange="this.form.submit()" style="padding:8px 10px; border-radius:999px; border:1.5px solid var(--border); font:inherit; font-weight:700; background:var(--surface); color:var(--ink);">
+      <option value="">كل الطلاب</option>
+      {% for s in students %}<option value="{{ s.pk }}" {% if sid == s.pk|stringformat:"s" %}selected{% endif %}>{{ s.name }}</option>{% endfor %}
+    </select>
+  </form>
+</div>
+<div class="hw-list">
+  {% for h in rows %}
+    {% url 'learning_teacher_detail' h.pk as u %}{% include 'learning/_hw_row.html' with url=u who=h.student.name %}
+  {% empty %}
+    <div class="card l-empty"><span class="big">{% if f == 'review' %}🎉{% else %}📭{% endif %}</span>{% if f == 'review' %}مفيش تسليمات مستنياكي دلوقتي.{% else %}مفيش واجبات هنا.{% endif %}</div>
+  {% endfor %}
+</div>
+{% endblock %}

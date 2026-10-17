@@ -1,0 +1,58 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% load static %}
+{% block title %}واجب جديد{% endblock %}
+{% block content %}
+<div class="l-head"><div><h1>📝 واجب جديد</h1><p>اختاري الطلاب والآيات، والطالب هيسمعها بصوت الشيخ ويسجل قراءته ويبعتهالك.</p></div>
+  <a class="btn btn-outline" href="{% url 'learning_teacher_list' %}">رجوع</a></div>
+<form method="post" enctype="multipart/form-data" class="card" id="hw-form">
+  {% csrf_token %}
+  <div class="field"><label>الطلاب</label>
+    <div class="pick-students">
+      {% for s in students %}<label><input type="checkbox" name="students" value="{{ s.pk }}" {% if s.pk == pre_student or s.pk|stringformat:"s" in post_students %}checked{% endif %}> {{ s.name }}</label>
+      {% empty %}<p style="color:var(--ink-muted);">مفيش طلاب مربوطين بيكي.</p>{% endfor %}
+    </div>
+  </div>
+  <div class="field"><label>نوع الواجب</label>
+    <div class="choice">{% for v, l in kinds %}<label class="ok"><input type="radio" name="kind" value="{{ v }}" {% if post.kind == v or not post.kind and forloop.first %}checked{% endif %}> {{ l }}</label>{% endfor %}</div>
+  </div>
+  <div class="grid-3" id="range-fields">
+    <div class="field"><label for="surah">السورة</label>
+      <select id="surah" name="surah"><option value="">— اختاري —</option>
+        {% for s in quran_index %}<option value="{{ s.id }}" data-n="{{ s.count }}" {% if post.surah == s.id|stringformat:"s" %}selected{% endif %}>{{ s.id }}. {{ s.name }} ({{ s.count }} آية)</option>{% endfor %}
+      </select></div>
+    <div class="field"><label for="af">من آية</label><input id="af" type="number" name="ayah_from" min="1" value="{{ post.ayah_from|default:'1' }}"></div>
+    <div class="field"><label for="at">إلى آية</label><input id="at" type="number" name="ayah_to" min="1" value="{{ post.ayah_to }}"></div>
+  </div>
+  <div id="preview" class="hw-note" style="display:none; background:var(--violet-50); font-family:'Amiri Quran',serif; font-size:1.2rem; line-height:2.2;"></div>
+  <div class="field"><label for="title">العنوان (اختياري - بيتكتب لوحده من السورة)</label><input id="title" name="title" maxlength="160" value="{{ post.title }}" placeholder="مثال: حفظ أول 5 آيات من سورة النبأ"></div>
+  <div class="field"><label for="ins">التعليمات للطالب</label><textarea id="ins" name="instructions" rows="3" placeholder="مثال: اسمع الآيات 3 مرات بصوت الحصري، وبعدين سجّل وانت بتقرأ من غير ما تبص.">{{ post.instructions }}</textarea></div>
+  <div class="field" style="max-width:240px;"><label for="due">آخر موعد للتسليم</label><input id="due" type="date" name="due_date" min="{{ today }}" value="{{ post.due_date }}"></div>
+  <div class="field"><label>شرح بصوتك (اختياري)</label>
+    {% include 'learning/_recorder.html' with name='teacher_audio' label='سجّلي شرح أو قراءة نموذجية للطالب' compact=1 max=300 %}
+  </div>
+  <p style="font-size:.8rem; color:var(--ink-muted);">🔒 زي الشات: ممنوع كتابة أرقام أو روابط أو حسابات، والإدارة شايفة كل الواجبات والتسجيلات.</p>
+  <button class="btn btn-primary btn-big" type="submit"><i class="fas fa-paper-plane"></i> ابعتي الواجب</button>
+</form>
+<script src="{% static 'js/recorder.js' %}" defer></script>
+<script>
+(function(){
+  var sel = document.getElementById('surah'), af = document.getElementById('af'), at = document.getElementById('at'), pv = document.getElementById('preview');
+  var STATIC = document.querySelector('meta[name="static-url"]').content;
+  function sync(){
+    var o = sel.selectedOptions[0], n = o && +o.dataset.n;
+    if(!n){ pv.style.display='none'; return; }
+    af.max = at.max = n;
+    if(!at.value || +at.value > n) at.value = Math.min(n, (+af.value||1) + 4);
+    if(+af.value > n) af.value = 1;
+    fetch(STATIC + 'quran/' + sel.value + '.json').then(function(r){return r.json();}).then(function(d){
+      var a = Math.max(1, +af.value||1), b = Math.min(d.verses.length, +at.value||a);
+      var t = d.verses.slice(a-1, b).map(function(v,i){ return v + ' ﴿' + (a+i) + '﴾'; }).join(' ');
+      pv.textContent = t.length > 600 ? t.slice(0, 600) + ' …' : t; pv.style.display = 'block';
+    });
+  }
+  sel.addEventListener('change', function(){ at.value=''; af.value=1; sync(); });
+  af.addEventListener('change', sync); at.addEventListener('change', sync);
+  if(sel.value) sync();
+})();
+</script>
+{% endblock %}

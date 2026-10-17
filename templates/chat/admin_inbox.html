@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+{% block title %}الشات - تحت إشراف الإدارة{% endblock %}
+{% block extra_css %}{% include 'chat/_inbox_styles.html' %}
+<style>
+.ch-tabs{display:flex; gap:8px; flex-wrap:wrap; margin:16px 0;}
+.ch-tabs a{padding:8px 16px; border-radius:999px; text-decoration:none; font-weight:700; font-size:0.85rem; background:#fff; border:1px solid var(--border); color:var(--ink);}
+.ch-tabs a.on{background:var(--violet-600); color:#fff; border-color:var(--violet-600);}
+.ch-badge{display:inline-block; background:var(--red); color:#fff; border-radius:999px; padding:1px 8px; font-size:0.72rem; margin-right:4px;}
+</style>{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+  <div>
+    <h1 style="margin:0;">💬 الشات بين المعلمات والطلاب</h1>
+    <p style="color:var(--ink-muted); margin:6px 0 0;">كل الرسايل بتعدي من المنصة، والإدارة شايفة كل حاجة - حتى الرسايل اللي اتمنعت.</p>
+  </div>
+  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+    <div class="stat-card" style="padding:12px 18px;"><div class="number">{{ totals.flagged }}</div><div class="label">🚩 محتاجة مراجعة</div></div>
+    <div class="stat-card" style="padding:12px 18px;"><div class="number">{{ blocked_attempts }}</div><div class="label">⛔ محاولات اتمنعت</div></div>
+    <div class="stat-card" style="padding:12px 18px;"><div class="number">{{ students_with_accounts }}/{{ students_total }}</div><div class="label">🎓 طلاب ليهم حساب</div></div>
+  </div>
+</div>
+
+<div class="ch-tabs">
+  <a href="?f=" class="{% if not f %}on{% endif %}">الكل ({{ totals.all }})</a>
+  <a href="?f=unread" class="{% if f == 'unread' %}on{% endif %}">جديدة {% if totals.unread %}<span class="ch-badge">{{ totals.unread }}</span>{% endif %}</a>
+  <a href="?f=flagged" class="{% if f == 'flagged' %}on{% endif %}">🚩 محتاجة مراجعة {% if totals.flagged %}<span class="ch-badge">{{ totals.flagged }}</span>{% endif %}</a>
+  <a href="?f=locked" class="{% if f == 'locked' %}on{% endif %}">🔒 مقفولة ({{ totals.locked }})</a>
+</div>
+<form method="get" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px;">
+  <input type="hidden" name="f" value="{{ f }}">
+  <input type="text" name="q" value="{{ q }}" class="form-input" placeholder="اسم الطالب أو كلمة في الرسايل..." style="max-width:280px;">
+  <select name="teacher" class="form-input" style="max-width:220px;">
+    <option value="">كل المعلمات</option>
+    {% for t in teachers %}<option value="{{ t.id }}" {% if teacher_id == t.id|stringformat:"s" %}selected{% endif %}>{{ t.name }}</option>{% endfor %}
+  </select>
+  <button class="btn btn-primary btn-sm" type="submit">بحث</button>
+</form>
+
+<div class="ci-wrap">
+  {% for r in rows %}{% with c=r.conv m=r.last %}
+    <a class="ci-item" href="{% url 'chat_admin_thread' c.student_id %}">
+      <div class="ci-av">{{ c.student.name|slice:":1" }}</div>
+      <div class="ci-body">
+        <div class="ci-name">{{ c.student.name }} <small style="font-weight:500; color:var(--ink-muted);">مع {{ c.student.teacher.name|default:"بدون معلمة" }}</small>
+          {% if c.is_flagged %}<span class="ci-chip red">🚩</span>{% endif %}{% if c.blocked_count %}<span class="ci-chip red">⛔ {{ c.blocked_count }}</span>{% endif %}{% if c.is_locked %}<span class="ci-chip">🔒 مقفولة</span>{% endif %}</div>
+        <div class="ci-last">{% if m %}{{ m.get_sender_type_display }}: {% if m.is_blocked %}⛔ {% endif %}{{ m.preview|truncatechars:90 }}{% endif %}</div>
+      </div>
+      <div class="ci-side">
+        <span class="ci-time">{{ c.last_message_at|date:"j/n H:i" }}</span>
+        {% if c.admin_unread %}<span class="ci-badge">{{ c.admin_unread }}</span>{% endif %}
+      </div>
+    </a>
+  {% endwith %}{% empty %}
+    <div class="ci-empty">مفيش محادثات لسه. أول ما معلمة أو طالب يبعت رسالة هتظهر هنا.<br>
+      (عشان الطالب يقدر يدخل الشات لازم يكون ليه حساب - من صفحة الطالب ← "إنشاء حساب بوابة الطالب")</div>
+  {% endfor %}
+</div>
+{% if page.has_other_pages %}
+<div style="margin-top:14px; display:flex; gap:8px;">
+  {% if page.has_previous %}<a class="btn btn-outline btn-sm" href="?f={{ f }}&q={{ q|urlencode }}&teacher={{ teacher_id }}&page={{ page.previous_page_number }}">السابق</a>{% endif %}
+  <span style="align-self:center;">صفحة {{ page.number }} من {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}<a class="btn btn-outline btn-sm" href="?f={{ f }}&q={{ q|urlencode }}&teacher={{ teacher_id }}&page={{ page.next_page_number }}">التالي</a>{% endif %}
+</div>
+{% endif %}
+{% endblock %}

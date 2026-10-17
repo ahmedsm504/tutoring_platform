@@ -1,0 +1,10 @@
+{% with st=h.status %}
+<a class="hw-card st-{{ st }}" href="{{ url }}">
+  <span class="hw-ic">{% if h.kind == 'memorize' %}📖{% elif h.kind == 'review' %}🔁{% elif h.kind == 'recite' %}🎙️{% else %}✏️{% endif %}</span>
+  <span class="hw-main">
+    <strong>{{ h.title }}</strong>
+    <small>{% if who %}{{ who }} · {% endif %}{{ h.get_kind_display }}{% if h.due_date %} · {% if h.is_overdue %}<span class="hw-late">متأخر - كان آخر موعد {{ h.due_date|date:"j F" }}</span>{% else %}آخر موعد {{ h.due_date|date:"l j F" }}{% endif %}{% endif %}</small>
+  </span>
+  <span class="hw-st">{% if st == 'approved' %}{% with s=h.latest.stars %}<span class="stars">{% for i in "12345"|make_list %}{% if forloop.counter <= s %}★{% endif %}{% endfor %}</span>{% endwith %}{% else %}{{ h.status_label }}{% endif %}</span>
+</a>
+{% endwith %}

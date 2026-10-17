@@ -25,35 +25,40 @@ except ImportError:
 
 
 class StaticViewSitemap(Sitemap):
-    """Sitemap للصفحات الثابتة (بما في ذلك صفحات الموبايل)"""
+    """الصفحات الثابتة المهمة بس (صفحات الدخول والتسجيل وفورم السؤال اتشالوا: مالهمش قيمة في البحث
+    وكانوا متعارضين مع robots.txt)"""
     protocol = 'https'
-    
+
+    PAGES = [
+        ('home', 1.0, 'daily'),
+        ('pricing', 0.9, 'weekly'),
+        ('contact', 0.8, 'monthly'),
+        ('about', 0.7, 'monthly'),
+        ('quality_standards', 0.7, 'monthly'),
+        ('blog_list', 0.8, 'daily'),
+        ('qna:question_list', 0.85, 'daily'),
+    ]
+
     def items(self):
-        """قائمة الصفحات الثابتة"""
-        return [
-            {'url': 'home', 'priority': 1.0, 'changefreq': 'daily'},
-            {'url': 'pricing', 'priority': 0.9, 'changefreq': 'weekly'},
-            {'url': 'about', 'priority': 0.7, 'changefreq': 'monthly'},
-            {'url': 'quality_standards', 'priority': 0.7, 'changefreq': 'monthly'},
-            {'url': 'contact', 'priority': 0.8, 'changefreq': 'monthly'},
-            {'url': 'blog_list', 'priority': 0.8, 'changefreq': 'daily'},
-            {'url': 'qna:question_list', 'priority': 0.85, 'changefreq': 'daily'},
-            {'url': 'qna:ask', 'priority': 0.75, 'changefreq': 'weekly'},
-            {'url': 'register', 'priority': 0.6, 'changefreq': 'yearly'},
-            {'url': 'login', 'priority': 0.5, 'changefreq': 'yearly'},
-        ]
+        return self.PAGES
 
     def location(self, obj):
-        return reverse(obj['url'])
-    
-    def lastmod(self, obj):
-        return timezone.now()
-    
-    def changefreq(self, obj):
-        return obj['changefreq']
-    
+        return reverse(obj[0])
+
     def priority(self, obj):
-        return obj['priority']
+        return obj[1]
+
+    def changefreq(self, obj):
+        return obj[2]
+
+    def lastmod(self, obj):
+        # آخر تحديث حقيقي للصفحات اللي محتواها بيتغير (بدل "دلوقتي" كل مرة - جوجل بيتجاهل ده)
+        if obj[0] in ('blog_list', 'home') and HAS_BLOG:
+            p = Post.objects.filter(status='published').order_by('-published_at').values_list('published_at', flat=True).first()
+            return p
+        if obj[0] == 'qna:question_list' and HAS_QNA:
+            return PublicQuestion.objects.filter(status='approved').order_by('-created_at').values_list('created_at', flat=True).first()
+        return None
 
 
 class BlogPostSitemap(Sitemap):
@@ -131,8 +136,10 @@ class QNAQuestionsSitemap(Sitemap):
     def items(self):
         if not HAS_QNA:
             return []
-        # جميع الأسئلة المعتمدة
-        return PublicQuestion.objects.filter(status='approved').order_by('-created_at')
+        from django.db.models import Exists, OuterRef
+        return (PublicQuestion.objects.filter(status='approved')
+                .annotate(has_answer=Exists(QuestionAnswer.objects.filter(question=OuterRef('pk'))))
+                .order_by('-created_at'))
 
     def lastmod(self, obj):
         return obj.updated_at if hasattr(obj, 'updated_at') else obj.created_at
@@ -150,18 +157,10 @@ class QNAQuestionsSitemap(Sitemap):
         if hasattr(obj, 'is_frequent') and obj.is_frequent:
             return 0.9
         
-        # 3. الأسئلة التي لها إجابة معتمدة
-        try:
-            has_answer = QuestionAnswer.objects.filter(question=obj).exists()
-            if has_answer:
-                # تحقق إذا كانت الإجابة مميزة
-                answer = QuestionAnswer.objects.filter(question=obj).first()
-                if answer and hasattr(answer, 'is_featured') and answer.is_featured:
-                    return 0.92
-                return 0.85
-        except:
-            pass
-        
+        # 3. الأسئلة التي لها إجابة معتمدة (محسوبة مرة واحدة في items)
+        if getattr(obj, 'has_answer', False):
+            return 0.85
+
         # 4. الأسئلة الأكثر مشاهدة
         if hasattr(obj, 'view_count'):
             if obj.view_count > 500:
@@ -209,3 +208,20 @@ class QNACategorySitemap(Sitemap):
 # - NewsSitemap
 # - PopularPagesSitemap
 # لأن وظائفها مغطاة بالكامل في QNAQuestionsSitemap و BlogPostSitemap من خلال دوال priority الذكية.
+
+
+class QuranSitemap(Sitemap):
+    """صفحات المصحف: فهرس السور + صفحة لكل سورة (114) - بحث قوي جدًا زي "سورة الكهف مكتوبة" """
+    protocol = 'https'
+    changefreq = 'monthly'
+
+    def items(self):
+        return ['index'] + list(range(1, 115))
+
+    def location(self, obj):
+        return reverse('quran_index') if obj == 'index' else reverse('quran_surah', args=[obj])
+
+    def priority(self, obj):
+        if obj == 'index':
+            return 0.85
+        return 0.75 if obj in (1, 2, 18, 36, 55, 56, 67, 112, 113, 114) else 0.6

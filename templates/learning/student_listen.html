@@ -1,0 +1,46 @@
+{% extends 'core/student_portal_base.html' %}
+{% load static %}
+{% block title %}استمع للقرآن{% endblock %}
+{% block content %}
+<div class="l-head"><div><h1>🎧 استمع للقرآن</h1><p>اختار السورة والآيات والشيخ اللي تحبه، وكرر لحد ما تحفظ.</p></div></div>
+<div class="card">
+  <form class="listen-pick" id="pick" onsubmit="return false;">
+    <label>السورة<select id="ls"></select></label>
+    <label>من آية<input id="la" type="number" min="1" value="1"></label>
+    <label>إلى آية<input id="lb" type="number" min="1"></label>
+    <button class="btn btn-primary" id="lgo" type="submit" style="height:42px;">عرض</button>
+  </form>
+  <div class="surah-chips" id="quick">
+    {% for s in quran_index %}{% if s.id == 1 or s.id >= 108 or s.id == 36 or s.id == 67 or s.id == 18 %}<button type="button" data-s="{{ s.id }}">{{ s.name }}</button>{% endif %}{% endfor %}
+  </div>
+  <div class="qp" id="lp" data-surah="{{ start_surah|default:1 }}" data-from="1"><div class="qp-text"></div>
+    <p class="qp-credit">التلاوة من EveryAyah · نص المصحف: موسوعة القرآن الكريم QuranEnc (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar" target="_blank" rel="noopener license">CC BY-SA 4.0</a>)</p></div>
+</div>
+{% csrf_token %}
+{{ reciters|json_script:"qp-reciters" }}
+{{ quran_index|json_script:"q-index" }}
+<script src="{% static 'js/quran-player.js' %}"></script>
+<script>
+(function(){
+  var idx = JSON.parse(document.getElementById('q-index').textContent);
+  var ls = document.getElementById('ls'), la = document.getElementById('la'), lb = document.getElementById('lb');
+  idx.forEach(function(s){ var o = document.createElement('option'); o.value = s.id; o.textContent = s.id + '. ' + s.name; o.dataset.n = s.count; ls.appendChild(o); });
+  var root = document.getElementById('lp'), player = QuranPlayer.mount(root);
+  ls.value = root.dataset.surah;
+  function setMax(){ var n = +ls.selectedOptions[0].dataset.n; la.max = lb.max = n; if(!lb.value || +lb.value > n) lb.value = n; if(+la.value > n) la.value = 1; }
+  setMax();
+  ls.onchange = function(){ lb.value = ''; la.value = 1; setMax(); go(); };
+  function go(){ player.load(ls.value, la.value, lb.value); }
+  document.getElementById('pick').onsubmit = function(){ go(); return false; };
+  document.querySelectorAll('#quick button').forEach(function(b){ b.onclick = function(){ ls.value = b.dataset.s; ls.onchange(); }; });
+  var awarded = {};
+  root.addEventListener('quran:finished', function(e){
+    var key = e.detail.surah + ':' + e.detail.from + ':' + e.detail.to;
+    if(awarded[key]) return; awarded[key] = 1;
+    var tok = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    fetch('{% url "learning_api_score" %}', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':tok}, body: JSON.stringify({kind:'listen', detail:key})})
+      .then(function(r){ return r.json(); }).then(function(r){ if(r.added && window.fireConfetti){ fireConfetti({particleCount:50}); } });
+  });
+})();
+</script>
+{% endblock %}

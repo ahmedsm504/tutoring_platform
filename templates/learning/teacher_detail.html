@@ -1,0 +1,45 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% load static %}
+{% block title %}{{ hw.title }}{% endblock %}
+{% block content %}
+<div class="l-head" style="margin-bottom:10px;"><a class="btn btn-outline" href="{% url 'learning_teacher_list' %}">← الواجبات</a>
+  <a class="btn btn-outline" href="{% url 'chat_teacher_thread' hw.student_id %}"><i class="fas fa-comments"></i> شات {{ hw.student.name }}</a></div>
+{% include 'learning/_hw_body.html' %}
+
+{% if latest and latest.status == 'submitted' %}
+<form method="post" enctype="multipart/form-data" class="card" style="border:2px solid var(--violet-500);">
+  {% csrf_token %}
+  <h3 class="hw-sec">🎧 اسمعي تسليم {{ hw.student.name }} وصححيه</h3>
+  <audio controls preload="metadata" style="width:100%;" src="{% url 'learning_audio' 'sub' latest.pk %}"></audio>
+  {% if latest.note %}<p class="hw-note">💬 {{ latest.note }}</p>{% endif %}
+  <div class="field" style="margin-top:12px;"><label>النتيجة</label>
+    <div class="choice">
+      <label class="ok"><input type="radio" name="status" value="approved" checked> ✅ ممتاز - مقبول</label>
+      <label class="redo"><input type="radio" name="status" value="redo"> 🔁 يعيد التسجيل</label>
+    </div></div>
+  <div class="field" id="stars-field"><label>التقييم</label>
+    <div class="star-pick">{% for i in "54321"|make_list %}<input type="radio" id="st{{ i }}" name="stars" value="{{ i }}" {% if i == '5' %}checked{% endif %}><label for="st{{ i }}" title="{{ i }}">★</label>{% endfor %}</div></div>
+  <div class="field"><label for="fb">تعليقك</label><textarea id="fb" name="feedback" rows="3" placeholder="مثال: ما شاء الله! انتبه للمد في (الرحيم)"></textarea></div>
+  <div class="field"><label>تصحيح بصوتك (اختياري)</label>{% include 'learning/_recorder.html' with name='feedback_audio' label='سجّلي التصحيح بصوتك' compact=1 max=300 %}</div>
+  <input type="hidden" name="next" value="0" id="next-flag">
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    <button class="btn btn-primary btn-big" type="submit">إرسال التصحيح</button>
+    <button class="btn btn-outline btn-big" type="submit" onclick="document.getElementById('next-flag').value='1'">إرسال والتالي ⏭</button>
+  </div>
+</form>
+{% endif %}
+
+<div class="card">
+  <h3 class="hw-sec">🗂️ سجل التسليمات</h3>
+  {% include 'learning/_subs.html' %}
+</div>
+{% if not subs %}
+<form method="post" action="{% url 'learning_teacher_delete' hw.pk %}" onsubmit="return confirm('تمسحي الواجب ده؟')">{% csrf_token %}
+  <button class="btn btn-red" type="submit"><i class="fas fa-trash"></i> مسح الواجب</button></form>
+{% endif %}
+<script src="{% static 'js/recorder.js' %}" defer></script>
+<script>
+document.querySelectorAll('input[name=status]').forEach(function(r){ r.addEventListener('change', function(){
+  var sf = document.getElementById('stars-field'); if(sf) sf.style.display = (this.value === 'approved') ? '' : 'none'; }); });
+</script>
+{% endblock %}

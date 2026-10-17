@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>تقييم {{ evaluation.student_name }} - {{ evaluation.month_label }}</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -23,6 +24,9 @@
         font-family:'Tajawal', sans-serif; box-shadow: 0 6px 18px rgba(109,40,217,0.3);
     }
     .download-btn:hover{ background:#5B21B6; }
+    .wa-btn{ background:#EC4899; box-shadow:0 6px 18px rgba(236,72,153,0.3); text-decoration:none; margin-inline-start:8px; }
+    .wa-btn:hover{ background:#DB2777; }
+    .wa-note{ max-width:720px; margin:10px auto 0; text-align:center; color:#6b5f8a; font-size:0.82rem; line-height:1.8; }
     .footer-note{ text-align:center; color:#8b7fa8; font-size:0.78rem; margin-top:20px; }
 
     @media print{
@@ -41,6 +45,7 @@
         <button class="download-btn" onclick="window.print()">
             ⬇️ تحميل / طباعة كـ PDF
         </button>
+        <a class="download-btn wa-btn" href="{{ student_portal_url }}">💬 كلّم المعلمة من بوابة الطالب</a>
     </div>
 
     {% include 'core/_evaluation_report.html' %}

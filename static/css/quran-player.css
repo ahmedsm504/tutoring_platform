@@ -1,0 +1,29 @@
+/* مشغّل القرآن - بياخد ألوان الصفحة من المتغيرات دي */
+.qp{--qp-accent:var(--qp-accent-c,#0f5e55);--qp-gold:#c49a2c;--qp-paper:#fbf8ef;--qp-ink:#1d2b28;--qp-line:rgba(0,0,0,.08);position:relative}
+.qp-bar{position:sticky;top:var(--qp-sticky,0);z-index:5;background:var(--qp-bar-bg,#fff);border:1px solid var(--qp-line);border-radius:18px;padding:10px 12px;box-shadow:0 6px 18px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.qp-main{display:flex;align-items:center;gap:8px;min-width:0}
+.qp-btn{width:42px;height:42px;border-radius:50%;border:none;background:color-mix(in srgb,var(--qp-accent) 12%,transparent);color:var(--qp-accent);font-size:1rem;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
+.qp-play{width:52px;height:52px;background:var(--qp-accent);color:#fff;font-size:1.25rem;box-shadow:0 6px 16px color-mix(in srgb,var(--qp-accent) 35%,transparent)}
+.qp-loading .qp-play{animation:qp-pulse 1s infinite}
+@keyframes qp-pulse{50%{opacity:.6}}
+.qp-now{font-weight:600;font-size:.88rem;color:var(--qp-ink-muted,#5d6b68);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.qp-opts{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.qp-opt{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--qp-ink-muted,#5d6b68);font-weight:600}
+.qp-opt select{font:inherit;font-weight:700;color:var(--qp-ink);background:var(--qp-bar-bg,#fff);border:1.5px solid var(--qp-line);border-radius:10px;padding:6px 8px;max-width:210px}
+.qp-chip{font:inherit;font-size:.78rem;font-weight:700;border:1.5px solid var(--qp-line);background:transparent;color:var(--qp-ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.qp-chip.on{background:var(--qp-accent);color:#fff;border-color:var(--qp-accent)}
+.qp-text{background:var(--qp-paper);border-radius:20px;padding:clamp(16px,4vw,32px);border:1px solid color-mix(in srgb,var(--qp-gold) 35%,transparent);box-shadow:inset 0 0 0 6px color-mix(in srgb,var(--qp-gold) 8%,transparent)}
+.qp-basmala{font-family:'Amiri Quran',serif;text-align:center;font-size:clamp(1.3rem,3.4vw,1.8rem);color:var(--qp-accent);margin:0 0 8px}
+.qp-flow{font-family:'Amiri Quran','Amiri',serif;font-size:clamp(1.35rem,3.6vw,1.9rem);line-height:2.6;text-align:justify;text-align-last:center;color:var(--qp-ink);margin:0}
+.qp-flow .ayah{cursor:pointer;border-radius:10px;padding:2px 3px;transition:background .2s,color .2s,filter .25s}
+.qp-flow .ayah:hover{background:color-mix(in srgb,var(--qp-gold) 14%,transparent)}
+.qp-flow .ayah:focus-visible{outline:2px solid var(--qp-accent);outline-offset:2px}
+.qp-flow .ayah.now{background:color-mix(in srgb,var(--qp-accent) 16%,transparent);color:var(--qp-accent)}
+.ayah-num{display:inline-grid;place-items:center;min-width:1.7em;height:1.7em;margin:0 .15em;border-radius:50%;border:1.5px solid var(--qp-gold);color:var(--qp-gold);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:.5em;font-weight:700;vertical-align:middle;line-height:1}
+.qp-hidden .qp-flow .ayah:not(.shown):not(.now){color:transparent;text-shadow:0 0 14px var(--qp-ink);user-select:none}
+.qp-hidden .qp-flow .ayah:not(.shown):not(.now) .ayah-num{color:var(--qp-gold);text-shadow:none}
+.qp-wait{text-align:center;color:var(--qp-ink-muted,#5d6b68);font-size:1rem;margin:0}
+.qp-credit{font-size:.72rem;color:var(--qp-ink-muted,#5d6b68);margin:8px 2px 0}
+.qp-credit a{color:inherit}
+html[data-theme="dark"] .qp{--qp-paper:#1e1830;--qp-ink:#ede9f7;--qp-bar-bg:#241c36;--qp-line:rgba(255,255,255,.1);--qp-ink-muted:#a79fc2}
+@media (max-width:560px){.qp-opt span{display:none}.qp-opt select{max-width:150px}}

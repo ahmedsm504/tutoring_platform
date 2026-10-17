@@ -1,0 +1,10 @@
+{% load static %}{# surah, from, to, verses=[(n,text)], show_basmala #}
+<div class="qp" data-surah="{{ surah }}" data-from="{{ from }}" data-to="{{ to }}">
+  <div class="qp-text">
+    {% if from == 1 and surah != 1 and surah != 9 %}<p class="qp-basmala">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</p>{% endif %}
+    <p class="qp-flow" lang="ar">{% for n, t in verses %}<span class="ayah" data-a="{{ n }}" tabindex="0" role="button" aria-label="تشغيل الآية {{ n }}">{{ t }} <span class="ayah-num" aria-hidden="true">{{ n }}</span></span> {% endfor %}</p>
+  </div>
+  <p class="qp-credit">التلاوة من EveryAyah · نص المصحف: موسوعة القرآن الكريم QuranEnc (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar" target="_blank" rel="noopener license">CC BY-SA 4.0</a>)</p>
+</div>
+{{ reciters|json_script:"qp-reciters" }}
+<script src="{% static 'js/quran-player.js' %}" defer></script>

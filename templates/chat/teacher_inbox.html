@@ -1,0 +1,38 @@
+{% extends 'core/teacher_portal_base.html' %}
+{% block title %}الشات مع الطلاب - بورتال المعلمة{% endblock %}
+{% block extra_css %}{% include 'chat/_inbox_styles.html' %}{% endblock %}
+{% block content %}
+<div class="ci-wrap">
+  <div class="ci-head">
+    <div>
+      <h2>💬 الشات مع طلابي</h2>
+      <div style="font-size:0.82rem; color:var(--ink-muted);">التواصل مع الطلاب وأولياء الأمور بيكون هنا بس، تحت إشراف الإدارة.</div>
+    </div>
+    <input type="search" class="ci-search" id="ci-search" placeholder="🔍 دوري على طالب...">
+  </div>
+  <div id="ci-list">
+  {% for r in rows %}{% with s=r.student c=r.conv m=r.last %}
+    <a class="ci-item" href="{% url 'chat_teacher_thread' s.id %}" data-name="{{ s.name }}">
+      <div class="ci-av">{{ s.name|slice:":1" }}{% if c and c.student_online %}<span class="on"></span>{% endif %}</div>
+      <div class="ci-body">
+        <div class="ci-name">{{ s.name }}{% if not s.user_id %}<span class="ci-chip">ملوش حساب لسه</span>{% endif %}{% if c.is_locked %}<span class="ci-chip red">مقفولة</span>{% endif %}</div>
+        <div class="ci-last">{% if m %}{% if m.sender_type == 'teacher' %}أنتِ: {% elif m.sender_type == 'admin' %}الإدارة: {% endif %}{{ m.preview|truncatechars:80 }}{% else %}ابدأي المحادثة{% endif %}</div>
+      </div>
+      <div class="ci-side">
+        {% if m %}<span class="ci-time">{{ m.created_at|date:"j/n H:i" }}</span>{% endif %}
+        {% if c.teacher_unread %}<span class="ci-badge">{{ c.teacher_unread }}</span>{% endif %}
+      </div>
+    </a>
+  {% endwith %}{% empty %}
+    <div class="ci-empty">مفيش طلاب مسجلين معاكي لسه.</div>
+  {% endfor %}
+  </div>
+</div>
+<script>
+document.getElementById('ci-search').addEventListener('input', function(){
+  var q = this.value.trim();
+  document.querySelectorAll('#ci-list .ci-item').forEach(function(a){ a.style.display = !q || a.dataset.name.indexOf(q) !== -1 ? '' : 'none'; });
+});
+setTimeout(function(){ if(!document.hidden) location.reload(); }, 30000);
+</script>
+{% endblock %}

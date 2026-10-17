@@ -290,6 +290,13 @@ class Student(models.Model):
     name = models.CharField(max_length=255, verbose_name="اسم الطالب")
     age = models.PositiveIntegerField(null=True, blank=True, verbose_name="السن")
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="رقم الهاتف")
+    guardian_phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="هاتف ولي الأمر")
+    # حساب دخول الطالب لبوابة الطالب (بيستخدمه الطالب أو ولي أمره) - عشان المراسلة مع المعلمة تكون جوه المنصة بس
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='core_student',
+        verbose_name="حساب دخول بوابة الطالب"
+    )
     governorate = models.CharField(max_length=100, blank=True, null=True, verbose_name="المحافظة")
 
     package_name = models.CharField(max_length=100, blank=True, null=True, verbose_name="اسم الباقة")
@@ -711,6 +718,7 @@ class TeacherActivity(models.Model):
         ('added', 'أضافت حلقات'),
         ('marked', 'سجّلت حالة حلقة'),
         ('removed', 'حذفت حلقة'),
+        ('chat_flag', 'تنبيه في الشات'),
     ]
     STATUS_WORDS = {
         'completed': '✅ تمت',
@@ -757,8 +765,24 @@ class TeacherActivity(models.Model):
     def delay_label(self):
         return _delay_label(self.delay_minutes)
 
+    @classmethod
+    def log_chat_flag(cls, teacher, student_name, note):
+        """تنبيه للإدارة في نفس فيد النشاط اللحظي (بصوت) لما حد في الشات يحاول يبعت
+        وسيلة تواصل خاصة. note بتتحفظ في حقل status."""
+        return cls.objects.create(
+            teacher=teacher, kind='chat_flag', status=(note or '')[:20],
+            student_name=student_name or '', count=1,
+        )
+
     def text(self):
         when = self.lesson_when()
+        if self.kind == 'chat_flag':
+            reason = {
+                'blocked': 'المعلمة حاولت تبعت وسيلة تواصل خاصة (اتمنعت)',
+                'student': 'الطالب/ولي الأمر حاول يبعت وسيلة تواصل خاصة (اتمنعت)',
+                'flagged': 'رسالة محتاجة مراجعة',
+            }.get(self.status, 'تنبيه في الشات')
+            return f"⚠️ شات {self.student_name}: {reason}"
         if self.kind == 'added':
             if self.count > 1:
                 return f"أضافت {self.count} حلقات مع {self.student_name} ابتداءً من {when}"
@@ -770,6 +794,8 @@ class TeacherActivity(models.Model):
         return f"{s} · {late}" if late else s
 
     def tone(self):
+        if self.kind == 'chat_flag':
+            return 'bad'
         if self.kind == 'marked':
             return {'completed': 'ok', 'student_absent': 'bad'}.get(self.status, 'warn')
         return 'info'

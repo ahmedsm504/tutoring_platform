@@ -1,0 +1,33 @@
+{% load chat_tags %}{% if role == 'teacher' or role == 'student' %}{% if m.sender_type == role %}{% firstof 'out' as side %}{% else %}{% firstof 'in' as side %}{% endif %}{% else %}{% if m.sender_type == 'student' %}{% firstof 'in' as side %}{% else %}{% firstof 'out' as side %}{% endif %}{% endif %}<div class="cb-row cb-{{ side }}{% if m.sender_type == 'admin' %} cb-admin{% endif %}{% if m.is_blocked %} cb-blocked{% endif %}" data-mid="{{ m.id }}">
+  <div class="cb-bubble{% if m.flagged and not m.flag_resolved and role == 'admin' %} cb-flagged{% endif %}">
+    {% if role == 'admin' or role == 'supervisor' or m.sender_type != role %}<div class="cb-who">{% sender_label m role %}</div>{% endif %}
+    {% if m.attachment_kind %}
+      {% if m.attachment_hidden and role != 'admin' %}
+        <div class="cb-note">📎 مرفق مخفي من الإدارة</div>
+      {% elif not m.attachment %}
+        <div class="cb-note">📎 {{ m.get_attachment_kind_display }} (متبعتش)</div>
+      {% elif m.attachment_kind == 'image' %}
+        <a href="{% url 'chat_attachment' m.id %}" target="_blank" rel="noopener"><img class="cb-img" src="{% url 'chat_attachment' m.id %}" alt="صورة" loading="lazy"></a>
+      {% elif m.attachment_kind == 'audio' %}
+        <audio class="cb-audio" controls preload="metadata" src="{% url 'chat_attachment' m.id %}"></audio>
+      {% elif m.attachment_kind == 'video' %}
+        <video class="cb-video" controls preload="metadata" src="{% url 'chat_attachment' m.id %}"></video>
+      {% else %}
+        <a class="cb-file" href="{% url 'chat_attachment' m.id %}" target="_blank" rel="noopener">📄 {{ m.attachment_name|default:"ملف" }}</a>
+      {% endif %}
+      {% if role == 'admin' and m.attachment %}
+        <form method="post" action="{% url 'chat_admin_update' m.conversation.student_id %}" class="cb-mini">{% csrf_token %}
+          <input type="hidden" name="action" value="hide_attachment"><input type="hidden" name="message_id" value="{{ m.id }}">
+          <button type="submit">{% if m.attachment_hidden %}👁️ إظهار المرفق{% else %}🙈 إخفاء المرفق عن الطرفين{% endif %}</button>
+        </form>
+      {% endif %}
+    {% endif %}
+    {% if m.body %}<div class="cb-text" dir="auto">{{ m.body|urlize|linebreaksbr }}</div>{% endif %}
+    {% if m.is_blocked %}<div class="cb-alert">⛔ اتمنعت ومتبعتتش (فيها وسيلة تواصل خاصة){% if role == 'admin' or role == 'supervisor' %} · {{ m.flag_reasons }}{% endif %}</div>
+    {% elif m.flagged and role == 'admin' %}<div class="cb-flag">🚩 {{ m.flag_reasons }}{% if m.flag_resolved %} · ✔ اتراجعت{% endif %}</div>{% endif %}
+    <div class="cb-meta">
+      <span>{{ m.created_at|date:"j/n H:i" }}</span>
+      {% if side == 'out' and not m.is_blocked and m.sender_type == role %}<span class="cb-tick{% if m.read_at %} read{% endif %}" title="{% if m.read_at %}اتقرت{% else %}اتبعتت{% endif %}">{% if m.read_at %}✓✓{% else %}✓{% endif %}</span>{% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}القرآن الكريم مكتوب كامل بالتشكيل واستماع بصوت الحصري والمنشاوي | العجمي{% endblock %}
+{% block meta_description %}اقرأ القرآن الكريم مكتوبًا بالرسم العثماني واستمع لكل سورة آية بآية بصوت الحصري والمنشاوي وعبد الباسط والعفاسي، مع تكرار الآيات لتسهيل الحفظ. 114 سورة مجانًا.{% endblock %}
+{% block meta_keywords %}القرآن الكريم مكتوب, المصحف مكتوب, استماع القرآن, الحصري, المنشاوي, عبد الباسط, المصحف المعلم, تكرار الآيات للحفظ, سور القرآن{% endblock %}
+{% block og_title %}القرآن الكريم مكتوب واستماع آية بآية | مؤسسة العجمي{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}{% url 'quran_index' %}{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},{"@type":"ListItem","position":2,"name":"القرآن الكريم","item":"{{ SITE_URL }}{% url 'quran_index' %}"}]}</script>
+{% endblock %}
+{% block extra_css %}
+<style>
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;padding:0;margin:0;list-style:none}
+.sgrid a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
+.sgrid a:hover{border-color:var(--gold);transform:translateY(-2px)}
+.snum{width:40px;height:40px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;background:color-mix(in srgb,var(--gold) 14%,transparent);color:var(--green-deep);font-weight:700;font-size:.9rem}
+.sname{font-family:'Amiri Quran',serif;font-size:1.25rem;line-height:1.6;display:block}
+.smeta{font-size:.8rem;color:var(--ink-soft)}
+.sfind{width:100%;max-width:420px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);font:inherit;margin-bottom:16px;background:var(--surface)}
+</style>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">القرآن الكريم</li></ol>
+  <h1>القرآن الكريم مكتوب واستماع آية بآية</h1>
+  <p>اختار السورة، واقرأها بالرسم العثماني، واسمعها بصوت الشيخ اللي تحبه. تقدر تكرر كل آية وتخفي النص عشان تختبر حفظك.</p>
+</div></header>
+<section class="section"><div class="container">
+  <label class="sr-only" for="sfind">ابحث عن سورة</label>
+  <input id="sfind" class="sfind" type="search" placeholder="🔎 ابحث باسم السورة أو رقمها">
+  <ul class="sgrid" id="sgrid">
+    {% for s in surahs %}<li data-k="{{ s.id }} {{ s.name }}"><a href="{% url 'quran_surah' s.id %}"><span class="snum">{{ s.id }}</span><span><span class="sname">سورة {{ s.name }}</span><span class="smeta">{{ s.count }} آية · {% if s.type == 'meccan' %}مكية{% else %}مدنية{% endif %}</span></span></a></li>{% endfor %}
+  </ul>
+  <div class="inline-cta" style="margin-top:28px;"><p><strong>عايز تحفظ مع معلمة متقنة؟</strong> أول حلقة تحفيظ أونلاين مجانية.</p><a class="btn btn-gold" href="{% url 'contact' %}">احجز حلقة تجريبية مجانية</a></div>
+  <p class="qp-credit" style="font-size:.8rem;color:var(--ink-soft);margin-top:18px;">نص المصحف: موسوعة القرآن الكريم QuranEnc (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar" rel="license noopener" target="_blank">CC BY-SA 4.0</a>) · التلاوات: EveryAyah.com</p>
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function(){ var i=document.getElementById('sfind'), items=document.querySelectorAll('#sgrid li');
+  function norm(s){ return s.replace(/[ً-ٰٟۖ-ۭ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي'); }
+  i.addEventListener('input', function(){ var q=norm(i.value.trim()); items.forEach(function(li){ li.hidden = q && norm(li.dataset.k).indexOf(q) < 0; }); }); })();
+</script>
+{% endblock %}

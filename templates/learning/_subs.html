@@ -1,0 +1,19 @@
+{# كل التسليمات (الأحدث الأول) #}
+{% for s in subs %}
+<div class="fb {% if s.status == 'approved' %}ok{% elif s.status == 'redo' %}redo{% endif %}">
+  <h4>{% if role == 'student' %}تسجيلك{% else %}تسجيل الطالب{% endif %} · {{ s.submitted_at|date:"l j F - h:i A" }}
+    {% if s.status == 'submitted' %}<span class="badge" style="background:#E0F2FE; color:#0369A1;">مستني التصحيح</span>{% endif %}</h4>
+  {% if s.audio %}<audio controls preload="none" src="{% url 'learning_audio' 'sub' s.pk %}"></audio>{% endif %}
+  {% if s.note %}<p>💬 {{ s.note }}</p>{% endif %}
+  {% if s.reviewed_at %}
+    <div style="border-top:1px dashed var(--border); margin-top:10px; padding-top:8px;">
+      <strong>{% if s.status == 'approved' %}✅ تصحيح المعلمة{% else %}🔁 المعلمة طالبة تسجيل تاني{% endif %}</strong>
+      {% if s.stars %}<span class="stars" style="font-size:1.2rem;">{% for i in "12345"|make_list %}{% if forloop.counter <= s.stars %}★{% else %}☆{% endif %}{% endfor %}</span>{% endif %}
+      {% if s.feedback %}<p>{{ s.feedback }}</p>{% endif %}
+      {% if s.feedback_audio %}<audio controls preload="none" src="{% url 'learning_audio' 'fb' s.pk %}"></audio>{% endif %}
+    </div>
+  {% endif %}
+</div>
+{% empty %}
+<p class="l-empty" style="padding:10px;">لسه مفيش تسليمات.</p>
+{% endfor %}

@@ -110,6 +110,7 @@ th{color:var(--ink-muted); font-weight:700; font-size:0.8rem;}
 <div style="background:var(--surface); border-bottom:1px solid var(--border); padding:8px 16px; display:flex; gap:6px; flex-wrap:wrap; max-width:1080px; margin:0 auto;">
     <a href="{% url 'supervisor_portal_home' %}" style="text-decoration:none; padding:7px 14px; border-radius:999px; font-weight:700; font-size:0.82rem; color:var(--ink); {% if request.path == '/supervisor-portal/' %}background:var(--violet-600); color:#fff;{% endif %}">🏠 الرئيسية</a>
     <a href="{% url 'supervisor_schedule_requests_list' %}" style="text-decoration:none; padding:7px 14px; border-radius:999px; font-weight:700; font-size:0.82rem; color:var(--ink); {% if 'schedule-requests' in request.path %}background:var(--violet-600); color:#fff;{% endif %}">🗓️ طلبات المواعيد</a>
+    <a href="{% url 'chat_supervisor_inbox' %}" style="text-decoration:none; padding:7px 14px; border-radius:999px; font-weight:700; font-size:0.82rem; color:var(--ink); {% if '/messages/' in request.path %}background:var(--violet-600); color:#fff;{% endif %}">💬 متابعة الشات</a>
 </div>
 {% endif %}
 <div class="container">

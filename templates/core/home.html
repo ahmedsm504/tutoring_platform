@@ -2,841 +2,189 @@
 {% load static %}
 
 {% block title %}تحفيظ القرآن أونلاين | حلقة تجريبية مجانية لجميع الدول | العجمي{% endblock %}
-
-{% block meta_description %}احجز حلقة تجريبية مجانية لتحفيظ القرآن الكريم عن بُعد من أي دولة. حصص فردية مع معلمين متقنين للأطفال والكبار ومواعيد مرنة بتوقيت بلدك.{% endblock %}
-
-{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ القرآن اونلاين, حفظ القرآن للأطفال, معلم قرآن عن بعد, معلمة قرآن, دروس تجويد, حصص قرآن فردية, تعليم القرآن للكبار, تحفيظ قرآن لجميع الدول, منصة تحفيظ قرآن, حفظ القرآن بالتجويد, نور البيان, الأربعون النووية, alagme{% endblock %}
-
+{% block meta_description %}احجز حلقة تجريبية مجانية لتحفيظ القرآن الكريم عن بُعد من أي دولة. حصص فردية مع معلمات ومعلمين متقنين للأطفال والكبار ومواعيد مرنة بتوقيت بلدك.{% endblock %}
+{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ القرآن اونلاين, حفظ القرآن للأطفال, معلم قرآن عن بعد, معلمة قرآن, دروس تجويد, حصص قرآن فردية, تعليم القرآن للكبار, تحفيظ قرآن لجميع الدول, نور البيان, الأربعون النووية{% endblock %}
 {% block og_title %}تحفيظ القرآن الكريم عن بُعد - حلقة تجريبية مجانية | العجمي{% endblock %}
+{% block og_description %}حصص فردية لتحفيظ القرآن الكريم عن بعد مع معلمين متقنين حاصلين على إجازات، والحجز متاح من أي دولة. احجز حلقتك التجريبية المجانية.{% endblock %}
+{% block og_image %}{{ SITE_URL }}{% static 'images/og-image.jpg' %}{% endblock %}
+{% block twitter_image %}{{ SITE_URL }}{% static 'images/og-image.jpg' %}{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}/{% endblock %}
 
-{% block og_description %}منصة العجمي لتحفيظ القرآن الكريم عن بعد. معلمون متقنون حاصلون على إجازات، حصص فردية 100%، والحجز متاح من أي دولة. احجز حلقتك التجريبية المجانية.{% endblock %}
+{% block extra_meta %}
+<link rel="preconnect" href="https://i.ytimg.com">
+<link rel="preload" as="image" href="https://i.ytimg.com/vi/yUpz_m5kWBE/hqdefault.jpg" fetchpriority="high">
+{% endblock %}
 
-{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}
-{% block twitter_image %}{% static 'images/og-image.jpg' %}{% endblock %}
-{% block canonical_url %}https://alagme.com/{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "العجمي - تحفيظ القرآن الكريم أونلاين",
-  "url": "https://alagme.com/",
-  "inLanguage": "ar",
-  "publisher": {"@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"}
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "هل يمكنني الحجز من خارج مصر؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "نعم. التحفيظ أونلاين بالكامل، ويمكن لأي طالب من أي دولة حجز حلقته التجريبية المجانية، واختيار موعد يناسب توقيت بلده بالتنسيق مع فريقنا."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "هل الحلقة الأولى مجانية؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "نعم، نوفر حلقة تجريبية مجانية بالكامل لجميع الطلاب الجدد لتجربة الخدمة قبل الاشتراك."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "كيف أحجز حلقتي؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "اضغط على زر «احجز الآن» أو تواصل معنا عبر صفحة التواصل أو واتساب، وسنحدد معك الباقة والموعد المناسبين."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "لمن تناسب الباقات؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "لدينا باقات للأطفال من سن 6 سنوات، وللطلاب من 10 إلى 15 سنة، وللبالغين، إضافة إلى دورات متخصصة مثل نور البيان والأربعون النووية."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "هل المعلمون مؤهلون؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "جميع معلمينا حاصلون على إجازات في القرآن الكريم ولديهم خبرة واسعة في تحفيظ القرآن للأطفال والكبار."
-      }
-    }
-  ]
-}
-</script>
-
-<style>
-  /* ===== الأسئلة الشائعة ===== */
-  .faq-section { max-width: 900px; margin: 40px auto; padding: 0 16px; }
-  .faq-list details {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 12px; margin-bottom: 10px; padding: 0 16px; color: inherit;
-  }
-  .faq-list summary { cursor: pointer; padding: 14px 0; font-weight: 700; list-style-position: inside; }
-  .faq-list details[open] summary { border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 10px; }
-  .faq-list p { margin: 0 0 14px; line-height: 1.9; }
-</style>
-
-<style>
-  /* منع تقطع عناوين الكروت */
-  .card h3 {
-    white-space: nowrap;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-  }
-  @media (max-width: 500px) {
-    .card h3 { white-space: normal; font-size: 1rem; }
-  }
-</style>
-
-<style>
-  /* ===== بانر عرض الإجازة الصيفية ===== */
-  :root {
-    --offer-gold: #c8972a;
-    --offer-gold-light: #f0c84a;
-    --offer-dark: #1a1200;
-    --offer-green: #1e6b3c;
-    --offer-green-light: #27904f;
-    --offer-cream: #fdf8ee;
-    --offer-radius: 18px;
-  }
-
-  .summer-offer-banner {
-    direction: rtl;
-    font-family: 'Tajawal', 'Cairo', sans-serif;
-    background: linear-gradient(135deg, var(--offer-dark) 0%, #2a1e00 50%, var(--offer-green) 100%);
-    border-radius: var(--offer-radius);
-    padding: 0;
-    margin: 0 auto 40px auto;
-    max-width: 900px;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      0 8px 40px rgba(200, 151, 42, 0.25),
-      0 2px 8px rgba(0,0,0,0.4);
-    border: 1.5px solid rgba(200,151,42,0.35);
-  }
-
-  .summer-offer-banner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 15% 20%, rgba(200,151,42,0.12) 0%, transparent 50%),
-      radial-gradient(circle at 85% 80%, rgba(39,144,79,0.15) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(200,151,42,0.05) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .summer-offer-banner::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--offer-gold), var(--offer-gold-light), var(--offer-gold), transparent);
-  }
-
-  .sob-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 16px 24px 10px;
-    position: relative;
-  }
-
-  .sob-badge {
-    background: linear-gradient(135deg, var(--offer-gold), var(--offer-gold-light));
-    color: var(--offer-dark);
-    font-weight: 900;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    padding: 4px 14px;
-    border-radius: 50px;
-    box-shadow: 0 2px 10px rgba(200,151,42,0.4);
-    animation: sob-pulse 2.5s ease-in-out infinite;
-  }
-
-  @keyframes sob-pulse {
-    0%, 100% { box-shadow: 0 2px 10px rgba(200,151,42,0.4); }
-    50%       { box-shadow: 0 2px 20px rgba(200,151,42,0.7); }
-  }
-
-  .sob-header-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(200,151,42,0.4), transparent);
-  }
-
-  .sob-body {
-    padding: 10px 32px 28px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 24px;
-    align-items: center;
-  }
-
-  .sob-offer-card {
-    background: rgba(200,151,42,0.1);
-    border: 1px solid rgba(200,151,42,0.3);
-    border-radius: 14px;
-    padding: 18px 22px;
-    text-align: center;
-    transition: transform 0.3s ease, background 0.3s ease;
-  }
-
-  .sob-offer-card:hover {
-    transform: translateY(-3px);
-    background: rgba(200,151,42,0.18);
-  }
-
-  .sob-offer-icon {
-    font-size: 2rem;
-    display: block;
-    margin-bottom: 8px;
-    filter: drop-shadow(0 2px 6px rgba(200,151,42,0.5));
-  }
-
-  .sob-offer-title {
-    color: var(--offer-gold-light);
-    font-size: 0.82rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-    opacity: 0.9;
-  }
-
-  .sob-offer-value {
-    color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: 900;
-    line-height: 1.2;
-  }
-
-  .sob-offer-value span {
-    color: var(--offer-gold-light);
-  }
-
-  .sob-offer-sub {
-    color: rgba(255,255,255,0.6);
-    font-size: 0.75rem;
-    margin-top: 4px;
-  }
-
-  .sob-divider {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .sob-divider-line {
-    width: 1px;
-    height: 50px;
-    background: linear-gradient(to bottom, transparent, rgba(200,151,42,0.5), transparent);
-  }
-
-  .sob-divider-icon {
-    font-size: 1.5rem;
-    filter: drop-shadow(0 0 8px rgba(200,151,42,0.6));
-    animation: sob-rotate 8s linear infinite;
-  }
-
-  @keyframes sob-rotate {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-
-  .sob-cta {
-    text-align: center;
-    padding: 0 24px 28px;
-  }
-
-  .sob-cta-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--offer-gold), var(--offer-gold-light), var(--offer-gold));
-    background-size: 200% 100%;
-    color: var(--offer-dark);
-    font-weight: 900;
-    font-size: 1rem;
-    padding: 14px 40px;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(200,151,42,0.45);
-    animation: sob-shimmer 3s ease-in-out infinite;
-  }
-
-  @keyframes sob-shimmer {
-    0%, 100% { background-position: 0% 50%; }
-    50%       { background-position: 100% 50%; }
-  }
-
-  .sob-cta-btn:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 8px 30px rgba(200,151,42,0.65);
-    color: var(--offer-dark);
-    text-decoration: none;
-  }
-
-  .sob-cta-note {
-    color: rgba(255,255,255,0.5);
-    font-size: 0.75rem;
-    margin-top: 10px;
-  }
-
-  .sob-cta-note strong {
-    color: rgba(255,255,255,0.8);
-  }
-
-  .sob-deco {
-    position: absolute;
-    font-size: 5rem;
-    opacity: 0.04;
-    pointer-events: none;
-    user-select: none;
-    line-height: 1;
-  }
-  .sob-deco-r { top: 10px; right: 16px; transform: rotate(15deg); }
-  .sob-deco-l { bottom: 10px; left: 16px; transform: rotate(-15deg); }
-
-  @media (max-width: 680px) {
-    .sob-body {
-      grid-template-columns: 1fr;
-      gap: 16px;
-      padding: 10px 20px 24px;
-    }
-    .sob-divider { flex-direction: row; }
-    .sob-divider-line { width: 40px; height: 1px; }
-    .sob-offer-value { font-size: 1.25rem; }
-    .summer-offer-banner { margin: 0 12px 32px; }
-  }
-</style>
+{% block extra_ldjson %}
+<script type="application/ld+json">{{ faq_ldjson|safe }}</script>
 {% endblock %}
 
 {% block content %}
-
-
-<!-- Hero Banner - Two Column Layout -->
-<section class="hero-banner">
-    <div class="hero-content">
-        <div class="hero-text">
-            <h1>🎓 تحفيظ القرآن الكريم عن بُعد</h1>
-            <p>"يا يحي خذ الكتاب بقوة"</p>
-            <div class="cta-buttons">
-                <a href="{% url 'contact' %}" class="btn-primary">احجز حصتك التجريبية المجانية</a>
-                <a href="#packages" class="btn-secondary">اعرف الباقات</a>
-            </div>
-        </div>
-        <div class="hero-video">
-            <div class="hero-video-wrapper" id="hero-video-wrapper" onclick="loadHeroVideo()">
-                <div class="video-placeholder" id="hero-video-placeholder">
-                    <div class="play-button"></div>
-                </div>
-            </div>
-        </div>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-inner">
+    <div>
+      <h1 id="hero-title">تحفيظ القرآن الكريم أونلاين، مع معلمة متقنة لطفلك أو لك</h1>
+      <p class="hero-lead">حصص فردية بالتجويد والتلقين الصحيح، بمواعيد على توقيت بلدك، ومتابعة شهرية مكتوبة لمستوى الطالب. أول حلقة مجانية.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="{% url 'contact' %}">احجز حلقة تجريبية مجانية</a>
+        <a class="btn btn-light" href="{% url 'pricing' %}">شوف الباقات</a>
+      </div>
+      <ul class="hero-facts">
+        <li><svg aria-hidden="true"><use href="#i-user"/></svg>حصص فردية 100%</li>
+        <li><svg aria-hidden="true"><use href="#i-star"/></svg>معلمون حاصلون على إجازات</li>
+        <li><svg aria-hidden="true"><use href="#i-globe"/></svg>من أي دولة</li>
+      </ul>
     </div>
-</section>
 
-<!-- Features Carousel Section -->
-<section class="carousel-section">
-    <h2 class="section-title">لماذا تختار منصتنا لتحفيظ القرآن؟</h2>
-    <div class="carousel-container">
-        <button class="carousel-arrow prev" onclick="moveCarousel('features', -1)" aria-label="السابق">
-            <i class="fas fa-chevron-right"></i>
+    <figure class="mushaf" style="margin:0;">
+      <div class="mushaf-frame">
+        <svg class="mushaf-border" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="0.4" y="0.4" width="99.2" height="99.2" rx="1" pathLength="1" vector-effect="non-scaling-stroke"/></svg>
+        <span class="corner tr" aria-hidden="true"></span><span class="corner tl" aria-hidden="true"></span>
+        <span class="corner br" aria-hidden="true"></span><span class="corner bl" aria-hidden="true"></span>
+        <div class="cartouche">
+          <p class="verse" lang="ar">يَا يَحْيَىٰ خُذِ الْكِتَابَ بِقُوَّةٍ</p>
+          <span class="verse-ref">سورة مريم · الآية 12</span>
+        </div>
+        <button class="video-facade" type="button" id="hero-video" aria-label="تشغيل الفيديو التعريفي عن مؤسسة العجمي">
+          <img src="https://i.ytimg.com/vi/yUpz_m5kWBE/hqdefault.jpg" alt="الفيديو التعريفي لمؤسسة العجمي لتحفيظ القرآن الكريم" width="480" height="360" fetchpriority="high">
+          <span class="play" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
         </button>
-        <div class="carousel-wrapper">
-            <div class="carousel-track" id="features-carousel">
-                <div class="carousel-card">
-                    <i class="fa-solid fa-laptop-code"></i>
-                    <h3>تعلم عن بعد</h3>
-                    <p>استمتع بدروس تحفيظ القرآن من أي مكان وفي أي وقت يناسبك</p>
-                </div>
+        <figcaption class="mushaf-caption">اتفرج إزاي بتكون الحلقة مع معلماتنا</figcaption>
+      </div>
+    </figure>
+  </div>
+</section>
 
-                <div class="carousel-card">
-                    <i class="fa-solid fa-video"></i>
-                    <h3>حصص فردية</h3>
-                    <p>معلمين متقنين يصلون إلى منزلك لضمان تركيز وانضباط الطالب</p>
-                </div>
-
-                <div class="carousel-card">
-                    <i class="fa-solid fa-book-open-reader"></i>
-                    <h3>مناهج مميزة</h3>
-                    <p>مناهج تم تصميمها واختيارها بعناية فائقة لضمان أفضل النتائج</p>
-                </div>
-
-                <div class="carousel-card">
-                    <i class="fa-solid fa-globe"></i>
-                    <h3>متاح لكل الدول</h3>
-                    <p>احجز من أي بلد في العالم وحدد موعدًا يناسب توقيتك</p>
-                </div>
-
-                <div class="carousel-card">
-                    <i class="fa-solid fa-clock"></i>
-                    <h3>مواعيد مرنة</h3>
-                    <p>اختر الوقت الذي يناسبك للدراسة بسهولة</p>
-                </div>
-
-                <div class="carousel-card">
-                    <i class="fa-solid fa-book"></i>
-                    <h3>حل مشاكل الحفظ</h3>
-                    <p>نساعدك على تخطي أي صعوبة تواجهك أثناء الحفظ</p>
-                </div>
-
-                <div class="carousel-card">
-                    <i class="fa-solid fa-heart"></i>
-                    <h3>دعم نفسي</h3>
-                    <p>نوفر بيئة متكاملة من الدعم والرعاية للطالب</p>
-                </div>
-
-                <div class="carousel-card">
-                    <i class="fa-solid fa-users"></i>
-                    <h3>لجميع الأعمار</h3>
-                    <p>برامج مخصصة للأطفال والشباب والكبار تناسب كل الفئات العمرية</p>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-arrow next" onclick="moveCarousel('features', 1)" aria-label="التالي">
-            <i class="fas fa-chevron-left"></i>
-        </button>
+<section class="section" aria-labelledby="steps-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="steps-title">تبدأ في 3 خطوات</h2>
+      <p>من غير أي التزام قبل ما تجرّب بنفسك.</p>
     </div>
-    <div class="carousel-indicators" id="features-indicators"></div>
+    <ol class="steps">
+      {% for title, text in steps %}
+      <li>
+        <span class="step-num" aria-hidden="true">{{ forloop.counter }}</span>
+        <h3>{{ title }}</h3>
+        <p>{{ text }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
 </section>
 
-    <!-- ====== بانر عرض الإجازة الصيفية ====== -->
-    <div class="summer-offer-banner" role="region" aria-label="عرض الإجازة الصيفية">
-        <span class="sob-deco sob-deco-r" aria-hidden="true">📖</span>
-        <span class="sob-deco sob-deco-l" aria-hidden="true">🌙</span>
-
-        <div class="sob-header">
-            <div class="sob-header-line"></div>
-            <div class="sob-badge">✨ عرض الإجازة الصيفية</div>
-            <div class="sob-header-line"></div>
-        </div>
-
-        <div class="sob-body">
-            <div class="sob-offer-card">
-                <span class="sob-offer-icon">🎁</span>
-                <div class="sob-offer-title">ابدأ بـ</div>
-                <div class="sob-offer-value">حصة <span>مجانية</span></div>
-                <div class="sob-offer-sub">تجريبية بدون أي التزام</div>
-            </div>
-
-            <div class="sob-divider">
-                <div class="sob-divider-line"></div>
-                <div class="sob-divider-icon">✦</div>
-                <div class="sob-divider-line"></div>
-            </div>
-
-            <div class="sob-offer-card">
-                <span class="sob-offer-icon">🏷️</span>
-                <div class="sob-offer-title">خصم على أول شهر</div>
-                <div class="sob-offer-value"><span>20%</span> خصم</div>
-                <div class="sob-offer-sub">للمسجلين خلال الصيف فقط</div>
-            </div>
-        </div>
-
-        <div class="sob-cta">
-            <a href="{% url 'contact' %}" class="sob-cta-btn" aria-label="سجل الآن للاستفادة من عرض الإجازة الصيفية">
-                سجّل الآن واستفد من العرض 🌟
-            </a>
-            <div class="sob-cta-note">
-                العرض محدود — <strong>خلال الإجازة الصيفية فقط</strong>
-            </div>
-        </div>
+<section class="section band" aria-labelledby="programs-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="programs-title">برامج لكل عمر ومستوى</h2>
+      <p>كل البرامج حصص فردية أونلاين، وتختار عدد الحصص ومدتها حسب وقتك.</p>
     </div>
-
-    <section id="packages" aria-label="الباقات المتاحة">
-        <h2 class="section-title">💎 اختر الباقة التي تناسب هدفك</h2>
-        <div class="pricing">
-            <!-- الباقة الأولى -->
-            <div class="card" id="package-1">
-                <h3>🌙 باقة البداية النورانية</h3>
-                <p>
-                    <strong>مناسبة للأطفال من سن 6 سنوات</strong><br>
-                    اختر عدد الحلقات المناسبة لطفلك بمرونة كاملة.
-                </p>
-                <ul>
-                    <li>شرح مبسط لمعاني الآيات يناسب فهم الطفل</li>
-                    <li>ألعاب تفاعلية تعليمية مشوقة</li>
-                    <li>تعليم العقيدة والسيرة النبوية</li>
-                    <li>واجبات يومية لترسيخ الحفظ</li>
-                    <li>التحفيظ بالتجويد والتلقين الصحيح</li>
-                </ul>
-                <p style="text-align:center; margin-top:15px;">
-                    <span class="highlight">*نقترح 40 دقيقة لطفلك*</span><br>
-                    <span class="feature-badge">💡 الحلقة الأولى تجريبية ومجانية</span>
-                </p>
-                <div class="table-container">
-                    <table>
-                        <caption class="sr-only">خيارات باقة البداية النورانية الشهرية (عدد الحصص ومدة الحلقة)</caption>
-                        <tr>
-                            <th scope="col">عدد الحصص شهريًا</th>
-                            <th scope="col">مدة الحلقة</th>
-                        </tr>
-                        <tr><td>8 حصص</td><td>30 دقيقة</td></tr>
-                        <tr><td>12 حصة</td><td>30 دقيقة</td></tr>
-                        <tr><td>8 حصص</td><td>60 دقيقة</td></tr>
-                    </table>
-                    <p class="table-note">يمكنك اختيار الباقة ونوع البرنامج والوقت المناسب لك</p>
-                </div>
-                <a href="{% url 'contact' %}" class="btn" aria-label="احجز باقة البداية النورانية">احجز الآن</a>
-            </div>
-
-            <!-- الباقة الثانية -->
-            <div class="card" id="package-2">
-                <h3>🌿 باقة الغراس الطيب</h3>
-                <p>
-                    <strong>لتحسين التلاوة وتصحيح الأخطاء التجويدية</strong><br>
-                    تمكين الطالب من تلاوة القرآن بشكل صحيح خالي من اللحن.
-                </p>
-                <p><strong>✨ مميزات الباقة:</strong></p>
-                <ul>
-                    <li>تصحيح التلاوة من المصحف مباشرة</li>
-                    <li>تدريب عملي على المخارج والصفات</li>
-                    <li>مراجعة الأخطاء الفردية وتحليل النطق</li>
-                    <li>تقييم دوري وشهادة إتمام</li>
-                </ul>
-                <p><strong>👤 مناسبة لمن:</strong></p>
-                <ul>
-                    <li>من يقرأ القرآن ويريد تصحيح تلاوته</li>
-                    <li>من يعاني من صعوبة في النطق أو المدود</li>
-                </ul>
-                <div class="table-container">
-                    <table>
-                        <caption class="sr-only">خيارات باقة الغراس الطيب الشهرية (عدد الحصص ومدة الحلقة)</caption>
-                        <tr>
-                            <th scope="col">عدد الحصص شهريًا</th>
-                            <th scope="col">مدة الحلقة</th>
-                        </tr>
-                        <tr><td>8 حصص</td><td>30 دقيقة</td></tr>
-                        <tr><td>12 حصة</td><td>30 دقيقة</td></tr>
-                        <tr><td>8 حصص</td><td>60 دقيقة</td></tr>
-                    </table>
-                    <p class="table-note">يمكنك اختيار الباقة ونوع البرنامج والوقت المناسب لك</p>
-                </div>
-                <a href="{% url 'contact' %}" class="btn" aria-label="احجز باقة الغراس الطيب">احجز الآن</a>
-            </div>
-
-            <!-- الباقة الثالثة -->
-            <div class="card" id="package-3">
-                <h3>🔥 باقة الهمة العالية</h3>
-                <p>
-                    <strong>للطلاب من سن 10 إلى 15 سنة</strong><br>
-                    حفظ القرآن الكريم بتدرج وراحة مع متابعة دقيقة.
-                </p>
-                <p><strong>📘 تشمل الباقة:</strong></p>
-                <ul>
-                    <li>جلسات لحفظ الجديد والمراجعة</li>
-                    <li>تصحيح الورد اليومي من المعلمة</li>
-                    <li>تعليم العقيدة والسيرة والأحاديث الصحيحة</li>
-                    <li>متابعة الأداء الأسبوعي وتقارير تقدم</li>
-                    <li>معلمون ذوو خبرة عالية في التحفيظ</li>
-                    <li>مرونة في أوقات الدراسة</li>
-                </ul>
-                <div class="table-container">
-                    <table>
-                        <caption class="sr-only">خيارات باقة الهمة العالية الشهرية (عدد الحصص ومدة الحلقة)</caption>
-                        <tr>
-                            <th scope="col">عدد الحصص شهريًا</th>
-                            <th scope="col">مدة الحلقة</th>
-                        </tr>
-                        <tr><td>8 حصص</td><td>30 دقيقة</td></tr>
-                        <tr><td>12 حصة</td><td>30 دقيقة</td></tr>
-                        <tr><td>8 حصص</td><td>60 دقيقة</td></tr>
-                    </table>
-                    <p class="table-note">يمكنك اختيار الباقة ونوع البرنامج والوقت المناسب لك</p>
-                </div>
-                <a href="{% url 'contact' %}" class="btn" aria-label="احجز باقة الهمة العالية">احجز الآن</a>
-            </div>
-
-            <!-- الباقة الرابعة -->
-            <div class="card" id="package-4">
-                <h3>📖 باقة سفراء القرآن</h3>
-                <p>
-                    <strong>برنامج مخصص للبالغين</strong><br>
-                    حفظ القرآن الكريم بخطى ثابتة ومنهج منظم يناسب أوقاتك.
-                </p>
-                <p><strong>✨ مميزات الباقة:</strong></p>
-                <ul>
-                    <li>تسميع الحفظ الجديد ومراجعة القديم</li>
-                    <li>ضبط القراءة ومخارج الحروف والأحكام</li>
-                    <li>خطة حفظ مرنة تناسب جدولك اليومي</li>
-                    <li>جلسات فردية مريحة عبر الإنترنت</li>
-                    <li>متابعة دقيقة وتقييم دوري</li>
-                </ul>
-                <p><strong>👥 مناسبة لـ:</strong></p>
-                <ul>
-                    <li>الكبار الراغبين في بدء الحفظ من البداية</li>
-                    <li>من يرغبون في استكمال ما بدأوه</li>
-                </ul>
-                <div class="table-container">
-                    <table>
-                        <caption class="sr-only">خيارات باقة سفراء القرآن الشهرية (عدد الحصص ومدة الحلقة)</caption>
-                        <tr>
-                            <th scope="col">عدد الحصص شهريًا</th>
-                            <th scope="col">مدة الحلقة</th>
-                        </tr>
-                        <tr><td>8 حصص</td><td>30 دقيقة</td></tr>
-                        <tr><td>12 حصة</td><td>30 دقيقة</td></tr>
-                        <tr><td>8 حصص</td><td>60 دقيقة</td></tr>
-                    </table>
-                    <p class="table-note">يمكنك اختيار الباقة ونوع البرنامج والوقت المناسب لك</p>
-                </div>
-                <a href="{% url 'contact' %}" class="btn" aria-label="احجز باقة سفراء القرآن">احجز الآن</a>
-            </div>
-
-            <!-- الدورة الأولى - نور البيان -->
-            <div class="card" id="package-5">
-                <h3>🌟 دورة نور البيان</h3>
-                <p>
-                    <strong>لتعليم القراءة الصحيحة والبيان الواضح</strong><br>
-                    دورة تأسيسية متكاملة تهدف إلى تعليم القراءة السليمة باللغة العربية وفق منهج تدريجي واضح، يُمكّن المتعلّم من الانتقال من معرفة الحروف إلى قراءة الكلمات والجمل بطلاقة.
-                </p>
-                <p><strong>🎯 أهداف الدورة:</strong></p>
-                <ul>
-                    <li>تمكين المتعلم من قراءة الحروف العربية قراءة صحيحة</li>
-                    <li>إتقان الحركات القصيرة والطويلة</li>
-                    <li>التدريب على الدمج بين الحروف وتكوين الكلمات</li>
-                    <li>تحسين النطق ومخارج الحروف</li>
-                    <li>تأسيس قوي للقراءة العربية والقرآن الكريم</li>
-                </ul>
-                <p><strong>📚 محتوى الدورة:</strong></p>
-                <ul>
-                    <li>التعريف بالحروف العربية وأشكالها</li>
-                    <li>الحركات: الفتحة – الضمة – الكسرة</li>
-                    <li>المدود (الألف – الواو – الياء)</li>
-                    <li>التنوين، السكون، الشدة</li>
-                    <li>تركيب الحروف وتكوين الكلمات</li>
-                    <li>تطبيقات عملية على القراءة</li>
-                </ul>
-                <p><strong>🧠 مميزات الدورة:</strong></p>
-                <ul>
-                    <li>منهج تدريجي واضح وسهل</li>
-                    <li>تطبيق عملي مستمر</li>
-                    <li>يركّز على الفهم وليس الحفظ فقط</li>
-                    <li>نتائج ملموسة خلال فترة قصيرة بإذن الله</li>
-                </ul>
-                <div class="table-container">
-                    <table>
-                        <caption class="sr-only">مدة حلقات دورة نور البيان</caption>
-                        <tr>
-                            <th scope="col">مدة الحلقة</th>
-                            <th scope="col">الحجز</th>
-                        </tr>
-                        <tr><td>40 دقيقة</td><td>احجز حلقتك التجريبية المجانية</td></tr>
-                    </table>
-                    <p class="table-note">دورة متخصصة بمنهج علمي مدروس لتأسيس قوي في القراءة العربية</p>
-                </div>
-                <a href="{% url 'contact' %}" class="btn" aria-label="احجز دورة نور البيان">احجز الآن</a>
-            </div>
-
-            <!-- الدورة الثانية - الأربعون النووية -->
-            <div class="card" id="package-6">
-                <h3>🌟 دورة الأربعون النووية</h3>
-                <p>
-                    <strong>دراسة منهجية في أصول السنة النبوية</strong><br>
-                    برنامج علمي تأصيلي يهدف إلى دراسة مجموعة الأحاديث النبوية التي جمعها الإمام يحيى بن شرف النووي رحمه الله، والتي تمثّل قواعد كبرى في الدين.
-                </p>
-                <p><strong>💫 أهداف الدورة:</strong></p>
-                <ul>
-                    <li>تمكين الدارس من فهم الأحاديث النبوية الأربعين فهمًا علميًّا صحيحًا</li>
-                    <li>بيان القواعد الكلية والمقاصد الشرعية المستفادة من الأحاديث</li>
-                    <li>تدريب الدارس على الاستنباط والربط بين النصوص الشرعية</li>
-                    <li>ترسيخ المنهج الوسطي في فهم السنة النبوية</li>
-                    <li>إعداد قاعدة علمية صلبة لطلبة العلم المبتدئين</li>
-                    <li>تدريبات تطبيقية وتحريرية بعد كل درس</li>
-                </ul>
-                <p><strong>🌱 مميزات الدورة:</strong></p>
-                <ul>
-                    <li>منهج علمي معتمد قائم على نصوص الأحاديث الصحيحة</li>
-                    <li>تأصيل علمي منهجي يركّز على فهم مقاصد الأحاديث</li>
-                    <li>الجمع بين الحفظ والفهم والتحليل</li>
-                    <li>اعتماد التدرج العلمي المناسب للمبتدئين</li>
-                    <li>شرح الأحاديث بأسلوب علمي مبسّط دون إخلال بالدقة الشرعية</li>
-                    <li>ربط الأحاديث النبوية بالواقع العملي والسلوك اليومي</li>
-                    <li>تنمية مهارات الاستنباط والفهم الصحيح للنصوص الشرعية</li>
-                    <li>مناسبة لطلاب العلم وغير المتخصصين</li>
-                    <li>تهيئة الدارس للانتقال إلى مراحل متقدمة في دراسة علوم الحديث والفقه</li>
-                </ul>
-                <div class="table-container">
-                    <table>
-                        <caption class="sr-only">مدة حلقات دورة الأربعين النووية</caption>
-                        <tr>
-                            <th scope="col">مدة الحلقة</th>
-                            <th scope="col">الحجز</th>
-                        </tr>
-                        <tr><td>40 دقيقة</td><td>احجز حلقتك التجريبية المجانية</td></tr>
-                    </table>
-                    <p class="table-note">دورة علمية متخصصة في دراسة الأحاديث النبوية الصحيحة</p>
-                </div>
-                <a href="{% url 'contact' %}" class="btn" aria-label="احجز دورة الأربعين النووية">احجز الآن</a>
-            </div>
+    <ul class="programs">
+      {% for p in programs %}
+      <li>
+        <span class="prog-kind">{{ p.kind }}</span>
+        <div>
+          <h3><a href="{% url 'pricing' %}#{{ p.slug }}">{{ p.name }}</a></h3>
+          <p class="prog-aud">{{ p.audience }}</p>
         </div>
-    </section>
-
-
-
-<!-- Reviews Section -->
-<section class="reviews-section">
-    <h2>🌟 آراء طلابنا وأولياء الأمور</h2>
-    <div class="reviews-grid" id="reviews-grid"></div>
-</section>
-
-<!-- Support Carousel Section -->
-<section class="carousel-section">
-    <h2 class="section-title">💪 لماذا نحن الأفضل؟</h2>
-    <div class="carousel-container">
-        <button class="carousel-arrow prev" onclick="moveCarousel('support', -1)" aria-label="السابق">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-        <div class="carousel-wrapper">
-            <div class="carousel-track" id="support-carousel">
-                <div class="carousel-card">
-                    <i class="fa-solid fa-user-check"></i>
-                    <h3>معلمون مؤهلون</h3>
-                    <p>معلمون ذوو خبرة عالية ومؤهلات أكاديمية متميزة في تحفيظ القرآن الكريم</p>
-                </div>
-                <div class="carousel-card">
-                    <i class="fa-solid fa-certificate"></i>
-                    <h3>شهادات معتمدة</h3>
-                    <p>احصل على شهادات معتمدة بعد إتمام مراحل الحفظ</p>
-                </div>
-                <div class="carousel-card">
-                    <i class="fa-solid fa-headset"></i>
-                    <h3>دعم فني 24/7</h3>
-                    <p>فريق دعم متواجد على مدار الساعة لمساعدتك والإجابة على استفساراتك</p>
-                </div>
-                <div class="carousel-card">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <h3>متابعة مستمرة</h3>
-                    <p>تقارير دورية مفصلة عن تقدم الطالب ومستواه في الحفظ</p>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-arrow next" onclick="moveCarousel('support', 1)" aria-label="التالي">
-            <i class="fas fa-chevron-left"></i>
-        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="section-foot">
+      <a class="btn btn-primary" href="{% url 'pricing' %}">تفاصيل الباقات والمواعيد</a>
+      <a class="btn btn-ghost" href="{% url 'contact' %}">مش عارف تختار؟ اسألنا</a>
     </div>
-    <div class="carousel-indicators" id="support-indicators"></div>
+  </div>
 </section>
 
-<!-- FAQ Section (مطابق لبيانات FAQPage المنظمة) -->
-<section class="faq-section" aria-labelledby="faq-heading">
-    <h2 class="section-title" id="faq-heading">❓ أسئلة شائعة</h2>
-    <div class="faq-list">
-        <details>
-            <summary>هل يمكنني الحجز من خارج مصر؟</summary>
-            <p>نعم. التحفيظ أونلاين بالكامل، ويمكن لأي طالب من أي دولة حجز حلقته التجريبية المجانية، واختيار موعد يناسب توقيت بلده بالتنسيق مع فريقنا.</p>
-        </details>
-        <details>
-            <summary>هل الحلقة الأولى مجانية؟</summary>
-            <p>نعم، نوفر حلقة تجريبية مجانية بالكامل لجميع الطلاب الجدد لتجربة الخدمة قبل الاشتراك.</p>
-        </details>
-        <details>
-            <summary>كيف أحجز حلقتي؟</summary>
-            <p>اضغط على زر «احجز الآن» أو تواصل معنا عبر صفحة التواصل أو واتساب، وسنحدد معك الباقة والموعد المناسبين.</p>
-        </details>
-        <details>
-            <summary>لمن تناسب الباقات؟</summary>
-            <p>لدينا باقات للأطفال من سن 6 سنوات، وللطلاب من 10 إلى 15 سنة، وللبالغين، إضافة إلى دورات متخصصة مثل نور البيان والأربعون النووية.</p>
-        </details>
-        <details>
-            <summary>هل المعلمون مؤهلون؟</summary>
-            <p>جميع معلمينا حاصلون على إجازات في القرآن الكريم ولديهم خبرة واسعة في تحفيظ القرآن للأطفال والكبار.</p>
-        </details>
+<section class="section" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="features-title">ليه أولياء الأمور بيختارونا</h2>
     </div>
+    <ul class="features">
+      {% for title, text in features %}
+      <li><h3>{{ title }}</h3><p>{{ text }}</p></li>
+      {% endfor %}
+    </ul>
+  </div>
 </section>
 
-<!-- Contact Info Section -->
-<section>
-    <h2 class="section-title">📞 تواصل معنا</h2>
-    <div class="contact-info">
-        <div class="info-card">
-            <i class="fas fa-phone"></i>
-            <h3>اتصل بنا</h3>
-            <p><a href="tel:+201044568181">+20 104 456 8181</a></p>
-            <p>السبت - الخميس</p>
-            <p>9 صباحاً - 12 مساءً</p>
-        </div>
-
-        <div class="info-card">
-            <i class="fab fa-whatsapp"></i>
-            <h3>واتساب</h3>
-            <p><a href="https://wa.me/201044568181" target="_blank">تواصل مباشر</a></p>
-            <p>رد فوري على</p>
-            <p>استفساراتك</p>
-        </div>
-
-        <div class="info-card">
-            <i class="fas fa-map-marker-alt"></i>
-            <h3>موقعنا</h3>
-            <p>جمهورية مصر العربية</p>
-            <p>تعليم أونلاين</p>
-            <p>من أي مكان</p>
-        </div>
+<section class="container" aria-labelledby="offer-title">
+  <div class="offer">
+    <div class="offer-badge">مجانًا<small>أول حلقة</small></div>
+    <div>
+      <h2 id="offer-title">جرّب قبل ما تشترك</h2>
+      <p>الحلقة الأولى تجريبية ومجانية بالكامل: نحدد فيها مستوى الطالب ونقترح الباقة المناسبة.</p>
     </div>
+    <a class="btn btn-gold" href="{% url 'contact' %}">احجز حلقتك</a>
+  </div>
 </section>
 
-<!-- CTA Section -->
-<section style="text-align: center; margin: 50px 50px; padding: 40px 20px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%); border-radius: 20px; border: 2px solid rgba(76, 175, 80, 0.2);">
-    <h2 style="color: #e9d561; font-size: 2em; margin-bottom: 20px;">🎓 لا تتردد - احجز حصتك المجانية الآن</h2>
-    <p style="color: #b3daff; font-size: 1.2em; margin-bottom: 30px;">الحلقة الأولى مجانية بالكامل - جرب معنا الآن</p>
-    <a href="{% url 'contact' %}" class="btn" style="margin: 50px auto;">احجز الآن</a>
+<section class="section" aria-labelledby="reviews-title">
+  <div class="container">
+    <div class="row-head">
+      <div class="section-head">
+        <h2 id="reviews-title">من رسائل أولياء الأمور</h2>
+        <p>صور حقيقية من محادثات أولياء أمور طلابنا.</p>
+      </div>
+      <div class="reviews-nav">
+        <button class="icon-btn" type="button" data-dir="1" aria-label="الآراء السابقة"><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></button>
+        <button class="icon-btn" type="button" data-dir="-1" aria-label="الآراء التالية"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+    <div class="reviews" id="reviews" tabindex="0" aria-label="آراء أولياء الأمور">
+      {% for r in reviews %}
+      <figure><img src="{% static 'images/'|add:r %}" alt="رسالة من ولي أمر عن تجربته مع مؤسسة العجمي ({{ forloop.counter }})" width="300" height="400" loading="lazy" decoding="async"></figure>
+      {% endfor %}
+    </div>
+  </div>
 </section>
 
-<!-- Social Fixed Icons -->
-<aside class="social-fixed">
-    <a href="https://wa.me/201044568181" 
-       class="whatsapp"
-       target="_blank" 
-       rel="noopener noreferrer" 
-       title="تواصل معنا عبر واتساب">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-    <a href="https://www.facebook.com/profile.php?id=61587497605651" 
-       class="facebook" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       title="تابعنا على فيسبوك">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-    <a href="https://www.instagram.com/ala.gme/" 
-       class="instagram" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       title="تابعنا على إنستجرام">
-        <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://www.tiktok.com/@alagme_12" 
-       class="tiktok" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       title="تابعنا على تيك توك">
-        <i class="fab fa-tiktok"></i>
-    </a>
-    <a href="https://x.com/alagme_12" 
-       class="twitter" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       title="تابعنا على تويتر">
-        <i class="fab fa-twitter"></i>
-    </a>
-</aside>
+<section class="section band" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-head center"><h2 id="faq-title">أسئلة بتتكرر</h2></div>
+    <div class="faq">
+      {% for q, a in faq %}
+      <details{% if forloop.first %} open{% endif %}><summary>{{ q }}</summary><p>{{ a }}</p></details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section cta" aria-labelledby="cta-title">
+  <div class="container">
+    <h2 id="cta-title">جاهز تبدأ رحلتك مع القرآن؟</h2>
+    <p>احجز الحلقة التجريبية المجانية، وهنتواصل معاك خلال 24 ساعة نحدد الموعد.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'contact' %}">احجز حلقة تجريبية مجانية</a>
+      <a class="btn btn-ghost" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">كلمنا على واتساب</a>
+    </div>
+    <ul class="contact-strip">
+      <li><svg aria-hidden="true"><use href="#i-phone"/></svg><div><strong><a href="tel:+201044568181" dir="ltr">+20 104 456 8181</a></strong><span>اتصال أو واتساب</span></div></li>
+      <li><svg aria-hidden="true"><use href="#i-clock"/></svg><div><strong>السبت – الخميس</strong><span>من 9 صباحًا لحد 12 منتصف الليل</span></div></li>
+      <li><svg aria-hidden="true"><use href="#i-globe"/></svg><div><strong>أونلاين بالكامل</strong><span>لطلاب من كل الدول</span></div></li>
+    </ul>
+  </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/carouselconfig.js' %}"></script>
-<script src="{% static 'js/reviews.js' %}"></script>
+<script>
+  (function(){
+    var v = document.getElementById('hero-video');
+    if(v) v.addEventListener('click', function(){
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/yUpz_m5kWBE?autoplay=1&rel=0';
+      f.title = 'الفيديو التعريفي - مؤسسة العجمي لتحفيظ القرآن الكريم';
+      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      f.allowFullscreen = true;
+      v.replaceChildren(f);
+    }, {once: true});
+    var r = document.getElementById('reviews');
+    document.querySelectorAll('.reviews-nav button').forEach(function(b){
+      b.addEventListener('click', function(){ r.scrollBy({left: -parseInt(b.dataset.dir, 10) * r.clientWidth * 0.8, behavior: 'smooth'}); });
+    });
+  })();
+</script>
 {% endblock %}

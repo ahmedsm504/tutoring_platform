@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta, datetime
 from decimal import Decimal
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -89,14 +90,18 @@ ARABIC_MONTHS = {
 # =======================
 # صفحات الموقع العامة
 # =======================
+def _public_ctx(**extra):
+    from . import site_content as sc
+    ctx = {'programs': sc.PROGRAMS, 'steps': sc.STEPS, 'features': sc.FEATURES, 'faq': sc.FAQ, 'reviews': sc.REVIEWS}
+    ctx.update(extra)
+    return ctx
+
+
 def home(request):
-    reviews = [
-        'review1.jpeg', 'review2.jpeg', 'review3.jpeg', 'review4.jpeg',
-        'review5.jpeg', 'review6.jpeg', 'review7.jpeg', 'review8.jpeg',
-        'review9.jpeg', 'review10.jpeg', 'review11.jpeg', 'review12.jpeg',
-        'review13.jpeg', 'review14.jpeg'
-    ]
-    return render(request, 'core/home.html', {'reviews': reviews})
+    from . import site_content as sc
+    return render(request, 'core/home.html', _public_ctx(
+        faq_ldjson=json.dumps(sc.faq_schema(), ensure_ascii=False).replace('<', '\\u003c'),
+    ))
 
 
 def about(request):
@@ -104,11 +109,18 @@ def about(request):
 
 
 def contact(request):
-    return render(request, 'core/contact.html')
+    # القالب core/contact.html مكانش موجود أصلًا (الصفحة كانت بتقع 500) -
+    # صفحة التواصل الحقيقية بفورم حجز الحلقة التجريبية موجودة في accounts
+    from accounts.views import contact_view
+    return contact_view(request)
 
 
 def pricing(request):
-    return render(request, 'core/pricing.html')
+    from . import site_content as sc
+    site = settings.CANONICAL_URL.rstrip('/')
+    return render(request, 'core/pricing.html', _public_ctx(
+        courses_ldjson=json.dumps(sc.courses_schema(site), ensure_ascii=False).replace('<', '\\u003c'),
+    ))
 
 
 def quality_standards(request):
@@ -321,6 +333,7 @@ def add_student(request):
                 name=name,
                 age=_to_int_or_none(request.POST.get('age')),
                 phone=_or_none(request.POST.get('phone')),
+                guardian_phone=_or_none(request.POST.get('guardian_phone')),
                 governorate=_or_none(request.POST.get('governorate')),
                 package_name=_or_none(request.POST.get('package_name')),
                 lessons_count=_to_int_or_none(request.POST.get('lessons_count')) or 4,
@@ -383,6 +396,7 @@ def edit_student(request, student_id):
         student.name = request.POST.get('name', '').strip()
         student.age = _to_int_or_none(request.POST.get('age'))
         student.phone = _or_none(request.POST.get('phone'))
+        student.guardian_phone = _or_none(request.POST.get('guardian_phone'))
         student.governorate = _or_none(request.POST.get('governorate'))
         student.package_name = _or_none(request.POST.get('package_name'))
         student.lessons_count = _to_int_or_none(request.POST.get('lessons_count')) or 4
@@ -440,6 +454,9 @@ def student_detail(request, student_id):
         'paid_this_month': student.total_paid(year=now.year, month=now.month),
         'pay_month_name': ARABIC_MONTHS[now.month],
         'pay_year': now.year,
+        'student_conv': getattr(student, 'chat', None) if hasattr(student, 'chat') else None,
+        'student_login_display': student.user.get_username() if student.user_id else None,
+        'student_portal_url': settings.CANONICAL_URL.rstrip('/') + reverse('student_login'),
     }
     return render(request, 'core/student_detail.html', context)
 
@@ -474,8 +491,11 @@ def add_student_payment(request, student_id):
 @staff_member_required
 def toggle_student_status(request, student_id):
     student = get_object_or_404(Student, pk=student_id)
+    if request.method != 'POST':
+        # تغيير الحالة لازم يبقى POST (رابط GET ممكن يتفتح بالغلط من المتصفح أو من أي موقع تاني)
+        return redirect('student_detail', student_id=student.id)
     student.status = 'inactive' if student.status == 'active' else 'active'
-    student.save()
+    student.save(update_fields=['status'])
 
     if student.status == 'inactive':
         messages.warning(request, f'تم تحويل "{student.name}" إلى غير مقيد.')
@@ -834,13 +854,9 @@ def financial_reports(request):
         })
 
     # السنين المتاحة للاختيار من بينها (فيها بيانات فعلية + السنة الحالية)
-    years_with_data = set()
-    for s in Student.objects.all():
-        pdate = _student_payment_date(s)
-        if pdate:
-            years_with_data.add(pdate.year)
-    for e in Expense.objects.all():
-        years_with_data.add(e.date.year)
+    years_with_data = set(Payment.objects.values_list('date__year', flat=True))
+    years_with_data |= set(Expense.objects.values_list('date__year', flat=True))
+    years_with_data |= set(TeacherSalaryRecord.objects.values_list('payout_date__year', flat=True))
     years_with_data.add(timezone.now().year)
     years_with_data = sorted(years_with_data, reverse=True)
 
@@ -1234,8 +1250,7 @@ def mark_lesson(request, lesson_id):
             lesson.mark(new_status, was_late=was_late, by='admin')
             messages.success(request, f'تم تسجيل حالة الحلقة: {valid_statuses[new_status]}.')
 
-    next_url = request.POST.get('next') or request.GET.get('next') or 'lessons_dashboard'
-    return redirect(next_url)
+    return redirect(_safe_next(request, 'lessons_dashboard'))
 
 
 @staff_member_required
@@ -1245,8 +1260,7 @@ def mark_lesson_started(request, lesson_id):
     if request.method == 'POST':
         lesson.mark_started()
         messages.success(request, f'تم تسجيل بدء حلقة {lesson.student.name}.')
-    next_url = request.POST.get('next') or request.GET.get('next') or 'lessons_dashboard'
-    return redirect(next_url)
+    return redirect(_safe_next(request, 'lessons_dashboard'))
 
 
 @staff_member_required
@@ -1359,6 +1373,9 @@ def create_teacher_login(request, teacher_id):
                 'is_staff': False,      # <-- الأهم: مفيش دخول للوحة الإدارة نهائيًا
                 'is_superuser': False,
             }
+            if 'user_type' in user_field_names:
+                # من غيرها كان بياخد 'student' افتراضيًا وبيتعمله ملف طالب فاضي بالغلط
+                create_kwargs['user_type'] = 'teacher'
             if 'first_name' in user_field_names:
                 create_kwargs['first_name'] = teacher.name
             user = User(**create_kwargs)
@@ -1830,7 +1847,7 @@ def add_evaluation(request):
         'students': students,
         'preselected_student': preselected_student,
         'default_month': default_month,
-        'students_json': json.dumps(students_data, ensure_ascii=False),
+        'students_json': json.dumps(students_data, ensure_ascii=False).replace('<', '\\u003c'),
         'preview_defaults': preview_defaults,
     }
     return render(request, 'core/add_evaluation.html', context)
@@ -1856,8 +1873,11 @@ def delete_evaluation(request, evaluation_id):
 
 def public_evaluation(request, token):
     """صفحة عامة بدون تسجيل دخول - عشان تُبعت كلينك لولي الأمر مباشرة"""
-    evaluation = get_object_or_404(MonthlyEvaluation, public_token=token)
-    return render(request, 'core/evaluation_public.html', {'evaluation': evaluation})
+    evaluation = get_object_or_404(MonthlyEvaluation.objects.select_related('student'), public_token=token)
+    return render(request, 'core/evaluation_public.html', {
+        'evaluation': evaluation,
+        'student_portal_url': reverse('student_login'),
+    })
 
 # =======================
 # إدارة المشرفات (من لوحة الأدمن)
@@ -1937,6 +1957,8 @@ def create_supervisor_login(request, supervisor_id):
             'is_staff': False,
             'is_superuser': False,
         }
+        if 'user_type' in user_field_names:
+            create_kwargs['user_type'] = 'supervisor'
         if 'first_name' in user_field_names:
             create_kwargs['first_name'] = supervisor.name
         user = User(**create_kwargs)
@@ -2196,8 +2218,16 @@ def supervisor_register_student_schedule(request, student_id):
             messages.error(request, 'من فضلك حددي يوم/أيام الحلقة والوقت.')
             return redirect('supervisor_register_student_schedule', student_id=student.id)
 
-        weekdays = {int(w) for w in weekdays}
-        hour, minute = [int(x) for x in lesson_time.split(':')[:2]]
+        try:
+            weekdays = {int(w) for w in weekdays if 0 <= int(w) <= 6}
+            hour, minute = [int(x) for x in lesson_time.split(':')[:2]]
+            if not (0 <= hour <= 23 and 0 <= minute <= 59) or not weekdays:
+                raise ValueError
+        except (TypeError, ValueError):
+            messages.error(request, 'الأيام أو الوقت مش مظبوطين.')
+            return redirect('supervisor_register_student_schedule', student_id=student.id)
+        weeks_count = min(max(weeks_count, 1), MAX_REPEAT_WEEKS)
+        duration_minutes = min(max(duration_minutes, 10), 180)
 
         created_count = 0
         today = timezone.localdate()
@@ -2360,3 +2390,75 @@ def teacher_whiteboard(request):
 @teacher_login_required
 def teacher_games(request):
     return render(request, 'core/teacher_games.html', {'teacher': request.user.teacher_profile})
+
+
+# =======================
+# حساب بوابة الطالب (الطالب أو ولي أمره بيدخل بيه للشات مع المعلمة)
+# =======================
+@staff_member_required
+def create_student_login(request, student_id):
+    student = get_object_or_404(Student, pk=student_id)
+    if student.user_id:
+        messages.info(request, f'"{student.name}" عنده حساب بالفعل ({student.user.get_username()}).')
+        return redirect('student_detail', student_id=student.id)
+
+    suggested = f'st{student.id}'
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip() or suggested
+        if User.objects.filter(**{User.USERNAME_FIELD: username}).exists():
+            messages.error(request, f'"{username}" مستخدم قبل كده، اختاري اسم تاني.')
+            return render(request, 'core/create_student_login.html', {'student': student, 'suggested': suggested, 'entered_username': username})
+        password = request.POST.get('password', '')
+        error = _check_chosen_password(password, request.POST.get('password2', ''), username)
+        if error:
+            messages.error(request, error)
+            return render(request, 'core/create_student_login.html', {'student': student, 'suggested': suggested, 'entered_username': username})
+        user = User(**{User.USERNAME_FIELD: username, 'is_staff': False, 'is_superuser': False})
+        if hasattr(user, 'user_type'):
+            user.user_type = 'student'
+        if hasattr(user, 'first_name'):
+            user.first_name = student.name[:150]
+        user._skip_student_profile = True
+        user.set_password(password)
+        user.save()
+        student.user = user
+        student.save(update_fields=['user'])
+        messages.success(request, f'تم إنشاء حساب بوابة الطالب لـ "{student.name}": اسم المستخدم {username} - ابعتيله اسم المستخدم وكلمة السر ورابط الدخول.')
+        return redirect('student_detail', student_id=student.id)
+    return render(request, 'core/create_student_login.html', {'student': student, 'suggested': suggested})
+
+
+@staff_member_required
+def reset_student_login_password(request, student_id):
+    student = get_object_or_404(Student, pk=student_id)
+    if not student.user_id:
+        messages.error(request, 'الطالب ده معندوش حساب أصلًا.')
+        return redirect('student_detail', student_id=student.id)
+    if request.method == 'POST':
+        password = request.POST.get('password', '')
+        error = _check_chosen_password(password, request.POST.get('password2', ''), student.user.get_username())
+        if error:
+            messages.error(request, error)
+        else:
+            student.user.set_password(password)
+            student.user.is_active = True
+            student.user.save(update_fields=['password', 'is_active'])
+            messages.success(request, f'تم تغيير كلمة سر "{student.name}".')
+            return redirect('student_detail', student_id=student.id)
+    return render(request, 'core/reset_login_password.html', {
+        'person': student.name, 'kind': 'الطالب', 'login_name': student.user.get_username(),
+        'back_url': reverse('student_detail', args=[student.id]),
+    })
+
+
+@staff_member_required
+def revoke_student_login(request, student_id):
+    student = get_object_or_404(Student, pk=student_id)
+    if request.method == 'POST' and student.user_id:
+        old = student.user
+        student.user = None
+        student.save(update_fields=['user'])
+        old.is_active = False
+        old.save(update_fields=['is_active'])
+        messages.success(request, f'تم إلغاء حساب "{student.name}".')
+    return redirect('student_detail', student_id=student.id)

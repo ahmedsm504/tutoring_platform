@@ -1,0 +1,33 @@
+{% extends 'core/student_portal_base.html' %}
+{% load static %}
+{% block title %}ألعاب ومسابقات{% endblock %}
+{% block content %}
+<div class="l-head"><div><h1>🎮 ألعاب ومسابقات</h1><p>العب واكسب نجوم — كل الألعاب من آيات السور اللي بتحفظها.</p></div>
+  <span class="chip" style="font-size:1rem;">⭐ <b class="js-total">{{ st.points }}</b></span></div>
+<div id="g-hub">
+  <div class="g-pick card" style="padding:12px 16px;">
+    <strong>الأسئلة من:</strong>
+    <select id="g-surah"><option value="">كل السور (جزء عم{% if mine %} + سور واجباتي{% endif %})</option>
+      {% for n, name in pool %}<option value="{{ n }}">سورة {{ name }}</option>{% endfor %}
+    </select>
+  </div>
+  <div class="g-hub">
+    <button class="g-card t1" type="button" data-game="arrange"><span class="e">🧩</span><strong>رتّب الآية</strong><small>الكلمات اتلخبطت! رتّبها زي ما بتحفظها.</small></button>
+    <button class="g-card t5" type="button" data-game="complete"><span class="e">✍️</span><strong>كمّل الناقص</strong><small>في كلمة مستخبية، تعرف هي إيه؟</small></button>
+    <button class="g-card t2" type="button" data-game="listen"><span class="e">🎧</span><strong>اسمع وخمّن</strong><small>اسمع الشيخ وقول الآية دي من أي سورة.</small></button>
+    <button class="g-card t3" type="button" data-game="surah"><span class="e">🔎</span><strong>من أي سورة؟</strong><small>اقرأ الآية واختار اسم السورة.</small></button>
+    <button class="g-card t4" type="button" data-game="nextayah"><span class="e">➡️</span><strong>الآية الجاية</strong><small>تعرف إيه اللي بعدها؟ ده اختبار حفظ حقيقي.</small></button>
+    <button class="g-card" style="background:linear-gradient(135deg,#0F766E,#14B8A6);" type="button" data-game="letters"><span class="e">🔤</span><strong>ذاكرة الحروف</strong><small>اقلب الكروت ولاقي كل حرف مع اسمه.</small></button>
+  </div>
+</div>
+<div class="g-stage card" id="g-stage">
+  <div class="g-bar"><strong class="g-title" style="font-size:1.1rem;"></strong>
+    <div class="g-score"><span class="g-round"></span><span class="g-pts"></span><button type="button" class="btn btn-outline g-exit">✕ خروج</button></div></div>
+  <div class="g-body"></div>
+</div>
+{% csrf_token %}
+{{ reciters|json_script:"qp-reciters" }}
+{{ cfg|json_script:"games-cfg" }}
+<script src="{% static 'js/quran-player.js' %}"></script>
+<script src="{% static 'js/student-games.js' %}"></script>
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ post.title }} | مدونة العجمي لتحفيظ القرآن الكريم{% endblock %}
+{% block title %}{{ post.title }} | مدونة العجمي{% endblock %}
 
 {% block meta_description %}{{ post.meta_description|default:post.excerpt|truncatechars:160 }}{% endblock %}
 
@@ -9,22 +9,17 @@
 
 {% block og_title %}{{ post.title }}{% endblock %}
 {% block og_description %}{{ post.meta_description|default:post.excerpt|truncatechars:200 }}{% endblock %}
-{% block og_image %}{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/default_post.webp' %}{% endif %}{% endblock %}
+{% block og_image %}{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}{% endblock %}
 
 {% block twitter_title %}{{ post.title }}{% endblock %}
 {% block twitter_description %}{{ post.meta_description|default:post.excerpt|truncatechars:200 }}{% endblock %}
-{% block twitter_image %}{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/default_post.webp' %}{% endif %}{% endblock %}
+{% block twitter_image %}{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}{% endblock %}
 
+{% block og_type %}article{% endblock %}
 {% block extra_meta %}
-<meta name="author" content="مؤسسة العجمي">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="مؤسسة العجمي">
 <meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
 <meta property="article:modified_time" content="{{ post.updated_at|date:'c' }}">
 {% if post.category %}<meta property="article:section" content="{{ post.category.name }}">{% endif %}
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@AlAjami">
-<meta name="theme-color" content="#FFD700">
 {% endblock %}
 
 {% block extra_ldjson %}
@@ -37,33 +32,33 @@
       "@type": "ListItem",
       "position": 1,
       "name": "الرئيسية",
-      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+      "item": "{{ SITE_URL }}{% url 'home' %}"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "المدونة",
-      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_list' %}"
+      "item": "{{ SITE_URL }}{% url 'blog_list' %}"
     }
     {% if post.category %}
     ,{
       "@type": "ListItem",
       "position": 3,
       "name": "{{ post.category.name|escapejs }}",
-      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'category_posts' post.category.slug %}"
+      "item": "{{ SITE_URL }}{% url 'category_posts' post.category.slug %}"
     },
     {
       "@type": "ListItem",
       "position": 4,
       "name": "{{ post.title|escapejs }}",
-      "item": "{{ request.build_absolute_uri }}"
+      "item": "{{ canonical_url }}"
     }
     {% else %}
     ,{
       "@type": "ListItem",
       "position": 3,
       "name": "{{ post.title|escapejs }}",
-      "item": "{{ request.build_absolute_uri }}"
+      "item": "{{ canonical_url }}"
     }
     {% endif %}
   ]
@@ -74,19 +69,19 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": "{{ request.build_absolute_uri }}",
+  "@id": "{{ canonical_url }}",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "{{ request.build_absolute_uri }}"
+    "@id": "{{ canonical_url }}"
   },
   "headline": "{{ post.title|escapejs }}",
   "name": "{{ post.title|escapejs }}",
-  "url": "{{ request.build_absolute_uri }}",
+  "url": "{{ canonical_url }}",
   "datePublished": "{{ post.published_at|date:'c' }}",
   "dateModified": "{{ post.updated_at|date:'c' }}",
   "description": "{{ post.excerpt|escapejs }}",
   "articleBody": "{{ post.excerpt|escapejs }}",
-  "image": "{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/default_post.webp' %}{% endif %}",
+  "image": "{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}",
   "inLanguage": "ar",
   "wordCount": {{ post.content|wordcount }},
   {% if post.category %}"articleSection": "{{ post.category.name|escapejs }}",{% endif %}
@@ -94,14 +89,14 @@
   "author": {
     "@type": "Organization",
     "name": "مؤسسة العجمي",
-    "url": "{{ request.scheme }}://{{ request.get_host }}"
+    "url": "{{ SITE_URL }}"
   },
   "publisher": {
     "@type": "Organization",
     "name": "مؤسسة العجمي",
     "logo": {
       "@type": "ImageObject",
-      "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}"
+      "url": "{{ SITE_URL }}{% static 'images/logo.png' %}"
     }
   }
 }
@@ -146,753 +141,130 @@
 {% endif %}
 {% endblock %}
 
-{% block extra_css %}
-<style>
-/* ==================== RESET & BASE (نفس هوية صفحة المدونة الرئيسية) ==================== */
-.post-page * { box-sizing: border-box; }
-
-.post-page {
-    font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #0a0e1a;
-    color: #ffffff;
-    line-height: 1.8;
-}
-
-.post-page a { color: inherit; }
-
-/* ==================== PROGRESS BAR ==================== */
-.reading-progress {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 4px;
-    background: transparent;
-    z-index: 999;
-}
-
-.reading-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #FFD700, #FFA500);
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
-    transition: width 0.1s ease-out;
-}
-
-.post-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 50px 20px 80px;
-}
-
-/* Breadcrumb */
-.post-breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    font-size: 0.92em;
-    color: #a8b8d8;
-    margin-bottom: 25px;
-}
-
-.post-breadcrumb a {
-    color: #a8b8d8;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.post-breadcrumb a:hover { color: #FFD700; }
-.post-breadcrumb span.sep { opacity: 0.5; }
-.post-breadcrumb span.current { color: #FFD700; font-weight: 700; }
-
-/* Back Button */
-.back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 22px;
-    background: rgba(255, 215, 0, 0.1);
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    border-radius: 12px;
-    color: #fff;
-    text-decoration: none;
-    margin-bottom: 30px;
-    transition: all 0.3s;
-    font-weight: 700;
-}
-
-.back-btn:hover {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    border-color: #FFD700;
-    color: #000;
-    transform: translateX(5px);
-}
-
-/* Messages */
-.message {
-    padding: 16px 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.message.success { background: rgba(39, 174, 96, 0.2); border-right: 4px solid #27ae60; }
-.message.error { background: rgba(231, 76, 60, 0.2); border-right: 4px solid #e74c3c; }
-
-/* Post Header */
-.post-header { margin-bottom: 40px; }
-
-.post-meta-top {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 22px;
-    align-items: center;
-    font-size: 0.95em;
-    font-weight: 600;
-    color: #d0e0ff;
-}
-
-.category-badge {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.95em;
-    color: #000;
-    font-weight: 800;
-}
-
-.meta-item { display: flex; align-items: center; gap: 6px; }
-
-.post-title {
-    font-size: 2.6em;
-    line-height: 1.35;
-    margin-bottom: 22px;
-    font-weight: 900;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.post-excerpt {
-    font-size: 1.2em;
-    color: #c8d8ff;
-    margin-bottom: 25px;
-    font-weight: 500;
-}
-
-.author-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 20px;
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.9), rgba(45, 63, 107, 0.9));
-    border-radius: 16px;
-    border: 2px solid rgba(255, 215, 0, 0.2);
-}
-
-.author-avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6em;
-    flex-shrink: 0;
-}
-
-.author-details .author-name {
-    margin-bottom: 4px;
-    font-weight: 800;
-    font-size: 1.05em;
-}
-
-.author-details small { color: #a8b8d8; }
-
-/* Featured Image */
-.featured-image {
-    width: 100%;
-    max-height: 500px;
-    object-fit: contain;
-    border-radius: 20px;
-    margin: 30px 0;
-    background: linear-gradient(135deg, #1a2847, #2d3f6b);
-    border: 3px solid rgba(255, 215, 0, 0.25);
-}
-
-/* Post Content */
-.post-content {
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.6), rgba(45, 63, 107, 0.6));
-    padding: 40px;
-    border-radius: 20px;
-    margin-bottom: 40px;
-    border: 2px solid rgba(255, 215, 0, 0.15);
-    font-size: 1.12em;
-    color: #e4ecff;
-}
-
-.post-content p { margin-bottom: 20px; }
-
-.post-content h2, .post-content h3 {
-    margin: 30px 0 15px;
-    color: #FFD700;
-}
-
-.post-content ul, .post-content ol { margin: 20px 0 20px 30px; }
-.post-content li { margin-bottom: 10px; }
-
-.post-content blockquote {
-    border-right: 4px solid #FFD700;
-    padding: 20px;
-    margin: 30px 0;
-    background: rgba(255, 215, 0, 0.08);
-    border-radius: 10px;
-    font-style: italic;
-}
-
-.post-content img {
-    max-width: 100%;
-    border-radius: 14px;
-    margin: 20px 0;
-}
-
-/* ==================== GALLERY (✅ جديد) ==================== */
-.media-section { margin-bottom: 45px; }
-
-.media-section-title {
-    font-size: 1.5em;
-    font-weight: 900;
-    color: #FFD700;
-    margin-bottom: 22px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 18px;
-}
-
-.gallery-item {
-    border-radius: 16px;
-    overflow: hidden;
-    border: 2px solid rgba(255, 215, 0, 0.2);
-    cursor: zoom-in;
-    background: #1a2847;
-    position: relative;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 170px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease;
-}
-
-.gallery-item:hover img { transform: scale(1.08); }
-
-.gallery-item figcaption {
-    padding: 10px 12px;
-    font-size: 0.85em;
-    color: #c8d8ff;
-    background: rgba(10, 14, 26, 0.6);
-}
-
-/* Lightbox */
-.lightbox-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 8, 16, 0.94);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    padding: 30px;
-}
-
-.lightbox-overlay.active { display: flex; }
-
-.lightbox-overlay img {
-    max-width: 90vw;
-    max-height: 85vh;
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-}
-
-.lightbox-close {
-    position: absolute;
-    top: 25px;
-    left: 30px;
-    background: rgba(255, 215, 0, 0.15);
-    border: 2px solid #FFD700;
-    color: #FFD700;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    font-size: 1.3em;
-    cursor: pointer;
-}
-
-/* ==================== VIDEOS (✅ جديد) ==================== */
-.videos-list { display: flex; flex-direction: column; gap: 28px; }
-
-.video-embed-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 700px;
-    aspect-ratio: 16 / 9;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 2px solid rgba(255, 215, 0, 0.2);
-    background: #000;
-}
-
-.video-embed-wrapper iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-.video-caption {
-    margin-top: 10px;
-    color: #c8d8ff;
-    font-weight: 600;
-}
-
-.tiktok-wrapper { display: flex; justify-content: flex-start; }
-
-/* Share Section */
-.share-section {
-    padding: 25px;
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.9), rgba(45, 63, 107, 0.9));
-    border-radius: 16px;
-    margin-bottom: 40px;
-    border: 2px solid rgba(255, 215, 0, 0.2);
-}
-
-.share-section h2 {
-    margin-bottom: 15px;
-    font-size: 1.3em;
-    color: #FFD700;
-}
-
-.share-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
-
-.share-btn {
-    padding: 12px 22px;
-    border-radius: 10px;
-    text-decoration: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    transition: transform 0.3s;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 1em;
-}
-
-.share-btn:hover { transform: translateY(-3px); }
-
-.share-facebook { background: #3b5998; }
-.share-twitter { background: #1da1f2; }
-.share-whatsapp { background: #25d366; }
-.share-linkedin { background: #0077b5; }
-.share-copy { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
-
-/* Comment Form */
-.comment-form {
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.9), rgba(45, 63, 107, 0.9));
-    padding: 30px;
-    border-radius: 16px;
-    margin-bottom: 40px;
-    border: 2px solid rgba(255, 215, 0, 0.2);
-}
-
-.comment-form h2, .comments-section h2 { font-size: 1.3em; color: #FFD700; }
-
-.form-group { margin-bottom: 20px; }
-
-.form-group label { display: block; margin-bottom: 8px; font-weight: 700; }
-
-.form-group input, .form-group textarea {
-    width: 100%;
-    padding: 13px;
-    border: 2px solid rgba(255, 215, 0, 0.25);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.06);
-    color: white;
-    font-size: 16px;
-    font-family: inherit;
-}
-
-.form-group input:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: #FFD700;
-}
-
-.form-group textarea { min-height: 150px; resize: vertical; }
-
-.submit-btn {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    color: #000;
-    padding: 14px 32px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-    font-family: inherit;
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.35);
-}
-
-/* Comments Section */
-.comments-section {
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.9), rgba(45, 63, 107, 0.9));
-    padding: 30px;
-    border-radius: 16px;
-    margin-bottom: 40px;
-    border: 2px solid rgba(255, 215, 0, 0.2);
-}
-
-.comments-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.comment-item {
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 12px;
-    margin-bottom: 15px;
-    border-right: 3px solid #FFD700;
-}
-
-.comment-author { font-weight: 800; margin-bottom: 5px; color: #FFD700; }
-.comment-date { font-size: 0.85em; opacity: 0.7; margin-bottom: 10px; }
-
-/* Related Posts */
-.related-section { margin-top: 60px; }
-
-.related-section h2.section-title {
-    font-size: 1.9em;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #FFD700;
-    font-weight: 900;
-}
-
-.related-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-}
-
-.related-card {
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.9), rgba(45, 63, 107, 0.9));
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.3s;
-    border: 2px solid rgba(255, 215, 0, 0.2);
-}
-
-.related-card:hover { transform: translateY(-6px); border-color: #FFD700; }
-
-.related-image { width: 100%; height: 170px; object-fit: cover; display: block; }
-
-.related-content { padding: 18px; }
-
-.related-title { font-size: 1.15em; margin-bottom: 10px; }
-.related-title a { text-decoration: none; transition: color 0.3s; }
-.related-title a:hover { color: #FFD700; }
-
-.related-meta {
-    display: flex;
-    gap: 15px;
-    font-size: 0.85em;
-    color: #a8b8d8;
-    margin-top: 10px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .post-title { font-size: 2em; }
-    .post-content { padding: 25px; }
-    .related-grid { grid-template-columns: 1fr; }
-    .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-}
-
-a:focus, button:focus, input:focus, textarea:focus {
-    outline: 3px solid #FFD700;
-    outline-offset: 2px;
-}
-</style>
-{% endblock %}
-
 {% block content %}
-<div class="reading-progress"><div class="reading-progress-bar" id="readingProgressBar"></div></div>
-
-<main class="post-page" role="main" aria-labelledby="post-heading">
-    <div class="post-container">
-
-        <!-- Breadcrumb -->
-        <nav class="post-breadcrumb" aria-label="مسار التنقل">
-            <a href="{% url 'home' %}">الرئيسية</a>
-            <span class="sep">/</span>
-            <a href="{% url 'blog_list' %}">المدونة</a>
-            {% if post.category %}
-            <span class="sep">/</span>
-            <a href="{% url 'category_posts' post.category.slug %}">{{ post.category.name }}</a>
-            {% endif %}
-            <span class="sep">/</span>
-            <span class="current">{{ post.title|truncatewords:6 }}</span>
-        </nav>
-
-        <!-- Back Button -->
-        <a href="{% url 'blog_list' %}" class="back-btn">← العودة للمدونة</a>
-
-        <!-- Messages -->
-        {% if messages %}
-            {% for message in messages %}
-            <div class="message {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-
-        <!-- Post Header -->
-        <header class="post-header">
-            <div class="post-meta-top">
-                {% if post.category %}
-                <span class="category-badge">{{ post.category.icon }} {{ post.category.name }}</span>
-                {% endif %}
-                <span class="meta-item">👁 {{ post.views_count }} مشاهدة</span>
-                <span class="meta-item">⏱ {{ post.reading_time }} دقائق قراءة</span>
-                <span class="meta-item">📅 {{ post.published_at|date:"d M Y" }}</span>
-            </div>
-
-            <!-- ✅ H1 وحيد في الصفحة -->
-            <h1 id="post-heading" class="post-title">{{ post.title }}</h1>
-
-            {% if post.excerpt %}
-            <p class="post-excerpt">{{ post.excerpt }}</p>
-            {% endif %}
-
-            <div class="author-info">
-                <div class="author-avatar">👨‍💼</div>
-                <div class="author-details">
-                    <p class="author-name">{{ post.author.get_full_name|default:post.author.username }}</p>
-                    <small>تم النشر في {{ post.published_at|date:"d F Y" }}</small>
-                </div>
-            </div>
-        </header>
-
-        <!-- Featured Image -->
-        {% if post.image %}
-        <img src="{{ post.cloud_url }}" alt="{{ post.display_image_alt }}" class="featured-image" loading="lazy" decoding="async">
-        {% endif %}
-
-        <!-- Post Content (بدون أي تعديل - نفس عرض الـ 180 مقال القديم) -->
-        <article class="post-content">
-            {{ post.content|linebreaks }}
-        </article>
-
-        <!-- Gallery (✅ جديد - يظهر فقط لو المقال فيه صور إضافية) -->
-        {% if gallery_images %}
-        <section class="media-section" id="gallery" aria-labelledby="gallery-heading">
-            <h2 class="media-section-title" id="gallery-heading">📷 معرض الصور</h2>
-            <div class="gallery-grid">
-                {% for img in gallery_images %}
-                <figure class="gallery-item" data-full="{{ img.cloud_url }}" data-caption="{{ img.display_alt }}">
-                    <img src="{{ img.cloud_url }}" alt="{{ img.display_alt }}" loading="lazy" decoding="async">
-                    {% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
-                </figure>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <!-- Videos (✅ جديد - يظهر فقط لو المقال فيه فيديوهات) -->
-        {% if videos %}
-        <section class="media-section" id="videos" aria-labelledby="videos-heading">
-            <h2 class="media-section-title" id="videos-heading">🎬 فيديوهات المقال</h2>
-            <div class="videos-list">
-                {% for video in videos %}
-                <div>
-                    {% if video.platform == 'youtube' %}
-                    <div class="video-embed-wrapper">
-                        <iframe src="{{ video.embed_url }}"
-                                title="{{ video.title|default:post.title }}"
-                                loading="lazy"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                    </div>
-                    {% elif video.platform == 'tiktok' %}
-                    <div class="tiktok-wrapper">
-                        <blockquote class="tiktok-embed" cite="{{ video.url }}" data-video-id="{{ video.tiktok_video_id }}" style="max-width: 605px;min-width: 325px;">
-                            <section></section>
-                        </blockquote>
-                    </div>
-                    {% endif %}
-                    {% if video.title %}<p class="video-caption">{{ video.title }}</p>{% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </section>
-        <script async src="https://www.tiktok.com/embed.js"></script>
-        {% endif %}
-
-        <!-- Share Section -->
-        <section class="share-section">
-            <h2>📤 شارك هذا المقال</h2>
-            <div class="share-buttons">
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="share-btn share-facebook">Facebook</a>
-                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" rel="noopener" class="share-btn share-twitter">Twitter</a>
-                <a href="https://wa.me/?text={{ post.title }} {{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="share-btn share-whatsapp">WhatsApp</a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="share-btn share-linkedin">LinkedIn</a>
-                <button type="button" class="share-btn share-copy" id="copyLinkBtn" data-url="{{ request.build_absolute_uri }}">🔗 نسخ الرابط</button>
-            </div>
-        </section>
-
-        <!-- Comment Form -->
-        {% if post.allow_comments %}
-        <section class="comment-form">
-            <h2>💬 اترك تعليقك</h2>
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="author_name">الاسم *</label>
-                    <input type="text" id="author_name" name="author_name" required>
-                </div>
-                <div class="form-group">
-                    <label for="author_email">البريد الإلكتروني *</label>
-                    <input type="email" id="author_email" name="author_email" required>
-                </div>
-                <div class="form-group">
-                    <label for="content">التعليق *</label>
-                    <textarea id="content" name="content" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">إرسال التعليق</button>
-            </form>
-        </section>
-        {% endif %}
-
-        <!-- Comments -->
-        <section class="comments-section">
-            <div class="comments-header">
-                <h2>💬 التعليقات</h2>
-                <span style="opacity: 0.7;">{{ comments_count }} تعليق</span>
-            </div>
-
-            {% if comments %}
-                {% for comment in comments %}
-                <div class="comment-item">
-                    <div class="comment-author">{{ comment.author_name }}</div>
-                    <div class="comment-date">{{ comment.created_at|date:"d F Y, H:i" }}</div>
-                    <p>{{ comment.content }}</p>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p style="text-align: center; opacity: 0.7; padding: 30px;">لا توجد تعليقات بعد. كن أول من يعلق!</p>
-            {% endif %}
-        </section>
-
-        <!-- Related Posts -->
-        {% if related_posts %}
-        <section class="related-section" aria-labelledby="related-heading">
-            <h2 class="section-title" id="related-heading">📚 مقالات ذات صلة</h2>
-            <div class="related-grid">
-                {% for related in related_posts %}
-                <article class="related-card">
-                    {% if related.cloud_url %}
-                    <img src="{{ related.cloud_url }}" alt="{{ related.display_image_alt }}" class="related-image" loading="lazy" decoding="async">
-                    {% else %}
-                    <div class="related-image" style="background: linear-gradient(135deg, #1a2847, #2d3f6b); display: flex; align-items: center; justify-content: center; font-size: 3em;">📝</div>
-                    {% endif %}
-                    <div class="related-content">
-                        <h3 class="related-title"><a href="{% url 'blog_detail' related.slug %}">{{ related.title }}</a></h3>
-                        <div class="related-meta">
-                            <span>👁 {{ related.views_count }}</span>
-                            <span>⏱ {{ related.reading_time }} د</span>
-                        </div>
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
+<div class="progress" id="progress" aria-hidden="true"></div>
+<header class="page-head">
+  <div class="container article-head">
+    <ol class="crumbs">
+      <li><a href="{% url 'home' %}">الرئيسية</a></li>
+      <li><a href="{% url 'blog_list' %}">المدونة</a></li>
+      {% if post.category %}<li><a href="{% url 'category_posts' post.category.slug %}">{{ post.category.name }}</a></li>{% endif %}
+    </ol>
+    <h1>{{ post.title }}</h1>
+    <div class="post-meta">
+      <span>بقلم {{ post.author.get_full_name|default:"فريق مؤسسة العجمي" }}</span>
+      {% if post.published_at %}<time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"j F Y" }}</time>{% endif %}
+      <span>{{ post.reading_time }} دقائق قراءة</span>
     </div>
-</main>
+    {% if post.excerpt %}<p>{{ post.excerpt|striptags|truncatewords:45 }}</p>{% endif %}
+  </div>
+</header>
 
-<!-- Lightbox (✅ جديد) -->
-<div class="lightbox-overlay" id="lightboxOverlay">
-    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="إغلاق">✕</button>
-    <img id="lightboxImage" src="" alt="">
+{% if post.cloud_url %}
+<div class="container"><figure class="article-cover" style="margin-bottom:0;"><img src="{{ post.cloud_url }}" alt="{{ post.display_image_alt }}" width="980" height="520" fetchpriority="high"></figure></div>
+{% endif %}
+
+<div class="section" style="padding-top:clamp(36px,5vw,64px);">
+  <div class="container">
+    <div class="article">
+      {% for message in messages %}<div class="notice {% if message.tags == 'success' %}notice-success{% else %}notice-error{% endif %}" role="status">{{ message }}</div>{% endfor %}
+
+      <article class="article-body">
+        {{ post.content|linebreaks }}
+      </article>
+
+      {% if gallery_images %}
+      <section id="gallery" aria-labelledby="gallery-title" style="margin-top:40px;">
+        <h2 id="gallery-title">صور من المقال</h2>
+        <div class="gallery">
+          {% for img in gallery_images %}
+          <figure data-full="{{ img.cloud_url }}"><img src="{{ img.cloud_url }}" alt="{{ img.display_alt }}" loading="lazy" decoding="async">{% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}</figure>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      {% if videos %}
+      <section id="videos" aria-labelledby="videos-title" style="margin-top:40px;">
+        <h2 id="videos-title">فيديوهات المقال</h2>
+        {% for video in videos %}
+          {% if video.platform == 'youtube' %}
+          <div class="video-embed"><iframe src="{{ video.embed_url }}" title="{{ video.title|default:post.title }}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          {% elif video.platform == 'tiktok' %}
+          <blockquote class="tiktok-embed" cite="{{ video.url }}" data-video-id="{{ video.tiktok_video_id }}" style="max-width:605px; min-width:300px; margin:0 auto 14px;"><section></section></blockquote>
+          {% endif %}
+          {% if video.title %}<p style="color:var(--muted); font-size:.95rem;">{{ video.title }}</p>{% endif %}
+        {% endfor %}
+        <script async src="https://www.tiktok.com/embed.js"></script>
+      </section>
+      {% endif %}
+
+      <div class="inline-cta">
+        <p>عايز طفلك يحفظ القرآن مع معلمة متقنة؟ أول حلقة مجانية.</p>
+        <a class="btn btn-primary" href="{% url 'contact' %}">احجز حلقة تجريبية مجانية</a>
+      </div>
+
+      <div class="share">
+        <strong>شارك المقال:</strong>
+        <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ canonical_url|urlencode }}" target="_blank" rel="noopener">واتساب</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_url|urlencode }}" target="_blank" rel="noopener">فيسبوك</a>
+        <a href="https://twitter.com/intent/tweet?url={{ canonical_url|urlencode }}&text={{ post.title|urlencode }}" target="_blank" rel="noopener">إكس</a>
+        <a href="https://t.me/share/url?url={{ canonical_url|urlencode }}&text={{ post.title|urlencode }}" target="_blank" rel="noopener">تليجرام</a>
+        <button type="button" id="copy-link" data-url="{{ canonical_url }}">نسخ الرابط</button>
+      </div>
+
+      <section aria-labelledby="comments-title">
+        <h2 id="comments-title">التعليقات ({{ comments_count }})</h2>
+        {% for comment in comments %}
+          <div class="comment"><strong>{{ comment.author_name }}</strong><time datetime="{{ comment.created_at|date:'c' }}">{{ comment.created_at|date:"j F Y" }}</time><p>{{ comment.content|linebreaksbr }}</p></div>
+        {% empty %}
+          <p style="color:var(--muted);">لسه مفيش تعليقات. شاركنا رأيك.</p>
+        {% endfor %}
+        {% if post.allow_comments %}
+        <form method="post" class="form-card" style="margin-top:28px;">
+          {% csrf_token %}
+          <h3 style="margin-top:0;">اكتب تعليقك</h3>
+          <div class="field-row">
+            <div class="field"><label for="author_name">الاسم<span class="req" aria-hidden="true">*</span></label><input type="text" id="author_name" name="author_name" required autocomplete="name"></div>
+            <div class="field"><label for="author_email">البريد الإلكتروني<span class="req" aria-hidden="true">*</span></label><input type="email" id="author_email" name="author_email" required autocomplete="email" dir="ltr" style="text-align:right"></div>
+          </div>
+          <div class="field"><label for="content">التعليق<span class="req" aria-hidden="true">*</span></label><textarea id="content" name="content" required></textarea></div>
+          <button type="submit" class="btn btn-primary">إرسال التعليق</button>
+          <p style="color:var(--muted); font-size:.88rem; margin:10px 0 0;">التعليق بيظهر بعد مراجعته. البريد الإلكتروني مش بيظهر لحد.</p>
+        </form>
+        {% endif %}
+      </section>
+    </div>
+
+    {% if related_posts %}
+    <section aria-labelledby="related-title" style="margin-top:72px;">
+      <h2 id="related-title">مقالات قريبة من الموضوع</h2>
+      <ul class="posts" style="margin-top:24px;">{% for post in related_posts %}<li>{% include 'blog/_post_card.html' %}</li>{% endfor %}</ul>
+    </section>
+    {% endif %}
+  </div>
 </div>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="عرض الصورة">
+  <button type="button" class="icon-btn" id="lightbox-close" aria-label="إغلاق">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+{% endblock %}
+
+{% block extra_js %}
 <script>
-(function () {
-    // شريط تقدّم القراءة
-    var bar = document.getElementById('readingProgressBar');
-    function updateProgress() {
-        var scrollTop = window.scrollY || document.documentElement.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        if (bar) bar.style.width = pct + '%';
-    }
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    updateProgress();
-
-    // نسخ رابط المقال
-    var copyBtn = document.getElementById('copyLinkBtn');
-    if (copyBtn) {
-        copyBtn.addEventListener('click', function () {
-            var url = copyBtn.getAttribute('data-url');
-            navigator.clipboard && navigator.clipboard.writeText(url).then(function () {
-                var original = copyBtn.textContent;
-                copyBtn.textContent = '✅ تم النسخ';
-                setTimeout(function () { copyBtn.textContent = original; }, 2000);
-            });
-        });
-    }
-
-    // Lightbox لمعرض الصور
-    var overlay = document.getElementById('lightboxOverlay');
-    var lightboxImg = document.getElementById('lightboxImage');
-    var closeBtn = document.getElementById('lightboxClose');
-    document.querySelectorAll('.gallery-item').forEach(function (item) {
-        item.addEventListener('click', function () {
-            var full = item.getAttribute('data-full');
-            var caption = item.getAttribute('data-caption');
-            lightboxImg.src = full;
-            lightboxImg.alt = caption || '';
-            overlay.classList.add('active');
-        });
-    });
-    function closeLightbox() { overlay.classList.remove('active'); lightboxImg.src = ''; }
-    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) closeLightbox(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+(function(){
+  var bar = document.getElementById('progress');
+  function upd(){ var h = document.documentElement.scrollHeight - innerHeight; bar.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%'; }
+  addEventListener('scroll', upd, {passive: true}); upd();
+  var c = document.getElementById('copy-link');
+  if(c) c.addEventListener('click', function(){ navigator.clipboard && navigator.clipboard.writeText(c.dataset.url).then(function(){ c.textContent = 'اتنسخ ✓'; setTimeout(function(){ c.textContent = 'نسخ الرابط'; }, 2000); }); });
+  var lb = document.getElementById('lightbox'), li = document.getElementById('lightbox-img');
+  document.querySelectorAll('.gallery figure').forEach(function(f){ f.addEventListener('click', function(){ li.src = f.dataset.full; li.alt = f.querySelector('img').alt; lb.classList.add('open'); }); });
+  function close(){ lb.classList.remove('open'); li.src = ''; }
+  document.getElementById('lightbox-close').addEventListener('click', close);
+  lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
 })();
 </script>
 {% endblock %}

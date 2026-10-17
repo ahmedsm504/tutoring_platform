@@ -1,0 +1,20 @@
+{% extends 'core/supervisor_portal_base.html' %}
+{% block title %}متابعة شات المعلمات{% endblock %}
+{% block extra_css %}{% include 'chat/_inbox_styles.html' %}{% endblock %}
+{% block content %}
+<div class="ci-wrap">
+  <div class="ci-head"><h2>👁️ متابعة شات معلماتك مع الطلاب</h2></div>
+  {% for c in convs %}
+    <a class="ci-item" href="{% url 'chat_supervisor_thread' c.student_id %}">
+      <div class="ci-av">{{ c.student.name|slice:":1" }}</div>
+      <div class="ci-body">
+        <div class="ci-name">{{ c.student.name }}{% if c.is_flagged %}<span class="ci-chip red">🚩 محتاجة مراجعة</span>{% endif %}{% if c.blocked_count %}<span class="ci-chip red">⛔ {{ c.blocked_count }} محاولة اتمنعت</span>{% endif %}</div>
+        <div class="ci-last">المعلمة: {{ c.student.teacher.name|default:"-" }}</div>
+      </div>
+      <div class="ci-side"><span class="ci-time">{{ c.last_message_at|date:"j/n H:i" }}</span></div>
+    </a>
+  {% empty %}
+    <div class="ci-empty">مفيش محادثات لسه.</div>
+  {% endfor %}
+</div>
+{% endblock %}

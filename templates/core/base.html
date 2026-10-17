@@ -332,6 +332,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <li><a href="{% url 'financial_reports' %}" class="{% if 'financial-reports' in request.path %}active{% endif %}"><i class="fas fa-chart-line"></i> <span>التقارير المالية</span></a></li>
             <li><a href="{% url 'salaries_list' %}" class="{% if 'salar' in request.path %}active{% endif %}"><i class="fas fa-sack-dollar"></i> <span>قائمة الرواتب</span></a></li>
             <li><a href="{% url 'lessons_dashboard' %}" class="{% if 'lessons' in request.path %}active{% endif %}"><i class="fas fa-calendar-check"></i> <span>الحلقات اليوم</span></a></li>
+            <li><a href="{% url 'chat_admin_inbox' %}" class="{% if '/chat/' in request.path %}active{% endif %}"><i class="fas fa-comments"></i> <span>الشات</span>{% if chat_admin_unread or chat_admin_flagged %}<b style="margin-inline-start:auto; background:#DC3545; color:#fff; border-radius:999px; padding:0 8px; font-size:0.72rem;">{% if chat_admin_flagged %}🚩{{ chat_admin_flagged }} {% endif %}{% if chat_admin_unread %}{{ chat_admin_unread }}{% endif %}</b>{% endif %}</a></li>
+            <li><a href="{% url 'learning_admin_list' %}" class="{% if '/learning/admin/' in request.path %}active{% endif %}"><i class="fas fa-microphone-lines"></i> <span>الواجبات الصوتية</span></a></li>
             <li><a href="{% url 'teacher_activity' %}" class="{% if 'teacher-activity' in request.path %}active{% endif %}"><i class="fas fa-bell"></i> <span>نشاط المعلمات</span></a></li>
             <li><a href="{% url 'schedule_requests_list' %}" class="{% if 'schedule-requests' in request.path %}active{% endif %}"><i class="fas fa-clock-rotate-left"></i> <span>طلبات المواعيد</span></a></li>
             <li><a href="{% url 'evaluations_list' %}" class="{% if 'evaluation' in request.path %}active{% endif %}"><i class="fas fa-clipboard-check"></i> <span>تقييم الطلاب الشهري</span></a></li>
@@ -344,14 +346,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <div class="quick-link-box">
                 <span>بورتال المعلمة</span>
                 <div class="quick-link-row">
-                    <input type="text" readonly id="ql-teacher" value="{{ request.scheme }}://{{ request.get_host }}{% url 'teacher_login' %}">
+                    <input type="text" readonly id="ql-teacher" value="{{ SITE_URL }}{% url 'teacher_login' %}">
                     <button type="button" onclick="quickCopy('ql-teacher', this)"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+            <div class="quick-link-box">
+                <span>بوابة الطالب</span>
+                <div class="quick-link-row">
+                    <input type="text" readonly id="ql-student" value="{{ SITE_URL }}{% url 'student_login' %}">
+                    <button type="button" onclick="quickCopy('ql-student', this)"><i class="fas fa-copy"></i></button>
                 </div>
             </div>
             <div class="quick-link-box">
                 <span>بورتال المشرفة</span>
                 <div class="quick-link-row">
-                    <input type="text" readonly id="ql-supervisor" value="{{ request.scheme }}://{{ request.get_host }}{% url 'supervisor_login' %}">
+                    <input type="text" readonly id="ql-supervisor" value="{{ SITE_URL }}{% url 'supervisor_login' %}">
                     <button type="button" onclick="quickCopy('ql-supervisor', this)"><i class="fas fa-copy"></i></button>
                 </div>
             </div>

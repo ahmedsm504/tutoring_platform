@@ -1,0 +1,31 @@
+<aside aria-label="روابط المدونة">
+  {% if categories %}
+  <div class="aside-block">
+    <h2>التصنيفات</h2>
+    <ul class="aside-list">
+      {% for c in categories %}<li><a href="{% url 'category_posts' c.slug %}" {% if category and category.pk == c.pk %}aria-current="page"{% endif %}><span>{{ c.name }}</span><small>{{ c.posts_count }} مقال</small></a></li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% if popular_posts %}
+  <div class="aside-block">
+    <h2>الأكثر قراءة</h2>
+    <ul class="aside-list">
+      {% for p in popular_posts %}<li><a href="{% url 'blog_detail' p.slug %}"><span>{{ p.title|truncatewords:9 }}</span></a></li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% if recent_videos %}
+  <div class="aside-block">
+    <h2>أحدث الفيديوهات</h2>
+    <ul class="aside-list">
+      {% for v in recent_videos %}<li><a href="{% url 'blog_detail' v.post.slug %}#videos"><span>▶ {{ v.title|default:v.post.title|truncatewords:8 }}</span><small>{% if v.platform == 'tiktok' %}تيك توك{% else %}يوتيوب{% endif %}</small></a></li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  <div class="aside-cta">
+    <h2>عايز تبدأ الحفظ؟</h2>
+    <p>أول حلقة مع معلماتنا مجانية، ومن أي دولة.</p>
+    <a class="btn btn-gold btn-block" href="{% url 'contact' %}">احجز حلقة تجريبية مجانية</a>
+  </div>
+</aside>

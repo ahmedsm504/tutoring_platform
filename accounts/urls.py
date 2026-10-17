@@ -9,7 +9,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     
     # ============= Contact & Booking =============
-    path('contact/', views.contact_view, name='contact'),
+    # صفحة التواصل بقت على /contact/ (core) - /accounts/contact/ بيتحول عليها 301 من config/urls.py
     
     # ============= Student Pages =============
     path('dashboard/', views.student_dashboard, name='student_dashboard'),

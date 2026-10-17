@@ -72,8 +72,8 @@ def register(request):
             messages.success(request, "تم التسجيل بنجاح! يمكنك الآن تسجيل الدخول.")
             return redirect('login')
         
-        except Exception as e:
-            messages.error(request, f"حدث خطأ أثناء التسجيل: {str(e)}")
+        except Exception:
+            messages.error(request, "حدث خطأ أثناء التسجيل، حاول مرة أخرى.")
             return redirect('register')
 
     return render(request, 'accounts/register.html')
@@ -82,14 +82,26 @@ def register(request):
 # ==========================================
 # تسجيل الدخول
 # ==========================================
+def _home_for(user):
+    """كل نوع حساب يروح على لوحته الصح (المعلمة/المشرفة/الطالب/الإدارة ليهم بورتالات منفصلة)"""
+    if hasattr(user, 'core_student'):
+        return 'student_portal_home'
+    if hasattr(user, 'teacher_profile'):
+        return 'teacher_portal_home'
+    if hasattr(user, 'supervisor_profile'):
+        return 'supervisor_portal_home'
+    if user.is_staff:
+        return 'dashboard_home'
+    if user.user_type == 'student':
+        return 'student_dashboard'
+    if user.user_type in ['supervisor', 'admin']:
+        return 'supervisor_dashboard'
+    return 'home'
+
+
 def login_view(request):
     if request.user.is_authenticated:
-        # إعادة توجيه المستخدم المسجل بالفعل
-        if request.user.user_type == 'student':
-            return redirect('student_dashboard')
-        elif request.user.user_type in ['supervisor', 'admin']:
-            return redirect('supervisor_dashboard')
-        return redirect('home')
+        return redirect(_home_for(request.user))
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -99,14 +111,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, f'مرحباً {user.username}! تم تسجيل الدخول بنجاح.')
-
-            # إعادة التوجيه حسب نوع المستخدم
-            if user.user_type == 'student':
-                return redirect('student_dashboard')
-            elif user.user_type in ['supervisor', 'admin']:
-                return redirect('supervisor_dashboard')
-            else:
-                return redirect('home')
+            return redirect(_home_for(user))
         else:
             messages.error(request, 'اسم المستخدم أو كلمة المرور غير صحيحة.')
 
@@ -142,8 +147,14 @@ def contact_view(request):
         else:
             messages.error(request, "حدث خطأ في الحجز. الرجاء المحاولة مرة أخرى.")
     else:
-        form = TrialBookingForm()
-    
+        initial = {}
+        slug = request.GET.get('program', '')
+        from core.site_content import PROGRAMS
+        prog = next((p for p in PROGRAMS if p['slug'] == slug), None)
+        if prog:
+            initial['notes'] = f"مهتم بـ{prog['kind']} {prog['name']}"
+        form = TrialBookingForm(initial=initial)
+
     return render(request, 'accounts/contact.html', {'form': form})
 
 
@@ -268,7 +279,7 @@ def supervisor_dashboard(request):
             date = request.POST.get('date')
             
             try:
-                student = StudentProfile.objects.get(user__id=student_id)
+                student = students.get(user__id=student_id)
                 Session.objects.create(
                     student=student,
                     date=date,
@@ -286,7 +297,9 @@ def supervisor_dashboard(request):
             status = request.POST.get('status')
             
             try:
-                session = Session.objects.get(id=session_id)
+                if status not in ('present', 'absent', ''):
+                    raise Session.DoesNotExist
+                session = Session.objects.get(id=session_id, student__in=students)
                 session.status = status
                 session.save()
                 
@@ -302,7 +315,7 @@ def supervisor_dashboard(request):
             session_id = request.POST.get('session_id')
             
             try:
-                session = Session.objects.get(id=session_id)
+                session = Session.objects.get(id=session_id, student__in=students)
                 student_name = session.student.full_name
                 session.delete()
                 messages.success(request, f'✅ تم حذف جلسة {student_name}')
@@ -320,7 +333,7 @@ def supervisor_dashboard(request):
                 messages.error(request, '❌ الرسالة فارغة!')
             else:
                 try:
-                    student_user = User.objects.get(id=student_id)
+                    student_user = User.objects.get(id=student_id, student_profile__in=students)
                     Message.objects.create(
                         sender=request.user,
                         recipient=student_user,
@@ -463,13 +476,14 @@ def save_fcm_token(request):
             token = data.get('token')
             is_admin = request.user.is_staff if request.user.is_authenticated else False
 
-            if token:
+            if token and len(token) < 4096:
                 FCMToken.objects.update_or_create(
                     token=token,
-                    defaults={'is_admin': is_admin}
+                    defaults={'is_admin': is_admin,
+                              'user': request.user if request.user.is_authenticated else None}
                 )
                 return JsonResponse({'status': 'success'})
             return JsonResponse({'status': 'error', 'message': 'لا يوجد token'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
+        except Exception:
+            return JsonResponse({'status': 'error'})
     return JsonResponse({'status': 'error'})

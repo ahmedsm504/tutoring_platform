@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}سورة {{ meta.name }} مكتوبة كاملة بالتشكيل واستماع بصوت الحصري | العجمي{% endblock %}
+{% block meta_description %}سورة {{ meta.name }} مكتوبة كاملة بالرسم العثماني ({{ meta.count }} آية، {% if meta.type == 'meccan' %}مكية{% else %}مدنية{% endif %}) مع استماع آية بآية بصوت الحصري والمنشاوي وعبد الباسط والعفاسي، وتكرار الآيات لتسهيل الحفظ.{% endblock %}
+{% block meta_keywords %}سورة {{ meta.name }}, سورة {{ meta.name }} مكتوبة, سورة {{ meta.name }} بصوت الحصري, سورة {{ meta.name }} المنشاوي, حفظ سورة {{ meta.name }}, سورة {{ meta.name }} مكررة, سورة {{ meta.name }} للأطفال{% endblock %}
+{% block og_title %}سورة {{ meta.name }} مكتوبة واستماع آية بآية{% endblock %}
+{% block og_description %}اقرأ واسمع سورة {{ meta.name }} بصوت الحصري وكبار القراء، مع تكرار كل آية لتسهيل الحفظ.{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}{% url 'quran_surah' meta.id %}{% endblock %}
+{% block extra_meta %}<link rel="preload" href="{% static 'fonts/amiri-quran-arabic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+<meta name="static-url" content="{% static '' %}">
+<link rel="stylesheet" href="{% static 'css/quran-player.css' %}">{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},{"@type":"ListItem","position":2,"name":"القرآن الكريم","item":"{{ SITE_URL }}{% url 'quran_index' %}"},{"@type":"ListItem","position":3,"name":"سورة {{ meta.name }}","item":"{{ SITE_URL }}{% url 'quran_surah' meta.id %}"}]}</script>
+{% endblock %}
+{% block extra_css %}
+<style>
+.qp{--qp-accent-c:var(--green);--qp-sticky:72px;--qp-ink:var(--ink);--qp-paper:#fffdf7}
+.surah-nav{display:flex;justify-content:space-between;gap:10px;margin:18px 0 0;flex-wrap:wrap}
+.surah-nav a{display:inline-flex;gap:6px;align-items:center;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-weight:600}
+.surah-nav a:hover{border-color:var(--gold)}
+.surah-facts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding:0;list-style:none}
+.surah-facts li{background:rgba(255,255,255,.1);padding:6px 12px;border-radius:999px;font-size:.88rem}
+</style>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'quran_index' %}">القرآن الكريم</a></li><li aria-current="page">سورة {{ meta.name }}</li></ol>
+  <h1>سورة {{ meta.name }} مكتوبة واستماع آية بآية</h1>
+  <p>اضغط على أي آية تسمعها، واختار الشيخ، وكرر الآية كذا مرة لحد ما تحفظها.</p>
+  <ul class="surah-facts"><li>رقمها في المصحف: {{ meta.id }}</li><li>{{ meta.count }} آية</li><li>{% if meta.type == 'meccan' %}مكية{% else %}مدنية{% endif %}</li></ul>
+</div></header>
+<section class="section"><div class="container" style="max-width:900px;">
+  <div class="qp" data-surah="{{ meta.id }}" data-from="1" data-to="{{ meta.count }}">
+    <div class="qp-text">
+      {% if meta.id != 1 and meta.id != 9 %}<p class="qp-basmala">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</p>{% endif %}
+      <p class="qp-flow" lang="ar">{% for n, t in verses %}<span class="ayah" data-a="{{ n }}" id="a{{ n }}" tabindex="0" role="button" aria-label="الآية {{ n }}">{{ t }} <span class="ayah-num" aria-hidden="true">{{ n }}</span></span> {% endfor %}</p>
+    </div>
+    <p class="qp-credit">نص المصحف: موسوعة القرآن الكريم QuranEnc (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar" target="_blank" rel="license noopener">CC BY-SA 4.0</a>) · التلاوات: EveryAyah.com</p>
+  </div>
+  <nav class="surah-nav" aria-label="التنقل بين السور">
+    {% if prev %}<a href="{% url 'quran_surah' prev.id %}" rel="prev">→ سورة {{ prev.name }}</a>{% else %}<span></span>{% endif %}
+    <a href="{% url 'quran_index' %}">كل السور</a>
+    {% if next %}<a href="{% url 'quran_surah' next.id %}" rel="next">سورة {{ next.name }} ←</a>{% endif %}
+  </nav>
+  <div class="inline-cta" style="margin-top:28px;"><p><strong>عايز تحفظ سورة {{ meta.name }} بالتجويد مع معلمة؟</strong> حصص فردية أونلاين، وأول حلقة مجانية.</p><a class="btn btn-gold" href="{% url 'contact' %}?program=سورة {{ meta.name }}">احجز حلقة تجريبية مجانية</a></div>
+</div></section>
+{{ reciters|json_script:"qp-reciters" }}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/quran-player.js' %}" defer></script>{% endblock %}

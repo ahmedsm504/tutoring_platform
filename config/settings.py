@@ -1,116 +1,126 @@
 """
-Django settings for config project - with HTTPS/SSL
+Django settings for config project (alagme.com)
+
+⚠️ كل الأسرار (SECRET_KEY / Cloudinary / WhatsApp / Firebase) بتتقري من متغيرات
+البيئة على Railway - مفيش أي كلمة سر مكتوبة في الكود.
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
 import dj_database_url
+from django.contrib.messages import constants as messages
 
 
-# Build paths
+def env_bool(name, default=False):
+    return os.environ.get(name, str(default)).strip().lower() in ('1', 'true', 'yes', 'on')
+
+
+def env_list(name, default=''):
+    return [x.strip() for x in os.environ.get(name, default).split(',') if x.strip()]
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security
+# =========================================================
+# الأمان
+# =========================================================
+# على Railway (فيه DATABASE_URL) افتراضيًا False عشان الأمان.
+# على جهازك (من غير DATABASE_URL) افتراضيًا True عشان runserver يشتغل على http عادي.
+# وفي الحالتين تقدري تحددي DEBUG=True أو False بنفسك من متغيرات البيئة.
+DEBUG = env_bool('DEBUG', not os.environ.get('DATABASE_URL'))
+# ⚠️ لازم يكون فيه SECRET_KEY قوي في متغيرات Railway. القيمة الاحتياطية دي هي نفس
+# القديمة بالظبط عشان جلسات الدخول الحالية متتقفلش - بس متعتمديش عليها.
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-
-
-DATABASE_URL = os.environ.get("DATABASE_URL")
-
-if DATABASE_URL:
-    DATABASES = {
-        "default": dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True
-        )
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-        }
-    }
+CANONICAL_HOST = os.environ.get('CANONICAL_HOST', 'alagme.com')
+CANONICAL_URL = f'https://{CANONICAL_HOST}'
+DEFAULT_PROTOCOL = 'https'
 
 ALLOWED_HOSTS = [
+    CANONICAL_HOST,
+    f'www.{CANONICAL_HOST}',
     'tutoringplatform-production-b8c8.up.railway.app',
-    'alagme.com',
-    'www.alagme.com',
+    '.up.railway.app',
+    'healthcheck.railway.app',
     'localhost',
     '127.0.0.1',
-]
+    'testserver',
+] + env_list('EXTRA_ALLOWED_HOSTS')
+
+# الدومينات دي بتتحول 301 للدومين الأساسي (عشان جوجل ميشوفش نسخ مكررة من الموقع)
+SEO_REDIRECT_HOSTS = [f'www.{CANONICAL_HOST}', 'tutoringplatform-production-b8c8.up.railway.app'] + env_list('SEO_REDIRECT_HOSTS')
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://alagme.com',
-    'https://www.alagme.com',
+    f'https://{CANONICAL_HOST}',
+    f'https://www.{CANONICAL_HOST}',
     'https://tutoringplatform-production-b8c8.up.railway.app',
-]
-
-if os.environ.get("CSRF_TRUSTED_ORIGINS"):
-    CSRF_TRUSTED_ORIGINS.extend([
-        origin.strip()
-        for origin in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
-        if origin.strip()
-    ])
+] + env_list('CSRF_TRUSTED_ORIGINS')
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-
-    SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    X_FRAME_OPTIONS = 'DENY'
-
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     USE_X_FORWARDED_HOST = True
     USE_X_FORWARDED_PORT = True
 
-    # ✅ منع SecurityMiddleware من إضافة noindex على الـ sitemap
-    SECURE_REDIRECT_EXEMPT = [r'^sitemap\.xml$']
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']
 
+# =========================================================
+# قاعدة البيانات
+# =========================================================
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES = {"default": dj_database_url.config(default=DATABASE_URL, conn_max_age=600, ssl_require=env_bool('DB_SSL', True))}
+else:
+    DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}}
+
+# =========================================================
+# التطبيقات
+# =========================================================
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'admin_interface',
-    'colorfield',
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'accounts',
     'core',
     'payments',
+    'chat.apps.ChatConfig',
+    'learning.apps.LearningConfig',
     'cloudinary',
     'cloudinary_storage',
     'corsheaders',
-    'blog.apps.BlogConfig',  # مش بس 'blog'
+    'blog.apps.BlogConfig',
     'qna.apps.QnaConfig',
 ]
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-SILENCED_SYSTEM_CHECKS = ['security.W019']
-
 MIDDLEWARE = [
+    'config.middleware.CanonicalHostMiddleware',  # الأول: http://www -> https://alagme.com في خطوة واحدة
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middleware.PrivatePagesNoIndexMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -125,22 +135,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'config.context_processors.seo',
+                'chat.context_processors.chat_counts',
+                'learning.context_processors.learning_counts',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-from django.contrib.messages import constants as messages
-
-MESSAGE_TAGS = {
-    messages.DEBUG: 'debug',
-    messages.INFO: 'info',
-    messages.SUCCESS: 'success',
-    messages.WARNING: 'warning',
-    messages.ERROR: 'error',
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -155,94 +158,59 @@ USE_I18N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 AUTH_USER_MODEL = 'accounts.User'
+SITE_ID = 1
 
+# =========================================================
+# الملفات الثابتة والمرفوعة
+# ملحوظة: Django 5.1+ شال DEFAULT_FILE_STORAGE و STATICFILES_STORAGE نهائيًا
+# (كانوا بيتجاهلوا من غير ما حد يحس) - الإعداد الصح بقى STORAGES.
+# =========================================================
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
+STORAGES = {
+    # افتراضيًا على السيرفر نفسه زي ما كان شغال فعليًا. لو عايزة الملفات المرفوعة
+    # تتحفظ على Cloudinary (أضمن على Railway) حطي USE_CLOUDINARY_MEDIA=True
+    'default': {
+        'BACKEND': ('cloudinary_storage.storage.RawMediaCloudinaryStorage'
+                    if env_bool('USE_CLOUDINARY_MEDIA', False)
+                    else 'django.core.files.storage.FileSystemStorage'),
+    },
+    # ضغط gzip/brotli للـ CSS/JS (أسرع = أحسن للسيو). من غير manifest عشان
+    # أي ملف ناقص ميوقعش الموقع.
+    'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage'},
+}
+WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
 
+# ⚠️ مفاتيح Cloudinary كانت مكتوبة في الكود (ومتشافة لأي حد معاه نسخة منه).
+# انقليها لمتغيرات البيئة على Railway واعملي Regenerate للـ API Secret من لوحة Cloudinary،
+# وبعدها امسحي القيم الاحتياطية دي. (سايبينها مؤقتًا عشان رفع صور المدونة ميقفش)
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'dxunjx7wa'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '183271731539698'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'WjhFhczJET7-wAWu1fUs35PQW88'),
 }
+if CLOUDINARY_STORAGE['CLOUD_NAME']:
+    import cloudinary
+    cloudinary.config(
+        cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
+        api_key=CLOUDINARY_STORAGE['API_KEY'],
+        api_secret=CLOUDINARY_STORAGE['API_SECRET'],
+        secure=True,
+    )
 
-CLOUDINARY = {
-    'cloud_name': CLOUDINARY_STORAGE['CLOUD_NAME'],
-    'api_key': CLOUDINARY_STORAGE['API_KEY'],
-    'api_secret': CLOUDINARY_STORAGE['API_SECRET'],
-}
-
-cloudinary.config(
-    cloud_name=CLOUDINARY['cloud_name'],
-    api_key=CLOUDINARY['api_key'],
-    api_secret=CLOUDINARY['api_secret']
-)
-
-SITE_ID = 1
-CANONICAL_URL = 'https://alagme.com'
-DEFAULT_PROTOCOL = 'https'
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# =========================================================
+# كاش / جلسات / رسائل
+# =========================================================
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-    },
-    'sitemap': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'sitemap_cache'),
-        'TIMEOUT': 86400,
-    }
+    'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache', 'LOCATION': 'alagme-default'},
 }
-
-SITEMAP_CACHE_TIMEOUT = 3600
-
-CORS_ALLOWED_ORIGINS = [
-    'https://alagme.com',
-    'https://www.alagme.com',
-]
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'WARNING',
-    },
-    'loggers': {
-        'django.security': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-    },
-}
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-ADMINS = [('Admin', 'admin@example.com')]
-MANAGERS = ADMINS
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-
-from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.DEBUG: 'debug',
     messages.INFO: 'info',
@@ -251,13 +219,35 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-SESSION_COOKIE_SIZE = 4096  # تقليل حجم الـ session
+CORS_ALLOWED_ORIGINS = [f'https://{CANONICAL_HOST}', f'https://www.{CANONICAL_HOST}']
 
-# أو غيّر الـ session engine لـ database بدل cookies
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {'console': {'class': 'logging.StreamHandler'}},
+    'root': {'handlers': ['console'], 'level': 'WARNING'},
+    'loggers': {
+        'django.security': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+        'chat': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+    },
+}
 
-import os
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ADMINS = [('Admin', os.environ.get('ADMIN_EMAIL', 'admin@alagme.com'))]
+MANAGERS = ADMINS
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+# =========================================================
+# SEO / IndexNow
+# =========================================================
+INDEXNOW_KEY = os.environ.get('INDEXNOW_KEY', '800e60e37753412893002525b148ce17')
+SITE_NAME = 'مؤسسة العجمي'
 
-FIREBASE_CREDENTIALS = os.path.join(BASE_DIR, 'alagme-notifications-firebase-adminsdk-fbsvc-c217506122.json')
+# =========================================================
+# الشات الداخلي بين المعلمة والطالب
+# =========================================================
+# رقم واتساب الإدارة اللي بيظهر للزوار في الموقع العام بس (للاستفسارات والحجز) - مالوش علاقة بالشات
+WHATSAPP_PUBLIC_NUMBER = os.environ.get('WHATSAPP_PUBLIC_NUMBER', '201044568181')
+# روابط مسموح للمعلمة والطالب يبعتوها في الشات (أي رابط تاني بيتمنع)
+CHAT_ALLOWED_LINK_DOMAINS = env_list('CHAT_ALLOWED_LINK_DOMAINS', f'{CANONICAL_HOST},meet.google.com,zoom.us')
+# مكان حفظ مرفقات الشات (صور/صوت): على السيرفر افتراضيًا. على Railway من غير Volume
+# الملفات بتتمسح مع كل نشر، فيُفضل USE_CLOUDINARY_MEDIA=True أو Volume على /app/media

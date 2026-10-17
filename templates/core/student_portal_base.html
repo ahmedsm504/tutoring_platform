@@ -1,0 +1,236 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+    // تطبيق الوضع الليلي بدري قبل الرسم عشان منمنعش وميض لون غلط
+    (function(){
+        try{
+            const saved = localStorage.getItem('portal-theme');
+            if(saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        }catch(e){}
+    })();
+</script>
+<title>{% block title %}بوابة الطالب{% endblock %}</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+    --violet-50:  #F7F5FC;
+    --violet-100: #EEE9FA;
+    --violet-500: #8B5CF6;
+    --violet-600: #7C3AED;
+    --violet-700: #6D28D9;
+    --ink: #33195E;
+    --ink-muted: #746A93;
+    --green: #1D9A63; --green-soft: #E5F7EE;
+    --red: #DC3545; --red-soft: #FDEBEC;
+    --amber: #B87F16; --amber-soft: #FCF3DC;
+    --border: #E7E1F5;
+    --surface: #ffffff;
+    --radius-md: 16px; --radius-lg: 22px;
+    --shadow-md: 0 8px 24px rgba(51, 25, 94, 0.08);
+    --font-display: 'Cairo', sans-serif;
+    --font-body: 'Tajawal', sans-serif;
+}
+html[data-theme="dark"]{
+    --violet-50: #191325;
+    --violet-100: #241C36;
+    --ink: #EDE9F7;
+    --ink-muted: #A79FC2;
+    --border: #362A4D;
+    --surface: #241C36;
+    --green-soft: #10301F; --red-soft: #3A1518; --amber-soft: #3A2C0C;
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box;}
+body{font-family:var(--font-body); background:linear-gradient(160deg,#FDEFFB 0%,#EAF6FF 45%,#FFF8E7 100%); color:var(--ink); margin:0; transition:background .25s; min-height:100vh; position:relative;}
+html[data-theme="dark"] body{background:#120D1C;}
+.balloon-layer{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0;}
+.balloon{position:absolute; bottom:-130px; width:clamp(34px,7vw,52px); height:clamp(44px,9vw,68px); border-radius:50% 50% 46% 46% / 58% 58% 42% 42%; cursor:pointer; pointer-events:auto; box-shadow:inset -6px -8px 14px rgba(255,255,255,0.35), 0 6px 14px rgba(0,0,0,0.12); animation-name:balloon-rise; animation-timing-function:linear;}
+.balloon::after{content:''; position:absolute; bottom:-16px; left:50%; width:2px; height:18px; background:rgba(0,0,0,0.18); transform:translateX(-50%);}
+.balloon::before{content:''; position:absolute; bottom:-6px; left:50%; width:6px; height:6px; border-radius:2px; background:inherit; transform:translateX(-50%) rotate(45deg);}
+@keyframes balloon-rise{0%{bottom:-130px; transform:translateX(0);} 50%{transform:translateX(18px);} 100%{bottom:112%; transform:translateX(-8px);}}
+.layout, .container{position:relative; z-index:1;}
+h1,h2,h3,h4{font-family:var(--font-display);}
+.topbar{background:linear-gradient(120deg,var(--violet-700),var(--violet-500)); color:#fff; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; position:sticky; top:0; z-index:50;}
+.topbar .brand{font-weight:800; font-size:1.05rem;}
+.topbar .brand small{display:block; font-weight:500; font-size:0.7rem; opacity:0.85;}
+.topbar-actions{display:flex; align-items:center; gap:8px;}
+.theme-toggle{color:#fff; background:rgba(255,255,255,0.15); border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center;}
+.topbar a.logout{color:#fff; background:rgba(255,255,255,0.15); padding:8px 16px; border-radius:999px; text-decoration:none; font-size:0.85rem;}
+.layout{display:flex; max-width:1180px; margin:0 auto; align-items:flex-start; gap:18px; padding:18px 16px;}
+.side-menu{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:10px; width:230px; flex-shrink:0; box-shadow:var(--shadow-md); position:sticky; top:80px;}
+.side-menu a{display:flex; align-items:center; gap:10px; padding:11px 14px; border-radius:12px; color:var(--ink); text-decoration:none; font-weight:600; font-size:0.9rem; margin-bottom:3px;}
+.side-menu a i{width:18px; text-align:center; color:var(--violet-500);}
+.side-menu a:hover{background:var(--violet-50);}
+.side-menu a.active{background:var(--violet-600); color:#fff;}
+.side-menu a.active i{color:#fff;}
+.container{flex:1; min-width:0;}
+.card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:22px; margin-bottom:18px; box-shadow:var(--shadow-md);}
+.stats-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:18px;}
+.stat-box{background:var(--surface); border:1px solid var(--border); border-right:4px solid var(--violet-500); border-radius:14px; padding:14px 16px; text-align:center;}
+.stat-box .number{font-size:1.4rem; font-weight:800; color:var(--ink);}
+.stat-box .label{font-size:0.78rem; color:var(--ink-muted); margin-top:4px;}
+.btn{display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border-radius:10px; border:none; cursor:pointer; font-family:var(--font-body); font-weight:600; font-size:0.85rem; text-decoration:none;}
+.btn-green{background:var(--green-soft); color:var(--green);}
+.btn-red{background:var(--red-soft); color:var(--red);}
+.btn-amber{background:var(--amber-soft); color:var(--amber);}
+.btn-outline{background:var(--surface); border:1.6px solid var(--border); color:var(--ink);}
+.btn-primary{background:var(--violet-600); color:#fff;}
+.table-container{overflow-x:auto;}
+table{width:100%; border-collapse:collapse; font-size:0.88rem;}
+th, td{padding:10px 12px; text-align:right; border-bottom:1px solid var(--border);}
+th{color:var(--ink-muted); font-weight:700; font-size:0.8rem;}
+.field{margin-bottom:14px;}
+.field label{display:block; font-weight:600; margin-bottom:5px; font-size:0.85rem;}
+.field input, .field select, .field textarea{width:100%; padding:10px 12px; border-radius:10px; border:1.6px solid var(--border); font-family:var(--font-body); background:var(--surface); color:var(--ink);}
+.alert{padding:12px 16px; border-radius:12px; margin-bottom:14px; font-size:0.88rem;}
+.alert-success{background:var(--green-soft); color:var(--green);}
+.alert-error{background:var(--red-soft); color:var(--red);}
+.alert-warning{background:var(--amber-soft); color:var(--amber);}
+.badge{display:inline-block; padding:3px 10px; border-radius:999px; font-size:0.75rem; font-weight:700;}
+.quick-action-card{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:18px 10px; border-radius:18px; color:#fff; text-decoration:none; font-weight:700; font-size:0.85rem; text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.15); transition:transform .2s, box-shadow .2s;}
+.quick-action-card:hover{transform:translateY(-4px) scale(1.03); box-shadow:0 10px 22px rgba(0,0,0,0.22);}
+.alert-close-btn{position:absolute; top:10px; left:12px; background:rgba(0,0,0,0.08); border:none; border-radius:50%; width:24px; height:24px; cursor:pointer; font-size:1rem; line-height:1; color:inherit;}
+.alert{position:relative;}
+@media (max-width:820px){
+    .layout{flex-direction:column;}
+    .side-menu{width:100%; position:static; display:flex; overflow-x:auto; gap:4px;}
+    .side-menu a{white-space:nowrap;}
+}
+</style>
+<meta name="static-url" content="{% static '' %}">
+<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+<link rel="stylesheet" href="{% static 'css/quran-player.css' %}">
+<link rel="stylesheet" href="{% static 'css/learning.css' %}">
+{% block extra_css %}{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.4/confetti.browser.min.js"></script>
+</head>
+<body>
+<div class="balloon-layer" id="balloon-layer"></div>
+<div class="topbar">
+    <div class="brand">🎓 بوابة الطالب<small>مؤسسة العجمي لتحفيظ القرآن الكريم</small></div>
+    <div class="topbar-actions">
+        <button class="theme-toggle" id="theme-toggle" title="الوضع الليلي" type="button">🌙</button>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'student_logout' %}" class="logout"><i class="fas fa-arrow-right-from-bracket"></i> تسجيل الخروج</a>
+        {% endif %}
+    </div>
+</div>
+<div class="layout">
+    <div class="side-menu">
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'student_portal_home' %}" class="{% if request.path == '/student-portal/' %}active{% endif %}"><i class="fas fa-house"></i> الرئيسية</a>
+        <a href="{% url 'learning_student_list' %}" class="{% if '/homework/' in request.path %}active{% endif %}"><i class="fas fa-microphone-lines"></i> واجباتي <span class="nav-badge">{% if hw_student_todo %}{{ hw_student_todo }}{% endif %}</span></a>
+        <a href="{% url 'learning_student_listen' %}" class="{% if '/listen/' in request.path %}active{% endif %}"><i class="fas fa-headphones"></i> استمع للقرآن</a>
+        <a href="{% url 'learning_student_games' %}" class="{% if '/games/' in request.path %}active{% endif %}"><i class="fas fa-gamepad"></i> ألعاب ومسابقات</a>
+        <a href="{% url 'learning_student_achievements' %}" class="{% if '/stars/' in request.path %}active{% endif %}"><i class="fas fa-star"></i> نجومي وأوسمتي</a>
+        <a href="{% url 'student_chat' %}" class="{% if '/chat/' in request.path %}active{% endif %}"><i class="fas fa-comments"></i> الشات مع المعلمة <span class="js-chat-badge">{% if chat_student_unread %}{{ chat_student_unread }}{% endif %}</span></a>
+        {% endif %}
+    </div>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert js-auto-alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% else %}alert-error{% endif %}">
+                    <button type="button" class="alert-close-btn" onclick="this.parentElement.remove()">×</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<script>
+    // مساعد بسيط للاحتفال بالكونفيتي - متاح لكل صفحات بورتال المعلمة
+    window.fireConfetti = function(opts){
+        if(typeof confetti !== 'function') return;
+        confetti(Object.assign({
+            particleCount: 90,
+            spread: 75,
+            startVelocity: 38,
+            origin: { y: 0.6 },
+            colors: ['#8B5CF6','#EC4899','#F59E0B','#1D9A63','#3B82F6']
+        }, opts || {}));
+    };
+
+    // إخفاء تنبيهات النجاح/الخطأ تلقائيًا بعد شوية (تقدري كمان تقفليها فورًا بزرار ×)
+    document.querySelectorAll('.js-auto-alert').forEach(el => {
+        setTimeout(() => {
+            el.style.transition = 'opacity .4s, max-height .4s';
+            el.style.opacity = '0';
+            el.style.maxHeight = '0';
+            el.style.overflow = 'hidden';
+            setTimeout(() => el.remove(), 450);
+        }, 6000);
+    });
+
+    // زرار تبديل الوضع الليلي/النهاري
+    (function(){
+        const toggle = document.getElementById('theme-toggle');
+        function apply(theme){
+            if(theme === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); toggle.textContent = '☀️'; }
+            else { document.documentElement.removeAttribute('data-theme'); toggle.textContent = '🌙'; }
+        }
+        let current = 'light';
+        try{ current = localStorage.getItem('portal-theme') || 'light'; }catch(e){}
+        apply(current);
+        toggle.addEventListener('click', () => {
+            current = current === 'dark' ? 'light' : 'dark';
+            apply(current);
+            try{ localStorage.setItem('portal-theme', current); }catch(e){}
+        });
+    })();
+
+    // بالونات تطفو وتتفرقع - لمسة مرحة لموقع الأطفال
+    (function(){
+        const layer = document.getElementById('balloon-layer');
+        if(!layer) return;
+        const colors = ['#FF8FB1','#8B5CF6','#3B82F6','#FFC845','#4ADE80','#FB923C'];
+        const AudioCtxB = window.AudioContext || window.webkitAudioContext;
+        let actxB = null;
+        function popSound(){
+            try{
+                actxB = actxB || new AudioCtxB();
+                const o = actxB.createOscillator(), g = actxB.createGain();
+                o.type = 'sine'; o.frequency.setValueAtTime(520, actxB.currentTime);
+                o.frequency.exponentialRampToValueAtTime(120, actxB.currentTime + 0.12);
+                g.gain.setValueAtTime(0.3, actxB.currentTime);
+                g.gain.exponentialRampToValueAtTime(0.001, actxB.currentTime + 0.14);
+                o.connect(g); g.connect(actxB.destination);
+                o.start(); o.stop(actxB.currentTime + 0.15);
+            }catch(e){}
+        }
+        function spawnBalloon(){
+            const b = document.createElement('div');
+            b.className = 'balloon';
+            b.style.left = (Math.random()*90) + 'vw';
+            b.style.background = colors[Math.floor(Math.random()*colors.length)];
+            const duration = 13 + Math.random()*10;
+            b.style.animationDuration = duration + 's';
+            layer.appendChild(b);
+            const timeoutId = setTimeout(() => { if(b.parentElement) b.remove(); }, duration*1000 + 200);
+            b.addEventListener('click', () => {
+                clearTimeout(timeoutId);
+                popSound();
+                if(window.fireConfetti){
+                    const rect = b.getBoundingClientRect();
+                    window.fireConfetti({
+                        particleCount: 26, spread: 60, startVelocity: 22,
+                        origin: { x: (rect.left + rect.width/2) / window.innerWidth, y: (rect.top + rect.height/2) / window.innerHeight }
+                    });
+                }
+                b.remove();
+            });
+        }
+        for(let i=0;i<3;i++) setTimeout(spawnBalloon, i*1800);
+        setInterval(spawnBalloon, 4500);
+    })();
+</script>
+{% include 'chat/_live.html' %}
+{% block extra_js %}{% endblock %}
+</body>
+</html>

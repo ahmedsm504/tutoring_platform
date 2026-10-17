@@ -2,15 +2,59 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <!-- Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}مؤسسة العجمي | تحفيظ القرآن الكريم أونلاين لجميع الدول{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين للأطفال والكبار، من أي دولة وبتوقيت يناسبك. احجز حلقتك التجريبية المجانية الآن.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endblock %}">
+    <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock %}">
+    <link rel="canonical" href="{% block canonical_url %}{{ canonical_url }}{% endblock %}">
+    <link rel="alternate" hreflang="ar" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+    <meta name="author" content="مؤسسة العجمي">
+    <meta name="theme-color" content="#0a3f39">
+    <meta name="yandex-verification" content="2e1b6302af7d6340" />
+    <meta name="6ccf56db95ea081a7d94b3dce02408c2179346ca" content="6ccf56db95ea081a7d94b3dce02408c2179346ca" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
+
+    <meta property="og:locale" content="ar_AR">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:site_name" content="مؤسسة العجمي">
+    <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد لجميع الدول{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين. برامج للأطفال والكبار، والحجز متاح من أي دولة. حلقة تجريبية مجانية.{% endblock %}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'images/og-image.jpg' %}{% endblock %}">
+    <meta property="og:image:alt" content="مؤسسة العجمي - تحفيظ القرآن الكريم أونلاين">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@alagme_12">
+    <meta name="twitter:title" content="{% block twitter_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}حصص فردية لتحفيظ القرآن عن بُعد من أي دولة. معلمون متقنون. حلقة تجريبية مجانية.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ SITE_URL }}{% static 'images/og-image.jpg' %}{% endblock %}">
+    {% block extra_meta %}{% endblock %}
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="العجمي">
+    <link rel="icon" type="image/png" sizes="48x48" href="{% static 'images/favicon.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'images/icon-192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/icon-192.png' %}">
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/noto-kufi-arabic-arabic-700-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    {% block legacy_css %}{% endblock %}
+
+    <!-- Google Tag Manager (async - مش بيعطل الرسم) -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WLL77QGN');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNXPQQNRNP"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -19,149 +63,59 @@
       gtag('config', 'G-RNXPQQNRNP');
       gtag('config', 'AW-18213459162');
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253419170065458"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253419170065458" crossorigin="anonymous"></script>
 
-    <!-- Firebase Notifications -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-      import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyC-X81jKdtfaMRblBEsIEl01OVga2Hqe2E",
-        authDomain: "alagme-notifications.firebaseapp.com",
-        projectId: "alagme-notifications",
-        storageBucket: "alagme-notifications.firebasestorage.app",
-        messagingSenderId: "914317417493",
-        appId: "1:914317417493:web:2a9acda899a263a1c1821c"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const messaging = getMessaging(app);
-
-      navigator.serviceWorker.register('/firebase-messaging-sw.js')
-        .then(registration => {
-          console.log('Service Worker registered ✅');
-          Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-              getToken(messaging, {
-                vapidKey: "BDJXpC_xK5MZzmk7-qA1wiNAOYsOSIHZ6dWbjMGmX8p0hE9IB_Tp_lutxtN8tUC_hfqvlRym_3AniPt8IvfwmBQ",
-                serviceWorkerRegistration: registration
-              }).then(currentToken => {
-                if (currentToken) {
-                  fetch('/save-fcm-token/', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    body: JSON.stringify({ token: currentToken })
-                  });
-                }
-              }).catch(err => console.log('Token error:', err));
-            }
-          });
-        });
-
-      onMessage(messaging, (payload) => {
-        const { title, body } = payload.notification;
-        new Notification(title, {
-          body: body,
-          icon: '/static/images/logo.jpeg'
-        });
-      });
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
-
-    <title>{% block title %}مؤسسة العجمي | تحفيظ القرآن الكريم أونلاين لجميع الدول{% endblock %}</title>
-    <meta name="yandex-verification" content="2e1b6302af7d6340" />
-    <meta name="6ccf56db95ea081a7d94b3dce02408c2179346ca" content="6ccf56db95ea081a7d94b3dce02408c2179346ca" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
-    <meta name="description" content="{% block meta_description %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين للأطفال والكبار، من أي دولة وبتوقيت يناسبك. احجز حلقتك التجريبية المجانية الآن.{% endblock %}">
-    <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endblock %}">
-    <meta name="author" content="مؤسسة العجمي">
-    <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock %}">
-    <meta name="googlebot" content="index, follow">
-    <link rel="canonical" href="{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}">
-    <link rel="alternate" hreflang="ar" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-    <link rel="alternate" hreflang="x-default" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-
-    <meta property="og:locale" content="ar_AR">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد لجميع الدول{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين. برامج للأطفال والكبار، والحجز متاح من أي دولة. حلقة تجريبية مجانية.{% endblock %}">
-    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-    <meta property="og:site_name" content="مؤسسة العجمي">
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% block og_image %}{% static 'images/logo.jpeg' %}{% endblock %}">
-    <meta property="og:image:alt" content="مؤسسة العجمي - تحفيظ القرآن الكريم أونلاين">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block twitter_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}حصص فردية لتحفيظ القرآن عن بُعد من أي دولة. معلمون متقنون. حلقة تجريبية مجانية.{% endblock %}">
-    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% block twitter_image %}{% static 'images/logo.jpeg' %}{% endblock %}">
-
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="العجمي">
-
-    <link rel="preload" as="image" href="{% static 'images/logo.jpeg' %}">
-    <link rel="icon" type="image/jpeg" href="{% static 'images/logo.jpeg' %}">
-    <link rel="apple-touch-icon" href="{% static 'images/logo.jpeg' %}">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-
-    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <!-- Schema: منظمة تعليمية أونلاين تخدم طلاب جميع الدول -->
+    <!-- Schema: المنظمة + الموقع (مع البحث داخل المدونة) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
-      "name": "مؤسسة العجمي",
-      "alternateName": ["Al-Agmi Foundation", "Alagme"],
-      "url": "{{ request.scheme }}://{{ request.get_host }}/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}"
-      },
-      "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
-      "description": "مؤسسة تعليمية متخصصة في تحفيظ القرآن الكريم وتعليم التجويد عن بُعد (أونلاين) لطلاب من جميع الدول، بحصص فردية ومعلمين متقنين.",
-      "areaServed": "Worldwide",
-      "knowsLanguage": "ar",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "EG",
-        "addressLocality": "القاهرة"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+20-104-456-8181",
-        "contactType": "customer service",
-        "areaServed": "Worldwide",
-        "availableLanguage": ["ar"],
-        "hoursAvailable": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-          "opens": "09:00",
-          "closes": "23:59"
+      "@graph": [
+        {
+          "@type": "EducationalOrganization",
+          "@id": "{{ SITE_URL }}/#organization",
+          "name": "مؤسسة العجمي",
+          "alternateName": ["Al-Agmi Foundation", "Alagme", "منصة العجمي"],
+          "url": "{{ SITE_URL }}/",
+          "logo": {"@type": "ImageObject", "url": "{{ SITE_URL }}{% static 'images/logo.png' %}", "width": 512, "height": 512},
+          "image": "{{ SITE_URL }}{% static 'images/og-image.jpg' %}",
+          "description": "مؤسسة تعليمية متخصصة في تحفيظ القرآن الكريم وتعليم التجويد عن بُعد (أونلاين) لطلاب من جميع الدول، بحصص فردية ومعلمين متقنين.",
+          "areaServed": "Worldwide",
+          "knowsLanguage": "ar",
+          "address": {"@type": "PostalAddress", "addressCountry": "EG", "addressLocality": "القاهرة"},
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+20-104-456-8181",
+            "contactType": "customer service",
+            "areaServed": "Worldwide",
+            "availableLanguage": ["ar"],
+            "hoursAvailable": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+              "opens": "09:00",
+              "closes": "23:59"
+            }
+          },
+          "sameAs": [
+            "https://www.facebook.com/profile.php?id=61587497605651",
+            "https://www.instagram.com/ala.gme/",
+            "https://www.tiktok.com/@alagme_12",
+            "https://x.com/alagme_12",
+            "https://youtube.com/@alagme-c5h"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ SITE_URL }}/#website",
+          "url": "{{ SITE_URL }}/",
+          "name": "مؤسسة العجمي لتحفيظ القرآن الكريم",
+          "inLanguage": "ar",
+          "publisher": {"@id": "{{ SITE_URL }}/#organization"},
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {"@type": "EntryPoint", "urlTemplate": "{{ SITE_URL }}/blog/?search={search_term_string}"},
+            "query-input": "required name=search_term_string"
+          }
         }
-      },
-      "sameAs": [
-        "https://www.facebook.com/profile.php?id=61587497605651",
-        "https://www.instagram.com/ala.gme/",
-        "https://www.tiktok.com/@alagme_12",
-        "https://x.com/alagme_12",
-        "https://youtube.com/@alagme-c5h"
       ]
     }
     </script>
@@ -170,159 +124,170 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLL77QGN"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLL77QGN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <a href="#main" class="skip-link">انتقل إلى المحتوى</a>
 
-    <a href="#main-content" class="skip-to-content">انتقل إلى المحتوى الرئيسي</a>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5l3 5.7 6-2.7-2.7 6L24 12l-5.7 3 2.7 6-6-2.7-3 5.7-3-5.7-6 2.7 2.7-6L0 12l5.7-3L3 3l6 2.7z"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 3h3.5l1.8 4.6-2.3 1.4a12 12 0 0 0 7 7l1.4-2.3L21 15.5V19a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M8.5 9.5c.3 2.6 2.4 4.8 5 5.4l1.3-1.3 2 1-.4 1.6c-4 .2-8.4-4.1-8.3-8.2l1.6-.4 1 2z"/></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></g></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></g></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.9l12-7.5a1 1 0 0 0 0-1.8l-12-7.5A1 1 0 0 0 7 4.5z"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></symbol>
+      <symbol id="i-arrow-r" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></g></symbol>
+    </svg>
 
-    <!-- Navigation -->
-    <nav class="main-nav" role="navigation" aria-label="القائمة الرئيسية">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="{% url 'home' %}" aria-label="الصفحة الرئيسية - مؤسسة العجمي">
-                    <img src="{% static 'images/logo.jpeg' %}" alt="شعار مؤسسة العجمي لتحفيظ القرآن الكريم" width="60" height="60" fetchpriority="high">
-                    <span>العجمي</span>
-                </a>
-            </div>
-
-            <button class="menu-toggle" onclick="toggleMenu()" aria-label="فتح القائمة">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <div class="nav-links" id="navLinks">
-                <a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active" aria-current="page"{% endif %} aria-label="الرئيسية">
-                    <i class="fas fa-home"></i> الرئيسية
-                </a>
-                <a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}class="active" aria-current="page"{% endif %} aria-label="من نحن">
-                    <i class="fas fa-info-circle"></i> عنّا
-                </a>
-                <a href="{% url 'quality_standards' %}" {% if request.resolver_match.url_name == 'quality_standards' %}class="active" aria-current="page"{% endif %} aria-label="مواثيق الجودة">
-                    <i class="fas fa-award"></i> مواثيق الجودة
-                </a>
-                <a href="{% url 'contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="active" aria-current="page"{% endif %} aria-label="تواصل معنا">
-                    <i class="fas fa-envelope"></i> تواصل معنا
-                </a>
-                <a href="{% url 'blog_list' %}" {% if 'blog' in request.path %}class="active" aria-current="page"{% endif %} aria-label="المدونة">
-                    <i class="fas fa-blog"></i> المدوّنة
-                </a>
-                <a href="{% url 'qna:question_list' %}" {% if 'qna' in request.path %}class="active" aria-current="page"{% endif %} aria-label="أسئلة وأجوبة">
-                    <i class="fas fa-question-circle"></i> أسئلة وأجوبة
-                </a>
-                <a href="{% url 'pricing' %}" {% if request.resolver_match.url_name == 'pricing' %}class="active" aria-current="page"{% endif %} aria-label="الباقات المتاحة">
-                    <i class="fas fa-tags"></i> الباقات
-                </a>
-
-                {% if user.is_authenticated %}
-                    {% if user.user_type == 'supervisor' %}
-                        <a href="{% url 'supervisor_dashboard' %}" {% if request.resolver_match.url_name == 'supervisor_dashboard' %}class="active" aria-current="page"{% endif %} id="supervisorDashboardLink" aria-label="لوحة المشرف">
-                            <i class="fas fa-bell"></i>
-                            <span class="notification-badge" id="notificationBadge">0</span>
-                            لوحة المشرف
-                        </a>
-                    {% else %}
-                        <a href="{% url 'profile' %}" {% if request.resolver_match.url_name == 'profile' %}class="active" aria-current="page"{% endif %} aria-label="ملفي الشخصي">
-                            <i class="fas fa-user"></i> ملفي الشخصي
-                        </a>
-                        <a href="{% url 'student_dashboard' %}" {% if request.resolver_match.url_name == 'student_dashboard' %}class="active" aria-current="page"{% endif %} aria-label="لوحة التحكم">
-                            <i class="fas fa-tachometer-alt"></i> لوحة التحكم
-                        </a>
-                    {% endif %}
-                    <a href="{% url 'logout' %}" class="logout-btn" aria-label="تسجيل الخروج">
-                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
-                    </a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="login-btn" aria-label="تسجيل الدخول">
-                        <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
-                    </a>
-                {% endif %}
-            </div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="{% url 'home' %}" aria-label="مؤسسة العجمي - الصفحة الرئيسية">
+          <img src="{% static 'images/logo.jpeg' %}" alt="" width="46" height="46" fetchpriority="high">
+          <span class="brand-name">العجمي<small>لتحفيظ القرآن الكريم</small></span>
+        </a>
+        {% with u=request.resolver_match.url_name ns=request.resolver_match.namespace %}
+        <nav class="nav" id="site-nav" aria-label="القائمة الرئيسية">
+          <a href="{% url 'home' %}" {% if u == 'home' %}aria-current="page"{% endif %}>الرئيسية</a>
+          <a href="{% url 'pricing' %}" {% if u == 'pricing' %}aria-current="page"{% endif %}>الباقات</a>
+          <a href="{% url 'about' %}" {% if u == 'about' %}aria-current="page"{% endif %}>من نحن</a>
+          <a href="{% url 'quality_standards' %}" {% if u == 'quality_standards' %}aria-current="page"{% endif %}>مواثيق الجودة</a>
+          <a href="{% url 'quran_index' %}" {% if '/quran/' in request.path %}aria-current="page"{% endif %}>المصحف</a>
+          <a href="{% url 'blog_list' %}" {% if '/blog/' in request.path %}aria-current="page"{% endif %}>المدونة</a>
+          <a href="{% url 'qna:question_list' %}" {% if ns == 'qna' %}aria-current="page"{% endif %}>أسئلة وأجوبة</a>
+          <a href="{% url 'contact' %}" {% if u == 'contact' %}aria-current="page"{% endif %}>تواصل معنا</a>
+          {% if user.is_authenticated %}
+            {% if user.core_student %}<a href="{% url 'student_portal_home' %}">بوابة الطالب</a>
+            {% elif user.teacher_profile %}<a href="{% url 'teacher_portal_home' %}">بورتال المعلمة</a>
+            {% elif user.is_staff %}<a href="{% url 'dashboard_home' %}">لوحة التحكم</a>{% endif %}
+            <a href="{% url 'logout' %}">تسجيل الخروج</a>
+          {% else %}
+            <a href="{% url 'student_login' %}">دخول الطلاب</a>
+          {% endif %}
+        </nav>
+        {% endwith %}
+        <div class="header-actions">
+          <a class="btn btn-primary" href="{% url 'contact' %}">احجز حلقة مجانية</a>
         </div>
-    </nav>
+        <button class="menu-btn" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="القائمة"><span></span><span></span><span></span></button>
+      </div>
+    </header>
 
-    <!-- Main Content -->
-    <main id="main-content" role="main">
-        {% block content %}{% endblock %}
+    <main id="main">
+      {% block content %}{% endblock %}
     </main>
 
-    <!-- Social Fixed Icons -->
-    <aside class="social-fixed" aria-label="روابط التواصل الاجتماعي">
-        <a href="https://wa.me/201044568181" target="_blank" rel="noopener noreferrer" class="whatsapp" title="تواصل معنا على واتساب" aria-label="واتساب">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="noopener noreferrer" class="facebook" title="تابعنا على فيسبوك" aria-label="فيسبوك">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="noopener noreferrer" class="instagram" title="تابعنا على إنستجرام" aria-label="إنستجرام">
-            <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="noopener noreferrer" class="tiktok" title="تابعنا على تيك توك" aria-label="تيك توك">
-            <i class="fab fa-tiktok"></i>
-        </a>
-        <a href="https://x.com/alagme_12" target="_blank" rel="noopener noreferrer" class="twitter" title="تابعنا على تويتر" aria-label="تويتر">
-            <i class="fab fa-twitter"></i>
-        </a>
-    </aside>
-
-    <!-- Footer -->
-    <footer role="contentinfo">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3><i class="fas fa-graduation-cap"></i> عن المنصة</h3>
-                <p>منصة تعليمية متميزة متخصصة في تحفيظ القرآن الكريم عن بُعد بجودة عالية ومتاحة لطلاب جميع الدول والأعمار.</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="me noopener noreferrer" title="فيسبوك" aria-label="فيسبوك">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="me noopener noreferrer" title="إنستجرام" aria-label="إنستجرام">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://youtube.com/@alagme-c5h" target="_blank" rel="me noopener noreferrer" title="يوتيوب" aria-label="يوتيوب">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="me noopener noreferrer" title="تيك توك" aria-label="تيك توك">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
-                    <a href="https://wa.me/201044568181" target="_blank" rel="me noopener noreferrer" title="واتساب" aria-label="واتساب">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://x.com/alagme_12" target="_blank" rel="me noopener noreferrer" title="تويتر" aria-label="تويتر">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="footer-section">
-                <h3><i class="fas fa-link"></i> روابط سريعة</h3>
-                <ul>
-                    <li><a href="{% url 'home' %}"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
-                    <li><a href="{% url 'about' %}"><i class="fas fa-chevron-left"></i> من نحن</a></li>
-                    <li><a href="{% url 'quality_standards' %}"><i class="fas fa-chevron-left"></i> مواثيق الجودة</a></li>
-                    <li><a href="{% url 'pricing' %}"><i class="fas fa-chevron-left"></i> الباقات</a></li>
-                    <li><a href="{% url 'blog_list' %}"><i class="fas fa-chevron-left"></i> المدونة</a></li>
-                    <li><a href="{% url 'qna:question_list' %}"><i class="fas fa-chevron-left"></i> أسئلة وأجوبة</a></li>
-                    <li><a href="{% url 'contact' %}"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3><i class="fas fa-phone-alt"></i> تواصل معنا</h3>
-                <!-- ✅ تم إزالة itemscope/itemtype من هنا لأنه كان بيعمل Organization بدون name -->
-                <ul>
-                    <li><i class="fas fa-phone"></i> <a href="tel:+201044568181">+20 104 456 8181</a></li>
-                    <li><i class="fas fa-map-marker-alt"></i> جمهورية مصر العربية</li>
-                    <li><i class="fas fa-clock"></i> السبت - الخميس: 9 صباحاً - 12 مساءً</li>
-                </ul>
-            </div>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <a class="brand" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.jpeg' %}" alt="" width="46" height="46" loading="lazy">
+            <span class="brand-name">مؤسسة العجمي<small>لتحفيظ القرآن الكريم أونلاين</small></span>
+          </a>
+          <p>حصص فردية لتحفيظ القرآن الكريم وتعليم التجويد عن بُعد، لطلاب من كل الدول والأعمار.</p>
+          <div class="socials">
+            <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="me noopener">فيسبوك</a>
+            <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="me noopener">إنستجرام</a>
+            <a href="https://youtube.com/@alagme-c5h" target="_blank" rel="me noopener">يوتيوب</a>
+            <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="me noopener">تيك توك</a>
+            <a href="https://x.com/alagme_12" target="_blank" rel="me noopener">إكس</a>
+          </div>
         </div>
-
-        <div class="footer-bottom">
-            <p>&copy; {% now "Y" %} منصة العجمي. جميع الحقوق محفوظة.</p>
+        <div>
+          <h2>البرامج</h2>
+          <ul>
+            <li><a href="{% url 'pricing' %}#nourania">البداية النورانية (أطفال)</a></li>
+            <li><a href="{% url 'pricing' %}#himma">الهمة العالية (10–15 سنة)</a></li>
+            <li><a href="{% url 'pricing' %}#sufaraa">سفراء القرآن (الكبار)</a></li>
+            <li><a href="{% url 'pricing' %}#ghiras">تصحيح التلاوة</a></li>
+            <li><a href="{% url 'pricing' %}#nour-albayan">دورة نور البيان</a></li>
+          </ul>
         </div>
+        <div>
+          <h2>المنصة</h2>
+          <ul>
+            <li><a href="{% url 'about' %}">من نحن</a></li>
+            <li><a href="{% url 'quality_standards' %}">مواثيق الجودة</a></li>
+            <li><a href="{% url 'quran_index' %}">القرآن الكريم مكتوب واستماع</a></li>
+            <li><a href="{% url 'blog_list' %}">المدونة</a></li>
+            <li><a href="{% url 'qna:question_list' %}">أسئلة وأجوبة</a></li>
+            <li><a href="{% url 'student_login' %}">بوابة الطالب</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>تواصل معنا</h2>
+          <ul>
+            <li><a href="tel:+201044568181" dir="ltr">+20 104 456 8181</a></li>
+            <li><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">واتساب المنصة</a></li>
+            <li>السبت – الخميس، 9 صباحًا – 12 منتصف الليل</li>
+            <li>جمهورية مصر العربية · التعليم أونلاين لكل الدول</li>
+          </ul>
+          <button type="button" class="push-btn" id="enable-push" hidden>🔔 إشعارات المقالات الجديدة</button>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© {% now "Y" %} مؤسسة العجمي لتحفيظ القرآن الكريم</span>
+        <a href="{% url 'contact' %}">احجز حلقتك التجريبية المجانية</a>
+      </div>
     </footer>
 
-    <script src="{% static 'js/script.js' %}" defer></script>
+    <a class="fab-wa" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener" aria-label="كلمنا على واتساب">
+      <svg aria-hidden="true"><use href="#i-chat"/></svg><span>واتساب</span>
+    </a>
+
+    <script>
+      (function(){
+        var b = document.querySelector('.menu-btn'), n = document.getElementById('site-nav');
+        if(!b || !n) return;
+        b.addEventListener('click', function(){ var o = n.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && n.classList.contains('open')){ n.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
+      })();
+    </script>
+    <!-- إشعارات Firebase: مبقتش تطلب الإذن أول ما الصفحة تفتح (جوجل بيعتبرها تجربة سيئة) -
+         لو الزائر وافق قبل كده بنجدد التوكن بهدوء، وإلا بيظهر زرار في الفوتر يفعّلها بنفسه -->
+    <script type="module">
+      const btn = document.getElementById('enable-push');
+      if ('Notification' in window && 'serviceWorker' in navigator) {
+        async function initPush(ask) {
+          const [{ initializeApp }, { getMessaging, getToken, onMessage }] = await Promise.all([
+            import("https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"),
+            import("https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js"),
+          ]);
+          if (ask && Notification.permission !== 'granted') {
+            if (await Notification.requestPermission() !== 'granted') return;
+          }
+          const app = initializeApp({
+            apiKey: "AIzaSyC-X81jKdtfaMRblBEsIEl01OVga2Hqe2E",
+            authDomain: "alagme-notifications.firebaseapp.com",
+            projectId: "alagme-notifications",
+            storageBucket: "alagme-notifications.firebasestorage.app",
+            messagingSenderId: "914317417493",
+            appId: "1:914317417493:web:2a9acda899a263a1c1821c"
+          });
+          const messaging = getMessaging(app);
+          const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+          const token = await getToken(messaging, {
+            vapidKey: "BDJXpC_xK5MZzmk7-qA1wiNAOYsOSIHZ6dWbjMGmX8p0hE9IB_Tp_lutxtN8tUC_hfqvlRym_3AniPt8IvfwmBQ",
+            serviceWorkerRegistration: registration
+          });
+          if (token) {
+            fetch('/save-fcm-token/', {method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'}, body: JSON.stringify({ token })});
+          }
+          onMessage(messaging, (payload) => {
+            const { title, body } = payload.notification || {};
+            if (title) new Notification(title, { body, icon: '{% static "images/icon-192.png" %}' });
+          });
+          if (btn) btn.hidden = true;
+        }
+        if (Notification.permission === 'granted') {
+          const idle = window.requestIdleCallback || ((f) => setTimeout(f, 3000));
+          idle(() => initPush(false).catch(() => {}));
+        } else if (Notification.permission === 'default' && btn) {
+          btn.hidden = false;
+          btn.addEventListener('click', () => initPush(true).catch(() => {}));
+        }
+      }
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

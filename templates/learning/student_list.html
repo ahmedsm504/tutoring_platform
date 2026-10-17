@@ -1,0 +1,15 @@
+{% extends 'core/student_portal_base.html' %}
+{% block title %}واجباتي{% endblock %}
+{% block content %}
+<div class="l-head"><div><h1>🎙️ واجباتي</h1><p>اسمع الآيات بصوت الشيخ، وسجّل قراءتك بصوتك وابعتها لمعلمتك.</p></div></div>
+{% include 'learning/_level.html' %}
+<h3 class="hw-sec">✏️ مطلوب منك ({{ todo|length }})</h3>
+<div class="hw-list" style="margin-bottom:18px;">
+  {% for h in todo %}{% url 'learning_student_homework' h.pk as u %}{% include 'learning/_hw_row.html' with url=u %}
+  {% empty %}<div class="card l-empty"><span class="big">🎉</span>مفيش واجبات مستنياك. تقدر تلعب أو تسمع قرآن!</div>{% endfor %}
+</div>
+{% if waiting %}<h3 class="hw-sec">⏳ مستني المعلمة تسمعه</h3>
+<div class="hw-list" style="margin-bottom:18px;">{% for h in waiting %}{% url 'learning_student_homework' h.pk as u %}{% include 'learning/_hw_row.html' with url=u %}{% endfor %}</div>{% endif %}
+{% if done %}<h3 class="hw-sec">✅ خلصته</h3>
+<div class="hw-list">{% for h in done %}{% url 'learning_student_homework' h.pk as u %}{% include 'learning/_hw_row.html' with url=u %}{% endfor %}</div>{% endif %}
+{% endblock %}

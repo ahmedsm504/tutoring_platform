@@ -19,6 +19,3 @@ messaging.onBackgroundMessage((payload) => {
         icon: '/static/images/logo.jpeg'
     });
 });
-
-
-

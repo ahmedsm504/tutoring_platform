@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import student_views, views
 
 urlpatterns = [
     # الصفحات العامة
@@ -94,6 +94,14 @@ urlpatterns = [
     path('teacher-portal/curriculum/<int:doc_id>/stream/', views.teacher_curriculum_stream, name='teacher_curriculum_stream'),
     path('teacher-portal/whiteboard/', views.teacher_whiteboard, name='teacher_whiteboard'),
     path('teacher-portal/games/', views.teacher_games, name='teacher_games'),
+
+    # حساب بوابة الطالب (من لوحة الأدمن) + بوابة الطالب نفسها
+    path('student/<int:student_id>/create-login/', views.create_student_login, name='create_student_login'),
+    path('student/<int:student_id>/reset-login-password/', views.reset_student_login_password, name='reset_student_login_password'),
+    path('student/<int:student_id>/revoke-login/', views.revoke_student_login, name='revoke_student_login'),
+    path('student-portal/login/', student_views.student_login, name='student_login'),
+    path('student-portal/logout/', student_views.student_logout, name='student_logout'),
+    path('student-portal/', student_views.student_portal_home, name='student_portal_home'),
 
     # إدارة المشرفات (من لوحة الأدمن)
     path('supervisors/', views.supervisors_list, name='supervisors_list'),

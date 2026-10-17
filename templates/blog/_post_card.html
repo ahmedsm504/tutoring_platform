@@ -1,0 +1,13 @@
+{% load static %}<article class="post-card">
+  <a class="cover" href="{% url 'blog_detail' post.slug %}" tabindex="-1" aria-hidden="true">
+    {% if post.cloud_url %}<img src="{{ post.cloud_url }}" alt="" width="400" height="250" loading="lazy" decoding="async">
+    {% else %}<img src="{% static 'images/default_post.webp' %}" alt="" width="400" height="250" loading="lazy" decoding="async">{% endif %}
+  </a>
+  <div class="post-meta">
+    {% if post.category %}<a href="{% url 'category_posts' post.category.slug %}">{{ post.category.name }}</a>{% endif %}
+    <span>{{ post.reading_time }} دقائق قراءة</span>
+    {% if post.published_at %}<time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"j F Y" }}</time>{% endif %}
+  </div>
+  <h3><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h3>
+  <p>{{ post.excerpt|striptags|truncatewords:18 }}</p>
+</article>

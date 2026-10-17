@@ -1,29 +1,23 @@
-# urls.py (بعد التعديل)
-
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
-from .robots_view import robots_txt
-from django.views.generic import TemplateView
+from django.http import HttpResponse
+from django.urls import include, path
+from django.views.decorators.cache import cache_page
+from django.views.generic import RedirectView, TemplateView
+
 from accounts import views as accounts_views
 
-from django.http import HttpResponse
+from .robots_view import llms_txt, robots_txt
+from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap, QNAQuestionsSitemap,
+                       QuranSitemap, StaticViewSitemap)
+
 
 def indexnow_key(request):
-    return HttpResponse("b52bd4ea55c149459d7c6e1f2ca39c98", content_type="text/plain")
+    # ملف التحقق لازم محتواه يكون نفس المفتاح بالظبط (قبل كده كان بيرجع مفتاح تاني فـ IndexNow كان بيرفض)
+    return HttpResponse(settings.INDEXNOW_KEY, content_type="text/plain")
 
-
-# استيراد الخرائط المحدثة (بعد إزالة المكررة)
-from .sitemaps import (
-    StaticViewSitemap,
-    BlogPostSitemap,
-    BlogCategorySitemap,
-    QNAQuestionsSitemap,        # الخريطة الموحدة للأسئلة
-    QNACategorySitemap,
-    # تم إزالة: PopularPagesSitemap, NewsSitemap, QNAAnsweredQuestionsSitemap, FrequentQuestionsSitemap
-)
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -31,36 +25,37 @@ sitemaps = {
     'blog-categories': BlogCategorySitemap,
     'qna-questions': QNAQuestionsSitemap,
     'qna-categories': QNACategorySitemap,
-    # تم إزالة: 'popular', 'news', 'qna-answered', 'qna-frequent'
+    'quran': QuranSitemap,
 }
 
+
+@cache_page(60 * 30)
 def sitemap_view(request, **kwargs):
-    response = sitemap(request, sitemaps=sitemaps)
-    response['X-Robots-Tag'] = 'index, follow'
-    return response
+    return sitemap(request, sitemaps=sitemaps)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('sitemap.xml', sitemap_view, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', robots_txt, name='robots'),
+    path('llms.txt', llms_txt, name='llms_txt'),
+    path(f'{settings.INDEXNOW_KEY}.txt', indexnow_key),
+    path('favicon.ico', RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.png', permanent=True)),
+
+    # صفحة التواصل الأساسية بقت /contact/ - الرابط القديم بيتحول عليها (من غير صفحتين مكررتين)
+    path('accounts/contact/', RedirectView.as_view(pattern_name='contact', permanent=True)),
+
     path('', include('core.urls')),
+    path('', include('chat.urls')),
+    path('', include('learning.urls')),
     path('accounts/', include('accounts.urls')),
     path('blog/', include('blog.urls')),
     path('questions/', include('qna.urls', namespace='qna')),
-        # ... الـ urls الموجودة
     path('firebase-messaging-sw.js', TemplateView.as_view(
-        template_name='firebase-messaging-sw.js',
-        content_type='application/javascript'
+        template_name='firebase-messaging-sw.js', content_type='application/javascript'
     ), name='firebase-sw'),
     path('save-fcm-token/', accounts_views.save_fcm_token, name='save_fcm_token'),
-    path("800e60e37753412893002525b148ce17.txt", indexnow_key),
-
-
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-

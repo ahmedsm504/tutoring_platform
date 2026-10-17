@@ -1,0 +1,96 @@
+{% extends 'core/student_portal_base.html' %}
+{% block title %}بوابة الطالب - {{ student.name }}{% endblock %}
+{% block extra_css %}
+<style>
+.sp-hero{background:linear-gradient(120deg,#7C3AED,#EC4899); color:#fff; border-radius:24px; padding:24px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:18px; box-shadow:0 12px 30px rgba(124,58,237,.25);}
+.sp-hero h1{margin:0 0 6px; font-size:1.5rem;}
+.sp-hero p{margin:0; opacity:.9;}
+.sp-chat{display:flex; align-items:center; gap:14px; background:#fff; color:#33195E; text-decoration:none; border-radius:18px; padding:14px 18px; min-width:260px; box-shadow:0 8px 20px rgba(0,0,0,.12);}
+.sp-chat .ic{font-size:1.8rem;}
+.sp-chat small{display:block; color:#746A93; max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.sp-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;}
+.sp-ring{--p:0; width:120px; height:120px; border-radius:50%; background:conic-gradient(#22C55E calc(var(--p)*1%), var(--violet-100) 0); display:flex; align-items:center; justify-content:center; margin:6px auto 10px;}
+.sp-ring div{width:92px; height:92px; border-radius:50%; background:var(--surface); display:flex; align-items:center; justify-content:center; flex-direction:column; font-weight:800; font-size:1.3rem;}
+.sp-ring small{font-size:0.7rem; color:var(--ink-muted); font-weight:600;}
+.sp-li{display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:0.9rem;}
+.sp-li:last-child{border-bottom:none;}
+.daily{background:linear-gradient(135deg,#FFFBEB,#FDF2F8); border-color:#FCD34D;}
+html[data-theme="dark"] .daily{background:var(--surface);}
+.daily-text{font-family:'Amiri Quran',serif; font-size:clamp(1.4rem,3.8vw,2rem); line-height:2.3; text-align:center; margin:12px 0 6px; --qp-gold:#c49a2c;}
+.daily .ayah-num{border-color:#c49a2c; color:#c49a2c;}
+</style>
+{% endblock %}
+{% block content %}
+<div class="sp-hero">
+  <div>
+    <h1>أهلاً يا {{ student.name }} 🌿</h1>
+    <p>{% if teacher %}معلمتك: <strong>{{ teacher.name }}</strong>{% else %}هيتحددلك معلمة قريب إن شاء الله{% endif %}</p>
+  </div>
+  {% if teacher %}
+  <a class="sp-chat" href="{% url 'student_chat' %}">
+    <span class="ic">💬</span>
+    <span style="min-width:0;"><strong>الشات مع المعلمة</strong> <span class="js-chat-badge">{% if conv.student_unread %}{{ conv.student_unread }}{% endif %}</span>
+      <small>{% if last_msg %}{{ last_msg.preview|truncatechars:50 }}{% else %}ابعت سؤالك لمعلمتك{% endif %}</small></span>
+  </a>
+  {% endif %}
+</div>
+
+<div class="tiles">
+  <a class="tile t1" href="{% url 'learning_student_list' %}"><span class="e">🎙️</span><strong>واجباتي</strong><small>{% if hw_todo_count %}عندك {{ hw_todo_count }} واجب{% else %}مفيش واجبات جديدة{% endif %}</small>{% if hw_todo_count %}<span class="cnt">{{ hw_todo_count }}</span>{% endif %}</a>
+  <a class="tile t2" href="{% url 'learning_student_listen' %}"><span class="e">🎧</span><strong>استمع للقرآن</strong><small>بصوت الحصري والمنشاوي وغيرهم</small></a>
+  <a class="tile t3" href="{% url 'learning_student_games' %}"><span class="e">🎮</span><strong>ألعاب ومسابقات</strong><small>العب واكسب نجوم</small></a>
+  <a class="tile t5" href="{% url 'learning_student_achievements' %}"><span class="e">🏅</span><strong>نجومي</strong><small>{{ st.points }} نجمة · {{ st.level.name }}</small></a>
+</div>
+
+{% if daily %}
+<div class="card daily">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+    <h3 style="margin:0;">🌙 آية اليوم</h3>
+    <button type="button" class="btn btn-primary" id="daily-play">▶ اسمعها بصوت الحصري</button>
+  </div>
+  <p class="daily-text">{{ daily.text }} <span class="ayah-num">{{ daily.ayah }}</span></p>
+  <small style="color:var(--ink-muted);">سورة {{ daily.name }} · الآية {{ daily.ayah }} — <a href="{% url 'learning_student_listen' %}?s={{ daily.surah }}">اسمع السورة كلها</a></small>
+  <audio id="daily-audio" preload="none" src="{{ daily.audio }}"></audio>
+</div>
+{% endif %}
+
+{% if hw_todo %}
+<div class="card">
+  <h3 style="margin-top:0;">✏️ واجباتك الجاية</h3>
+  <div class="hw-list">{% for h in hw_todo %}{% url 'learning_student_homework' h.pk as u %}{% include 'learning/_hw_row.html' with url=u %}{% endfor %}</div>
+</div>
+{% endif %}
+
+<div class="sp-grid">
+  <div class="card" style="text-align:center;">
+    <h3 style="margin-top:0;">⭐ تقدمك في الباقة</h3>
+    <div class="sp-ring" style="--p:{{ progress_pct }};"><div>{{ completed_all }}<small>من {{ student.lessons_count }} حلقة</small></div></div>
+    <div style="color:var(--ink-muted); font-size:0.88rem;">الشهر ده: {{ completed_month }} حلقة تمت{% if month_total %} من {{ month_total }}{% endif %}</div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;">📅 حلقاتك الجاية</h3>
+    {% for l in upcoming %}
+      <div class="sp-li"><span>{{ l.scheduled_at|date:"l j F" }}</span><strong>{{ l.scheduled_at|date:"h:i A" }}</strong></div>
+    {% empty %}
+      <p style="color:var(--ink-muted);">مفيش حلقات متسجلة جاية لسه.</p>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;">📝 تقاريرك الشهرية</h3>
+    {% for e in evaluations %}
+      <div class="sp-li"><span>{{ e.month_label }}</span><a class="btn btn-outline" style="padding:6px 12px;" href="{% url 'public_evaluation' e.public_token %}" target="_blank" rel="noopener">عرض</a></div>
+    {% empty %}
+      <p style="color:var(--ink-muted);">لسه مفيش تقارير.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function(){ var b=document.getElementById('daily-play'), a=document.getElementById('daily-audio'); if(!b) return;
+  b.onclick=function(){ if(a.paused){ a.play(); b.textContent='⏸ إيقاف'; } else { a.pause(); b.textContent='▶ اسمعها بصوت الحصري'; } };
+  a.onended=function(){ b.textContent='▶ اسمعها تاني'; }; })();
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}الواجبات الصوتية{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/fonts.css' %}"><link rel="stylesheet" href="{% static 'css/learning.css' %}">
+<style>:root{--violet-50:#F7F5FC;--violet-100:#EEE9FA;--violet-500:#8B5CF6;--violet-600:#7C3AED;--violet-700:#6D28D9;--ink:#33195E;--ink-muted:#746A93;--border:#E7E1F5;--surface:#fff;--shadow-md:0 8px 24px rgba(51,25,94,.08);--red:#DC3545}</style>
+{% endblock %}
+{% block content %}
+<div class="l-head"><div><h1>🎙️ متابعة الواجبات الصوتية</h1><p>كل واجب بتبعته أي معلمة وكل تسجيل بيبعته أي طالب بيظهر هنا.</p></div>
+  <div class="chips"><span class="chip">📚 {{ total }} واجب</span><span class="chip">⏳ {{ agg.waiting }} مستني تصحيح</span><span class="chip">✅ {{ agg.approved }} مقبول</span></div></div>
+<form method="get" class="card" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:12px;">
+  <input name="q" value="{{ q }}" placeholder="بحث باسم الطالب أو العنوان" style="flex:1; min-width:180px; padding:9px 12px; border-radius:10px; border:1.5px solid var(--border);">
+  <select name="teacher" style="padding:9px; border-radius:10px; border:1.5px solid var(--border);"><option value="">كل المعلمات</option>{% for t2 in teachers %}<option value="{{ t2.pk }}" {% if t == t2.pk|stringformat:"s" %}selected{% endif %}>{{ t2.name }}</option>{% endfor %}</select>
+  <select name="f" style="padding:9px; border-radius:10px; border:1.5px solid var(--border);">
+    <option value="">كل الحالات</option><option value="new" {% if f == 'new' %}selected{% endif %}>جديد</option><option value="submitted" {% if f == 'submitted' %}selected{% endif %}>مستني تصحيح</option>
+    <option value="redo" {% if f == 'redo' %}selected{% endif %}>إعادة</option><option value="approved" {% if f == 'approved' %}selected{% endif %}>مقبول</option><option value="overdue" {% if f == 'overdue' %}selected{% endif %}>متأخر</option></select>
+  <button class="btn btn-primary" type="submit" style="background:#7C3AED; color:#fff; border:none; padding:9px 16px; border-radius:10px;">تصفية</button>
+</form>
+<div class="hw-list">
+  {% for h in rows %}{% url 'learning_admin_detail' h.pk as u %}{% with who=h.student.name|add:" ← "|add:h.teacher.name %}{% include 'learning/_hw_row.html' with url=u who=who %}{% endwith %}
+  {% empty %}<div class="card l-empty"><span class="big">📭</span>مفيش واجبات.</div>{% endfor %}
+</div>
+{% endblock %}

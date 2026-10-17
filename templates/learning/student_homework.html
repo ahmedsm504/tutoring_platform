@@ -1,0 +1,39 @@
+{% extends 'core/student_portal_base.html' %}
+{% load static %}
+{% block title %}{{ hw.title }}{% endblock %}
+{% block content %}
+<div class="l-head" style="margin-bottom:10px;"><a class="btn btn-outline" href="{% url 'learning_student_list' %}">← واجباتي</a></div>
+{% include 'learning/_hw_body.html' %}
+
+{% if can_submit %}
+<form method="post" enctype="multipart/form-data" class="card" id="submit-form" style="border:2px solid var(--violet-500);">
+  {% csrf_token %}
+  <h3 class="hw-sec">🎙️ دورك! سجّل قراءتك</h3>
+  {% if latest and latest.status == 'redo' %}<p class="hw-note">المعلمة طالبة تسجيل تاني — اسمع تعليقها تحت وجرّب تاني، إنت تقدر 💪</p>{% endif %}
+  <ol style="margin:0 0 6px; padding-inline-start:20px; color:var(--ink-muted); font-size:.9rem; line-height:1.9;">
+    <li>اسمع الآيات من الشيخ مرتين أو تلاتة (تقدر تخلي كل آية تتكرر).</li>
+    <li>جرّب «اختبر حفظك» عشان الآيات تستخبى وتسمّع لنفسك.</li>
+    <li>اضغط على المايك وسجّل، واسمع تسجيلك قبل ما تبعته.</li>
+  </ol>
+  {% include 'learning/_recorder.html' with name='audio' label='سجّل بصوتك' required=1 %}
+  <div class="field"><label for="note">رسالة لمعلمتك (اختياري)</label><input id="note" name="note" maxlength="500" placeholder="مثال: الآية الأخيرة كانت صعبة شوية"></div>
+  <button class="btn btn-primary btn-big" type="submit" id="send-btn"><i class="fas fa-paper-plane"></i> ابعت لمعلمتي</button>
+</form>
+{% endif %}
+
+{% if subs %}
+<div class="card"><h3 class="hw-sec">🗂️ تسليماتك وتصحيح المعلمة</h3>{% include 'learning/_subs.html' %}</div>
+{% endif %}
+<script src="{% static 'js/recorder.js' %}" defer></script>
+<script>
+(function(){
+  var f = document.getElementById('submit-form');
+  if(f) f.addEventListener('submit', function(e){
+    var inp = f.querySelector('input[name=audio]');
+    if(!inp.files.length){ e.preventDefault(); alert('سجّل صوتك الأول 🎙️'); return; }
+    var b = document.getElementById('send-btn'); b.disabled = true; b.textContent = 'جاري الإرسال…';
+  });
+  {% if celebrate %}window.addEventListener('load', function(){ setTimeout(function(){ if(window.fireConfetti){ fireConfetti({particleCount:160, spread:100}); setTimeout(function(){ fireConfetti({particleCount:80, spread:120, origin:{y:.4}}); }, 400);} }, 300); });{% endif %}
+})();
+</script>
+{% endblock %}

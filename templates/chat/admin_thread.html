@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+{% block title %}شات {{ student.name }} - الإدارة{% endblock %}
+{% block extra_css %}
+<style>
+.ct-grid{display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:18px; align-items:start;}
+@media (max-width:1100px){ .ct-grid{grid-template-columns:1fr;} }
+.ct-box{background:#fff; border:1px solid var(--border); border-radius:18px; padding:16px; margin-bottom:14px;}
+.ct-box h3{margin:0 0 10px; font-size:0.98rem;}
+.ct-kv{font-size:0.86rem; line-height:2;}
+.ct-flag{font-size:0.8rem; padding:8px 10px; border-radius:10px; background:var(--amber-soft); margin-bottom:6px;}
+</style>
+{% endblock %}
+{% block content %}
+<div class="ct-grid">
+  <div>{% include 'chat/_thread.html' %}</div>
+  <div>
+    <div class="ct-box">
+      <h3>📇 البيانات</h3>
+      <div class="ct-kv">
+        <div>الطالب: <a href="{% url 'student_detail' student.id %}">{{ student.name }}</a></div>
+        <div>المعلمة: {{ teacher.name|default:"بدون معلمة" }}</div>
+        <div>حساب الطالب: {% if student.user %}✅ {{ student.user.username }}{% else %}❌ مفيش - <a href="{% url 'create_student_login' student.id %}">إنشاء حساب</a>{% endif %}</div>
+        <div>الطالب: {% if conv.student_online %}🟢 متصل الآن{% elif conv.student_seen_at %}آخر ظهور {{ conv.student_seen_at|date:"j/n H:i" }}{% else %}لسه مدخلش{% endif %}</div>
+        <div>المعلمة: {% if conv.teacher_online %}🟢 متصلة الآن{% elif conv.teacher_seen_at %}آخر ظهور {{ conv.teacher_seen_at|date:"j/n H:i" }}{% else %}لسه مدخلتش{% endif %}</div>
+      </div>
+    </div>
+    <div class="ct-box">
+      <h3>🛡️ التحكم</h3>
+      <form method="post" action="{% url 'chat_admin_update' student.id %}" style="margin-bottom:8px;">{% csrf_token %}
+        <input type="hidden" name="action" value="toggle_lock">
+        <button class="btn {% if conv.is_locked %}btn-success{% else %}btn-danger{% endif %} btn-sm" type="submit">{% if conv.is_locked %}🔓 فتح المحادثة{% else %}🔒 قفل المحادثة مؤقتًا{% endif %}</button>
+      </form>
+      {% if conv.is_flagged %}
+      <form method="post" action="{% url 'chat_admin_update' student.id %}">{% csrf_token %}
+        <input type="hidden" name="action" value="resolve">
+        <button class="btn btn-success btn-sm" type="submit">✔ تمت مراجعة التنبيهات</button>
+      </form>
+      {% endif %}
+    </div>
+    {% if flagged_messages %}
+    <div class="ct-box">
+      <h3>🚩 تنبيهات مش متراجعة</h3>
+      {% for fm in flagged_messages %}
+        <div class="ct-flag"><strong>{{ fm.get_sender_type_display }}</strong> · {{ fm.created_at|date:"j/n H:i" }}{% if fm.is_blocked %} · ⛔ اتمنعت{% endif %}<br>{{ fm.flag_reasons }}<br><span style="color:var(--ink-muted);">{{ fm.body|truncatechars:140 }}</span></div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="ct-box">
+      <h3>📝 ملاحظة داخلية</h3>
+      <form method="post" action="{% url 'chat_admin_update' student.id %}">{% csrf_token %}
+        <input type="hidden" name="action" value="note">
+        <textarea name="admin_note" class="form-input" rows="3" placeholder="مش بتظهر للمعلمة ولا للطالب" style="width:100%;">{{ conv.admin_note }}</textarea>
+        <button class="btn btn-primary btn-sm" type="submit" style="margin-top:8px;">حفظ</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

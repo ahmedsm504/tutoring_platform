@@ -9,14 +9,14 @@
 
 {% block og_title %}مدونة العجمي لتحفيظ القرآن الكريم - مقالات تعليمية متخصصة{% endblock %}
 {% block og_description %}اكتشف مقالات متخصصة في تحفيظ وتعليم القرآن الكريم، التجويد، التفسير، وقصص الأنبياء من خبراء مؤسسة العجمي.{% endblock %}
-{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/blog-og-image.jpg' %}{% endblock %}
+{% block og_image %}{{ SITE_URL }}{% static 'images/blog-og-image.jpg' %}{% endblock %}
 
 {% block twitter_title %}مدونة العجمي - مقالات تحفيظ القرآن الكريم{% endblock %}
 {% block twitter_description %}محتوى تعليمي متميز في القرآن والتجويد{% endblock %}
-{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/blog-twitter.jpg' %}{% endblock %}
+{% block twitter_image %}{{ SITE_URL }}{% static 'images/blog-twitter.jpg' %}{% endblock %}
 
 {# canonical: الصفحة المرقّمة لها canonical خاص بيها، ونتايج البحث/الترتيب/الفلتر بتشاور على /blog/ ومش بتتفهرس #}
-{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% if posts.number > 1 and not search_query and not current_category %}?page={{ posts.number }}{% endif %}{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}{{ request.path }}{% if posts.number > 1 and not search_query and not current_category %}?page={{ posts.number }}{% endif %}{% endblock %}
 {% block robots %}{% if search_query or current_category or current_sort != 'latest' %}noindex, follow{% else %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endif %}{% endblock %}
 
 {% block extra_meta %}
@@ -38,13 +38,13 @@
       "@type": "ListItem",
       "position": 1,
       "name": "الرئيسية",
-      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+      "item": "{{ SITE_URL }}{% url 'home' %}"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "المدونة",
-      "item": "{{ request.build_absolute_uri }}"
+      "item": "{{ canonical_url }}"
     }
   ]
 }
@@ -55,15 +55,15 @@
   "@context": "https://schema.org",
   "@type": "Blog",
   "name": "مدونة مؤسسة العجمي لتحفيظ القرآن الكريم",
-  "url": "{{ request.build_absolute_uri }}",
+  "url": "{{ canonical_url }}",
   "description": "مدونة متخصصة في تحفيظ القرآن الكريم وتعليم التجويد وتفسير الآيات ونصائح دينية",
   "publisher": {
     "@type": "Organization",
     "name": "مؤسسة العجمي",
-    "url": "{{ request.scheme }}://{{ request.get_host }}",
+    "url": "{{ SITE_URL }}",
     "logo": {
       "@type": "ImageObject",
-      "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}"
+      "url": "{{ SITE_URL }}{% static 'images/logo.png' %}"
     },
     "sameAs": [
       "https://facebook.com/AlAjami",
@@ -76,14 +76,14 @@
     {% for post in posts %}
     {
       "@type": "BlogPosting",
-      "@id": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}",
+      "@id": "{{ SITE_URL }}{% url 'blog_detail' post.slug %}",
       "headline": "{{ post.title|escapejs }}",
       "name": "{{ post.title|escapejs }}",
-      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}",
+      "url": "{{ SITE_URL }}{% url 'blog_detail' post.slug %}",
       "datePublished": "{{ post.created_at|date:'c' }}",
       "dateModified": "{{ post.updated_at|date:'c' }}",
       "description": "{{ post.excerpt|escapejs }}",
-      "image": "{% if post.image %}{{ request.scheme }}://{{ request.get_host }}{{ post.cloud_url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/default_post.webp' %}{% endif %}",
+      "image": "{% if post.image %}{{ SITE_URL }}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}",
       "author": {
         "@type": "Organization",
         "name": "مؤسسة العجمي"
@@ -111,7 +111,7 @@
     {
       "@type": "ListItem",
       "position": {{ forloop.counter }},
-      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_detail' post.slug %}",
+      "url": "{{ SITE_URL }}{% url 'blog_detail' post.slug %}",
       "name": "{{ post.title|escapejs }}"
     }{% if not forloop.last %},{% endif %}
     {% endfor %}
@@ -124,12 +124,12 @@
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "مؤسسة العجمي",
-  "url": "{{ request.scheme }}://{{ request.get_host }}",
+  "url": "{{ SITE_URL }}",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "{{ request.scheme }}://{{ request.get_host }}{% url 'blog_list' %}?search={search_term_string}"
+      "urlTemplate": "{{ SITE_URL }}{% url 'blog_list' %}?search={search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }
@@ -164,960 +164,69 @@
 {% endif %}
 {% endblock %}
 
-{% block extra_css %}
-<style>
-/* ==================== RESET & BASE ==================== */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #0a0e1a;
-    color: #ffffff;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* ==================== CONTAINER ==================== */
-.blog-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 60px 30px;
-}
-
-/* ==================== PAGE HEADER ==================== */
-.page-header {
-    text-align: center;
-    margin-bottom: 60px;
-    animation: fadeInDown 0.8s ease-out;
-}
-
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.page-header h1 {
-    font-size: 3.5em;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 15px;
-    font-weight: 900;
-    text-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
-    letter-spacing: -1px;
-}
-
-.page-header p {
-    font-size: 1.3em;
-    color: #a8b8d8;
-    font-weight: 500;
-}
-
-/* ==================== STATS BAR ==================== */
-.stats-bar {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-bottom: 50px;
-    flex-wrap: wrap;
-    animation: fadeIn 1s ease-out 0.2s both;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.stat-item {
-    text-align: center;
-    padding: 20px 30px;
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.95), rgba(45, 63, 107, 0.95));
-    border-radius: 20px;
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-.stat-item:hover {
-    transform: translateY(-5px);
-    border-color: #FFD700;
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
-}
-
-.stat-number {
-    font-size: 2.5em;
-    font-weight: 900;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: block;
-}
-
-.stat-label {
-    color: #a8b8d8;
-    font-size: 0.95em;
-    font-weight: 600;
-    margin-top: 5px;
-}
-
-/* ==================== SEARCH & FILTER ==================== */
-.search-filter {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 60px;
-    background: linear-gradient(135deg, #1a2847 0%, #2d3f6b 100%);
-    padding: 30px;
-    border-radius: 25px;
-    backdrop-filter: blur(20px);
-    border: 3px solid rgba(255, 215, 0, 0.3);
-    box-shadow: 0 15px 50px rgba(255, 215, 0, 0.15);
-    animation: slideUp 0.8s ease-out 0.3s both;
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.search-filter input {
-    flex: 1;
-    min-width: 300px;
-    padding: 18px 25px;
-    border: 3px solid rgba(255, 215, 0, 0.4);
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 17px;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    font-family: 'Cairo', sans-serif;
-}
-
-.search-filter input:focus {
-    outline: none;
-    border-color: #FFD700;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-    transform: scale(1.02);
-}
-
-.search-filter input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.filter-btn {
-    padding: 16px 30px;
-    border: 3px solid rgba(255, 215, 0, 0.4);
-    border-radius: 15px;
-    background: rgba(255, 215, 0, 0.1);
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 16px;
-    white-space: nowrap;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.filter-btn:hover {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    border-color: #FFD700;
-    color: #000;
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
-}
-
-.filter-btn.active {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    border-color: #FFD700;
-    color: #000;
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
-    font-weight: 900;
-}
-
-/* ==================== FEATURED SECTION ==================== */
-.featured-section {
-    margin-bottom: 80px;
-}
-
-.section-title {
-    font-size: 2.8em;
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 900;
-    position: relative;
-    padding-bottom: 20px;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 150px;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #FFD700);
-    border-radius: 10px;
-}
-
-.featured-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 35px;
-    margin-bottom: 50px;
-}
-
-.featured-card {
-    position: relative;
-    border-radius: 25px;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.95) 0%, rgba(45, 63, 107, 0.95) 100%);
-    border: 3px solid rgba(255, 215, 0, 0.3);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-}
-
-.featured-card:hover {
-    transform: translateY(-20px) scale(1.03);
-    box-shadow: 0 35px 70px rgba(255, 215, 0, 0.3);
-    border-color: #FFD700;
-}
-
-.featured-badge {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-size: 1em;
-    font-weight: 900;
-    z-index: 10;
-    color: #000;
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
-    animation: pulseBadge 2s infinite;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-@keyframes pulseBadge {
-    0%, 100% { transform: scale(1); box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5); }
-    50% { transform: scale(1.08); box-shadow: 0 12px 35px rgba(255, 215, 0, 0.7); }
-}
-
-/* ==================== LAYOUT ==================== */
-.layout {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 60px;
-    margin-top: 50px;
-}
-
-/* ==================== POSTS GRID ==================== */
-.posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 35px;
-    margin-bottom: 50px;
-}
-
-.post-card {
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.9) 0%, rgba(45, 63, 107, 0.9) 100%);
-    border-radius: 22px;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 3px solid rgba(255, 215, 0, 0.25);
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-    height: 100%;
-    position: relative;
-}
-
-.post-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-    transform: rotate(45deg);
-    transition: all 0.6s;
-    opacity: 0;
-    z-index: 0;
-}
-
-.post-card:hover::before {
-    opacity: 1;
-    left: 100%;
-}
-
-.post-card:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(255, 215, 0, 0.25);
-    border-color: #FFD700;
-}
-
-/* ==================== POST IMAGE ==================== */
-.post-image-container {
-    width: 100%;
-    height: 280px;
-    overflow: hidden;
-    position: relative;
-    background: linear-gradient(135deg, #1a2847, #2d3f6b);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.post-image-container::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 100%);
-    z-index: 1;
-    pointer-events: none;
-}
-
-.post-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    transition: transform 0.6s ease;
-    display: block;
-}
-
-.post-card:hover .post-image {
-    transform: scale(1.15);
-}
-
-.post-placeholder {
-    font-size: 5em;
-}
-
-/* ==================== POST CONTENT ==================== */
-.post-content {
-    padding: 28px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    z-index: 2;
-}
-
-.meta {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 18px;
-    font-size: 0.92em;
-    flex-wrap: wrap;
-    color: #d0e0ff;
-    font-weight: 600;
-}
-
-.category-badge {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    color: #000;
-    font-weight: 800;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* ✅ post-title الآن H3 (تحت H2 الخاص بالقسم) */
-.post-title {
-    font-size: 1.65em;
-    margin-bottom: 16px;
-    line-height: 1.5;
-    font-weight: 800;
-    color: #fff;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.post-title a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.post-title a:hover {
-    color: #FFD700;
-}
-
-.post-excerpt {
-    color: #c8d8ff;
-    line-height: 1.8;
-    margin-bottom: 20px;
-    flex: 1;
-    font-size: 1.05em;
-    font-weight: 500;
-}
-
-.read-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    color: #FFD700;
-    text-decoration: none;
-    font-weight: 800;
-    transition: all 0.3s;
-    margin-top: auto;
-    font-size: 1.1em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.read-more:hover {
-    gap: 18px;
-    color: #FFA500;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-}
-
-/* ==================== SIDEBAR ==================== */
-.sidebar {
-    position: sticky;
-    top: 20px;
-    height: fit-content;
-}
-
-.widget {
-    background: linear-gradient(135deg, rgba(26, 40, 71, 0.95) 0%, rgba(45, 63, 107, 0.95) 100%);
-    border-radius: 22px;
-    padding: 32px;
-    margin-bottom: 30px;
-    backdrop-filter: blur(15px);
-    border: 3px solid rgba(255, 215, 0, 0.25);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-}
-
-/* ✅ widget-title الآن H3 (تحت H2 الخاص بالقسم) */
-.widget-title {
-    font-size: 1.6em;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #FFD700;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.category-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.category-list li {
-    padding: 16px 0;
-    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-    transition: all 0.3s;
-}
-
-.category-list li:hover {
-    padding-right: 12px;
-    border-color: rgba(255, 215, 0, 0.5);
-}
-
-.category-list li:last-child {
-    border-bottom: none;
-}
-
-.category-list a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
-    text-decoration: none;
-    transition: all 0.3s;
-    font-weight: 600;
-    font-size: 1.05em;
-}
-
-.category-list a:hover {
-    color: #FFD700;
-}
-
-.category-count {
-    color: #000;
-    font-weight: 900;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    padding: 6px 14px;
-    border-radius: 18px;
-    font-size: 0.92em;
-}
-
-.popular-post-item {
-    display: flex;
-    gap: 18px;
-    padding: 18px 0;
-    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-    transition: all 0.3s;
-    text-decoration: none;
-    color: inherit;
-}
-
-.popular-post-item:hover {
-    padding-right: 12px;
-    transform: translateX(8px);
-    border-color: rgba(255, 215, 0, 0.5);
-}
-
-.popular-post-item:last-child {
-    border-bottom: none;
-}
-
-.popular-post-image {
-    width: 90px;
-    height: 90px;
-    border-radius: 16px;
-    overflow: hidden;
-    flex-shrink: 0;
-    background: linear-gradient(135deg, #1a2847, #2d3f6b);
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.popular-post-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.4s;
-}
-
-.popular-post-item:hover .popular-post-image img {
-    transform: scale(1.15);
-}
-
-/* ✅ جديد: أيقونة تشغيل فوق صور ودجت الفيديوهات */
-.video-thumb {
-    position: relative;
-}
-
-.video-play-icon {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFD700;
-    font-size: 1.4em;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-    background: rgba(10, 14, 26, 0.25);
-    pointer-events: none;
-}
-
-.popular-post-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* ✅ تم التغيير: من h4 إلى p لأنه ليس عنواناً هيكلياً */
-.popular-post-info .post-name {
-    font-size: 1.05em;
-    margin-bottom: 8px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.5;
-}
-
-.popular-post-info small {
-    color: #d0e0ff;
-    font-weight: 600;
-    font-size: 0.88em;
-}
-
-/* ==================== PAGINATION ==================== */
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 70px 0;
-    flex-wrap: wrap;
-}
-
-.pagination a,
-.pagination span {
-    padding: 14px 26px;
-    background: rgba(255, 215, 0, 0.1);
-    border: 3px solid rgba(255, 215, 0, 0.4);
-    border-radius: 15px;
-    color: #fff;
-    text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    font-weight: 700;
-    font-size: 1.05em;
-}
-
-.pagination a:hover {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    border-color: #FFD700;
-    color: #000;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
-}
-
-.pagination .current {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    border-color: #FFD700;
-    color: #000;
-    font-weight: 900;
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-}
-
-.no-posts {
-    text-align: center;
-    grid-column: 1 / -1;
-    padding: 100px 40px;
-    color: #d0e0ff;
-    font-size: 1.4em;
-    font-weight: 600;
-}
-
-/* ==================== RESPONSIVE ==================== */
-@media (max-width: 1200px) {
-    .featured-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
-    .posts-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
-}
-
-@media (max-width: 1000px) {
-    .layout { grid-template-columns: 1fr; gap: 40px; }
-    .sidebar {
-        position: static;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 30px;
-    }
-    .widget { margin-bottom: 0; }
-}
-
-@media (max-width: 768px) {
-    .blog-container { padding: 40px 18px; }
-    .page-header h1 { font-size: 2.5em; }
-    .page-header p { font-size: 1.1em; }
-    .stats-bar { gap: 20px; }
-    .stat-item { padding: 15px 20px; }
-    .stat-number { font-size: 2em; }
-    .posts-grid, .featured-grid { grid-template-columns: 1fr; gap: 30px; }
-    .search-filter { flex-direction: column; padding: 25px; gap: 15px; }
-    .search-filter input { min-width: 100%; }
-    .filter-btn { padding: 13px 20px; font-size: 0.9em; flex: 1; min-width: 120px; text-align: center; }
-    .section-title { font-size: 2.2em; }
-    .post-image-container { height: 260px; }
-}
-
-@media (max-width: 480px) {
-    .blog-container { padding: 25px 15px; }
-    .page-header h1 { font-size: 2em; }
-    .section-title { font-size: 1.8em; }
-    .filter-btn { flex: 1 1 calc(50% - 8px); font-size: 0.85em; }
-    .post-image-container { height: 240px; }
-}
-
-/* ==================== LOADING ANIMATION ==================== */
-.loading-skeleton {
-    animation: shimmer 1.5s infinite;
-    background: linear-gradient(90deg, #1a2847 25%, #2d3f6b 50%, #1a2847 75%);
-    background-size: 200% 100%;
-}
-
-@keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-/* ==================== ACCESSIBILITY ==================== */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
-a:focus, button:focus, input:focus {
-    outline: 3px solid #FFD700;
-    outline-offset: 2px;
-}
-</style>
+{% block content %}
+{% block blog_head %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">المدونة</li></ol>
+    <h1>مدونة العجمي القرآنية</h1>
+    <p>مقالات في حفظ القرآن الكريم وتجويده، وتربية الأطفال على حبه، من معلمات ومشرفات المؤسسة.</p>
+  </div>
+</header>
 {% endblock %}
 
-{% block content %}
-<main role="main" aria-labelledby="blog-heading">
-    <div class="blog-container">
-
-        <!-- Page Header -->
-        <header class="page-header">
-            <!-- ✅ H1 وحيد في الصفحة -->
-            <h1 id="blog-heading">📚 مدونة العجمي</h1>
-            <p>مقالات متخصصة في تحفيظ القرآن الكريم وتجويده</p>
-        </header>
-
-        <!-- Stats Bar -->
-        <div class="stats-bar">
-            <div class="stat-item">
-                <span class="stat-number">{{ posts.paginator.count|default:0 }}</span>
-                <span class="stat-label">مقال منشور</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">{{ categories.count|default:0 }}</span>
-                <span class="stat-label">تصنيف</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">{{ total_views|default:0 }}</span>
-                <span class="stat-label">قراءة</span>
-            </div>
-        </div>
-
-        <!-- Search and Filter -->
-        <form method="get" class="search-filter" role="search" aria-label="بحث وتصفية المقالات">
-            <label for="search-input" class="sr-only">ابحث في المدونة</label>
-            <input
-                type="text"
-                id="search-input"
-                name="search"
-                placeholder="🔍 ابحث عن مقال..."
-                value="{{ search_query }}"
-                aria-label="كلمات البحث">
-            <a href="?sort=latest"
-               class="filter-btn {% if current_sort == 'latest' %}active{% endif %}"
-               aria-label="ترتيب حسب الأحدث"
-               {% if current_sort == 'latest' %}aria-current="page"{% endif %}>الأحدث</a>
-            <a href="?sort=popular"
-               class="filter-btn {% if current_sort == 'popular' %}active{% endif %}"
-               aria-label="ترتيب حسب الأكثر قراءة"
-               {% if current_sort == 'popular' %}aria-current="page"{% endif %}>الأكثر قراءة</a>
-            <a href="?sort=oldest"
-               class="filter-btn {% if current_sort == 'oldest' %}active{% endif %}"
-               aria-label="ترتيب حسب الأقدم"
-               {% if current_sort == 'oldest' %}aria-current="page"{% endif %}>الأقدم</a>
-        </form>
-
-        <!-- Featured Posts -->
-        {% if featured_posts %}
-        <section class="featured-section" aria-labelledby="featured-heading">
-            <!-- ✅ H2: قسم رئيسي تحت H1 -->
-            <h2 class="section-title" id="featured-heading">⭐ مقالات مميزة</h2>
-            <div class="featured-grid">
-                {% for post in featured_posts %}
-                <article class="featured-card" itemscope itemtype="https://schema.org/BlogPosting">
-                    <span class="featured-badge" aria-hidden="true">مميز</span>
-                    <a href="{% url 'blog_detail' post.slug %}" aria-label="اقرأ المقال: {{ post.title }}">
-                        <div class="post-image-container">
-                            {% if post.image %}
-                            <img src="{{ post.cloud_url }}"
-                                 alt="{{ post.title }}"
-                                 class="post-image"
-                                 loading="lazy"
-                                 itemprop="image">
-                            {% else %}
-                            <img src="{% static 'images/default_post.webp' %}"
-                                 alt="صورة افتراضية"
-                                 class="post-image"
-                                 loading="lazy"
-                                 decoding="async">
-                            {% endif %}
-                        </div>
-                        <div class="post-content">
-                            <div class="meta">
-                                {% if post.category %}
-                                <span class="category-badge" itemprop="articleSection">
-                                    {{ post.category.icon }} {{ post.category.name }}
-                                </span>
-                                {% endif %}
-                                <span aria-label="عدد المشاهدات">👁 {{ post.views_count }}</span>
-                                <span aria-label="وقت القراءة">⏱ {{ post.reading_time }} د</span>
-                            </div>
-                            <!-- ✅ H3: عنوان المقال تحت H2 قسم "مقالات مميزة" -->
-                            <h3 class="post-title" itemprop="headline">{{ post.title }}</h3>
-                            <p class="post-excerpt" itemprop="description">{{ post.excerpt|truncatewords:20 }}</p>
-                            <span class="read-more" aria-hidden="true">قراءة المزيد →</span>
-                            <meta itemprop="datePublished" content="{{ post.created_at|date:'c' }}">
-                            <meta itemprop="author" content="مؤسسة العجمي">
-                        </div>
-                    </a>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        <!-- Layout with Main Content and Sidebar -->
-        <div class="layout">
-
-            <!-- Main Content -->
-            <div>
-                <!-- ✅ H2: قسم رئيسي تحت H1 -->
-                <h2 class="section-title">📖 جميع المقالات</h2>
-                <div class="posts-grid">
-                    {% for post in posts %}
-                    <article class="post-card" itemscope itemtype="https://schema.org/BlogPosting">
-                        <a href="{% url 'blog_detail' post.slug %}" aria-label="اقرأ المقال: {{ post.title }}">
-                            <div class="post-image-container">
-                                {% if post.image %}
-                                <img src="{{ post.cloud_url }}"
-                                     alt="{{ post.title }}"
-                                     class="post-image"
-                                     loading="lazy"
-                                     itemprop="image">
-                                {% else %}
-                                <img src="{% static 'images/default_post.webp' %}"
-                                     alt="صورة افتراضية"
-                                     class="post-image"
-                                     loading="lazy"
-                                 decoding="async">
-                                {% endif %}
-                            </div>
-                            <div class="post-content">
-                                <div class="meta">
-                                    {% if post.category %}
-                                    <span class="category-badge" itemprop="articleSection">
-                                        {{ post.category.icon }} {{ post.category.name }}
-                                    </span>
-                                    {% endif %}
-                                    <span aria-label="عدد المشاهدات">👁 {{ post.views_count }}</span>
-                                    <span aria-label="وقت القراءة">⏱ {{ post.reading_time }} د</span>
-                                </div>
-                                <!-- ✅ H3: عنوان المقال تحت H2 قسم "جميع المقالات" -->
-                                <h3 class="post-title" itemprop="headline">{{ post.title }}</h3>
-                                <p class="post-excerpt" itemprop="description">{{ post.excerpt|truncatewords:15 }}</p>
-                                <span class="read-more" aria-hidden="true">قراءة المزيد →</span>
-                                <meta itemprop="datePublished" content="{{ post.created_at|date:'c' }}">
-                                <meta itemprop="author" content="مؤسسة العجمي">
-                            </div>
-                        </a>
-                    </article>
-                    {% empty %}
-                    <p class="no-posts" role="alert">لا توجد مقالات متاحة حالياً 📚</p>
-                    {% endfor %}
-                </div>
-
-                <!-- Pagination -->
-                {% if posts.has_other_pages %}
-                <nav class="pagination" role="navigation" aria-label="التنقل بين صفحات المقالات">
-                    {% if posts.has_previous %}
-                    <a href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}"
-                       aria-label="الصفحة السابقة">السابق</a>
-                    {% endif %}
-                    <span class="current" aria-current="page">{{ posts.number }} / {{ posts.paginator.num_pages }}</span>
-                    {% if posts.has_next %}
-                    <a href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}"
-                       aria-label="الصفحة التالية">التالي</a>
-                    {% endif %}
-                </nav>
-                {% endif %}
-            </div>
-
-            <!-- Sidebar -->
-            <aside class="sidebar" role="complementary" aria-label="الشريط الجانبي">
-
-                <!-- Categories Widget -->
-                {% if categories %}
-                <div class="widget">
-                    <!-- ✅ H3: عنوان widget تحت H2 الخاص بالمحتوى الرئيسي -->
-                    <h3 class="widget-title">📁 التصنيفات</h3>
-                    <ul class="category-list">
-                        {% for category in categories %}
-                        <li>
-                            <a href="{% url 'category_posts' category.slug %}"
-                               aria-label="عرض مقالات تصنيف {{ category.name }}">
-                                <span>{{ category.icon }} {{ category.name }}</span>
-                                <span class="category-count">{{ category.posts_count }}</span>
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-
-                <!-- Popular Posts Widget -->
-                {% if popular_posts %}
-                <div class="widget">
-                    <!-- ✅ H3: عنوان widget تحت H2 -->
-                    <h3 class="widget-title">🔥 الأكثر قراءة</h3>
-                    {% for post in popular_posts %}
-                    <a href="{% url 'blog_detail' post.slug %}"
-                       class="popular-post-item"
-                       aria-label="اقرأ المقال: {{ post.title }}">
-                        <div class="popular-post-image">
-                            {% if post.image %}
-                            <img src="{{ post.cloud_url }}"
-                                 alt="{{ post.title }}"
-                                 loading="lazy"
-                                 decoding="async">
-                            {% else %}
-                            <span style="font-size: 2em;">📝</span>
-                            {% endif %}
-                        </div>
-                        <div class="popular-post-info">
-                            <!-- ✅ تم التغيير: من h4 إلى p لأن اسم المقال هنا ليس عنواناً هيكلياً -->
-                            <p class="post-name">{{ post.title|truncatewords:6 }}</p>
-                            <small>👁 {{ post.views_count }} مشاهدة</small>
-                        </div>
-                    </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                <!-- Recent Videos Widget (✅ جديد) -->
-                {% if recent_videos %}
-                <div class="widget">
-                    <h3 class="widget-title">🎬 أحدث الفيديوهات</h3>
-                    {% for video in recent_videos %}
-                    <a href="{% url 'blog_detail' video.post.slug %}#videos"
-                       class="popular-post-item"
-                       aria-label="شاهد فيديو من مقال: {{ video.post.title }}">
-                        <div class="popular-post-image video-thumb">
-                            {% if video.thumbnail_url %}
-                            <img src="{{ video.thumbnail_url }}"
-                                 alt="{{ video.title|default:video.post.title }}"
-                                 loading="lazy"
-                                 decoding="async">
-                            {% else %}
-                            <span style="font-size: 2em;">🎬</span>
-                            {% endif %}
-                            <span class="video-play-icon" aria-hidden="true">▶</span>
-                        </div>
-                        <div class="popular-post-info">
-                            <p class="post-name">{{ video.title|default:video.post.title|truncatewords:6 }}</p>
-                            <small>{% if video.platform == 'tiktok' %}تيك توك{% else %}يوتيوب{% endif %} · من مقال {{ video.post.title|truncatewords:4 }}</small>
-                        </div>
-                    </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-            </aside>
-        </div>
+<section class="section">
+  <div class="container">
+    {% block blog_toolbar %}
+    <div class="toolbar">
+      <form class="search" method="get" role="search" action="{% url 'blog_list' %}">
+        <label for="q" class="sr-only">ابحث في المدونة</label>
+        <input id="q" type="search" name="search" value="{{ search_query }}" placeholder="ابحث عن مقال...">
+        <button class="btn btn-primary" type="submit">بحث</button>
+      </form>
+      <ul class="chips" aria-label="ترتيب المقالات">
+        <li><a href="?sort=latest" {% if current_sort == 'latest' %}aria-current="true"{% endif %}>الأحدث</a></li>
+        <li><a href="?sort=popular" {% if current_sort == 'popular' %}aria-current="true"{% endif %}>الأكثر قراءة</a></li>
+        <li><a href="?sort=oldest" {% if current_sort == 'oldest' %}aria-current="true"{% endif %}>الأقدم</a></li>
+      </ul>
     </div>
-</main>
+    {% if search_query %}<p style="color:var(--muted);">نتائج البحث عن «{{ search_query }}»: {{ posts.paginator.count }} مقال · <a href="{% url 'blog_list' %}">عرض كل المقالات</a></p>{% endif %}
+    {% endblock %}
+
+    {% block featured %}
+    {% if featured_posts and not search_query and posts.number == 1 %}{% with fp=featured_posts.0 %}
+    <article class="featured post-card" aria-labelledby="featured-title">
+      <a class="cover" href="{% url 'blog_detail' fp.slug %}" tabindex="-1" aria-hidden="true">
+        {% if fp.cloud_url %}<img src="{{ fp.cloud_url }}" alt="" width="640" height="400" fetchpriority="high">{% else %}<img src="{% static 'images/default_post.webp' %}" alt="" width="640" height="400">{% endif %}
+      </a>
+      <div>
+        <div class="post-meta">{% if fp.category %}<a href="{% url 'category_posts' fp.category.slug %}">{{ fp.category.name }}</a>{% endif %}<span>مقال مميز</span><span>{{ fp.reading_time }} دقائق قراءة</span></div>
+        <h2 id="featured-title"><a href="{% url 'blog_detail' fp.slug %}">{{ fp.title }}</a></h2>
+        <p>{{ fp.excerpt|striptags|truncatewords:32 }}</p>
+        <a class="btn btn-ghost" href="{% url 'blog_detail' fp.slug %}" style="margin-top:16px;">اقرأ المقال</a>
+      </div>
+    </article>
+    {% endwith %}{% endif %}
+    {% endblock %}
+
+    <div class="with-aside">
+      <div>
+        <h2 class="sr-only">{% block list_title %}كل المقالات{% endblock %}</h2>
+        {% if posts %}
+        <ul class="posts">{% for post in posts %}<li>{% include 'blog/_post_card.html' %}</li>{% endfor %}</ul>
+        {% else %}
+        <p class="empty">مفيش مقالات بالشروط دي. <a href="{% url 'blog_list' %}">اعرض كل المقالات</a></p>
+        {% endif %}
+        {% if posts.has_other_pages %}
+        <nav class="pager" aria-label="صفحات المقالات">
+          {% if posts.has_previous %}<a class="btn btn-ghost" rel="prev" href="?page={{ posts.previous_page_number }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if current_sort and current_sort != 'latest' %}&sort={{ current_sort }}{% endif %}">السابق</a>{% endif %}
+          <span>صفحة {{ posts.number }} من {{ posts.paginator.num_pages }}</span>
+          {% if posts.has_next %}<a class="btn btn-ghost" rel="next" href="?page={{ posts.next_page_number }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if current_sort and current_sort != 'latest' %}&sort={{ current_sort }}{% endif %}">التالي</a>{% endif %}
+        </nav>
+        {% endif %}
+      </div>
+      {% include 'blog/_aside.html' %}
+    </div>
+  </div>
+</section>
 {% endblock %}

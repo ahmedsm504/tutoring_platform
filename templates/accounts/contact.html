@@ -20,13 +20,13 @@
   "@type": "ContactPage",
   "name": "تواصل معنا - مؤسسة العجمي",
   "description": "صفحة التواصل مع مؤسسة العجمي لتحفيظ القرآن الكريم وحجز الحصص المجانية",
-  "url": "{{ request.build_absolute_uri }}",
+  "url": "{{ canonical_url }}",
   "mainEntity": {
     "@type": "Organization",
     "name": "مؤسسة العجمي",
     "alternateName": "Al-Agmi Foundation",
-    "url": "{{ request.scheme }}://{{ request.get_host }}",
-    "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}",
+    "url": "{{ SITE_URL }}",
+    "logo": "{{ SITE_URL }}{% static 'images/logo.png' %}",
     "telephone": "+20-104-456-8181",
     "email": "info@alagme.com",
     "address": {
@@ -68,544 +68,80 @@
       "@type": "ListItem",
       "position": 1,
       "name": "الرئيسية",
-      "item": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+      "item": "{{ SITE_URL }}{% url 'home' %}"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "تواصل معنا",
-      "item": "{{ request.build_absolute_uri }}"
+      "item": "{{ canonical_url }}"
     }
   ]
 }
 </script>
 {% endblock %}
 
-{% block extra_css %}
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-
-    /* رسائل Django */
-    .messages-container {
-        max-width: 700px;
-        margin: 20px auto;
-    }
-
-    .alert {
-        padding: 15px 20px;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        font-weight: 600;
-        text-align: center;
-        animation: slideDown 0.5s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .alert-success {
-        background: linear-gradient(135deg, #4CAF50, #45a049);
-        color: white;
-        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
-    }
-
-    .alert-error {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-        color: white;
-        box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Hero Section */
-    .contact-hero {
-        text-align: center;
-        padding: 50px 20px;
-        margin-bottom: 40px;
-        background: linear-gradient(135deg, rgba(27, 58, 112, 0.3) 0%, rgba(17, 43, 80, 0.3) 100%);
-        border-radius: 20px;
-        border: 2px solid rgba(76, 129, 175, 0.3);
-    }
-
-    .contact-hero h1 {
-        font-size: 2.4em;
-        color: #e8f7e9;
-        margin-bottom: 15px;
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    }
-
-    .contact-hero p {
-        font-size: 1.2em;
-        opacity: 0.95;
-        color: #b3daff;
-    }
-
-    /* Form Section */
-    .contact-form-section {
-        max-width: 700px;
-        margin: 0 auto 40px;
-        padding: 40px;
-        background: linear-gradient(145deg, rgba(17, 43, 80, 0.3), rgba(12, 35, 74, 0.3));
-        border-radius: 20px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-        border: 2px solid rgba(76, 175, 80, 0.2);
-    }
-
-    .form-title {
-        color: #e6d860;
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 2em;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .form-title::after {
-        content: '';
-        width: 80px;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, #4CAF50, transparent);
-        display: block;
-        position: absolute;
-        bottom: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 2px;
-    }
-
-    .form-group {
-        margin-bottom: 25px;
-    }
-
-    .form-group label {
-        display: block;
-        font-weight: 600;
-        color: #b3daff;
-        font-size: 1.05em;
-        margin-bottom: 8px;
-    }
-
-    .required-star {
-        color: #ff6b6b;
-        margin-right: 3px;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 14px 16px;
-        border-radius: 10px;
-        border: 2px solid rgba(76, 175, 80, 0.3);
-        background: rgba(12, 35, 74, 0.8);
-        color: #f0f8ff;
-        font-family: 'Cairo', sans-serif;
-        font-size: 1em;
-        transition: all 0.3s ease;
-    }
-
-    .form-control:focus {
-        outline: none;
-        border-color: #4CAF50;
-        background: rgba(12, 35, 74, 1);
-        box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
-    }
-
-    .form-control::placeholder {
-        color: rgba(240, 248, 255, 0.5);
-    }
-
-    select.form-control {
-        cursor: pointer;
-    }
-
-    select.form-control option {
-        background: #0c234a;
-        color: #f0f8ff;
-        padding: 10px;
-    }
-
-    textarea.form-control {
-        min-height: 120px;
-        resize: vertical;
-    }
-
-    .error-message {
-        color: #ff6b6b;
-        font-size: 0.9em;
-        margin-top: 5px;
-        display: block;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .submit-btn {
-        margin-top: 30px;
-        padding: 16px 40px;
-        background: linear-gradient(135deg, #4CAF50, #45a049);
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 10px;
-        font-size: 1.2em;
-        font-weight: 700;
-        width: 100%;
-        font-family: 'Cairo', sans-serif;
-        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .submit-btn:hover {
-        background: linear-gradient(135deg, #45a049, #4CAF50);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(76, 175, 80, 0.5);
-    }
-
-    .submit-btn:active {
-        transform: translateY(0);
-    }
-
-    /* Contact Info Cards */
-    .contact-info {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        margin-bottom: 40px;
-        max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .info-card {
-        background: linear-gradient(145deg, rgba(27, 58, 112, 0.3), rgba(12, 35, 74, 0.3));
-        border: 2px solid rgba(76, 175, 80, 0.3);
-        border-radius: 15px;
-        padding: 25px;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .info-card:hover {
-        transform: translateY(-5px);
-        border-color: #4CAF50;
-        box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
-    }
-
-    .info-card i {
-        font-size: 2.5em;
-        color: #4CAF50;
-        margin-bottom: 15px;
-    }
-
-    .info-card h3 {
-        color: #4CAF50;
-        margin-bottom: 10px;
-        font-size: 1.3em;
-    }
-
-    .info-card p {
-        color: #b3daff;
-        margin: 5px 0;
-    }
-
-    .info-card a {
-        color: #4CAF50;
-        text-decoration: none;
-        transition: all 0.3s;
-    }
-
-    .info-card a:hover {
-        color: #45a049;
-        text-decoration: underline;
-    }
-
-    /* أيقونات التواصل الثابتة */
-    .social-fixed {
-        position: fixed;
-        bottom: 100px;
-        left: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        z-index: 1000;
-    }
-
-    .social-fixed a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        color: white;
-        font-size: 26px;
-        text-decoration: none;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        transition: all 0.3s ease;
-        position: relative;
-    }
-
-    .social-fixed a::before {
-        content: attr(title);
-        position: absolute;
-        right: 70px;
-        background: rgba(12, 35, 74, 0.95);
-        color: white;
-        padding: 8px 15px;
-        border-radius: 8px;
-        white-space: nowrap;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        font-size: 14px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-
-    .social-fixed a:hover::before {
-        opacity: 1;
-    }
-
-    .social-fixed a:hover {
-        transform: scale(1.15);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-    }
-
-    .whatsapp {
-        background: linear-gradient(135deg, #25D366, #128C7E);
-    }
-
-    .facebook {
-        background: linear-gradient(135deg, #3b5998, #2d4373);
-    }
-
-    .instagram {
-        background: linear-gradient(135deg, #E1306C, #C13584);
-    }
-
-    .tiktok {
-        background: linear-gradient(135deg, #000000, #EE1D52);
-    }
-
-    .twitter {
-        background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
-    }
-
-    /* Responsive */
-    @media(max-width: 768px) {
-        .contact-hero h1 {
-            font-size: 1.8em;
-        }
-
-        .contact-hero p {
-            font-size: 1.1em;
-        }
-
-        .contact-form-section {
-            padding: 30px 20px;
-            margin: 20px;
-        }
-
-        .form-title {
-            font-size: 1.6em;
-        }
-
-        .contact-info {
-            grid-template-columns: 1fr;
-        }
-
-        .social-fixed {
-            left: 10px;
-            bottom: 90px;
-            gap: 10px;
-        }
-
-        .social-fixed a {
-            width: 50px;
-            height: 50px;
-            font-size: 22px;
-        }
-
-        .social-fixed a::before {
-            display: none;
-        }
-    }
-
-    @media(max-width: 480px) {
-        .contact-hero {
-            padding: 30px 15px;
-        }
-
-        .contact-hero h1 {
-            font-size: 1.5em;
-        }
-
-        .contact-form-section {
-            margin: 15px;
-            padding: 25px 15px;
-        }
-
-        .form-title {
-            font-size: 1.4em;
-        }
-
-        .submit-btn {
-            font-size: 1.1em;
-            padding: 14px 30px;
-        }
-    }
-</style>
-{% endblock %}
-
 {% block content %}
-<main role="main" aria-labelledby="contact-heading">
-    <!-- Hero Section -->
-    <header class="contact-hero">
-        <h1 id="contact-heading">🎓 احجز حصتك التجريبية المجانية في تحفيظ القرآن</h1>
-        <p>املأ النموذج وسنتواصل معك في أقرب وقت</p>
-    </header>
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">تواصل معنا</li></ol>
+    <h1>احجز حلقتك التجريبية المجانية</h1>
+    <p>اكتب بياناتك، وهيتواصل معاك أحد المشرفين خلال 24 ساعة يحدد معاك الموعد المناسب لتوقيت بلدك.</p>
+  </div>
+</header>
 
-    <!-- Django Messages -->
-    {% if messages %}
-    <div class="messages-container">
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}" role="alert">
-                {% if message.tags == 'success' %}
-                    <i class="fas fa-check-circle" aria-hidden="true"></i>
-                {% elif message.tags == 'error' %}
-                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-                {% else %}
-                    <i class="fas fa-info-circle" aria-hidden="true"></i>
-                {% endif %}
-                {{ message }}
-            </div>
-        {% endfor %}
+<section class="section">
+  <div class="container form-layout">
+    <div class="form-card">
+      <h2 style="font-size:1.4rem;">بيانات الحجز</h2>
+      {% if form.non_field_errors or form.errors %}<div class="notice notice-error" role="alert">من فضلك راجع الحقول اللي عليها ملاحظة تحت.</div>{% endif %}
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% with f=form.name %}<div class="field"><label for="{{ f.id_for_label }}">الاسم<span class="req" aria-hidden="true">*</span></label>
+          <input type="text" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="name" placeholder="اسم الطالب أو ولي الأمر">
+          {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+        <div class="field-row">
+          {% with f=form.country %}<div class="field"><label for="{{ f.id_for_label }}">الدولة<span class="req" aria-hidden="true">*</span></label>
+            <input type="text" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="country-name" placeholder="مثلاً: مصر، السعودية، الكويت">
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+          {% with f=form.gender %}<div class="field"><label for="{{ f.id_for_label }}">الطالب<span class="req" aria-hidden="true">*</span></label>
+            <select name="{{ f.html_name }}" id="{{ f.id_for_label }}" required>
+              <option value="">اختار</option>
+              {% for value, label in f.field.choices %}{% if value %}<option value="{{ value }}" {% if f.value == value %}selected{% endif %}>{{ label }}</option>{% endif %}{% endfor %}
+            </select>
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+        </div>
+        <div class="field-row">
+          {% with f=form.phone %}<div class="field"><label for="{{ f.id_for_label }}">رقم الهاتف أو واتساب<span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" dir="ltr" style="text-align:right" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="tel" placeholder="+20 100 000 0000">
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+          {% with f=form.email %}<div class="field"><label for="{{ f.id_for_label }}">البريد الإلكتروني (اختياري)</label>
+            <input type="email" dir="ltr" style="text-align:right" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" autocomplete="email">
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+        </div>
+        {% with f=form.notes %}<div class="field"><label for="{{ f.id_for_label }}">عمر الطالب ومستواه أو أي ملاحظة (اختياري)</label>
+          <textarea name="{{ f.html_name }}" id="{{ f.id_for_label }}" rows="4" placeholder="مثلاً: عمره 8 سنين، حافظ جزء عمّ، والمواعيد المناسبة بعد العصر">{{ f.value|default_if_none:'' }}</textarea>
+          {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+        <button type="submit" class="btn btn-primary btn-block">احجز الحلقة المجانية</button>
+        <p style="color:var(--muted); font-size:.9rem; margin:12px 0 0; text-align:center;">بياناتك بتستخدم بس للتواصل معاك بخصوص الحجز.</p>
+      </form>
     </div>
-    {% endif %}
 
-    <!-- Form Section -->
-    <section class="contact-form-section" aria-labelledby="form-heading">
-        <h2 class="form-title" id="form-heading">
-            <i class="fas fa-edit" aria-hidden="true"></i>
-            املأ بياناتك للحجز
-        </h2>
-        
-        <form method="POST" novalidate aria-label="نموذج حجز الحصة المجانية">
-            {% csrf_token %}
-            
-            {% for field in form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                    {% if field.field.required %}
-                        <span class="required-star" aria-hidden="true">*</span>
-                        <span class="sr-only">مطلوب</span>
-                    {% endif %}
-                </label>
-                
-                {% if field.name == 'gender' %}
-                    <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" {% if field.field.required %}required aria-required="true"{% endif %}>
-                        <option value="">اختر الجنس</option>
-                        {% for value, label in field.field.choices %}
-                            <option value="{{ value }}" {% if field.value == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                {% elif field.name == 'notes' %}
-                    <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" placeholder="{{ field.field.widget.attrs.placeholder|default:'أي ملاحظات أو استفسارات (اختياري)' }}" {% if field.field.required %}required aria-required="true"{% endif %} aria-label="{{ field.label }}">{{ field.value|default:'' }}</textarea>
-                {% else %}
-                    <input type="{{ field.field.widget.input_type|default:'text' }}" 
-                           name="{{ field.name }}" 
-                           id="{{ field.id_for_label }}" 
-                           class="form-control" 
-                           placeholder="{{ field.field.widget.attrs.placeholder|default:field.label }}"
-                           value="{{ field.value|default:'' }}"
-                           {% if field.field.required %}required aria-required="true"{% endif %}
-                           aria-label="{{ field.label }}">
-                {% endif %}
-                
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        <span class="error-message" role="alert">
-                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i> {{ error }}
-                        </span>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            {% endfor %}
-            
-            <button type="submit" class="submit-btn" aria-label="إرسال نموذج الحجز">
-                <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                احجز الآن
-            </button>
-        </form>
-    </section>
-
-    <!-- Contact Info Cards -->
-    <section class="contact-info" aria-labelledby="contact-info-heading">
-        <h2 id="contact-info-heading" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">معلومات الاتصال</h2>
-        
-        <div class="info-card">
-            <i class="fas fa-phone" aria-hidden="true"></i>
-            <h3>اتصل بنا</h3>
-            <p><a href="tel:+201044568181" aria-label="اتصل بنا على الرقم +20 104 456 8181">+20 104 456 8181</a></p>
-            <p>السبت - الخميس</p>
-            <p>9 صباحاً - 12 مساءً</p>
-        </div>
-
-        <div class="info-card">
-            <i class="fab fa-whatsapp" aria-hidden="true"></i>
-            <h3>واتساب</h3>
-            <p><a href="https://wa.me/201044568181" target="_blank" rel="noopener noreferrer" aria-label="تواصل معنا عبر واتساب">تواصل مباشر</a></p>
-            <p>رد فوري على</p>
-            <p>استفساراتك</p>
-        </div>
-
-        <div class="info-card">
-            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-            <h3>موقعنا</h3>
-            <p>جمهورية مصر العربية</p>
-            <p>تعليم أونلاين</p>
-            <p>من أي مكان</p>
-        </div>
-    </section>
-</main>
-
-<!-- أيقونات التواصل الاجتماعي الثابتة -->
-<aside class="social-fixed" aria-label="روابط التواصل الاجتماعي الثابتة">
-    <a href="https://wa.me/201044568181" target="_blank" rel="noopener noreferrer" class="whatsapp" title="تواصل معنا على واتساب" aria-label="واتساب">
-        <i class="fab fa-whatsapp" aria-hidden="true"></i>
-        <span class="sr-only">واتساب</span>
-    </a>
-    <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="noopener noreferrer" class="facebook" title="تابعنا على فيسبوك" aria-label="فيسبوك">
-        <i class="fab fa-facebook-f" aria-hidden="true"></i>
-        <span class="sr-only">فيسبوك</span>
-    </a>
-    <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="noopener noreferrer" class="instagram" title="تابعنا على إنستجرام" aria-label="إنستجرام">
-        <i class="fab fa-instagram" aria-hidden="true"></i>
-        <span class="sr-only">إنستجرام</span>
-    </a>
-    <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="noopener noreferrer" class="tiktok" title="تابعنا على تيك توك" aria-label="تيك توك">
-        <i class="fab fa-tiktok" aria-hidden="true"></i>
-        <span class="sr-only">تيك توك</span>
-    </a>
-    <a href="https://x.com/alagme_12" target="_blank" rel="noopener noreferrer" class="twitter" title="تابعنا على تويتر" aria-label="تويتر">
-        <i class="fab fa-twitter" aria-hidden="true"></i>
-        <span class="sr-only">تويتر</span>
-    </a>
-</aside>
+    <aside aria-labelledby="other-ways">
+      <h2 id="other-ways" style="font-size:1.4rem;">أو كلمنا مباشرة</h2>
+      <ul class="side-list">
+        <li><svg aria-hidden="true"><use href="#i-chat"/></svg><div><strong>واتساب</strong><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">ابعتلنا رسالة وهنرد عليك</a></div></li>
+        <li><svg aria-hidden="true"><use href="#i-phone"/></svg><div><strong>اتصال</strong><a href="tel:+201044568181" dir="ltr">+20 104 456 8181</a></div></li>
+        <li><svg aria-hidden="true"><use href="#i-clock"/></svg><div><strong>مواعيد الرد</strong><span>السبت – الخميس، 9 صباحًا – 12 منتصف الليل (بتوقيت القاهرة)</span></div></li>
+        <li><svg aria-hidden="true"><use href="#i-globe"/></svg><div><strong>من أي دولة</strong><span>كل الحصص أونلاين، والمواعيد على توقيت بلدك.</span></div></li>
+      </ul>
+      <h3 style="margin-top:28px;">بعد ما تبعت البيانات</h3>
+      <ol class="checklist" style="list-style:none;">
+        <li>مشرف من المؤسسة بيكلمك خلال 24 ساعة.</li>
+        <li>بنحدد موعد الحلقة التجريبية المجانية.</li>
+        <li>بعد الحلقة بنرشحلك الباقة المناسبة، والقرار ليك.</li>
+      </ol>
+    </aside>
+  </div>
+</section>
 {% endblock %}
