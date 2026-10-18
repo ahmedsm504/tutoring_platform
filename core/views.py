@@ -99,8 +99,12 @@ def _public_ctx(**extra):
 
 def home(request):
     from . import site_content as sc
+    from blog.models import Post
+    latest = (Post.objects.filter(status='published').select_related('category')
+              .order_by('-is_featured', '-published_at')[:3])
     return render(request, 'core/home.html', _public_ctx(
         faq_ldjson=json.dumps(sc.faq_schema(), ensure_ascii=False).replace('<', '\\u003c'),
+        latest_posts=latest,
     ))
 
 

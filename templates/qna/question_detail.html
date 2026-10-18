@@ -27,7 +27,7 @@
       "name": "{{ question.visitor_name|escapejs }}",
       "url": "{{ SITE_URL }}"
     },
-    "answerCount": {{ community_answers.count }},
+    "answerCount": {% if has_official_answer and official_answer %}{{ community_answers.count|add:1 }}{% else %}{{ community_answers.count }}{% endif %},
     {% if has_official_answer and official_answer %}
     "acceptedAnswer": {
       "@type": "Answer",
@@ -35,11 +35,7 @@
       "dateCreated": "{{ official_answer.answered_at|date:'c' }}",
       "upvoteCount": {{ official_answer.likes|default:0 }},
       "url": "{{ canonical_url }}#official-answer",
-      "author": {
-        "@type": "Person",
-        "name": "{{ official_answer.answered_by.get_full_name|default:official_answer.answered_by.username|escapejs }}",
-        "url": "{{ SITE_URL }}"
-      }
+      "author": {"@type": "Organization", "name": "فريق مؤسسة العجمي لتحفيظ القرآن", "url": "{{ SITE_URL }}/about/"}
     },
     {% endif %}
     "suggestedAnswer": [

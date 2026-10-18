@@ -329,9 +329,17 @@ def quran_surah(request, n):
     idx = quran.index()
     meta = idx[n - 1]
     rec = request.GET.get('r')
+    related = [('/blog/how-to-memorize-quran-plan/', 'كيف تحفظ القرآن وتثبّته: خطة خطوة بخطوة'),
+               ('/blog/madd-types-tajweed/', 'أنواع المد في التجويد وعدد حركاته')]
+    if n == 1:
+        related.insert(0, ('/blog/common-mistakes-surat-al-fatiha/', 'أخطاء شائعة في قراءة سورة الفاتحة وتصحيحها'))
+    elif n >= 78:
+        related.insert(0, ('/blog/juz-amma-plan-for-kids/', 'جدول حفظ جزء عمّ للأطفال في 6 أشهر'))
+    else:
+        related.insert(0, ('/blog/quran-revision-system/', 'كيف تراجع حفظك ولا تنساه'))
     return render(request, 'learning/quran_surah.html', _player_ctx({
         'surah': s, 'meta': meta, 'verses': list(enumerate(s['verses'], start=1)),
         'prev': idx[n - 2] if n > 1 else None, 'next': idx[n] if n < 114 else None,
         'reciter_name': quran.RECITER_NAMES.get(rec or '', quran.RECITER_NAMES[quran.DEFAULT_RECITER]),
-        'audio_first': quran.audio_url(quran.DEFAULT_RECITER, n, 1),
+        'audio_first': quran.audio_url(quran.DEFAULT_RECITER, n, 1), 'related': related,
     }))
