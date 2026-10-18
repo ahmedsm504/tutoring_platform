@@ -8,6 +8,9 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('pricing/', views.pricing, name='pricing'),
     path('quality-standards/', views.quality_standards, name='quality_standards'),
+    path('privacy-policy/', views.privacy, name='privacy'),
+    path('terms/', views.terms, name='terms'),
+    path('editorial-policy/', views.editorial_policy, name='editorial_policy'),
 
     # لوحة التحكم
     path('dashboard/', views.dashboard_home, name='dashboard_home'),

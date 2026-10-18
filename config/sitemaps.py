@@ -35,6 +35,9 @@ class StaticViewSitemap(Sitemap):
         ('contact', 0.8, 'monthly'),
         ('about', 0.7, 'monthly'),
         ('quality_standards', 0.7, 'monthly'),
+        ('editorial_policy', 0.4, 'yearly'),
+        ('privacy', 0.3, 'yearly'),
+        ('terms', 0.3, 'yearly'),
         ('blog_list', 0.8, 'daily'),
         ('qna:question_list', 0.85, 'daily'),
     ]

@@ -127,6 +127,18 @@ def quality_standards(request):
     return render(request, 'core/quality_standards.html')
 
 
+def privacy(request):
+    return render(request, 'core/privacy.html')
+
+
+def terms(request):
+    return render(request, 'core/terms.html')
+
+
+def editorial_policy(request):
+    return render(request, 'core/editorial_policy.html')
+
+
 # =======================
 # أدوات مساعدة صغيرة
 # =======================

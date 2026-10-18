@@ -436,3 +436,21 @@ p { margin: 0 0 1em; }
 .field.agree { display: flex; gap: 10px; align-items: flex-start; }
 .field.agree input { width: 20px; min-height: 20px; height: 20px; margin-top: 6px; flex-shrink: 0; }
 .field.agree label { font-weight: 500; }
+
+/* ===== محتوى المقالات المنسّق ===== */
+.article-body ul, .article-body ol, .answer-body ul, .answer-body ol { padding-inline-start: 1.4em; margin: 0 0 1.25em; }
+.article-body li, .answer-body li { margin-bottom: .45em; }
+.article-body h2 { font-size: clamp(1.35rem, 2.6vw, 1.7rem); color: var(--green-deep); scroll-margin-top: 90px; }
+.article-body h3 { font-size: 1.2rem; color: var(--green); scroll-margin-top: 90px; }
+.qv { font-family: 'Amiri Quran', serif; font-size: 1.18em; color: var(--green-deep); line-height: 2.2; }
+.table-wrap { overflow-x: auto; margin: 0 0 1.4em; border: 1px solid var(--line); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: .98rem; line-height: 1.8; }
+.table-wrap th { background: var(--green-tint); color: var(--green-deep); font-weight: 700; text-align: start; padding: 10px 14px; }
+.table-wrap td { padding: 10px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+.toc-box { background: var(--surface); border: 1px solid var(--line); border-inline-start: 4px solid var(--gold); border-radius: var(--radius); padding: 16px 20px; margin: 0 0 28px; }
+.toc-box strong { display: block; color: var(--green-deep); margin-bottom: 6px; }
+.toc-box ol { margin: 0; padding-inline-start: 1.3em; }
+.toc-box li { margin: 4px 0; }
+.toc-box a { color: var(--ink-soft); text-decoration: none; }
+.toc-box a:hover { color: var(--green); text-decoration: underline; }
+.answer-body blockquote { border-right: 3px solid var(--gold); margin: 1em 0; padding: 2px 16px 2px 0; color: var(--green-deep); }
