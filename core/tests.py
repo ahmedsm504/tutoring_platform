@@ -47,7 +47,7 @@ class SiteSmokeTests(TestCase):
         cls.post = Post.objects.create(title='أحكام النون الساكنة', author=cls.admin, category=cls.category,
                                        content='محتوى ' * 300, status='published', published_at=now,
                                        meta_description='شرح مبسط لأحكام النون الساكنة والتنوين')
-        cls.qcat = QuestionCategory.objects.create(name='التجويد', slug='tajweed')
+        cls.qcat, _ = QuestionCategory.objects.get_or_create(slug='tajweed', defaults={'name': 'التجويد'})
         cls.question = PublicQuestion.objects.create(visitor_name='زائر', title='ما حكم الإدغام؟', question_text='سؤال عن الإدغام بغنة',
                                                      category=cls.qcat, status='approved', slug='idgham')
         QuestionAnswer.objects.create(question=cls.question, answer_text='الإدغام هو...', answered_by=cls.admin)
@@ -246,3 +246,56 @@ class HardeningTests(TestCase):
     def test_ads_txt(self):
         r = self.client.get('/ads.txt')
         self.assertContains(r, 'pub-4253419170065458, DIRECT')
+
+
+@override_settings(SECURE_SSL_REDIRECT=False)
+class SeededContentTests(TestCase):
+    """المقالات والأسئلة الجاهزة بتتضاف مع migrate وبتظهر صح"""
+
+    def test_articles_seeded_and_render(self):
+        from blog.models import Post
+        from content_seed import load_articles
+        slugs = [a['slug'] for a in load_articles()]
+        self.assertEqual(Post.objects.filter(slug__in=slugs, status='published').count(), len(slugs))
+        r = self.client.get('/blog/noon-sakinah-tanween-rules/')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, '<h2 id=')
+        self.assertContains(r, 'class="toc-box"')
+        self.assertContains(r, '<table>')
+        self.assertContains(r, 'class="qv"')
+        self.assertContains(r, '/static/images/blog/noon-sakinah-tanween-rules.jpg')
+        self.assertNotIn('**', r.content.decode())
+
+    def test_article_internal_links_resolve(self):
+        import re
+        from content_seed import load_articles
+        from content_seed.questions import QUESTIONS
+        bodies = [a['body'] for a in load_articles()] + [q[3] for q in QUESTIONS]
+        links = set()
+        for b in bodies:
+            links |= set(re.findall(r'\]\((/[^)#\s]*)', b))
+        for url in sorted(links):
+            if url.startswith('/student-portal/'):
+                continue
+            self.assertIn(self.client.get(url).status_code, (200,), url)
+
+    def test_questions_seeded(self):
+        from qna.models import PublicQuestion
+        from content_seed.questions import QUESTIONS
+        self.assertGreaterEqual(PublicQuestion.objects.filter(status='approved', official_answer__isnull=False).count(), len(QUESTIONS))
+        q = PublicQuestion.objects.get(title='كم عدد سور وآيات وأجزاء القرآن الكريم؟')
+        r = self.client.get(q.get_absolute_url())
+        self.assertContains(r, '6236')
+        self.assertContains(r, 'QAPage')
+
+    def test_policy_pages(self):
+        for url in ['/privacy-policy/', '/terms/', '/editorial-policy/']:
+            r = self.client.get(url)
+            self.assertEqual(r.status_code, 200, url)
+            self.assertNotIn('X-Robots-Tag', r)
+        self.assertContains(self.client.get('/privacy-policy/'), 'adssettings.google.com')
+        self.assertContains(self.client.get('/sitemap.xml'), '/privacy-policy/')
+
+    def test_no_ads_on_thin_pages(self):
+        self.assertNotContains(self.client.get('/contact/'), 'adsbygoogle.js')
+        self.assertContains(self.client.get('/blog/madd-types-tajweed/'), 'adsbygoogle.js')

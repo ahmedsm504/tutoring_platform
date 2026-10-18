@@ -63,7 +63,7 @@
       gtag('config', 'G-RNXPQQNRNP');
       gtag('config', 'AW-18213459162');
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253419170065458" crossorigin="anonymous"></script>
+    {% block adsense %}<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253419170065458" crossorigin="anonymous"></script>{% endblock %}
 
     <!-- Schema: المنظمة + الموقع (مع البحث داخل المدونة) -->
     <script type="application/ld+json">
@@ -211,6 +211,9 @@
             <li><a href="{% url 'quran_index' %}">القرآن الكريم مكتوب واستماع</a></li>
             <li><a href="{% url 'blog_list' %}">المدونة</a></li>
             <li><a href="{% url 'qna:question_list' %}">أسئلة وأجوبة</a></li>
+            <li><a href="{% url 'editorial_policy' %}">منهجية المحتوى</a></li>
+            <li><a href="{% url 'privacy' %}">سياسة الخصوصية</a></li>
+            <li><a href="{% url 'terms' %}">الشروط والأحكام</a></li>
             <li><a href="{% url 'student_login' %}">بوابة الطالب</a></li>
           </ul>
         </div>

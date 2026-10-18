@@ -141,6 +141,24 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="learn-title">
+  <div class="container">
+    <div class="row-head">
+      <div class="section-head">
+        <h2 id="learn-title">تعلّم مجانًا قبل ما تبدأ</h2>
+        <p>شروحات في التجويد وطرق الحفظ وتحفيظ الأطفال، والمصحف كامل مكتوب بصوت الحصري وكبار القراء.</p>
+      </div>
+      <a class="btn btn-ghost" href="{% url 'blog_list' %}">كل المقالات</a>
+    </div>
+    {% if latest_posts %}<ul class="posts">{% for post in latest_posts %}<li>{% include 'blog/_post_card.html' %}</li>{% endfor %}</ul>{% endif %}
+    <div class="learn-links">
+      <a href="{% url 'quran_index' %}"><strong>📖 المصحف مكتوب واستماع</strong><span>114 سورة آية بآية مع تكرار للحفظ</span></a>
+      <a href="{% url 'qna:question_list' %}"><strong>❓ أسئلة وأجوبة</strong><span>إجابات عن التجويد والحفظ وتحفيظ الأطفال</span></a>
+      <a href="{% url 'category_posts' 'tajweed' %}"><strong>🎙️ أحكام التجويد</strong><span>من مخارج الحروف حتى المدود بالأمثلة</span></a>
+    </div>
+  </div>
+</section>
+
 <section class="section band" aria-labelledby="faq-title">
   <div class="container">
     <div class="section-head center"><h2 id="faq-title">أسئلة بتتكرر</h2></div>

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static content_tags %}
 
 {% block title %}{{ post.title }} | مدونة العجمي{% endblock %}
 
@@ -169,8 +169,14 @@
     <div class="article">
       {% for message in messages %}<div class="notice {% if message.tags == 'success' %}notice-success{% else %}notice-error{% endif %}" role="status">{{ message }}</div>{% endfor %}
 
+      {% with items=post.content|toc %}{% if items|length >= 3 %}
+      <nav class="toc-box" aria-labelledby="toc-title">
+        <strong id="toc-title">في المقال ده</strong>
+        <ol>{% for id, t in items %}<li><a href="#{{ id }}">{{ t }}</a></li>{% endfor %}</ol>
+      </nav>
+      {% endif %}{% endwith %}
       <article class="article-body">
-        {{ post.content|linebreaks }}
+        {{ post.content|rich }}
       </article>
 
       {% if gallery_images %}

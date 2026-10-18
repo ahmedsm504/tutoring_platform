@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static content_tags %}
 
 {% block title %}{{ question.title }} | أجوبة في تحفيظ القرآن وتجويده{% endblock %}
 
@@ -27,19 +27,15 @@
       "name": "{{ question.visitor_name|escapejs }}",
       "url": "{{ SITE_URL }}"
     },
-    "answerCount": {{ community_answers.count }},
+    "answerCount": {% if has_official_answer and official_answer %}{{ community_answers.count|add:1 }}{% else %}{{ community_answers.count }}{% endif %},
     {% if has_official_answer and official_answer %}
     "acceptedAnswer": {
       "@type": "Answer",
-      "text": "{{ official_answer.answer_text|striptags|escapejs }}",
+      "text": "{{ official_answer.answer_text|plain|escapejs }}",
       "dateCreated": "{{ official_answer.answered_at|date:'c' }}",
       "upvoteCount": {{ official_answer.likes|default:0 }},
       "url": "{{ canonical_url }}#official-answer",
-      "author": {
-        "@type": "Person",
-        "name": "{{ official_answer.answered_by.get_full_name|default:official_answer.answered_by.username|escapejs }}",
-        "url": "{{ SITE_URL }}"
-      }
+      "author": {"@type": "Organization", "name": "فريق مؤسسة العجمي لتحفيظ القرآن", "url": "{{ SITE_URL }}/about/"}
     },
     {% endif %}
     "suggestedAnswer": [
@@ -113,7 +109,7 @@
     <div>
       {% for message in messages %}<div class="notice {% if message.tags == 'success' %}notice-success{% else %}notice-error{% endif %}" role="status">{{ message }}</div>{% endfor %}
 
-      <div class="article-body" style="margin-bottom:32px;">{{ question.question_text|linebreaks }}</div>
+      <div class="article-body" style="margin-bottom:32px;">{{ question.question_text|rich }}</div>
 
       {% if has_official_answer and official_answer %}
       <article class="answer official" id="official-answer" aria-labelledby="official-title">
@@ -121,7 +117,7 @@
           <h2 id="official-title" style="font-size:1.3rem; margin:0;">إجابة المؤسسة{% if official_answer.is_featured %} <span class="tag tag-gold">مميزة</span>{% endif %}</h2>
           <button class="vote" type="button" data-url="{% url 'qna:vote_answer' official_answer.id %}" data-key="voted_official_{{ official_answer.id }}" aria-label="الإجابة مفيدة">♥ <span class="likes-count">{{ official_answer.likes }}</span></button>
         </div>
-        <div class="answer-body">{{ official_answer.answer_text|linebreaks }}</div>
+        <div class="answer-body">{{ official_answer.answer_text|rich }}</div>
         <div class="qmeta"><span>{{ official_answer.answered_by.get_full_name|default:"فريق مؤسسة العجمي" }}</span><time datetime="{{ official_answer.answered_at|date:'c' }}">{{ official_answer.answered_at|date:"j F Y" }}</time></div>
       </article>
       {% endif %}
