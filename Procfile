@@ -1,1 +1,1 @@
-web: python manage.py migrate --noinput && python manage.py collectstatic --noinput && python manage.py create_super_user_if_not_exists && gunicorn config.wsgi --workers 3 --timeout 60 --max-requests 1000 --max-requests-jitter 100
+web: python manage.py migrate --noinput && python manage.py collectstatic --noinput && python manage.py create_super_user_if_not_exists && gunicorn config.wsgi --worker-class gthread --workers 3 --threads 4 --timeout 60 --max-requests 1000 --max-requests-jitter 100
