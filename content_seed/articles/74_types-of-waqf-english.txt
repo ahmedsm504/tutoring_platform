@@ -1,0 +1,53 @@
+title: Types of Stops (Waqf) in Quran Recitation: Complete, Sufficient, Good and Bad
+category: english
+excerpt: Not every stop is correct: stopping in the wrong place can change the meaning of a verse. The four types of Waqf explained with examples, when to restart, and what to do when you run out of breath.
+meta: The four types of Waqf in Quran recitation: complete, sufficient, good and bad stops, with examples, the Mushaf's stop signs, and what to do when out of breath.
+keywords: waqf in quran, types of waqf, where to stop when reciting quran, waqf and ibtida, quran stopping rules, bad stop quran
+reading: 5
+translation_of: types-of-waqf-stopping
+---
+Scholars say knowing where to stop and where to start is half of practical Tajweed, because stopping in the wrong place can distort the meaning. They divided the stops a reciter chooses into four types.
+
+## 1. Complete stop (Waqf Tām)
+Stopping where the meaning is **complete** and **unconnected** to what follows, in grammar or meaning.
+- **Example:** stopping at ﴿وَأُوْلَٰٓئِكَ هُمُ ٱلۡمُفۡلِحُونَ﴾ (Al-Baqarah 2:5). The verses before describe the believers; the next verse starts a new topic about the disbelievers.
+- **Ruling:** good to stop, and good to start with what follows.
+
+## 2. Sufficient stop (Waqf Kāfī)
+The meaning is complete and the sentence is grammatically independent, but it's **connected in meaning** to what follows.
+- **Example:** stopping at ﴿لَا يُؤۡمِنُونَ﴾ (2:6), then starting ﴿خَتَمَ ٱللَّهُ عَلَىٰ قُلُوبِهِمۡ﴾. Still about the same people, but a new sentence.
+- **Ruling:** good to stop, and good to start with what follows.
+
+## 3. Good stop (Waqf Ḥasan)
+The phrase is meaningful on its own, but **connected grammatically and in meaning** to what follows.
+- **Example:** stopping at ﴿ٱلۡحَمۡدُ لِلَّهِ﴾; the next words ﴿رَبِّ ٱلۡعَٰلَمِينَ﴾ describe Allah and depend on it.
+- **Ruling:** stopping is fine. Resuming:
+  - at the **end of a verse**: many scholars allow starting with the next verse, since stopping at verse ends is Sunnah;
+  - **mid-verse**: better to go back a few words and restart from a suitable point.
+
+## 4. Bad stop (Waqf Qabīḥ)
+Stopping where **no proper meaning** results, or where a **wrong meaning** is implied.
+- **Examples:**
+  - Stopping at ﴿فَوَيۡلٌ لِّلۡمُصَلِّينَ﴾ ("woe to those who pray") without completing ﴿ٱلَّذِينَ هُمۡ عَن صَلَاتِهِمۡ سَاهُونَ﴾.
+  - Stopping at ﴿إِنَّ ٱللَّهَ لَا يَسۡتَحۡيِۦٓ﴾ without finishing the verse.
+  - Stopping on ﴿بِسۡمِ﴾ without "Allah".
+- **Ruling:** never stop there intentionally. If you run out of breath there, go back and reconnect the phrase.
+
+## Summary
+| Type | Meaning complete? | Connection to next | Stop? | Resume from next? |
+|---|---|---|---|---|
+| Complete | yes | none | yes | yes |
+| Sufficient | yes | meaning only | yes | yes |
+| Good | partly | grammar + meaning | allowed | with conditions |
+| Bad | no / wrong | strong | avoid | must go back |
+
+## Running out of breath
+This happens to everyone (*waqf iḍṭirārī*):
+1. Stop on the word where your breath ran out.
+2. Take a breath.
+3. **Go back** to a word where it's correct to start, and continue.
+
+## The Mushaf signs help you
+The stopping signs in the Madinah Mushaf (مـ compulsory, لا don't stop, ج optional, صلى continuing preferred, قلى stopping preferred) were placed by scholars based on these types. Following them protects you from bad stops. See [signs and symbols in the Madinah Mushaf](/blog/mushaf-symbols-english/).
+
+A teacher guides you to the best stopping points as you recite: [book a free trial class](/contact/).

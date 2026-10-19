@@ -160,6 +160,7 @@
       <span>{% if en %}By the Al-Agmi Quran team{% else %}بقلم {{ post.author.get_full_name|default:"فريق مؤسسة العجمي" }}{% endif %}</span>
       {% if post.published_at %}<time datetime="{{ post.published_at|date:'c' }}">{% if en %}{% language 'en' %}{{ post.published_at|date:"F j, Y" }}{% endlanguage %}{% else %}{{ post.published_at|date:"j F Y" }}{% endif %}</time>{% endif %}
       <span>{% if en %}{{ post.reading_time }} min read{% else %}{{ post.reading_time }} دقائق قراءة{% endif %}</span>
+      <span>{% if en %}{{ post.views_count }} views{% else %}{{ post.views_count }} قراءة{% endif %}</span>
     </div>
     {% if post.excerpt %}<p>{{ post.excerpt|striptags|truncatewords:45 }}</p>{% endif %}
   </div>
