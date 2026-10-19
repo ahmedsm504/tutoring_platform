@@ -349,11 +349,11 @@ class Wave2Tests(TestCase):
 class Wave3Tests(TestCase):
     def test_blog_and_questions_counters(self):
         r = self.client.get('/blog/')
-        self.assertContains(r, 'class="blog-stats"')
+        self.assertContains(r, 'class="stats-band"')
         self.assertContains(r, 'مقال منشور')
         self.assertContains(r, 'قراءة')
         r = self.client.get(reverse('qna:question_list'))
-        self.assertContains(r, 'class="blog-stats"')
+        self.assertContains(r, 'class="stats-band"')
         self.assertContains(r, 'سؤال مُجاب')
         self.assertContains(r, 'مشاهدة')
 
@@ -384,3 +384,22 @@ class Wave3Tests(TestCase):
                 self.assertEqual(self.client.get(url).status_code, 200, url)
         r = self.client.post(reverse('admin:blog_category_add'), {'name': 'تصنيف تجربة', 'slug': 'test-cat', 'description': 'x', 'icon': '📁'})
         self.assertEqual(r.status_code, 302)
+
+    def test_seo_title_and_card_thumbs(self):
+        from core.templatetags.content_tags import card_img, seo_title
+        self.assertEqual(seo_title('قصير', 'مدونة العجمي'), 'قصير | مدونة العجمي')
+        long_title = 'x' * 55
+        self.assertEqual(seo_title(long_title, 'مدونة العجمي'), long_title)
+        self.assertEqual(card_img('https://alagme.com/static/images/blog/madd-types-tajweed.jpg'),
+                         'https://alagme.com/static/images/blog/thumbs/madd-types-tajweed.webp')
+        self.assertEqual(card_img('https://res.cloudinary.com/x/y.jpg'), 'https://res.cloudinary.com/x/y.jpg')
+        r = self.client.get('/blog/')
+        self.assertContains(r, '/static/images/blog/thumbs/')
+        self.assertNotContains(r, '"@type": "FAQPage"')
+        r = self.client.get('/blog/madd-types-tajweed/')
+        self.assertContains(r, 'class="stat-num"', count=0)
+        self.assertContains(r, 'og:image:alt" content="أنواع المد')
+
+    def test_site_domain_is_production(self):
+        from django.contrib.sites.models import Site
+        self.assertEqual(Site.objects.get(pk=1).domain, 'alagme.com')

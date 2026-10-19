@@ -3,12 +3,12 @@
 
 {% block title %}{{ category.name }} | مدونة مؤسسة العجمي{% if posts.number > 1 %} - صفحة {{ posts.number }}{% endif %}{% endblock %}
 
-{% block meta_description %}{% if category.description %}{{ category.description|striptags|truncatechars:150 }}{% else %}مقالات تصنيف {{ category.name }} في مدونة مؤسسة العجمي لتحفيظ القرآن الكريم وتعليم التجويد.{% endif %}{% endblock %}
+{% block meta_description %}{% if category.description %}{{ category.description|striptags|truncatechars:150 }}{% if category.description|length < 90 %} مقالات مجانية من مؤسسة العجمي لتحفيظ القرآن الكريم.{% endif %}{% else %}مقالات تصنيف {{ category.name }} في مدونة مؤسسة العجمي لتحفيظ القرآن الكريم وتعليم التجويد.{% endif %}{% endblock %}
 
 {% block meta_keywords %}{{ category.name }}, مدونة تحفيظ القرآن الكريم, مقالات قرآنية, مؤسسة العجمي{% endblock %}
 
 {% block og_title %}{{ category.name }} - مدونة العجمي لتحفيظ القرآن الكريم{% endblock %}
-{% block og_description %}{% if category.description %}{{ category.description|striptags|truncatechars:150 }}{% else %}مقالات تصنيف {{ category.name }} في مدونة مؤسسة العجمي.{% endif %}{% endblock %}
+{% block og_description %}{% if category.description %}{{ category.description|striptags|truncatechars:150 }}{% if category.description|length < 90 %} مقالات مجانية من مؤسسة العجمي لتحفيظ القرآن الكريم.{% endif %}{% else %}مقالات تصنيف {{ category.name }} في مدونة مؤسسة العجمي.{% endif %}{% endblock %}
 {% block twitter_title %}{{ category.name }} - مدونة العجمي{% endblock %}
 {% block twitter_description %}مقالات تصنيف {{ category.name }} من مدونة مؤسسة العجمي لتحفيظ القرآن الكريم.{% endblock %}
 

@@ -27,7 +27,7 @@
     <meta property="og:description" content="{% block og_description %}حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين. برامج للأطفال والكبار، والحجز متاح من أي دولة. حلقة تجريبية مجانية.{% endblock %}">
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'images/og-image.jpg' %}{% endblock %}">
-    <meta property="og:image:alt" content="مؤسسة العجمي - تحفيظ القرآن الكريم أونلاين">
+    <meta property="og:image:alt" content="{% block og_image_alt %}مؤسسة العجمي - تحفيظ القرآن الكريم أونلاين{% endblock %}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@alagme_12">
     <meta name="twitter:title" content="{% block twitter_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
@@ -246,6 +246,24 @@
         if(!b || !n) return;
         b.addEventListener('click', function(){ var o = n.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
         document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && n.classList.contains('open')){ n.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
+      })();
+    </script>
+    <script>
+      /* عداد الإحصائيات: الرقم الحقيقي موجود في الـ HTML، والحركة بس للعين */
+      (function(){
+        var nums = document.querySelectorAll('.stat-num[data-count]');
+        if(!nums.length || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var fmt = function(v){ return Math.round(v).toLocaleString('en-US'); };
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(en){
+            if(!en.isIntersecting) return;
+            io.unobserve(en.target);
+            var el = en.target, end = +el.dataset.count || 0, t0 = null, dur = 1400;
+            if(end < 2) return;
+            (function step(t){ t0 = t0 || t; var p = Math.min((t - t0) / dur, 1); el.textContent = fmt(end * (1 - Math.pow(1 - p, 3))); if(p < 1) requestAnimationFrame(step); })(performance.now());
+          });
+        }, {threshold: .4});
+        nums.forEach(function(el){ io.observe(el); });
       })();
     </script>
     <!-- إشعارات Firebase: مبقتش تطلب الإذن أول ما الصفحة تفتح (جوجل بيعتبرها تجربة سيئة) -
