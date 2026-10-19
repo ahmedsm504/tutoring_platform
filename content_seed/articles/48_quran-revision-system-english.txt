@@ -1,0 +1,53 @@
+title: How to Revise Your Quran Memorization So You Never Forget It (Hifz Revision System)
+category: english
+excerpt: Forgetting what you memorized is the biggest struggle in Hifz. A simple three-track revision system (recent, old, and in prayer), a revision table by amount memorized, and how to handle similar verses.
+meta: A practical Quran revision system for Hifz: daily revision of recent and old memorization, a table by juz, reciting in prayer and similar verses.
+keywords: quran revision schedule, how to revise hifz, how not to forget quran memorization, hifz revision system, murajaah, mutashabihat
+reading: 6
+translation_of: quran-revision-system
+---
+Many students memorize several juz, then discover months later that most of it has slipped away. The reason is almost always the same: **focusing on new memorization and neglecting revision**. Every Quran teacher knows the rule: revision matters more than new memorization. If time is short, revise first.
+
+## Why does memorization fade?
+Memory weakens when it's not used. The Prophet ﷺ compared the Quran to a hobbled camel: "The example of the companion of the Quran is like the owner of hobbled camels: if he keeps watch over them he keeps them, and if he lets them loose they wander off" (Bukhari and Muslim).
+
+## The three-track revision system
+### Track 1: Recent memorization (daily)
+What you memorized in roughly the **last two weeks**, about the last 5–10 pages. It's still fresh and needs daily repetition to settle into long-term memory.
+
+**How:** before starting new memorization, recite yesterday's portion, then the last five pages, from memory.
+
+### Track 2: Old memorization (rotating)
+Everything else you've memorized, divided across the week so you go through all of it **every week or two**.
+
+| Amount memorized | Suggested daily revision |
+|---|---|
+| 1–3 juz | a quarter of a juz |
+| 5 juz | half a juz |
+| 10 juz | one juz |
+| 15+ juz | 1.5 to 2 juz |
+
+### Track 3: Revision in prayer
+Recite from your memorization in your Sunnah prayers and night prayer. Prayer tests your memory without a Mushaf, and you gain reward at the same time.
+
+## The mistakes notebook
+Keep a small notebook. Every time you stumble during revision, write the page number, the word, and the type of mistake. Before revising any juz, read your notes about it. After a few weeks you'll notice that your mistakes cluster in specific places, and those are the places that need focus.
+
+## Handling similar verses (mutashābihāt)
+Some verses repeat with tiny differences, and they're a classic cause of mix-ups. A famous example in Surah Al-Baqarah:
+- Verse 48: ﴿وَلَا يُقۡبَلُ مِنۡهَا شَفَٰعَةٌ وَلَا يُؤۡخَذُ مِنۡهَا عَدۡلٌ﴾ (intercession first)
+- Verse 123: ﴿وَلَا يُقۡبَلُ مِنۡهَا عَدۡلٌ وَلَا تَنفَعُهَا شَفَٰعَةٌ﴾ (compensation first)
+
+**Tips:** write both verses side by side, highlight the difference, find a memory hook, and always revise them with the Mushaf open.
+
+## Signs your system needs adjusting
+- You stumble often in passages memorized less than a month ago.
+- You can't connect the end of one surah to the next.
+- Weeks pass without you revising some of your juz.
+
+If you see these signs, **pause new memorization for a week or two** and focus only on revision. It's not lost time; it protects everything you've worked for.
+
+## How we keep students revising
+Our teachers assign "revision" audio homework through the student portal: the student listens to the passage recited by a renowned reciter, records their recitation from memory and sends it in. The teacher marks the mistakes and grades it with stars. That way revision continues even on days without a class.
+
+New to Hifz? Start with our [step-by-step memorization method](/blog/how-to-memorize-quran-step-by-step/). Want a teacher to follow your revision? [Book a free trial class](/contact/).

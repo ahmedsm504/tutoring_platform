@@ -12,6 +12,7 @@ BLOG_CATEGORIES = {
     'hifz': ('طرق الحفظ والمراجعة', '🧠', 'خطط عملية لحفظ القرآن وتثبيته ومراجعته من غير نسيان.'),
     'kids': ('تحفيظ الأطفال', '🌱', 'نصائح لأولياء الأمور لتحفيظ الأطفال القرآن بحب ومن غير إجبار.'),
     'quran-life': ('حياة مع القرآن', '🌙', 'فضل القرآن وأهله، وإزاي نخلي القرآن جزء من يومنا.'),
+    'english': ('Learn Quran in English', '🌍', 'Guides in English on Tajweed, Quran memorization and teaching kids, for non-Arabic speakers and Muslim families abroad.'),
 }
 
 
