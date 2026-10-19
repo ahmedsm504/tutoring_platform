@@ -6,13 +6,14 @@
 {% block hreflang %}{% with alt=post.slug|translation_of en=post.title|is_latin %}<link rel="alternate" hreflang="{% if en %}en{% else %}ar{% endif %}" href="{{ canonical_url }}">
     {% if alt %}<link rel="alternate" hreflang="{% if en %}ar{% else %}en{% endif %}" href="{{ SITE_URL }}/blog/{{ alt }}/">
     <link rel="alternate" hreflang="x-default" href="{% if en %}{{ SITE_URL }}/blog/{{ alt }}/{% else %}{{ canonical_url }}{% endif %}">{% else %}<link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endif %}{% endwith %}{% endblock %}
-{% block title %}{{ post.title }} | مدونة العجمي{% endblock %}
+{% block title %}{% if post.title|is_latin %}{{ post.title|seo_title:'Al-Agmi Quran Academy' }}{% else %}{{ post.title|seo_title:'مدونة العجمي' }}{% endif %}{% endblock %}
 
 {% block meta_description %}{{ post.meta_description|default:post.excerpt|truncatechars:160 }}{% endblock %}
 
 {% block meta_keywords %}{{ post.keywords|default:"تحفيظ القرآن الكريم, تعليم التجويد, مدونة العجمي" }}{% endblock %}
 
 {% block og_title %}{{ post.title }}{% endblock %}
+{% block og_image_alt %}{{ post.title }}{% endblock %}
 {% block og_description %}{{ post.meta_description|default:post.excerpt|truncatechars:200 }}{% endblock %}
 {% block og_image %}{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}{% endblock %}
 
@@ -167,7 +168,7 @@
 </header>
 
 {% if post.cloud_url %}
-<div class="container"><figure class="article-cover" style="margin-bottom:0;"><img src="{{ post.cloud_url }}" alt="{{ post.display_image_alt }}" width="980" height="520" fetchpriority="high"></figure></div>
+<div class="container"><figure class="article-cover" style="margin-bottom:0;"><img src="{{ post.cloud_url }}" srcset="{{ post.cloud_url|card_img }} 640w, {{ post.cloud_url }} 1200w" sizes="(max-width: 1000px) 100vw, 980px" alt="{{ post.display_image_alt }}" width="980" height="520" fetchpriority="high"></figure></div>
 {% endif %}
 
 <div class="section" style="padding-top:clamp(36px,5vw,64px);">

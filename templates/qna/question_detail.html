@@ -5,7 +5,7 @@
 {% block og_locale %}{% if question.title|is_latin %}en_US{% else %}ar_AR{% endif %}{% endblock %}
 {% block hreflang %}<link rel="alternate" hreflang="{% if question.title|is_latin %}en{% else %}ar{% endif %}" href="{{ canonical_url }}">
     <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endblock %}
-{% block title %}{{ question.title }} | أجوبة في تحفيظ القرآن وتجويده{% endblock %}
+{% block title %}{% if question.title|is_latin %}{{ question.title|seo_title:'Al-Agmi Quran Q&A' }}{% else %}{{ question.title|seo_title:'أسئلة العجمي' }}{% endif %}{% endblock %}
 
 {% block meta_description %}{% if question.meta_description %}{{ question.meta_description|striptags|truncatechars:160 }}{% else %}{{ question.title|striptags }} - {{ question.question_text|striptags|truncatechars:70 }}{% if official_answer %} الإجابة: {{ official_answer.answer_text|striptags|truncatechars:70 }}{% endif %}{% endif %}{% endblock %}
 

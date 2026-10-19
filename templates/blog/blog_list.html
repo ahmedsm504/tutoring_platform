@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static humanize %}
+{% load static humanize content_tags %}
 
 {% block title %}مدونة تحفيظ القرآن الكريم | مؤسسة العجمي - مقالات وفوائد قرآنية{% endblock %}
 
@@ -119,49 +119,6 @@
 }
 </script>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "مؤسسة العجمي",
-  "url": "{{ SITE_URL }}",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "{{ SITE_URL }}{% url 'blog_list' %}?search={search_term_string}"
-    },
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
-
-{% if featured_posts %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "ما هي فوائد تحفيظ القرآن الكريم؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "تحفيظ القرآن الكريم له فوائد عظيمة منها: الأجر والثواب العظيم، تقوية الذاكرة، الطمأنينة النفسية، والشفاعة يوم القيامة."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "كيف أبدأ في تعلم التجويد؟",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "يمكنك البدء بتعلم التجويد من خلال: الالتحاق بدورات متخصصة، دراسة أحكام التجويد الأساسية، الاستماع للقراء المتقنين، والممارسة المستمرة."
-      }
-    }
-  ]
-}
-</script>
-{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -171,11 +128,11 @@
     <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">المدونة</li></ol>
     <h1>مدونة العجمي القرآنية</h1>
     <p>مقالات في حفظ القرآن الكريم وتجويده، وتربية الأطفال على حبه، من معلمات ومشرفات المؤسسة.</p>
-    <ul class="blog-stats" aria-label="إحصائيات المدونة">
-      <li><strong>{{ total_posts|intcomma }}</strong><span>مقال منشور</span></li>
-      <li><strong>{{ categories|length }}</strong><span>تصنيف</span></li>
-      <li><strong>{{ total_views|intcomma }}</strong><span>قراءة</span></li>
-      {% if total_questions %}<li><a href="{% url 'qna:question_list' %}"><strong>{{ total_questions|intcomma }}</strong><span>سؤال مُجاب</span></a></li>{% endif %}
+    <ul class="stats-band" aria-label="إحصائيات المدونة">
+      {% include 'includes/stat_item.html' with n=total_posts label='مقال منشور' icon='book' %}
+      {% include 'includes/stat_item.html' with n=categories|length label='تصنيف' icon='grid' %}
+      {% include 'includes/stat_item.html' with n=total_views label='قراءة' icon='eye' %}
+      {% if total_questions %}{% url 'qna:question_list' as qurl %}{% include 'includes/stat_item.html' with n=total_questions label='سؤال مُجاب' icon='q' href=qurl %}{% endif %}
     </ul>
   </div>
 </header>
@@ -203,7 +160,7 @@
     {% if featured_posts and not search_query and posts.number == 1 %}{% with fp=featured_posts.0 %}
     <article class="featured post-card" aria-labelledby="featured-title">
       <a class="cover" href="{% url 'blog_detail' fp.slug %}" tabindex="-1" aria-hidden="true">
-        {% if fp.cloud_url %}<img src="{{ fp.cloud_url }}" alt="" width="640" height="400" fetchpriority="high">{% else %}<img src="{% static 'images/default_post.webp' %}" alt="" width="640" height="400">{% endif %}
+        {% if fp.cloud_url %}<img src="{{ fp.cloud_url|card_img }}" srcset="{{ fp.cloud_url|card_img }} 640w, {{ fp.cloud_url }} 1200w" sizes="(max-width: 900px) 100vw, 590px" alt="" width="640" height="400" fetchpriority="high">{% else %}<img src="{% static 'images/default_post.webp' %}" alt="" width="640" height="400">{% endif %}
       </a>
       <div>
         <div class="post-meta">{% if fp.category %}<a href="{% url 'category_posts' fp.category.slug %}">{{ fp.category.name }}</a>{% endif %}<span>مقال مميز</span><span>{{ fp.reading_time }} دقائق قراءة</span></div>
