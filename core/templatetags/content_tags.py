@@ -9,6 +9,8 @@
 وأي HTML بيتكتب بيظهر نص عادي (escape)، فمفيش خطر من الكود.
 المقالات القديمة المكتوبة نص عادي بتظهر زي ما هي (فقرات)."""
 import re
+from functools import lru_cache
+from pathlib import Path
 
 from django import template
 from django.utils.html import escape
@@ -161,3 +163,30 @@ def translation_of(slug):
         return translation_pairs().get(slug, '')
     except Exception:
         return ''
+
+
+@register.filter
+def seo_title(title, suffix=''):
+    """يضيف اسم الموقع للعنوان بس لو فيه مكان (جوجل بيقص العناوين بعد ~60 حرف)."""
+    title = (title or '').strip()
+    if suffix and len(title) + len(suffix) + 3 <= 60:
+        return f'{title} | {suffix}'
+    return title
+
+
+_COVER_RE = re.compile(r'/static/images/blog/([\w-]+)\.jpg$')
+
+
+@lru_cache(maxsize=1024)
+def _thumb_exists(stem):
+    from django.conf import settings
+    return (Path(settings.BASE_DIR) / 'static' / 'images' / 'blog' / 'thumbs' / f'{stem}.webp').exists()
+
+
+@register.filter
+def card_img(url):
+    """نسخة WebP خفيفة (640px) من غلاف المقال للكروت، لو موجودة."""
+    m = _COVER_RE.search(url or '')
+    if m and _thumb_exists(m.group(1)):
+        return url[:m.start()] + f'/static/images/blog/thumbs/{m.group(1)}.webp'
+    return url

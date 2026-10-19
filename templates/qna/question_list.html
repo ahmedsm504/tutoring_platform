@@ -87,11 +87,11 @@
     <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">أسئلة وأجوبة</li></ol>
     <h1>أسئلة وأجوبة في تحفيظ القرآن الكريم</h1>
     <p>أسئلة الناس عن الحفظ والتجويد والتلاوة، وإجاباتها من معلمات ومشرفات المؤسسة.</p>
-    <ul class="blog-stats" aria-label="إحصائيات الأسئلة">
-      <li><strong>{{ total_questions|intcomma }}</strong><span>سؤال</span></li>
-      <li><strong>{{ answered_count|intcomma }}</strong><span>سؤال مُجاب</span></li>
-      <li><strong>{{ categories|length }}</strong><span>تصنيف</span></li>
-      <li><strong>{{ total_views|intcomma }}</strong><span>مشاهدة</span></li>
+    <ul class="stats-band" aria-label="إحصائيات الأسئلة">
+      {% include 'includes/stat_item.html' with n=total_questions label='سؤال' icon='q' %}
+      {% include 'includes/stat_item.html' with n=answered_count label='سؤال مُجاب' icon='check' %}
+      {% include 'includes/stat_item.html' with n=categories|length label='تصنيف' icon='grid' %}
+      {% include 'includes/stat_item.html' with n=total_views label='مشاهدة' icon='eye' %}
     </ul>
     <div class="hero-actions" style="margin:22px 0 0;"><a class="btn btn-gold" href="{% url 'qna:ask' %}">اسأل سؤالك</a></div>
   </div>
