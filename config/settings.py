@@ -184,9 +184,12 @@ STORAGES = {
     },
     # ضغط gzip/brotli للـ CSS/JS (أسرع = أحسن للسيو). من غير manifest عشان
     # أي ملف ناقص ميوقعش الموقع.
-    'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage'},
+    'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'},
 }
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 7
+# أسماء الملفات بقت بالـ hash (site.abc123.css)، فأي تعديل بيوصل للزوار فورًا من غير كاش قديم.
+# ولو ملف ناقص منطلعش 500، نرجع للاسم العادي.
+WHITENOISE_MANIFEST_STRICT = False
 
 # ⚠️ مفاتيح Cloudinary كانت مكتوبة في الكود (ومتشافة لأي حد معاه نسخة منه).
 # انقليها لمتغيرات البيئة على Railway واعملي Regenerate للـ API Secret من لوحة Cloudinary،
