@@ -18,7 +18,12 @@ BLOG_CATEGORIES = {
 
 def load_articles():
     items = []
-    for f in sorted(ARTICLES_DIR.glob('*.txt')):
+    def _order(f):
+        # ترتيب رقمي (100 بعد 99 مش قبل 10) عشان دفعة 0003 تفضل ثابتة
+        num = f.stem.split('_', 1)[0]
+        return (int(num) if num.isdigit() else 10**6, f.stem)
+
+    for f in sorted(ARTICLES_DIR.glob('*.txt'), key=_order):
         raw = f.read_text(encoding='utf-8')
         head, body = raw.split('\n---\n', 1)
         meta = {}
