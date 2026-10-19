@@ -1,5 +1,7 @@
 # qna/urls.py
 from django.urls import path, re_path
+
+from .feeds import LatestQuestionsFeed
 from . import views
 
 app_name = 'qna'
@@ -7,6 +9,7 @@ app_name = 'qna'
 urlpatterns = [
     # صفحات رئيسية
     path('', views.QuestionListView.as_view(), name='question_list'),
+    path('feed/', LatestQuestionsFeed(), name='feed'),
     path('ask/', views.AskQuestionView.as_view(), name='ask'),
     
     # صفحة السؤال - تدعم GET و POST

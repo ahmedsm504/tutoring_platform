@@ -1,0 +1,71 @@
+title: Common Mistakes in Reciting Surah Al-Fatiha (and How to Correct Them)
+category: english
+excerpt: Surah Al-Fatiha is recited at least 17 times a day in prayer. These are the most common pronunciation mistakes non-Arabs make in it, word by word, including the 14 shaddas you must not drop.
+meta: Common mistakes non-Arabs make in Surah Al-Fatiha: Haa vs Ha, Ayn, the shadda in Iyyaka, An'amta, Daad and the Madd. Word-by-word fixes.
+keywords: surah fatiha mistakes, how to recite surah fatiha correctly, fatiha tajweed, fatiha pronunciation, correct fatiha for salah, iyyaka shadda
+reading: 7
+translation_of: common-mistakes-surat-al-fatiha
+---
+**Surah Al-Fatiha** is the greatest surah of the Quran and a pillar of every unit of prayer. If you pray the five daily prayers, you recite it **at least 17 times a day**. That's why correcting it is the very first thing our teachers do with every new student, child or adult.
+
+## 1. The 14 shaddas
+Counting the Basmala, Al-Fatiha contains **14 shaddas** (doubled letters). Dropping a shadda means dropping a whole letter.
+
+1. ﴿ٱللَّهِ﴾ in the Basmala
+2. ﴿ٱلرَّحۡمَٰنِ﴾ in the Basmala
+3. ﴿ٱلرَّحِيمِ﴾ in the Basmala
+4. ﴿لِلَّهِ﴾
+5. ﴿رَبِّ﴾
+6. ﴿ٱلرَّحۡمَٰنِ﴾
+7. ﴿ٱلرَّحِيمِ﴾
+8. ﴿ٱلدِّينِ﴾
+9. ﴿إِيَّاكَ﴾ (first)
+10. ﴿وَإِيَّاكَ﴾ (second)
+11. ﴿ٱلصِّرَٰطَ﴾
+12. ﴿ٱلَّذِينَ﴾
+13. the Ḍaad in ﴿ٱلضَّآلِّينَ﴾
+14. the Laam in ﴿ٱلضَّآلِّينَ﴾
+
+## 2. Letter mistakes
+### ح (Ḥaa) pronounced as ه (Haa)
+In ﴿ٱلۡحَمۡدُ﴾, ﴿ٱلرَّحۡمَٰنِ﴾ and ﴿ٱلرَّحِيمِ﴾, many learners say a light English "h". Ḥaa comes from the middle of the throat with friction. See [the hardest Arabic letters for non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/).
+
+### ع (ʿAyn) dropped or turned into a glottal stop
+In ﴿ٱلۡعَٰلَمِينَ﴾, ﴿نَعۡبُدُ﴾, ﴿نَسۡتَعِينُ﴾ and ﴿أَنۡعَمۡتَ﴾.
+
+### ض (Ḍaad)
+In ﴿ٱلۡمَغۡضُوبِ﴾ and ﴿ٱلضَّآلِّينَ﴾, often pronounced as a heavy "d" or as ظ.
+
+### ص vs س
+﴿ٱلصِّرَٰطَ﴾ needs a heavy Ṣaad, while the س in ﴿نَسۡتَعِينُ﴾ and ﴿ٱلۡمُسۡتَقِيمَ﴾ must stay light.
+
+## 3. Vowel mistakes that change the meaning
+### ﴿أَنۡعَمۡتَ﴾ with a fatha on the Taa
+It means "**You** (O Allah) have favoured". Saying *anʿamtu* (with a damma) changes the meaning to "**I** have favoured". This is a serious mistake (*laḥn jalī*).
+
+### ﴿إِيَّاكَ﴾ with a fatha on the Kaaf
+It addresses Allah: "You alone". A kasra on the Kaaf is a mistake.
+
+### The shadda on ﴿إِيَّاكَ﴾
+Pronouncing *iyāka* with a single Yaa instead of *iyyāka* is a well-known mistake that scholars specifically warned about.
+
+## 4. Tajweed points
+- **Meem Sakinah** in ﴿ٱلۡحَمۡدُ﴾ and ﴿أَنۡعَمۡتَ﴾ is pronounced clearly (Iẓhār Shafawī).
+- **Noon Sakinah** in ﴿أَنۡعَمۡتَ﴾ is clear too, because it's followed by ʿAyn, a throat letter (Iẓhār).
+- **Raa** is heavy in ﴿ٱلرَّحۡمَٰنِ﴾ and ﴿ٱلصِّرَٰطَ﴾, but light in ﴿غَيۡرِ﴾ (because it has a kasra).
+- **Laam** in ﴿لِلَّهِ﴾ is light because a kasra comes before it.
+- **Qalqalah:** a light bounce on the silent Daal in ﴿ٱهۡدِنَا﴾, without adding a vowel.
+
+## 5. Madd (elongation)
+- ﴿ٱلضَّآلِّينَ﴾: **6 counts**. Shortening it is a clear mistake.
+- Stopping at the end of verses (﴿ٱلۡعَٰلَمِينَ﴾, ﴿ٱلرَّحِيمِ﴾, ﴿ٱلدِّينِ﴾, ﴿نَسۡتَعِينُ﴾): 2, 4 or 6 counts, but keep them consistent.
+- ﴿مَٰلِكِ﴾: in Hafs, the Meem is elongated naturally, 2 counts.
+
+More in our guide to [Madd rules](/blog/madd-rules-tajweed-english/).
+
+## How to check your Fatiha
+1. Listen to [Surah Al-Fatiha](/quran/1/) by Sheikh Al-Husary (the *Mu'allim* teaching version is ideal) and repeat each verse five times.
+2. Record yourself and compare verse by verse.
+3. Recite it to a qualified teacher at least once. Letter mistakes are almost impossible to spot on your own.
+
+Correct your Fatiha with a certified teacher in your [free trial class](/contact/).

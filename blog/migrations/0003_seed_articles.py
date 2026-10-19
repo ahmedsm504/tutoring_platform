@@ -27,7 +27,7 @@ def seed(apps, schema_editor):
 
     base = getattr(settings, 'CANONICAL_URL', 'https://alagme.com').rstrip('/')
     now = timezone.now()
-    articles = load_articles()
+    articles = load_articles()[:17]  # الدفعة الأولى بس (الباقي في 0004)
     for i, a in enumerate(articles):
         if Post.objects.filter(slug=a['slug']).exists():
             continue

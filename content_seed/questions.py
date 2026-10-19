@@ -7,9 +7,10 @@ QNA_CATEGORIES = {
     'kids': ('تحفيظ الأطفال', '🌱', 'أسئلة أولياء الأمور عن تحفيظ أبنائهم.', 3),
     'online': ('الدراسة أونلاين في المنصة', '💻', 'كل ما يخص الحلقات الأونلاين والمتابعة في مؤسسة العجمي.', 4),
     'quran-general': ('معلومات عن القرآن', '🌙', 'معلومات عامة عن القرآن الكريم وتلاوته وختمه.', 5),
+    'english': ('Questions in English', '🌍', 'Answers in English about learning Quran, Tajweed and online classes for kids and adults.', 6),
 }
 
-ASKER = {'kids': 'أولياء الأمور', 'online': 'أولياء الأمور', 'tajweed': 'طلاب الحلقات', 'hifz': 'طلاب الحلقات', 'quran-general': 'زوار الموقع'}
+ASKER = {'kids': 'أولياء الأمور', 'online': 'أولياء الأمور', 'tajweed': 'طلاب الحلقات', 'hifz': 'طلاب الحلقات', 'quran-general': 'زوار الموقع', 'english': 'Parents and students'}
 
 QUESTIONS = [
 # ======================= التجويد =======================
@@ -881,3 +882,9 @@ QUESTIONS = [
 
 **الأفضل:** اجمع بين الاثنين. تعلّم الأحكام من الشروحات، مثل [مقالات التجويد في مدونتنا](/blog/category/tajweed/)، واعرض قراءتك على معلم متقن ولو حصة أسبوعيًا.'''),
 ]
+
+# الدفعة التانية (لهجات + إنجليزي)
+from .questions_wave2 import QUESTIONS_AR2, QUESTIONS_EN  # noqa: E402
+
+QUESTIONS_WAVE1 = list(QUESTIONS)
+QUESTIONS = QUESTIONS + QUESTIONS_AR2 + QUESTIONS_EN

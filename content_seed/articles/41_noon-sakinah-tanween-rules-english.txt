@@ -1,0 +1,81 @@
+title: Tajweed Rules of Noon Sakinah and Tanween Explained in English (With Examples)
+category: english
+excerpt: The four rules of Noon Sakinah and Tanween (Izhar, Idgham, Iqlab and Ikhfa) explained simply in English, with the letters of each rule, Quranic examples, a summary table and common mistakes.
+meta: The 4 Tajweed rules of Noon Sakinah and Tanween in English: Izhar, Idgham, Iqlab and Ikhfa, with letters, Quran examples and a summary table.
+keywords: noon sakinah rules, tanween rules, izhar idgham iqlab ikhfa, tajweed rules in english, learn tajweed online, ikhfa letters
+reading: 7
+translation_of: noon-sakinah-tanween-rules
+---
+If you are learning Tajweed, the rules of **Noon Sakinah and Tanween** are usually the first chapter you study, because they appear on almost every page of the Quran. Master these four rules and your recitation will improve noticeably within weeks.
+
+## What are Noon Sakinah and Tanween?
+- **Noon Sakinah (نْ)** is a Noon with no vowel on it, such as in ﴿مِنۡ﴾ (*min*).
+- **Tanween** is the double vowel at the end of a noun (ـً ـٌ ـٍ). It is pronounced as an extra Noon Sakinah that is not written, for example ﴿عَلِيمٌ حَكِيمٌ﴾ (*ʿalīmun ḥakīm*).
+
+Because Tanween is really a hidden Noon Sakinah, both follow exactly the same rules. **What decides the rule is the letter that comes right after the Noon or Tanween.**
+
+## Rule 1: Izhar (clear pronunciation)
+Pronounce the Noon clearly, without extra nasal sound (ghunnah), when it is followed by one of the **six throat letters**: ء ه ع ح غ خ.
+
+Examples:
+- ﴿مَنۡ ءَامَنَ﴾ (*man āmana*)
+- ﴿مِنۡهُمۡ﴾ (*minhum*)
+- ﴿مِّنۡ غِلٍّ﴾ (*min ghillin*)
+
+**Tip:** say the Noon clearly, then move straight to the next letter. Do not add a pause or bounce.
+
+## Rule 2: Idgham (merging)
+The Noon merges into the next letter, so the two become one doubled letter. Idgham happens with six letters, remembered in the word **يرملون** (*yarmalūn*).
+
+### Idgham with ghunnah
+With the four letters of **ينمو** (ي ن م و), the Noon merges and a nasal sound of **two counts** remains:
+- ﴿مَن يَقُولُ﴾ is read *may-yaqūl*
+- ﴿مِّن مَّالٍ﴾ is read *mim-māl*
+
+### Idgham without ghunnah
+With **ل** and **ر**, the Noon merges completely with no nasal sound:
+- ﴿مِّن رَّبِّهِمۡ﴾ is read *mir-rabbihim*
+- ﴿غَفُورٌ رَّحِيمٌ﴾ is read *ghafūrur-raḥīm*
+
+**Important exception:** Idgham only happens **between two words**. Inside a single word, the Noon stays clear. There are only four such words in the Quran: ﴿ٱلدُّنۡيَا﴾, ﴿بُنۡيَٰنٌ﴾, ﴿قِنۡوَانٌ﴾ and ﴿صِنۡوَانٌ﴾.
+
+## Rule 3: Iqlab (changing)
+When the Noon is followed by **ب (Baa)**, it changes into a hidden **Meem** with ghunnah of two counts. In the Mushaf you'll see a small Meem above the Noon.
+- ﴿مِنۢ بَعۡدِ﴾ is read *mim-baʿdi*
+- ﴿سَمِيعُۢ بَصِيرٌ﴾
+
+**How:** close your lips gently (don't press), hold the nasal sound for two counts, then say the Baa.
+
+## Rule 4: Ikhfa (hiding)
+Ikhfa is between clear pronunciation and merging. You don't pronounce a full Noon, and you don't merge it either. Instead, you **hide** it with a ghunnah of two counts while your tongue gets ready for the next letter. It applies to the **remaining 15 letters**:
+
+ص ذ ث ك ج ش ق س د ط ز ف ت ض ظ
+
+Examples:
+- ﴿يُنفِقُونَ﴾ (*yunfiqūn*)
+- ﴿أَنتُمۡ﴾ (*antum*)
+- ﴿مِن قَبۡلُ﴾ (*min qabl*)
+
+**Tip:** in Ikhfa, the tip of your tongue should **not** press firmly behind your top teeth as it does for a normal "n".
+
+## Summary table
+| Rule | Letters | Ghunnah | Example |
+|---|---|---|---|
+| Izhar | ء ه ع ح غ خ | No extra ghunnah | ﴿مَنۡ ءَامَنَ﴾ |
+| Idgham with ghunnah | ي ن م و | 2 counts | ﴿مَن يَقُولُ﴾ |
+| Idgham without ghunnah | ل ر | None | ﴿مِّن رَّبِّهِمۡ﴾ |
+| Iqlab | ب | 2 counts (hidden Meem) | ﴿مِنۢ بَعۡدِ﴾ |
+| Ikhfa | the other 15 letters | 2 counts | ﴿يُنفِقُونَ﴾ |
+
+## Common beginner mistakes
+1. **Holding the ghunnah too long**, so it sounds like a long vowel.
+2. **Pronouncing a clear "n" where Ikhfa is required**, as in *antum*. This is the most common mistake we hear.
+3. **Pressing the lips hard** in Iqlab.
+4. **Merging inside one word**, for example saying *ad-dunyā* as *ad-duyyā*.
+
+## How to practise
+- Pick one page from Juz Amma and highlight every Noon Sakinah and Tanween in a colour for each rule.
+- Listen to the same page recited by Sheikh Al-Husary on our [Quran pages](/quran/), using the verse-repeat feature.
+- Record yourself and compare.
+
+Tajweed is best learned **by listening and reciting to a qualified teacher**, because nasal sounds are hard to judge by yourself. [Book a free trial class](/contact/) with one of our certified teachers. When you're ready, continue with [the rules of Madd (elongation)](/blog/madd-rules-tajweed-english/).

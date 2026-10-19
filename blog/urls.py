@@ -1,5 +1,6 @@
 from django.urls import path, register_converter
 from . import views
+from .feeds import LatestPostsFeed
 
 # تسجيل converter مخصص يدعم العربي
 class UnicodeSlugConverter:
@@ -16,6 +17,7 @@ register_converter(UnicodeSlugConverter, 'uslug')
 urlpatterns = [
     # صفحة قائمة المقالات
     path("", views.blog_list, name="blog_list"),
+    path("feed/", LatestPostsFeed(), name="blog_feed"),
     
     # صفحة مقالات تصنيف معين (تدعم العربي)
     path("category/<uslug:slug>/", views.category_posts, name="category_posts"),

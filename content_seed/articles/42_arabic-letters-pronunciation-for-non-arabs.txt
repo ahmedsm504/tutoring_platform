@@ -1,0 +1,66 @@
+title: The 10 Arabic Letters Non-Arabs Find Hardest in Quran Recitation (and How to Fix Them)
+category: english
+excerpt: Ḥaa, ʿAyn, Qaaf, Ḍaad and the emphatic letters don't exist in English. A practical guide to where each sound comes from, the typical mistake, and simple exercises to correct it.
+meta: How to pronounce the hardest Arabic letters for non-Arabs in Quran recitation: ح ع ق خ غ ض ظ ص ط ث ذ. Articulation points, common mistakes and simple exercises.
+keywords: arabic pronunciation for non arabs, how to pronounce ayn, how to pronounce haa, how to pronounce daad, makharij al huruf english, quran pronunciation
+reading: 7
+---
+If English (or French, German, Urdu...) is your first language, some Arabic sounds will feel completely new. That's normal. The good news: every one of them can be learned with the right explanation and a bit of daily practice. Here are the ten letters our non-Arabic-speaking students struggle with most.
+
+## A simple test for any letter
+Scholars of Tajweed give a neat trick: put a vowelled *hamza* (a) before the letter and make the letter silent, like **"ab"**, **"aq"**, **"aḥ"**. Where the sound stops in your mouth or throat is that letter's point of articulation (*makhraj*).
+
+## 1. ح — Ḥaa (from the middle of the throat)
+- **Typical mistake:** pronouncing it like an English "h" (ه), so ﴿ٱلۡحَمۡدُ﴾ sounds like *al-hamd*.
+- **Fix:** tighten the middle of your throat, as if you're breathing on glasses to clean them, but stronger and with friction. It's a breathy, "squeezed" h.
+
+## 2. ع — ʿAyn (from the middle of the throat)
+- **Typical mistake:** dropping it or turning it into a glottal stop (ء), so ﴿نَعۡبُدُ﴾ sounds like *na'bud*.
+- **Fix:** start from the Ḥaa position, then add voice. Many learners find it helps to say "aaa" while gently tightening the throat, as if you were about to gag slightly.
+
+## 3. ق — Qaaf (from the very back of the tongue)
+- **Typical mistake:** saying it like an English "k".
+- **Fix:** raise the very back of your tongue to touch the soft palate, further back than for "k". It produces a deeper, "heavier" sound. Try ﴿قُلۡ﴾ (*qul*) versus "cool".
+
+## 4. خ — Khaa and 5. غ — Ghayn (from the top of the throat)
+- **Khaa** is like the "ch" in Scottish *loch* or German *Bach*: voiceless and raspy.
+- **Ghayn** is its voiced partner, similar to a French gargled "r".
+- **Typical mistake:** turning خ into "k" and غ into "g".
+
+## 6. ض — Ḍaad (from the side of the tongue)
+The letter Arabic is famous for, often called *lughat aḍ-ḍād*, "the language of Ḍaad".
+- **Typical mistake:** saying it like a heavy "d" or like ظ.
+- **Fix:** press **the side of your tongue** (usually the left) against your upper back teeth, and let the sound stretch along the tongue's edge. It is heavy (emphatic) and longer than a "d". Practise with ﴿وَلَا ٱلضَّآلِّينَ﴾.
+
+## 7. ص — Ṣaad, 8. ط — Ṭaa, 9. ظ — Ẓaa (the emphatic letters)
+These are "heavy" versions of س, ت and ذ.
+- **Typical mistake:** pronouncing them light, so ﴿ٱلصِّرَٰطَ﴾ sounds like *as-sirāt* with a thin "s" and "t".
+- **Fix:** raise the back of your tongue towards the roof of your mouth while pronouncing them. Your mouth should feel "full". Compare *sīn* and *ṣād* back to back.
+
+## 10. ث — Thaa and ذ — Dhaal
+- **Thaa** is the "th" in *think*; **Dhaal** is the "th" in *this*.
+- **Typical mistake:** speakers of some languages (and many Arabic dialects!) turn them into "s/t" and "z/d".
+- **Fix:** let the tip of your tongue touch the edges of your upper front teeth, slightly sticking out.
+
+## Quick reference table
+| Letter | Closest sound | Where it comes from |
+|---|---|---|
+| ح | breathy, squeezed "h" | middle of throat |
+| ع | voiced version of ح | middle of throat |
+| ق | deep "k" | back of tongue + soft palate |
+| خ | "ch" in *loch* | top of throat |
+| غ | gargled French "r" | top of throat |
+| ض | heavy, stretched "d" | side of tongue + molars |
+| ص ط ظ | heavy s / t / dh | tongue tip, with raised back of tongue |
+| ث ذ | "th" in *think* / *this* | tongue tip + upper teeth edges |
+
+## A 10-minute daily routine
+1. Pick **two letters** per week.
+2. Say each one with the "a + silent letter" test, ten times.
+3. Read three Quranic words containing each letter.
+4. Record yourself and compare with a reciter such as Sheikh Al-Husary on our [Quran pages](/quran/).
+
+## Why you need a teacher for this
+These letters are where self-study fails most often: we simply can't hear our own mistakes after years of habit. A teacher who listens to you live, and sends you audio corrections between classes, can fix in weeks what might take years alone.
+
+Start with a [free trial class](/contact/), or read [how to teach your child the Quran online](/blog/learn-quran-online-for-kids/) if this is for your children.

@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
-{% load static content_tags %}
+{% load static content_tags i18n %}
 
+{% block html_lang %}{% if post.title|is_latin %}en{% else %}ar{% endif %}{% endblock %}
+{% block og_locale %}{% if post.title|is_latin %}en_US{% else %}ar_AR{% endif %}{% endblock %}
+{% block hreflang %}{% with alt=post.slug|translation_of en=post.title|is_latin %}<link rel="alternate" hreflang="{% if en %}en{% else %}ar{% endif %}" href="{{ canonical_url }}">
+    {% if alt %}<link rel="alternate" hreflang="{% if en %}ar{% else %}en{% endif %}" href="{{ SITE_URL }}/blog/{{ alt }}/">
+    <link rel="alternate" hreflang="x-default" href="{% if en %}{{ SITE_URL }}/blog/{{ alt }}/{% else %}{{ canonical_url }}{% endif %}">{% else %}<link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endif %}{% endwith %}{% endblock %}
 {% block title %}{{ post.title }} | مدونة العجمي{% endblock %}
 
 {% block meta_description %}{{ post.meta_description|default:post.excerpt|truncatechars:160 }}{% endblock %}
@@ -82,7 +87,7 @@
   "description": "{{ post.excerpt|escapejs }}",
   "articleBody": "{{ post.excerpt|escapejs }}",
   "image": "{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}",
-  "inLanguage": "ar",
+  "inLanguage": "{% if post.title|is_latin %}en{% else %}ar{% endif %}",
   "wordCount": {{ post.content|wordcount }},
   {% if post.category %}"articleSection": "{{ post.category.name|escapejs }}",{% endif %}
   {% if post.keywords %}"keywords": "{{ post.keywords|escapejs }}",{% endif %}
@@ -141,20 +146,20 @@
 {% endif %}
 {% endblock %}
 
-{% block content %}
+{% block content %}{% with en=post.title|is_latin %}
 <div class="progress" id="progress" aria-hidden="true"></div>
 <header class="page-head">
-  <div class="container article-head">
+  <div class="container article-head"{% if post.title|is_latin %} lang="en" dir="ltr"{% endif %}>
     <ol class="crumbs">
-      <li><a href="{% url 'home' %}">الرئيسية</a></li>
-      <li><a href="{% url 'blog_list' %}">المدونة</a></li>
+      <li><a href="{% url 'home' %}">{% if en %}Home{% else %}الرئيسية{% endif %}</a></li>
+      <li><a href="{% url 'blog_list' %}">{% if en %}Blog{% else %}المدونة{% endif %}</a></li>
       {% if post.category %}<li><a href="{% url 'category_posts' post.category.slug %}">{{ post.category.name }}</a></li>{% endif %}
     </ol>
     <h1>{{ post.title }}</h1>
     <div class="post-meta">
-      <span>بقلم {{ post.author.get_full_name|default:"فريق مؤسسة العجمي" }}</span>
-      {% if post.published_at %}<time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"j F Y" }}</time>{% endif %}
-      <span>{{ post.reading_time }} دقائق قراءة</span>
+      <span>{% if en %}By the Al-Agmi Quran team{% else %}بقلم {{ post.author.get_full_name|default:"فريق مؤسسة العجمي" }}{% endif %}</span>
+      {% if post.published_at %}<time datetime="{{ post.published_at|date:'c' }}">{% if en %}{% language 'en' %}{{ post.published_at|date:"F j, Y" }}{% endlanguage %}{% else %}{{ post.published_at|date:"j F Y" }}{% endif %}</time>{% endif %}
+      <span>{% if en %}{{ post.reading_time }} min read{% else %}{{ post.reading_time }} دقائق قراءة{% endif %}</span>
     </div>
     {% if post.excerpt %}<p>{{ post.excerpt|striptags|truncatewords:45 }}</p>{% endif %}
   </div>
@@ -166,12 +171,12 @@
 
 <div class="section" style="padding-top:clamp(36px,5vw,64px);">
   <div class="container">
-    <div class="article">
+    <div class="article"{% if post.title|is_latin %} lang="en" dir="ltr"{% endif %}>
       {% for message in messages %}<div class="notice {% if message.tags == 'success' %}notice-success{% else %}notice-error{% endif %}" role="status">{{ message }}</div>{% endfor %}
 
       {% with items=post.content|toc %}{% if items|length >= 3 %}
       <nav class="toc-box" aria-labelledby="toc-title">
-        <strong id="toc-title">في المقال ده</strong>
+        <strong id="toc-title">{% if en %}In this article{% else %}في المقال ده{% endif %}</strong>
         <ol>{% for id, t in items %}<li><a href="#{{ id }}">{{ t }}</a></li>{% endfor %}</ol>
       </nav>
       {% endif %}{% endwith %}
@@ -206,12 +211,12 @@
       {% endif %}
 
       <div class="inline-cta">
-        <p>عايز طفلك يحفظ القرآن مع معلمة متقنة؟ أول حلقة مجانية.</p>
-        <a class="btn btn-primary" href="{% url 'contact' %}">احجز حلقة تجريبية مجانية</a>
+        <p>{% if en %}Want your child to learn Quran with a qualified tutor? The first class is free.{% else %}عايز طفلك يحفظ القرآن مع معلمة متقنة؟ أول حلقة مجانية.{% endif %}</p>
+        <a class="btn btn-primary" href="{% url 'contact' %}">{% if en %}Book a free trial class{% else %}احجز حلقة تجريبية مجانية{% endif %}</a>
       </div>
 
       <div class="share">
-        <strong>شارك المقال:</strong>
+        <strong>{% if en %}Share:{% else %}شارك المقال:{% endif %}</strong>
         <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ canonical_url|urlencode }}" target="_blank" rel="noopener">واتساب</a>
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_url|urlencode }}" target="_blank" rel="noopener">فيسبوك</a>
         <a href="https://twitter.com/intent/tweet?url={{ canonical_url|urlencode }}&text={{ post.title|urlencode }}" target="_blank" rel="noopener">إكس</a>
@@ -244,7 +249,7 @@
 
     {% if related_posts %}
     <section aria-labelledby="related-title" style="margin-top:72px;">
-      <h2 id="related-title">مقالات قريبة من الموضوع</h2>
+      <h2 id="related-title">{% if en %}Related articles{% else %}مقالات قريبة من الموضوع{% endif %}</h2>
       <ul class="posts" style="margin-top:24px;">{% for post in related_posts %}<li>{% include 'blog/_post_card.html' %}</li>{% endfor %}</ul>
     </section>
     {% endif %}
@@ -255,7 +260,7 @@
   <button type="button" class="icon-btn" id="lightbox-close" aria-label="إغلاق">✕</button>
   <img id="lightbox-img" src="" alt="">
 </div>
-{% endblock %}
+{% endwith %}{% endblock %}
 
 {% block extra_js %}
 <script>
