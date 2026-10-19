@@ -802,3 +802,16 @@ class TeacherActivity(models.Model):
 
     def short_time(self):
         return f"{timezone.localtime(self.created_at):%H:%M}"
+
+
+class IndexNowPing(models.Model):
+    """آخر مرة بلّغنا فيها محركات البحث (IndexNow) برابط معين - عشان منبلّغش بنفس الرابط كل نشر"""
+    url = models.CharField(max_length=500, unique=True)
+    pinged_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name = "تبليغ IndexNow"
+        verbose_name_plural = "تبليغات IndexNow"
+
+    def __str__(self):
+        return self.url

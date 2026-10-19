@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static content_tags %}
 
+{% block html_lang %}{% if question.title|is_latin %}en{% else %}ar{% endif %}{% endblock %}
+{% block og_locale %}{% if question.title|is_latin %}en_US{% else %}ar_AR{% endif %}{% endblock %}
+{% block hreflang %}<link rel="alternate" hreflang="{% if question.title|is_latin %}en{% else %}ar{% endif %}" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endblock %}
 {% block title %}{{ question.title }} | أجوبة في تحفيظ القرآن وتجويده{% endblock %}
 
 {% block meta_description %}{% if question.meta_description %}{{ question.meta_description|striptags|truncatechars:160 }}{% else %}{{ question.title|striptags }} - {{ question.question_text|striptags|truncatechars:70 }}{% if official_answer %} الإجابة: {{ official_answer.answer_text|striptags|truncatechars:70 }}{% endif %}{% endif %}{% endblock %}
@@ -86,20 +90,20 @@
 </script>
 {% endblock %}
 
-{% block content %}
+{% block content %}{% with en=question.title|is_latin %}
 <header class="page-head">
-  <div class="container article-head">
+  <div class="container article-head"{% if en %} lang="en" dir="ltr"{% endif %}>
     <ol class="crumbs">
-      <li><a href="{% url 'home' %}">الرئيسية</a></li>
-      <li><a href="{% url 'qna:question_list' %}">أسئلة وأجوبة</a></li>
+      <li><a href="{% url 'home' %}">{% if en %}Home{% else %}الرئيسية{% endif %}</a></li>
+      <li><a href="{% url 'qna:question_list' %}">{% if en %}Q&amp;A{% else %}أسئلة وأجوبة{% endif %}</a></li>
       {% if question.category %}<li><a href="{% url 'qna:question_list' %}?category={{ question.category.slug }}">{{ question.category.name }}</a></li>{% endif %}
     </ol>
     <h1>{{ question.title }}</h1>
     <div class="post-meta">
-      <span>سؤال من {{ question.visitor_name|default:"زائر" }}</span>
+      <span>{% if en %}Asked by {{ question.visitor_name|default:"a visitor" }}{% else %}سؤال من {{ question.visitor_name|default:"زائر" }}{% endif %}</span>
       <time datetime="{{ question.created_at|date:'c' }}">{{ question.created_at|date:"j F Y" }}</time>
-      <span>{{ question.view_count }} مشاهدة</span>
-      {% if has_official_answer %}<span>تمت الإجابة</span>{% endif %}
+      <span>{{ question.view_count }} {% if en %}views{% else %}مشاهدة{% endif %}</span>
+      {% if has_official_answer %}<span>{% if en %}Answered{% else %}تمت الإجابة{% endif %}</span>{% endif %}
     </div>
   </div>
 </header>
@@ -109,16 +113,16 @@
     <div>
       {% for message in messages %}<div class="notice {% if message.tags == 'success' %}notice-success{% else %}notice-error{% endif %}" role="status">{{ message }}</div>{% endfor %}
 
-      <div class="article-body" style="margin-bottom:32px;">{{ question.question_text|rich }}</div>
+      <div class="article-body" style="margin-bottom:32px;"{% if en %} lang="en" dir="ltr"{% endif %}>{{ question.question_text|rich }}</div>
 
       {% if has_official_answer and official_answer %}
       <article class="answer official" id="official-answer" aria-labelledby="official-title">
         <div class="answer-head">
-          <h2 id="official-title" style="font-size:1.3rem; margin:0;">إجابة المؤسسة{% if official_answer.is_featured %} <span class="tag tag-gold">مميزة</span>{% endif %}</h2>
+          <h2 id="official-title" style="font-size:1.3rem; margin:0;">{% if en %}Our answer{% else %}إجابة المؤسسة{% endif %}{% if official_answer.is_featured %} <span class="tag tag-gold">مميزة</span>{% endif %}</h2>
           <button class="vote" type="button" data-url="{% url 'qna:vote_answer' official_answer.id %}" data-key="voted_official_{{ official_answer.id }}" aria-label="الإجابة مفيدة">♥ <span class="likes-count">{{ official_answer.likes }}</span></button>
         </div>
-        <div class="answer-body">{{ official_answer.answer_text|rich }}</div>
-        <div class="qmeta"><span>{{ official_answer.answered_by.get_full_name|default:"فريق مؤسسة العجمي" }}</span><time datetime="{{ official_answer.answered_at|date:'c' }}">{{ official_answer.answered_at|date:"j F Y" }}</time></div>
+        <div class="answer-body"{% if en %} lang="en" dir="ltr"{% endif %}>{{ official_answer.answer_text|rich }}</div>
+        <div class="qmeta"><span>{% if en %}Al-Agmi Quran team{% else %}{{ official_answer.answered_by.get_full_name|default:"فريق مؤسسة العجمي" }}{% endif %}</span><time datetime="{{ official_answer.answered_at|date:'c' }}">{{ official_answer.answered_at|date:"j F Y" }}</time></div>
       </article>
       {% endif %}
 
@@ -196,7 +200,7 @@
     </aside>
   </div>
 </section>
-{% endblock %}
+{% endwith %}{% endblock %}
 
 {% block extra_js %}
 <script>

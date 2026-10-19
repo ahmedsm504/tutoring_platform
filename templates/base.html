@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="{% block html_lang %}ar{% endblock %}" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +9,10 @@
     <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endblock %}">
     <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock %}">
     <link rel="canonical" href="{% block canonical_url %}{{ canonical_url }}{% endblock %}">
-    <link rel="alternate" hreflang="ar" href="{{ canonical_url }}">
-    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+    {% block hreflang %}<link rel="alternate" hreflang="ar" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endblock %}
+    <link rel="alternate" type="application/rss+xml" title="مقالات مؤسسة العجمي" href="{{ SITE_URL }}/blog/feed/">
+    <link rel="alternate" type="application/rss+xml" title="أسئلة وأجوبة مؤسسة العجمي" href="{{ SITE_URL }}/questions/feed/">
     <meta name="author" content="مؤسسة العجمي">
     <meta name="theme-color" content="#0a3f39">
     <meta name="yandex-verification" content="2e1b6302af7d6340" />
@@ -18,7 +20,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
 
-    <meta property="og:locale" content="ar_AR">
+    <meta property="og:locale" content="{% block og_locale %}ar_AR{% endblock %}">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:site_name" content="مؤسسة العجمي">
     <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد لجميع الدول{% endblock %}">

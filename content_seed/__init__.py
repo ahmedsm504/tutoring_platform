@@ -2,6 +2,7 @@
 - كل مقال في ملف .txt جوه articles/ : سطور الهيدر، وبعدين سطر --- وبعدين نص المقال.
 - الأسئلة في questions.py
 لو مقال أو سؤال بنفس الرابط (slug) موجود أصلًا، مبيتعدلش (عشان تعديلاتك من لوحة التحكم متضيعش)."""
+from functools import lru_cache
 from pathlib import Path
 
 ARTICLES_DIR = Path(__file__).resolve().parent / 'articles'
@@ -27,3 +28,15 @@ def load_articles():
         meta['body'] = body.strip() + '\n'
         items.append(meta)
     return items
+
+
+@lru_cache(maxsize=1)
+def translation_pairs():
+    """{slug: slug_المقابل} في الاتجاهين، من سطر translation_of في المقالات الإنجليزي"""
+    pairs = {}
+    for a in load_articles():
+        other = a.get('translation_of')
+        if other:
+            pairs[a['slug']] = other
+            pairs[other] = a['slug']
+    return pairs

@@ -137,3 +137,24 @@ def plain(text):
     t = _LINK.sub(r'\1', t)
     t = re.sub(r'^\|.*\|\s*$', '', t, flags=re.M)
     return re.sub(r'\n{2,}', '\n', t).strip()
+
+
+_LATIN = re.compile(r'[A-Za-z]')
+_ARABIC = re.compile(r'[\u0600-\u06FF]')
+
+
+@register.filter
+def is_latin(text):
+    """True لو النص إنجليزي في الغالب (عشان نظبط lang و dir للصفحة)"""
+    t = text or ''
+    return len(_LATIN.findall(t)) > len(_ARABIC.findall(t))
+
+
+@register.filter
+def translation_of(slug):
+    """رابط المقال المترجم (عربي ⇄ إنجليزي) لو موجود في content_seed"""
+    try:
+        from content_seed import translation_pairs
+        return translation_pairs().get(slug, '')
+    except Exception:
+        return ''
