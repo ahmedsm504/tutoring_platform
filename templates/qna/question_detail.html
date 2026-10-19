@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static content_tags %}
+{% load static content_tags i18n %}
 
 {% block html_lang %}{% if question.title|is_latin %}en{% else %}ar{% endif %}{% endblock %}
 {% block og_locale %}{% if question.title|is_latin %}en_US{% else %}ar_AR{% endif %}{% endblock %}
@@ -101,7 +101,7 @@
     <h1>{{ question.title }}</h1>
     <div class="post-meta">
       <span>{% if en %}Asked by {{ question.visitor_name|default:"a visitor" }}{% else %}سؤال من {{ question.visitor_name|default:"زائر" }}{% endif %}</span>
-      <time datetime="{{ question.created_at|date:'c' }}">{{ question.created_at|date:"j F Y" }}</time>
+      <time datetime="{{ question.created_at|date:'c' }}">{% if en %}{% language 'en' %}{{ question.created_at|date:"F j, Y" }}{% endlanguage %}{% else %}{{ question.created_at|date:"j F Y" }}{% endif %}</time>
       <span>{{ question.view_count }} {% if en %}views{% else %}مشاهدة{% endif %}</span>
       {% if has_official_answer %}<span>{% if en %}Answered{% else %}تمت الإجابة{% endif %}</span>{% endif %}
     </div>
@@ -118,11 +118,11 @@
       {% if has_official_answer and official_answer %}
       <article class="answer official" id="official-answer" aria-labelledby="official-title">
         <div class="answer-head">
-          <h2 id="official-title" style="font-size:1.3rem; margin:0;">{% if en %}Our answer{% else %}إجابة المؤسسة{% endif %}{% if official_answer.is_featured %} <span class="tag tag-gold">مميزة</span>{% endif %}</h2>
+          <h2 id="official-title" style="font-size:1.3rem; margin:0;">{% if en %}Our answer{% else %}إجابة المؤسسة{% endif %}{% if official_answer.is_featured %} <span class="tag tag-gold">{% if en %}Featured{% else %}مميزة{% endif %}</span>{% endif %}</h2>
           <button class="vote" type="button" data-url="{% url 'qna:vote_answer' official_answer.id %}" data-key="voted_official_{{ official_answer.id }}" aria-label="الإجابة مفيدة">♥ <span class="likes-count">{{ official_answer.likes }}</span></button>
         </div>
         <div class="answer-body"{% if en %} lang="en" dir="ltr"{% endif %}>{{ official_answer.answer_text|rich }}</div>
-        <div class="qmeta"><span>{% if en %}Al-Agmi Quran team{% else %}{{ official_answer.answered_by.get_full_name|default:"فريق مؤسسة العجمي" }}{% endif %}</span><time datetime="{{ official_answer.answered_at|date:'c' }}">{{ official_answer.answered_at|date:"j F Y" }}</time></div>
+        <div class="qmeta"><span>{% if en %}Al-Agmi Quran team{% else %}{{ official_answer.answered_by.get_full_name|default:"فريق مؤسسة العجمي" }}{% endif %}</span><time datetime="{{ official_answer.answered_at|date:'c' }}">{% if en %}{% language 'en' %}{{ official_answer.answered_at|date:"F j, Y" }}{% endlanguage %}{% else %}{{ official_answer.answered_at|date:"j F Y" }}{% endif %}</time></div>
       </article>
       {% endif %}
 

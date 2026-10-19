@@ -17,7 +17,7 @@ def _plain(text, limit=155):
 
 
 def seed(apps, schema_editor):
-    from content_seed.questions import ASKER, QNA_CATEGORIES, QUESTIONS
+    from content_seed.questions import ASKER, QNA_CATEGORIES, QUESTIONS_WAVE1 as QUESTIONS
 
     User = apps.get_model('accounts', 'User')
     Cat = apps.get_model('qna', 'QuestionCategory')

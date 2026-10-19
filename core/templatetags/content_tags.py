@@ -17,6 +17,7 @@ from django.utils.safestring import mark_safe
 register = template.Library()
 
 _BOLD = re.compile(r'\*\*(.+?)\*\*')
+_ITAL = re.compile(r'(?<![*\w])\*(?!\s)([^*\n]+?)(?<!\s)\*(?![*\w])')
 _LINK = re.compile(r'\[([^\]\n]+)\]\(((?:/|https://)[^\s)]*)\)')
 _AYAH = re.compile(r'﴿([^﴾\n]+)﴾')
 _OL = re.compile(r'^\d+[.)]\s+')
@@ -34,6 +35,7 @@ def _slug(text, used):
 def _inline(text):
     t = escape(text)
     t = _BOLD.sub(r'<strong>\1</strong>', t)
+    t = _ITAL.sub(r'<em>\1</em>', t)
 
     def link(m):
         url = m.group(2)
@@ -91,7 +93,7 @@ def _parse(text):
             title = line[level + 1:].strip()
             sid = _slug(title, used)
             if level == 2:
-                toc.append((sid, title))
+                toc.append((sid, re.sub(r'^\d+[.)]\s*', '', title)))
             out.append(f'<h{level} id="{sid}">{_inline(title)}</h{level}>')
             continue
         if line.startswith('|'):
@@ -134,6 +136,7 @@ def plain(text):
     """نص من غير علامات التنسيق (للوصف وschema)"""
     t = re.sub(r'^\s*(#{2,3}|[-•*>]|\d+[.)])\s+', '', text or '', flags=re.M)
     t = _BOLD.sub(r'\1', t)
+    t = _ITAL.sub(r'\1', t)
     t = _LINK.sub(r'\1', t)
     t = re.sub(r'^\|.*\|\s*$', '', t, flags=re.M)
     return re.sub(r'\n{2,}', '\n', t).strip()

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static content_tags %}
+{% load static content_tags i18n %}
 
 {% block html_lang %}{% if post.title|is_latin %}en{% else %}ar{% endif %}{% endblock %}
 {% block og_locale %}{% if post.title|is_latin %}en_US{% else %}ar_AR{% endif %}{% endblock %}
@@ -158,7 +158,7 @@
     <h1>{{ post.title }}</h1>
     <div class="post-meta">
       <span>{% if en %}By the Al-Agmi Quran team{% else %}بقلم {{ post.author.get_full_name|default:"فريق مؤسسة العجمي" }}{% endif %}</span>
-      {% if post.published_at %}<time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"j F Y" }}</time>{% endif %}
+      {% if post.published_at %}<time datetime="{{ post.published_at|date:'c' }}">{% if en %}{% language 'en' %}{{ post.published_at|date:"F j, Y" }}{% endlanguage %}{% else %}{{ post.published_at|date:"j F Y" }}{% endif %}</time>{% endif %}
       <span>{% if en %}{{ post.reading_time }} min read{% else %}{{ post.reading_time }} دقائق قراءة{% endif %}</span>
     </div>
     {% if post.excerpt %}<p>{{ post.excerpt|striptags|truncatewords:45 }}</p>{% endif %}

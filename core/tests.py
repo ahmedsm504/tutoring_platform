@@ -299,3 +299,46 @@ class SeededContentTests(TestCase):
     def test_no_ads_on_thin_pages(self):
         self.assertNotContains(self.client.get('/contact/'), 'adsbygoogle.js')
         self.assertContains(self.client.get('/blog/madd-types-tajweed/'), 'adsbygoogle.js')
+
+
+@override_settings(SECURE_SSL_REDIRECT=False)
+class Wave2Tests(TestCase):
+    def test_english_article_lang_and_hreflang(self):
+        r = self.client.get('/blog/noon-sakinah-tanween-rules-english/')
+        self.assertContains(r, '<html lang="en"')
+        self.assertContains(r, 'hreflang="ar" href="https://alagme.com/blog/noon-sakinah-tanween-rules/"')
+        self.assertContains(r, 'lang="en" dir="ltr"')
+        self.assertContains(r, 'In this article')
+        r = self.client.get('/blog/noon-sakinah-tanween-rules/')
+        self.assertContains(r, '<html lang="ar"')
+        self.assertContains(r, 'hreflang="en" href="https://alagme.com/blog/noon-sakinah-tanween-rules-english/"')
+
+    def test_english_question_page(self):
+        from qna.models import PublicQuestion
+        q = PublicQuestion.objects.get(title='How many counts is Madd Lazim?')
+        r = self.client.get(q.get_absolute_url())
+        self.assertContains(r, '<html lang="en"')
+        self.assertContains(r, 'Our answer')
+
+    def test_feeds(self):
+        r = self.client.get('/blog/feed/')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, '<rss')
+        self.assertContains(r, '/blog/madd-types-tajweed/')
+        r = self.client.get('/questions/feed/')
+        self.assertContains(r, '<rss')
+
+    def test_indexnow_command_tracks_pings(self):
+        from io import StringIO
+        from unittest import mock
+        from django.core.management import call_command
+        from core.models import IndexNowPing
+        with mock.patch('core.indexnow.send_indexnow_batch', return_value=True) as send:
+            call_command('indexnow_ping', '--force', stdout=StringIO())
+            urls = send.call_args[0][0]
+            self.assertIn('https://alagme.com/blog/madd-types-tajweed/', urls)
+            self.assertIn('https://alagme.com/quran/18/', urls)
+            n = IndexNowPing.objects.count()
+            self.assertEqual(n, len(urls))
+            call_command('indexnow_ping', '--force', stdout=StringIO())
+            self.assertEqual(send.call_count, 1)  # المرة التانية مفيش جديد
