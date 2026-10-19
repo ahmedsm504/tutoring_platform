@@ -403,3 +403,17 @@ class Wave3Tests(TestCase):
     def test_site_domain_is_production(self):
         from django.contrib.sites.models import Site
         self.assertEqual(Site.objects.get(pk=1).domain, 'alagme.com')
+
+
+@override_settings(**TEST_SETTINGS)
+class Wave4Tests(TestCase):
+    def test_wave4_content_seeded_and_ordered(self):
+        from content_seed import load_articles
+        arts = load_articles()
+        self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
+        self.assertEqual(arts[-1]['slug'], 'ruqyah-with-quran')
+        for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='هل «الصراط» تُقرأ بالصاد أم بالسين؟').exists())
