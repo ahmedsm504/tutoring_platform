@@ -888,3 +888,8 @@ from .questions_wave2 import QUESTIONS_AR2, QUESTIONS_EN  # noqa: E402
 
 QUESTIONS_WAVE1 = list(QUESTIONS)
 QUESTIONS = QUESTIONS + QUESTIONS_AR2 + QUESTIONS_EN
+
+# الدفعة التالتة (أحكام دقيقة + فقه التلاوة + أولياء أمور + إنجليزي)
+from .questions_wave3 import QUESTIONS_AR3, QUESTIONS_EN3  # noqa: E402
+
+QUESTIONS = QUESTIONS + QUESTIONS_AR3 + QUESTIONS_EN3

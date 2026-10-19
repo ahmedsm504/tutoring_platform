@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static humanize %}
 
 {% block title %}مدونة تحفيظ القرآن الكريم | مؤسسة العجمي - مقالات وفوائد قرآنية{% endblock %}
 
@@ -171,6 +171,12 @@
     <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">المدونة</li></ol>
     <h1>مدونة العجمي القرآنية</h1>
     <p>مقالات في حفظ القرآن الكريم وتجويده، وتربية الأطفال على حبه، من معلمات ومشرفات المؤسسة.</p>
+    <ul class="blog-stats" aria-label="إحصائيات المدونة">
+      <li><strong>{{ total_posts|intcomma }}</strong><span>مقال منشور</span></li>
+      <li><strong>{{ categories|length }}</strong><span>تصنيف</span></li>
+      <li><strong>{{ total_views|intcomma }}</strong><span>قراءة</span></li>
+      {% if total_questions %}<li><a href="{% url 'qna:question_list' %}"><strong>{{ total_questions|intcomma }}</strong><span>سؤال مُجاب</span></a></li>{% endif %}
+    </ul>
   </div>
 </header>
 {% endblock %}

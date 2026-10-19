@@ -1,0 +1,42 @@
+title: Ayat al-Kursi with Tajweed: How to Memorize and Recite It Correctly, Phrase by Phrase
+category: english
+excerpt: Ayat al-Kursi is the greatest verse in the Quran and part of our daily remembrance. The Tajweed rules in it phrase by phrase (Madd, nasal sounds, Ikhfa, Silah), common mistakes, and an easy way to memorize it.
+meta: Ayat al-Kursi with Tajweed, phrase by phrase: Madd, Ghunnah, Ikhfa, Silah, the hardest letters, common mistakes, and an easy way to memorize it.
+keywords: ayatul kursi tajweed, ayat al kursi pronunciation, memorize ayatul kursi, ayatul kursi mistakes, ayat al kursi transliteration, greatest verse in quran
+reading: 6
+translation_of: ayat-al-kursi-tajweed
+---
+Ayat al-Kursi is verse 255 of [Surah Al-Baqarah](/quran/2/) and **the greatest verse in the Book of Allah**, as the Prophet ﷺ confirmed to Ubayy ibn Kaʿb (Muslim). Since we recite it so often in our daily remembrance, reciting it correctly matters a lot.
+
+## The verse in nine phrases
+1. ﴿ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡحَيُّ ٱلۡقَيُّومُ﴾
+2. ﴿لَا تَأۡخُذُهُۥ سِنَةٌ وَلَا نَوۡمٌ﴾
+3. ﴿لَّهُۥ مَا فِي ٱلسَّمَٰوَٰتِ وَمَا فِي ٱلۡأَرۡضِ﴾
+4. ﴿مَن ذَا ٱلَّذِي يَشۡفَعُ عِندَهُۥٓ إِلَّا بِإِذۡنِهِۦ﴾
+5. ﴿يَعۡلَمُ مَا بَيۡنَ أَيۡدِيهِمۡ وَمَا خَلۡفَهُمۡ﴾
+6. ﴿وَلَا يُحِيطُونَ بِشَيۡءٍ مِّنۡ عِلۡمِهِۦٓ إِلَّا بِمَا شَآءَ﴾
+7. ﴿وَسِعَ كُرۡسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضَ﴾
+8. ﴿وَلَا يَـُٔودُهُۥ حِفۡظُهُمَا﴾
+9. ﴿وَهُوَ ٱلۡعَلِيُّ ٱلۡعَظِيمُ﴾
+
+**Memorization:** one phrase a day for children; two or three a day for adults. On the last day, recite the whole verse.
+
+## Tajweed, phrase by phrase
+1. **﴿ٱللَّهُ﴾:** heavy Laam at the start. **﴿لَآ إِلَٰهَ﴾:** separated Madd, 4–5 counts. **﴿ٱلۡحَيُّ ٱلۡقَيُّومُ﴾:** doubled Yaa in both, and a real Ḥaa (not "h").
+2. **﴿تَأۡخُذُهُۥ﴾:** short *ṣilah* (2 counts). **﴿سِنَةٌ وَلَا﴾:** Tanween merges into Waw with nasal sound (*sinatuw-walā*).
+3. **﴿لَّهُۥ مَا﴾:** short *ṣilah*. **﴿ٱلسَّمَٰوَٰتِ﴾:** natural 2-count Madd on the small Alifs.
+4. **﴿مَن ذَا﴾:** Noon hidden before Dhaal (Ikhfa). **﴿يَشۡفَعُ﴾:** a real ʿAyn. **﴿عِندَهُۥٓ إِلَّا﴾:** Ikhfa of the Noon, and a long *ṣilah* (4–5 counts) because a hamza follows.
+5. **﴿أَيۡدِيهِمۡ وَمَا﴾:** Meem before Waw must be **clear** (Izhar Shafawi); don't hide it.
+6. **﴿بِشَيۡءٍ﴾:** no elongation of the soft Yaa when continuing. **﴿شَيۡءٍ مِّنۡ﴾:** Tanween merges into Meem with nasal sound. **﴿مِّنۡ عِلۡمِهِۦٓ إِلَّا﴾:** clear Noon before ʿAyn, and a long *ṣilah*. **﴿شَآءَ﴾:** connected Madd, 4–5 counts.
+7. **﴿كُرۡسِيُّهُ﴾:** no *ṣilah*, because a silent letter follows. **﴿وَٱلۡأَرۡضَ﴾:** a real Ḍaad.
+8. **﴿حِفۡظُهُمَا﴾:** Ẓaa is pronounced with the tongue tip touching the upper front teeth, never as "z".
+9. **﴿ٱلۡعَلِيُّ ٱلۡعَظِيمُ﴾:** when stopping, the final Madd can be 2, 4 or 6 counts.
+
+## Most common mistakes
+1. "h" instead of Ḥaa in ﴿ٱلۡحَيُّ﴾.
+2. Dropping the doubled Yaa in ﴿ٱلۡحَيُّ ٱلۡقَيُّومُ﴾.
+3. "z" instead of Ẓaa in ﴿حِفۡظُهُمَا﴾.
+4. Hiding the Meem in ﴿أَيۡدِيهِمۡ وَمَا﴾.
+5. Shortening the Madd in ﴿لَآ إِلَٰهَ﴾.
+
+Listen to Ayat al-Kursi by Sheikh Al-Husary and repeat it on the [Surah Al-Baqarah page](/quran/2/) (verse 255). Review the rules: [Noon Sakinah](/blog/noon-sakinah-tanween-rules-english/) and [Madd](/blog/madd-rules-tajweed-english/).

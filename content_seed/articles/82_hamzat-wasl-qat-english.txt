@@ -1,0 +1,47 @@
+title: Hamzat al-Wasl vs Hamzat al-Qat: The Two Hamzas in the Quran Explained
+category: english
+excerpt: Why is the hamza in "anʿamta" always pronounced, while the one in "ihdinā" disappears when you join it to the previous word? The difference between the two hamzas, their marks in the Madinah Mushaf, and the mistakes caused by mixing them up.
+meta: Hamzat al-Wasl vs Hamzat al-Qat: their marks in the Madinah Mushaf, when each is pronounced or dropped, examples from Al-Fatihah, and common mistakes.
+keywords: hamzat al wasl, hamzat al qat, hamza wasl and qat difference, connecting hamza quran, tajweed hamza rules, alif wasla
+reading: 5
+translation_of: hamzat-wasl-vs-qat
+---
+A question students often ask: "Why do we pronounce the hamza of ﴿ٱهۡدِنَا﴾ at the start of the verse, but it disappears when we join it to the word before?" The answer lies in two kinds of hamza: **Hamzat al-Qaṭʿ** (the cutting hamza) and **Hamzat al-Waṣl** (the connecting hamza).
+
+## Hamzat al-Qaṭʿ (cutting hamza)
+- **Always pronounced**, at the start or in the middle of speech, whether you join or start fresh.
+- **Its mark in the Mushaf:** a small ʿayn-head (ء) above or below the alif: أَ، إِ، أُ.
+- **Examples:** ﴿أَنۡعَمۡتَ﴾, ﴿إِيَّاكَ﴾, ﴿أَحَدٌ﴾, ﴿إِنَّا أَعۡطَيۡنَٰكَ﴾.
+
+## Hamzat al-Waṣl (connecting hamza)
+- **Pronounced only when you start with it**, and **dropped when joined** to what comes before.
+- **Its mark in the Madinah Mushaf:** a small ṣād-head above the alif: **ٱ**.
+- **Examples:** ﴿ٱهۡدِنَا﴾, ﴿ٱلۡحَمۡدُ﴾, ﴿ٱلصِّرَٰطَ﴾, ﴿ٱسۡمِ﴾.
+
+### How it drops when joining
+- ﴿بِسۡمِ ٱللَّهِ﴾: not *bismi a-llāh*, but *bismi-llāh*. The hamza drops and the Laam is pronounced.
+- ﴿مَٰلِكِ يَوۡمِ ٱلدِّينِ﴾: *yawmi-d-dīn*.
+- ﴿وَقَالَ ٱلَّذِينَ﴾: *wa qāla-lladhīna*.
+
+## Comparison table
+| | Hamzat al-Qaṭʿ | Hamzat al-Waṣl |
+|---|---|---|
+| When starting | Pronounced | Pronounced |
+| When joining | Pronounced | Dropped |
+| Madinah Mushaf mark | ء (ʿayn-head) | ٱ (ṣād-head) |
+| Example | ﴿أَنۡعَمۡتَ﴾ | ﴿ٱهۡدِنَا﴾ |
+
+## Which vowel do you start Hamzat al-Waṣl with?
+- **In the definite article "al-":** always *a* (fatḥah).
+- **In verbs:** *u* if the third letter has a permanent ḍammah (﴿ٱنظُرۡ﴾ = *unẓur*), and *i* if it has a fatḥah or kasrah (﴿ٱذۡهَبۡ﴾ = *idh-hab*, ﴿ٱهۡدِنَا﴾ = *ihdinā*).
+- **In nouns:** *i*, as in ﴿ٱسۡمُهُۥ﴾ and ﴿ٱبۡنَ﴾.
+
+## Common mistakes
+1. **Pronouncing Hamzat al-Waṣl when joining:** reading ﴿إِيَّاكَ نَسۡتَعِينُ ٱهۡدِنَا﴾ as *nastaʿīnu ihdinā*. Correct when joining: *nastaʿīnu-hdinā*.
+2. **Dropping Hamzat al-Qaṭʿ:** reading ﴿قُلۡ أَعُوذُ﴾ as *qulaʿūdhu*. The hamza must be clear: *qul aʿūdhu*.
+3. **Starting Hamzat al-Waṣl with the wrong vowel:** starting ﴿ٱنظُرۡ﴾ with *i* instead of *u*.
+
+## Why this matters for memorizers
+Memorizers join verses constantly in recitation and prayer. Without knowing the difference, you'll cut what should be joined or drop what should be pronounced, and teachers catch these mistakes quickly in recitation tests.
+
+See [the symbols of the Mushaf explained](/blog/mushaf-symbols-english/) and [the types of Waqf (stopping)](/blog/types-of-waqf-english/).

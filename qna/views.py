@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q, Count, F, Exists, OuterRef, Prefetch
+from django.db.models import Q, Count, F, Exists, OuterRef, Prefetch, Sum
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
@@ -126,6 +126,10 @@ class QuestionListView(ListView):
         context['community_answers_count'] = CommunityAnswer.objects.filter(
             is_spam=False
         ).count()
+
+        context['total_views'] = PublicQuestion.objects.filter(
+            status='approved'
+        ).aggregate(total=Sum('view_count'))['total'] or 0
 
         return context
 

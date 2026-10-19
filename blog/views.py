@@ -58,7 +58,17 @@ def blog_list(request):
         post__status='published'
     ).select_related('post').order_by('-id')[:4]
 
+    # عدادات المدونة (كل المنشور، مش المفلتر)
+    total_posts = Post.objects.filter(status='published').count()
+    try:
+        from qna.models import PublicQuestion
+        total_questions = PublicQuestion.objects.filter(status='approved').count()
+    except Exception:
+        total_questions = 0
+
     context = {
+        'total_posts': total_posts,
+        'total_questions': total_questions,
         'posts': posts,
         'featured_posts': featured_posts,
         'categories': categories,

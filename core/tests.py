@@ -324,7 +324,8 @@ class Wave2Tests(TestCase):
         r = self.client.get('/blog/feed/')
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, '<rss')
-        self.assertContains(r, '/blog/madd-types-tajweed/')
+        newest = Post.objects.filter(status='published').order_by('-published_at').first()
+        self.assertContains(r, f'/blog/{newest.slug}/')
         r = self.client.get('/questions/feed/')
         self.assertContains(r, '<rss')
 
@@ -342,3 +343,44 @@ class Wave2Tests(TestCase):
             self.assertEqual(n, len(urls))
             call_command('indexnow_ping', '--force', stdout=StringIO())
             self.assertEqual(send.call_count, 1)  # المرة التانية مفيش جديد
+
+
+@override_settings(**TEST_SETTINGS)
+class Wave3Tests(TestCase):
+    def test_blog_and_questions_counters(self):
+        r = self.client.get('/blog/')
+        self.assertContains(r, 'class="blog-stats"')
+        self.assertContains(r, 'مقال منشور')
+        self.assertContains(r, 'قراءة')
+        r = self.client.get(reverse('qna:question_list'))
+        self.assertContains(r, 'class="blog-stats"')
+        self.assertContains(r, 'سؤال مُجاب')
+        self.assertContains(r, 'مشاهدة')
+
+    def test_wave3_content_seeded(self):
+        self.assertTrue(Post.objects.filter(slug='quran-revision-games-kids-english', status='published').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='What is Iqlab in Tajweed?').exists())
+        r = self.client.get('/blog/ayat-al-kursi-tajweed-english/')
+        self.assertContains(r, '<html lang="en"')
+        self.assertContains(r, 'hreflang="ar" href="https://alagme.com/blog/ayat-al-kursi-tajweed/"')
+
+    def test_every_admin_page_opens(self):
+        """كل صفحات الأدمن (القائمة + الإضافة + التعديل) تفتح من غير 500."""
+        from django.contrib import admin
+        from blog.models import Comment
+        admin_user = User.objects.create_superuser('wave3admin', 'a3@example.com', 'x-Pass-12345')
+        post = Post.objects.filter(status='published').first()
+        Comment.objects.create(post=post, author_name='t', author_email='t@example.com', content='hi', is_approved=False)
+        Post.objects.filter(pk=post.pk).update(is_featured=True)
+        self.client.force_login(admin_user)
+        for model in admin.site._registry:
+            opts = model._meta
+            for name in ('changelist', 'add'):
+                url = reverse(f'admin:{opts.app_label}_{opts.model_name}_{name}')
+                self.assertEqual(self.client.get(url).status_code, 200, url)
+            obj = model.objects.first()
+            if obj is not None:
+                url = reverse(f'admin:{opts.app_label}_{opts.model_name}_change', args=[obj.pk])
+                self.assertEqual(self.client.get(url).status_code, 200, url)
+        r = self.client.post(reverse('admin:blog_category_add'), {'name': 'تصنيف تجربة', 'slug': 'test-cat', 'description': 'x', 'icon': '📁'})
+        self.assertEqual(r.status_code, 302)

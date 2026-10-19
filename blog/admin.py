@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.db.models import Count
 from .models import Post, Category, Comment, PostImage, PostVideo
 
@@ -88,7 +89,7 @@ class PostAdmin(admin.ModelAdmin):
                 obj.category.icon or '📁',
                 obj.category.name
             )
-        return format_html('<span style="color: #95a5a6;">غير مصنف</span>')
+        return mark_safe('<span style="color: #95a5a6;">غير مصنف</span>')
     category_badge.short_description = 'التصنيف'
     
     def status_badge(self, obj):
@@ -124,7 +125,7 @@ class PostAdmin(admin.ModelAdmin):
     
     def featured_badge(self, obj):
         if obj.is_featured:
-            return format_html('<span style="color: #f39c12; font-size: 18px;">⭐</span>')
+            return mark_safe('<span style="color: #f39c12; font-size: 18px;">⭐</span>')
         return ''
     featured_badge.short_description = 'مميز'
 
@@ -133,7 +134,7 @@ class PostAdmin(admin.ModelAdmin):
         images_count = obj.gallery_images.count()
         videos_count = obj.videos.count()
         if not images_count and not videos_count:
-            return format_html('<span style="color: #95a5a6;">—</span>')
+            return mark_safe('<span style="color: #95a5a6;">—</span>')
         return format_html(
             '<span style="color:#16a085;">📷 {}</span>&nbsp;&nbsp;<span style="color:#e67e22;">🎬 {}</span>',
             images_count, videos_count
@@ -190,8 +191,8 @@ class CommentAdmin(admin.ModelAdmin):
     
     def approved_badge(self, obj):
         if obj.is_approved:
-            return format_html('<span style="color: green;">✓</span> موافق عليه')
-        return format_html('<span style="color: orange;">⏳</span> بانتظار الموافقة')
+            return mark_safe('<span style="color: green;">✓</span> موافق عليه')
+        return mark_safe('<span style="color: orange;">⏳</span> بانتظار الموافقة')
     approved_badge.short_description = 'الحالة'
     
     actions = ['approve_comments', 'unapprove_comments']

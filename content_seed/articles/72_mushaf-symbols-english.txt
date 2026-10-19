@@ -1,0 +1,56 @@
+title: Signs and Symbols in the Madinah Mushaf Explained (A Guide for Non-Arabs)
+category: english
+excerpt: Small circles, upright ovals, tiny Meems, stacked tanween and little letters: what every symbol in the Madinah Mushaf means and how it changes your recitation.
+meta: What every symbol in the Madinah Mushaf means: small circles, waqf marks, tiny Meems, stacked tanween and small letters, and how each changes recitation.
+keywords: madinah mushaf symbols, quran symbols meaning, small circle above alif quran, small meem quran, tanween stacked meaning, quran recitation signs
+reading: 6
+translation_of: mushaf-symbols-explained
+---
+Open any page of the Madinah Mushaf and you'll see tiny marks above and below the letters. These are **pronunciation marks** (*ḍabṭ*), added by scholars to guide you to correct recitation in the Hafs reading. Once you understand them, it's like having a teacher whispering on every line.
+
+## 1. The round zero ( ۟ )
+Above a long-vowel letter (Alif, Waw or Yaa), it means that letter is **extra and never pronounced**, whether you stop or continue.
+- Example: the Alif after the plural Waw in ﴿قَالُواْ﴾ is read *qālū*, with no Alif sound.
+
+## 2. The upright oval zero ( ۠ )
+Placed on an Alif followed by a vowelled letter: the Alif is **dropped when continuing, but pronounced when stopping**.
+- Example: ﴿أَنَا۠﴾ is read *ana* when you continue, *anā* when you stop on it.
+
+## 3. The sukoon ( ْ )
+A small head of the letter Khaa (without its dot). It means the letter is **silent and pronounced clearly**, e.g. ﴿مَنۡ ءَامَنَ﴾.
+
+### When the sukoon is missing
+- If a silent letter has **no sukoon and the next letter has a shadda**, it's **full merging** (Idgham), e.g. ﴿مِن رَّبِّهِمۡ﴾.
+- If it has **no sukoon and the next letter has no shadda**, it's **hiding** (Ikhfa), e.g. ﴿مِن قَبۡلُ﴾.
+
+## 4. The small Meem ( ۢ )
+Above a Noon Sakinah or replacing the second vowel of tanween: it signals **Iqlab**, turning the Noon into a hidden Meem with nasal sound, e.g. ﴿مِنۢ بَعۡدِ﴾.
+
+## 5. Consecutive vs. stacked tanween
+- **Consecutive** (one vowel after the other): **Izhar** (clear), e.g. ﴿عَذَابٌ أَلِيمٌ﴾.
+- **Stacked** (one vowel directly above the other): **Idgham or Ikhfa**, e.g. ﴿غَفُورٌ رَّحِيمٌ﴾.
+
+This single detail tells you the Tanween rule as you read.
+
+## 6. Small letters
+They indicate letters **not written in the original script but pronounced**:
+- **Small (dagger) Alif:** ﴿ذَٰلِكَ﴾, ﴿ٱلرَّحۡمَٰنِ﴾.
+- **Small Waw:** ﴿دَاوُۥدَ﴾. **Small Yaa:** ﴿يُحۡيِۦ﴾.
+- **After the pronoun "hu/hi":** they mark *ṣilah* (lengthening the pronoun), e.g. ﴿إِنَّهُۥ كَانَ﴾.
+
+## 7. The Madd sign ( ~ )
+A wavy line over a long vowel means **elongation beyond the natural 2 counts**: connected, separated or compulsory Madd, e.g. ﴿جَآءَ﴾, ﴿ٱلضَّآلِّينَ﴾. See [Madd rules in English](/blog/madd-rules-tajweed-english/).
+
+## 8. The small Seen
+- **Above the last letter of a word:** a *sakt* (brief pause without breath), e.g. ﴿عِوَجَاۜ﴾.
+- **Above a Ṣaad:** the word is read with a Seen, e.g. ﴿وَيَبۡصُۜطُ﴾ in Al-Baqarah.
+
+## 9. Other marks
+- **۞** marks the start of a Hizb or quarter.
+- **۩** marks a place of prostration (sajdah).
+- **مـ، لا، ج، صلى، قلى** are stopping signs: compulsory stop, don't stop, optional, continuing preferred, stopping preferred. See [types of stops in Quran recitation](/blog/types-of-waqf-english/).
+
+## A practical tip
+Each week, focus on **one symbol** while you read and notice every occurrence. Within a month, these marks will guide you automatically.
+
+Learning to read from scratch? Start with [learning to read the Quran as an adult](/blog/learn-quran-as-an-adult-from-zero/), or [book a free trial class](/contact/).
