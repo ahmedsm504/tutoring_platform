@@ -12,6 +12,8 @@ import os
 logger = logging.getLogger(__name__)
 
 _app_ready = None  # None = لسه ماجربناش، True/False = نتيجة آخر محاولة
+_key_project = ''  # project_id بتاع المفتاح المستخدم
+WEB_PROJECT = 'alagme-notifications'  # المشروع اللي الموقع بيسجل فيه المتصفحات (base.html)
 _last_error = ''   # آخر سبب فشل (بيظهر في صفحة حالة الإشعارات في الأدمن)
 
 
@@ -19,27 +21,80 @@ def last_error():
     return _last_error
 
 
+def key_project():
+    return _key_project
+
+
+# أسماء متغيرات مقبولة للمفتاح (الأول هو المعتمد، والباقي عشان لو اتكتب باسم تاني)
+ENV_NAMES = ('FIREBASE_CREDENTIALS_JSON', 'FIREBASE_CREDENTIALS', 'FIREBASE_SERVICE_ACCOUNT',
+             'FIREBASE_KEY', 'GOOGLE_CREDENTIALS_JSON')
+
+
+def _parse_key(raw):
+    """يقرا مفتاح الـ service account مهما كانت طريقة لصقه: JSON عادي، أو بين علامات تنصيص،
+    أو Base64، ويصلح \\n في private_key."""
+    import base64
+
+    def attempt(text):
+        data = json.loads(text)
+        if isinstance(data, str):  # JSON متغلف مرتين
+            data = json.loads(data)
+        return data
+
+    s = raw.strip()
+    candidates = [s]
+    if len(s) >= 2 and s[0] == s[-1] and s[0] in "'\"":
+        candidates.append(s[1:-1].strip())
+    try:
+        candidates.append(base64.b64decode(s + '=' * (-len(s) % 4)).decode('utf-8').strip())
+    except Exception:
+        pass
+    data, err = None, None
+    for c in candidates:
+        try:
+            data = attempt(c)
+            if isinstance(data, dict):
+                break
+        except Exception as e:  # نجرب الشكل اللي بعده
+            err = e
+    if not isinstance(data, dict):
+        raise ValueError(f'مش قادر أقرا المفتاح كـ JSON: {err}')
+    key = data.get('private_key', '')
+    if '\\n' in key and '\n' not in key:
+        data['private_key'] = key.replace('\\n', '\n')
+    if data.get('type') != 'service_account':
+        raise ValueError('ده مش ملف service account (لازم يكون فيه "type": "service_account").')
+    return data
+
+
 def _ensure_app():
-    global _app_ready, _last_error
+    global _app_ready, _last_error, _key_project
     if _app_ready is not None:
         return _app_ready
     try:
-        import firebase_admin
-        from firebase_admin import credentials
+        try:
+            import firebase_admin
+            from firebase_admin import credentials
+        except ImportError:
+            _last_error = 'مكتبة firebase-admin مش متثبتة على السيرفر (لازم تكون في requirements.txt).'
+            _app_ready = False
+            return False
 
         if firebase_admin._apps:
             _app_ready = True
             return True
 
-        firebase_json = os.environ.get('FIREBASE_CREDENTIALS_JSON')
+        firebase_json = next((os.environ.get(k) for k in ENV_NAMES if os.environ.get(k)), None)
         firebase_file = os.environ.get('FIREBASE_CREDENTIALS_FILE')
         if firebase_json:
-            cred = credentials.Certificate(json.loads(firebase_json))
+            data = _parse_key(firebase_json)
+            _key_project = data.get('project_id', '')
+            cred = credentials.Certificate(data)
         elif firebase_file and os.path.exists(firebase_file):
             cred = credentials.Certificate(firebase_file)
         else:
             logger.warning('Firebase مش متظبط (FIREBASE_CREDENTIALS_JSON فاضي) - الإشعارات متوقفة.')
-            _last_error = 'متغير FIREBASE_CREDENTIALS_JSON مش موجود في Railway.'
+            _last_error = 'متغير FIREBASE_CREDENTIALS_JSON مش موجود في Railway (أو اسمه مكتوب غلط).'
             _app_ready = False
             return False
 

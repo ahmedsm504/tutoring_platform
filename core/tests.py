@@ -538,3 +538,14 @@ class Wave5Tests(TestCase):
         for slug in ('ibtida-where-to-restart', 'father-role-in-quran', 'family-quran-quiz-for-kids'):
             self.assertEqual(self.client.get(f'/blog/{slug}/').status_code, 200, slug)
         self.assertTrue(PublicQuestion.objects.filter(title='ما الفرق بين التأسيس والتحفيظ؟').exists())
+
+    def test_firebase_key_parsing_is_tolerant(self):
+        import base64
+        from accounts.notifications import _parse_key
+        d = {'type': 'service_account', 'project_id': 'alagme-notifications',
+             'private_key': '-----BEGIN PRIVATE KEY-----\nabc\n-----END PRIVATE KEY-----\n', 'client_email': 'a@b'}
+        raw = json.dumps(d)
+        for v in (raw, f"'{raw}'", base64.b64encode(raw.encode()).decode(), json.dumps(raw), raw.replace('\\n', '\\\\n')):
+            self.assertEqual(_parse_key(v)['private_key'].count('\n'), 3)
+        with self.assertRaises(ValueError):
+            _parse_key('{"type": "x"}')

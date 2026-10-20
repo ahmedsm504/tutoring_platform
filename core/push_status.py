@@ -15,7 +15,7 @@ def _last(model, field, **filters):
 @require_http_methods(['GET', 'POST'])
 def push_status(request):
     from accounts.models import FCMToken
-    from accounts.notifications import _send, is_configured, last_error
+    from accounts.notifications import WEB_PROJECT, _send, is_configured, key_project, last_error
     from blog.models import Post
     from qna.models import PublicQuestion
 
@@ -45,6 +45,8 @@ def push_status(request):
         'title': 'حالة الإشعارات',
         'configured': configured,
         'error': last_error(),
+        'key_project': key_project(),
+        'web_project': WEB_PROJECT,
         'total': FCMToken.objects.count(),
         'admins': FCMToken.objects.filter(is_admin=True).count(),
         'mine': FCMToken.objects.filter(user=request.user).count(),
