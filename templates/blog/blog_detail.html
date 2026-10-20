@@ -217,6 +217,8 @@
         <a class="btn btn-primary" href="{% url 'contact' %}">{% if en %}Book a free trial class{% else %}احجز حلقة تجريبية مجانية{% endif %}</a>
       </div>
 
+      {% if not en %}{% include 'includes/push_card.html' with push_title="يوصلك كل مقال جديد أول ما ينزل" %}{% endif %}
+
       <div class="share">
         <strong>{% if en %}Share:{% else %}شارك المقال:{% endif %}</strong>
         <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ canonical_url|urlencode }}" target="_blank" rel="noopener">واتساب</a>

@@ -8,6 +8,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView, TemplateView
 
 from accounts import views as accounts_views
+from core.push_status import push_status
 
 from .robots_view import llms_txt, robots_txt
 from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap, QNAQuestionsSitemap,
@@ -41,6 +42,7 @@ def ads_txt(request):
 
 urlpatterns = [
     path('ads.txt', ads_txt),
+    path('admin/push-status/', push_status, name='push_status'),
     path('admin/', admin.site.urls),
     path('sitemap.xml', sitemap_view, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', robots_txt, name='robots'),

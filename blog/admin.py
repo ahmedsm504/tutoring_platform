@@ -147,11 +147,35 @@ class PostAdmin(admin.ModelAdmin):
         return 'لا توجد صورة'
     image_preview.short_description = 'معاينة الصورة'
     
-    actions = ['make_published', 'make_draft', 'make_featured']
+    actions = ['make_published', 'make_draft', 'make_featured', 'send_push_now']
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if obj.status == 'published':
+            from accounts.notifications import is_configured
+            if not is_configured():
+                self.message_user(request, 'تنبيه: Firebase مش متظبط على السيرفر، فإشعار المقال مش هيتبعت. الخطوات في صفحة /admin/push-status/', level='warning')
+
+    def send_push_now(self, request, queryset):
+        from accounts.notifications import is_configured
+        from .signals import notify_post
+        if not is_configured():
+            self.message_user(request, 'Firebase مش متظبط على السيرفر، الإشعار مش هيتبعت. الخطوات في صفحة /admin/push-status/', level='error')
+            return
+        qs = queryset.filter(status='published')
+        qs.update(push_sent_at=None)
+        sent = sum(1 for p in qs if notify_post(p))
+        self.message_user(request, f'تم إرسال إشعار لـ {sent} مقال.')
+    send_push_now.short_description = '🔔 إرسال إشعار للزوار الآن'
     
     def make_published(self, request, queryset):
         from django.utils import timezone
-        updated = queryset.update(status='published', published_at=timezone.now())
+        to_publish = list(queryset.exclude(status='published'))
+        for post in to_publish:
+            post.status = 'published'
+            post.published_at = post.published_at or timezone.now()
+            post.save()  # save عادي عشان الإشعار و IndexNow يشتغلوا
+        updated = len(to_publish)
         self.message_user(request, f'تم نشر {updated} مقال')
     make_published.short_description = 'نشر المقالات المحددة'
     

@@ -67,6 +67,8 @@ class Post(models.Model):
     # الميزات
     is_featured = models.BooleanField(default=False, verbose_name='مميز')
     allow_comments = models.BooleanField(default=True, verbose_name='السماح بالتعليقات')
+    # وقت إرسال إشعار المقال (فاضي = لسه ما اتبعتش) - عشان الإشعار ميتبعتش مرتين
+    push_sent_at = models.DateTimeField(null=True, blank=True, editable=False, verbose_name='وقت إرسال الإشعار')
     
     class Meta:
         verbose_name = 'مقال'

@@ -495,3 +495,15 @@ p { margin: 0 0 1em; }
   .stat:nth-child(odd) { border-inline-end: 1px solid rgba(243,231,198,.14); }
   .stat:nth-child(-n+2) { border-bottom: 1px solid rgba(243,231,198,.14); }
 }
+
+/* كارت «فعّل الإشعارات» في آخر المقالات والأسئلة */
+.push-card { position: relative; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 32px 0 8px; padding: 18px 20px; padding-inline-end: 44px; border-radius: var(--radius-lg); background: linear-gradient(135deg, var(--green-deep), var(--green)); color: #e8f1ee; box-shadow: var(--shadow); }
+.push-card[hidden] { display: none; }
+.push-card-ico { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 14px; background: rgba(243,231,198,.14); font-size: 1.4rem; }
+.push-card p { flex: 1 1 220px; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+.push-card strong { color: #fff; font-size: 1.02rem; }
+.push-card p span { font-size: .88rem; opacity: .85; }
+.push-card .btn { flex: none; }
+.push-card-x { position: absolute; inset-block-start: 8px; inset-inline-end: 10px; width: 30px; height: 30px; border: 0; border-radius: 50%; background: transparent; color: #cfe1db; font-size: 1.3rem; line-height: 1; cursor: pointer; }
+.push-card-x:hover { background: rgba(255,255,255,.1); color: #fff; }
+@media (max-width: 560px) { .push-card .btn { width: 100%; } }

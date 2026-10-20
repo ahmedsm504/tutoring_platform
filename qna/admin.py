@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from django.db import transaction
-from accounts.notifications import send_public_notification
 from .models import *
 
 
@@ -12,26 +10,29 @@ class QuestionCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
+class QuestionAnswerInline(admin.StackedInline):
+    """الإجابة الرسمية في نفس صفحة السؤال: تكتب السؤال والإجابة مرة واحدة، والإشعار يتبعت بعد الحفظ."""
+    model = QuestionAnswer
+    extra = 1
+    max_num = 1
+    fields = ('answer_text', 'answered_by', 'is_featured')
+    verbose_name = 'الإجابة الرسمية'
+    verbose_name_plural = 'الإجابة الرسمية'
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        formset.form.base_fields['answered_by'].initial = request.user.pk
+        return formset
+
+
 @admin.register(PublicQuestion)
 class PublicQuestionAdmin(admin.ModelAdmin):
+    inlines = [QuestionAnswerInline]
     list_display = ['title', 'visitor_name', 'category', 'status', 'view_count', 'created_at']
     list_filter = ['status', 'category', 'created_at', 'is_frequent']
     search_fields = ['title', 'question_text', 'visitor_name']
     readonly_fields = ['view_count', 'created_at', 'updated_at']
-    actions = ['mark_approved', 'mark_rejected', 'mark_spam']
-
-    def save_model(self, request, obj, form, change):
-        if change:
-            old_status = PublicQuestion.objects.get(pk=obj.pk).status
-            super().save_model(request, obj, form, change)
-            if old_status != 'approved' and obj.status == 'approved':
-                transaction.on_commit(lambda: send_public_notification(
-                    title=f'❓ سؤال جديد: {obj.title[:50]}',
-                    message=obj.question_text[:100],
-                    url=f'https://alagme.com/questions/question/{obj.slug}/'
-                ))
-        else:
-            super().save_model(request, obj, form, change)
+    actions = ['mark_approved', 'mark_rejected', 'mark_spam', 'send_push_now']
 
     def mark_approved(self, request, queryset):
         for question in queryset.exclude(status='approved'):
@@ -47,6 +48,18 @@ class PublicQuestionAdmin(admin.ModelAdmin):
         queryset.update(status='spam')
     mark_spam.short_description = "تحديد كـ سبام"
 
+    def send_push_now(self, request, queryset):
+        from accounts.notifications import is_configured
+        from .signals import notify_question
+        if not is_configured():
+            self.message_user(request, 'Firebase مش متظبط على السيرفر، الإشعار مش هيتبعت. الخطوات في صفحة /admin/push-status/', level='error')
+            return
+        qs = queryset.filter(status='approved')
+        qs.update(push_sent_at=None)
+        sent = sum(1 for q in qs if notify_question(q))
+        self.message_user(request, f'تم إرسال إشعار لـ {sent} سؤال.')
+    send_push_now.short_description = "🔔 إرسال إشعار للزوار الآن"
+
 
 @admin.register(QuestionAnswer)
 class QuestionAnswerAdmin(admin.ModelAdmin):
@@ -54,17 +67,7 @@ class QuestionAnswerAdmin(admin.ModelAdmin):
     list_filter = ['is_featured', 'answered_at']
     search_fields = ['answer_text', 'question__title']
     readonly_fields = ['answered_at', 'updated_at']
-
-    def save_model(self, request, obj, form, change):
-        is_new = not change
-        super().save_model(request, obj, form, change)
-        if is_new:
-            question = obj.question
-            transaction.on_commit(lambda: send_public_notification(
-                title=f'✅ تمت الإجابة: {question.title[:50]}',
-                message=obj.answer_text[:100],
-                url=f'https://alagme.com/questions/question/{question.slug}/'
-            ))
+    # إشعار «تمت الإجابة» بيتبعت من qna/signals.py
 
 
 @admin.register(CommunityAnswer)

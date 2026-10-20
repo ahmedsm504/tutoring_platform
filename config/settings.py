@@ -237,7 +237,22 @@ LOGGING = {
     },
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# الإيميلات (إشعار الأدمن بالأسئلة الجديدة، والمشتركين في الأسئلة) كانت بتتطبع في اللوج بس.
+# لتشغيلها فعليًا ضيف في Railway: EMAIL_HOST و EMAIL_HOST_USER و EMAIL_HOST_PASSWORD
+# (مثلًا Gmail: smtp.gmail.com مع App Password). من غيرهم بتفضل في اللوج زي ما هي.
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
+if EMAIL_HOST:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+    EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', EMAIL_PORT == 587)
+    EMAIL_USE_SSL = env_bool('EMAIL_USE_SSL', EMAIL_PORT == 465)
+    EMAIL_TIMEOUT = 15
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', os.environ.get('EMAIL_HOST_USER') or 'no-reply@alagme.com')
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 ADMINS = [('Admin', os.environ.get('ADMIN_EMAIL', 'admin@alagme.com'))]
 MANAGERS = ADMINS
 

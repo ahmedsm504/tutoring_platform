@@ -12,10 +12,15 @@ import os
 logger = logging.getLogger(__name__)
 
 _app_ready = None  # None = لسه ماجربناش، True/False = نتيجة آخر محاولة
+_last_error = ''   # آخر سبب فشل (بيظهر في صفحة حالة الإشعارات في الأدمن)
+
+
+def last_error():
+    return _last_error
 
 
 def _ensure_app():
-    global _app_ready
+    global _app_ready, _last_error
     if _app_ready is not None:
         return _app_ready
     try:
@@ -34,15 +39,29 @@ def _ensure_app():
             cred = credentials.Certificate(firebase_file)
         else:
             logger.warning('Firebase مش متظبط (FIREBASE_CREDENTIALS_JSON فاضي) - الإشعارات متوقفة.')
+            _last_error = 'متغير FIREBASE_CREDENTIALS_JSON مش موجود في Railway.'
             _app_ready = False
             return False
 
         firebase_admin.initialize_app(cred)
         _app_ready = True
-    except Exception:
+    except Exception as e:
         logger.exception('فشل تهيئة Firebase')
+        _last_error = f'المفتاح موجود بس فيه مشكلة: {type(e).__name__}: {str(e)[:200]}'
         _app_ready = False
     return _app_ready
+
+
+def is_configured():
+    """True لو مفتاح Firebase موجود والتهيئة نجحت."""
+    return bool(_ensure_app())
+
+
+def _absolute(url):
+    if url.startswith('http'):
+        return url
+    from django.conf import settings
+    return getattr(settings, 'CANONICAL_URL', 'https://alagme.com').rstrip('/') + url
 
 
 def _send(tokens, title, message, url):
@@ -50,29 +69,72 @@ def _send(tokens, title, message, url):
         return None
     from firebase_admin import messaging
 
-    msg = messaging.MulticastMessage(
-        notification=messaging.Notification(title=title, body=message),
-        webpush=messaging.WebpushConfig(
-            fcm_options=messaging.WebpushFCMOptions(link=url),
-            notification=messaging.WebpushNotification(icon='/static/images/logo.jpeg'),
-        ),
-        tokens=tokens,
-    )
-    response = messaging.send_each_for_multicast(msg)
+    url = _absolute(url)
+    title, message = (title or '')[:120], (message or '')[:240]
+    responses = []
+    # FCM بيقبل 500 توكن كحد أقصى في الرسالة الواحدة
+    for i in range(0, len(tokens), 500):
+        chunk = tokens[i:i + 500]
+        msg = messaging.MulticastMessage(
+            notification=messaging.Notification(title=title, body=message),
+            data={'url': url},
+            webpush=messaging.WebpushConfig(
+                headers={'TTL': '172800'},
+                fcm_options=messaging.WebpushFCMOptions(link=url),
+                notification=messaging.WebpushNotification(
+                    icon=_absolute('/static/images/icon-192.png'),
+                    badge=_absolute('/static/images/favicon.png'),
+                    dir='rtl', lang='ar',
+                ),
+            ),
+            tokens=chunk,
+        )
+        resp = messaging.send_each_for_multicast(msg)
+        responses.append((chunk, resp))
+        if resp.failure_count and not resp.success_count:
+            global _last_error
+            first = next((r.exception for r in resp.responses if r.exception is not None), None)
+            _last_error = f'الإرسال فشل: {type(first).__name__}: {str(first)[:200]}' if first else 'الإرسال فشل'
+    _cleanup(responses)
+    return responses
+
+
+def _cleanup(responses):
 
     # تنظيف التوكنات اللي بقت مش صالحة (المستخدم لغى الإذن أو مسح المتصفح)
     try:
         from accounts.models import FCMToken
-        dead = [
-            tokens[i] for i, r in enumerate(response.responses)
-            if not r.success and r.exception is not None
-            and type(r.exception).__name__ in ('UnregisteredError', 'SenderIdMismatchError', 'InvalidArgumentError')
-        ]
+        dead = []
+        for tokens, response in responses:
+            dead += [
+                tokens[i] for i, r in enumerate(response.responses)
+                if not r.success and r.exception is not None
+                and type(r.exception).__name__ in ('UnregisteredError', 'SenderIdMismatchError', 'InvalidArgumentError')
+            ]
         if dead:
             FCMToken.objects.filter(token__in=dead).delete()
     except Exception:
         logger.exception('فشل تنظيف توكنات FCM')
-    return response
+
+
+def send_in_background(func, *args, **kwargs):
+    """يبعت الإشعار في thread منفصل بعد ما الحفظ يخلص، عشان صفحة الأدمن متستناش Firebase."""
+    import threading
+
+    from django.db import close_old_connections, transaction
+
+    def run():
+        try:
+            func(*args, **kwargs)
+        except Exception:
+            logger.exception('فشل إرسال إشعار في الخلفية')
+        finally:
+            close_old_connections()
+
+    def start():
+        threading.Thread(target=run, daemon=True).start()
+
+    transaction.on_commit(start)
 
 
 def send_public_notification(title, message, url="https://alagme.com"):

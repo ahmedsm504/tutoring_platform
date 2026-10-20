@@ -83,6 +83,8 @@ class PublicQuestion(models.Model):
     # تفاعل المستخدمين
     view_count = models.PositiveIntegerField(default=0, verbose_name="عدد المشاهدات")
     is_frequent = models.BooleanField(default=False, verbose_name="سؤال متكرر")
+    # وقت إرسال إشعار السؤال (فاضي = لسه ما اتبعتش) - عشان الإشعار ميتبعتش مرتين
+    push_sent_at = models.DateTimeField(null=True, blank=True, editable=False, verbose_name="وقت إرسال الإشعار")
     
     # SEO
     slug = models.SlugField(
