@@ -3,6 +3,7 @@
 <div style="max-width:820px;line-height:1.9">
   {% if configured %}
     <p style="background:#e8f5ee;border:1px solid #9fd3b5;padding:12px 16px;border-radius:10px">✅ <strong>Firebase متظبط على السيرفر.</strong> أي مقال جديد يتنشر، أو سؤال يتعمد وليه إجابة، بيبعت إشعار تلقائي لكل المشتركين.</p>
+    {% if key_project and key_project != web_project %}<p style="background:#fff7e0;border:1px solid #f0d58a;padding:10px 14px;border-radius:10px">⚠️ المفتاح تبع مشروع <code>{{ key_project }}</code>، لكن الموقع بيسجل المتصفحات في مشروع <code>{{ web_project }}</code>. الإشعارات مش هتوصل. نزّل المفتاح من مشروع <strong>{{ web_project }}</strong>.</p>{% endif %}
   {% else %}
     <div style="background:#fdecec;border:1px solid #f1a9a9;padding:12px 16px;border-radius:10px">
       <p>❌ <strong>Firebase مش متظبط على السيرفر، فمفيش أي إشعار بيتبعت.</strong>{% if error %}<br><small>السبب: {{ error }}</small>{% endif %}</p>
@@ -10,7 +11,7 @@
       <ol>
         <li>افتح <a href="https://console.firebase.google.com/project/alagme-notifications/settings/serviceaccounts/adminsdk" target="_blank" rel="noopener">Firebase Console ← Project settings ← Service accounts</a>.</li>
         <li>اضغط <strong>Generate new private key</strong> وهينزل ملف JSON.</li>
-        <li>في Railway افتح الخدمة ← <strong>Variables</strong> ← New Variable: الاسم <code>FIREBASE_CREDENTIALS_JSON</code> والقيمة <strong>محتوى الملف كله</strong> (من أول <code>{</code> لآخر <code>}</code>).</li>
+        <li>في Railway افتح الخدمة ← <strong>Variables</strong> ← New Variable: الاسم <code>FIREBASE_CREDENTIALS_JSON</code> بالظبط، والقيمة <strong>محتوى الملف كله</strong> (افتح الملف بأي محرر نصوص، Ctrl+A ثم Ctrl+C، والصقه). مش مشكلة لو اتلصق على أكتر من سطر.</li>
         <li>احفظ، وRailway هيعيد تشغيل الموقع لوحده. ارجع للصفحة دي هتلاقيها خضرا.</li>
       </ol>
     </div>
@@ -27,11 +28,15 @@
 
   {% if not mine %}<p>⚠️ متصفحك ده مش مشترك. افتح <a href="/" target="_blank">الموقع</a> وانت عامل دخول، واضغط «🔔 إشعارات المقالات الجديدة» في آخر الصفحة ووافق على الإذن، وبعدين جرّب الإشعار هنا.</p>{% endif %}
 
+  {% if not configured %}
+  <p style="background:#fff7e0;border:1px solid #f0d58a;padding:10px 14px;border-radius:10px">⏸️ <strong>أزرار الإشعار التجريبي متوقفة لحد ما مفتاح Firebase يتضاف</strong> (الخطوات فوق). بعد ما تضيفه وRailway يعيد التشغيل، حدّث الصفحة وهتلاقيها شغالة.</p>
+  {% endif %}
   <form method="post" style="display:flex;gap:10px;flex-wrap:wrap">{% csrf_token %}
-    <button class="button" name="target" value="me" type="submit">📱 إشعار تجريبي لمتصفحاتي</button>
-    <button class="button" name="target" value="admins" type="submit">👥 إشعار تجريبي للأدمن</button>
-    {% if user.is_superuser %}<button class="button" name="target" value="everyone" type="submit" onclick="return confirm('هيتبعت إشعار تجريبي لكل الزوار المشتركين. متأكد؟')">📢 للكل</button>{% endif %}
+    <button class="button" name="target" value="me" type="submit" {% if not configured or not mine %}disabled style="opacity:.5;cursor:not-allowed"{% endif %}>📱 إشعار تجريبي لمتصفحاتي ({{ mine }})</button>
+    <button class="button" name="target" value="admins" type="submit" {% if not configured or not admins %}disabled style="opacity:.5;cursor:not-allowed"{% endif %}>👥 إشعار تجريبي للأدمن ({{ admins }})</button>
+    {% if user.is_superuser %}<button class="button" name="target" value="everyone" type="submit" {% if not configured or not total %}disabled style="opacity:.5;cursor:not-allowed"{% endif %} onclick="return confirm('هيتبعت إشعار تجريبي لكل الزوار المشتركين. متأكد؟')">📢 للكل ({{ total }})</button>{% endif %}
   </form>
+  {% if configured and not total %}<p>مفيش ولا متصفح مشترك لسه. أول ما زائر يضغط «🔔 إشعارات المقالات الجديدة» في الموقع ويوافق، هيظهر هنا.</p>{% endif %}
 
   <h3 style="margin-top:28px">إمتى بيتبعت إشعار تلقائي؟</h3>
   <ul>
