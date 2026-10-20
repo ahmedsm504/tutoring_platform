@@ -417,3 +417,116 @@ class Wave4Tests(TestCase):
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='هل «الصراط» تُقرأ بالصاد أم بالسين؟').exists())
+
+
+@override_settings(**TEST_SETTINGS)
+class NotificationTests(TestCase):
+    """الإشعار يتبعت مرة واحدة بالظبط، في الوقت الصح."""
+
+    def setUp(self):
+        self.author = User.objects.create_user('notif_author', 'na@example.com', 'x-Pass-12345')
+
+    def _post(self, **kw):
+        d = dict(title='مقال إشعارات', slug=f'notif-{Post.objects.count()}', author=self.author,
+                 content='نص', excerpt='ملخص', status='draft')
+        d.update(kw)
+        return Post.objects.create(**d)
+
+    def test_post_notified_once_on_publish(self):
+        with mock.patch('blog.signals.send_in_background') as bg:
+            p = self._post(status='draft')
+            self.assertEqual(bg.call_count, 0)
+            p.status = 'published'
+            p.published_at = timezone.now()
+            p.save()
+            self.assertEqual(bg.call_count, 1)
+            self.assertIn('/blog/', bg.call_args.kwargs['url'])
+            p.title = 'تعديل'
+            p.save()
+            self.assertEqual(bg.call_count, 1)  # التعديل مبيبعتش تاني
+        p.refresh_from_db()
+        self.assertIsNotNone(p.push_sent_at)
+
+    def test_post_created_published_notifies(self):
+        with mock.patch('blog.signals.send_in_background') as bg:
+            self._post(status='published', published_at=timezone.now())
+            self.assertEqual(bg.call_count, 1)
+
+    def test_question_flow(self):
+        with mock.patch('qna.signals.send_in_background') as bg:
+            q = PublicQuestion.objects.create(title='سؤال إشعار جديد', question_text='نص السؤال هنا', visitor_name='زائر', status='pending')
+            funcs = [c.args[0].__name__ for c in bg.call_args_list]
+            self.assertIn('send_admin_notification', funcs)
+            bg.reset_mock()
+            q.status = 'approved'
+            q.save()
+            self.assertEqual([c.args[0].__name__ for c in bg.call_args_list], ['send_public_notification'])
+            self.assertEqual(bg.call_args.kwargs['title'], '❓ سؤال جديد')
+            q.save()
+            self.assertEqual(bg.call_count, 1)
+            # إجابة بعد فترة → «تمت الإجابة»
+            PublicQuestion.objects.filter(pk=q.pk).update(push_sent_at=timezone.now() - timezone.timedelta(hours=1))
+            bg.reset_mock()
+            QuestionAnswer.objects.create(question=q, answer_text='الإجابة')
+            titles = [c.kwargs.get('title') for c in bg.call_args_list]
+            self.assertIn('✅ تمت الإجابة', titles)
+
+    def test_digest_sends_single_notification(self):
+        from io import StringIO
+        from django.core.management import call_command
+        Post.objects.update(push_sent_at=timezone.now())
+        PublicQuestion.objects.update(push_sent_at=timezone.now())
+        for i in range(3):
+            Post.objects.filter(pk=self._post(status='draft').pk).update(status='published', published_at=timezone.now())
+        with mock.patch('accounts.notifications.is_configured', return_value=True), \
+             mock.patch('accounts.notifications.send_public_notification') as send:
+            call_command('send_content_digest', stdout=StringIO())
+            self.assertEqual(send.call_count, 1)
+            self.assertIn('3 مقال', send.call_args.kwargs['message'])
+            call_command('send_content_digest', stdout=StringIO())
+            self.assertEqual(send.call_count, 1)  # مبيتكررش
+
+    def test_push_card_on_article(self):
+        r = self.client.get('/blog/madd-types-tajweed/')
+        self.assertContains(r, 'data-push-card')
+
+
+@override_settings(**TEST_SETTINGS)
+class NotificationTests(TestCase):
+    def setUp(self):
+        self.admin = User.objects.create_superuser('pushadmin', 'p@example.com', 'x-Pass-12345')
+
+    def test_push_status_page(self):
+        self.assertEqual(self.client.get('/admin/push-status/').status_code, 302)  # لازم دخول
+        self.client.force_login(self.admin)
+        r = self.client.get('/admin/push-status/')
+        self.assertContains(r, 'حالة الإشعارات')
+        self.assertContains(r, 'FIREBASE_CREDENTIALS_JSON')  # مش متظبط في الاختبارات
+
+    def test_digest_keeps_content_pending_without_firebase(self):
+        from io import StringIO
+        from django.core.management import call_command
+        Post.objects.update(push_sent_at=None, published_at=timezone.now())
+        with mock.patch('accounts.notifications.is_configured', return_value=False):
+            call_command('send_content_digest', stdout=StringIO())
+        self.assertFalse(Post.objects.filter(status='published', push_sent_at__isnull=False).exists())
+
+    def test_question_push_waits_for_answer(self):
+        cat = QuestionCategory.objects.first()
+        with mock.patch('qna.signals.notify_question', return_value=True) as notify, \
+                mock.patch('qna.signals.send_indexnow'), mock.patch('qna.signals.send_in_background'), \
+                self.captureOnCommitCallbacks(execute=True):
+            q = PublicQuestion.objects.create(title='سؤال اختبار الإشعار بدون إجابة', question_text='نص السؤال للاختبار هنا',
+                                              visitor_name='زائر', category=cat, status='approved')
+            self.assertFalse(notify.called)
+            QuestionAnswer.objects.create(question=q, answer_text='إجابة رسمية طويلة بما يكفي للاختبار', answered_by=self.admin)
+            self.assertTrue(notify.called)
+
+    def test_new_post_triggers_push(self):
+        with mock.patch('blog.signals.send_in_background') as bg, \
+                mock.patch('blog.signals.send_indexnow'):
+            p = Post.objects.create(title='مقال اختبار الإشعار', slug='push-test-post', author=self.admin,
+                                    content='محتوى', status='published', published_at=timezone.now())
+        self.assertTrue(bg.called)
+        p.refresh_from_db()
+        self.assertIsNotNone(p.push_sent_at)

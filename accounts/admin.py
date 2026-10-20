@@ -220,3 +220,33 @@ class TrialBookingAdmin(admin.ModelAdmin):
         self.message_user(request, f'تم تحديد {updated} حجز كلم يتم التواصل معه')
     
     mark_as_not_contacted.short_description = 'تحديد كلم يتم التواصل'
+
+@admin.register(models.FCMToken)
+class FCMTokenAdmin(admin.ModelAdmin):
+    """المتصفحات المشتركة في الإشعارات."""
+    list_display = ('short_token', 'user', 'is_admin', 'created_at')
+    list_filter = ('is_admin', 'created_at')
+    search_fields = ('user__username', 'user__email')
+    readonly_fields = ('token', 'created_at')
+    actions = ['send_test']
+
+    def short_token(self, obj):
+        return f'{obj.token[:24]}…'
+    short_token.short_description = 'التوكن'
+
+    def changelist_view(self, request, extra_context=None):
+        from accounts.notifications import is_configured
+        total = models.FCMToken.objects.count()
+        state = 'متظبط ✅' if is_configured() else 'مش متظبط ❌ (ضيف FIREBASE_CREDENTIALS_JSON في Railway)'
+        self.message_user(request, f'عدد المتصفحات المشتركة في الإشعارات: {total} — Firebase: {state}')
+        return super().changelist_view(request, extra_context)
+
+    def send_test(self, request, queryset):
+        from accounts.notifications import _send, is_configured
+        if not is_configured():
+            self.message_user(request, 'Firebase مش متظبط على السيرفر.', level='error')
+            return
+        res = _send(list(queryset.values_list('token', flat=True)), '🔔 إشعار تجريبي', 'الإشعارات شغالة من موقع العجمي', '/')
+        ok = sum(r.success_count for _, r in (res or []))
+        self.message_user(request, f'اتبعت بنجاح لـ {ok} من {queryset.count()}')
+    send_test.short_description = 'إرسال إشعار تجريبي للمحدد'

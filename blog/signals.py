@@ -2,9 +2,12 @@ import logging
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Post
-from accounts.notifications import send_public_notification
+from django.utils import timezone
+
+from accounts.notifications import send_in_background, send_public_notification
 from core.indexnow import send_indexnow
+
+from .models import Post
 
 logger = logging.getLogger(__name__)
 
@@ -15,8 +18,25 @@ CONTENT_FIELDS = {
 }
 
 
+def notify_post(post):
+    """يبعت إشعار المقال (في الخلفية) ويعلّم إنه اتبعت. بيرجع False لو كان اتبعت قبل كده."""
+    # update بشرط إن الحقل لسه فاضي: لو حصل حفظين في نفس اللحظة، واحد بس اللي هيبعت
+    now = timezone.now()
+    updated = Post.objects.filter(pk=post.pk, push_sent_at__isnull=True).update(push_sent_at=now)
+    post.push_sent_at = post.push_sent_at or now  # عشان أي save تاني لنفس الـ object ميرجّعهاش فاضية
+    if not updated:
+        return False
+    send_in_background(
+        send_public_notification,
+        title='📖 مقال جديد في مدونة العجمي',
+        message=post.title,
+        url=f'/blog/{post.slug}/',
+    )
+    return True
+
+
 @receiver(post_save, sender=Post)
-def notify_new_post(sender, instance, created, **kwargs):
+def on_post_saved(sender, instance, created, **kwargs):
     if instance.status != 'published':
         return
 
@@ -24,14 +44,12 @@ def notify_new_post(sender, instance, created, **kwargs):
     if update_fields is not None and not (set(update_fields) & CONTENT_FIELDS):
         return
 
-    url = f"https://alagme.com/blog/{instance.slug}/"
-
-    # إشعار (للمقال الجديد بس)
-    if created:
+    # إشعار: أول مرة المقال يبقى منشور (سواء اتعمل منشور على طول أو اتنشر بعد ما كان مسودة)
+    if instance.push_sent_at is None:
         try:
-            send_public_notification(title="📖 مقال جديد!", message=instance.title, url=url)
+            notify_post(instance)
         except Exception:
-            logger.exception("فشل إرسال إشعار المقال الجديد: %s", url)
+            logger.exception('فشل تجهيز إشعار المقال: %s', instance.slug)
 
     # IndexNow (دالة send_indexnow نفسها مابترميش أخطاء)
-    send_indexnow(url)
+    send_indexnow(f'https://alagme.com/blog/{instance.slug}/')

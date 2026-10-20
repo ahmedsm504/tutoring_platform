@@ -176,6 +176,7 @@
         <a href="https://twitter.com/intent/tweet?url={{ canonical_url|urlencode }}&text={{ question.title|urlencode }}" target="_blank" rel="noopener">إكس</a>
         <button type="button" id="copy-link" data-url="{{ canonical_url }}">نسخ الرابط</button>
       </div>
+      {% include 'includes/push_card.html' with push_title="يوصلك كل سؤال جديد مُجاب أول ما ينزل" %}
     </div>
 
     <aside aria-label="أسئلة قريبة">

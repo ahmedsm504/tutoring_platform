@@ -296,18 +296,32 @@
           if (token) {
             fetch('/save-fcm-token/', {method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'}, body: JSON.stringify({ token })});
           }
+          // الإشعار وهو فاتح الموقع: نعرضه من الـ service worker عشان الضغط عليه يفتح المقال
           onMessage(messaging, (payload) => {
-            const { title, body } = payload.notification || {};
-            if (title) new Notification(title, { body, icon: '{% static "images/icon-192.png" %}' });
+            const n = payload.notification || {};
+            const url = (payload.data && payload.data.url) || (payload.fcmOptions && payload.fcmOptions.link) || '/';
+            if (n.title) registration.showNotification(n.title, { body: n.body || '', icon: '{% static "images/icon-192.png" %}', dir: 'rtl', lang: 'ar', data: { url } });
           });
-          if (btn) btn.hidden = true;
+          document.querySelectorAll('#enable-push, [data-push-card]').forEach((el) => { el.hidden = true; });
         }
         if (Notification.permission === 'granted') {
           const idle = window.requestIdleCallback || ((f) => setTimeout(f, 3000));
           idle(() => initPush(false).catch(() => {}));
-        } else if (Notification.permission === 'default' && btn) {
-          btn.hidden = false;
-          btn.addEventListener('click', () => initPush(true).catch(() => {}));
+        } else if (Notification.permission === 'default') {
+          // زرار الفوتر + كارت «فعّل الإشعارات» في آخر المقالات والأسئلة (الإذن مبيتطلبش غير لما الزائر يضغط)
+          let dismissed = false;
+          try { dismissed = localStorage.getItem('push-card-dismissed') === '1'; } catch (e) {}
+          if (btn) btn.hidden = false;
+          document.querySelectorAll('[data-push-card]').forEach((card) => { if (!dismissed) card.hidden = false; });
+          document.querySelectorAll('#enable-push, [data-push-enable]').forEach((el) => {
+            el.addEventListener('click', () => initPush(true).catch(() => {}));
+          });
+          document.querySelectorAll('[data-push-dismiss]').forEach((el) => {
+            el.addEventListener('click', () => {
+              document.querySelectorAll('[data-push-card]').forEach((c) => { c.hidden = true; });
+              try { localStorage.setItem('push-card-dismissed', '1'); } catch (e) {}
+            });
+          });
         }
       }
     </script>

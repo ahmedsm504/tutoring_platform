@@ -1,4 +1,6 @@
 # qna/views.py
+import logging
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -18,6 +20,9 @@ from .models import (
 from .forms import PublicQuestionForm, CommunityAnswerForm
 import json
 
+
+
+logger = logging.getLogger(__name__)
 
 class QuestionListView(ListView):
     model = PublicQuestion
@@ -171,7 +176,9 @@ class QuestionDetailView(DetailView):
             answer.user_agent = request.META.get('HTTP_USER_AGENT', '')[:500]
             answer.save()
 
-            self.send_subscription_notifications(self.object, answer)
+            from accounts.notifications import send_in_background
+            send_in_background(self.send_subscription_notifications, self.object, answer,
+                               self.request.build_absolute_uri(self.object.get_absolute_url()))
 
             messages.success(
                 request,
@@ -220,7 +227,7 @@ class QuestionDetailView(DetailView):
             official_answer = QuestionAnswer.objects.filter(question=self.object).first()
             context['has_official_answer'] = official_answer is not None
             context['official_answer'] = official_answer
-        except:
+        except Exception:
             context['has_official_answer'] = False
             context['official_answer'] = None
 
@@ -268,7 +275,7 @@ class QuestionDetailView(DetailView):
             ip = self.request.META.get('REMOTE_ADDR')
         return ip
 
-    def send_subscription_notifications(self, question, answer):
+    def send_subscription_notifications(self, question, answer, url):
         try:
             subscriptions = QuestionSubscription.objects.filter(
                 question=question,
@@ -286,11 +293,11 @@ class QuestionDetailView(DetailView):
 الإجابة:
 {answer.answer_text[:200]}...
 
-اضغط هنا لقراءة الإجابة الكاملة: {self.request.build_absolute_uri(question.get_absolute_url())}
+اضغط هنا لقراءة الإجابة الكاملة: {url}
                     """
                     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=True)
         except Exception as e:
-            print(f"Failed to send subscription notifications: {e}")
+            logger.exception("Failed to send subscription notifications")
 
     def generate_schema_markup(self):
         from django.utils.html import escape
@@ -326,7 +333,7 @@ class QuestionDetailView(DetailView):
                     },
                     "upvoteCount": official_answer.likes
                 }
-        except:
+        except Exception:
             pass
 
         return json.dumps(schema, ensure_ascii=False, indent=2)
@@ -371,10 +378,7 @@ class AskQuestionView(CreateView):
             question.is_frequent = True
 
         question.status = 'pending'
-        question.save()
-        
-
-        self.send_admin_notification(question)
+        question.save()  # إشعار وإيميل الأدمن بيتبعتوا من qna/signals.py
 
         messages.success(
             self.request,
@@ -412,35 +416,6 @@ class AskQuestionView(CreateView):
             ip = self.request.META.get('REMOTE_ADDR')
         return ip
 
-    def send_admin_notification(self, question):
-        try:
-            subject = f'📧 سؤال جديد يحتاج مراجعة: {question.title[:50]}'
-            message = f"""
-سؤال جديد يحتاج مراجعة:
-
-العنوان: {question.title}
-من: {question.visitor_name}
-البريد: {question.visitor_email or 'غير متوفر'}
-الهاتف: {question.visitor_phone or 'غير متوفر'}
-الفئة: {question.category.name if question.category else 'غير محدد'}
-
-نص السؤال:
-{question.question_text[:300]}...
-
-للمراجعة والموافقة: {self.request.build_absolute_uri('/admin/qna/publicquestion/')}
-            """
-            if hasattr(settings, 'ADMINS') and settings.ADMINS:
-                admin_emails = [email for name, email in settings.ADMINS]
-                send_mail(
-                    subject,
-                    message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    admin_emails,
-                    fail_silently=True,
-                )
-        except Exception as e:
-            print(f"Failed to send admin notification: {e}")
-
 
 # ============================================
 # دوال AJAX للتصويت والتفاعل
@@ -468,7 +443,7 @@ def vote_answer(request, answer_id):
             return JsonResponse({'success': False, 'message': 'لقد صوّت مسبقاً على هذه الإجابة'})
 
     except Exception as e:
-        print(f"Vote error: {e}")
+        logger.exception("Vote error")
         return JsonResponse({'success': False, 'message': 'حدث خطأ أثناء التصويت'}, status=500)
 
 
@@ -494,7 +469,7 @@ def vote_community_answer(request, answer_id):
             return JsonResponse({'success': False, 'message': 'لقد صوّت مسبقاً على هذه الإجابة'})
 
     except Exception as e:
-        print(f"Vote community error: {e}")
+        logger.exception("Vote community error")
         return JsonResponse({'success': False, 'message': 'حدث خطأ أثناء التصويت'}, status=500)
 
 
@@ -511,7 +486,7 @@ def verify_community_answer(request, answer_id):
         return JsonResponse({'success': True, 'is_verified': answer.is_verified, 'message': 'تم التحديث بنجاح'})
 
     except Exception as e:
-        print(f"Verify error: {e}")
+        logger.exception("Verify error")
         return JsonResponse({'success': False, 'message': 'حدث خطأ أثناء التحقق'}, status=500)
 
 
@@ -528,7 +503,7 @@ def delete_community_answer(request, answer_id):
         return JsonResponse({'success': True, 'message': 'تم الحذف بنجاح'})
 
     except Exception as e:
-        print(f"Delete error: {e}")
+        logger.exception("Delete error")
         return JsonResponse({'success': False, 'message': 'حدث خطأ أثناء الحذف'}, status=500)
 
 
@@ -558,7 +533,7 @@ def report_content(request, slug):
         return JsonResponse({'success': True, 'message': 'شكراً لإبلاغك، سنراجع المحتوى في أقرب وقت'})
 
     except Exception as e:
-        print(f"Report error: {e}")
+        logger.exception("Report error")
         return JsonResponse({'success': False, 'message': 'حدث خطأ أثناء إرسال البلاغ'}, status=500)
 
 
@@ -604,5 +579,5 @@ def subscribe_to_question(request, slug):
             })
 
     except Exception as e:
-        print(f"Subscribe error: {e}")
+        logger.exception("Subscribe error")
         return JsonResponse({'success': False, 'message': 'حدث خطأ أثناء الاشتراك'}, status=500)
