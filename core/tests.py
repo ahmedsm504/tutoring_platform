@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'ruqyah-with-quran')
+        self.assertEqual(arts[-1]['slug'], 'breathing-in-recitation')
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -530,3 +530,11 @@ class NotificationTests(TestCase):
         self.assertTrue(bg.called)
         p.refresh_from_db()
         self.assertIsNotNone(p.push_sent_at)
+
+
+@override_settings(**TEST_SETTINGS)
+class Wave5Tests(TestCase):
+    def test_wave5_content(self):
+        for slug in ('ibtida-where-to-restart', 'father-role-in-quran', 'family-quran-quiz-for-kids'):
+            self.assertEqual(self.client.get(f'/blog/{slug}/').status_code, 200, slug)
+        self.assertTrue(PublicQuestion.objects.filter(title='ما الفرق بين التأسيس والتحفيظ؟').exists())
