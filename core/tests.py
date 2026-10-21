@@ -503,6 +503,42 @@ class NotificationTests(TestCase):
         self.assertContains(r, 'حالة الإشعارات')
         self.assertContains(r, 'FIREBASE_CREDENTIALS_JSON')  # مش متظبط في الاختبارات
 
+    def test_push_diagnostics(self):
+        from types import SimpleNamespace
+        from accounts.models import FCMToken
+        from core.models import PushLog
+        self.client.force_login(self.admin)
+        # خطأ من المتصفح بيتسجل
+        r = self.client.post('/save-fcm-token/', data=json.dumps({'client_error': 'messaging/token-subscribe-failed: x', 'page': '/'}),
+                             content_type='application/json')
+        self.assertEqual(r.json()['status'], 'logged')
+        self.assertTrue(PushLog.objects.filter(kind='client', error__contains='token-subscribe-failed').exists())
+        # اختبار توكن بعينه بيرجع نتيجة Firebase الحرفية
+        ok = SimpleNamespace(responses=[SimpleNamespace(success=True, message_id='projects/x/messages/123', exception=None)])
+        with mock.patch('accounts.notifications.is_configured', return_value=True), \
+                mock.patch('accounts.notifications._send', return_value=[(['t'], ok)]):
+            r = self.client.post('/admin/push-status/', {'target': 'token', 'token': 'abc'})
+        self.assertEqual(r.json(), {'ok': True, 'message_id': 'projects/x/messages/123'})
+        # أزرار الإرسال بترجع JSON لما تتنادى من الصفحة
+        r = self.client.post('/admin/push-status/', {'target': 'me'}, HTTP_X_REQUESTED_WITH='fetch')
+        self.assertFalse(r.json()['ok'])  # Firebase مش متظبط في الاختبارات
+
+    def test_config_errors_do_not_delete_subscribers(self):
+        from types import SimpleNamespace
+        from accounts.models import FCMToken
+        from accounts.notifications import _cleanup
+        FCMToken.objects.create(token='keep-me')
+        FCMToken.objects.create(token='dead-one')
+        class SenderIdMismatchError(Exception):
+            pass
+        class UnregisteredError(Exception):
+            pass
+        resp = SimpleNamespace(responses=[SimpleNamespace(success=False, exception=SenderIdMismatchError('x')),
+                                          SimpleNamespace(success=False, exception=UnregisteredError('y'))])
+        _cleanup([(['keep-me', 'dead-one'], resp)])
+        self.assertTrue(FCMToken.objects.filter(token='keep-me').exists())
+        self.assertFalse(FCMToken.objects.filter(token='dead-one').exists())
+
     def test_digest_keeps_content_pending_without_firebase(self):
         from io import StringIO
         from django.core.management import call_command

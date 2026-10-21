@@ -34,9 +34,111 @@
   <form method="post" style="display:flex;gap:10px;flex-wrap:wrap">{% csrf_token %}
     <button class="button" name="target" value="me" type="submit" {% if not configured or not mine %}disabled style="opacity:.5;cursor:not-allowed"{% endif %}>📱 إشعار تجريبي لمتصفحاتي ({{ mine }})</button>
     <button class="button" name="target" value="admins" type="submit" {% if not configured or not admins %}disabled style="opacity:.5;cursor:not-allowed"{% endif %}>👥 إشعار تجريبي للأدمن ({{ admins }})</button>
-    {% if user.is_superuser %}<button class="button" name="target" value="everyone" type="submit" {% if not configured or not total %}disabled style="opacity:.5;cursor:not-allowed"{% endif %} onclick="return confirm('هيتبعت إشعار تجريبي لكل الزوار المشتركين. متأكد؟')">📢 للكل ({{ total }})</button>{% endif %}
+    {% if user.is_superuser %}<button class="button" name="target" value="everyone" type="submit" {% if not configured or not total %}disabled style="opacity:.5;cursor:not-allowed"{% endif %}>📢 للكل ({{ total }})</button>{% endif %}
   </form>
+  <p id="push-result" style="font-weight:bold"></p>
   {% if configured and not total %}<p>مفيش ولا متصفح مشترك لسه. أول ما زائر يضغط «🔔 إشعارات المقالات الجديدة» في الموقع ويوافق، هيظهر هنا.</p>{% endif %}
+
+  <h3 style="margin-top:28px">🔍 اختبار المتصفح ده خطوة بخطوة</h3>
+  <p>افتح الصفحة دي من الجهاز اللي عايز يوصله الإشعار (موبايل أو كمبيوتر)، واضغط الزرار. هيشترك المتصفح ويبعتله إشعار، ويوريك نتيجة كل خطوة.</p>
+  <button class="button" type="button" id="diag-run">▶️ اختبار المتصفح ده</button>
+  <ol id="diag-steps" style="margin-top:12px;line-height:2"></ol>
+
+  <h3 style="margin-top:28px">📋 آخر محاولات الإرسال والأخطاء</h3>
+  {% if logs %}
+  <table style="border-collapse:collapse;width:100%;font-size:13px">
+    <tr style="background:#f3f4f6"><th style="padding:6px;text-align:right">الوقت</th><th style="padding:6px;text-align:right">النوع</th><th style="padding:6px;text-align:right">العنوان</th><th style="padding:6px">نجح/الكل</th><th style="padding:6px;text-align:right">الخطأ</th></tr>
+    {% for l in logs %}
+    <tr style="border-top:1px solid #e5e7eb"><td style="padding:6px;white-space:nowrap">{{ l.created_at|date:"m-d H:i" }}</td><td style="padding:6px">{{ l.get_kind_display }}</td><td style="padding:6px">{{ l.title|truncatechars:50 }}</td><td style="padding:6px;text-align:center">{% if l.kind == 'send' %}{{ l.success }}/{{ l.tokens }}{% endif %}</td><td style="padding:6px;direction:ltr;text-align:left;font-family:monospace;font-size:12px;white-space:pre-wrap">{{ l.error|truncatechars:400 }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}<p>لسه مفيش محاولات مسجلة.</p>{% endif %}
+
+  <details style="margin-top:14px"><summary><strong>معنى الأخطاء الشائعة وحلها</strong></summary>
+  <ul>
+    <li><code>SenderIdMismatch</code>: المفتاح من مشروع Firebase غير المشروع اللي المتصفحات اشتركت فيه (<code>{{ web_project }}</code>). نزّل المفتاح من نفس المشروع.</li>
+    <li><code>ThirdPartyAuthError</code> أو <code>token-subscribe-failed</code>: مفتاح Web Push (VAPID) في الموقع مش من نفس المشروع. من Firebase ← Project settings ← Cloud Messaging ← Web Push certificates انسخ المفتاح وابعتهولي.</li>
+    <li><code>PERMISSION_DENIED</code> أو «Firebase Cloud Messaging API has not been used»: فعّل <a href="https://console.cloud.google.com/apis/library/fcm.googleapis.com?project={{ web_project }}" target="_blank" rel="noopener">Firebase Cloud Messaging API</a> في Google Cloud للمشروع.</li>
+    <li><code>permission-blocked</code> أو <code>NotAllowedError</code>: الإذن مرفوض في المتصفح. اضغط على القفل جنب الرابط ← الإشعارات ← سماح.</li>
+    <li><code>unsupported-browser</code>: المتصفح مش بيدعم الإشعارات. على الآيفون لازم تضيف الموقع للشاشة الرئيسية الأول (iOS 16.4+).</li>
+    <li><strong>Firebase قال «نجح» ومفيش إشعار ظهر</strong>: إشعارات المتصفح مقفولة من إعدادات الجهاز (في ويندوز: Settings ← Notifications، وتأكد إن Focus Assist/Do not disturb مقفول)، أو المتصفح مقفول خالص.</li>
+  </ul></details>
+
+  <script type="module">
+    const steps = document.getElementById('diag-steps');
+    const add = (txt, ok) => { const li = document.createElement('li'); li.textContent = (ok === true ? '✅ ' : ok === false ? '❌ ' : '⏳ ') + txt; steps.appendChild(li); return li; };
+    const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const CONFIG = {
+      apiKey: "AIzaSyC-X81jKdtfaMRblBEsIEl01OVga2Hqe2E", authDomain: "alagme-notifications.firebaseapp.com",
+      projectId: "alagme-notifications", storageBucket: "alagme-notifications.firebasestorage.app",
+      messagingSenderId: "914317417493", appId: "1:914317417493:web:2a9acda899a263a1c1821c"
+    };
+    let fb = null;
+    async function firebaseReady() {
+      if (fb) return fb;
+      const [{ initializeApp }, msgMod] = await Promise.all([
+        import("https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js"),
+      ]);
+      const app = initializeApp(CONFIG, 'admin-push');
+      const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+      await navigator.serviceWorker.ready;
+      const messaging = msgMod.getMessaging(app);
+      // والصفحة دي مفتوحة قدامك، Firebase بيسلّم الإشعار للصفحة بدل ما يعرضه، فلازم نعرضه إحنا
+      msgMod.onMessage(messaging, (payload) => {
+        const n = payload.notification || {};
+        const d = payload.data || {};
+        reg.showNotification(n.title || d.title || '🔔', { body: n.body || d.body || '', icon: '/static/images/icon-192.png', dir: 'rtl', lang: 'ar', data: { url: d.url || '/' } });
+      });
+      fb = { msgMod, messaging, reg };
+      return fb;
+    }
+    if ('Notification' in window && Notification.permission === 'granted' && 'serviceWorker' in navigator) {
+      firebaseReady().catch((e) => console.error(e));
+    }
+    // أزرار الإرسال من غير ما الصفحة تعيد التحميل (عشان الإشعار ميضيعش وقت إعادة التحميل)
+    document.querySelectorAll('form button[name=target]').forEach((btn) => {
+      btn.addEventListener('click', async (ev) => {
+        ev.preventDefault();
+        if (btn.value === 'everyone' && !confirm('هيتبعت إشعار تجريبي لكل الزوار المشتركين. متأكد؟')) return;
+        const out = document.getElementById('push-result');
+        out.textContent = '⏳ جاري الإرسال...';
+        try { if (Notification.permission === 'granted') await firebaseReady(); } catch (e) {}
+        const body = new FormData(); body.append('target', btn.value); body.append('csrfmiddlewaretoken', csrf);
+        try {
+          const res = await (await fetch(location.pathname, { method: 'POST', body, headers: { 'X-Requested-With': 'fetch' } })).json();
+          out.textContent = res.ok ? `✅ Firebase بعت لـ ${res.sent} من ${res.total} متصفح. لو مظهرش عندك، جرّب «اختبار المتصفح ده» تحت.` : `❌ ${res.error}`;
+        } catch (e) { out.textContent = '❌ ' + e.message; }
+      });
+    });
+    document.getElementById('diag-run').addEventListener('click', async () => {
+      steps.innerHTML = '';
+      try {
+        if (!('Notification' in window) || !('serviceWorker' in navigator)) { add('المتصفح ده مش بيدعم الإشعارات (على الآيفون: ضيف الموقع للشاشة الرئيسية الأول).', false); return; }
+        add('المتصفح بيدعم الإشعارات', true);
+        let perm = Notification.permission;
+        if (perm !== 'granted') perm = await Notification.requestPermission();
+        if (perm !== 'granted') { add('الإذن: ' + perm + ' — اضغط على القفل جنب الرابط واسمح بالإشعارات.', false); return; }
+        add('الإذن: مسموح', true);
+        const { msgMod, messaging, reg } = await firebaseReady();
+        add('Service worker اتسجل', true);
+        let token;
+        try {
+          token = await msgMod.getToken(messaging, { vapidKey: "BDJXpC_xK5MZzmk7-qA1wiNAOYsOSIHZ6dWbjMGmX8p0hE9IB_Tp_lutxtN8tUC_hfqvlRym_3AniPt8IvfwmBQ", serviceWorkerRegistration: reg });
+        } catch (e) { add('فشل الاشتراك في Firebase: ' + (e.code || e.name) + ' — ' + e.message, false); return; }
+        if (!token) { add('Firebase مرجعش توكن', false); return; }
+        add('اشتراك Firebase نجح (التوكن: ' + token.slice(0, 16) + '…)', true);
+        await fetch('/save-fcm-token/', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf }, body: JSON.stringify({ token }) });
+        add('المتصفح اتسجل في الموقع كمتصفح أدمن', true);
+        const li = add('بنبعت إشعار تجريبي للمتصفح ده...');
+        const body = new FormData(); body.append('target', 'token'); body.append('token', token); body.append('csrfmiddlewaretoken', csrf);
+        const res = await (await fetch(location.pathname, { method: 'POST', body })).json();
+        li.remove();
+        if (res.ok) add('Firebase استلم الإشعار وبعته (' + res.message_id.slice(-24) + '). المفروض يظهرلك دلوقتي. لو مظهرش: إشعارات المتصفح مقفولة من إعدادات الجهاز.', true);
+        else add('Firebase رفض الإرسال: ' + res.error, false);
+      } catch (e) { add('خطأ: ' + (e.code || e.name) + ' — ' + e.message, false); }
+    });
+  </script>
 
   <h3 style="margin-top:28px">إمتى بيتبعت إشعار تلقائي؟</h3>
   <ul>

@@ -815,3 +815,23 @@ class IndexNowPing(models.Model):
 
     def __str__(self):
         return self.url
+
+
+class PushLog(models.Model):
+    """سجل كل محاولة إرسال إشعار (أو خطأ من متصفح الزائر) عشان نعرف بالظبط إيه اللي حصل."""
+    KIND_CHOICES = [('send', 'إرسال'), ('client', 'خطأ من المتصفح')]
+    kind = models.CharField(max_length=10, choices=KIND_CHOICES, default='send')
+    title = models.CharField(max_length=200, blank=True)
+    tokens = models.PositiveIntegerField(default=0)
+    success = models.PositiveIntegerField(default=0)
+    failure = models.PositiveIntegerField(default=0)
+    error = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'سجل إشعار'
+        verbose_name_plural = 'سجل الإشعارات'
+
+    def __str__(self):
+        return f'{self.get_kind_display()} {self.success}/{self.tokens} {self.created_at:%Y-%m-%d %H:%M}'

@@ -119,44 +119,88 @@ def _absolute(url):
     return getattr(settings, 'CANONICAL_URL', 'https://alagme.com').rstrip('/') + url
 
 
+# أخطاء معناها إن التوكن نفسه مات (الزائر لغى الإذن أو مسح المتصفح) فنمسحه.
+# أما SenderIdMismatch و ThirdPartyAuth وغيرها فمعناها مشكلة في الإعداد، فمنمسحش المشتركين بسببها.
+DEAD_TOKEN_ERRORS = ('UnregisteredError',)
+
+
+def _err_text(exc):
+    if exc is None:
+        return ''
+    code = getattr(exc, 'code', '') or ''
+    return f'{type(exc).__name__}{f" ({code})" if code else ""}: {str(exc)[:300]}'
+
+
+def _log(kind, title='', tokens=0, success=0, failure=0, error=''):
+    try:
+        from core.models import PushLog
+        PushLog.objects.create(kind=kind, title=(title or '')[:200], tokens=tokens,
+                               success=success, failure=failure, error=(error or '')[:2000])
+        # نحتفظ بآخر 200 سجل بس
+        old = PushLog.objects.order_by('-created_at').values_list('pk', flat=True)[200:]
+        if old:
+            PushLog.objects.filter(pk__in=list(old)).delete()
+    except Exception:
+        logger.exception('فشل تسجيل محاولة الإشعار')
+
+
+def _build_message(tokens, title, message, url):
+    from firebase_admin import messaging
+    return messaging.MulticastMessage(
+        notification=messaging.Notification(title=title, body=message),
+        data={'url': url, 'title': title, 'body': message},
+        webpush=messaging.WebpushConfig(
+            headers={'TTL': '172800', 'Urgency': 'high'},
+            fcm_options=messaging.WebpushFCMOptions(link=url),
+            notification=messaging.WebpushNotification(
+                title=title, body=message,
+                icon=_absolute('/static/images/icon-192.png'),
+                badge=_absolute('/static/images/favicon.png'),
+                dir='rtl', lang='ar',
+            ),
+        ),
+        tokens=tokens,
+    )
+
+
 def _send(tokens, title, message, url):
+    """يبعت لقائمة توكنات. بيرجع [(chunk, response)] ومبيرميش أخطاء أبدًا؛ النتيجة بتتسجل في PushLog."""
+    global _last_error
     if not tokens or not _ensure_app():
         return None
     from firebase_admin import messaging
 
     url = _absolute(url)
     title, message = (title or '')[:120], (message or '')[:240]
-    responses = []
+    responses, ok, bad, errors = [], 0, 0, []
     # FCM بيقبل 500 توكن كحد أقصى في الرسالة الواحدة
     for i in range(0, len(tokens), 500):
         chunk = tokens[i:i + 500]
-        msg = messaging.MulticastMessage(
-            notification=messaging.Notification(title=title, body=message),
-            data={'url': url},
-            webpush=messaging.WebpushConfig(
-                headers={'TTL': '172800'},
-                fcm_options=messaging.WebpushFCMOptions(link=url),
-                notification=messaging.WebpushNotification(
-                    icon=_absolute('/static/images/icon-192.png'),
-                    badge=_absolute('/static/images/favicon.png'),
-                    dir='rtl', lang='ar',
-                ),
-            ),
-            tokens=chunk,
-        )
-        resp = messaging.send_each_for_multicast(msg)
+        try:
+            resp = messaging.send_each_for_multicast(_build_message(chunk, title, message, url))
+        except Exception as exc:  # مشكلة عامة: صلاحيات، أو FCM API مقفول في المشروع، أو شبكة
+            logger.exception('فشل إرسال إشعار FCM')
+            bad += len(chunk)
+            errors.append(_err_text(exc))
+            continue
         responses.append((chunk, resp))
-        if resp.failure_count and not resp.success_count:
-            global _last_error
-            first = next((r.exception for r in resp.responses if r.exception is not None), None)
-            _last_error = f'الإرسال فشل: {type(first).__name__}: {str(first)[:200]}' if first else 'الإرسال فشل'
+        ok += resp.success_count
+        bad += resp.failure_count
+        for r in resp.responses:
+            if r.exception is not None:
+                errors.append(_err_text(r.exception))
+    unique = list(dict.fromkeys(errors))[:5]
+    if bad and not ok:
+        _last_error = 'الإرسال فشل: ' + (unique[0] if unique else 'سبب غير معروف')
+    elif ok:
+        _last_error = ''
+    _log('send', title, len(tokens), ok, bad, '\n'.join(unique))
     _cleanup(responses)
     return responses
 
 
 def _cleanup(responses):
-
-    # تنظيف التوكنات اللي بقت مش صالحة (المستخدم لغى الإذن أو مسح المتصفح)
+    """يمسح التوكنات الميتة بس (الزائر لغى الإذن أو مسح بيانات المتصفح)."""
     try:
         from accounts.models import FCMToken
         dead = []
@@ -164,7 +208,7 @@ def _cleanup(responses):
             dead += [
                 tokens[i] for i, r in enumerate(response.responses)
                 if not r.success and r.exception is not None
-                and type(r.exception).__name__ in ('UnregisteredError', 'SenderIdMismatchError', 'InvalidArgumentError')
+                and type(r.exception).__name__ in DEAD_TOKEN_ERRORS
             ]
         if dead:
             FCMToken.objects.filter(token__in=dead).delete()
@@ -232,7 +276,7 @@ def send_user_notification(users, title, message, url="/", tag="chat"):
         response = messaging.send_each_for_multicast(msg)
         dead = [tokens[i] for i, r in enumerate(response.responses)
                 if not r.success and r.exception is not None
-                and type(r.exception).__name__ in ('UnregisteredError', 'SenderIdMismatchError', 'InvalidArgumentError')]
+                and type(r.exception).__name__ in DEAD_TOKEN_ERRORS]
         if dead:
             FCMToken.objects.filter(token__in=dead).delete()
         return response

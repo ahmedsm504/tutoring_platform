@@ -473,6 +473,13 @@ def save_fcm_token(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
+            if data.get('client_error'):
+                # خطأ من متصفح الزائر أثناء الاشتراك في الإشعارات (بيظهر في صفحة حالة الإشعارات)
+                from accounts.notifications import _log
+                who = request.user.username if request.user.is_authenticated else 'زائر'
+                _log('client', title=f"{who} • {str(data.get('page', ''))[:80]}",
+                     error=f"{str(data['client_error'])[:400]}\n{request.META.get('HTTP_USER_AGENT', '')[:200]}")
+                return JsonResponse({'status': 'logged'})
             token = data.get('token')
             is_admin = request.user.is_staff if request.user.is_authenticated else False
 
