@@ -270,6 +270,14 @@
          لو الزائر وافق قبل كده بنجدد التوكن بهدوء، وإلا بيظهر زرار في الفوتر يفعّلها بنفسه -->
     <script type="module">
       const btn = document.getElementById('enable-push');
+      // أي خطأ في الاشتراك بيتسجل عندنا (بيظهر في /admin/push-status/) بدل ما يضيع
+      const reportPushError = (e) => {
+        try {
+          console.error('push init failed', e);
+          fetch('/save-fcm-token/', {method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
+            body: JSON.stringify({ client_error: String((e && (e.code || e.name)) || '') + ': ' + String((e && e.message) || e).slice(0, 300), page: location.pathname })});
+        } catch (x) {}
+      };
       if ('Notification' in window && 'serviceWorker' in navigator) {
         async function initPush(ask) {
           const [{ initializeApp }, { getMessaging, getToken, onMessage }] = await Promise.all([
@@ -306,7 +314,7 @@
         }
         if (Notification.permission === 'granted') {
           const idle = window.requestIdleCallback || ((f) => setTimeout(f, 3000));
-          idle(() => initPush(false).catch(() => {}));
+          idle(() => initPush(false).catch(reportPushError));
         } else if (Notification.permission === 'default') {
           // زرار الفوتر + كارت «فعّل الإشعارات» في آخر المقالات والأسئلة (الإذن مبيتطلبش غير لما الزائر يضغط)
           let dismissed = false;
@@ -314,7 +322,7 @@
           if (btn) btn.hidden = false;
           document.querySelectorAll('[data-push-card]').forEach((card) => { if (!dismissed) card.hidden = false; });
           document.querySelectorAll('#enable-push, [data-push-enable]').forEach((el) => {
-            el.addEventListener('click', () => initPush(true).catch(() => {}));
+            el.addEventListener('click', () => initPush(true).catch(reportPushError));
           });
           document.querySelectorAll('[data-push-dismiss]').forEach((el) => {
             el.addEventListener('click', () => {

@@ -92,7 +92,9 @@
         await fetch('/save-fcm-token/', {method:'POST', credentials:'same-origin', headers:{'Content-Type':'application/json', 'X-CSRFToken': CSRF}, body: JSON.stringify({token})});
         set('lv_push_{{ request.user.pk }}', '1');
       }
-    } catch(e){}
+    } catch(e){
+      try { fetch('/save-fcm-token/', {method:'POST', credentials:'same-origin', headers:{'Content-Type':'application/json', 'X-CSRFToken': CSRF}, body: JSON.stringify({client_error: String((e && (e.code || e.name)) || '') + ': ' + String((e && e.message) || e).slice(0, 300), page: location.pathname})}); } catch(x){}
+    }
   }
   if(Notification.permission === 'granted'){
     if(!sessionStorage.getItem('lv_reg')){ try { sessionStorage.setItem('lv_reg', '1'); } catch(e){} setTimeout(function(){ register(false); }, 2500); }
