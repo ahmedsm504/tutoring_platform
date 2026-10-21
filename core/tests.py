@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'lessons-from-surat-al-kahf-for-youth')
+        self.assertEqual(arts[-1]['slug'], 'quran-while-traveling')
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -593,3 +593,16 @@ class Wave6Tests(TestCase):
         for slug in ('tahzib-al-quran-fami-bishawq', 'prophets-in-quran-for-kids', 'divine-names-at-verse-endings'):
             self.assertEqual(self.client.get(f'/blog/{slug}/').status_code, 200, slug)
         self.assertTrue(PublicQuestion.objects.filter(title='ما أرجى آية في القرآن؟').exists())
+
+
+@override_settings(**TEST_SETTINGS)
+class Wave7Tests(TestCase):
+    def test_wave7_content(self):
+        from content_seed import load_articles
+        self.assertEqual(len(load_articles()), 200)
+        for slug in ('hajr-al-quran-five-types', 'madinah-mushaf-story', 'yusuf-story-for-kids', 'tajweed-applied-surat-al-mulk'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='كيف أرتب الحواميم السبع في ذهني؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='ما هي «المسبّحات»؟').exists())
