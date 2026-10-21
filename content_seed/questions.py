@@ -908,3 +908,8 @@ QUESTIONS = QUESTIONS + QUESTIONS_AR5
 from .questions_wave6 import QUESTIONS_AR6  # noqa: E402
 
 QUESTIONS = QUESTIONS + QUESTIONS_AR6
+
+# الدفعة السابعة (عربي)
+from .questions_wave7 import QUESTIONS_AR7  # noqa: E402
+
+QUESTIONS = QUESTIONS + QUESTIONS_AR7
