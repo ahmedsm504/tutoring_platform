@@ -633,3 +633,11 @@ class Wave9Tests(TestCase):
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='ما الفرق بين اللام الشمسية واللام القمرية؟').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='هل الجن يستمعون إلى القرآن؟').exists())
+
+
+class PushMessageBuildTests(TestCase):
+    def test_build_message_uses_valid_webpush_kwargs(self):
+        from accounts.notifications import _build_message
+        msg = _build_message(['tok'], 'عنوان', 'نص', 'https://alagme.com/')
+        self.assertEqual(msg.webpush.notification.direction, 'rtl')
+        self.assertEqual(msg.webpush.notification.language, 'ar')
