@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'quran-while-traveling')
+        self.assertEqual(arts[-1]['slug'], 'lessons-surat-luqman-for-parents')
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -599,10 +599,23 @@ class Wave6Tests(TestCase):
 class Wave7Tests(TestCase):
     def test_wave7_content(self):
         from content_seed import load_articles
-        self.assertEqual(len(load_articles()), 200)
+        self.assertGreaterEqual(len(load_articles()), 200)
         for slug in ('hajr-al-quran-five-types', 'madinah-mushaf-story', 'yusuf-story-for-kids', 'tajweed-applied-surat-al-mulk'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='كيف أرتب الحواميم السبع في ذهني؟').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='ما هي «المسبّحات»؟').exists())
+
+
+@override_settings(**TEST_SETTINGS)
+class Wave8Tests(TestCase):
+    def test_wave8_content(self):
+        from content_seed import load_articles
+        self.assertEqual(len(load_articles()), 300)
+        for slug in ('memorize-surat-al-imran', 'tajweed-applied-surat-an-naba', 'sulayman-story-for-kids', 'parables-in-the-quran'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='كيف أقرأ «ءأعجمي» في سورة فصلت؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='ما هو «المصحف الإمام»؟').exists())
