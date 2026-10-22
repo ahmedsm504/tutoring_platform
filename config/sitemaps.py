@@ -40,6 +40,7 @@ class StaticViewSitemap(Sitemap):
         ('terms', 0.3, 'yearly'),
         ('blog_list', 0.8, 'daily'),
         ('qna:question_list', 0.85, 'daily'),
+        ('site_index', 0.6, 'daily'),
     ]
 
     def items(self):
@@ -56,7 +57,7 @@ class StaticViewSitemap(Sitemap):
 
     def lastmod(self, obj):
         # آخر تحديث حقيقي للصفحات اللي محتواها بيتغير (بدل "دلوقتي" كل مرة - جوجل بيتجاهل ده)
-        if obj[0] in ('blog_list', 'home') and HAS_BLOG:
+        if obj[0] in ('blog_list', 'home', 'site_index') and HAS_BLOG:
             p = Post.objects.filter(status='published').order_by('-published_at').values_list('published_at', flat=True).first()
             return p
         if obj[0] == 'qna:question_list' and HAS_QNA:

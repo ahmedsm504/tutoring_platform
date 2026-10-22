@@ -145,7 +145,7 @@
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="{% url 'home' %}" aria-label="مؤسسة العجمي - الصفحة الرئيسية">
-          <img src="{% static 'images/logo.jpeg' %}" alt="" width="46" height="46" fetchpriority="high">
+          <img src="{% static 'images/logo.jpeg' %}" alt="" width="46" height="46">
           <span class="brand-name">العجمي<small>لتحفيظ القرآن الكريم</small></span>
         </a>
         {% with u=request.resolver_match.url_name ns=request.resolver_match.namespace %}
@@ -213,6 +213,7 @@
             <li><a href="{% url 'quran_index' %}">القرآن الكريم مكتوب واستماع</a></li>
             <li><a href="{% url 'blog_list' %}">المدونة</a></li>
             <li><a href="{% url 'qna:question_list' %}">أسئلة وأجوبة</a></li>
+            <li><a href="{% url 'site_index' %}">فهرس كل المقالات والأسئلة</a></li>
             <li><a href="{% url 'editorial_policy' %}">منهجية المحتوى</a></li>
             <li><a href="{% url 'privacy' %}">سياسة الخصوصية</a></li>
             <li><a href="{% url 'terms' %}">الشروط والأحكام</a></li>

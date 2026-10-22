@@ -40,6 +40,21 @@ def seed_articles(apps, schema_editor=None):
         )
 
 
+def refresh_articles(apps, slugs):
+    """تحديث محتوى مقالات موجودة من ملفاتها (للتصحيحات)، بدون تغيير العنوان أو الرابط أو التاريخ."""
+    from content_seed import load_articles
+    Post = apps.get_model('blog', 'Post')
+    by_slug = {a['slug']: a for a in load_articles()}
+    for slug in slugs:
+        a = by_slug.get(slug)
+        if not a:
+            continue
+        Post.objects.filter(slug=slug).update(
+            content=a['body'], excerpt=a['excerpt'][:300],
+            meta_description=a['meta'][:160], keywords=a['keywords'][:200],
+        )
+
+
 def _plain(text, limit=155):
     t = re.sub(r'^\s*(#{2,3}|[-•*>]|\d+[.)])\s+', '', text, flags=re.M)
     t = re.sub(r'\*\*(.+?)\*\*', r'\1', t)

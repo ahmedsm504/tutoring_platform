@@ -923,3 +923,8 @@ QUESTIONS = QUESTIONS + QUESTIONS_AR8
 from .questions_wave9 import QUESTIONS_AR9  # noqa: E402
 
 QUESTIONS = QUESTIONS + QUESTIONS_AR9
+
+# الدفعة العاشرة (عربي)
+from .questions_wave10 import QUESTIONS_AR10  # noqa: E402
+
+QUESTIONS = QUESTIONS + QUESTIONS_AR10
