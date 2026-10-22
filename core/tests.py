@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'lessons-surat-luqman-for-parents')
+        self.assertEqual(arts[-1]['slug'], 'quran-at-work')
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -612,10 +612,24 @@ class Wave7Tests(TestCase):
 class Wave8Tests(TestCase):
     def test_wave8_content(self):
         from content_seed import load_articles
-        self.assertEqual(len(load_articles()), 300)
+        self.assertGreaterEqual(len(load_articles()), 300)
         for slug in ('memorize-surat-al-imran', 'tajweed-applied-surat-an-naba', 'sulayman-story-for-kids', 'parables-in-the-quran'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='كيف أقرأ «ءأعجمي» في سورة فصلت؟').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='ما هو «المصحف الإمام»؟').exists())
+
+
+@override_settings(**TEST_SETTINGS)
+class Wave9Tests(TestCase):
+    def test_wave9_content(self):
+        from content_seed import load_articles
+        self.assertEqual(len(load_articles()), 450)
+        for slug in ('juz-1-memorization-plan', 'four-sakt-positions-hafs', 'asiya-story-for-kids',
+                     'tafsir-surat-al-ikhlas', 'angels-in-the-quran', 'quran-at-work'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='ما الفرق بين اللام الشمسية واللام القمرية؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='هل الجن يستمعون إلى القرآن؟').exists())
