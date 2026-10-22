@@ -156,7 +156,7 @@ def _build_message(tokens, title, message, url):
                 title=title, body=message,
                 icon=_absolute('/static/images/icon-192.png'),
                 badge=_absolute('/static/images/favicon.png'),
-                dir='rtl', lang='ar',
+                direction='rtl', language='ar',
             ),
         ),
         tokens=tokens,
