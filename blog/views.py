@@ -137,7 +137,13 @@ def blog_detail(request, slug):
         'videos': videos,
     }
     
-    return render(request, 'blog/blog_detail.html', context)
+    response = render(request, 'blog/blog_detail.html', context)
+    if request.method == 'GET' and not request.user.is_authenticated:
+        from django.utils.http import http_date
+        changed = post.updated_at or post.published_at
+        if changed:
+            response['Last-Modified'] = http_date(changed.timestamp())
+    return response
 
 
 def category_posts(request, slug):

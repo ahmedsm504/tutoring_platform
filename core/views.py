@@ -143,6 +143,27 @@ def editorial_policy(request):
     return render(request, 'core/editorial_policy.html')
 
 
+def site_index(request):
+    """فهرس الموقع: كل المقالات والأسئلة في صفحة واحدة مقسمة بالتصنيف.
+    بيخلي محركات البحث توصل لأي صفحة بخطوة واحدة من الفوتر (أسرع في الاكتشاف والفهرسة)."""
+    from blog.models import Category, Post
+    from qna.models import PublicQuestion, QuestionCategory
+    posts = Post.objects.filter(status='published').only('slug', 'title', 'category_id').order_by('-published_at')
+    by_cat = {}
+    for p in posts:
+        by_cat.setdefault(p.category_id, []).append(p)
+    blog_groups = [(c, by_cat[c.id]) for c in Category.objects.order_by('name') if c.id in by_cat]
+    qs = PublicQuestion.objects.filter(status='approved').only('slug', 'title', 'category_id').order_by('-created_at')
+    q_by_cat = {}
+    for q in qs:
+        q_by_cat.setdefault(q.category_id, []).append(q)
+    qna_groups = [(c, q_by_cat[c.id]) for c in QuestionCategory.objects.order_by('order', 'name') if c.id in q_by_cat]
+    return render(request, 'core/site_index.html', {
+        'blog_groups': blog_groups, 'qna_groups': qna_groups,
+        'posts_count': len(posts), 'questions_count': len(qs),
+    })
+
+
 # =======================
 # أدوات مساعدة صغيرة
 # =======================

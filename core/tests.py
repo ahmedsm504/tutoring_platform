@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'quran-at-work')
+        self.assertEqual(arts[-1]['slug'], 'quran-companion-for-the-sick')
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -625,7 +625,7 @@ class Wave8Tests(TestCase):
 class Wave9Tests(TestCase):
     def test_wave9_content(self):
         from content_seed import load_articles
-        self.assertEqual(len(load_articles()), 450)
+        self.assertGreaterEqual(len(load_articles()), 450)
         for slug in ('juz-1-memorization-plan', 'four-sakt-positions-hafs', 'asiya-story-for-kids',
                      'tafsir-surat-al-ikhlas', 'angels-in-the-quran', 'quran-at-work'):
             r = self.client.get(f'/blog/{slug}/')
@@ -641,3 +641,40 @@ class PushMessageBuildTests(TestCase):
         msg = _build_message(['tok'], 'عنوان', 'نص', 'https://alagme.com/')
         self.assertEqual(msg.webpush.notification.direction, 'rtl')
         self.assertEqual(msg.webpush.notification.language, 'ar')
+
+
+class Wave10Tests(TestCase):
+    def test_wave10_content(self):
+        from content_seed import load_articles
+        self.assertEqual(len(load_articles()), 600)
+        for slug in ('juz-6-memorization-plan', 'tafsir-surat-al-mulk', 'ghulam-and-king-story-for-kids',
+                     'ibad-al-rahman-traits', 'nasikh-mansukh', 'quran-companion-for-the-sick'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='ما الفرق بين الخوف والخشية في القرآن؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='هل يحتاج معلم القرآن أونلاين إلى إجازة؟').exists())
+
+    def test_juz21_refresh(self):
+        from blog.models import Post
+        p = Post.objects.get(slug='history-of-juz-and-hizb-divisions')
+        self.assertIn('العنكبوت: 46', p.content)
+
+
+class SiteIndexAndCachingTests(TestCase):
+    def test_site_index_lists_content(self):
+        r = self.client.get('/site-index/')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, '/blog/nasikh-mansukh/')
+        self.assertContains(r, 'فهرس كل المقالات والأسئلة')
+
+    def test_sitemap_has_site_index(self):
+        r = self.client.get('/sitemap.xml')
+        self.assertEqual(r.status_code, 200)
+
+    def test_blog_detail_conditional_get(self):
+        r = self.client.get('/blog/nasikh-mansukh/')
+        self.assertEqual(r.status_code, 200)
+        self.assertIn('Last-Modified', r)
+        r2 = self.client.get('/blog/nasikh-mansukh/', HTTP_IF_MODIFIED_SINCE=r['Last-Modified'])
+        self.assertEqual(r2.status_code, 304)

@@ -11,6 +11,7 @@ urlpatterns = [
     path('privacy-policy/', views.privacy, name='privacy'),
     path('terms/', views.terms, name='terms'),
     path('editorial-policy/', views.editorial_policy, name='editorial_policy'),
+    path('site-index/', views.site_index, name='site_index'),
 
     # لوحة التحكم
     path('dashboard/', views.dashboard_home, name='dashboard_home'),
