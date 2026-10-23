@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponsePermanentRedirect
 # الصفحات العامة اللي عايزين جوجل يأرشفها - أي حاجة تانية (لوحات التحكم، البورتالات،
 # المراسلات، تقارير الطلاب الخاصة...) بتاخد X-Robots-Tag: noindex تلقائيًا
 PUBLIC_PREFIXES = (
-    '/about/', '/contact/', '/pricing/', '/quality-standards/', '/privacy-policy/', '/terms/', '/editorial-policy/',
+    '/about/', '/contact/', '/pricing/', '/quality-standards/', '/privacy-policy/', '/terms/', '/editorial-policy/', '/site-index/',
     '/blog/', '/questions/', '/quran/', '/static/', '/media/',
     '/sitemap.xml', '/robots.txt', '/ads.txt', '/llms.txt', '/favicon.ico', '/firebase-messaging-sw.js',
 )
