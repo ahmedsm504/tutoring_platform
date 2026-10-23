@@ -7,6 +7,8 @@ from django.conf import settings
 
 logger = logging.getLogger(__name__)
 ENDPOINT = "https://api.indexnow.org/indexnow"
+# بنبعت لـ Bing مباشرة كمان: Bing Webmaster بيحسب الإرسال اللي واصله هو، والمشترك أحيانًا بيتأخر
+ENDPOINTS = (ENDPOINT, "https://www.bing.com/indexnow")
 
 
 def _payload(urls):
@@ -22,14 +24,19 @@ def send_indexnow_batch(urls, timeout=15):
         return True
     ok = True
     for i in range(0, len(urls), 10000):
-        try:
-            r = requests.post(ENDPOINT, json=_payload(urls[i:i + 10000]), timeout=timeout)
-            if r.status_code not in (200, 202):
-                logger.warning("IndexNow رجّع %s (%s رابط)", r.status_code, len(urls[i:i + 10000]))
-                ok = False
-        except requests.RequestException:
-            logger.exception("فشل إرسال IndexNow")
-            ok = False
+        chunk = urls[i:i + 10000]
+        sent = False
+        for endpoint in ENDPOINTS:
+            try:
+                r = requests.post(endpoint, json=_payload(chunk), timeout=timeout,
+                                  headers={'Content-Type': 'application/json; charset=utf-8'})
+                if r.status_code in (200, 202):
+                    sent = True
+                else:
+                    logger.warning("IndexNow %s رجّع %s (%s رابط)", endpoint, r.status_code, len(chunk))
+            except requests.RequestException:
+                logger.exception("فشل إرسال IndexNow إلى %s", endpoint)
+        ok = ok and sent
     return ok
 
 

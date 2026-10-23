@@ -751,3 +751,15 @@ class SeoLimitsAndQuranLinksTests(TestCase):
         r = self.client.get(f'/{settings.INDEXNOW_KEY}.txt')
         self.assertEqual(r.status_code, 200)
         self.assertNotIn('X-Robots-Tag', r.headers)
+
+
+class IndexNowEndpointsTests(TestCase):
+    def test_batch_posts_to_indexnow_and_bing(self):
+        from unittest import mock
+        from core import indexnow
+        resp = mock.Mock(status_code=200)
+        with mock.patch('core.indexnow.requests.post', return_value=resp) as post:
+            self.assertTrue(indexnow.send_indexnow_batch(['https://alagme.com/blog/x/']))
+        hosts = [c.args[0] for c in post.call_args_list]
+        self.assertIn('https://api.indexnow.org/indexnow', hosts)
+        self.assertIn('https://www.bing.com/indexnow', hosts)
