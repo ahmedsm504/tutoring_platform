@@ -255,12 +255,10 @@ class QuestionDetailView(DetailView):
             )
         ).select_related('category')
 
-        if self.object.category:
-            context['related_questions'] = related_qs.filter(
-                category=self.object.category
-            ).order_by('-view_count')[:5]
-        else:
-            context['related_questions'] = related_qs.order_by('-created_at')[:5]
+        from .related import related_question_ids
+        rel_ids = related_question_ids(self.object, limit=5)
+        rel_map = {q.pk: q for q in related_qs.filter(pk__in=rel_ids)}
+        context['related_questions'] = [rel_map[i] for i in rel_ids if i in rel_map]
 
         context['schema_markup'] = self.generate_schema_markup()
         context['user_ip'] = self.get_client_ip()
