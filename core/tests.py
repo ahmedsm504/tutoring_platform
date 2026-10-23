@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'quran-companion-for-the-sick')
+        self.assertEqual(arts[-1]['slug'], 'tafsir-ibn-ashur-introduction')
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -646,7 +646,7 @@ class PushMessageBuildTests(TestCase):
 class Wave10Tests(TestCase):
     def test_wave10_content(self):
         from content_seed import load_articles
-        self.assertEqual(len(load_articles()), 600)
+        self.assertGreaterEqual(len(load_articles()), 600)
         for slug in ('juz-6-memorization-plan', 'tafsir-surat-al-mulk', 'ghulam-and-king-story-for-kids',
                      'ibad-al-rahman-traits', 'nasikh-mansukh', 'quran-companion-for-the-sick'):
             r = self.client.get(f'/blog/{slug}/')
@@ -679,3 +679,49 @@ class SiteIndexAndCachingTests(TestCase):
         self.assertIn('Last-Modified', r)
         r2 = self.client.get('/blog/nasikh-mansukh/', HTTP_IF_MODIFIED_SINCE=r['Last-Modified'])
         self.assertEqual(r2.status_code, 304)
+
+
+class Wave11Tests(TestCase):
+    def test_wave11_content(self):
+        from content_seed import load_articles
+        self.assertEqual(len(load_articles()), 750)
+        for slug in ('tafsir-surat-al-hujurat', 'tajweed-applied-surat-qaf', 'kids-birr-parents-from-quran',
+                     'amanah-in-the-quran', 'zayd-ibn-thabit-and-the-quran', 'tafsir-ibn-ashur-introduction'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='هل يجوز الوقف على «كلا» في كل مواضعها في القرآن؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='ما حكم الحلف على المصحف؟').exists())
+
+
+class RelatedPostsTests(TestCase):
+    def test_related_posts_vary_and_match_topic(self):
+        from blog.models import Post
+        from blog.related import related_posts
+        p = Post.objects.get(slug='tafsir-surat-al-hujurat')
+        rel = related_posts(p)
+        self.assertEqual(len(rel), 4)
+        self.assertNotIn(p, rel)
+        self.assertTrue(all(r.category_id == p.category_id for r in rel))
+        # مقالين مختلفين في نفس التصنيف مايرجعوش نفس القايمة (قبل كده كانت أحدث 3 للكل)
+        q = Post.objects.get(slug='zayd-ibn-thabit-and-the-quran')
+        self.assertNotEqual([x.pk for x in rel], [x.pk for x in related_posts(q)])
+
+    def test_detail_has_prev_next_and_related(self):
+        r = self.client.get('/blog/amanah-in-the-quran/')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'rel="prev"')
+        self.assertContains(r, 'rel="next"')
+        self.assertContains(r, 'related-title')
+
+    def test_related_questions_vary(self):
+        from qna.related import related_question_ids
+        qs = list(PublicQuestion.objects.filter(status='approved', category__isnull=False).order_by('pk')[:40])
+        lists = {tuple(related_question_ids(q)) for q in qs}
+        self.assertGreater(len(lists), 10)
+        q = qs[5]
+        from django.urls import reverse
+        r = self.client.get(reverse('qna:question_detail', args=[q.slug]))
+        self.assertEqual(r.status_code, 200)
+        self.assertGreater(len(r.context['related_questions']), 0)
+

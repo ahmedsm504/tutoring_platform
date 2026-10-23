@@ -101,10 +101,9 @@ def blog_detail(request, slug):
     comments = post.comments.filter(is_approved=True).order_by('-created_at')
     
     # مقالات ذات صلة (من نفس التصنيف)
-    related_posts = Post.objects.filter(
-        status='published',
-        category=post.category
-    ).exclude(id=post.id)[:3]
+    from .related import related_posts as _related, prev_next
+    related_posts = _related(post, limit=4)
+    prev_post, next_post = prev_next(post)
 
     # ✅ جديد: معرض الصور وفيديوهات المقال
     gallery_images = post.gallery_images.all()
@@ -133,6 +132,8 @@ def blog_detail(request, slug):
         'comments': comments,
         'comments_count': comments.count(),
         'related_posts': related_posts,
+        'prev_post': prev_post,
+        'next_post': next_post,
         'gallery_images': gallery_images,
         'videos': videos,
     }
