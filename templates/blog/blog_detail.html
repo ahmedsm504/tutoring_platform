@@ -185,6 +185,12 @@
       <article class="article-body">
         {{ post.content|rich }}
       </article>
+      {% if quran_surah %}
+      <aside class="inline-cta" style="margin-top:28px;" aria-label="اقرأ واستمع للسورة">
+        <p><strong>اقرأ سورة {{ quran_surah.1 }} كاملة واستمع لها آية آية</strong> بصوت الحصري والمنشاوي وعبد الباسط وكبار القراء، مع تكرار الآيات للحفظ.</p>
+        <a class="btn btn-primary" href="{% url 'quran_surah' quran_surah.0 %}">سورة {{ quran_surah.1 }} مكتوبة بصوت الشيوخ</a>
+      </aside>
+      {% endif %}
 
       {% if gallery_images %}
       <section id="gallery" aria-labelledby="gallery-title" style="margin-top:40px;">

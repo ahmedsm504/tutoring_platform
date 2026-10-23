@@ -83,6 +83,11 @@ def blog_list(request):
     return render(request, 'blog/blog_list.html', context)
 
 
+def _surah_link(post):
+    from learning.quran import surah_from_title
+    return surah_from_title(post.title)
+
+
 def blog_detail(request, slug):
     """عرض تفاصيل مقال واحد"""
     post = Post.objects.filter(slug=slug, status='published').first()
@@ -132,6 +137,7 @@ def blog_detail(request, slug):
         'comments': comments,
         'comments_count': comments.count(),
         'related_posts': related_posts,
+        'quran_surah': _surah_link(post),
         'prev_post': prev_post,
         'next_post': next_post,
         'gallery_images': gallery_images,

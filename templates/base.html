@@ -1,11 +1,11 @@
-{% load static %}
+{% load static content_tags %}
 <!DOCTYPE html>
 <html lang="{% block html_lang %}ar{% endblock %}" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}مؤسسة العجمي | تحفيظ القرآن الكريم أونلاين لجميع الدول{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين للأطفال والكبار، من أي دولة وبتوقيت يناسبك. احجز حلقتك التجريبية المجانية الآن.{% endblock %}">
+    <title>{% filter seo_clip_title %}{% block title %}مؤسسة العجمي | تحفيظ القرآن الكريم أونلاين لجميع الدول{% endblock %}{% endfilter %}</title>
+    <meta name="description" content="{% filter seo_fill_desc %}{% block meta_description %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين للأطفال والكبار، من أي دولة وبتوقيت يناسبك. احجز حلقتك التجريبية المجانية الآن.{% endblock %}{% endfilter %}">
     <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endblock %}">
     <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock %}">
     <link rel="canonical" href="{% block canonical_url %}{{ canonical_url }}{% endblock %}">
