@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'tafsir-ibn-ashur-introduction')
+        self.assertEqual(arts[-1]['slug'], 'how-to-test-your-tajweed-level')
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -684,7 +684,7 @@ class SiteIndexAndCachingTests(TestCase):
 class Wave11Tests(TestCase):
     def test_wave11_content(self):
         from content_seed import load_articles
-        self.assertEqual(len(load_articles()), 750)
+        self.assertGreaterEqual(len(load_articles()), 750)
         for slug in ('tafsir-surat-al-hujurat', 'tajweed-applied-surat-qaf', 'kids-birr-parents-from-quran',
                      'amanah-in-the-quran', 'zayd-ibn-thabit-and-the-quran', 'tafsir-ibn-ashur-introduction'):
             r = self.client.get(f'/blog/{slug}/')
@@ -692,6 +692,20 @@ class Wave11Tests(TestCase):
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='هل يجوز الوقف على «كلا» في كل مواضعها في القرآن؟').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='ما حكم الحلف على المصحف؟').exists())
+
+
+class Wave12Tests(TestCase):
+    def test_wave12_content(self):
+        from content_seed import load_articles
+        self.assertEqual(len(load_articles()), 950)
+        for slug in ('tafsir-surat-al-baqarah', 'allah-name-as-samad-meaning', 'tafsir-ayah-dua-dhi-an-nun',
+                     'hudhud-story-for-kids', 'mutashabihat-surat-ash-shuara', 'why-quran-in-arabic',
+                     'idgham-mithlayn', 'how-to-test-your-tajweed-level'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='ما معنى اسم الله الصمد؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='هل في «اركب معنا» بسورة هود إدغام؟').exists())
 
 
 class RelatedPostsTests(TestCase):
