@@ -667,6 +667,7 @@ class SiteIndexAndCachingTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, '/blog/nasikh-mansukh/')
         self.assertContains(r, 'فهرس كل المقالات والأسئلة')
+        self.assertNotIn('X-Robots-Tag', r.headers)
 
     def test_sitemap_has_site_index(self):
         r = self.client.get('/sitemap.xml')
