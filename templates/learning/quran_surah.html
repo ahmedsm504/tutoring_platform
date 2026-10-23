@@ -42,6 +42,10 @@
     <a href="{% url 'quran_index' %}">كل السور</a>
     {% if next %}<a href="{% url 'quran_surah' next.id %}" rel="next">سورة {{ next.name }} ←</a>{% endif %}
   </nav>
+  {% if surah_articles %}<aside class="related-learn" aria-labelledby="surah-art-title"><h2 id="surah-art-title" style="font-size:1.2rem;">عن سورة {{ meta.name }} في مدونتنا</h2>
+    <ul>{% for slug, t in surah_articles %}<li><a href="{% url 'blog_detail' slug %}">{{ t }}</a></li>{% endfor %}</ul></aside>{% endif %}
+  <section aria-labelledby="reciters-title" style="margin-top:22px;"><h2 id="reciters-title" style="font-size:1.2rem;">استمع إلى سورة {{ meta.name }} بصوت كبار القراء</h2>
+    <p>تقدر تسمع سورة {{ meta.name }} آية آية وتكررها للحفظ بصوت: {% for code, name in reciters %}{{ name }}{% if not forloop.last %}، {% endif %}{% endfor %}. اختار الشيخ من المشغّل فوق، واضغط على أي آية تبدأ منها.</p></section>
   <aside class="related-learn" aria-labelledby="rel-title"><h2 id="rel-title" style="font-size:1.2rem;">يفيدك في حفظ السورة</h2>
     <ul>{% for url, t in related %}<li><a href="{{ url }}">{{ t }}</a></li>{% endfor %}</ul></aside>
   <div class="inline-cta" style="margin-top:28px;"><p><strong>عايز تحفظ سورة {{ meta.name }} بالتجويد مع معلمة؟</strong> حصص فردية أونلاين، وأول حلقة مجانية.</p><a class="btn btn-gold" href="{% url 'contact' %}?program=سورة {{ meta.name }}">احجز حلقة تجريبية مجانية</a></div>

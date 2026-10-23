@@ -37,7 +37,7 @@ class CanonicalHostMiddleware:
 
 
 def is_public_path(path):
-    if path == '/':
+    if path == '/' or path == f"/{getattr(settings, 'INDEXNOW_KEY', '')}.txt":
         return True
     if path.startswith(PRIVATE_UNDER_PUBLIC):
         return False

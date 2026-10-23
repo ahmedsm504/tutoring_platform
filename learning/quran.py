@@ -64,3 +64,37 @@ def range_label(s, a, b):
     if a and b and (a, b) != (1, ayah_count(s)):
         return f"سورة {name} من الآية {a} إلى {b}" if a != b else f"سورة {name} الآية {a}"
     return f"سورة {name} كاملة"
+
+
+@lru_cache(maxsize=1)
+def _title_patterns():
+    import re
+    pats = []
+    for s in index():
+        name = s['name']
+        pats.append((len(name), s['id'], name, re.compile(rf'سور[ةه]\s+{re.escape(name)}(?![ء-ي])')))
+    pats.sort(reverse=True)  # الأسماء الأطول الأول (عشان «ق» ماتمسكش «القمر» مثلًا)
+    return pats
+
+
+def surah_from_title(title):
+    """لو عنوان المقال فيه «سورة X» نرجّع (رقمها، اسمها)، وإلا None."""
+    for _, sid, name, rx in _title_patterns():
+        if rx.search(title or ''):
+            return sid, name
+    return None
+
+
+def surah_articles(n, limit=6):
+    """مقالات المدونة الخاصة بالسورة (تفسير، خطة حفظ، تطبيق تجويد...) عشان صفحة السورة تلينك عليها."""
+    from django.core.cache import cache
+    key = f'quran:articles:v1:{n}'
+    items = cache.get(key)
+    if items is None:
+        from blog.models import Post
+        name = index()[n - 1]['name']
+        rx = [p for p in _title_patterns() if p[1] == n][0][3]
+        qs = Post.objects.filter(status='published', title__contains=name).values_list('slug', 'title')
+        items = [(slug, title) for slug, title in qs if rx.search(title) and surah_from_title(title) == (n, name)][:limit]
+        cache.set(key, items, 6 * 3600)
+    return items

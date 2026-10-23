@@ -725,3 +725,29 @@ class RelatedPostsTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertGreater(len(r.context['related_questions']), 0)
 
+
+
+class SeoLimitsAndQuranLinksTests(TestCase):
+    def test_title_and_description_limits(self):
+        import html, re
+        for url in ('/', '/blog/', '/blog/anam-ten-commandments/', '/blog/category/hifz/', '/quran/2/'):
+            t = self.client.get(url).content.decode()
+            title = html.unescape(re.search(r'<title>(.*?)</title>', t, re.S).group(1).strip())
+            desc = html.unescape(re.search(r'<meta name="description" content="(.*?)"', t, re.S).group(1))
+            self.assertLessEqual(len(title), 60, url)
+            self.assertTrue(120 <= len(desc) <= 160, (url, len(desc)))
+            self.assertEqual(t.count('<h1'), 1, url)
+            self.assertEqual(t.count('rel="canonical"'), 1, url)
+
+    def test_surah_page_links_articles_and_back(self):
+        r = self.client.get('/quran/49/')
+        self.assertContains(r, '/blog/tafsir-surat-al-hujurat/')
+        self.assertContains(r, 'بصوت كبار القراء')
+        r = self.client.get('/blog/tafsir-surat-al-hujurat/')
+        self.assertContains(r, '/quran/49/')
+
+    def test_indexnow_key_is_public(self):
+        from django.conf import settings
+        r = self.client.get(f'/{settings.INDEXNOW_KEY}.txt')
+        self.assertEqual(r.status_code, 200)
+        self.assertNotIn('X-Robots-Tag', r.headers)

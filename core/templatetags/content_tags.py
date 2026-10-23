@@ -190,3 +190,77 @@ def card_img(url):
     if m and _thumb_exists(m.group(1)):
         return url[:m.start()] + f'/static/images/blog/thumbs/{m.group(1)}.webp'
     return url
+
+
+TITLE_MAX = 60
+DESC_MIN, DESC_MAX = 120, 160
+_DESC_TAIL = ' مؤسسة العجمي لتحفيظ القرآن الكريم وتعليم التجويد أونلاين للأطفال والكبار.'
+
+
+_DANGLING = {'في', 'من', 'على', 'عن', 'إلى', 'الى', 'أن', 'و', 'أو', 'ثم', 'مع', 'بين', 'التي', 'الذي', 'لا',
+             'and', 'or', 'to', 'the', 'of', 'a', 'an', 'in', 'for', 'with', 'how', 'why', 'what'}
+
+
+def _clip_words(text, limit):
+    if len(text) <= limit:
+        return text
+    cut = text[:limit + 1]
+    sp = cut.rfind(' ')
+    out = (cut[:sp] if sp > limit * 0.6 else text[:limit])
+    if out.count('(') > out.count(')'):
+        out = out[:out.rfind('(')]
+    words = out.split()
+    while len(words) > 3 and (words[-1].lower() in _DANGLING or words[-1].startswith('و') and len(words[-1]) <= 2):
+        words.pop()
+    return ' '.join(words).rstrip(' ،,:-–|')
+
+
+def _unesc(v):
+    import html as _h
+    return _h.unescape(str(v or ''))
+
+
+@register.filter
+def seo_clip_title(title):
+    """عنوان الصفحة في <title> مايزيدش عن 60 حرف (Bing وجوجل بيعلموا على الأطول ويقصّوه).
+    بنشيل اسم الموقع الأول، وبعدين ناخد الجزء اللي قبل «:» لو كافي، وإلا نقص على كلمة."""
+    return mark_safe(escape(_clip_title(_unesc(title))))
+
+
+def _clip_title(title):
+    t = ' '.join(title.split())
+    if len(t) <= TITLE_MAX:
+        return t
+    if ' | ' in t:
+        t = t.rsplit(' | ', 1)[0].strip()
+        if len(t) <= TITLE_MAX:
+            return t
+    for sep in (':', '؟', '?', ' - ', '،'):
+        if sep in t:
+            head, rest = t.split(sep, 1)
+            head = head.strip() + (sep if sep in '؟?' else '')
+            if 20 <= len(head) <= TITLE_MAX:
+                if len(head) < 35 and sep == ':':
+                    # نحاول نحتفظ بجزء من العنوان الفرعي لحد أول «،» أو «(» لو يدخل في 60
+                    sub = re.split(r'[،(]', rest.strip(), 1)[0].strip()
+                    if sub and len(head) + 2 + len(sub) <= TITLE_MAX:
+                        return f'{head}: {sub}'
+                return head
+    return _clip_words(t, TITLE_MAX)
+
+
+@register.filter
+def seo_fill_desc(desc):
+    """الوصف بين 120 و160 حرف: لو قصير نكمّله بتعريف الموقع، ولو طويل نقصه على كلمة."""
+    return mark_safe(escape(_fill_desc(_unesc(desc))))
+
+
+def _fill_desc(desc):
+    d = ' '.join(desc.split())
+    if len(d) < DESC_MIN:
+        if d and d[-1] not in '.!؟?':
+            d += '.'
+        d = (d + _DESC_TAIL).strip()
+        if len(d) < DESC_MIN:
+            d += ' احجز حلقة تجريبية مجانية الآن.'
+    return _clip_words(d, DESC_MAX)

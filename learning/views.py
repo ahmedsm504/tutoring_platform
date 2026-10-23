@@ -342,4 +342,5 @@ def quran_surah(request, n):
         'prev': idx[n - 2] if n > 1 else None, 'next': idx[n] if n < 114 else None,
         'reciter_name': quran.RECITER_NAMES.get(rec or '', quran.RECITER_NAMES[quran.DEFAULT_RECITER]),
         'audio_first': quran.audio_url(quran.DEFAULT_RECITER, n, 1), 'related': related,
+        'surah_articles': quran.surah_articles(n),
     }))
