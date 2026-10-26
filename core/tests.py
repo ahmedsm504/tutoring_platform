@@ -791,3 +791,21 @@ class IndexNowEndpointsTests(TestCase):
         hosts = [c.args[0] for c in post.call_args_list]
         self.assertIn('https://api.indexnow.org/indexnow', hosts)
         self.assertIn('https://www.bing.com/indexnow', hosts)
+
+
+class VarcharLimitsTests(TestCase):
+    """SQLite مابيطبقش max_length لكن Postgres (الإنتاج) بيرفض أي قيمة أطول وبيوقع الـ migration كلها.
+    (slug مقال طوله 54 والحد 50 وقّع الموقع كله بعد الدفعة 13)"""
+    def test_seeded_values_fit_postgres_limits(self):
+        from django.apps import apps
+        over = []
+        for label in ('blog', 'qna'):
+            for M in apps.get_app_config(label).get_models():
+                fields = [f for f in M._meta.fields if getattr(f, 'max_length', None)
+                          and f.get_internal_type() in ('CharField', 'SlugField', 'URLField', 'EmailField')]
+                for o in M.objects.all():
+                    for f in fields:
+                        v = getattr(o, f.attname) or ''
+                        if len(v) > f.max_length:
+                            over.append((M.__name__, f.name, f.max_length, len(v), str(v)[:60]))
+        self.assertEqual(over, [])
