@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static humanize content_tags %}
 
-{% block title %}مدونة تحفيظ القرآن الكريم | مؤسسة العجمي - مقالات وفوائد قرآنية{% endblock %}
+{% block title %}مدونة تحفيظ القرآن الكريم{% if posts.number > 1 %} - صفحة {{ posts.number }}{% endif %} | مؤسسة العجمي{% endblock %}
 
-{% block meta_description %}مدونة مؤسسة العجمي المتخصصة في تحفيظ القرآن الكريم وتعليم التجويد. اقرأ مقالات متنوعة في تفسير القرآن، أحكام التلاوة، قصص الأنبياء، ونصائح دينية مفيدة للمسلمين.{% endblock %}
+{% block meta_description %}{% if posts.number > 1 %}صفحة {{ posts.number }}: {% endif %}مدونة مؤسسة العجمي المتخصصة في تحفيظ القرآن الكريم وتعليم التجويد. اقرأ مقالات متنوعة في تفسير القرآن، أحكام التلاوة، قصص الأنبياء، ونصائح دينية مفيدة للمسلمين.{% endblock %}
 
 {% block meta_keywords %}تحفيظ القرآن الكريم, تعليم التجويد, تفسير القرآن, مدونة قرآنية, أحكام التلاوة, قصص الأنبياء, نصائح دينية, فوائد إسلامية, تعليم القرآن للأطفال, دورات قرآنية{% endblock %}
 
@@ -19,14 +19,7 @@
 {% block canonical_url %}{{ SITE_URL }}{{ request.path }}{% if posts.number > 1 and not search_query and not current_category %}?page={{ posts.number }}{% endif %}{% endblock %}
 {% block robots %}{% if search_query or current_category or current_sort != 'latest' %}noindex, follow{% else %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endif %}{% endblock %}
 
-{% block extra_meta %}
-<meta name="author" content="مؤسسة العجمي">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="مؤسسة العجمي">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@AlAjami">
-<meta name="theme-color" content="#FFD700">
-{% endblock %}
+
 
 {% block extra_ldjson %}
 <script type="application/ld+json">
@@ -57,20 +50,8 @@
   "name": "مدونة مؤسسة العجمي لتحفيظ القرآن الكريم",
   "url": "{{ canonical_url }}",
   "description": "مدونة متخصصة في تحفيظ القرآن الكريم وتعليم التجويد وتفسير الآيات ونصائح دينية",
-  "publisher": {
-    "@type": "Organization",
-    "name": "مؤسسة العجمي",
-    "url": "{{ SITE_URL }}",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ SITE_URL }}{% static 'images/logo.png' %}"
-    },
-    "sameAs": [
-      "https://facebook.com/AlAjami",
-      "https://twitter.com/AlAjami",
-      "https://instagram.com/AlAjami"
-    ]
-  },
+  "publisher": {"@id": "{{ SITE_URL }}/#organization"},
+  "isPartOf": {"@id": "{{ SITE_URL }}/#website"},
   "inLanguage": "ar",
   "blogPost": [
     {% for post in posts %}
@@ -80,19 +61,12 @@
       "headline": "{{ post.title|escapejs }}",
       "name": "{{ post.title|escapejs }}",
       "url": "{{ SITE_URL }}{% url 'blog_detail' post.slug %}",
-      "datePublished": "{{ post.created_at|date:'c' }}",
+      "datePublished": "{{ post.published_at|default:post.created_at|date:'c' }}",
       "dateModified": "{{ post.updated_at|date:'c' }}",
       "description": "{{ post.excerpt|escapejs }}",
-      "image": "{% if post.image %}{{ SITE_URL }}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}",
-      "author": {
-        "@type": "Organization",
-        "name": "مؤسسة العجمي"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "مؤسسة العجمي"
-      },
-      "articleBody": "{{ post.excerpt|escapejs }}"
+      "image": "{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}",
+      "author": {"@id": "{{ SITE_URL }}/#organization"},
+      "publisher": {"@id": "{{ SITE_URL }}/#organization"}
     }{% if not forloop.last %},{% endif %}
     {% endfor %}
   ]

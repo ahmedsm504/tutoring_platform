@@ -32,7 +32,8 @@ sitemaps = {
 
 @cache_page(60 * 30)
 def sitemap_view(request, **kwargs):
-    return sitemap(request, sitemaps=sitemaps)
+    # قالب بيضيف صورة الغلاف لكل مقال (image sitemap) عشان الصور تظهر في بحث جوجل للصور
+    return sitemap(request, sitemaps=sitemaps, template_name='sitemaps/sitemap_images.xml')
 
 
 def ads_txt(request):
