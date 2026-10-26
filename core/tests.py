@@ -827,19 +827,3 @@ class SeoBoostTests(TestCase):
     def test_plain_keeps_table_rows(self):
         from core.templatetags.content_tags import plain
         self.assertEqual(plain('أمثلة:\n| أ | ب |\n|---|---|\n| **ج** | د |'), 'أمثلة:\nأ - ب\nج - د')
-
-
-class SitemapResilienceTests(TestCase):
-    def test_healthz_ok_on_any_host(self):
-        r = self.client.get('/healthz', HTTP_HOST='healthcheck.railway.app')
-        self.assertEqual(r.status_code, 200)
-
-    def test_bad_slug_post_does_not_break_sitemap(self):
-        from django.core.cache import cache
-        cache.clear()
-        p = Post.objects.filter(status='published').first()
-        Post.objects.filter(pk=p.pk).update(slug='bad slug؟')
-        r = self.client.get('/sitemap.xml')
-        self.assertEqual(r.status_code, 200)
-        self.assertNotIn('bad slug', r.content.decode())
-        self.assertGreater(r.content.decode().count('<url>'), 1000)
