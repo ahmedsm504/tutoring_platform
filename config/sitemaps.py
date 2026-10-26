@@ -69,7 +69,9 @@ class BlogPostSitemap(Sitemap):
     """Sitemap موحد لجميع مقالات المدونة مع أولوية ديناميكية"""
     changefreq = "weekly"
     protocol = 'https'
-    limit = 1000
+    # كان 1000: وخريطة الموقع ملف واحد (/sitemap.xml) فأي مقال بعد الألف ماكانش بيظهر فيها خالص.
+    # جوجل بيقبل لحد 50 ألف رابط في الملف الواحد.
+    limit = 45000
 
     def items(self):
         """جلب جميع المقالات المنشورة"""
@@ -135,7 +137,7 @@ class QNAQuestionsSitemap(Sitemap):
     """Sitemap موحد لجميع أسئلة QNA مع أولوية ديناميكية (يغطي جميع الحالات)"""
     changefreq = "daily"
     protocol = 'https'
-    limit = 1000
+    limit = 45000
 
     def items(self):
         if not HAS_QNA:

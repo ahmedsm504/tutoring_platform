@@ -7,12 +7,12 @@
     <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endblock %}
 {% block title %}{% if question.title|is_latin %}{{ question.title|seo_title:'Al-Agmi Quran Q&A' }}{% else %}{{ question.title|seo_title:'أسئلة العجمي' }}{% endif %}{% endblock %}
 
-{% block meta_description %}{% if question.meta_description %}{{ question.meta_description|striptags|truncatechars:160 }}{% else %}{{ question.title|striptags }} - {{ question.question_text|striptags|truncatechars:70 }}{% if official_answer %} الإجابة: {{ official_answer.answer_text|striptags|truncatechars:70 }}{% endif %}{% endif %}{% endblock %}
+{% block meta_description %}{% if question.meta_description %}{{ question.meta_description|striptags|truncatechars:160 }}{% else %}{{ question.title|striptags }} - {{ question.question_text|striptags|truncatechars:70 }}{% if official_answer %} الإجابة: {{ official_answer.answer_text|plain|striptags|truncatechars:70 }}{% endif %}{% endif %}{% endblock %}
 
 {% block meta_keywords %}{% if question.category %}{{ question.category.name }},{% endif %} تحفيظ قرآن, تجويد, تفسير, أحكام تلاوة, فتاوى قرآنية, استفسارات قرآنية{% endblock %}
 
 {% block og_title %}{{ question.title }} - منصة العجمي{% endblock %}
-{% block og_description %}{{ question.question_text|truncatewords:30 }}{% endblock %}
+{% block og_description %}{% if official_answer %}{{ official_answer.answer_text|plain|striptags|truncatechars:190 }}{% else %}{{ question.question_text|striptags|truncatewords:30 }}{% endif %}{% endblock %}
 {% block twitter_title %}{{ question.title }} - العجمي{% endblock %}
 {% block twitter_description %}{{ question.question_text|truncatewords:30 }}{% endblock %}
 
@@ -46,7 +46,7 @@
       {% for answer in community_answers %}
       {
         "@type": "Answer",
-        "text": "{{ answer.answer_text|striptags|truncatewords:80|escapejs }}",
+        "text": "{{ answer.answer_text|plain|striptags|truncatewords:80|escapejs }}",
         "dateCreated": "{{ answer.created_at|date:'c' }}",
         "upvoteCount": {{ answer.likes|default:0 }},
         "url": "{{ canonical_url }}#answer-{{ answer.id }}",
@@ -78,10 +78,16 @@
       "position": 2,
       "name": "أسئلة وأجوبة",
       "item": "{{ SITE_URL }}{% url 'qna:question_list' %}"
-    },
+    },{% if question.category %}
     {
       "@type": "ListItem",
       "position": 3,
+      "name": "{{ question.category.name|escapejs }}",
+      "item": "{{ SITE_URL }}{% url 'qna:question_list' %}?category={{ question.category.slug }}"
+    },{% endif %}
+    {
+      "@type": "ListItem",
+      "position": {% if question.category %}4{% else %}3{% endif %},
       "name": "{{ question.title|striptags|escapejs }}",
       "item": "{{ canonical_url }}"
     }

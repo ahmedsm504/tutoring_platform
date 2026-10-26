@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static humanize %}
 
-{% block title %}أسئلة وأجوبة في تحفيظ القرآن وتجويده | منصة العجمي{% endblock %}
+{% block title %}{% if current_category_obj.slug == 'english' %}Quran &amp; Tajweed Questions in English{% elif current_category_obj %}أسئلة {{ current_category_obj.name }}{% else %}أسئلة وأجوبة في تحفيظ القرآن وتجويده{% endif %}{% if page_obj.number > 1 %} - صفحة {{ page_obj.number }}{% endif %} | منصة العجمي{% endblock %}
 
-{% block meta_description %}تصفح الأسئلة الشائعة في تحفيظ القرآن الكريم عن بعد، تجويد، تفسير، وأحكام التلاوة. إجابات دقيقة من معلمين متخصصين.{% endblock %}
+{% block meta_description %}{% if page_obj.number > 1 %}صفحة {{ page_obj.number }}: {% endif %}{% if current_category_obj.slug == 'english' %}{{ current_category_obj.description }} {{ current_category_obj.get_questions_count }} questions answered by the teachers of Al-Agmi Quran Academy, with a free trial class.{% elif current_category_obj %}{{ current_category_obj.description }} {{ current_category_obj.get_questions_count }} سؤالًا في قسم «{{ current_category_obj.name }}» بإجابات معلمات مؤسسة العجمي لتحفيظ القرآن الكريم.{% else %}تصفح الأسئلة الشائعة في تحفيظ القرآن الكريم عن بعد، تجويد، تفسير، وأحكام التلاوة. إجابات دقيقة من معلمين متخصصين.{% endif %}{% endblock %}
 
 {% block meta_keywords %}أسئلة وأجوبة قرآن, تحفيظ القرآن, تجويد القرآن, تفسير القرآن, فتاوى قرآنية, أحكام التلاوة, استفسارات قرآنية{% endblock %}
 
-{% block og_title %}أسئلة وأجوبة عن تحفيظ القرآن - منصة العجمي{% endblock %}
+{% block og_title %}{% if current_category_obj %}أسئلة {{ current_category_obj.name }} - منصة العجمي{% else %}أسئلة وأجوبة عن تحفيظ القرآن - منصة العجمي{% endif %}{% endblock %}
 {% block og_description %}أكبر تجمع للأسئلة والأجوبة المتخصصة في تحفيظ القرآن الكريم وتجويده وتفسيره. اطرح سؤالك واحصل على إجابة من خبراء.{% endblock %}
 {% block twitter_title %}أسئلة وأجوبة قرآنية - العجمي{% endblock %}
 {% block twitter_description %}أجوبة موثقة عن كل ما يتعلق بتحفيظ القرآن وتلاوته.{% endblock %}
@@ -30,8 +30,14 @@
       "@type": "ListItem",
       "position": 2,
       "name": "أسئلة وأجوبة",
-      "item": "{{ canonical_url }}"
-    }
+      "item": "{{ SITE_URL }}{% url 'qna:question_list' %}"
+    }{% if current_category_obj %},
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ current_category_obj.name|escapejs }}",
+      "item": "{{ SITE_URL }}{% url 'qna:question_list' %}?category={{ current_category_obj.slug }}"
+    }{% endif %}
   ]
 }
 </script>
@@ -40,37 +46,15 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {% for question in questions %}{% if question.has_official %}{
-      "@type": "Question",
-      "name": "{{ question.title|striptags|escapejs }}",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "{{ question.official_answer.answer_text|striptags|truncatewords:80|escapejs }}",
-        "upvoteCount": {{ question.official_answer.likes|default:0 }},
-        "author": {
-          "@type": "Organization",
-          "name": "مؤسسة العجمي"
-        }
-      }
-    }{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}
-  ]
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "قائمة الأسئلة المتعلقة بتحفيظ القرآن",
+  "name": "{% if current_category_obj %}أسئلة {{ current_category_obj.name|escapejs }}{% else %}قائمة الأسئلة المتعلقة بتحفيظ القرآن{% endif %}",
   "description": "مجموعة من الأسئلة والأجوبة حول تحفيظ القرآن وتجويده وتفسيره.",
-  "numberOfItems": {{ total_questions|default:0 }},
+  "numberOfItems": {{ page_obj.paginator.count|default:0 }},
   "itemListElement": [
     {% for question in questions %}
     {
       "@type": "ListItem",
-      "position": {{ forloop.counter }},
+      "position": {{ page_obj.start_index|add:forloop.counter0 }},
       "name": "{{ question.title|striptags|escapejs }}",
       "url": "{{ SITE_URL }}{% url 'qna:question_detail' question.slug %}"
     }{% if not forloop.last %},{% endif %}
@@ -84,9 +68,10 @@
 {% block content %}
 <header class="page-head">
   <div class="container">
-    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">أسئلة وأجوبة</li></ol>
-    <h1>أسئلة وأجوبة في تحفيظ القرآن الكريم</h1>
-    <p>أسئلة الناس عن الحفظ والتجويد والتلاوة، وإجاباتها من معلمات ومشرفات المؤسسة.</p>
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li>{% if current_category_obj %}<li><a href="{% url 'qna:question_list' %}">أسئلة وأجوبة</a></li><li aria-current="page">{{ current_category_obj.name }}</li>{% else %}<li aria-current="page">أسئلة وأجوبة</li>{% endif %}</ol>
+    {% if current_category_obj %}<h1>{% if current_category_obj.slug == 'english' %}Quran &amp; Tajweed Questions in English{% else %}أسئلة {{ current_category_obj.name }}{% endif %}</h1>
+    <p>{{ current_category_obj.description|default:"أسئلة الناس وإجاباتها من معلمات ومشرفات المؤسسة." }}</p>{% else %}<h1>أسئلة وأجوبة في تحفيظ القرآن الكريم</h1>
+    <p>أسئلة الناس عن الحفظ والتجويد والتلاوة، وإجاباتها من معلمات ومشرفات المؤسسة.</p>{% endif %}
     <ul class="stats-band" aria-label="إحصائيات الأسئلة">
       {% include 'includes/stat_item.html' with n=total_questions label='سؤال' icon='q' %}
       {% include 'includes/stat_item.html' with n=answered_count label='سؤال مُجاب' icon='check' %}
