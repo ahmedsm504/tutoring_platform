@@ -140,12 +140,7 @@ def plain(text):
     t = _BOLD.sub(r'\1', t)
     t = _ITAL.sub(r'\1', t)
     t = _LINK.sub(r'\1', t)
-    # الجداول: صف الفاصل (|---|) بيتشال، وباقي الصفوف بتتحول لسطر "خلية - خلية" بدل ما تضيع
-    # (قبل كده كانت بتتمسح كلها، فإجابات زي "أمثلة:" كانت بتظهر في Schema من غير الأمثلة)
-    t = re.sub(r'^[ \t]*\|[ \t|:\-]+\|[ \t]*$', '', t, flags=re.M)
-    t = re.sub(r'^[ \t]*\|(.*)\|[ \t]*$', lambda m: ' - '.join(c.strip() for c in m.group(1).split('|') if c.strip()),
-               t, flags=re.M)
-    t = _AYAH.sub(r'﴿\1﴾', t)
+    t = re.sub(r'^\|.*\|\s*$', '', t, flags=re.M)
     return re.sub(r'\n{2,}', '\n', t).strip()
 
 
