@@ -16,6 +16,20 @@ PRIVATE_UNDER_PUBLIC = ('/questions/vote', '/questions/vote-community', '/questi
                         '/questions/delete-community', '/questions/report', '/questions/subscribe')
 
 
+class HealthCheckMiddleware:
+    """/healthz بيرد 200 فورًا (قبل فحص الدومين والتحويل لـ https) عشان Railway يتأكد إن السيرفر
+    الجديد شغال قبل ما يحوّل الزوار عليه. من غيره، كل نشر كان بيدّي جوجل أخطاء 5xx لحد ما
+    migrate وcollectstatic يخلصوا."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.path == '/healthz':
+            return HttpResponse('ok', content_type='text/plain')
+        return self.get_response(request)
+
+
 class CanonicalHostMiddleware:
     """www.alagme.com ودومين Railway -> 301 على https://alagme.com بنفس المسار.
     ده بيمنع "المحتوى المكرر" وبيجمّع قوة الروابط كلها على دومين واحد."""

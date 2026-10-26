@@ -110,6 +110,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'config.middleware.HealthCheckMiddleware',
     'config.middleware.BlockScannersMiddleware',
     'config.middleware.CanonicalHostMiddleware',  # الأول: http://www -> https://alagme.com في خطوة واحدة
     'django.middleware.security.SecurityMiddleware',
