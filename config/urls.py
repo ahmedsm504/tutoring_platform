@@ -1,3 +1,4 @@
+import logging
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -32,8 +33,25 @@ sitemaps = {
 
 @cache_page(60 * 30)
 def sitemap_view(request, **kwargs):
-    # قالب بيضيف صورة الغلاف لكل مقال (image sitemap) عشان الصور تظهر في بحث جوجل للصور
-    return sitemap(request, sitemaps=sitemaps, template_name='sitemaps/sitemap_images.xml')
+    # قالب بيضيف صورة الغلاف لكل مقال (image sitemap) عشان الصور تظهر في بحث جوجل للصور.
+    # لو أي عنصر (مقال قديم مثلًا) عمل خطأ، بنسجله ونرجع الخريطة العادية بدل ما جوجل ياخد 500.
+    try:
+        resp = sitemap(request, sitemaps=sitemaps, template_name='sitemaps/sitemap_images.xml')
+        resp.render()
+        return resp
+    except Exception:
+        logging.getLogger(__name__).exception('sitemap_images فشل - هنرجع الخريطة بدون صور')
+    safe = {}
+    for name, cls in sitemaps.items():
+        sm = cls()
+        try:
+            sm.get_urls(site=None, protocol='https')
+            safe[name] = cls
+        except Exception:
+            logging.getLogger(__name__).exception('قسم %s في خريطة الموقع فيه خطأ واتشال مؤقتًا', name)
+    resp = sitemap(request, sitemaps=safe)
+    resp.render()
+    return resp
 
 
 def ads_txt(request):
