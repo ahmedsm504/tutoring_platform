@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'how-to-test-your-tajweed-level')
+        self.assertEqual(arts[-1]['slug'], 'quran-translations-history')
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -697,7 +697,7 @@ class Wave11Tests(TestCase):
 class Wave12Tests(TestCase):
     def test_wave12_content(self):
         from content_seed import load_articles
-        self.assertEqual(len(load_articles()), 950)
+        self.assertGreaterEqual(len(load_articles()), 950)
         for slug in ('tafsir-surat-al-baqarah', 'allah-name-as-samad-meaning', 'tafsir-ayah-dua-dhi-an-nun',
                      'hudhud-story-for-kids', 'mutashabihat-surat-ash-shuara', 'why-quran-in-arabic',
                      'idgham-mithlayn', 'how-to-test-your-tajweed-level'):
@@ -706,6 +706,20 @@ class Wave12Tests(TestCase):
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='ما معنى اسم الله الصمد؟').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='هل في «اركب معنا» بسورة هود إدغام؟').exists())
+
+
+class Wave13Tests(TestCase):
+    def test_wave13_content(self):
+        from content_seed import load_articles
+        self.assertGreaterEqual(len(load_articles()), 1150)
+        for slug in ('allah-name-al-jabbar-meaning', 'tafsir-ayah-rabbana-la-tuzigh-qulubana',
+                     'maida-table-story-for-kids', 'mutashabihat-surat-al-kahf', 'ibrahim-in-the-quran',
+                     'madd-farq-and-tamkin', 'tafsir-al-baghawi-introduction', 'quran-translations-history'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='ما معنى اسم الله الجبار؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='كيف أقرأ «اتقوا والذين» وهل فيها مد؟').exists())
 
 
 class RelatedPostsTests(TestCase):
