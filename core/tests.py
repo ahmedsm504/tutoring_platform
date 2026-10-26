@@ -791,3 +791,39 @@ class IndexNowEndpointsTests(TestCase):
         hosts = [c.args[0] for c in post.call_args_list]
         self.assertIn('https://api.indexnow.org/indexnow', hosts)
         self.assertIn('https://www.bing.com/indexnow', hosts)
+
+
+class SeoBoostTests(TestCase):
+    """خريطة الموقع فيها كل المقالات وصورها، وصفحات التصنيفات والـ404 سليمة للسيو"""
+    def test_sitemap_lists_every_post_with_image(self):
+        from django.core.cache import cache
+        cache.clear()
+        r = self.client.get('/sitemap.xml')
+        root = ET.fromstring(r.content)
+        locs = {e.text for e in root.iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')}
+        posts = Post.objects.filter(status='published')
+        self.assertGreater(posts.count(), 1000)
+        for p in posts:
+            self.assertIn(f'https://alagme.com/blog/{p.slug}/', locs)
+        images = list(root.iter('{http://www.google.com/schemas/sitemap-image/1.1}loc'))
+        self.assertEqual(len(images), posts.exclude(cloud_url__isnull=True).exclude(cloud_url='').count())
+
+    def test_qna_category_pages_have_own_title_and_crumbs(self):
+        t1 = self.client.get('/questions/?category=hifz').content.decode()
+        t2 = self.client.get('/questions/?category=kids').content.decode()
+        title = lambda t: re.search(r'<title>(.*?)</title>', t, re.S).group(1)
+        self.assertNotEqual(title(t1), title(t2))
+        self.assertIn('الحفظ والمراجعة', title(t1))
+        self.assertNotIn('"FAQPage"', t1)  # الأسئلة من الزوار: QAPage في صفحة السؤال بس
+        for blk in re.findall(r'<script type="application/ld\+json">(.*?)</script>', t1, re.S):
+            json.loads(blk)
+
+    def test_custom_404_is_noindex(self):
+        r = self.client.get('/no-such-page-at-all/')
+        self.assertEqual(r.status_code, 404)
+        self.assertContains(r, 'noindex', status_code=404)
+        self.assertContains(r, '/blog/', status_code=404)
+
+    def test_plain_keeps_table_rows(self):
+        from core.templatetags.content_tags import plain
+        self.assertEqual(plain('أمثلة:\n| أ | ب |\n|---|---|\n| **ج** | د |'), 'أمثلة:\nأ - ب\nج - د')

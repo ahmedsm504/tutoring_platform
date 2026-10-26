@@ -125,6 +125,11 @@ class QuestionListView(ListView):
 
         context['current_search'] = self.request.GET.get('search', '')
         context['current_category'] = self.request.GET.get('category', '')
+        # كائن التصنيف نفسه: عشان كل صفحة تصنيف يبقى ليها عنوان ووصف وH1 خاصين بيها (مش نسخة من الصفحة العامة)
+        context['current_category_obj'] = (
+            QuestionCategory.objects.filter(slug=context['current_category']).first()
+            if context['current_category'] else None
+        )
         context['current_filter'] = self.request.GET.get('filter', '')
         context['current_sort'] = self.request.GET.get('sort', 'newest')
 
