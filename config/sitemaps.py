@@ -4,6 +4,20 @@ from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
 
+from django.urls import NoReverseMatch
+
+
+def _reversible(objs, name):
+    """بنشيل أي عنصر الـ slug بتاعه مايعملش رابط (مقال قديم مثلًا) بدل ما الخريطة كلها تقع بـ 500"""
+    out = []
+    for o in objs:
+        try:
+            reverse(name, args=[o.slug])
+        except NoReverseMatch:
+            continue
+        out.append(o)
+    return out
+
 # استيراد الموديلات مع التأكد من وجود التطبيقات
 try:
     from blog.models import Post, Category
@@ -69,13 +83,16 @@ class BlogPostSitemap(Sitemap):
     """Sitemap موحد لجميع مقالات المدونة مع أولوية ديناميكية"""
     changefreq = "weekly"
     protocol = 'https'
-    limit = 1000
+    # كان 1000: وخريطة الموقع ملف واحد (/sitemap.xml) فأي مقال بعد الألف ماكانش بيظهر فيها خالص.
+    # جوجل بيقبل لحد 50 ألف رابط في الملف الواحد.
+    limit = 45000
 
     def items(self):
         """جلب جميع المقالات المنشورة"""
         if not HAS_BLOG:
             return []
-        return Post.objects.filter(status='published').order_by('-published_at')
+        return _reversible(Post.objects.filter(status='published').exclude(slug='').exclude(slug__isnull=True)
+                           .order_by('-published_at'), 'blog_detail')
 
     def lastmod(self, obj):
         """آخر تعديل للمقال"""
@@ -135,15 +152,15 @@ class QNAQuestionsSitemap(Sitemap):
     """Sitemap موحد لجميع أسئلة QNA مع أولوية ديناميكية (يغطي جميع الحالات)"""
     changefreq = "daily"
     protocol = 'https'
-    limit = 1000
+    limit = 45000
 
     def items(self):
         if not HAS_QNA:
             return []
         from django.db.models import Exists, OuterRef
-        return (PublicQuestion.objects.filter(status='approved')
-                .annotate(has_answer=Exists(QuestionAnswer.objects.filter(question=OuterRef('pk'))))
-                .order_by('-created_at'))
+        return _reversible(PublicQuestion.objects.filter(status='approved').exclude(slug='').exclude(slug__isnull=True)
+                           .annotate(has_answer=Exists(QuestionAnswer.objects.filter(question=OuterRef('pk'))))
+                           .order_by('-created_at'), 'qna:question_detail')
 
     def lastmod(self, obj):
         return obj.updated_at if hasattr(obj, 'updated_at') else obj.created_at

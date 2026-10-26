@@ -86,25 +86,21 @@
   "datePublished": "{{ post.published_at|date:'c' }}",
   "dateModified": "{{ post.updated_at|date:'c' }}",
   "description": "{{ post.excerpt|escapejs }}",
-  "articleBody": "{{ post.excerpt|escapejs }}",
-  "image": "{% if post.cloud_url %}{{ post.cloud_url }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}",
+  "image": {% if post.cloud_url %}{"@type": "ImageObject", "url": "{{ post.cloud_url }}", "width": 1200, "height": 630, "caption": "{{ post.display_image_alt|escapejs }}"}{% else %}"{{ SITE_URL }}{% static 'images/default_post.webp' %}"{% endif %},
+  "thumbnailUrl": "{% if post.cloud_url %}{{ post.cloud_url|card_img }}{% else %}{{ SITE_URL }}{% static 'images/default_post.webp' %}{% endif %}",
+  "isPartOf": {"@type": "Blog", "@id": "{{ SITE_URL }}{% url 'blog_list' %}#blog", "name": "مدونة مؤسسة العجمي", "url": "{{ SITE_URL }}{% url 'blog_list' %}"},
+  "isAccessibleForFree": true,
   "inLanguage": "{% if post.title|is_latin %}en{% else %}ar{% endif %}",
   "wordCount": {{ post.content|wordcount }},
   {% if post.category %}"articleSection": "{{ post.category.name|escapejs }}",{% endif %}
   {% if post.keywords %}"keywords": "{{ post.keywords|escapejs }}",{% endif %}
   "author": {
     "@type": "Organization",
-    "name": "مؤسسة العجمي",
-    "url": "{{ SITE_URL }}"
+    "@id": "{{ SITE_URL }}/#organization",
+    "name": "فريق مؤسسة العجمي لتحفيظ القرآن",
+    "url": "{{ SITE_URL }}/about/"
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "مؤسسة العجمي",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ SITE_URL }}{% static 'images/logo.png' %}"
-    }
-  }
+  "publisher": {"@id": "{{ SITE_URL }}/#organization"}
 }
 </script>
 
@@ -168,7 +164,7 @@
 </header>
 
 {% if post.cloud_url %}
-<div class="container"><figure class="article-cover" style="margin-bottom:0;"><img src="{{ post.cloud_url }}" srcset="{{ post.cloud_url|card_img }} 640w, {{ post.cloud_url }} 1200w" sizes="(max-width: 1000px) 100vw, 980px" alt="{{ post.display_image_alt }}" width="980" height="520" fetchpriority="high"></figure></div>
+<div class="container"><figure class="article-cover" style="margin-bottom:0;"><img src="{{ post.cloud_url }}" srcset="{{ post.cloud_url|card_img }} 640w, {{ post.cloud_url }} 1200w" sizes="(max-width: 1000px) 100vw, 980px" alt="{{ post.display_image_alt }}" width="1200" height="630" fetchpriority="high"></figure></div>
 {% endif %}
 
 <div class="section" style="padding-top:clamp(36px,5vw,64px);">
@@ -275,7 +271,7 @@
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="عرض الصورة">
   <button type="button" class="icon-btn" id="lightbox-close" aria-label="إغلاق">✕</button>
-  <img id="lightbox-img" src="" alt="">
+  <img id="lightbox-img" alt="" width="1200" height="630" decoding="async">
 </div>
 {% endwith %}{% endblock %}
 
