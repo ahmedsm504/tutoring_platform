@@ -894,6 +894,19 @@ class Wave22Tests(TestCase):
                          'tafsir-ayah-allahu-nuru-as-samawati-wal-ard')
 
 
+class Wave23Tests(TestCase):
+    def test_wave23_content(self):
+        from content_seed import load_articles
+        arts = {a['slug']: a for a in load_articles()}
+        self.assertGreaterEqual(len(arts), 2150)
+        for slug in ('tafsir-ayah-dhalika-al-kitabu-la-rayba-fih', 'this-is-the-book-no-doubt-2-2-english',
+                     'tafsir-ayah-inna-kulla-shayin-khalaqnahu-biqadar', 'everything-created-by-measure-54-49-english'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+        self.assertEqual(arts['everything-created-by-measure-54-49-english']['translation_of'],
+                         'tafsir-ayah-inna-kulla-shayin-khalaqnahu-biqadar')
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
