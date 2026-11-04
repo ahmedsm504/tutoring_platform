@@ -800,6 +800,22 @@ class Wave17Tests(TestCase):
         self.assertContains(r, '/blog/qalqalah-rules/')
 
 
+class Wave18Tests(TestCase):
+    def test_wave18_content(self):
+        from content_seed import load_articles
+        self.assertGreaterEqual(len(load_articles()), 1650)
+        for slug in ('surah-ar-rahman-meaning-english', 'compilation-of-the-quran-english',
+                     'tafsir-ayah-fasbir-sabran-jamila', 'tajweed-applied-imran-159',
+                     'kids-family-ties-from-quran', 'yusuf-shirt-three-times'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+
+    def test_english_wave18_hreflang(self):
+        r = self.client.get('/blog/surah-al-qadr-meaning-english/')
+        self.assertContains(r, 'hreflang="ar"')
+        self.assertContains(r, '/blog/tafsir-surat-al-qadr/')
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post

@@ -1,0 +1,37 @@
+title: How the Quran Was Compiled: From the Prophet ﷺ to ʿUthman
+category: english
+excerpt: The history of the compilation of the Quran in three stages: memorization and writing in the Prophet's lifetime ﷺ, the collection into one manuscript under Abu Bakr after the battle of Yamamah led by Zayd ibn Thabit, and the copying of standard Mushafs under ʿUthman, based on authentic reports in Sahih al-Bukhari.
+meta: How the Quran was compiled: memorized and written in the Prophet's lifetime, collected under Abu Bakr by Zayd ibn Thabit after Yamamah, and copied into standard Mushafs under Uthman, from Sahih al-Bukhari.
+keywords: compilation of the quran, history of the quran, uthmani mushaf, zayd ibn thabit, abu bakr quran collection, preservation of the quran
+reading: 5
+translation_of: compilation-of-quran
+---
+Allah promised: ﴿إِنَّا نَحۡنُ نَزَّلۡنَا ٱلذِّكۡرَ وَإِنَّا لَهُۥ لَحَٰفِظُونَ﴾ [Al-Hijr: 9]. History shows how that preservation happened.
+
+## Stage 1: In the Prophet's lifetime ﷺ
+- The Quran was revealed **over about 23 years**.
+- **Memorized** by many companions.
+- **Written** by scribes such as Zayd ibn Thabit, on materials like parchment, bones and palm stalks, but not yet gathered in one volume.
+
+## Stage 2: Abu Bakr's collection
+- After the battle of **Yamamah**, many reciters were killed.
+- ʿUmar urged Abu Bakr to collect the Quran, and Abu Bakr assigned **Zayd ibn Thabit**.
+- Zayd gathered it carefully from what was written and memorized, into **one manuscript (ṣuḥuf)** [Al-Bukhari].
+- These ṣuḥuf stayed with Abu Bakr, then ʿUmar, then **Hafsah** bint ʿUmar.
+
+## Stage 3: ʿUthman's copies
+- Hudhayfah ibn al-Yaman saw people differing in recitation and urged ʿUthman to act.
+- ʿUthman borrowed the ṣuḥuf from Hafsah, and a committee led by Zayd made **copies**, sent to major cities [Al-Bukhari].
+- These copies are the basis of the **ʿUthmani script** in every Mushaf today.
+
+## Dots and vowels later
+- Dots and vowel marks were added later to help non-Arabs read correctly, without changing the text.
+
+## Summary
+| Stage | When | What |
+|---|---|---|
+| 1 | Prophet's lifetime ﷺ | Memorized and written |
+| 2 | Abu Bakr | Gathered in one manuscript |
+| 3 | ʿUthman | Standard copies distributed |
+
+Read [The Names of the Quran](/blog/names-of-the-quran-english/) and [The Ten Qira'at](/blog/ten-qiraat-introduction-english/).
