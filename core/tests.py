@@ -881,6 +881,19 @@ class Wave21Tests(TestCase):
             self.assertIn(t, arts, t)
 
 
+class Wave22Tests(TestCase):
+    def test_wave22_content(self):
+        from content_seed import load_articles
+        arts = {a['slug']: a for a in load_articles()}
+        self.assertGreaterEqual(len(arts), 2042)
+        for slug in ('tafsir-ayah-allahu-nuru-as-samawati-wal-ard', 'the-verse-of-light-24-35-meaning-english',
+                     'tafsir-ayah-inna-al-muslimina-wal-muslimat', 'enter-islam-completely-2-208-meaning-english'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+        self.assertEqual(arts['the-verse-of-light-24-35-meaning-english']['translation_of'],
+                         'tafsir-ayah-allahu-nuru-as-samawati-wal-ard')
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
