@@ -837,6 +837,34 @@ class Wave19Tests(TestCase):
             self.assertLessEqual(len(t), tmax, t)
 
 
+class Wave20Tests(TestCase):
+    def test_wave20_content(self):
+        from content_seed import load_articles
+        self.assertGreaterEqual(len(load_articles()), 1846)
+        for slug in ('surah-al-baqarah-meaning-english', 'surah-maryam-meaning-english',
+                     'wa-idha-saalaka-ibadi-meaning-english', 'tafsir-ayah-fasfah-as-safh-al-jamil',
+                     'surah-al-fatiha-meaning-english'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+        self.assertTrue(PublicQuestion.objects.filter(title='لماذا سُمي القرآن «الفرقان»؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='Is it permissible to kiss the Mushaf?').exists())
+
+    def test_wave20_english_hreflang_pairs(self):
+        from content_seed import load_articles
+        arts = {a['slug']: a for a in load_articles()}
+        a = arts['surah-al-baqarah-meaning-english']
+        self.assertEqual(a.get('translation_of'), 'tafsir-surat-al-baqarah')
+        self.assertIn('tafsir-surat-al-baqarah', arts)
+
+    def test_wave20_fits_postgres_limits(self):
+        from content_seed.questions_wave20 import QUESTIONS_AR20
+        tmax = PublicQuestion._meta.get_field('title').max_length
+        titles = [q[1] for q in QUESTIONS_AR20]
+        self.assertEqual(len(titles), len(set(titles)))
+        for t in titles:
+            self.assertLessEqual(len(t), tmax, t)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
