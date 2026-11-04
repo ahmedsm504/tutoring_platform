@@ -775,6 +775,17 @@ class Wave15Tests(TestCase):
             self.assertLessEqual(len(q[1]), tmax, q[1])
 
 
+class Wave16Tests(TestCase):
+    def test_wave16_content(self):
+        from content_seed import load_articles
+        self.assertGreaterEqual(len(load_articles()), 1548)
+        for slug in ('surat-nuh-for-kids', 'abu-amr-ad-dani-biography', 'allah-name-al-mannan-meaning',
+                     'mutashabihat-surat-al-qamar', 'tafsir-ayah-fafirru-ila-allah', 'ya-bani-adam-calls'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
