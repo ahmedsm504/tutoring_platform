@@ -411,7 +411,10 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'surat-at-tariq-for-kids')  # آخر مقال (ترتيب رقمي)
+        # آخر مقال = صاحب أكبر رقم (ترتيب رقمي مش أبجدي)
+        from content_seed import ARTICLES_DIR
+        last = max(ARTICLES_DIR.glob('*.txt'), key=lambda f: int(f.stem.split('_', 1)[0]))
+        self.assertEqual(arts[-1]['slug'], last.stem.split('_', 1)[1])
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -744,6 +747,31 @@ class Wave14Tests(TestCase):
         from content_seed.questions_wave14 import QUESTIONS_AR14
         tmax = PublicQuestion._meta.get_field('title').max_length
         for q in QUESTIONS_AR14:
+            self.assertLessEqual(len(q[1]), tmax, q[1])
+
+
+class Wave15Tests(TestCase):
+    def test_wave15_content(self):
+        from content_seed import load_articles
+        self.assertGreaterEqual(len(load_articles()), 1476)
+        for slug in ('surat-an-naba-for-kids', 'rain-in-the-quran', 'allah-name-al-ghaffar-meaning',
+                     'mutashabihat-surat-sad', 'tafsir-ayah-nahnu-aqrabu-ilayhi', 'markets-in-the-quran'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='من هم القراء العشرة ورواتهم؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='كيف أقرأ «نُجي المؤمنين» في سورة الأنبياء؟').exists())
+
+    def test_article_slugs_unique(self):
+        from content_seed import load_articles
+        slugs = [a['slug'] for a in load_articles()]
+        dups = sorted({s for s in slugs if slugs.count(s) > 1})
+        self.assertEqual(dups, [])
+
+    def test_wave15_fits_postgres_limits(self):
+        from content_seed.questions_wave15 import QUESTIONS_AR15
+        tmax = PublicQuestion._meta.get_field('title').max_length
+        for q in QUESTIONS_AR15:
             self.assertLessEqual(len(q[1]), tmax, q[1])
 
 
