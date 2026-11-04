@@ -865,6 +865,22 @@ class Wave20Tests(TestCase):
             self.assertLessEqual(len(t), tmax, t)
 
 
+class Wave21Tests(TestCase):
+    def test_wave21_content(self):
+        from content_seed import load_articles
+        arts = {a['slug']: a for a in load_articles()}
+        self.assertGreaterEqual(len(arts), 1944)
+        for slug in ('khalaqakum-min-nafsin-wahida-meaning-english', 'salawat-on-the-prophet-33-56-meaning-english',
+                     'ibrahim-describes-his-lord-26-78-english', 'walasawfa-yutika-rabbuka-meaning-english'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+        # كل مقال إنجليزي في الموجة مربوط بمقال عربي موجود، ومفيش مقال عربي مترجم مرتين
+        targets = [a['translation_of'] for a in arts.values() if a.get('translation_of')]
+        self.assertEqual(len(targets), len(set(targets)))
+        for t in targets:
+            self.assertIn(t, arts, t)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
