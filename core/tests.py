@@ -411,7 +411,7 @@ class Wave4Tests(TestCase):
         from content_seed import load_articles
         arts = load_articles()
         self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
-        self.assertEqual(arts[-1]['slug'], 'quran-translations-history')
+        self.assertEqual(arts[-1]['slug'], 'surat-at-tariq-for-kids')  # آخر مقال (ترتيب رقمي)
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
             r = self.client.get(f'/blog/{slug}/')
             self.assertEqual(r.status_code, 200, slug)
@@ -720,6 +720,31 @@ class Wave13Tests(TestCase):
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='ما معنى اسم الله الجبار؟').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='كيف أقرأ «اتقوا والذين» وهل فيها مد؟').exists())
+
+
+class Wave14Tests(TestCase):
+    def test_wave14_content(self):
+        from content_seed import load_articles
+        self.assertGreaterEqual(len(load_articles()), 1350)
+        for slug in ('allah-names-al-awwal-al-akhir-meaning', 'tajweed-applied-zumar-53-55',
+                     'mutashabihat-surat-taha', 'hifz-for-shift-workers', 'surat-al-falaq-for-kids',
+                     'surat-at-tariq-for-kids'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, '<html lang="ar"')
+        self.assertTrue(PublicQuestion.objects.filter(title='كيف أقرأ «لكنا هو الله ربي» في سورة الكهف؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='ما معنى هجر القرآن؟').exists())
+
+    def test_wave14_fits_postgres_limits(self):
+        from content_seed import load_articles
+        from blog.models import Post
+        slug_max = Post._meta.get_field('slug').max_length
+        for a in load_articles():
+            self.assertLessEqual(len(a['slug']), slug_max, a['slug'])
+        from content_seed.questions_wave14 import QUESTIONS_AR14
+        tmax = PublicQuestion._meta.get_field('title').max_length
+        for q in QUESTIONS_AR14:
+            self.assertLessEqual(len(q[1]), tmax, q[1])
 
 
 class RelatedPostsTests(TestCase):
