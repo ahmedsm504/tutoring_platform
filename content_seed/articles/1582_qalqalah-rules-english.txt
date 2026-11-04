@@ -1,0 +1,40 @@
+title: Qalqalah in Tajweed: The 5 Echoing Letters Explained
+category: english
+excerpt: What qalqalah is and how to pronounce it correctly: the five letters of qalqalah gathered in "quṭbu jad", the difference between minor qalqalah in the middle of a word and major qalqalah when stopping, examples from the Quran, and mistakes that make the bounce too weak or too strong.
+meta: Qalqalah rules in English: the five letters qaf, taa, baa, jeem and daal (qutbu jad), minor and major qalqalah, Quran examples, and common mistakes in pronouncing the echo.
+keywords: qalqalah rules, qalqalah letters, qutbu jad, tajweed in english, minor and major qalqalah, echoing letters quran
+reading: 4
+translation_of: qalqalah-rules
+---
+**Qalqalah** means "shaking" or "echoing". It is a small bounce in the sound of certain letters when they carry a sukūn, so they do not sound swallowed.
+
+## The five letters
+They are gathered in the phrase **قُطۡبُ جَدٍّ** (*quṭbu jad*):
+| Letter | Name |
+|---|---|
+| ق | Qaf |
+| ط | Ṭaa |
+| ب | Baa |
+| ج | Jeem |
+| د | Daal |
+
+## Why do these letters bounce?
+These letters are both **strong (shiddah)**, which blocks the sound, and **voiced (jahr)**, which blocks the breath. When they have a sukūn, nothing would be heard without a small release, so the qalqalah lets the letter be heard.
+
+## Types of qalqalah
+| Type | When | Example |
+|---|---|---|
+| Minor (ṣughrā) | Sukūn in the middle of a word or when joining | ﴿يَقۡطَعُونَ﴾ |
+| Major (kubrā) | Stopping on the letter at the end of an ayah | ﴿ٱلۡفَلَقِ﴾, ﴿أَحَدٌ﴾ when stopping |
+- Some scholars add a stronger level when the stopped letter is also doubled, as in ﴿وَتَبَّ﴾ when stopping.
+
+## How to pronounce it
+- **Release the letter** with a short, light bounce.
+- **Do not add a vowel**: *al-falaq*, not *al-falaqa*.
+
+## Common mistakes
+1. **No bounce at all**, so ﴿أَحَدٌ﴾ sounds like *aḥat*.
+2. **Too strong a bounce**, adding a full vowel.
+3. **Qalqalah on other letters** like kaaf or taa (ت), which are whispered letters.
+
+Read [Sifat al-Huruf in English](/blog/sifat-al-huruf-english/) and [Surah Al-Fatiha Common Mistakes](/blog/surah-al-fatiha-common-mistakes/).

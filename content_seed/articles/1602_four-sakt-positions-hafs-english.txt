@@ -1,0 +1,37 @@
+title: The Four Places of Sakt (Silent Pause) in Hafs Recitation
+category: english
+excerpt: What sakt is in Quran recitation and the four places where Hafs makes it: after "ʿiwajā" in Al-Kahf, after "marqadinā" in Ya-Sin, in "man rāq" in Al-Qiyamah and "bal rān" in Al-Mutaffifin, how to perform it without taking a breath, the small sīn sign in the Madinah Mushaf, and why it protects the meaning.
+meta: The four sakt places in Hafs: after iwaja in Al-Kahf, marqadina in Ya-Sin, man raq in Al-Qiyamah and bal ran in Al-Mutaffifin, how to do sakt without breathing, the Mushaf sign, and its purpose.
+keywords: sakt in quran, sakt hafs, four sakt places, silent pause quran recitation, man raq bal ran, tajweed hafs
+reading: 4
+translation_of: four-sakt-positions-hafs
+---
+**Sakt** is a very short pause of about two counts, **without taking a breath**, then continuing. In the Madinah Mushaf it is marked with a small **سـ (sīn)**.
+
+## The four places
+| # | Surah | Words | Read as |
+|---|---|---|---|
+| 1 | Al-Kahf 1–2 | ﴿عِوَجَاۜ﴾ then *qayyiman* | *ʿiwajā* (pause) *qayyiman* |
+| 2 | Ya-Sin 52 | ﴿مِن مَّرۡقَدِنَاۜۗ هَٰذَا﴾ | *marqadinā* (pause) *hādhā* |
+| 3 | Al-Qiyamah 27 | ﴿مَنۡۜ رَاقٖ﴾ | *man* (pause) *rāq* |
+| 4 | Al-Mutaffifin 14 | ﴿بَلۡۜ رَانَ﴾ | *bal* (pause) *rāna* |
+
+## Why sakt?
+| Place | Purpose |
+|---|---|
+| Al-Kahf | So "qayyiman" (straight) is not heard as a description of "ʿiwajā" (crookedness) |
+| Ya-Sin | Separates the words of the disbelievers from the reply that follows |
+| Al-Qiyamah and Al-Mutaffifin | Keeps the noon and laam clear instead of merging them into the raa |
+
+## How to do it
+1. Stop the **sound** for about two counts.
+2. **Don't breathe.**
+3. Continue with the next word.
+
+## Without sakt?
+- In ﴿مَنۡۜ رَاقٖ﴾, without sakt the noon would merge into the raa (*marrāq*). Sakt keeps the noon heard.
+
+## Optional sakt places
+- Between Al-Anfal and At-Tawbah, and in ﴿مَالِيَهۡۜ﴾ in Al-Haqqah, Hafs has more than one option; learn them with a teacher.
+
+Read [Mushaf Symbols in English](/blog/mushaf-symbols-english/) and [How to Stop at the End of a Word](/blog/stopping-on-word-endings-english/).

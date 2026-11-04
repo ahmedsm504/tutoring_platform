@@ -1,0 +1,50 @@
+title: Sujud al-Tilawa: The 15 Places of Prostration in the Quran
+category: english
+excerpt: A clear guide to the prostration of recitation (sujud al-tilawa) in English: the 15 places marked in the Madinah Mushaf in a table, its ruling according to most scholars, whether wudu is required, what to say in it, how to do it inside and outside prayer, and what the listener should do.
+meta: Sujud al-tilawa in English: the 15 places in the Madinah Mushaf, its ruling, whether wudu is required, the authentic dua to say, how to do it in and out of prayer, and the listener's ruling.
+keywords: sujud al tilawa, sajdah tilawat, prostration of recitation, sajda places in quran, sujood tilawah dua, 15 sajdas quran
+reading: 4
+translation_of: sujud-al-tilawa-places
+---
+When you reach certain ayat, you will see the sign **۩** in the Mushaf. This is a place of **sujūd al-tilāwah**, the prostration of recitation.
+
+## The 15 places
+| # | Surah | Ayah |
+|---|---|---|
+| 1 | Al-Aʿraf | 206 |
+| 2 | Ar-Raʿd | 15 |
+| 3 | An-Nahl | 50 |
+| 4 | Al-Isra | 109 |
+| 5 | Maryam | 58 |
+| 6 | Al-Hajj | 18 |
+| 7 | Al-Hajj | 77 |
+| 8 | Al-Furqan | 60 |
+| 9 | An-Naml | 26 |
+| 10 | As-Sajdah | 15 |
+| 11 | Sad | 24 |
+| 12 | Fussilat | 38 |
+| 13 | An-Najm | 62 |
+| 14 | Al-Inshiqaq | 21 |
+| 15 | Al-ʿAlaq | 19 |
+- Scholars differed about the **second place in Al-Hajj** and the one in **Sad**, and both are marked in the Madinah Mushaf.
+
+## Ruling
+- **A confirmed Sunnah** according to most scholars; the Hanafis consider it obligatory.
+- ʿUmar recited a prostration ayah on the minbar and did not prostrate, saying: "Allah has not made it obligatory unless we wish" [Al-Bukhari].
+
+## Is wudu required?
+- Most scholars require purity, as for prayer; some, like Ibn Taymiyyah, did not.
+- **The safest** is to prostrate with wuḍūʾ.
+
+## What to say
+- «Sajada wajhī lilladhī khalaqahu, wa shaqqa samʿahu wa baṣarahu, bi-ḥawlihi wa quwwatih» [Abu Dawud, At-Tirmidhi and An-Nasa'i].
+- Saying *Subḥāna Rabbiyal-Aʿlā* is also fine.
+
+## How
+- **In prayer**: say *Allāhu akbar*, prostrate once, then rise with *Allāhu akbar* and continue.
+- **Outside prayer**: a single prostration.
+
+## The listener
+- It is Sunnah for one **intentionally listening**; less emphasised for someone who hears by chance.
+
+Read [Etiquette of Reciting the Quran](/blog/etiquette-of-quran-recitation-english/) and [Mushaf Symbols in English](/blog/mushaf-symbols-english/).

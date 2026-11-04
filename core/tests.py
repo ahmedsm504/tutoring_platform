@@ -786,6 +786,20 @@ class Wave16Tests(TestCase):
             self.assertContains(r, '<html lang="ar"')
 
 
+class Wave17Tests(TestCase):
+    def test_wave17_content(self):
+        from content_seed import load_articles
+        self.assertGreaterEqual(len(load_articles()), 1606)
+        for slug in ('tafsir-ayah-wa-ma-min-dabbatin', 'aisha-and-the-quran', 'surat-al-mulk-for-kids',
+                     'mubhamat-al-quran', 'meem-sakinah-rules-english', 'surah-yasin-meaning-english'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+
+    def test_english_wave17_has_arabic_counterpart(self):
+        r = self.client.get('/blog/qalqalah-rules-english/')
+        self.assertContains(r, '/blog/qalqalah-rules/')
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post

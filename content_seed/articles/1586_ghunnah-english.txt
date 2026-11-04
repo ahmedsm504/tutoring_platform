@@ -1,0 +1,39 @@
+title: Ghunnah in Tajweed: The Nasal Sound and Its Five Levels
+category: english
+excerpt: What ghunnah is and how long to hold it: the nasal sound of noon and meem, why doubled noon and meem always carry a full two-count ghunnah, the five levels of ghunnah from strongest to weakest, how to test it by holding your nose, and the mistakes that cut it short or stretch it too long.
+meta: Ghunnah in English: the nasal sound of noon and meem, the two-count ghunnah in doubled letters, the five levels of ghunnah, the nose test, and common mistakes in its length.
+keywords: ghunnah tajweed, ghunnah rules english, nasal sound quran, noon and meem mushaddad, levels of ghunnah, tajweed for beginners
+reading: 4
+translation_of: ghunnah-levels
+---
+**Ghunnah** is the nasal sound that comes from the **nose** (al-khayshūm). It belongs to two letters only: **noon** and **meem**.
+
+## The nose test
+- Say ﴿إِنَّ﴾ and gently hold your nose: the sound stops. That is ghunnah.
+
+## Doubled noon and meem
+- Every **noon or meem with a shaddah** has a full ghunnah of **two counts**.
+- **Examples:** ﴿إِنَّ﴾, ﴿ثُمَّ﴾, ﴿ٱلنَّاسِ﴾.
+
+## The five levels
+| Level | Case | Example | Length |
+|---|---|---|---|
+| 1 (strongest) | Doubled | ﴿إِنَّ﴾ | 2 counts |
+| 2 | Merged with ghunnah (idgham) | ﴿مَن يَقُولُ﴾ | 2 counts |
+| 3 | Hidden (ikhfa) | ﴿مِن قَبۡلُ﴾ | 2 counts |
+| 4 | Clear with sukūn | ﴿أَنۡعَمۡتَ﴾ | Natural, not held |
+| 5 (weakest) | With a vowel | ﴿نَعۡبُدُ﴾ | Natural, not held |
+
+## How long is two counts?
+- About the time it takes to fold or unfold a finger at a steady pace.
+- **Keep it equal**: every full ghunnah in your recitation should be the same length.
+
+## Heavy or light?
+- In ikhfa, the ghunnah **follows the next letter**: heavy before a heavy letter, as in ﴿مِن قَبۡلُ﴾, and light otherwise.
+
+## Common mistakes
+1. **Rushing** the doubled noon in ﴿إِنَّا أَعۡطَيۡنَٰكَ﴾.
+2. **Holding** the ghunnah in clear noon, as in ﴿أَنۡعَمۡتَ﴾.
+3. **Uneven lengths** across the recitation.
+
+Read [Noon Sakinah and Tanween Rules](/blog/noon-sakinah-tanween-rules-english/) and [Meem Sakinah Rules](/blog/meem-sakinah-rules-english/).
