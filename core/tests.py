@@ -816,6 +816,27 @@ class Wave18Tests(TestCase):
         self.assertContains(r, '/blog/tafsir-surat-al-qadr/')
 
 
+class Wave19Tests(TestCase):
+    def test_wave19_content(self):
+        from content_seed import load_articles
+        self.assertGreaterEqual(len(load_articles()), 1748)
+        for slug in ('surah-an-naba-meaning-english', 'surah-ar-rum-meaning-english',
+                     'tafsir-ayah-inni-jailun-fil-ard-khalifa', 'tajweed-applied-ibrahim-7',
+                     'tafsir-ayah-yamhu-allahu-ma-yasha'):
+            r = self.client.get(f'/blog/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+        self.assertTrue(PublicQuestion.objects.filter(title='ما معنى «أهل القرآن» في الحديث؟').exists())
+        self.assertTrue(PublicQuestion.objects.filter(title='What does Bismillah ar-Rahman ar-Rahim mean?').exists())
+
+    def test_wave19_fits_postgres_limits(self):
+        from content_seed.questions_wave19 import QUESTIONS_AR19
+        tmax = PublicQuestion._meta.get_field('title').max_length
+        titles = [q[1] for q in QUESTIONS_AR19]
+        self.assertEqual(len(titles), len(set(titles)))
+        for t in titles:
+            self.assertLessEqual(len(t), tmax, t)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post

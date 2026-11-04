@@ -948,3 +948,7 @@ QUESTIONS = QUESTIONS + QUESTIONS_AR14
 # الدفعة الخامسة عشرة (عربي)
 from .questions_wave15 import QUESTIONS_AR15  # noqa: E402
 QUESTIONS = QUESTIONS + QUESTIONS_AR15
+
+# الدفعة التاسعة عشرة (عربي وإنجليزي)
+from .questions_wave19 import QUESTIONS_AR19  # noqa: E402
+QUESTIONS = QUESTIONS + QUESTIONS_AR19
