@@ -1,0 +1,36 @@
+title: Over-Rolling the Raa: The Takrir Mistake and How to Fix It
+category: english
+excerpt: Why scholars say you should know the "takrir" (repetition) quality of raa in order to avoid it: what over-rolling sounds like, the words where it happens most such as "ar-raḥmān" and "rabbi", how to place the tongue for a single tap, and simple exercises for English and other speakers who roll the raa.
+meta: Over-rolling the raa in Quran recitation: the takrir quality and why it is avoided, words where it happens most like ar-rahman and rabbi, tongue placement for a single tap, and exercises.
+keywords: rolling raa quran, takrir raa, raa pronunciation, rolled r arabic tajweed, ar rahman pronunciation, tajweed raa mistakes
+reading: 4
+translation_of: takrir-in-raa
+---
+The Arabic raa has a quality called **takrīr** (repetition): the tongue is ready to vibrate. Scholars of tajweed say you should **know it in order to avoid it**, not to show it.
+
+## What over-rolling sounds like
+- *Ar-rrrraḥmān* instead of *ar-raḥmān*.
+- It is especially noticeable when the raa has a **shaddah** or a **sukūn**.
+
+## Words to watch
+| Word | Why |
+|---|---|
+| ﴿ٱلرَّحۡمَٰنِ﴾ | Doubled raa |
+| ﴿رَبِّ﴾ | Raa at the start, heavy |
+| ﴿وَٱنۡحَرۡ﴾ | Raa with sukūn when stopping |
+| ﴿خَيۡرࣱ﴾ | Raa between letters |
+
+## How to fix it
+1. **Touch** the tip of the tongue to the ridge behind the upper teeth **once**.
+2. **Keep the tongue firm**, not loose.
+3. For a doubled raa, **hold** the contact a little longer instead of tapping many times.
+
+## Exercises
+- Say *ar-raḥmān* slowly ten times, counting one tap only.
+- Read Al-Fatihah and mark every raa.
+- Record and listen: can you hear more than one tap?
+
+## Don't overcorrect
+- Removing all vibration makes the raa sound like a *d* or *l*. Aim for **one clean tap**.
+
+Read [Heavy and Light Letters in Tajweed](/blog/heavy-and-light-letters-english/) and [Sifat al-Huruf in English](/blog/sifat-al-huruf-english/).

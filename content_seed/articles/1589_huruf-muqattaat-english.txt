@@ -1,0 +1,39 @@
+title: The Disconnected Letters (Huruf Muqatta'at) at the Start of Surahs
+category: english
+excerpt: What are the mysterious letters like "Alif Lam Meem" at the start of 29 surahs? Their forms from one to five letters, the 14 letters used, how to recite them with the correct madd, what scholars said about their meaning, and why the Book is often mentioned right after them.
+meta: Huruf muqattaat in English: the 29 surahs that begin with them, forms from one to five letters, the 14 letters used, how to recite them with madd, scholars' views and the mention of the Book after them.
+keywords: huruf muqattaat, disconnected letters quran, alif lam meem meaning, mysterious letters quran, muqattaat english, how to recite alif lam meem
+reading: 5
+translation_of: huruf-muqattaat
+---
+**29 surahs** begin with letters read one by one, like ﴿الٓمٓ﴾ at the start of Al-Baqarah. They are called **al-ḥurūf al-muqaṭṭaʿah**, the disconnected letters.
+
+## Their forms
+| Number of letters | Example |
+|---|---|
+| One | ﴿صٓۚ﴾, ﴿قٓۚ﴾, ﴿نٓۚ﴾ |
+| Two | ﴿حمٓ﴾, ﴿يسٓ﴾ |
+| Three | ﴿الٓمٓ﴾, ﴿طسٓمٓ﴾ |
+| Four | ﴿الٓمٓرۚ﴾ |
+| Five | ﴿كٓهيعٓصٓ﴾ |
+
+## The 14 letters
+- Only **14 letters** of the alphabet appear in them, about half of the 28.
+- Some scholars gathered them in the phrase: **نَصٌّ حَكِيمٌ قَاطِعٌ لَهُ سِرٌّ**.
+
+## How to recite them
+- You read each **letter by its name**: *alif lām mīm*.
+- Letters whose names are spelled with three letters and a madd letter in the middle, like *lām* (ل ا م) and *mīm* (م ي م), take a **long madd of six counts**. They are gathered in **نَقَصَ عَسَلُكُمۡ**.
+- *ʿAyn* (ع) may be stretched **four or six counts**.
+- Letters with two-letter names, gathered in **حَيٌّ طَهُرَ**, like *ḥā* and *yā*, take **two counts**.
+- *Alif* has no madd.
+
+## What do they mean?
+- The most cautious view: **Allah knows best** what He meant by them.
+- Many scholars noted a **challenge**: the Quran is made of the same letters the Arabs used, yet they could not produce anything like it.
+- **Evidence for this view:** most of these surahs mention the Book right after the letters, as in ﴿ذَٰلِكَ ٱلۡكِتَٰبُ لَا رَيۡبَۛ فِيهِۛ﴾ [Al-Baqarah: 2].
+
+## A reward for every letter
+- The Prophet ﷺ said: «I do not say *Alif Lām Mīm* is one letter, but *alif* is a letter, *lām* is a letter and *mīm* is a letter» [At-Tirmidhi].
+
+Read [Madd Rules in Tajweed](/blog/madd-rules-tajweed-english/) and [Virtues of Learning the Quran](/blog/virtues-of-learning-quran-hadith/).

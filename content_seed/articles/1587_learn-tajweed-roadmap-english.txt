@@ -1,0 +1,48 @@
+title: Learn Tajweed Step by Step: A 6-Stage Roadmap for Beginners
+category: english
+excerpt: A practical roadmap for learning tajweed in English, from reading Arabic letters to reciting confidently: correct letters and makharij, short vowels and sukūn, noon and meem rules, madd, stopping and starting, then applied recitation with a teacher, with how long each stage usually takes and how to know you are ready to move on.
+meta: Learn tajweed step by step: a 6-stage roadmap from Arabic letters and makharij to noon and meem rules, madd, waqf and applied recitation, with time estimates and signs of readiness.
+keywords: learn tajweed step by step, tajweed roadmap, how to learn tajweed, tajweed for beginners english, quran recitation course, tajweed plan
+reading: 5
+translation_of: learn-tajweed-roadmap
+---
+Tajweed can feel overwhelming because of all the names. The good news: it is learned in **stages**, and each stage builds on the one before.
+
+## Stage 1: The letters (2–6 weeks)
+- Learn the **shapes** and **sounds** of the 28 letters.
+- Focus on letters that don't exist in English: ع ح ق ض ط ظ.
+- Read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/).
+
+## Stage 2: Vowels and joining (2–4 weeks)
+- Fatḥah, kasrah, ḍammah, sukūn, shaddah and tanween.
+- Read short words, then short ayat.
+
+## Stage 3: Noon and meem rules (3–4 weeks)
+- [Noon Sakinah and Tanween](/blog/noon-sakinah-tanween-rules-english/).
+- [Meem Sakinah Rules](/blog/meem-sakinah-rules-english/).
+- [Ghunnah](/blog/ghunnah-english/).
+
+## Stage 4: Madd (2–3 weeks)
+- Natural madd of two counts, then the longer types.
+- Read [Madd Rules in Tajweed](/blog/madd-rules-tajweed-english/).
+
+## Stage 5: Letters in detail (ongoing)
+- [Makharij al-Huruf](/blog/makharij-al-huruf-english/) and [Sifat al-Huruf](/blog/sifat-al-huruf-english/).
+- [Qalqalah](/blog/qalqalah-rules-english/) and [Heavy and Light Letters](/blog/heavy-and-light-letters-english/).
+
+## Stage 6: Stopping and applied recitation (ongoing)
+- Learn the [Types of Stops (Waqf) in Quran Recitation: Complete, Sufficient, Good and Bad](/blog/types-of-waqf-english/) and the [Signs and Symbols in the Madinah Mushaf Explained (A Guide for Non-Arabs)](/blog/mushaf-symbols-english/).
+- Recite **Al-Fatihah** and **Juz ʿAmma** to a teacher.
+
+## How do you know you're ready to move on?
+| Sign | Meaning |
+|---|---|
+| You read without stopping to spell | Ready for rules |
+| You apply a rule without thinking | Ready for the next rule |
+| A teacher corrects you less | Ready for longer surahs |
+
+## Tips
+- **Theory is not enough**: tajweed is learned by listening and reciting to a teacher.
+- **15 minutes a day** beats two hours once a week.
+
+Read [Learn Quran as an Adult from Zero](/blog/learn-quran-as-an-adult-from-zero/).

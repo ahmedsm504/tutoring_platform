@@ -1,0 +1,40 @@
+title: Meem Sakinah Rules in Tajweed: Ikhfa Shafawi, Idgham Shafawi and Izhar Shafawi
+category: english
+excerpt: The three rules of meem sakinah explained simply for English speakers: Ikhfa Shafawi before baa, Idgham Shafawi before another meem, and Izhar Shafawi before every other letter, with examples from short surahs, a summary table, and the most common mistakes.
+meta: Meem sakinah rules in English: Ikhfa Shafawi before baa, Idgham Shafawi before meem, Izhar Shafawi before all other letters, Quran examples, a table and common mistakes.
+keywords: meem sakinah rules, ikhfa shafawi, idgham shafawi, izhar shafawi, tajweed rules in english, meem saakin
+reading: 4
+translation_of: meem-sakinah-rules
+---
+A **meem sakinah** is a meem with a sukūn (no vowel), like the meem in ﴿عَلَيۡهِمۡ﴾. What you do with it depends on the letter that comes right after it. There are only **three rules**, and they are called *shafawī* (labial) because meem is pronounced with the lips.
+
+## 1. Ikhfa Shafawi (labial hiding)
+- **When:** meem sakinah followed by **baa (ب)**.
+- **How:** close the lips lightly, without pressing, and hold a **ghunnah of two counts**.
+- **Example:** ﴿تَرۡمِيهِم بِحِجَارَةٖ مِّن سِجِّيلٖ﴾ [Al-Fil: 4].
+
+## 2. Idgham Shafawi (labial merging)
+- **When:** meem sakinah followed by **another meem (م)**.
+- **How:** merge the two meems into one stressed meem with a **ghunnah of two counts**.
+- **Example:** ﴿وَلَكُم مَّا كَسَبۡتُمۡۖ﴾ [Al-Baqarah: 134].
+- It is also called *idgham mithlayn ṣaghīr* (merging two identical letters).
+
+## 3. Izhar Shafawi (labial clarity)
+- **When:** meem sakinah followed by **any other letter** (26 letters).
+- **How:** pronounce the meem clearly, with no extra nasal sound.
+- **Examples:** ﴿أَلَمۡ تَرَ﴾, ﴿عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ﴾ [Al-Fatihah: 7].
+- **Be extra careful before waw (و) and faa (ف):** these letters are close to meem in the mouth, so students often hide the meem by mistake.
+
+## Summary table
+| Next letter | Rule | Ghunnah |
+|---|---|---|
+| ب | Ikhfa Shafawi | 2 counts |
+| م | Idgham Shafawi | 2 counts |
+| Any other letter | Izhar Shafawi | None |
+
+## Common mistakes
+1. **Pressing the lips hard** in ikhfa shafawi, which turns it into a full meem.
+2. **Hiding the meem before waw or faa**, as in ﴿عَلَيۡهِمۡ وَلَا﴾.
+3. **Dropping the ghunnah** in ﴿وَلَكُم مَّا﴾.
+
+Next, read [Noon Sakinah and Tanween Rules](/blog/noon-sakinah-tanween-rules-english/) and [Madd Rules in Tajweed](/blog/madd-rules-tajweed-english/).

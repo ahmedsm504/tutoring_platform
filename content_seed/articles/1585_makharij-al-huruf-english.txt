@@ -1,0 +1,45 @@
+title: Makharij al-Huruf: Where Each Arabic Letter Comes From
+category: english
+excerpt: A clear English guide to makharij al-huruf, the articulation points of Arabic letters: the five main areas (the empty space of the mouth and throat, the throat, the tongue, the lips and the nasal passage), which letters come from each, a simple test to find any letter's makhraj, and the letters English speakers find hardest.
+meta: Makharij al-huruf in English: the five areas jawf, throat, tongue, lips and nose, which letters come from each, how to find a letter's makhraj, and the hardest letters for English speakers.
+keywords: makharij al huruf, articulation points arabic, makharij english, throat letters, tajweed for beginners, arabic pronunciation
+reading: 5
+translation_of: makharij-al-huruf
+---
+Every Arabic letter has a **makhraj**: the exact place in the mouth or throat where it is produced. Getting the makhraj right is the first step of tajweed.
+
+## How to find a letter's makhraj
+- Put a **hamza with a fatḥah** before the letter and give the letter a **sukūn**: *ab*, *at*, *aq*.
+- Where the sound stops is the makhraj.
+
+## The five main areas
+| Area | Letters |
+|---|---|
+| Al-Jawf (the empty space in the mouth and throat) | The three madd letters: ا و ي when they are madd |
+| Al-Ḥalq (the throat) | ء هـ / ع ح / غ خ |
+| Al-Lisān (the tongue) | 18 letters |
+| Ash-Shafatān (the lips) | ف ب م و |
+| Al-Khayshūm (the nasal passage) | The ghunnah of noon and meem |
+- Imam Ibn al-Jazarī counted **17 detailed makharij** within these five areas.
+
+## The throat in three levels
+| Level | Letters |
+|---|---|
+| Deepest | ء هـ |
+| Middle | ع ح |
+| Closest to the mouth | غ خ |
+
+## Hardest letters for English speakers
+| Letter | Common mistake | Tip |
+|---|---|---|
+| ع | Said like a plain vowel | Tighten the middle of the throat |
+| ح | Said like h | A tight, breathy sound from the middle of the throat |
+| ق | Said like k | Further back, at the very back of the tongue |
+| ض | Said like d | Side of the tongue against the upper molars |
+| ظ / ذ | Mixed together | ظ is heavy, ذ is light |
+
+## Practice
+- **Use a mirror** to check your lips and tongue.
+- **Listen** to a careful reciter and copy one letter at a time.
+
+Read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/) and [Heavy and Light Letters in Tajweed](/blog/heavy-and-light-letters-english/).

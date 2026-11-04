@@ -1,0 +1,39 @@
+title: Sun and Moon Letters (Lam Shamsiyyah and Qamariyyah) Made Simple
+category: english
+excerpt: When is the laam of "al-" pronounced and when does it disappear? The 14 moon letters gathered in "ibghi ḥajjaka wa khaf ʿaqīmah", the 14 sun letters, how the Madinah Mushaf marks each case, examples like "ash-shams" and "al-qamar", and the mistakes English speakers make.
+meta: Sun and moon letters in English: when the laam of al- is pronounced or merged, the 14 moon letters ibghi hajjaka wa khaf aqimah, Mushaf marks, examples and common mistakes.
+keywords: sun and moon letters, lam shamsiyya, lam qamariyya, al lam rules, tajweed in english, definite article quran
+reading: 4
+translation_of: lam-shamsiyya-qamariyya
+---
+In Arabic, "the" is **al-** (ال). Sometimes you hear the laam clearly, as in **al-qamar** (the moon). Sometimes it disappears into the next letter, as in **ash-shams** (the sun). This is the rule of sun and moon letters.
+
+## Moon letters (Lam Qamariyyah): the laam is pronounced
+- **14 letters**, gathered in: **ابۡغِ حَجَّكَ وَخَفۡ عَقِيمَهُ** (*ibghi ḥajjaka wa khaf ʿaqīmah*).
+- The laam has a **sukūn** and is pronounced clearly.
+- **Examples:** ﴿ٱلۡحَمۡدُ﴾, ﴿ٱلۡمُسۡتَقِيمَ﴾, ﴿ٱلۡفَلَقِ﴾, ﴿وَٱلۡقَمَرِ إِذَا﴾.
+
+## Sun letters (Lam Shamsiyyah): the laam is silent
+- **The other 14 letters.**
+- The laam is **not pronounced**, and the next letter is **doubled** (has a shaddah).
+- **Examples:** ﴿ٱلرَّحۡمَٰنِ﴾, ﴿ٱلصِّرَٰطَ﴾, ﴿وَٱلشَّمۡسِ﴾, ﴿ٱلنَّاسِ﴾.
+
+## How the Mushaf shows it
+| Case | What you see |
+|---|---|
+| Moon letter | A sukūn on the laam, as in ٱلۡـ |
+| Sun letter | No mark on the laam, and a shaddah on the next letter |
+
+## The sun letters
+ت ث د ذ ر ز س ش ص ض ط ظ ل ن
+
+## Why the names?
+- The word **الشمس** (sun) starts with a sun letter, so its laam disappears.
+- The word **القمر** (moon) starts with a moon letter, so its laam is heard.
+
+## Common mistakes
+1. **Pronouncing the laam before sun letters**, saying *al-raḥmān* instead of *ar-raḥmān*.
+2. **Forgetting to double the sun letter**.
+3. **Dropping the laam before moon letters**, especially before jeem and kaaf.
+
+Read [Hamzat al-Wasl vs Hamzat al-Qat](/blog/hamzat-wasl-qat-english/) and [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/).
