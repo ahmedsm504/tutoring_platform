@@ -1,0 +1,33 @@
+title: The Names of the Quran and What They Mean
+category: english
+excerpt: The best-known names Allah gave His Book and what each one teaches: Al-Qur'an (the recited), Al-Kitab (the written), Al-Furqan (the criterion), Adh-Dhikr (the reminder) and At-Tanzil (the revelation), with the ayat where they appear and descriptions such as light, guidance and healing.
+meta: The names of the Quran explained: Al-Quran, Al-Kitab, Al-Furqan, Adh-Dhikr and At-Tanzil, the ayat where they appear, and descriptions such as light, guidance, mercy and healing.
+keywords: names of the quran, al furqan meaning, al kitab, adh dhikr, quran names meaning, what does quran mean
+reading: 4
+translation_of: names-of-the-quran
+---
+Allah called His Book by several names. Each name shows a different side of it.
+
+## The five best-known names
+| Name | Meaning | Ayah |
+|---|---|---|
+| Al-Qurʾān | The recited | ﴿إِنَّ هَٰذَا ٱلۡقُرۡءَانَ يَهۡدِي لِلَّتِي هِيَ أَقۡوَمُ﴾ [Al-Isra: 9] |
+| Al-Kitāb | The written Book | ﴿ذَٰلِكَ ٱلۡكِتَٰبُ لَا رَيۡبَۛ فِيهِۛ هُدٗى لِّلۡمُتَّقِينَ﴾ [Al-Baqarah: 2] |
+| Al-Furqān | The criterion between truth and falsehood | ﴿تَبَارَكَ ٱلَّذِي نَزَّلَ ٱلۡفُرۡقَانَ عَلَىٰ عَبۡدِهِۦ﴾ [Al-Furqan: 1] |
+| Adh-Dhikr | The reminder | ﴿إِنَّا نَحۡنُ نَزَّلۡنَا ٱلذِّكۡرَ وَإِنَّا لَهُۥ لَحَٰفِظُونَ﴾ [Al-Hijr: 9] |
+| At-Tanzīl | The revelation sent down | ﴿وَإِنَّهُۥ لَتَنزِيلُ رَبِّ ٱلۡعَٰلَمِينَ﴾ [Ash-Shu'ara: 192] |
+
+## Recited and written
+- Some scholars noted that the names **Al-Qurʾān** (recited) and **Al-Kitāb** (written) point to how it is preserved: **in hearts** and **on pages**.
+
+## Descriptions in the Quran
+| Description | Ayah |
+|---|---|
+| Light | ﴿وَأَنزَلۡنَآ إِلَيۡكُمۡ نُورٗا مُّبِينٗا﴾ [An-Nisa: 174] |
+| Blessed | ﴿وَهَٰذَا ذِكۡرࣱ مُّبَارَكٌ أَنزَلۡنَٰهُۚ﴾ [Al-Anbiya: 50] |
+| Healing and mercy | ﴿وَنُنَزِّلُ مِنَ ٱلۡقُرۡءَانِ مَا هُوَ شِفَآءࣱ وَرَحۡمَةࣱ لِّلۡمُؤۡمِنِينَ﴾ [Al-Isra: 82] |
+
+## Why it matters
+- Each name is a **relationship**: recite it, write it, judge by it, be reminded by it.
+
+Read [How the Quran Was Compiled](/blog/compilation-of-the-quran-english/) and [The Ten Qira'at](/blog/ten-qiraat-introduction-english/).

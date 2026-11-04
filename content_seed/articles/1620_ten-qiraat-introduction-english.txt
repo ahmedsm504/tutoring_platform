@@ -1,0 +1,47 @@
+title: The Ten Qira'at: An Introduction to the Readings of the Quran
+category: english
+excerpt: An introduction to the ten mutawatir readings (qira'at) of the Quran in English: what a qira'ah and a riwayah are, the ten imams and their twenty narrators in a table, which readings are recited where today, the difference between the qira'at and the seven ahruf, and examples of how readings differ.
+meta: The ten qira'at in English: what a qira'ah and riwayah are, the ten imams and twenty narrators, where each is recited today, qira'at versus the seven ahruf, and examples of differences.
+keywords: ten qiraat, qiraat of the quran, hafs and warsh, riwayah meaning, seven ahruf, quran readings english
+reading: 5
+translation_of: ten-qiraat-introduction
+---
+Most Muslims today recite in **Hafs ʿan ʿĀṣim**. But it is one of **twenty narrations** from **ten readings**, all transmitted by mass, authentic chains (mutawātir).
+
+## Key terms
+| Term | Meaning |
+|---|---|
+| Qirāʾah | A reading attributed to one of the ten imams |
+| Riwāyah | A narration of that reading by one of the imam's students |
+| Mutawātir | Transmitted by so many that error is impossible |
+
+## The ten imams and their narrators
+| Imam | City | Narrators |
+|---|---|---|
+| Nāfiʿ | Madinah | Qālūn, Warsh |
+| Ibn Kathīr | Makkah | Al-Bazzī, Qunbul |
+| Abū ʿAmr | Basra | Ad-Dūrī, As-Sūsī |
+| Ibn ʿĀmir | Damascus | Hishām, Ibn Dhakwān |
+| ʿĀṣim | Kufa | Shuʿbah, Ḥafṣ |
+| Ḥamzah | Kufa | Khalaf, Khallād |
+| Al-Kisāʾī | Kufa | Abul-Ḥārith, Ad-Dūrī |
+| Abū Jaʿfar | Madinah | Ibn Wardān, Ibn Jammāz |
+| Yaʿqūb | Basra | Ruways, Rawḥ |
+| Khalaf al-ʿĀshir | Baghdad | Isḥāq, Idrīs |
+
+## Where they are recited today
+| Riwāyah | Common in |
+|---|---|
+| Ḥafṣ | Most of the Muslim world |
+| Warsh | North and West Africa |
+| Qālūn | Libya and parts of Tunisia |
+| Ad-Dūrī ʿan Abī ʿAmr | Parts of Sudan |
+
+## Qira'at are not the seven ahruf
+- The **seven ahruf** were modes of revelation mentioned in hadith.
+- The **ten qira'at** are readings preserved within the ʿUthmani script, and scholars discussed how they relate to the ahruf.
+
+## An example
+- ﴿مَٰلِكِ يَوۡمِ ٱلدِّينِ﴾ is read *Māliki* by ʿĀṣim, Al-Kisāʾī, Yaʿqūb and Khalaf, and *Maliki* by the others: Owner and King, both true.
+
+Read [What Is an Ijazah?](/blog/what-is-ijazah-quran-english/) and [Hamzat al-Wasl vs Hamzat al-Qat](/blog/hamzat-wasl-qat-english/).
