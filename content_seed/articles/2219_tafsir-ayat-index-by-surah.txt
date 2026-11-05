@@ -191,6 +191,7 @@ reading: 15
 - [تفسير «لئن شكرتم لأزيدنكم ولئن كفرتم إن عذابي لشديد»](/blog/tafsir-ayah-lain-shakartum/) (الآية 7)
 - [تفسير آية «ألم تر كيف ضرب الله مثلا كلمة طيبة كشجرة طيبة»](/blog/tafsir-ayah-kalimatan-tayyibatan-kashajara/) (الآية 24)
 - [تفسير آية «وإن تعدوا نعمة الله لا تحصوها» في سورتي إبراهيم والنحل](/blog/tafsir-ayah-wa-in-taudduu-nimat-allah/) (الآية 34)
+- [تفسير آية «رب اجعلني مقيم الصلاة ومن ذريتي ربنا وتقبل دعاء»](/blog/tafsir-ayah-rabbi-ijalni-muqima-as-salat/) (الآية 40)
 
 ### سورة الحجر
 - [تفسير آية «إنا نحن نزلنا الذكر وإنا له لحافظون»](/blog/tafsir-ayah-inna-nahnu-nazzalna-adh-dhikr/) (الآية 9)
@@ -224,6 +225,7 @@ reading: 15
 - [تفسير آية «قل كل يعمل على شاكلته»](/blog/tafsir-ayah-qul-kullun-yamalu-ala-shakilatih/) (الآية 84)
 
 ### سورة الكهف
+- [تفسير آية «ربنا آتنا من لدنك رحمة وهيئ لنا من أمرنا رشدا»](/blog/tafsir-ayah-rabbana-atina-min-ladunka-rahma/) (الآية 10)
 - [تفسير آية «ولا تقولن لشيء إني فاعل ذلك غدا إلا أن يشاء الله»](/blog/tafsir-ayah-illa-an-yashaa-allah/) (الآية 23)
 - [تفسير «واصبر نفسك مع الذين يدعون ربهم بالغداة والعشي»](/blog/tafsir-ayah-wasbir-nafsak/) (الآية 28)
 - [تفسير آية «ولولا إذ دخلت جنتك قلت ما شاء الله لا قوة إلا بالله»](/blog/tafsir-ayah-ma-shaa-allahu-la-quwwata-illa-billah/) (الآية 39)
