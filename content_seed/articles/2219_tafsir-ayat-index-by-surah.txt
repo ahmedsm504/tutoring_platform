@@ -49,6 +49,7 @@ reading: 15
 - [تفسير آية «والذين آمنوا أشد حبا لله»](/blog/tafsir-ayah-ashaddu-hubban-lillah/) (الآية 165)
 - [تفسير آية «يا أيها الناس كلوا مما في الأرض حلالا طيبا»](/blog/tafsir-ayah-kulu-mimma-fil-ardi-halalan-tayyiba/) (الآية 168)
 - [تفسير آية البر «ليس البر أن تولوا وجوهكم قبل المشرق والمغرب»](/blog/tafsir-ayah-laysa-al-birr/) (الآية 177)
+- [تفسير آية «شهر رمضان الذي أنزل فيه القرآن» و«يريد الله بكم اليسر»](/blog/tafsir-ayah-shahru-ramadan-yuridu-allah-al-yusr/) (الآية 185)
 - [تفسير آية «وإذا سألك عبادي عني فإني قريب» ولطائفها](/blog/tafsir-ayah-wa-idha-saalaka-ibadi/) (الآية 186)
 - [تفسير آية «يسألونك عن الأهلة قل هي مواقيت للناس والحج»](/blog/tafsir-ayah-yasalunaka-anil-ahilla/) (الآية 189)
 - [تفسير آية «ولا تلقوا بأيديكم إلى التهلكة»](/blog/tafsir-ayah-wala-tulqu-bi-aydikum/) (الآية 195)
@@ -293,6 +294,9 @@ reading: 15
 ### سورة الروم
 - [تفسير آية «ومن آياته أن خلق لكم من أنفسكم أزواجا لتسكنوا إليها وجعل بينكم مودة ورحمة»](/blog/tafsir-ayah-mawadda-wa-rahma/) (الآية 21)
 - [تفسير آية «ظهر الفساد في البر والبحر بما كسبت أيدي الناس»](/blog/tafsir-ayah-zahara-al-fasadu/) (الآية 41)
+
+### سورة لقمان
+- [تفسير آية «يا بني لا تشرك بالله إن الشرك لظلم عظيم»](/blog/tafsir-ayah-ya-bunayya-la-tushrik-billah/) (الآية 13)
 
 ### سورة الأحزاب
 - [تفسير آية «لقد كان لكم في رسول الله أسوة حسنة»](/blog/tafsir-ayah-uswa-hasana/) (الآية 21)
