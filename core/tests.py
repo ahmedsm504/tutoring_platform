@@ -945,6 +945,23 @@ class Wave25Tests(TestCase):
                       Post.objects.get(slug='juz-11-of-the-quran-summary-english').content)
 
 
+class Wave26Tests(TestCase):
+    def test_wave26_juz_guides(self):
+        import re
+        from content_seed import load_articles
+        arts = {a['slug']: a for a in load_articles()}
+        for n in range(17, 21):
+            ar, en = f'juz-{n}-themes-and-summary', f'juz-{n}-of-the-quran-summary-english'
+            self.assertEqual(arts[en]['translation_of'], ar)
+            for slug in (ar, en):
+                self.assertGreaterEqual(len(re.findall(r'\S+', arts[slug]['body'])), 2000, slug)
+        r = self.client.get('/blog/juz-20-themes-and-summary/')
+        self.assertEqual(r.status_code, 200)
+        from blog.models import Post
+        self.assertIn('/blog/juz-17-of-the-quran-summary-english/',
+                      Post.objects.get(slug='juz-16-of-the-quran-summary-english').content)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
