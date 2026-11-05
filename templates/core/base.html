@@ -136,7 +136,9 @@ a { color: inherit; }
 /* =========================================================
    2. المحتوى الرئيسي
    ========================================================= */
-.main-content{ margin-right: 272px; flex: 1; padding: 32px 40px 60px; min-height: 100vh; }
+.main-content{ margin-right: 272px; flex: 1; min-width: 0; padding: 32px 40px 60px; min-height: 100vh; }
+.main-content img, .main-content video, .main-content iframe{ max-width:100%; height:auto; }
+.main-content pre{ white-space:pre-wrap; word-break:break-word; }
 
 .page-header{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-bottom:8px; }
 .page-title{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.5rem; color:var(--ink); }
@@ -294,6 +296,32 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     .sidebar ul li a i { font-size: 1.2rem; }
     .main-content { margin-right: 74px; padding: 20px 18px; }
     .country-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
+/* الموبايل: الشريط الجانبي يبقى شريط علوي أفقي قابل للتمرير، والمحتوى ياخد العرض كله */
+@media (max-width: 600px) {
+    body { display: block !important; }
+    .sidebar { position: sticky; top: 0; width: 100%; height: auto; padding: 6px 8px; overflow-x: auto; overflow-y: hidden; box-shadow: var(--shadow-md); -webkit-overflow-scrolling: touch; }
+    .sidebar .logo, .sidebar > div:last-child { display: none; }
+    .sidebar ul { display: flex; gap: 4px; }
+    .sidebar ul li { margin: 0; flex: 0 0 auto; }
+    .sidebar ul li a { padding: 9px 12px; gap: 6px; font-size: 0.8rem; white-space: nowrap; }
+    .sidebar ul li a span { display: inline !important; }
+    .sidebar ul li a i { font-size: 0.95rem; }
+    .sidebar ul li a.active::before { display: none; }
+    .main-content { margin-right: 0; padding: 16px 12px 40px; }
+    .page-title { font-size: 1.2rem; }
+    .filter-bar { padding: 10px; }
+    .filter-bar input[type="text"], .filter-bar select { flex: 1 1 140px; min-width: 0; max-width: 100%; }
+    .table-container { padding: 4px 8px; }
+    .stats-row { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+    .btn { padding: 9px 16px; }
+    #act-toast-wrap { left: 8px; right: 8px; max-width: none; }
+    /* القوالب اللي فيها grid/flex مكتوب inline */
+    .main-content [style*="grid-template-columns"] { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)) !important; }
+    .main-content [style*="display:flex"], .main-content [style*="display: flex"] { flex-wrap: wrap !important; }
+    .main-content > div[style*="padding"] { padding: 18px 14px !important; }
+    .main-content input, .main-content select, .main-content textarea { max-width: 100%; min-width: 0; }
+    .main-content h1, .main-content h2, .main-content h3 { overflow-wrap: anywhere; }
 }
 
 /* ===== نشاط المعلمات: توست + زر الصوت + قائمة النشاط ===== */
