@@ -18,6 +18,20 @@
     {% for cat, items in qna_groups %}<a href="#qna-{{ cat.slug }}">{{ cat.name }} ({{ items|length }})</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>
   </nav>
 
+  <h2>الأدلة والفهارس الكبرى</h2>
+  <ul>
+    <li><a href="/blog/quran-30-juz-complete-guide/">أجزاء القرآن الثلاثون: دليل شامل لكل جزء</a></li>
+    <li><a href="/blog/tafsir-surahs-index/">فهرس تفسير سور القرآن</a></li>
+    <li><a href="/blog/tafsir-ayat-index-by-surah/">فهرس تفسير الآيات مرتبًا على سور القرآن</a></li>
+    <li><a href="/blog/quran-topics-encyclopedia/">موسوعة موضوعات القرآن</a></li>
+    <li><a href="/blog/allah-names-index/">أسماء الله الحسنى ومعانيها</a></li>
+    <li><a href="/blog/tajweed-applied-index-by-surah/">فهرس تطبيقات التجويد على سور القرآن</a></li>
+    <li><a href="/blog/surah-memorization-plans-index/">فهرس خطط حفظ السور والأجزاء</a></li>
+    <li><a href="/blog/quran-stories-for-kids-index/">قصص القرآن للأطفال</a></li>
+    <li lang="en" dir="ltr"><a href="/blog/30-juz-of-the-quran-guide-english/">The 30 Juz of the Quran: A Complete Guide</a></li>
+    <li lang="en" dir="ltr"><a href="/blog/quran-verses-explained-english-index/">Quran Verses Explained in English: An Index by Surah</a></li>
+  </ul>
+
   <h2>المقالات</h2>
   {% for cat, items in blog_groups %}
   <h3 id="blog-{{ cat.slug }}"><a href="{% url 'category_posts' cat.slug %}">{{ cat.name }}</a></h3>
