@@ -1082,6 +1082,22 @@ class Wave33Tests(TestCase):
                 self.assertNotIn(link, arabic_slugs, (en, link))
 
 
+class Wave34Tests(TestCase):
+    def test_makharij_expanded_with_full_letter_table(self):
+        import re
+        from content_seed import load_articles
+        from blog.models import Post
+        arts = {a['slug']: a for a in load_articles()}
+        self.assertEqual(arts['makharij-al-huruf-english']['translation_of'], 'makharij-al-huruf')
+        for s in ('makharij-al-huruf', 'makharij-al-huruf-english'):
+            self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
+            # جدول الحروف: 28 صف على الأقل
+            self.assertGreaterEqual(Post.objects.get(slug=s).content.count('\n| '), 28, s)
+        self.assertEqual(arts['learn-tajweed-roadmap-english']['translation_of'], 'learn-tajweed-roadmap')
+        for s in ('learn-tajweed-roadmap', 'learn-tajweed-roadmap-english'):
+            self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
