@@ -1130,6 +1130,19 @@ class Wave36Tests(TestCase):
         self.assertNotIn('silent Daal in ﴿ٱهۡدِنَا﴾', Post.objects.get(slug=en).content)
 
 
+class Wave37Tests(TestCase):
+    def test_kids_guides_expanded_and_all_featured_long(self):
+        import re
+        from content_seed import load_articles
+        arts = {a['slug']: a for a in load_articles()}
+        self.assertEqual(arts['learn-quran-online-for-kids']['translation_of'], 'teaching-quran-to-kids')
+        # كل المقالات المميزة (featured) بقت 2000 كلمة على الأقل
+        featured = [s for s, a in arts.items() if a.get('featured') == '1']
+        self.assertGreaterEqual(len(featured), 7)
+        for s in featured:
+            self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
