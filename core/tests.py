@@ -907,6 +907,27 @@ class Wave23Tests(TestCase):
                          'tafsir-ayah-inna-kulla-shayin-khalaqnahu-biqadar')
 
 
+class Wave24Tests(TestCase):
+    def test_wave24_juz_guides(self):
+        import re
+        from content_seed import load_articles
+        arts = {a['slug']: a for a in load_articles()}
+        self.assertGreaterEqual(len(arts), 2170)
+        for n in range(1, 11):
+            ar, en = f'juz-{n}-themes-and-summary', f'juz-{n}-of-the-quran-summary-english'
+            self.assertEqual(arts[en]['translation_of'], ar)
+            for slug in (ar, en):
+                self.assertGreaterEqual(len(re.findall(r'\S+', arts[slug]['body'])), 2000, slug)
+        r = self.client.get('/blog/juz-1-themes-and-summary/')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, '"wordCount"')
+
+    def test_old_slug_alias_redirects(self):
+        r = self.client.get('/blog/allah-name-al-awwal-al-akhir-az-zahir-al-batin-meaning/')
+        self.assertEqual(r.status_code, 301)
+        self.assertTrue(r['Location'].endswith('/blog/allah-names-al-awwal-al-akhir-meaning/'))
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
