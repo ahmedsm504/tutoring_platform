@@ -256,6 +256,7 @@ reading: 15
 - [تفسير آية «فإنها لا تعمى الأبصار ولكن تعمى القلوب التي في الصدور»](/blog/tafsir-ayah-fa-innaha-la-tama-al-absar/) (الآية 46)
 
 ### سورة المؤمنون
+- [تفسير آية «قد أفلح المؤمنون الذين هم في صلاتهم خاشعون»](/blog/tafsir-ayah-qad-aflaha-al-muminun-khashiun/) (الآية 1)
 - [تفسير آية «أفحسبتم أنما خلقناكم عبثا وأنكم إلينا لا ترجعون»](/blog/tafsir-ayah-afahasibtum-annama-khalaqnakum-abathan/) (الآية 115)
 
 ### سورة النور
@@ -362,6 +363,7 @@ reading: 15
 - [تفسير آية «وأن ليس للإنسان إلا ما سعى وأن سعيه سوف يرى»](/blog/tafsir-ayah-laysa-lil-insani-illa-ma-saa/) (الآية 39)
 
 ### سورة القمر
+- [تفسير آية «ولقد يسرنا القرآن للذكر فهل من مدكر»](/blog/tafsir-ayah-walaqad-yassarna-al-quran-lidh-dhikr/) (الآية 1)
 - [تفسير آية «إنا كل شيء خلقناه بقدر»](/blog/tafsir-ayah-inna-kulla-shayin-khalaqnahu-biqadar/) (الآية 49)
 
 ### سورة الرحمن
