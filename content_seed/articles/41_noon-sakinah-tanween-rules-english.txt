@@ -1,62 +1,132 @@
 title: Tajweed Rules of Noon Sakinah and Tanween Explained in English (With Examples)
 category: english
-excerpt: The four rules of Noon Sakinah and Tanween (Izhar, Idgham, Iqlab and Ikhfa) explained simply in English, with the letters of each rule, Quranic examples, a summary table and common mistakes.
-meta: The 4 Tajweed rules of Noon Sakinah and Tanween in English: Izhar, Idgham, Iqlab and Ikhfa, with letters, Quran examples and a summary table.
-keywords: noon sakinah rules, tanween rules, izhar idgham iqlab ikhfa, tajweed rules in english, learn tajweed online, ikhfa letters
-reading: 7
+excerpt: A complete English guide to the four rules of Noon Sakinah and Tanween: Izhar, Idgham with and without ghunnah, Iqlab and Ikhfa, with the letters of each rule, how to pronounce it, Quranic examples, the exceptions, the levels of Ikhfa, practice on short surahs, a summary table and common mistakes.
+meta: The 4 Tajweed rules of Noon Sakinah and Tanween in English: Izhar, Idgham, Iqlab and Ikhfa, with letters, pronunciation tips, Quran examples, exceptions, practice on short surahs and a summary table.
+keywords: noon sakinah rules, tanween rules, izhar idgham iqlab ikhfa, tajweed rules in english, ikhfa letters, idgham with ghunnah, learn tajweed online
+reading: 13
 translation_of: noon-sakinah-tanween-rules
 ---
-If you are learning Tajweed, the rules of **Noon Sakinah and Tanween** are usually the first chapter you study, because they appear on almost every page of the Quran. Master these four rules and your recitation will improve noticeably within weeks.
+If you are learning Tajweed, the rules of **Noon Sakinah and Tanween** are usually the first chapter you study, because they appear on almost every page of the Quran, often several times in one verse. Master these four rules and your recitation will improve noticeably within weeks.
+
+This guide explains each rule in plain English: which letters trigger it, how to pronounce it, real examples from the Mushaf, the exceptions, and then a hands-on practice section using short surahs you probably already know.
+
+## Why start with this chapter?
+- **It is everywhere.** Words such as ﴿مِنۢ بَعۡدِ﴾ (*mim baʿdi*), ﴿مِن قَبۡلُ﴾ (*min qablu*), ﴿أَنتُمۡ﴾ (*antum*) and ﴿يُنفِقُونَ﴾ (*yunfiqūn*) appear on nearly every page.
+- **Mistakes here are easy to hear.** A clear "n" where the Noon should be hidden, or a missing nasal sound where it should stay, is noticed by anyone who listens to skilled reciters.
+- **It prepares you for what comes next.** The rules of Meem Sakinah, ghunnah, and similar and close letters all build on this chapter.
 
 ## What are Noon Sakinah and Tanween?
-- **Noon Sakinah (نْ)** is a Noon with no vowel on it, such as in ﴿مِنۡ﴾ (*min*).
+- **Noon Sakinah (نْ)** is a Noon with no vowel on it. It is written and pronounced, and can come in the middle or at the end of a word, in nouns, verbs and particles: ﴿يَنۡهَوۡنَ﴾ (*yanhawn*), ﴿مِنۡهُمۡ﴾ (*minhum*), ﴿مَنۡ ءَامَنَ﴾ (*man āmana*).
 - **Tanween** is the double vowel at the end of a noun (ـً ـٌ ـٍ). It is pronounced as an extra Noon Sakinah that is not written, for example ﴿عَلِيمٌ حَكِيمٌ﴾ (*ʿalīmun ḥakīm*).
 
-Because Tanween is really a hidden Noon Sakinah, both follow exactly the same rules. **What decides the rule is the letter that comes right after the Noon or Tanween.**
+Because Tanween is really a hidden Noon Sakinah, both follow exactly the same rules. **What decides the rule is the letter that comes right after the Noon or Tanween**, never the letter before it.
+
+### Five differences between Noon Sakinah and Tanween
+| Point | Noon Sakinah | Tanween |
+|---|---|---|
+| Position | middle or end of a word | end of a word only |
+| Type of word | nouns, verbs and particles | nouns only |
+| Writing | written as a Noon | written as a doubled vowel |
+| When stopping | the Noon stays | dropped; *-an* becomes a long *ā* |
+| Origin | may be part of the root | always an addition |
+
+So if you stop on ﴿عَلِيمٌ﴾ you say *ʿalīm* with no "n", and if you stop on ﴿قَوۡلٗا سَدِيدٗا﴾ you say *sadīdā*. But ﴿مِنۡ﴾ keeps its Noon whether you stop or continue.
 
 ## Rule 1: Izhar (clear pronunciation)
-Pronounce the Noon clearly, without extra nasal sound (ghunnah), when it is followed by one of the **six throat letters**: ء ه ع ح غ خ.
+Pronounce the Noon clearly, without extra nasal sound (ghunnah), when it is followed by one of the **six throat letters**: ء ه ع ح غ خ (hamzah, haa, ʿayn, ḥaa, ghayn, khaa).
+
+It is called *ḥalqī* (of the throat) because these letters come from the throat, which is far from where the Noon is made at the tip of the tongue. Because the two places are far apart, they do not blend, and the Noon stays clear.
 
 Examples:
-- ﴿مَنۡ ءَامَنَ﴾ (*man āmana*)
-- ﴿مِنۡهُمۡ﴾ (*minhum*)
-- ﴿مِّنۡ غِلٍّ﴾ (*min ghillin*)
+- Hamzah: ﴿مَنۡ ءَامَنَ﴾ (*man āmana*). In Al-Fatiha: ﴿أَنۡعَمۡتَ عَلَيۡهِمۡ﴾, where the Noon comes before ʿayn.
+- Haa: ﴿مِنۡهُمۡ﴾ (*minhum*)
+- ʿAyn: ﴿مَنۡ عَمِلَ﴾ (*man ʿamila*)
+- Ḥaa: ﴿مِّنۡ حَكِيمٍ حَمِيدٖ﴾ (*min ḥakīmin ḥamīd*)
+- Ghayn: ﴿مِّنۡ غِلٍّ﴾ (*min ghillin*)
+- Khaa: ﴿مِّنۡ خَوۡفِۭ﴾ (*min khawf*)
 
-**Tip:** say the Noon clearly, then move straight to the next letter. Do not add a pause or bounce.
+It applies to Tanween too: ﴿طَيۡرًا أَبَابِيلَ﴾ (*ṭayran abābīl*) and ﴿كُفُوًا أَحَدُۢ﴾ (*kufuwan aḥad*), where Tanween is followed by a hamzah.
+
+**Tip:** say the Noon clearly, then move straight to the next letter. Do not add a pause or a bounce, and do not stretch the nasal sound.
+
+**In the Mushaf:** an Izhar Noon carries a visible sukun, which in the Madinah Mushaf looks like a small *khaa* head without a dot. An Izhar Tanween has its two vowel marks **stacked** directly on top of each other.
 
 ## Rule 2: Idgham (merging)
-The Noon merges into the next letter, so the two become one doubled letter. Idgham happens with six letters, remembered in the word **يرملون** (*yarmalūn*).
+The Noon merges into the next letter, so the two become one doubled letter of the second kind. Idgham happens with six letters, remembered in the word **يرملون** (*yarmalūn*): ي ر م ل و ن.
 
 ### Idgham with ghunnah
-With the four letters of **ينمو** (ي ن م و), the Noon merges and a nasal sound of **two counts** remains:
-- ﴿مَن يَقُولُ﴾ is read *may-yaqūl*
-- ﴿مِّن مَّالٍ﴾ is read *mim-māl*
+With the four letters of **ينمو** (*yanmū*: ي ن م و), the Noon merges and a nasal sound of **two counts** remains:
+- Yaa: ﴿مَن يَقُولُ﴾ is read *may-yaqūl*
+- Noon: ﴿مِّن نِّعۡمَةٖ﴾ is read *min-niʿmah*
+- Meem: ﴿مِّن مَّالٖ﴾ is read *mim-māl*
+- Waw: ﴿مِن وَالٍ﴾ is read *miw-wāl*
+
+With Tanween: ﴿حَبۡلࣱ مِّن مَّسَدِۭ﴾ (*ḥablum mim masad*) has two merges in a row: Tanween into Meem, then Noon into Meem.
+
+**A finer point:** with Noon and Meem the merge is **complete**, because the Noon disappears entirely and the nasal sound you hear belongs to the doubled Noon or Meem. With Yaa and Waw the merge is **incomplete**, because the Noon itself disappears but its quality, the ghunnah, remains.
 
 ### Idgham without ghunnah
-With **ل** and **ر**, the Noon merges completely with no nasal sound:
-- ﴿مِّن رَّبِّهِمۡ﴾ is read *mir-rabbihim*
-- ﴿غَفُورٌ رَّحِيمٌ﴾ is read *ghafūrur-raḥīm*
+With **ل** (Laam) and **ر** (Raa), the Noon merges completely with no nasal sound at all:
+- Laam: ﴿مِّن لَّدُنۡهُ﴾ is read *mil-ladunhu*. In Al-Ikhlas: ﴿وَلَمۡ يَكُن لَّهُۥ﴾ is read *yakul-lahu*.
+- Raa: ﴿مِّن رَّبِّهِمۡ﴾ is read *mir-rabbihim*
+- With Tanween: ﴿غَفُورٞ رَّحِيمٞ﴾ is read *ghafūrur-raḥīm*
 
-**Important exception:** Idgham only happens **between two words**. Inside a single word, the Noon stays clear. There are only four such words in the Quran: ﴿ٱلدُّنۡيَا﴾, ﴿بُنۡيَٰنٌ﴾, ﴿قِنۡوَانٌ﴾ and ﴿صِنۡوَانٌ﴾.
+This is how it is read in the narration of Ḥafṣ via Ash-Shāṭibiyyah, the reading found in most printed Mushafs today.
+
+**In the Mushaf:** a merged Noon has **no sukun**, and the next letter carries a **shaddah**. A merged Tanween has its two vowel marks written **one after the other**, not stacked.
+
+### Important exceptions
+- **Idgham only happens between two words.** Inside a single word, a Noon Sakinah followed by Waw or Yaa stays clear (called *Iẓhār Muṭlaq*). There are only four such words in the Quran: ﴿ٱلدُّنۡيَا﴾, ﴿بُنۡيَٰنࣱ﴾, ﴿قِنۡوَانࣱ﴾ and ﴿صِنۡوَانࣱ﴾. Merging them would distort the word: *ad-dunyā* would become *ad-duyyā*.
+- **﴿يسٓ﴾ ﴿وَٱلۡقُرۡءَانِ ٱلۡحَكِيمِ﴾ and ﴿نٓۚ وَٱلۡقَلَمِ﴾:** the Noon at the end of *Yā-Sīn* and *Nūn* is read clearly by Ḥafṣ via Ash-Shāṭibiyyah, even though a Waw follows.
+- **﴿وَقِيلَ مَنۡۜ رَاقٖ﴾ in Surah Al-Qiyamah:** Ḥafṣ makes a brief pause (*saktah*) on the Noon without taking a breath, so it does not merge into the Raa.
 
 ## Rule 3: Iqlab (changing)
-When the Noon is followed by **ب (Baa)**, it changes into a hidden **Meem** with ghunnah of two counts. In the Mushaf you'll see a small Meem above the Noon.
-- ﴿مِنۢ بَعۡدِ﴾ is read *mim-baʿdi*
-- ﴿سَمِيعُۢ بَصِيرٌ﴾
+When the Noon or Tanween is followed by **ب (Baa)**, it changes into a hidden **Meem** with ghunnah of two counts. In the Mushaf you'll see a **small Meem** above the Noon, or in place of the second vowel mark of a Tanween.
+- Inside one word: ﴿أَنۢبِئۡهُم﴾ (*ambiʾhum*)
+- Between two words: ﴿مِنۢ بَعۡدِ﴾ is read *mim-baʿdi*
+- With Tanween: ﴿سَمِيعُۢ بَصِيرٌ﴾ (*samīʿum baṣīr*) and ﴿عَلِيمُۢ بِذَاتِ ٱلصُّدُورِ﴾
 
-**How:** close your lips gently (don't press), hold the nasal sound for two counts, then say the Baa.
+**How, in three steps:**
+1. Think "Meem" before you say it.
+2. Close your lips **gently**, without pressing, and hold the nasal sound for two counts.
+3. Say the Baa without a break.
+
+Unlike Idgham, Iqlab happens both inside one word and between two words.
 
 ## Rule 4: Ikhfa (hiding)
-Ikhfa is between clear pronunciation and merging. You don't pronounce a full Noon, and you don't merge it either. Instead, you **hide** it with a ghunnah of two counts while your tongue gets ready for the next letter. It applies to the **remaining 15 letters**:
+Ikhfa is between clear pronunciation and merging. You don't pronounce a full Noon, and you don't merge it either. Instead, you **hide** it with a ghunnah of two counts while your tongue gets ready for the next letter, so the tip of the tongue does not press firmly where a normal "n" is made. It applies to the **remaining 15 letters**:
 
 ص ذ ث ك ج ش ق س د ط ز ف ت ض ظ
 
-Examples:
-- ﴿يُنفِقُونَ﴾ (*yunfiqūn*)
-- ﴿أَنتُمۡ﴾ (*antum*)
-- ﴿مِن قَبۡلُ﴾ (*min qabl*)
+### Examples for the Ikhfa letters
+| Letter | Example |
+|---|---|
+| ص | ﴿عَن صَلَاتِهِمۡ﴾ |
+| ذ | ﴿مِن ذَكَرٍ﴾ |
+| ث | ﴿مِن ثَمَرَةٖ﴾ |
+| ك | ﴿يَنكُثُونَ﴾ |
+| ج | ﴿أَنجَىٰكُم﴾ |
+| ش | ﴿يُنشِئُ﴾ |
+| ق | ﴿يَنقَلِبُونَ﴾ |
+| س | ﴿مِّن سِجِّيلٖ﴾ |
+| د | ﴿أَندَادٗا﴾ |
+| ط | ﴿يَنطِقُ﴾ |
+| ز | ﴿أَنزَلَ﴾ |
+| ف | ﴿يُنفِقُونَ﴾ |
+| ت | ﴿أَنتُمۡ﴾ |
+| ض | ﴿مِن ضَعۡفٖ﴾ |
+| ظ | ﴿يَنظُرُونَ﴾ |
 
-**Tip:** in Ikhfa, the tip of your tongue should **not** press firmly behind your top teeth as it does for a normal "n".
+With Tanween: ﴿نَارٗا ذَاتَ لَهَبٖ﴾ (*nāran dhāta lahab*), Tanween before Dhaal.
+
+### The ghunnah takes the colour of the next letter
+Before the heavy letters ص ض ط ظ ق, the ghunnah is **heavy** (*tafkhīm*), as in ﴿مِن قَبۡلُ﴾ and ﴿يَنطِقُ﴾. Before the other letters it is **light** (*tarqīq*), as in ﴿كُنتُمۡ﴾ and ﴿أَنتُمۡ﴾. The reason is that the tongue is already preparing for the next letter, so the sound takes on its colour.
+
+### Levels of Ikhfa
+The fifteen letters are not all equal. Ikhfa has three levels, depending on how close the letter is to the place of the Noon:
+- **Strongest** with ط د ت, which are very close to the Noon, so the Ikhfa comes close to merging.
+- **Weakest** with ق and ك, which are far from the Noon, so the Ikhfa comes close to clear pronunciation.
+- **Middle** with the rest.
 
 ## Summary table
 | Rule | Letters | Ghunnah | Example |
@@ -67,15 +137,84 @@ Examples:
 | Iqlab | ب | 2 counts (hidden Meem) | ﴿مِنۢ بَعۡدِ﴾ |
 | Ikhfa | the other 15 letters | 2 counts | ﴿يُنفِقُونَ﴾ |
 
+## Practice on short surahs
+The best way to lock these rules in is to apply them to surahs you already know. Read each example aloud:
+
+### Surah Al-'Asr
+﴿إِنَّ ٱلۡإِنسَٰنَ لَفِي خُسۡرٍ﴾ ﴿إِلَّا ٱلَّذِينَ ءَامَنُواْ﴾
+- ﴿ٱلۡإِنسَٰنَ﴾: Noon before Seen, **Ikhfa**.
+- ﴿خُسۡرٍ﴾ then ﴿إِلَّا﴾: Tanween before a hamzah when you join the verses, **Izhar**.
+
+### Surah Al-Masad
+﴿مَآ أَغۡنَىٰ عَنۡهُ مَالُهُۥ وَمَا كَسَبَ﴾ ﴿سَيَصۡلَىٰ نَارٗا ذَاتَ لَهَبٖ﴾ ﴿فِي جِيدِهَا حَبۡلࣱ مِّن مَّسَدِۭ﴾
+- ﴿عَنۡهُ﴾: Noon before Haa, **Izhar**.
+- ﴿نَارٗا ذَاتَ﴾: Tanween before Dhaal, **Ikhfa**.
+- ﴿حَبۡلࣱ مِّن﴾: Tanween before Meem, **Idgham with ghunnah**.
+- ﴿مِّن مَّسَدِۭ﴾: Noon before Meem, **Idgham with ghunnah**.
+
+### Surah Al-Fil
+﴿وَأَرۡسَلَ عَلَيۡهِمۡ طَيۡرًا أَبَابِيلَ﴾ ﴿تَرۡمِيهِم بِحِجَارَةٖ مِّن سِجِّيلٖ﴾ ﴿فَجَعَلَهُمۡ كَعَصۡفٖ مَّأۡكُولِۭ﴾
+- ﴿طَيۡرًا أَبَابِيلَ﴾: Tanween before hamzah, **Izhar**.
+- ﴿بِحِجَارَةٖ مِّن﴾: Tanween before Meem, **Idgham with ghunnah**.
+- ﴿مِّن سِجِّيلٖ﴾: Noon before Seen, **Ikhfa**.
+- ﴿كَعَصۡفٖ مَّأۡكُولِۭ﴾: Tanween before Meem, **Idgham with ghunnah**.
+
+### Surah Quraysh
+﴿ٱلَّذِيٓ أَطۡعَمَهُم مِّن جُوعٖ وَءَامَنَهُم مِّنۡ خَوۡفِۭ﴾
+- ﴿مِّن جُوعٖ﴾: Noon before Jeem, **Ikhfa**.
+- ﴿جُوعٖ وَءَامَنَهُم﴾: Tanween before Waw, **Idgham with ghunnah**.
+- ﴿مِّنۡ خَوۡفِۭ﴾: Noon before Khaa, **Izhar**.
+
+### Surahs Al-Ikhlas and Al-Falaq
+- ﴿وَلَمۡ يَكُن لَّهُۥ كُفُوًا أَحَدُۢ﴾: ﴿يَكُن لَّهُۥ﴾ is **Idgham without ghunnah**, and ﴿كُفُوًا أَحَدُۢ﴾ is **Izhar**.
+- ﴿مِن شَرِّ مَا خَلَقَ﴾: Noon before Sheen, **Ikhfa**.
+
+With these few examples you have met all four rules in surahs you recite every day.
+
+## A special case: Tanween before a silent letter
+If Tanween is followed by a silent letter, as happens with a connecting hamzah (*hamzat al-waṣl*), two silent sounds meet. The Noon of the Tanween is then given a **kasrah** and pronounced as a clear "ni", as in ﴿وَنَادَىٰ نُوحٌ ٱبۡنَهُۥ﴾, read *wa nādā Nūḥunib-nahu*. Some Mushafs print a small Noon under the Tanween as a reminder. Because this Noon now has a vowel, none of the four rules applies to it.
+
+## Stopping and joining
+These are **joining rules**: they apply when you connect a word to the next one. When you stop, things change:
+- **Stopping on Tanween** drops it, so no rule applies. If you stop on ﴿لَفِي خُسۡرٍ﴾ you say *khusr*, and there is no Izhar with the hamzah of the next verse.
+- **Stopping on Tanween with fatḥah** turns it into a long *ā*, as in ﴿طَيۡرًا﴾ read *ṭayrā*.
+- **Stopping on a real Noon Sakinah** such as ﴿مِنۡ﴾ keeps it as a clear "n", because nothing follows it.
+- **Joining the end of one verse to the next** means you apply the rule according to the first letter of the next verse, as in ﴿خُسۡرٍ﴾ ﴿إِلَّا﴾.
+
+So practise each surah twice: once stopping at the end of every verse, and once joining the verses.
+
 ## Common beginner mistakes
 1. **Holding the ghunnah too long**, so it sounds like a long vowel.
-2. **Pronouncing a clear "n" where Ikhfa is required**, as in *antum*. This is the most common mistake we hear.
-3. **Pressing the lips hard** in Iqlab.
-4. **Merging inside one word**, for example saying *ad-dunyā* as *ad-duyyā*.
+2. **Pronouncing a clear "n" where Ikhfa is required**, as in *antum* and *kuntum*. This is the most common mistake we hear.
+3. **Pressing the tongue firmly** behind the upper teeth in Ikhfa, which produces a normal "n" instead of a hidden one.
+4. **Pressing the lips hard** in Iqlab. A light closure is enough.
+5. **Merging inside one word**, for example saying *ad-dunyā* as *ad-duyyā*.
+6. **Adding a nasal sound with Laam and Raa**, so *mir-rabbihim* sounds nasal. It should be a complete merge with no ghunnah.
+7. **Making the ghunnah light before heavy letters**, as in ﴿مِن قَبۡلُ﴾. It should be heavy.
+8. **Bouncing or pausing on a clear Noon** before a throat letter.
+9. **Forgetting the rule between verses** when you join them.
 
 ## How to practise
-- Pick one page from Juz Amma and highlight every Noon Sakinah and Tanween in a colour for each rule.
-- Listen to the same page recited by Sheikh Al-Husary on our [Quran pages](/quran/), using the verse-repeat feature.
-- Record yourself and compare.
+- **Colour-code a page.** Pick one page from Juz Amma and highlight every Noon Sakinah and Tanween: green for Izhar, blue for Idgham, red for Iqlab and orange for Ikhfa.
+- **Listen and repeat.** Listen to the same page recited by Sheikh Al-Husary on our [Quran pages](/quran/), using the verse-repeat feature.
+- **Record and compare.** Your ear catches mistakes in a recording faster than while you are reciting.
+- **Go step by step.** One week for Izhar and Iqlab, which are easier, then a week for Idgham, then two weeks for Ikhfa, the most delicate rule.
+- **Ten minutes a day** beats an hour once a week. For a complete path, see the [Learn Tajweed Step by Step: A 6-Stage Roadmap for Beginners](/blog/learn-tajweed-roadmap-english/).
 
-Tajweed is best learned **by listening and reciting to a qualified teacher**, because nasal sounds are hard to judge by yourself. [Book a free trial class](/contact/) with one of our certified teachers. When you're ready, continue with [the rules of Madd (elongation)](/blog/madd-rules-tajweed-english/).
+## Frequently asked questions
+### How long is the ghunnah?
+Two counts in Idgham with ghunnah, Iqlab and Ikhfa. A count is roughly the time it takes to fold or unfold a finger at a steady pace.
+
+### Is a doubled Noon (نّ) part of this chapter?
+No. A doubled Noon, as in ﴿إِنَّ﴾, has its own rule, the **emphasised ghunnah** of two counts. It is not a Noon Sakinah.
+
+### Why is there no Idgham inside one word?
+Because merging inside a word would change its shape and meaning: ﴿صِنۡوَانࣱ﴾ would sound like a different word. That is why the four words keep a clear Noon.
+
+### What is the difference between Ikhfa and Iqlab?
+In Iqlab the Noon becomes a hidden Meem, and only before Baa. In Ikhfa it stays a Noon, but without full contact of the tongue, with ghunnah, before fifteen letters.
+
+## Conclusion
+These four rules are the key to correct recitation, but they cannot be perfected from reading alone. Ghunnah and Ikhfa in particular need **a qualified teacher** who listens and corrects you directly. [Book a free trial class](/contact/) with one of our certified teachers.
+
+When you're ready, continue with [the rules of Meem Sakinah](/blog/meem-sakinah-rules-english/), which are closely related, and then [the rules of Madd (elongation)](/blog/madd-rules-tajweed-english/).

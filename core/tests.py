@@ -1049,6 +1049,23 @@ class Wave31Tests(TestCase):
         self.assertEqual(self.client.get(f'/blog/{en}/').status_code, 200)
 
 
+class Wave32Tests(TestCase):
+    def test_core_tajweed_articles_expanded(self):
+        import re
+        from content_seed import load_articles
+        from blog.models import Post
+        arts = {a['slug']: a for a in load_articles()}
+        for slug in ('noon-sakinah-tanween-rules', 'meem-sakinah-rules'):
+            en = slug + '-english'
+            self.assertEqual(arts[en]['translation_of'], slug)
+            for s in (slug, en):
+                self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
+                p = Post.objects.get(slug=s)
+                self.assertIn('Ikhfa' if s == en else 'الإخفاء', p.content)
+            for link in re.findall(r'/blog/([a-z0-9-]+)/', Post.objects.get(slug=en).content):
+                self.assertTrue(link.endswith('-english'), (en, link))
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post

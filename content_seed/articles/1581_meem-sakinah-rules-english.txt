@@ -1,40 +1,177 @@
 title: Meem Sakinah Rules in Tajweed: Ikhfa Shafawi, Idgham Shafawi and Izhar Shafawi
 category: english
-excerpt: The three rules of meem sakinah explained simply for English speakers: Ikhfa Shafawi before baa, Idgham Shafawi before another meem, and Izhar Shafawi before every other letter, with examples from short surahs, a summary table, and the most common mistakes.
-meta: Meem sakinah rules in English: Ikhfa Shafawi before baa, Idgham Shafawi before meem, Izhar Shafawi before all other letters, Quran examples, a table and common mistakes.
-keywords: meem sakinah rules, ikhfa shafawi, idgham shafawi, izhar shafawi, tajweed rules in english, meem saakin
-reading: 4
+excerpt: A complete English guide to the three rules of meem sakinah: Ikhfa Shafawi before baa, Idgham Shafawi before another meem, and Izhar Shafawi before every other letter, with pronunciation steps, the warning about waw and faa, meem in the opening letters of surahs, practice on short surahs and common mistakes.
+meta: Meem sakinah rules in English: Ikhfa Shafawi before baa, Idgham Shafawi before meem, Izhar Shafawi before all other letters, with the waw and faa warning, Quran examples, practice surahs and a table.
+keywords: meem sakinah rules, ikhfa shafawi, idgham shafawi, izhar shafawi, tajweed rules in english, meem saakin, labial rules tajweed
+reading: 12
 translation_of: meem-sakinah-rules
 ---
-A **meem sakinah** is a meem with a sukūn (no vowel), like the meem in ﴿عَلَيۡهِمۡ﴾. What you do with it depends on the letter that comes right after it. There are only **three rules**, and they are called *shafawī* (labial) because meem is pronounced with the lips.
+A **meem sakinah** is a meem with a sukūn (no vowel), like the meem in ﴿عَلَيۡهِمۡ﴾ (*ʿalayhim*). What you do with it depends on the letter that comes right after it. There are only **three rules**, and they are all called *shafawī* (labial) because meem is pronounced with the lips.
 
-## 1. Ikhfa Shafawi (labial hiding)
-- **When:** meem sakinah followed by **baa (ب)**.
-- **How:** close the lips lightly, without pressing, and hold a **ghunnah of two counts**.
-- **Example:** ﴿تَرۡمِيهِم بِحِجَارَةٖ مِّن سِجِّيلٖ﴾ [Al-Fil: 4].
+This chapter usually comes straight after [the rules of Noon Sakinah and Tanween](/blog/noon-sakinah-tanween-rules-english/). It is shorter and easier, but it needs attention, because a meem sakinah appears in pronouns like *-hum*, *-kum* and *-tum* on almost every line of the Quran.
 
-## 2. Idgham Shafawi (labial merging)
-- **When:** meem sakinah followed by **another meem (م)**.
-- **How:** merge the two meems into one stressed meem with a **ghunnah of two counts**.
-- **Example:** ﴿وَلَكُم مَّا كَسَبۡتُمۡۖ﴾ [Al-Baqarah: 134].
-- It is also called *idgham mithlayn ṣaghīr* (merging two identical letters).
+## Why this chapter matters
+- **Meem sakinah is everywhere.** Words such as ﴿عَلَيۡهِمۡ﴾, ﴿لَكُمۡ﴾, ﴿أَنتُمۡ﴾ and ﴿فَجَعَلَهُمۡ﴾ appear in almost every verse.
+- **The mistakes are very common.** Teachers constantly hear meem hidden before faa and waw, bounced, or merged without its nasal sound.
+- **It completes what you learned with Noon.** Ghunnah, hiding and merging are terms you already know; here you meet them on the lips.
 
-## 3. Izhar Shafawi (labial clarity)
-- **When:** meem sakinah followed by **any other letter** (26 letters).
-- **How:** pronounce the meem clearly, with no extra nasal sound.
-- **Examples:** ﴿أَلَمۡ تَرَ﴾, ﴿عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ﴾ [Al-Fatihah: 7].
-- **Be extra careful before waw (و) and faa (ف):** these letters are close to meem in the mouth, so students often hide the meem by mistake.
+## What is meem sakinah?
+It is a meem with no vowel, in the middle or at the end of a word, in nouns, verbs and particles: ﴿ٱلۡحَمۡدُ﴾ (*al-ḥamdu*), ﴿عَلَيۡهِمۡ﴾, ﴿أَلَمۡ تَرَ﴾ (*alam tara*). Its rule is decided by **the letter right after it**.
+
+A meem sakinah can be followed by any letter of the alphabet except a pure alif, because an alif is only ever preceded by a letter with fatḥah.
+
+### Meem sakinah versus doubled meem
+A **doubled meem** (مّ), as in ﴿ثُمَّ﴾ (*thumma*) and ﴿هَمَّتۡ﴾, is not part of this chapter. It always carries an **emphasised ghunnah** of two counts. In fact it is two meems: the first silent and merged into the second. That is why the ghunnah in Idgham Shafawi sounds exactly like a doubled meem.
+
+## Rule 1: Ikhfa Shafawi (labial hiding)
+When meem sakinah is followed by **ب (baa)**, the meem is hidden with a ghunnah of **two counts**. This only happens **between two words**.
+
+- ﴿تَرۡمِيهِم بِحِجَارَةٖ﴾ (*tarmīhim bi-ḥijārah*)
+- ﴿وَهُم بِٱلۡأٓخِرَةِ﴾ (*wa hum bil-ākhirah*)
+- ﴿وَمَن يَعۡتَصِم بِٱللَّهِ﴾ (*wa may-yaʿtaṣim billāh*)
+
+**How to say it:**
+1. Bring your lips together **lightly**, without pressing.
+2. Hold the nasal sound through your nose for two counts.
+3. Release into the baa without a break.
+
+It is called *shafawī* because meem and baa both come from the lips, and *ikhfāʾ* because the meem is neither fully clear nor fully merged.
+
+**A note on the lips:** reciters have two accepted ways here. Some close the lips lightly; others leave a very small gap. Most teachers in Egypt teach a light closure. Follow the way your teacher passes it on to you, and focus on getting the two-count ghunnah right.
+
+**In the Mushaf:** the meem has **no sukun**, and the baa after it has **no shaddah**.
+
+### Ikhfa Shafawi versus Iqlab
+Both produce a hidden meem with ghunnah before baa, and they sound the same. The difference is where the meem comes from. In **Iqlab** a noon sakinah or tanween turns into a meem, as in ﴿مِنۢ بَعۡدِ﴾. In **Ikhfa Shafawi** the meem is a real, written meem, as in ﴿تَرۡمِيهِم بِحِجَارَةٖ﴾.
+
+## Rule 2: Idgham Shafawi (labial merging)
+When meem sakinah is followed by **another meem with a vowel**, the two merge into one doubled meem with a ghunnah of **two counts**.
+
+- ﴿لَهُم مَّا يَشَآءُونَ﴾ (*lahum-mā yashāʾūn*)
+- ﴿كَم مِّن فِئَةٖ﴾ (*kam-min fiʾah*)
+- ﴿أَم مَّنۡ أَسَّسَ﴾ (*am-man assasa*)
+- ﴿فِي قُلُوبِهِم مَّرَضࣱ﴾ (*fī qulūbihim-maraḍ*)
+- ﴿إِنَّهَا عَلَيۡهِم مُّؤۡصَدَةࣱ﴾ (*innahā ʿalayhim-muʾṣadah*)
+
+It is also called **Idgham Mithlayn Saghir**: *mithlayn* (two identical letters) because it is meem into meem, and *ṣaghīr* (small) because the first is silent and the second voweled.
+
+**How to say it:** do not pronounce two separate meems. Close your lips **once** on a doubled meem, hold the ghunnah for two counts, then open onto the vowel of the second meem.
+
+**In the Mushaf:** the first meem has **no sukun**, and the second meem carries a **shaddah**.
+
+## Rule 3: Izhar Shafawi (labial clarity)
+When meem sakinah is followed by **any letter other than baa and meem**, which is **26 letters**, pronounce the meem clearly with the lips, without extra ghunnah, and without bouncing or adding a vowel.
+
+- ﴿ٱلۡحَمۡدُ﴾: meem then daal, inside one word.
+- ﴿أَنۡعَمۡتَ﴾: meem then taa.
+- ﴿عَلَيۡهِمۡ غَيۡرِ﴾: meem then ghayn.
+- ﴿عَلَيۡهِمۡ ءَأَنذَرۡتَهُمۡ أَمۡ لَمۡ تُنذِرۡهُمۡ﴾: three clear meems in a row.
+- ﴿هُمۡ فِيهَا﴾: meem then faa.
+- ﴿عَلَيۡهِمۡ وَلَا﴾: meem then waw.
+
+Izhar Shafawi happens both inside one word and between two words, unlike Ikhfa Shafawi, which only happens between two words.
+
+**In the Mushaf:** the meem carries a visible **sukun**.
+
+### The most important warning: waw and faa
+Meem **shares its place of articulation with waw** (both use the lips) and is **close to faa** (made with the inner lower lip against the tips of the upper front teeth). Because of this, the tongue and lips are tempted to hide the meem before them, as they do before baa. That is a mistake: the meem must be **fully clear**, as in ﴿هُمۡ فِيهَا﴾, ﴿وَهُمۡ فِيهَا﴾, ﴿عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ﴾ and ﴿أَنتُمۡ وَأَزۡوَٰجُكُمۡ﴾.
+
+The classical poem on tajweed, *Tuḥfat al-Aṭfāl*, gives this warning in a famous line: be careful that the meem is not hidden before waw and faa, because it is close to one and shares its place with the other.
+
+**Drill:** say ﴿عَلَيۡهِمۡ وَلَا﴾ slowly. Close your lips firmly but briefly on the meem, then open them and round them for the waw. You should hear a clear "m" followed by a "w", not a long humming sound in between.
+
+## Meem in the opening letters of surahs
+The separated letters at the start of some surahs contain meems, and the same rules apply in the reading of Ḥafṣ:
+- ﴿الٓمٓ﴾ is read *alif lām mīm*. The meem at the end of *lām* is silent and is followed by the meem of *mīm*, so they merge with ghunnah: *lām-mīm*.
+- When ﴿الٓمٓ﴾ at the start of Al-Baqarah is joined to ﴿ذَٰلِكَ﴾, the final meem is silent before a dhaal, so it is **Izhar Shafawi**.
+- At the start of Al Imran, ﴿الٓمٓ﴾ ﴿ٱللَّهُ﴾: when joined, the final meem takes a fatḥah to avoid two silent letters meeting, and the yaa before it may be stretched six counts or shortened to two.
+- In ﴿طسٓمٓ﴾ the noon of *sīn* merges into the meem of *mīm* with ghunnah: *ṭā sīm-mīm*. This one belongs to the Noon Sakinah chapter.
 
 ## Summary table
-| Next letter | Rule | Ghunnah |
-|---|---|---|
-| ب | Ikhfa Shafawi | 2 counts |
-| م | Idgham Shafawi | 2 counts |
-| Any other letter | Izhar Shafawi | None |
+| Rule | Letter after meem | Ghunnah | Example |
+|---|---|---|---|
+| Ikhfa Shafawi | ب | 2 counts | ﴿تَرۡمِيهِم بِحِجَارَةٖ﴾ |
+| Idgham Shafawi | م | 2 counts, with shaddah | ﴿لَهُم مَّا﴾ |
+| Izhar Shafawi | the other 26 letters | no extra ghunnah | ﴿ٱلۡحَمۡدُ﴾ |
+
+## Understanding the four letters involved
+Knowing where these letters come from makes the three rules logical rather than memorised:
+- **Meem**: the lips close, and the ghunnah comes through the nasal passage.
+- **Baa**: the lips also close, but more firmly, and with no ghunnah. Because meem and baa share one place, hiding the meem before baa makes the transition smoother.
+- **Waw**: the lips round, leaving a gap. It is from almost the same place as meem, which is why scholars warn against hiding the meem before it.
+- **Faa**: the inner lower lip meets the tips of the upper front teeth. It is close to meem but not the same place.
+
+So the logic is: **before baa** we hide, because the place is shared; **before meem** we merge, because the letters are identical; **before everything else** we pronounce clearly, taking extra care with waw and faa.
+
+## The ghunnah in this chapter
+Ghunnah is a nasal sound, a built-in quality of meem and noon. Its strength depends on the state of the meem:
+- **Fullest** in a doubled meem, as in ﴿ثُمَّ﴾, and in Idgham Shafawi, as in ﴿لَهُم مَّا﴾: held for two counts.
+- **Next** in Ikhfa Shafawi, as in ﴿تَرۡمِيهِم بِحِجَارَةٖ﴾: held for two counts.
+- **Next** in a clear meem sakinah, as in ﴿ٱلۡحَمۡدُ﴾: not held, only its natural trace.
+- **Weakest** in a voweled meem, as in ﴿مَٰلِكِ﴾.
+
+A frequent mistake is treating a clear meem like a hidden one and stretching its nasal sound, so ﴿عَلَيۡهِمۡ وَلَا﴾ sounds as if there were a long hum between the meem and the waw.
+
+## Practice on short surahs
+### Surah Al-Fatiha
+- ﴿ٱلۡحَمۡدُ لِلَّهِ﴾: meem then daal, **Izhar**.
+- ﴿أَنۡعَمۡتَ عَلَيۡهِمۡ﴾: in ﴿أَنۡعَمۡتَ﴾ meem then taa, **Izhar**; then ﴿عَلَيۡهِمۡ﴾ before ﴿غَيۡرِ﴾, **Izhar**.
+- ﴿عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ﴾: meem then waw, **Izhar**, with extra care.
+
+### Surah Al-Fil
+﴿أَلَمۡ تَرَ كَيۡفَ فَعَلَ رَبُّكَ بِأَصۡحَٰبِ ٱلۡفِيلِ﴾ ﴿أَلَمۡ يَجۡعَلۡ كَيۡدَهُمۡ فِي تَضۡلِيلٖ﴾ ﴿وَأَرۡسَلَ عَلَيۡهِمۡ طَيۡرًا أَبَابِيلَ﴾ ﴿تَرۡمِيهِم بِحِجَارَةٖ مِّن سِجِّيلٖ﴾ ﴿فَجَعَلَهُمۡ كَعَصۡفٖ مَّأۡكُولِۭ﴾
+- ﴿أَلَمۡ تَرَ﴾ and ﴿أَلَمۡ يَجۡعَلۡ﴾: **Izhar**.
+- ﴿كَيۡدَهُمۡ فِي﴾: meem then faa, **Izhar**, with care.
+- ﴿عَلَيۡهِمۡ طَيۡرًا﴾: **Izhar**.
+- ﴿تَرۡمِيهِم بِحِجَارَةٖ﴾: meem then baa, **Ikhfa Shafawi**.
+- ﴿فَجَعَلَهُمۡ كَعَصۡفٖ﴾: **Izhar**.
+
+### Surah Quraysh
+﴿إِۦلَٰفِهِمۡ رِحۡلَةَ ٱلشِّتَآءِ وَٱلصَّيۡفِ﴾ ﴿ٱلَّذِيٓ أَطۡعَمَهُم مِّن جُوعٖ وَءَامَنَهُم مِّنۡ خَوۡفِۭ﴾
+- ﴿إِۦلَٰفِهِمۡ رِحۡلَةَ﴾: **Izhar**.
+- ﴿أَطۡعَمَهُم مِّن﴾ and ﴿وَءَامَنَهُم مِّنۡ﴾: meem then meem, **Idgham Shafawi**, twice.
+
+### Surahs Al-Humazah, Al-Kafirun and Al-Ma'un
+- ﴿إِنَّهَا عَلَيۡهِم مُّؤۡصَدَةࣱ﴾: **Idgham Shafawi**.
+- ﴿وَلَآ أَنتُمۡ عَٰبِدُونَ مَآ أَعۡبُدُ﴾: meem then ʿayn, **Izhar**.
+- ﴿لَكُمۡ دِينُكُمۡ وَلِيَ دِينِ﴾: meem then daal, then meem then waw, **Izhar** in both, with care before the waw.
+- ﴿ٱلَّذِينَ هُمۡ عَن صَلَاتِهِمۡ سَاهُونَ﴾: ﴿هُمۡ عَن﴾ and ﴿صَلَاتِهِمۡ سَاهُونَ﴾ are both **Izhar**.
+
+With these six surahs you meet all three rules in passages you recite every day.
 
 ## Common mistakes
-1. **Pressing the lips hard** in ikhfa shafawi, which turns it into a full meem.
-2. **Hiding the meem before waw or faa**, as in ﴿عَلَيۡهِمۡ وَلَا﴾.
-3. **Dropping the ghunnah** in ﴿وَلَكُم مَّا﴾.
+1. **Hiding the meem before faa and waw**, the very mistake the classical poem warns against.
+2. **Adding a vowel or a bounce to a clear meem**, so it sounds like *huma fīhā*.
+3. **Pressing the lips hard** in Ikhfa Shafawi, which muffles the ghunnah.
+4. **Dropping the ghunnah in Idgham Shafawi**. A doubled meem always carries two counts of ghunnah.
+5. **Pronouncing two separate meems** in Idgham, closing the lips twice.
+6. **Stretching the ghunnah in Izhar**. A clear meem is short and natural.
+7. **Confusing stopping and joining**: if you stop on ﴿عَلَيۡهِمۡ﴾ it is a plain clear meem; if you join it, the rule depends on the next letter.
 
-Next, read [Noon Sakinah and Tanween Rules](/blog/noon-sakinah-tanween-rules-english/) and [Madd Rules in Tajweed](/blog/madd-rules-tajweed-english/).
+## A two-week plan to master this chapter
+- **Days 1 to 3**: Izhar Shafawi in Al-Fatiha and Al-Fil, focusing on faa and waw.
+- **Days 4 to 6**: Ikhfa Shafawi. Find five examples in Juz Amma and recite them along with a skilled reciter.
+- **Days 7 to 9**: Idgham Shafawi in Quraysh and Al-Humazah, comparing it with a doubled meem.
+- **Days 10 to 12**: take one full page of Juz Amma, find every meem sakinah and name its rule.
+- **Days 13 and 14**: record a full surah and have a teacher check it, or compare it with a skilled reciter on our [Quran pages](/quran/).
+
+## Frequently asked questions
+### Why are the rules called "shafawi"?
+Because meem comes from the lips (*shafatān*), so all three rules are named after its place of articulation.
+
+### Should the lips close or stay slightly open in Ikhfa Shafawi?
+Both ways are accepted among reciters, as explained above. What matters most is a two-count ghunnah with no pressure on the lips, following the way your teacher recites.
+
+### Can a meem sakinah come before an alif?
+No. An alif is always preceded by a letter with fatḥah, so it never follows a silent meem.
+
+### How is Idgham Shafawi different from Idgham with ghunnah in the Noon chapter?
+In Idgham Shafawi a **meem** merges into a meem. In Idgham with ghunnah a **noon** merges into one of the letters of *yanmū*. Before a meem, both sound the same: a doubled meem with two counts of ghunnah, as in ﴿مِّن مَّالٖ﴾ and ﴿لَهُم مَّا﴾.
+
+### Do the rules change when I stop?
+If you stop on a word ending in meem sakinah, such as ﴿عَلَيۡهِمۡ﴾, you pronounce it as a plain clear meem, because nothing follows it. When you join it to the next word, its rule depends on that word's first letter.
+
+## Conclusion
+The meem sakinah chapter is small in rules but large in effect, because it appears in nearly every verse. Once you hide the meem before baa, merge it before meem, and keep it fully clear before faa and waw, a big part of the beauty of your recitation falls into place. Start today with one small step: in your next prayer, recite Al-Fatiha paying attention to the meem in ﴿عَلَيۡهِمۡ وَلَا﴾.
+
+For live correction of your ghunnah and lips, [book a free trial class](/contact/) with one of our certified teachers. Next, continue with [ghunnah in Tajweed](/blog/ghunnah-english/) and [the rules of Madd (elongation)](/blog/madd-rules-tajweed-english/).
