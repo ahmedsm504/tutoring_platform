@@ -1,15 +1,31 @@
 title: How to Revise Your Quran Memorization So You Never Forget It (Hifz Revision System)
 category: english
-excerpt: Forgetting what you memorized is the biggest struggle in Hifz. A simple three-track revision system (recent, old, and in prayer), a revision table by amount memorized, and how to handle similar verses.
+excerpt: A complete Hifz revision system: three tracks (recent, old and in prayer), how long each revision cycle takes by amount memorized, revising by looking, from memory and in one sitting, the mistakes notebook, worked examples of similar verses, weekly templates, a recovery plan after a long break, and revision for children.
 meta: A practical Quran revision system for Hifz: daily revision of recent and old memorization, a table by juz, reciting in prayer and similar verses.
 keywords: quran revision schedule, how to revise hifz, how not to forget quran memorization, hifz revision system, murajaah, mutashabihat
-reading: 6
+reading: 14
 translation_of: quran-revision-system
 ---
-Many students memorize several juz, then discover months later that most of it has slipped away. The reason is almost always the same: **focusing on new memorization and neglecting revision**. Every Quran teacher knows the rule: revision matters more than new memorization. If time is short, revise first.
+Many students memorize several juz, then discover months later that most of it has slipped away. Some of them work hard on new memorization every day, but don't give yesterday's portion its due, so they are building one wall while the other crumbles. This guide gives you a complete system to protect what you have memorized, with tables, examples and a recovery plan if you have fallen behind. The reason is almost always the same: **focusing on new memorization and neglecting revision**. Every Quran teacher knows the rule: revision matters more than new memorization. If time is short, revise first.
 
 ## Why does memorization fade?
 Memory weakens when it's not used. The Prophet ﷺ compared the Quran to a hobbled camel: "The example of the companion of the Quran is like the owner of hobbled camels: if he keeps watch over them he keeps them, and if he lets them loose they wander off" (Bukhari and Muslim).
+
+## Revision in the Sunnah and the early generations
+Revision is not a modern invention. The Prophet ﷺ commanded that the Quran be kept fresh, and when ʿAbdullah ibn ʿAmr wanted to recite more, he told him: "Recite the Quran in a month", until he finally said: "Then recite it in seven, and do not go beyond that" (Bukhari and Muslim). Repeated completion of the Quran was itself the revision.
+
+The Prophet ﷺ also reviewed the Quran with Jibril every Ramadan once, and twice in the year he passed away, as reported in both Saheeh collections. Reciting to someone and listening to them, known as *muʿāraḍah*, is one of the foundations of revision.
+
+## The practical reasons memorization fades
+If you know why memorizers forget, you know how to prevent it. The most common reasons:
+- **Too little repetition the first time.** A page memorized with ten repetitions fades faster than one memorized with thirty.
+- **Too long between revisions.** Every juz needs to come round before it starts to weaken.
+- **Revising only by looking.** With the Mushaf open you feel you know it; close it and you discover the gaps.
+- **Weak links between pages and surahs.** You know each page alone but stop at every transition.
+- **Memorizing without understanding.** Verses you don't understand stay as loose words that easily get swapped.
+- **Not reciting in prayer.** Without it you lose the strongest daily test of your memory.
+
+Each track in this system addresses one of these causes.
 
 ## The three-track revision system
 ### Track 1: Recent memorization (daily)
@@ -27,8 +43,37 @@ Everything else you've memorized, divided across the week so you go through all 
 | 10 juz | one juz |
 | 15+ juz | 1.5 to 2 juz |
 
+### How long does a full revision cycle take?
+| Amount memorized | Daily old revision | Full cycle every |
+|---|---|---|
+| 3 juz | a quarter of a juz | 12 days |
+| 5 juz | half a juz | 10 days |
+| 10 juz | one juz | 10 days |
+| 20 juz | two juz | 10 days |
+| whole Quran | one juz | a month |
+| whole Quran | three juz | 10 days |
+| whole Quran | five juz | 6 days |
+
+There is no single correct number for everyone. The rule is to reach every juz before it starts to fade. If a juz weakens before its turn, shorten its cycle.
+
 ### Track 3: Revision in prayer
 Recite from your memorization in your Sunnah prayers and night prayer. Prayer tests your memory without a Mushaf, and you gain reward at the same time.
+
+## Ways to revise: looking, from memory, and in one sitting
+Not all revision is the same:
+- **Looking (naẓar)**: reading from the Mushaf with your eyes on the page. Useful for weak passages, for fixing the image of the page in your mind, and for similar verses.
+- **From memory (ghayb)**: reciting without looking. This is real revision, because it reveals what you have forgotten.
+- **In one sitting (sard)**: reciting a whole juz from memory without stopping. It strengthens the links between pages and surahs and shows exactly where you break.
+- **Reciting to someone**: a teacher, partner or family member. The strongest form, because you can't skip past a mistake.
+- **Listening**: following a skilled reciter in your mind. A support, not a substitute.
+
+A good system combines them: mostly from memory, by looking when a passage is weak, one juz in one sitting each week, and reciting to someone at least once a week.
+
+## Revising by quarter, hizb and juz
+Revising by whole juz may be too big for some memorizers. Use smaller units:
+- **A quarter (rubʿ)**: an eighth of a juz, about two and a half pages. Good for near revision and for one rakʿah of night prayer.
+- **A hizb**: half a juz, about ten pages. Good for old revision if you have five juz or fewer.
+- **A juz**: about twenty pages. Good once you have ten juz or more.
 
 ## The mistakes notebook
 Keep a small notebook. Every time you stumble during revision, write the page number, the word, and the type of mistake. Before revising any juz, read your notes about it. After a few weeks you'll notice that your mistakes cluster in specific places, and those are the places that need focus.
@@ -40,12 +85,89 @@ Some verses repeat with tiny differences, and they're a classic cause of mix-ups
 
 **Tips:** write both verses side by side, highlight the difference, find a memory hook, and always revise them with the Mushaf open.
 
+### More similar verses, worked through
+**The story of Adam in Al-Baqarah and Al-A'raf:**
+- Al-Baqarah: ﴿وَكُلَا مِنۡهَا رَغَدًا حَيۡثُ شِئۡتُمَا﴾, with *wa* and the extra word ﴿رَغَدًا﴾.
+- Al-A'raf: ﴿فَكُلَا مِنۡ حَيۡثُ شِئۡتُمَا﴾, with *fa* and without ﴿رَغَدًا﴾.
+
+**Entering the town in Al-Baqarah 58 and Al-A'raf 161:**
+- Al-Baqarah: ﴿وَإِذۡ قُلۡنَا ٱدۡخُلُواْ هَٰذِهِ ٱلۡقَرۡيَةَ فَكُلُواْ مِنۡهَا حَيۡثُ شِئۡتُمۡ رَغَدٗا﴾, ending ﴿خَطَٰيَٰكُمۡۚ وَسَنَزِيدُ ٱلۡمُحۡسِنِينَ﴾.
+- Al-A'raf: ﴿وَإِذۡ قِيلَ لَهُمُ ٱسۡكُنُواْ هَٰذِهِ ٱلۡقَرۡيَةَ وَكُلُواْ مِنۡهَا حَيۡثُ شِئۡتُمۡ﴾, ending ﴿خَطِيٓـَٰٔتِكُمۡۚ سَنَزِيدُ ٱلۡمُحۡسِنِينَ﴾.
+
+Among the differences: "We said" against "it was said to them", "enter" against "dwell", *fa-kulū* against *wa-kulū*, *raghadan* in Al-Baqarah only, the order of "enter the gate bowing" and "say ḥiṭṭah" reversed, *khaṭāyākum* against *khaṭīʾātikum*, and *wa sanazīdu* against *sanazīdu*. Once you have worked through these differences carefully, you rarely mix the two again.
+
 ## Signs your system needs adjusting
 - You stumble often in passages memorized less than a month ago.
 - You can't connect the end of one surah to the next.
 - Weeks pass without you revising some of your juz.
 
 If you see these signs, **pause new memorization for a week or two** and focus only on revision. It's not lost time; it protects everything you've worked for.
+
+## Weekly templates
+### If you have memorized 5 juz
+- **Daily**: yesterday's portion and the last five pages, then half a juz of old revision.
+- **Saturday to Wednesday**: the half juz rotates through the five juz, finishing every ten days.
+- **Thursday**: recite this week's new memorization to your teacher.
+- **Friday**: recite one whole juz from memory in one sitting.
+
+### If you have memorized 15 juz
+- **Daily**: near revision, then one and a half juz of old revision, completing a cycle about every ten days.
+- **In night prayer**: a quarter juz or more from memory.
+- **Weekly**: recite one whole juz to a teacher or partner.
+
+### If you have memorized the whole Quran
+- **Daily**: at least three juz, completing a cycle every ten days.
+- **In prayer**: recite from memory in obligatory, Sunnah and night prayers.
+- **Weekly**: recite one or two juz to a skilled teacher or partner.
+- **In Ramadan**: increase your completions and use Taraweeh and night prayer. See [revising in night prayer](/blog/revision-in-night-prayer-english/).
+
+## If you have stopped revising: a recovery plan
+Many memorizers stop for months because of travel, work or study, then find their memorization has weakened. Don't despair:
+1. **Stop new memorization** completely until you recover the old.
+2. **Assess yourself**: recite two pages from memory from each juz and sort them into strong, medium and weak.
+3. **Start with the strong**: revise it quickly to regain the feeling of progress.
+4. **Then the medium**: once by looking, then twice from memory.
+5. **Then the weak**: treat it as new memorization, but faster; the second time is much easier than the first.
+6. **Return to new memorization** only after passing over everything at least twice.
+
+## Revision for children
+Children memorize quickly and forget quickly too. Make their revision:
+- **Short and frequent**: ten minutes twice a day beats half an hour once.
+- **By listening and repeating**: play the surahs they know in the car and before bed.
+- **Playful**: "finish the verse" and "which surah is this?" games. See [Quran revision games for kids](/blog/quran-revision-games-kids-english/).
+- **Encouraged**: a star chart for every successful revision.
+
+## Using recordings
+- **Record your revision from memory**, then listen with the Mushaf open and mark every mistake.
+- **Compare recordings over months**: you will hear your fluency grow and your pauses shrink.
+- **Send recordings to your teacher** on days without a class, as our students do.
+
+## Start today: practical steps
+1. **List everything you have memorized** and rate each part: strong, medium or weak.
+2. **Choose your daily old revision** from the table above.
+3. **Spread it over the days**: write what you will revise on each of the next ten days.
+4. **Get a small notebook** for mistakes and keep it with your Mushaf.
+5. **Pick two fixed times**: one for near revision before new memorization, one for old revision later in the day.
+6. **Set a weekly recitation day** with a teacher or partner.
+7. **Review the system after a month** and adjust what needs adjusting.
+
+A simple system you keep is better than a perfect one you drop after a week.
+
+## Frequently asked questions
+### Should I revise before or after new memorization?
+Revise yesterday's portion and recent pages **before** new memorization, when your mind is freshest. Do old revision at another time of day.
+
+### How many times should I revise a new page?
+The first week is the most fragile. Revise it every day for seven days, keep it in near revision for about two weeks, then move it into old revision.
+
+### Is fast revision useful?
+Yes, for strong passages: a skilled memorizer revises at a quicker pace to cover more. Weak passages should be revised slowly, by looking, until they are strong.
+
+### I'm very busy. What is the minimum?
+Yesterday's portion, five recent pages and a quarter juz of old revision each day, plus reciting from memory in your Sunnah prayers. If time is even shorter, pause new memorization and keep revising until your schedule frees up.
+
+### Is revising in prayer enough on its own?
+No. In prayer we tend to recite what we already know well, so weak passages stay weak. Keep it as the third track alongside the other two.
 
 ## How we keep students revising
 Our teachers assign "revision" audio homework through the student portal: the student listens to the passage recited by a renowned reciter, records their recitation from memory and sends it in. The teacher marks the mistakes and grades it with stars. That way revision continues even on days without a class.
