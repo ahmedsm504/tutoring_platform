@@ -62,6 +62,7 @@ reading: 15
 - [تفسير آية «ولا تنسوا الفضل بينكم»](/blog/tafsir-ayah-wala-tansawu-al-fadl/) (الآية 237)
 - [تفسير آية «حافظوا على الصلوات والصلاة الوسطى»](/blog/tafsir-ayah-hafizu-alas-salawat/) (الآية 238)
 - [تفسير آية «من ذا الذي يقرض الله قرضا حسنا»](/blog/tafsir-ayah-man-dha-alladhi-yuqridu-allah/) (الآية 245)
+- [تفسير آية «ربنا أفرغ علينا صبرا وثبت أقدامنا وانصرنا على القوم الكافرين»](/blog/tafsir-ayah-rabbana-afrigh-alayna-sabra/) (الآية 250)
 - [تفسير آية «الله ولي الذين آمنوا يخرجهم من الظلمات إلى النور»](/blog/tafsir-ayah-allahu-waliyyu-alladhina-amanu/) (الآية 257)
 - [تفسير آية «مثل الذين ينفقون أموالهم في سبيل الله كمثل حبة»](/blog/tafsir-ayah-mathal-alladhina-yunfiqun/) (الآية 261)
 - [تفسير آية «قول معروف ومغفرة خير من صدقة يتبعها أذى»](/blog/tafsir-ayah-qawlun-maruf-wa-maghfira/) (الآية 263)
@@ -179,6 +180,7 @@ reading: 15
 - [تفسير آية «إنما أشكو بثي وحزني إلى الله»](/blog/tafsir-ayah-innama-ashku-baththi-wa-huzni/) (الآية 86)
 - [تفسير آية «ولا تيأسوا من روح الله إنه لا ييأس من روح الله إلا القوم الكافرون»](/blog/tafsir-ayah-wala-tayasu-min-rawhillah/) (الآية 87)
 - [تفسير آية «لا تثريب عليكم اليوم يغفر الله لكم»](/blog/tafsir-ayah-la-tathriba-alaykum-al-yawm/) (الآية 92)
+- [تفسير آية «رب قد آتيتني من الملك... توفني مسلما وألحقني بالصالحين»](/blog/tafsir-ayah-tawaffani-musliman-wa-alhiqni/) (الآية 101)
 - [تفسير آية «قل هذه سبيلي أدعو إلى الله على بصيرة أنا ومن اتبعني»](/blog/tafsir-ayah-hadhihi-sabili-ala-basira/) (الآية 108)
 
 ### سورة الرعد
