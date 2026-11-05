@@ -1143,6 +1143,40 @@ class Wave37Tests(TestCase):
             self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
 
 
+class Wave38Tests(TestCase):
+    HUBS = ['tafsir-ayat-index-by-surah', 'tafsir-surahs-index', 'tajweed-applied-index-by-surah',
+            'surah-memorization-plans-index', 'quran-topics-encyclopedia', 'allah-names-index',
+            'quran-stories-for-kids-index', 'quran-verses-explained-english-index']
+
+    def test_hubs_published_long_and_link_their_series(self):
+        import re
+        from content_seed import load_articles
+        from blog.models import Post
+        arts = {a['slug']: a for a in load_articles()}
+        for s in self.HUBS:
+            self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
+            self.assertTrue(Post.objects.filter(slug=s, status='published').exists(), s)
+        tafsir = [s for s in arts if s.startswith('tafsir-ayah')]
+        hub = Post.objects.get(slug='tafsir-ayat-index-by-surah').content
+        for s in tafsir:
+            self.assertIn(f'/blog/{s}/', hub, s)
+        topics = [s for s, a in arts.items() if s.endswith('-in-the-quran') and a['category'] != 'english']
+        hub = Post.objects.get(slug='quran-topics-encyclopedia').content
+        for s in topics:
+            self.assertIn(f'/blog/{s}/', hub, s)
+        self.assertContains(self.client.get('/site-index/'), '/blog/quran-topics-encyclopedia/')
+
+    def test_refresh_bumps_updated_at(self):
+        from django.apps import apps as global_apps
+        from blog.models import Post
+        from content_seed.seeding import refresh_articles
+        p = Post.objects.get(slug='makharij-al-huruf')
+        Post.objects.filter(pk=p.pk).update(content='x')
+        before = Post.objects.get(pk=p.pk).updated_at
+        refresh_articles(global_apps, ['makharij-al-huruf'])
+        self.assertGreater(Post.objects.get(pk=p.pk).updated_at, before)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
