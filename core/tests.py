@@ -1177,6 +1177,17 @@ class Wave38Tests(TestCase):
         self.assertGreater(Post.objects.get(pk=p.pk).updated_at, before)
 
 
+class QuestionsWave21Tests(TestCase):
+    def test_thousand_questions_and_juz_answers_link_guides(self):
+        from qna.models import PublicQuestion
+        self.assertGreaterEqual(PublicQuestion.objects.filter(status='approved').count(), 1000)
+        q = PublicQuestion.objects.get(title='من أين يبدأ الجزء الخامس عشر من القرآن وما أهم موضوعاته؟')
+        self.assertIn('/blog/juz-15-themes-and-summary/', q.official_answer.answer_text)
+        q = PublicQuestion.objects.get(title='Where does Juz 30 of the Quran start, and what are its main themes?')
+        self.assertIn('/blog/juz-30-of-the-quran-summary-english/', q.official_answer.answer_text)
+        self.assertEqual(self.client.get(f'/questions/question/{q.slug}/').status_code, 200)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
