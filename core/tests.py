@@ -1066,6 +1066,22 @@ class Wave32Tests(TestCase):
                 self.assertTrue(link.endswith('-english'), (en, link))
 
 
+class Wave33Tests(TestCase):
+    def test_madd_and_qalqalah_expanded(self):
+        import re
+        from content_seed import load_articles
+        from blog.models import Post
+        arts = {a['slug']: a for a in load_articles()}
+        for ar, en in (('madd-types-tajweed', 'madd-rules-tajweed-english'), ('qalqalah-rules', 'qalqalah-rules-english')):
+            self.assertEqual(arts[en]['translation_of'], ar)
+            for s in (ar, en):
+                self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
+            self.assertIn('ٱلضَّآلِّينَ' if ar.startswith('madd') else 'قطب جد', Post.objects.get(slug=ar).content)
+            arabic_slugs = {a['slug'] for a in arts.values() if a.get('category') != 'english'}
+            for link in re.findall(r'/blog/([a-z0-9-]+)/', Post.objects.get(slug=en).content):
+                self.assertNotIn(link, arabic_slugs, (en, link))
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
