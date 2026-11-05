@@ -956,3 +956,11 @@ QUESTIONS = QUESTIONS + QUESTIONS_AR19
 # الدفعة العشرون (عربي وإنجليزي)
 from .questions_wave20 import QUESTIONS_AR20  # noqa: E402
 QUESTIONS = QUESTIONS + QUESTIONS_AR20
+
+# الدفعة الحادية والعشرون: بدايات الأجزاء الثلاثين وموضوعاتها، وسبب تسمية السور
+from .questions_wave21 import QUESTIONS_AR21  # noqa: E402
+QUESTIONS = QUESTIONS + QUESTIONS_AR21
+
+# الدفعة الثانية والعشرون: بدايات الأجزاء بالإنجليزية، وأسئلة تجويد وحفظ وأطفال
+from .questions_wave22 import QUESTIONS_AR22  # noqa: E402
+QUESTIONS = QUESTIONS + QUESTIONS_AR22
