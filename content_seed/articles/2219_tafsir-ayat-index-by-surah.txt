@@ -316,6 +316,7 @@ reading: 15
 
 ### سورة ص
 - [تفسير آية «كتاب أنزلناه إليك مبارك ليدبروا آياته»](/blog/tafsir-ayah-kitabun-anzalnahu-mubarakun/) (الآية 29)
+- [تفسير آية «وأيوب إذ نادى ربه أني مسني الضر وأنت أرحم الراحمين»](/blog/tafsir-ayah-wa-ayyuba-idh-nada-rabbah/) (الآية 44)
 
 ### سورة الزمر
 - [تفسير آية «قل هل يستوي الذين يعلمون والذين لا يعلمون»](/blog/tafsir-ayah-hal-yastawi-alladhina-yalamun/) (الآية 9)
@@ -391,6 +392,7 @@ reading: 15
 - [تفسير آية «لا ينهاكم الله عن الذين لم يقاتلوكم في الدين»](/blog/tafsir-ayah-la-yanhakumu-allah/) (الآية 8)
 
 ### سورة التغابن
+- [تفسير آية «ما أصاب من مصيبة إلا بإذن الله ومن يؤمن بالله يهد قلبه»](/blog/tafsir-ayah-wa-man-yumin-billah-yahdi-qalbah/) (الآية 11)
 - [تفسير آية «فاتقوا الله ما استطعتم واسمعوا وأطيعوا وأنفقوا خيرا لأنفسكم»](/blog/tafsir-ayah-fattaqu-allaha-ma-istatatum/) (الآية 16)
 
 ### سورة الطلاق
