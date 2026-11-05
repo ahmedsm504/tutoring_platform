@@ -88,10 +88,19 @@ def _surah_link(post):
     return surah_from_title(post.title)
 
 
+# slugs قديمة اتغيرت -> الـ slug الصحيح
+SLUG_ALIASES = {
+    'allah-name-al-awwal-al-akhir-az-zahir-al-batin-meaning': 'allah-names-al-awwal-al-akhir-meaning',
+}
+
+
 def blog_detail(request, slug):
     """عرض تفاصيل مقال واحد"""
     post = Post.objects.filter(slug=slug, status='published').first()
     if post is None:
+        alias = SLUG_ALIASES.get(slug)
+        if alias:
+            return redirect('blog_detail', slug=alias, permanent=True)
         # لينكات قديمة أو مقطوعة (زي /blog/waqf-and-ibtid/) -> لو في مقال واحد بيبدأ بنفس الكلام نحوّل عليه
         if len(slug) >= 8:
             matches = list(Post.objects.filter(slug__startswith=slug, status='published').values_list('slug', flat=True)[:2])
