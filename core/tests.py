@@ -1115,6 +1115,21 @@ class Wave35Tests(TestCase):
                       Post.objects.get(slug='how-to-memorize-quran-step-by-step').content)
 
 
+class Wave36Tests(TestCase):
+    def test_fatiha_mistakes_expanded_and_corrected(self):
+        import re
+        from content_seed import load_articles
+        from blog.models import Post
+        arts = {a['slug']: a for a in load_articles()}
+        ar, en = 'common-mistakes-surat-al-fatiha', 'surah-al-fatiha-common-mistakes'
+        self.assertEqual(arts[en]['translation_of'], ar)
+        for s in (ar, en):
+            self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
+        # الدال في «اهدنا» مكسورة، فلا قلقلة فيها
+        self.assertNotIn('الدال الساكنة في ﴿ٱهۡدِنَا﴾', Post.objects.get(slug=ar).content)
+        self.assertNotIn('silent Daal in ﴿ٱهۡدِنَا﴾', Post.objects.get(slug=en).content)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
