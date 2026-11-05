@@ -1,12 +1,17 @@
 title: Qalqalah in Tajweed: The 5 Echoing Letters Explained
 category: english
-excerpt: What qalqalah is and how to pronounce it correctly: the five letters of qalqalah gathered in "quṭbu jad", the difference between minor qalqalah in the middle of a word and major qalqalah when stopping, examples from the Quran, and mistakes that make the bounce too weak or too strong.
-meta: Qalqalah rules in English: the five letters qaf, taa, baa, jeem and daal (qutbu jad), minor and major qalqalah, Quran examples, and common mistakes in pronouncing the echo.
-keywords: qalqalah rules, qalqalah letters, qutbu jad, tajweed in english, minor and major qalqalah, echoing letters quran
-reading: 4
+excerpt: A complete English guide to qalqalah: what it is and why it happens, the five letters gathered in "quṭbu jad", minor, major and strongest qalqalah, how to pronounce each letter, when qalqalah disappears through merging, how it differs from whispered letters, practice on short surahs, a one-week plan and common mistakes.
+meta: Qalqalah rules in English: the five letters qaf, taa, baa, jeem and daal (qutbu jad), minor, major and strongest qalqalah, how to pronounce each, when it drops, Quran examples and a practice plan.
+keywords: qalqalah rules, qalqalah letters, qutbu jad, tajweed in english, minor and major qalqalah, echoing letters quran, qalqalah examples
+reading: 12
 translation_of: qalqalah-rules
 ---
-**Qalqalah** means "shaking" or "echoing". It is a small bounce in the sound of certain letters when they carry a sukūn, so they do not sound swallowed.
+**Qalqalah** means "shaking" or "echoing". It is a small bounce in the sound of certain letters when they carry a sukūn, so they do not sound swallowed. It is one of the easiest qualities to hear, and one of the easiest to learn once you understand the idea, but it is also the quality beginners exaggerate most, until the bounce turns into a whole new vowel.
+
+In this guide you will learn what qalqalah is and why it happens, why only five letters have it, its three levels, how to pronounce each letter, when qalqalah disappears, and how it differs from whispered letters. Then we apply it to short surahs you recite every day and finish with a one-week plan, common mistakes and FAQs.
+
+## What is qalqalah?
+Linguistically, *qalqalah* means disturbance or shaking. In Tajweed it is **a slight vibration of the point of articulation when a letter is pronounced with sukūn, producing a clear, strong echo**.
 
 ## The five letters
 They are gathered in the phrase **قُطۡبُ جَدٍّ** (*quṭbu jad*):
@@ -18,23 +23,153 @@ They are gathered in the phrase **قُطۡبُ جَدٍّ** (*quṭbu jad*):
 | ج | Jeem |
 | د | Daal |
 
-## Why do these letters bounce?
-These letters are both **strong (shiddah)**, which blocks the sound, and **voiced (jahr)**, which blocks the breath. When they have a sukūn, nothing would be heard without a small release, so the qalqalah lets the letter be heard.
+Imam Ibn al-Jazari lists them in his famous poem on Tajweed, the *Muqaddimah*, and adds a line on how to recite them: make the qalqalah clear when the letter is silent, and clearer still when the silence comes from stopping. That one line summarises the levels explained below.
 
-## Types of qalqalah
-| Type | When | Example |
+## Why do these letters bounce?
+These letters are both **strong (shiddah)**, which blocks the flow of sound, and **voiced (jahr)**, which blocks the flow of breath. When they have a sukūn, the sound and the breath are both trapped at the point of articulation. Nothing would be heard without a small release, so the mouth opens very slightly and the letter is heard. That release is the qalqalah.
+
+### Why only these five?
+There are eight strong letters in Arabic, gathered in *ajidu qaṭ bakat* (أجد قط بكت). Three of them do not take qalqalah:
+- **Kaaf (ك) and Taa (ت)** are **whispered** (*hams*): breath flows with them, and that breath releases the letter, so no bounce is needed.
+- **Hamza (ء)** is strong and voiced, but it is not counted among the qalqalah letters because it is heavy. A bouncing hamza would sound like retching, so a silent hamza is pronounced smoothly, as in ﴿ٱقۡرَأۡ﴾.
+
+## When does qalqalah happen?
+Only when the letter is **silent**, whether the sukūn is original or comes from stopping. A letter with a vowel has no qalqalah, because the vowel itself opens the articulation point.
+
+## The three levels of qalqalah
+| Level | When | Example |
 |---|---|---|
-| Minor (ṣughrā) | Sukūn in the middle of a word or when joining | ﴿يَقۡطَعُونَ﴾ |
-| Major (kubrā) | Stopping on the letter at the end of an ayah | ﴿ٱلۡفَلَقِ﴾, ﴿أَحَدٌ﴾ when stopping |
-- Some scholars add a stronger level when the stopped letter is also doubled, as in ﴿وَتَبَّ﴾ when stopping.
+| Minor (ṣughrā) | sukūn in the middle of a word, or at the end of a word when joining | ﴿يَقۡطَعُونَ﴾, ﴿قَدۡ أَفۡلَحَ﴾ |
+| Major (kubrā) | stopping on the letter at the end of a word | ﴿ٱلۡفَلَقِ﴾, ﴿أَحَدٌ﴾ when stopping |
+| Strongest (akbar) | stopping on a doubled qalqalah letter | ﴿وَتَبَّ﴾, ﴿بِٱلۡحَقِّ﴾ when stopping |
+
+Some scholars count only the first two levels and treat the third as a stronger form of the major one.
+
+### Examples of each letter
+| Letter | Minor | Major (when stopping) |
+|---|---|---|
+| ق | ﴿يَقۡطَعُونَ﴾ | ﴿ٱلۡفَلَقِ﴾ |
+| ط | ﴿أَطۡعَمَهُم﴾ | ﴿مُّحِيطُۢ﴾ |
+| ب | ﴿ٱلۡأَبۡتَرُ﴾ | ﴿لَهَبٖ﴾ |
+| ج | ﴿يَجۡعَلُونَ﴾ | ﴿ٱلۡبُرُوجِ﴾ |
+| د | ﴿ٱلۡقَدۡرِ﴾ | ﴿ٱلصَّمَدُ﴾ |
+
+Read each row three times, minor then major, and notice that the major one is clearer and a little longer, but never becomes a vowel.
+
+## How to pronounce each letter
+- **Qaf (ق)**: from the back of the tongue against the soft palate, always **heavy**, as in ﴿يَقۡطَعُونَ﴾. A common mistake is turning it into a kaaf or a hamza.
+- **Ṭaa (ط)**: from the tip of the tongue against the roots of the upper front teeth, **heavy** with the tongue raised, as in ﴿مُّحِيطُۢ﴾ when stopping. The mistake is making it light, so it becomes a plain taa (ت).
+- **Baa (ب)**: from the two lips, **light**, as in ﴿ٱلۡأَبۡتَرُ﴾. English speakers often release it with a puff of air like "p", which is wrong: baa is voiced.
+- **Jeem (ج)**: from the middle of the tongue against the hard palate, **light** and strong, as in ﴿يَجۡعَلُونَ﴾. The mistake is softening it into "zh" or "sh".
+- **Daal (د)**: from the tip of the tongue against the roots of the upper front teeth, **light**, as in ﴿قَدۡ أَفۡلَحَ﴾. The mistake is whispering it so it sounds like "t".
+
+**Heavy or light:** the qalqalah of qaf and ṭaa is heavy, because they are elevated letters; the qalqalah of baa, jeem and daal is light.
 
 ## How to pronounce it
 - **Release the letter** with a short, light bounce.
-- **Do not add a vowel**: *al-falaq*, not *al-falaqa*.
+- **Do not add a vowel**: *al-falaq*, not *al-falaqa*, and *qad aflaḥa*, not *qada aflaḥa*.
+- **Do not add a hamza** after the letter: not *qad'* *aflaḥa*.
+- **Quick test:** say *aq* and then *aqa*. The first has correct qalqalah; the second has a full fatḥah. The difference between them is the gap you must keep.
+
+### Does qalqalah lean towards a vowel?
+Reciters have two well-known views: that the bounce leans towards a fatḥah sound in all cases, or that it follows the vowel of the letter before it. In both views it is a bounce, not a vowel. Follow the way your teacher recites.
+
+## When qalqalah disappears
+If a silent qalqalah letter is **merged** into the next letter, it no longer has qalqalah, because it is no longer pronounced as a separate letter:
+- ﴿قَد تَّبَيَّنَ﴾: the daal merges completely into the taa, read *qat-tabayyana*, with no qalqalah on the daal.
+- ﴿أَلَمۡ نَخۡلُقكُّم﴾: the qaf merges into the kaaf, so it has no qalqalah.
+- ﴿أَحَطتُ﴾, ﴿بَسَطتَ﴾ and ﴿فَرَّطتُ﴾: the ṭaa merges partially into the taa. It keeps its heaviness, but there is **no qalqalah**, because the tongue moves straight on to the taa.
+
+## Qalqalah versus whispered letters
+Students sometimes confuse qalqalah with *hams* (whispering), where breath flows with the letter. A silent kaaf, as in ﴿يَكۡسِبُونَ﴾, does not bounce; a light breath comes out with it instead. The silent taa in ﴿تَبَّتۡ﴾ is the same. Bouncing kaaf or taa is a mistake, and so is holding the breath with them. Remember: **quṭbu jad bounces; kaaf and taa breathe.**
+
+A useful drill: put your hand in front of your mouth and say *ak*, then *aq*. You will feel breath on *ak* and no breath on *aq*, only a small bounce.
+
+## Not too much, not too little
+There are two extremes to avoid:
+- **Too much**: the bounce turns into a full vowel or an extra hamza, so ﴿قَدۡ أَفۡلَحَ﴾ becomes *qada aflaḥa*. This changes the shape of the word.
+- **Too little**: the letter is swallowed and nothing is heard, so ﴿يَجۡعَلُونَ﴾ sounds as if the jeem were missing.
+
+The right sound is a short, clear bounce that the person next to you can hear, without thinking it is a vowel.
+
+## Practice on short surahs
+### Surah Al-Falaq
+Stop at the end of each verse and listen to the major qalqalah: ﴿ٱلۡفَلَقِ﴾, ﴿خَلَقَ﴾, ﴿وَقَبَ﴾, ﴿ٱلۡعُقَدِ﴾, ﴿حَسَدَ﴾. Almost the whole surah is a lesson in qalqalah. Listen to it on our [Quran pages](/quran/113/).
+
+### Surah Al-Ikhlas
+Stop on ﴿أَحَدٌ﴾, ﴿ٱلصَّمَدُ﴾ and ﴿يُولَدۡ﴾: major qalqalah on the daal each time.
+
+### Surah Al-Masad
+﴿تَبَّتۡ يَدَآ أَبِي لَهَبٖ وَتَبَّ﴾
+- Stopping on ﴿وَتَبَّ﴾: a doubled baa, **strongest** qalqalah.
+- Stopping on ﴿لَهَبٖ﴾ in verse three, on ﴿كَسَبَ﴾ and on ﴿ٱلۡحَطَبِ﴾: **major** qalqalah.
+- ﴿تَبَّتۡ﴾: the silent taa is whispered, with **no qalqalah**.
+
+### Surah Al-'Alaq
+﴿ٱقۡرَأۡ بِٱسۡمِ رَبِّكَ ٱلَّذِي خَلَقَ﴾ ﴿خَلَقَ ٱلۡإِنسَٰنَ مِنۡ عَلَقٍ﴾
+- ﴿ٱقۡرَأۡ﴾: the silent hamza does **not** bounce; say it smoothly.
+- Stopping on ﴿خَلَقَ﴾ and ﴿عَلَقٍ﴾: **major** qalqalah on a heavy qaf.
+
+### Minor qalqalah in everyday surahs
+- Al-Kawthar: ﴿ٱلۡأَبۡتَرُ﴾
+- Quraysh: ﴿أَطۡعَمَهُم﴾
+- Al-Qari'ah: ﴿كَٱلۡفَرَاشِ ٱلۡمَبۡثُوثِ﴾
+- Al-Fajr: ﴿وَٱلۡفَجۡرِ﴾
+- Al-Qadr: ﴿فِي لَيۡلَةِ ٱلۡقَدۡرِ﴾
+
+Many students master the major qalqalah at verse endings and forget the minor one in the middle of words. Reading ﴿وَٱلۡفَجۡرِ﴾ with a swallowed jeem, or with a vowel on it, are both mistakes.
+
+## Joining verses
+If you join the end of one verse to the next, the qalqalah letter at the end of the first verse takes a **vowel**, so it has no qalqalah. If you join ﴿قُلۡ أَعُوذُ بِرَبِّ ٱلۡفَلَقِ﴾ to the next verse, the qaf is read with kasrah and does not bounce. When you stop at each verse end, the major qalqalah appears. That is why Al-Falaq sounds different depending on whether you stop or join.
+
+## Teaching qalqalah to children
+Children love qalqalah because it is a sound that "jumps". Use that:
+- Teach *quṭbu jad* with a hand sign for each letter.
+- Have them put a hand in front of their mouth and say *ak* then *aq* to feel the difference.
+- Start with the major qalqalah in Al-Falaq, which is clearest, then move to the minor.
+
+## A one-week practice plan
+- **Day 1**: say *aq, aṭ, ab, aj, ad* ten times, then compare with *ak, at* to hear the difference between qalqalah and whispering.
+- **Day 2**: minor qalqalah in ﴿يَقۡطَعُونَ﴾, ﴿يَجۡعَلُونَ﴾, ﴿يَدۡعُونَ﴾ and ﴿ٱلۡأَبۡتَرُ﴾.
+- **Day 3**: major qalqalah in Al-Falaq, stopping at every verse.
+- **Day 4**: strongest qalqalah, stopping on ﴿وَتَبَّ﴾, then comparing with stopping on ﴿لَهَبٖ﴾.
+- **Day 5**: where qalqalah drops: ﴿قَد تَّبَيَّنَ﴾ and ﴿أَحَطتُ﴾.
+- **Day 6**: Al-'Alaq and Al-Qadr in full, naming every qalqalah.
+- **Day 7**: record a surah from Juz Amma and have a teacher check it, or compare with a skilled reciter.
 
 ## Common mistakes
 1. **No bounce at all**, so ﴿أَحَدٌ﴾ sounds like *aḥat*.
 2. **Too strong a bounce**, adding a full vowel.
 3. **Qalqalah on other letters** like kaaf or taa (ت), which are whispered letters.
+4. **Making qaf and ṭaa light** during qalqalah. They stay heavy.
+5. **Bouncing a merged letter**, as with the daal in ﴿قَد تَّبَيَّنَ﴾.
+6. **Stretching the bounce** when stopping until it sounds like a new syllable.
+7. **Swallowing the strongest qalqalah** when stopping on a doubled letter, as in ﴿وَتَبَّ﴾.
+8. **Bouncing a silent hamza**, as in ﴿ٱقۡرَأۡ﴾.
 
-Read [Sifat al-Huruf in English](/blog/sifat-al-huruf-english/) and [Surah Al-Fatiha Common Mistakes](/blog/surah-al-fatiha-common-mistakes/).
+## Frequently asked questions
+### Is qalqalah a permanent quality?
+Yes. It is a permanent quality of these five letters, but it only shows when the letter is silent, because a vowel already opens the point of articulation.
+
+### Why doesn't hamza bounce, if it is strong and voiced?
+Because hamza is a heavy letter from the deepest part of the throat. If it bounced it would sound like coughing, so a silent hamza is pronounced smoothly.
+
+### Is every stop on a qalqalah letter a major qalqalah?
+Yes: whenever you stop with sukūn on one of *quṭbu jad*, it is major qalqalah. If the letter is doubled, it is the strongest level for those who count it separately.
+
+### Should I learn qalqalah before the Noon Sakinah rules?
+It is best learned early, alongside [the rules of Noon Sakinah and Tanween](/blog/noon-sakinah-tanween-rules-english/), because it is simple and appears at the end of many verses in Juz Amma, so it improves your recitation quickly.
+
+## Summary
+- Five letters: **ق ط ب ج د**, gathered in *quṭbu jad*.
+- Caused by the combination of **shiddah and jahr**.
+- Only on a **silent** letter, whether the sukūn is original or from stopping.
+- Levels: **minor** in the middle, **major** when stopping, **strongest** on a doubled letter when stopping.
+- Heavy with qaf and ṭaa, light with baa, jeem and daal.
+- It **disappears** when the letter merges into the next one.
+- Kaaf and taa **do not bounce**; they are whispered.
+
+## Conclusion
+Start with Al-Falaq today: stop at the end of each of its five verses and listen to yourself. Then add one surah a day from Juz Amma. Qalqalah is small in sound but big in effect: it lets a silent letter be heard clearly and strongly without turning it into a voweled one.
+
+For the other letter qualities, read [Sifat al-Huruf in English](/blog/sifat-al-huruf-english/), then [Surah Al-Fatiha Common Mistakes](/blog/surah-al-fatiha-common-mistakes/). If you want someone to listen and correct you, [book a free trial class](/contact/).

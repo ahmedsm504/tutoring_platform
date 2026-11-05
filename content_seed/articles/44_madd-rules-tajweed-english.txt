@@ -1,12 +1,21 @@
 title: Madd Rules in Tajweed: Types of Elongation and How Many Counts (Hafs)
 category: english
-excerpt: A clear English guide to Madd (elongation) in Tajweed: natural Madd, connected and separated Madd, Madd due to stopping, Madd Lazim and more, with the number of counts for each in the Hafs recitation.
+excerpt: A complete English guide to Madd (elongation) in Tajweed for Hafs: natural, Badal, Iwad and Silah Madd, connected and separated Madd, Madd due to stopping, Leen, Farq and the four kinds of Madd Lazim, with counts, the rule of the stronger cause, worked examples from Al-Fatiha and Ayat al-Kursi, and a practice plan.
 meta: Madd rules of Tajweed in English: Tabee'i, Muttasil, Munfasil, Aarid, Leen, Badal, Silah and Lazim, with counts for Hafs and Quran examples.
 keywords: madd rules tajweed, types of madd, madd muttasil munfasil, madd lazim, how many counts madd, tajweed in english, madd tabeei
-reading: 8
+reading: 14
 translation_of: madd-types-tajweed
 ---
 **Madd** means elongation: stretching a vowel sound for a set length. Getting Madd right is one of the biggest differences between ordinary reading and beautiful, correct recitation. In this guide we follow the recitation of **Hafs from ʿAsim**, via the Shatibiyyah route, which is the most widespread recitation in the world today.
+
+## What Madd is, and what causes it
+Linguistically, *madd* means stretching or increasing. In Tajweed it means **lengthening the sound of a Madd letter**. Its opposite is *qaṣr*: keeping the Madd letter at its natural length with no extra stretch.
+
+All Madd falls into two big groups:
+- **Original Madd** (*aṣlī*): needs no cause. This is the natural Madd of two counts.
+- **Secondary Madd** (*farʿī*): longer than natural because of a cause. There are only two causes: a **hamza** or a **sukoon** coming after the Madd letter.
+
+This one idea answers most beginners' questions. At every Madd letter, ask: is a hamza after it? Is a sukoon after it? If neither, it is natural: two counts. If a hamza comes *before* it, it is Badal: also two counts.
 
 ## What is a "count" (ḥaraka)?
 Madd is measured in **counts** (*harakāt*). One count is roughly the time it takes to fold or unfold one finger at a normal pace. What matters most is **consistency**: if a Madd is two counts, it should always be two counts.
@@ -24,6 +33,9 @@ Also 2 counts:
 - **Madd ʿIwaḍ:** stopping on a word ending with tanween fatha: stop on ﴿عَلِيمًا﴾ as *ʿalīmā*.
 - **Small Silah:** the pronoun "hu/hi" between two vowelled letters: ﴿إِنَّهُۥ كَانَ﴾ (*innahū kāna*).
 
+### A Madd letter before a silent letter in the next word
+If a Madd letter ends a word and the next word starts with a silent letter, **the Madd letter is dropped in pronunciation** when you join them, and there is no Madd at all. For example ﴿قَالُواْ ٱلۡحَمۡدُ﴾ is read *qālul-ḥamd*, and ﴿فِي ٱلسَّمَٰوَٰتِ﴾ is read *fis-samāwāt*. If you stop on the first word, its natural Madd returns. Beginners often stretch the yaa of *fī* here, which is a mistake.
+
 ## 2. Madd because of hamza
 ### Madd Muttaṣil (connected): 4 or 5 counts
 The Madd letter and the hamza are **in the same word**: ﴿جَآءَ﴾, ﴿ٱلسَّمَآءِ﴾, ﴿سُوٓءَ﴾. It's obligatory to lengthen it: **4 or 5 counts**, and up to 6 when you stop on a word ending with hamza.
@@ -33,6 +45,12 @@ The Madd letter ends one word and the hamza starts the next: ﴿إِنَّآ أ�
 
 ### Big Silah: 4 or 5 counts
 The pronoun "hu/hi" between two vowelled letters, followed by a hamza: ﴿مَالَهُۥٓ أَخۡلَدَهُۥ﴾.
+
+### Exceptions in the pronoun "hu/hi" for Hafs
+The rule is that the pronoun haa between two voweled letters is extended into a waw or yaa sound. Hafs has a few well-known exceptions worth memorising:
+- ﴿وَيَخۡلُدۡ فِيهِۦ مُهَانًا﴾ in Al-Furqan: the haa **is** extended, even though the letter before it is silent.
+- ﴿يَرۡضَهُ لَكُمۡ﴾ in Az-Zumar: the haa is **not** extended, only a short damma, even though it sits between voweled letters.
+- ﴿أَرۡجِهۡ﴾ in Al-A'raf and Ash-Shu'ara', and ﴿فَأَلۡقِهۡ﴾ in An-Naml: the haa is read **silent**.
 
 **Rule of thumb:** pick one length (say 4) and stick with it throughout your recitation. Never make Munfasil longer than Muttasil.
 
@@ -48,6 +66,43 @@ A Madd letter followed by a **permanent sukoon** (present whether you stop or co
 - In a word, with a shadda: ﴿ٱلضَّآلِّينَ﴾, ﴿ٱلۡحَآقَّةُ﴾
 - In the opening letters of surahs: the Laam and Meem in ﴿الٓمٓ﴾, and ﴿قٓ﴾, ﴿صٓ﴾, ﴿نٓ﴾. The letter ʿAyn (in ﴿كٓهيعٓصٓ﴾) may be 4 or 6.
 
+### Madd Farq: 6 counts
+This occurs where the question hamza enters a word starting with the definite article. The connecting hamza is turned into a long alif stretched **6 counts**, like Madd Lazim, to distinguish a question from a statement. It appears in three words in six places: ﴿ءَآللَّهُ﴾ (Yunus and An-Naml), ﴿ءَآلذَّكَرَيۡنِ﴾ (twice in Al-An'am) and ﴿ءَآلۡـَٰٔنَ﴾ (twice in Yunus). Hafs also has a second option here: **easing** (*tas-hīl*) the second hamza between a hamza and an alif, with no elongation.
+
+### Madd Tamkin
+Two yaas, the first doubled with kasra and the second a silent Madd yaa, as in ﴿حُيِّيتُم﴾ and ﴿ٱلنَّبِيِّـۧنَ﴾. It is really a **natural Madd** of two counts. The name means "firming": the reciter gives the doubled yaa its full weight, then stretches the second, so neither is swallowed.
+
+### The opening letters of surahs
+The fourteen separated letters at the start of surahs fall into three groups:
+| Group | Letters | Madd | Example |
+|---|---|---|---|
+| No Madd | alif | none | the alif in ﴿الٓمٓ﴾ is just *alif* |
+| Natural Madd | the five letters of *ḥayy ṭahur*: ح ي ط ه ر | 2 counts | *hā* and *yā* in ﴿كٓهيعٓصٓ﴾ |
+| Madd Lazim | the eight letters of *naqaṣa ʿasalukum*: ن ق ص ع س ل ك م | 6 counts (ʿAyn 4 or 6) | ﴿قٓ﴾, ﴿نٓ﴾, the *sīn* in ﴿طسٓمٓ﴾ |
+
+The reason: the names of *ḥayy ṭahur* letters have two sounds ending in a Madd (*ḥā*, *yā*), so nothing silent follows the Madd. The names of *naqaṣa ʿasalukum* letters have three sounds with a Madd in the middle and a silent letter at the end (*nūn*, *qāf*), so a permanent sukoon follows the Madd, making it Lazim. ʿAyn has a soft letter in the middle (*ʿayn*), not a Madd letter, which is why 4 counts is also allowed.
+
+## When two causes meet: the stronger one wins
+Sometimes one Madd letter has two causes. You apply **the stronger** and drop the weaker. From strongest to weakest:
+1. **Lazim**
+2. **Muttasil**
+3. **ʿĀriḍ lis-sukūn**
+4. **Munfasil**
+5. **Badal**
+
+Examples:
+- Stopping on ﴿ٱلسَّمَآءِ﴾: it has Muttasil and ʿĀriḍ, so you stretch **4, 5 or 6 counts**, never 2, because Muttasil is stronger than ʿĀriḍ.
+- ﴿وَلَآ ءَآمِّينَ ٱلۡبَيۡتَ﴾: ﴿ءَآمِّينَ﴾ has Badal and Lazim, so it is stretched **6 counts**.
+
+## Short, medium and full
+Teachers describe lengths with three words you will hear often:
+- **Qaṣr** (short): 2 counts.
+- **Tawassuṭ** (medium): 4 counts.
+- **Fuwayq at-tawassuṭ** (a little above medium): 5 counts.
+- **Ishbāʿ** or **ṭūl** (full): 6 counts.
+
+So "read the ʿĀriḍ with tawassuṭ" means 4 counts, and "give the Lazim ishbāʿ" means 6.
+
 ## Summary table
 | Madd | Counts (Hafs, Shatibiyyah) |
 |---|---|
@@ -57,13 +112,63 @@ A Madd letter followed by a **permanent sukoon** (present whether you stop or co
 | ʿĀriḍ lis-sukūn, Līn (stopping) | 2, 4 or 6 |
 | Lāzim | 6 |
 
+## Worked examples
+### Surah Al-Fatiha
+- ﴿ٱلرَّحۡمَٰنِ﴾: a small alif after the meem, **natural**, 2 counts.
+- ﴿ٱلرَّحِيمِ﴾ when stopping: a Madd yaa before a meem made silent by the stop, **ʿĀriḍ**, 2, 4 or 6.
+- ﴿مَٰلِكِ يَوۡمِ ٱلدِّينِ﴾: the alif of ﴿مَٰلِكِ﴾ is **natural**; the waw of ﴿يَوۡمِ﴾ is a soft (Līn) letter, not stretched when joining; the yaa of ﴿ٱلدِّينِ﴾ is **ʿĀriḍ** when you stop.
+- ﴿نَسۡتَعِينُ﴾ when stopping: **ʿĀriḍ**.
+- ﴿وَلَا ٱلضَّآلِّينَ﴾: an alif followed by a doubled laam in one word, **Lazim (heavy, in a word)**, 6 counts; then the final yaa is **ʿĀriḍ** when stopping.
+
+**Consistency in Al-Fatiha:** if you stop at the end of each verse, choose one length for ʿĀriḍ for the whole surah: 2 everywhere, or 4 everywhere, or 6 everywhere. Stretching ﴿ٱلرَّحِيمِ﴾ to 6 and ﴿ٱلدِّينِ﴾ to 2 is a mistake.
+
+### Ayat al-Kursi
+- ﴿ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ﴾: in ﴿لَآ إِلَٰهَ﴾ an alif ends one word and a hamza starts the next, **Munfasil**, 4 or 5.
+- ﴿لَا تَأۡخُذُهُۥ سِنَةࣱ﴾: the pronoun haa between voweled letters, **small Silah**, 2 counts.
+- ﴿مَن ذَا ٱلَّذِي﴾: the alif of ﴿ذَا﴾ drops when joining, because a silent letter follows.
+- ﴿وَهُوَ ٱلۡعَلِيُّ ٱلۡعَظِيمُ﴾ when stopping: **ʿĀriḍ** in ﴿ٱلۡعَظِيمُ﴾.
+
+### Surah Al-Kawthar and Surah Al-Humazah
+- ﴿إِنَّآ أَعۡطَيۡنَٰكَ﴾: **Munfasil**, 4 or 5; then the small alif in ﴿أَعۡطَيۡنَٰكَ﴾ is **natural**.
+- ﴿يَحۡسَبُ أَنَّ مَالَهُۥٓ أَخۡلَدَهُۥ﴾: the alif in ﴿مَالَهُۥٓ﴾ is **natural**, then the pronoun haa is extended before a hamza, **big Silah**, 4 or 5 like Munfasil.
+
 ## Common mistakes
 1. Stretching a natural Madd beyond 2 counts.
 2. Inconsistent lengths in the same recitation.
 3. Shortening Madd Lazim, for example a short *ad-dāllīn*.
 4. Elongating Līn letters while continuing (not stopping).
 
+5. Stretching a Madd letter before a silent letter when joining, as in ﴿فِي ٱلسَّمَٰوَٰتِ﴾.
+6. Shortening Muttasil to 2 when stopping on a word like ﴿ٱلسَّمَآءِ﴾. It should be at least 4.
+7. Neglecting the ʿAyn in ﴿كٓهيعٓصٓ﴾ and ﴿عٓسٓقٓ﴾, or giving it only 2 counts.
+8. Extending the pronoun haa where Hafs does not, as in ﴿يَرۡضَهُ لَكُمۡ﴾.
+
+## A two-week practice plan
+- **Days 1-2**: natural Madd only. Recite Al-Ikhlas and count two on your finger for every Madd, no more.
+- **Days 3-4**: Muttasil and Munfasil. Choose one length, say 4, and recite An-Nasr and Al-Kawthar with it everywhere.
+- **Days 5-6**: ʿĀriḍ. Recite Al-Fatiha three times: once with 2 at every verse end, once with 4, once with 6.
+- **Day 7**: Līn. In Surah Quraysh, stop on ﴿ٱلۡبَيۡتِ﴾ and ﴿خَوۡفِۭ﴾ with each of the three lengths.
+- **Days 8-9**: Lazim. Recite the openings of Al-Baqarah, Maryam, Ash-Shura and Al-Qalam, giving the *naqaṣa ʿasalukum* letters 6 counts.
+- **Days 10-11**: Badal and Silah. Recite Al-Humazah, watching the big Silah in ﴿مَالَهُۥٓ أَخۡلَدَهُۥ﴾.
+- **Days 12-14**: take one full page of Juz Amma, label every Madd with its type and length before reciting, then record yourself and compare with a skilled reciter.
+
+## Frequently asked questions
+### How long is one count in seconds?
+Counts are not measured in seconds, because they depend on your pace: slow, careful recitation is slower than fast recitation. What matters is proportion: a 6-count Madd is three times a 2-count Madd at the same pace.
+
+### Can Hafs shorten Munfasil to 2 counts?
+Shortening Munfasil is reported for Hafs via the Ṭayyibah route. Via Ash-Shāṭibiyyah, the route of most printed Mushafs, it is read with 4 or 5 counts. If you recite by the Shatibiyyah, do not shorten it.
+
+### Why must Muttasil never be shorter than Munfasil?
+Because in Muttasil the hamza is in the same word, so the cause is firmer and stronger. That is why, in a single recitation, Muttasil may equal Munfasil or exceed it, but never be shorter.
+
+### What is the difference between Līn and a natural Madd?
+A Madd letter is silent and preceded by its matching vowel: damma before waw, kasra before yaa. A Līn letter is a silent waw or yaa preceded by a **fatha**, as in ﴿خَوۡفٍۭ﴾ and ﴿ٱلۡبَيۡتِ﴾, and it is stretched only when you stop.
+
+### Can I stretch ʿĀriḍ to 6 and Munfasil to 4?
+Yes. They are different categories, and each has its own length. What matters is consistency within each category: every Munfasil the same length, and every ʿĀriḍ the same length in one sitting.
+
 ## Practise with Al-Fatiha
 Listen to [Surah Al-Fatiha](/quran/1/) by Sheikh Al-Husary and count on your fingers: the natural Madd in ﴿مَٰلِكِ﴾, the stopping Madd at ﴿ٱلرَّحِيمِ﴾, and the 6-count Madd Lazim in ﴿ٱلضَّآلِّينَ﴾.
 
-Then read [common mistakes in Surah Al-Fatiha](/blog/surah-al-fatiha-common-mistakes/) and, if you want a teacher to check your counts live, [book a free trial class](/contact/).
+For more depth, read the full guide to [Madd Lazim](/blog/madd-lazim-english/), then [common mistakes in Surah Al-Fatiha](/blog/surah-al-fatiha-common-mistakes/) and, if you want a teacher to check your counts live, [book a free trial class](/contact/).
