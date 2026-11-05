@@ -312,6 +312,10 @@ reading: 15
 - [تفسير آية «يا أيها الناس أنتم الفقراء إلى الله»](/blog/tafsir-ayah-antum-al-fuqara-ila-allah/) (الآية 15)
 - [تفسير آية «إنما يخشى الله من عباده العلماء»](/blog/tafsir-ayah-innama-yakhsha-allaha/) (الآية 28)
 - [تفسير آية «إن الذين يتلون كتاب الله... يرجون تجارة لن تبور»](/blog/tafsir-ayah-yatluna-kitaba-allah/) (الآية 29)
+- [تفسير آية «ثم أورثنا الكتاب الذين اصطفينا من عبادنا»](/blog/tafsir-ayah-thumma-awrathna-al-kitab/) (الآية 32)
+
+### سورة ص
+- [تفسير آية «كتاب أنزلناه إليك مبارك ليدبروا آياته»](/blog/tafsir-ayah-kitabun-anzalnahu-mubarakun/) (الآية 29)
 
 ### سورة الزمر
 - [تفسير آية «قل هل يستوي الذين يعلمون والذين لا يعلمون»](/blog/tafsir-ayah-hal-yastawi-alladhina-yalamun/) (الآية 9)
