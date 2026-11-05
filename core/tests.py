@@ -1098,6 +1098,23 @@ class Wave34Tests(TestCase):
             self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
 
 
+class Wave35Tests(TestCase):
+    def test_hifz_pillars_expanded(self):
+        import re
+        from content_seed import load_articles
+        from blog.models import Post
+        arts = {a['slug']: a for a in load_articles()}
+        pairs = (('how-to-memorize-quran-plan', 'how-to-memorize-quran-step-by-step'),
+                 ('quran-revision-system', 'quran-revision-system-english'))
+        for ar, en in pairs:
+            self.assertEqual(arts[en]['translation_of'], ar)
+            for s in (ar, en):
+                self.assertGreaterEqual(len(re.findall(r'\S+', arts[s]['body'])), 2000, s)
+                self.assertTrue(Post.objects.filter(slug=s, status='published').exists(), s)
+        self.assertIn('/blog/30-juz-of-the-quran-guide-english/',
+                      Post.objects.get(slug='how-to-memorize-quran-step-by-step').content)
+
+
 class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
