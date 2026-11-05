@@ -119,6 +119,7 @@ reading: 15
 - [تفسير آية «اليوم أكملت لكم دينكم وأتممت عليكم نعمتي»](/blog/tafsir-ayah-al-yawma-akmaltu-lakum-dinakum/) (الآية 3)
 - [تفسير آية «ولا يجرمنكم شنآن قوم على ألا تعدلوا اعدلوا هو أقرب للتقوى»](/blog/tafsir-ayah-wala-yajrimannakum-shanaan/) (الآية 8)
 - [تفسير آية «إنما يتقبل الله من المتقين»](/blog/tafsir-ayah-innama-yataqabbalu-allah/) (الآية 27)
+- [تفسير آية «من قتل نفسًا بغير نفس أو فساد في الأرض فكأنما قتل الناس جميعًا»](/blog/tafsir-ayah-man-ahyaha-faka-annama-ahya/) (الآية 32)
 - [تفسير آية «من قتل نفسا بغير نفس فكأنما قتل الناس جميعا»](/blog/tafsir-ayah-man-qatala-nafsan/) (الآية 32)
 - [تفسير آية «يحبهم ويحبونه أذلة على المؤمنين أعزة على الكافرين»](/blog/tafsir-ayah-yuhibbuhum-wa-yuhibbunahu/) (الآية 54)
 - [تفسير آية «يا أيها الذين آمنوا عليكم أنفسكم لا يضركم من ضل إذا اهتديتم»](/blog/tafsir-ayah-alaykum-anfusakum/) (الآية 105)
@@ -383,6 +384,7 @@ reading: 15
 - [تفسير آية «فاتقوا الله ما استطعتم واسمعوا وأطيعوا وأنفقوا خيرا لأنفسكم»](/blog/tafsir-ayah-fattaqu-allaha-ma-istatatum/) (الآية 16)
 
 ### سورة الطلاق
+- [تفسير آية «ومن يتق الله يجعل له مخرجًا ويرزقه من حيث لا يحتسب ومن يتوكل على الله فهو حسبه»](/blog/tafsir-ayah-man-yattaqi-allah-makhraja/) (الآية 2)
 - [تفسير آية «ومن يتق الله يجعل له مخرجا ويرزقه من حيث لا يحتسب»](/blog/tafsir-ayah-wa-man-yattaqi-allah/) (الآية 2)
 
 ### سورة التحريم
