@@ -1,16 +1,18 @@
 title: Makharij al-Huruf: Where Each Arabic Letter Comes From
 category: english
-excerpt: A clear English guide to makharij al-huruf, the articulation points of Arabic letters: the five main areas (the empty space of the mouth and throat, the throat, the tongue, the lips and the nasal passage), which letters come from each, a simple test to find any letter's makhraj, and the letters English speakers find hardest.
-meta: Makharij al-huruf in English: the five areas jawf, throat, tongue, lips and nose, which letters come from each, how to find a letter's makhraj, and the hardest letters for English speakers.
-keywords: makharij al huruf, articulation points arabic, makharij english, throat letters, tajweed for beginners, arabic pronunciation
-reading: 5
+excerpt: A complete English guide to makharij al-huruf, the articulation points of Arabic letters: the five main areas and seventeen detailed points, a table of every letter with its makhraj and a Quranic example, how qualities separate letters from the same point, letter pairs that change the meaning, a two-week plan and the hardest letters for English speakers.
+meta: Makharij al-huruf in English: the five areas and 17 articulation points, every Arabic letter with its makhraj and an example, letters that share a point, meaning-changing pairs, and the hardest letters for English speakers.
+keywords: makharij al huruf, articulation points arabic, makharij english, throat letters, arabic letter pronunciation, tajweed for beginners, 17 makharij
+reading: 13
 translation_of: makharij-al-huruf
 ---
-Every Arabic letter has a **makhraj**: the exact place in the mouth or throat where it is produced. Getting the makhraj right is the first step of tajweed.
+Every Arabic letter has a **makhraj**: the exact place in the mouth or throat where it is produced. Getting the makhraj right is the first step of tajweed, before any rule. A letter produced from the wrong place can turn into a different letter and change the meaning, as when qaf becomes kaaf or hamza, or ḍaad becomes daal. That is why skilled teachers begin a new student with the articulation points and qualities of the letters.
 
 ## How to find a letter's makhraj
-- Put a **hamza with a fatḥah** before the letter and give the letter a **sukūn**: *ab*, *at*, *aq*.
-- Where the sound stops is the makhraj.
+- Put a **hamza with a fatḥah** before the letter and give the letter a **sukūn** (or a shaddah): *ab*, *at*, *aq*, *as*.
+- Notice where the sound stops. **That point is the makhraj.**
+
+This simple test, described by the scholars of tajweed, works for every letter except the madd letters, which have no fixed point and end when the breath ends.
 
 ## The five main areas
 | Area | Letters |
@@ -20,26 +22,165 @@ Every Arabic letter has a **makhraj**: the exact place in the mouth or throat wh
 | Al-Lisān (the tongue) | 18 letters |
 | Ash-Shafatān (the lips) | ف ب م و |
 | Al-Khayshūm (the nasal passage) | The ghunnah of noon and meem |
-- Imam Ibn al-Jazarī counted **17 detailed makharij** within these five areas.
 
-## The throat in three levels
+Imam Ibn al-Jazarī, following al-Khalīl ibn Aḥmad, counted **17 detailed makharij** within these five areas: one in the jawf, three in the throat, ten on the tongue, two on the lips and one in the nasal passage. Some earlier scholars counted fewer, but the letters are the same; only the way of counting differs.
+
+## 1. Al-Jawf: one point
+The three **madd letters** come from here: alif after fatḥah, silent waw after ḍammah, and silent yaa after kasrah, as in ﴿نُوحِيهَآ﴾. Their sound ends when the air ends, so they are also called the "air letters".
+
+## 2. The throat: three points
 | Level | Letters |
 |---|---|
-| Deepest | ء هـ |
+| Deepest (furthest from the mouth) | ء هـ |
 | Middle | ع ح |
 | Closest to the mouth | غ خ |
+
+**A common mistake:** saying ḥaa as a plain "h", so ﴿ٱلۡحَمۡدُ﴾ sounds like *al-hamd*. Ḥaa needs a tightening in the middle of the throat with breath flowing; haa comes from the deepest part with a light breath.
+
+## 3. The tongue: ten points
+1. **The back of the tongue with the soft palate above it**: qaf (ق).
+2. **Slightly lower and further forward than qaf**: kaaf (ك).
+3. **The middle of the tongue with the hard palate above it**: jeem (ج), sheen (ش) and non-madd yaa (ي).
+4. **One side edge of the tongue against the upper molars**: ḍaad (ض). It is easier and more common from the left side.
+5. **The front part of the tongue's edge up to its tip, against the gums of the upper teeth**: laam (ل).
+6. **The tip of the tongue, a little below the point of laam**: noon (ن).
+7. **The tip of the tongue with a little of its upper surface, near the point of noon**: raa (ر).
+8. **The tip of the tongue against the roots of the upper front teeth**: ṭaa (ط), daal (د) and taa (ت).
+9. **The tip of the tongue just above the lower front teeth, with a small gap**: ṣaad (ص), zaay (ز) and seen (س), the "whistling" letters.
+10. **The tip of the tongue against the edges of the upper front teeth**: ẓaa (ظ), dhaal (ذ) and thaa (ث).
+
+## 4. The lips: two points
+- **The inside of the lower lip against the tips of the upper front teeth**: faa (ف).
+- **Both lips**: baa (ب) and meem (م) with the lips closed, and non-madd waw (و) with the lips rounded and open.
+
+## 5. The nasal passage: one point
+The **ghunnah** comes from here: the nasal sound of noon and meem. It is clearest in a doubled noon or meem, and in idgham with ghunnah, ikhfa and iqlab.
+
+**Try it:** say ﴿إِنَّ﴾ and pinch your nose. The sound is blocked, which shows that the ghunnah comes through the nose.
+
+## Every letter with its makhraj and an example
+| Letter | Makhraj | Example |
+|---|---|---|
+| ء | deepest throat | ﴿أَعُوذُ﴾ |
+| هـ | deepest throat | ﴿هُدٗى﴾ |
+| ع | middle throat | ﴿نَعۡبُدُ﴾ |
+| ح | middle throat | ﴿ٱلرَّحِيمِ﴾ |
+| غ | closest throat | ﴿غَيۡرِ﴾ |
+| خ | closest throat | ﴿خَلَقَ﴾ |
+| ق | back of the tongue | ﴿قُلۡ﴾ |
+| ك | just below qaf | ﴿كَسَبَ﴾ |
+| ج | middle of the tongue | ﴿يَجۡعَلُونَ﴾ |
+| ش | middle of the tongue | ﴿شَرِّ﴾ |
+| ي | middle of the tongue | ﴿يَوۡمِ﴾ |
+| ض | side of the tongue and upper molars | ﴿ٱلضَّآلِّينَ﴾ |
+| ل | front edge of the tongue to its tip | ﴿لِلَّهِ﴾ |
+| ن | tip of the tongue, below laam | ﴿نَسۡتَعِينُ﴾ |
+| ر | tip of the tongue with its top | ﴿رَبِّ﴾ |
+| ط | tip of the tongue and roots of upper teeth | ﴿ٱلصِّرَٰطَ﴾ |
+| د | tip of the tongue and roots of upper teeth | ﴿ٱلدِّينِ﴾ |
+| ت | tip of the tongue and roots of upper teeth | ﴿أَنۡعَمۡتَ﴾ |
+| ص | tip of the tongue above lower teeth | ﴿صِرَٰطَ﴾ |
+| ز | tip of the tongue above lower teeth | ﴿زَكَّىٰهَا﴾ |
+| س | tip of the tongue above lower teeth | ﴿ٱلنَّاسِ﴾ |
+| ظ | tip of the tongue and edges of upper teeth | ﴿ظُلُمَٰتٖ﴾ |
+| ذ | tip of the tongue and edges of upper teeth | ﴿ٱلَّذِينَ﴾ |
+| ث | tip of the tongue and edges of upper teeth | ﴿ثُمَّ﴾ |
+| ف | inner lower lip and upper teeth | ﴿ٱلۡفَلَقِ﴾ |
+| ب | both lips closed | ﴿بِسۡمِ﴾ |
+| م | both lips closed | ﴿مَٰلِكِ﴾ |
+| و | both lips rounded | ﴿وَإِيَّاكَ﴾ |
+
+Most of these examples come from Al-Fatiha. Master the letters of Al-Fatiha and you have covered most of the Arabic alphabet.
+
+## Names of letter groups
+Scholars gave each group a name taken from its makhraj, and you will hear these names in tajweed classes:
+- **Jawfiyyah or hawāʾiyyah** (air letters): the three madd letters.
+- **Ḥalqiyyah** (throat letters): ء هـ ع ح غ خ.
+- **Lahawiyyah** (uvular): ق ك, after the uvula at the back of the mouth.
+- **Shajariyyah**: ج ش ي, after the opening between the jaws.
+- **Dhalqiyyah**: ل ن ر, after the tip of the tongue.
+- **Niṭʿiyyah**: ط د ت, after the ridged skin at the front of the palate.
+- **Asaliyyah**: ص ز س, after the pointed tip of the tongue.
+- **Lithawiyyah**: ظ ذ ث, after their closeness to the gums.
+- **Shafawiyyah** (lip letters): ف و ب م.
+
+## Letters from the same point: what tells them apart?
+Many points produce more than one letter. What makes hamza different from haa when both come from the deepest throat? The answer is **qualities (ṣifāt)**. The makhraj gives the place; the qualities give the manner:
+| Makhraj | Letters | What separates them |
+|---|---|---|
+| deepest throat | ء and هـ | hamza is voiced and strong; haa is whispered and soft, with breath |
+| middle throat | ع and ح | ʿayn is voiced and in between; ḥaa is whispered and soft |
+| closest throat | غ and خ | ghayn is voiced, khaa is whispered; both are heavy |
+| tip of the tongue and roots of upper teeth | ط د ت | ṭaa is raised, heavy and voiced; daal is voiced and light; taa is whispered and light |
+| whistling letters | ص ز س | ṣaad is raised and heavy; zaay is voiced; seen is whispered |
+| tip of the tongue and edges of upper teeth | ظ ذ ث | ẓaa is raised and heavy; dhaal is voiced and light; thaa is whispered |
+| lips | ب and م | baa is strong with no ghunnah; meem is in between, with ghunnah |
+
+If you get the quality wrong while the place is right, you produce a different letter. Ṭaa without its raised tongue becomes taa; ṣaad without it becomes seen; ẓaa without it becomes dhaal. That is why [the qualities of the letters](/blog/sifat-al-huruf-english/) are studied straight after the makharij.
+
+## Pairs that change the meaning
+A wrong makhraj is not just a matter of beauty: it can change the meaning completely. Here are examples from the Quran:
+- ﴿مَحۡظُورًا﴾ in Al-Isra' means "forbidden", while ﴿مَحۡذُورٗا﴾ in the same surah means "something to be feared". The only difference is the heaviness of ẓaa against dhaal.
+- ﴿وَعَصَىٰٓ ءَادَمُ رَبَّهُۥ﴾ is about disobedience, while ﴿عَسَىٰٓ﴾ expresses hope. The difference is ṣaad against seen.
+- ﴿مِن طِينٖ﴾ means clay, while ﴿وَٱلتِّينِ﴾ means figs. The difference is ṭaa against taa.
+- ﴿ضَلَّ﴾ means "went astray", while ﴿ظَلَّ وَجۡهُهُۥ مُسۡوَدّٗا﴾ means "his face became dark". The difference is ḍaad against ẓaa.
+- ﴿كَمَثَلِ ٱلۡكَلۡبِ﴾ refers to a dog; say the kaaf as a qaf and it becomes "heart".
+
+One letter can change the whole meaning, which is why scholars cared so much about the makharij.
 
 ## Hardest letters for English speakers
 | Letter | Common mistake | Tip |
 |---|---|---|
-| ع | Said like a plain vowel | Tighten the middle of the throat |
+| ع | Said like a plain vowel or a hamza | Tighten the middle of the throat with voice |
 | ح | Said like h | A tight, breathy sound from the middle of the throat |
-| ق | Said like k | Further back, at the very back of the tongue |
+| خ / غ | Said like k or g | Friction at the top of the throat, closest to the mouth |
+| ق | Said like k | Further back, at the very back of the tongue, always heavy |
 | ض | Said like d | Side of the tongue against the upper molars |
-| ظ / ذ | Mixed together | ظ is heavy, ذ is light |
+| ظ / ذ | Mixed together, or said like z | Put the tip of the tongue out to the upper teeth; ظ is heavy, ذ is light |
+| ث | Said like s | Tip of the tongue to the edges of the upper teeth, like "th" in "think" |
+| ط / ص | Said like t / s | Raise the back of the tongue so the letter becomes heavy |
+| ر | Said like an English r | The tip of the tongue taps near the gums, with no rolling |
 
-## Practice
-- **Use a mirror** to check your lips and tongue.
-- **Listen** to a careful reciter and copy one letter at a time.
+## A throat-letters drill
+The six throat letters are the hardest for most non-Arabs. Practise them in pairs:
+1. Say *aʾ* then *ah*. The first stops sharply; the second lets breath out.
+2. Say *aʿ* then *aḥ*. The first has voice; the second has breath with tightening.
+3. Say *agh* then *akh*. The first has voice; the second has breath and friction.
+4. Then read ﴿ٱلۡحَمۡدُ﴾, ﴿أَعُوذُ﴾, ﴿غَيۡرِ﴾ and ﴿خَلَقَ﴾ slowly.
 
-Read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/) and [Heavy and Light Letters in Tajweed](/blog/heavy-and-light-letters-english/).
+## A two-week plan
+- **Days 1-2**: the jawf and the madd letters, keeping natural madd at two counts.
+- **Days 3-4**: the six throat letters, with the drill above.
+- **Day 5**: qaf and kaaf, comparing ﴿قُلۡ﴾ with ﴿كَسَبَ﴾.
+- **Day 6**: jeem, sheen and yaa from the middle of the tongue.
+- **Days 7-8**: ḍaad, the hardest letter, so give it two full days.
+- **Day 9**: laam, noon and raa.
+- **Day 10**: ṭaa, daal and taa.
+- **Day 11**: the three whistling letters.
+- **Day 12**: ẓaa, dhaal and thaa.
+- **Day 13**: faa, baa, meem and waw, then the ghunnah.
+- **Day 14**: recite Al-Fatiha slowly, paying attention to every letter, and record it.
+
+## Practice tips
+- **Use a mirror** to check your lips and tongue, especially for the lip letters and ẓaa, dhaal and thaa.
+- **Listen** to a careful reciter and copy one letter at a time, using the verse-repeat feature on our [Quran pages](/quran/).
+- **Record yourself** and compare. Many makhraj mistakes are hidden from the person making them.
+- **Ten minutes a day** is better than one long session a week.
+
+## Frequently asked questions
+### Are there seventeen makharij or fewer?
+Ibn al-Jazarī, following al-Khalīl, chose seventeen, and this is the view used in teaching today. Some scholars counted fewer, but the letters are the same; the difference is only in how the points are grouped.
+
+### Which letter is the hardest?
+For most learners it is ḍaad, because it comes from the side of the tongue against the molars, a point few languages use. For English speakers, ʿayn and ḥaa are also very hard at first.
+
+### Can I learn makharij from videos?
+Videos help you understand where a letter comes from, but judging whether your pronunciation is right needs the ear of a qualified teacher.
+
+### When should I move on to the rules?
+Once the hardest letters are reasonably correct: ḍaad, ẓaa, dhaal and thaa, qaf, ʿayn and ḥaa. You do not need perfection before starting the rules; correction continues as you read.
+
+## Conclusion
+The makharij are the foundation of every rule that comes after them. Learn the five areas, then the seventeen points, then practise the hard letters a few minutes every day. When you are ready, read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/) and [Heavy and Light Letters in Tajweed](/blog/heavy-and-light-letters-english/), then move on to [the rules of Noon Sakinah and Tanween](/blog/noon-sakinah-tanween-rules-english/).
+
+Makharij need direct correction more than any other chapter. Our teachers start every new student with an assessment of their makharij in the [free trial class](/contact/).
