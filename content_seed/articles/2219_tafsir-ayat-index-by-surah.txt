@@ -40,6 +40,7 @@ reading: 15
 - [تفسير آية «وقولوا للناس حسنا»](/blog/tafsir-ayah-wa-qulu-lin-nasi-husna/) (الآية 83)
 - [تفسير آية «فأينما تولوا فثم وجه الله»](/blog/tafsir-ayah-faaynama-tuwallu-fathamma-wajhullah/) (الآية 115)
 - [تفسير آية «الذين آتيناهم الكتاب يتلونه حق تلاوته»](/blog/tafsir-ayah-yatlunahu-haqqa-tilawatih/) (الآية 121)
+- [تفسير آيات «وإذ يرفع إبراهيم القواعد من البيت وإسماعيل ربنا تقبل منا إنك أنت السميع العليم»](/blog/tafsir-ayah-rabbana-taqabbal-minna/) (الآية 127)
 - [تفسير آية «وكذلك جعلناكم أمة وسطا لتكونوا شهداء على الناس ويكون الرسول عليكم شهيدا»](/blog/tafsir-ayah-ummatan-wasata/) (الآية 143)
 - [تفسير آية «قد نرى تقلب وجهك في السماء فلنولينك قبلة ترضاها»](/blog/tafsir-ayah-qad-nara-taqalluba-wajhik/) (الآية 144)
 - [تفسير آية «ولكل وجهة هو موليها فاستبقوا الخيرات»](/blog/tafsir-ayah-fastabiqu-al-khayrat/) (الآية 148)
@@ -254,6 +255,7 @@ reading: 15
 
 ### سورة مريم
 - [تفسير آيات «واذكر في الكتاب إبراهيم إنه كان صديقا نبيا إذ قال لأبيه يا أبت لم تعبد ما لا يسمع ولا يبصر»](/blog/tafsir-ayah-ya-abati-lima-tabudu/) (الآية 42)
+- [تفسير آيتي «واذكر في الكتاب إسماعيل إنه كان صادق الوعد وكان رسولا نبيا وكان يأمر أهله بالصلاة والزكاة»](/blog/tafsir-ayah-sadiq-al-wad/) (الآية 54)
 - [تفسير آية «وما كان ربك نسيا»](/blog/tafsir-ayah-wa-ma-kana-rabbuka-nasiyya/) (الآية 64)
 - [تفسير آية «إن الذين آمنوا وعملوا الصالحات سيجعل لهم الرحمن ودا»](/blog/tafsir-ayah-sayajalu-lahum-ar-rahmanu-wudda/) (الآية 96)
 
