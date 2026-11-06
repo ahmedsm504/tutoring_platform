@@ -40,6 +40,7 @@ reading: 15
 - [تفسير آية «وقولوا للناس حسنا»](/blog/tafsir-ayah-wa-qulu-lin-nasi-husna/) (الآية 83)
 - [تفسير آية «فأينما تولوا فثم وجه الله»](/blog/tafsir-ayah-faaynama-tuwallu-fathamma-wajhullah/) (الآية 115)
 - [تفسير آية «الذين آتيناهم الكتاب يتلونه حق تلاوته»](/blog/tafsir-ayah-yatlunahu-haqqa-tilawatih/) (الآية 121)
+- [تفسير آية «وكذلك جعلناكم أمة وسطا لتكونوا شهداء على الناس ويكون الرسول عليكم شهيدا»](/blog/tafsir-ayah-ummatan-wasata/) (الآية 143)
 - [تفسير آية «قد نرى تقلب وجهك في السماء فلنولينك قبلة ترضاها»](/blog/tafsir-ayah-qad-nara-taqalluba-wajhik/) (الآية 144)
 - [تفسير آية «ولكل وجهة هو موليها فاستبقوا الخيرات»](/blog/tafsir-ayah-fastabiqu-al-khayrat/) (الآية 148)
 - [تفسير آية «فاذكروني أذكركم واشكروا لي ولا تكفرون»](/blog/tafsir-ayah-fadhkuruni-adhkurkum/) (الآية 152)
@@ -171,6 +172,7 @@ reading: 15
 - [تفسير آية «إن الله اشترى من المؤمنين أنفسهم وأموالهم»](/blog/tafsir-ayah-inna-allaha-ishtara-min-al-muminin/) (الآية 111)
 - [تفسير آية «وكونوا مع الصادقين» وقصة صدق كعب بن مالك](/blog/tafsir-ayah-wa-kunu-maa-as-sadiqin/) (الآية 119)
 - [تفسير «لقد جاءكم رسول من أنفسكم عزيز عليه ما عنتم»](/blog/tafsir-ayah-laqad-jaakum-rasul/) (الآية 128)
+- [تفسير آية «فإن تولوا فقل حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم»](/blog/tafsir-ayah-hasbiya-allahu/) (الآية 129)
 
 ### سورة يونس
 - [تفسير آية «قد جاءتكم موعظة من ربكم وشفاء لما في الصدور»](/blog/tafsir-ayah-qad-jaatkum-mawizatun/) (الآية 57)
