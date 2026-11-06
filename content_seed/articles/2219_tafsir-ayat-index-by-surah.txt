@@ -225,6 +225,7 @@ reading: 15
 ### سورة النحل
 - [تفسير آية «فاسألوا أهل الذكر إن كنتم لا تعلمون»](/blog/tafsir-ayah-fasalu-ahla-adh-dhikr/) (الآية 43)
 - [تفسير آية «وما بكم من نعمة فمن الله»](/blog/tafsir-ayah-wa-ma-bikum-min-nimatin/) (الآية 53)
+- [تفسير آية «والله أخرجكم من بطون أمهاتكم لا تعلمون شيئا وجعل لكم السمع والأبصار والأفئدة لعلكم تشكرون»](/blog/tafsir-ayah-akhrajakum-min-butuni-ummahatikum/) (الآية 78)
 - [تفسير «إن الله يأمر بالعدل والإحسان» أجمع آية في القرآن](/blog/tafsir-ayah-inna-allaha-yamuru-bil-adl/) (الآية 90)
 - [تفسير آية «ما عندكم ينفد وما عند الله باق»](/blog/tafsir-ayah-ma-indakum-yanfadu/) (الآية 96)
 - [تفسير آية «من عمل صالحا من ذكر أو أنثى وهو مؤمن فلنحيينه حياة طيبة»](/blog/tafsir-ayah-falanuhyiyannahu-hayatan-tayyiba/) (الآية 97)
@@ -384,6 +385,7 @@ reading: 15
 ### سورة الزمر
 - [تفسير آية «قل هل يستوي الذين يعلمون والذين لا يعلمون»](/blog/tafsir-ayah-hal-yastawi-alladhina-yalamun/) (الآية 9)
 - [تفسير آية «إنما يوفى الصابرون أجرهم بغير حساب»](/blog/tafsir-ayah-ajrahum-bighayri-hisab/) (الآية 10)
+- [تفسير آية «الذين يستمعون القول فيتبعون أحسنه أولئك الذين هداهم الله وأولئك هم أولو الألباب»](/blog/tafsir-ayah-yastamiuna-al-qawla/) (الآية 18)
 - [تفسير آية «أفمن شرح الله صدره للإسلام فهو على نور من ربه»](/blog/tafsir-ayah-afaman-sharaha-allahu-sadrahu/) (الآية 22)
 - [تفسير آية «الله نزل أحسن الحديث كتابا متشابها مثاني تقشعر منه جلود»](/blog/tafsir-ayah-allahu-nazzala-ahsana-al-hadith/) (الآية 23)
 - [تفسير آية «إنك ميت وإنهم ميتون»](/blog/tafsir-ayah-innaka-mayyitun-wa-innahum-mayyitun/) (الآية 30)
