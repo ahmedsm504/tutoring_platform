@@ -274,6 +274,7 @@ reading: 15
 - [تفسير آية النور «الله نور السماوات والأرض»](/blog/tafsir-ayah-allahu-nuru-as-samawati-wal-ard/) (الآية 35)
 
 ### سورة الفرقان
+- [تفسير آية «وقال الرسول يا رب إن قومي اتخذوا هذا القرآن مهجورا»](/blog/tafsir-ayah-ittakhadhu-al-quran-mahjura/) (الآية 30)
 - [تفسير آية «وتوكل على الحي الذي لا يموت»](/blog/tafsir-ayah-wa-tawakkal-ala-al-hayy/) (الآية 58)
 - [تفسير آية «وعباد الرحمن الذين يمشون على الأرض هونا»](/blog/tafsir-ayah-yamshuna-alal-ardi-hawna/) (الآية 63)
 - [تفسير آية «والذين إذا أنفقوا لم يسرفوا ولم يقتروا»](/blog/tafsir-ayah-idha-anfaqu-lam-yusrifu/) (الآية 67)
@@ -306,6 +307,9 @@ reading: 15
 
 ### سورة لقمان
 - [تفسير آية «يا بني لا تشرك بالله إن الشرك لظلم عظيم»](/blog/tafsir-ayah-ya-bunayya-la-tushrik-billah/) (الآية 13)
+
+### سورة السجدة
+- [تفسير آية «تتجافى جنوبهم عن المضاجع يدعون ربهم خوفا وطمعا»](/blog/tafsir-ayah-tatajafa-junubuhum/) (الآية 17)
 
 ### سورة الأحزاب
 - [تفسير آية «لقد كان لكم في رسول الله أسوة حسنة»](/blog/tafsir-ayah-uswa-hasana/) (الآية 21)
