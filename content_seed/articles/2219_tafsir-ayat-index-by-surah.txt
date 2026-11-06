@@ -117,6 +117,7 @@ reading: 15
 - [تفسير آية «وعاشروهن بالمعروف فإن كرهتموهن فعسى أن تكرهوا شيئا»](/blog/tafsir-ayah-wa-ashiruhunna-bil-maruf/) (الآية 19)
 - [تفسير آية «يريد الله أن يخفف عنكم وخلق الإنسان ضعيفا»](/blog/tafsir-ayah-wa-khuliqa-al-insanu-daifa/) (الآية 28)
 - [تفسير آية «لا تأكلوا أموالكم بينكم بالباطل إلا أن تكون تجارة عن تراض»](/blog/tafsir-ayah-la-takulu-amwalakum-bil-batil/) (الآية 29)
+- [تفسير آية «ولا تتمنوا ما فضل الله به بعضكم على بعض للرجال نصيب مما اكتسبوا وللنساء نصيب مما اكتسبن»](/blog/tafsir-ayah-wala-tatamannaw-ma-faddala-allah/) (الآية 32)
 - [تفسير آية الحقوق العشرة «واعبدوا الله ولا تشركوا به شيئا»](/blog/tafsir-ayah-wabudu-allaha-wala-tushriku/) (الآية 36)
 - [تفسير آية «إن الله لا يغفر أن يشرك به ويغفر ما دون ذلك لمن يشاء»](/blog/tafsir-ayah-inna-allaha-la-yaghfiru-an-yushraka/) (الآية 48)
 - [تفسير آية «إن الله يأمركم أن تؤدوا الأمانات إلى أهلها»](/blog/tafsir-ayah-tuaddu-al-amanat-ila-ahliha/) (الآية 58)
@@ -383,6 +384,7 @@ reading: 15
 
 ### سورة يس
 - [تفسير آية «إنا نحن نحيي الموتى ونكتب ما قدموا وآثارهم وكل شيء أحصيناه في إمام مبين»](/blog/tafsir-ayah-naktubu-ma-qaddamu-wa-atharahum/) (الآية 12)
+- [تفسير آية «إنما أمره إذا أراد شيئا أن يقول له كن فيكون»](/blog/tafsir-ayah-innama-amruhu-idha-arada-shayan/) (الآية 82)
 
 ### سورة ص
 - [تفسير آية «كتاب أنزلناه إليك مبارك ليدبروا آياته»](/blog/tafsir-ayah-kitabun-anzalnahu-mubarakun/) (الآية 29)
