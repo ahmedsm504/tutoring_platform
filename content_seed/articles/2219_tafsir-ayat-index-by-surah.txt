@@ -305,8 +305,10 @@ reading: 15
 - [تفسير آية «وقال الرسول يا رب إن قومي اتخذوا هذا القرآن مهجورا»](/blog/tafsir-ayah-ittakhadhu-al-quran-mahjura/) (الآية 30)
 - [تفسير آية «وتوكل على الحي الذي لا يموت»](/blog/tafsir-ayah-wa-tawakkal-ala-al-hayy/) (الآية 58)
 - [تفسير آية «وعباد الرحمن الذين يمشون على الأرض هونا»](/blog/tafsir-ayah-yamshuna-alal-ardi-hawna/) (الآية 63)
+- [تفسير آيات «والذين يبيتون لربهم سجدا وقياما والذين يقولون ربنا اصرف عنا عذاب جهنم إن عذابها كان غراما»](/blog/tafsir-ayah-yabituna-li-rabbihim/) (الآية 65)
 - [تفسير آية «والذين إذا أنفقوا لم يسرفوا ولم يقتروا»](/blog/tafsir-ayah-idha-anfaqu-lam-yusrifu/) (الآية 67)
 - [تفسير آية «فأولئك يبدل الله سيئاتهم حسنات»](/blog/tafsir-ayah-yubaddilu-allahu-sayyiatihim-hasanat/) (الآية 70)
+- [تفسير آيتي «والذين لا يشهدون الزور وإذا مروا باللغو مروا كراما والذين إذا ذكروا بآيات ربهم لم يخروا عليها صما وعميانا»](/blog/tafsir-ayah-la-yashhaduna-az-zur/) (الآية 72)
 - [تفسير دعاء «ربنا هب لنا من أزواجنا وذرياتنا قرة أعين واجعلنا للمتقين إماما»](/blog/tafsir-ayah-hab-lana-min-azwajina/) (الآية 74)
 
 ### سورة الشعراء
