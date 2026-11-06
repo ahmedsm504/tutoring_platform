@@ -84,6 +84,7 @@ reading: 15
 - [تفسير «قل اللهم مالك الملك تؤتي الملك من تشاء»](/blog/tafsir-ayah-qulillahumma-malik-al-mulk/) (الآية 26)
 - [تفسير آية «قل إن كنتم تحبون الله فاتبعوني يحببكم الله»](/blog/tafsir-ayah-in-kuntum-tuhibbuna-allah/) (الآية 31)
 - [تفسير آية «لن تنالوا البر حتى تنفقوا مما تحبون»](/blog/tafsir-ayah-lan-tanalu-al-birr/) (الآية 92)
+- [تفسير آية «إن أول بيت وضع للناس للذي ببكة مباركا وهدى للعالمين» و«ولله على الناس حج البيت»](/blog/tafsir-ayah-inna-awwala-baytin/) (الآية 96)
 - [تفسير آية «اتقوا الله حق تقاته ولا تموتن إلا وأنتم مسلمون»](/blog/tafsir-ayah-ittaqu-allaha-haqqa-tuqatih/) (الآية 102)
 - [تفسير آية «واعتصموا بحبل الله جميعا ولا تفرقوا»](/blog/tafsir-ayah-waatasimu-bi-habli-allah/) (الآية 103)
 - [تفسير آية «ولتكن منكم أمة يدعون إلى الخير ويأمرون بالمعروف»](/blog/tafsir-ayah-waltakun-minkum-ummatun/) (الآية 104)
@@ -252,6 +253,7 @@ reading: 15
 - [تفسير آية «فمن كان يرجو لقاء ربه فليعمل عملا صالحا ولا يشرك بعبادة ربه أحدا»](/blog/tafsir-ayah-faman-kana-yarju-liqaa-rabbih/) (الآية 110)
 
 ### سورة مريم
+- [تفسير آيات «واذكر في الكتاب إبراهيم إنه كان صديقا نبيا إذ قال لأبيه يا أبت لم تعبد ما لا يسمع ولا يبصر»](/blog/tafsir-ayah-ya-abati-lima-tabudu/) (الآية 42)
 - [تفسير آية «وما كان ربك نسيا»](/blog/tafsir-ayah-wa-ma-kana-rabbuka-nasiyya/) (الآية 64)
 - [تفسير آية «إن الذين آمنوا وعملوا الصالحات سيجعل لهم الرحمن ودا»](/blog/tafsir-ayah-sayajalu-lahum-ar-rahmanu-wudda/) (الآية 96)
 
