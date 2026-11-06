@@ -260,6 +260,7 @@ reading: 15
 - [تفسير آية «ومن يعظم شعائر الله فإنها من تقوى القلوب»](/blog/tafsir-ayah-wa-man-yuazzim-shaair-allah/) (الآية 32)
 - [تفسير آية «إن الله يدافع عن الذين آمنوا»](/blog/tafsir-ayah-inna-allaha-yudafiu/) (الآية 38)
 - [تفسير آية «فإنها لا تعمى الأبصار ولكن تعمى القلوب التي في الصدور»](/blog/tafsir-ayah-fa-innaha-la-tama-al-absar/) (الآية 46)
+- [تفسير آية «يا أيها الذين آمنوا اركعوا واسجدوا واعبدوا ربكم وافعلوا الخير»](/blog/tafsir-ayah-irkau-wasjudu/) (الآية 77)
 
 ### سورة المؤمنون
 - [تفسير آية «قد أفلح المؤمنون الذين هم في صلاتهم خاشعون»](/blog/tafsir-ayah-qad-aflaha-al-muminun-khashiun/) (الآية 1)
@@ -439,6 +440,9 @@ reading: 15
 ### سورة المزمل
 - [تفسير آية «ورتل القرآن ترتيلا» ومعنى الترتيل عند المفسرين](/blog/tafsir-ayah-wa-rattili-al-qurana-tartila/) (الآية 4)
 - [تفسير آية «فاقرءوا ما تيسر من القرآن»](/blog/tafsir-ayah-faqrau-ma-tayassara/) (الآية 20)
+
+### سورة المدثر
+- [تفسير آيات «يا أيها المدثر قم فأنذر وربك فكبر وثيابك فطهر»](/blog/tafsir-ayah-ya-ayyuha-al-muddaththir/) (الآية 1)
 
 ### سورة الإنسان
 - [تفسير آية «ويطعمون الطعام على حبه مسكينا ويتيما وأسيرا»](/blog/tafsir-ayah-wa-yutimuna-at-taam/) (الآية 8)
