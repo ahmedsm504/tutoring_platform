@@ -146,6 +146,7 @@ reading: 15
 - [تفسير «وعنده مفاتح الغيب لا يعلمها إلا هو» ومفاتح الغيب الخمس](/blog/tafsir-ayah-wa-indahu-mafatih-al-ghayb/) (الآية 59)
 - [تفسير آيات «فلما جن عليه الليل رأى كوكبا قال هذا ربي فلما أفل قال لا أحب الآفلين» حتى «إني وجهت وجهي»](/blog/tafsir-ayah-la-uhibbu-al-afilin/) (الآية 79)
 - [تفسير آية «الذين آمنوا ولم يلبسوا إيمانهم بظلم أولئك لهم الأمن»](/blog/tafsir-ayah-wa-lam-yalbisu-imanahum-bi-zulm/) (الآية 82)
+- [تفسير آية «لا تدركه الأبصار وهو يدرك الأبصار وهو اللطيف الخبير»](/blog/tafsir-ayah-la-tudrikuhu-al-absar/) (الآية 103)
 - [تفسير آية «قل تعالوا أتل ما حرم ربكم عليكم» الوصايا العشر](/blog/tafsir-ayah-qul-taalaw-atlu-ma-harrama/) (الآية 151)
 - [تفسير آية «وأن هذا صراطي مستقيما فاتبعوه ولا تتبعوا السبل»](/blog/tafsir-ayah-wa-anna-hadha-sirati-mustaqima/) (الآية 153)
 - [تفسير آية «قل إن صلاتي ونسكي ومحياي ومماتي لله رب العالمين»](/blog/tafsir-ayah-inna-salati-wa-nusuki/) (الآية 162)
@@ -485,6 +486,7 @@ reading: 15
 ### سورة الطلاق
 - [تفسير آية «ومن يتق الله يجعل له مخرجًا ويرزقه من حيث لا يحتسب ومن يتوكل على الله فهو حسبه»](/blog/tafsir-ayah-man-yattaqi-allah-makhraja/) (الآية 2)
 - [تفسير آية «ومن يتق الله يجعل له مخرجا ويرزقه من حيث لا يحتسب»](/blog/tafsir-ayah-wa-man-yattaqi-allah/) (الآية 2)
+- [تفسير آية «لينفق ذو سعة من سعته ومن قدر عليه رزقه فلينفق مما آتاه الله»](/blog/tafsir-ayah-li-yunfiq-dhu-saatin-min-saatih/) (الآية 7)
 
 ### سورة التحريم
 - [تفسير آية «يا أيها الذين آمنوا قوا أنفسكم وأهليكم نارا»](/blog/tafsir-ayah-qu-anfusakum-wa-ahlikum/) (الآية 6)
