@@ -60,6 +60,7 @@ reading: 15
 - [تفسير آية «فاذكروا الله كذكركم آباءكم أو أشد ذكرا»](/blog/tafsir-ayah-kadhikrikum-abaakum/) (الآية 200)
 - [تفسير «ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة» أكثر دعاء النبي](/blog/tafsir-ayah-rabbana-atina-fid-dunya-hasana/) (الآية 201)
 - [تفسير آية «يا أيها الذين آمنوا ادخلوا في السلم كافة»](/blog/tafsir-ayah-udkhulu-fis-silmi-kaffa/) (الآية 208)
+- [تفسير آية «أم حسبتم أن تدخلوا الجنة ولما يأتكم مثل الذين خلوا من قبلكم... ألا إن نصر الله قريب»](/blog/tafsir-ayah-am-hasibtum-an-tadkhulu-al-jannah/) (الآية 214)
 - [تفسير آية «وعسى أن تكرهوا شيئا وهو خير لكم»](/blog/tafsir-ayah-asa-an-takrahu-shayan/) (الآية 216)
 - [تفسير آية «إن الذين آمنوا والذين هاجروا وجاهدوا في سبيل الله أولئك يرجون رحمت الله»](/blog/tafsir-ayah-yarjuna-rahmat-allah/) (الآية 218)
 - [تفسير «إن الله يحب التوابين ويحب المتطهرين»](/blog/tafsir-ayah-inna-allaha-yuhibbu-at-tawwabin/) (الآية 222)
@@ -454,6 +455,7 @@ reading: 15
 - [تفسير آية «ويؤثرون على أنفسهم ولو كان بهم خصاصة»](/blog/tafsir-ayah-wa-yuthiruna-ala-anfusihim/) (الآية 9)
 - [تفسير دعاء «ربنا اغفر لنا ولإخواننا الذين سبقونا بالإيمان»](/blog/tafsir-ayah-rabbana-ighfir-lana-wa-li-ikhwanina/) (الآية 10)
 - [تفسير آية «ولتنظر نفس ما قدمت لغد»](/blog/tafsir-ayah-waltanzur-nafsun-ma-qaddamat/) (الآية 18)
+- [تفسير آية «ولا تكونوا كالذين نسوا الله فأنساهم أنفسهم أولئك هم الفاسقون»](/blog/tafsir-ayah-nasu-allaha-fa-ansahum/) (الآية 19)
 - [تفسير آية «لو أنزلنا هذا القرآن على جبل لرأيته خاشعا متصدعا»](/blog/tafsir-ayah-law-anzalna-hadha-al-quran-ala-jabal/) (الآية 21)
 
 ### سورة الممتحنة
