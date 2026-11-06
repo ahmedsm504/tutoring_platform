@@ -149,6 +149,7 @@ reading: 15
 - [تفسير آية «لا تدركه الأبصار وهو يدرك الأبصار وهو اللطيف الخبير»](/blog/tafsir-ayah-la-tudrikuhu-al-absar/) (الآية 103)
 - [تفسير آية «قل تعالوا أتل ما حرم ربكم عليكم» الوصايا العشر](/blog/tafsir-ayah-qul-taalaw-atlu-ma-harrama/) (الآية 151)
 - [تفسير آية «وأن هذا صراطي مستقيما فاتبعوه ولا تتبعوا السبل»](/blog/tafsir-ayah-wa-anna-hadha-sirati-mustaqima/) (الآية 153)
+- [تفسير آية «من جاء بالحسنة فله عشر أمثالها ومن جاء بالسيئة فلا يجزى إلا مثلها وهم لا يظلمون»](/blog/tafsir-ayah-man-jaa-bil-hasanati-falahu-ashru/) (الآية 160)
 - [تفسير آية «قل إن صلاتي ونسكي ومحياي ومماتي لله رب العالمين»](/blog/tafsir-ayah-inna-salati-wa-nusuki/) (الآية 162)
 - [تفسير آية «ولا تزر وازرة وزر أخرى»](/blog/tafsir-ayah-wala-taziru-wazira/) (الآية 164)
 - [تفسير آية «وهو الذي جعلكم خلائف الأرض ورفع بعضكم فوق بعض درجات»](/blog/tafsir-ayah-jaalakum-khalaifa-al-ard/) (الآية 165)
@@ -299,6 +300,7 @@ reading: 15
 - [تفسير آية «إن الله يدافع عن الذين آمنوا»](/blog/tafsir-ayah-inna-allaha-yudafiu/) (الآية 38)
 - [تفسير آية «فإنها لا تعمى الأبصار ولكن تعمى القلوب التي في الصدور»](/blog/tafsir-ayah-fa-innaha-la-tama-al-absar/) (الآية 46)
 - [تفسير آية «يا أيها الذين آمنوا اركعوا واسجدوا واعبدوا ربكم وافعلوا الخير»](/blog/tafsir-ayah-irkau-wasjudu/) (الآية 77)
+- [تفسير آية «وجاهدوا في الله حق جهاده هو اجتباكم وما جعل عليكم في الدين من حرج ملة أبيكم إبراهيم»](/blog/tafsir-ayah-wa-jahidu-fillahi-haqqa-jihadih/) (الآية 78)
 
 ### سورة المؤمنون
 - [تفسير آية «قد أفلح المؤمنون الذين هم في صلاتهم خاشعون»](/blog/tafsir-ayah-qad-aflaha-al-muminun-khashiun/) (الآية 1)
