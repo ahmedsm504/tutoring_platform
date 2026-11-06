@@ -366,6 +366,9 @@ reading: 15
 - [تفسير آية «إن الذين يتلون كتاب الله... يرجون تجارة لن تبور»](/blog/tafsir-ayah-yatluna-kitaba-allah/) (الآية 29)
 - [تفسير آية «ثم أورثنا الكتاب الذين اصطفينا من عبادنا»](/blog/tafsir-ayah-thumma-awrathna-al-kitab/) (الآية 32)
 
+### سورة يس
+- [تفسير آية «إنا نحن نحيي الموتى ونكتب ما قدموا وآثارهم وكل شيء أحصيناه في إمام مبين»](/blog/tafsir-ayah-naktubu-ma-qaddamu-wa-atharahum/) (الآية 12)
+
 ### سورة ص
 - [تفسير آية «كتاب أنزلناه إليك مبارك ليدبروا آياته»](/blog/tafsir-ayah-kitabun-anzalnahu-mubarakun/) (الآية 29)
 - [تفسير آية «وأيوب إذ نادى ربه أني مسني الضر وأنت أرحم الراحمين»](/blog/tafsir-ayah-wa-ayyuba-idh-nada-rabbah/) (الآية 44)
@@ -475,6 +478,7 @@ reading: 15
 
 ### سورة الملك
 - [تفسير آية «الذي خلق الموت والحياة ليبلوكم أيكم أحسن عملا»](/blog/tafsir-ayah-khalaqa-al-mawta-wal-hayat/) (الآية 2)
+- [تفسير آية «هو الذي جعل لكم الأرض ذلولا فامشوا في مناكبها وكلوا من رزقه وإليه النشور»](/blog/tafsir-ayah-al-arda-dhalulan/) (الآية 15)
 
 ### سورة القلم
 - [تفسير آية «وإنك لعلى خلق عظيم»](/blog/tafsir-ayah-wa-innaka-laala-khuluqin/) (الآية 4)
