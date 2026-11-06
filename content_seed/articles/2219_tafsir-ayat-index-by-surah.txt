@@ -237,6 +237,7 @@ reading: 15
 
 ### سورة مريم
 - [تفسير آية «وما كان ربك نسيا»](/blog/tafsir-ayah-wa-ma-kana-rabbuka-nasiyya/) (الآية 64)
+- [تفسير آية «إن الذين آمنوا وعملوا الصالحات سيجعل لهم الرحمن ودا»](/blog/tafsir-ayah-sayajalu-lahum-ar-rahmanu-wudda/) (الآية 96)
 
 ### سورة طه
 - [تفسير مطلع سورة طه: «ما أنزلنا عليك القرآن لتشقى إلا تذكرة لمن يخشى»](/blog/tafsir-ayah-ma-anzalna-alayka-al-quran-litashqa/) (الآية 2)
@@ -423,6 +424,9 @@ reading: 15
 
 ### سورة الملك
 - [تفسير آية «الذي خلق الموت والحياة ليبلوكم أيكم أحسن عملا»](/blog/tafsir-ayah-khalaqa-al-mawta-wal-hayat/) (الآية 2)
+
+### سورة القلم
+- [تفسير آية «وإنك لعلى خلق عظيم»](/blog/tafsir-ayah-wa-innaka-laala-khuluqin/) (الآية 4)
 
 ### سورة المعارج
 - [تفسير آية «فاصبر صبرا جميلا»: ما الصبر الجميل؟](/blog/tafsir-ayah-fasbir-sabran-jamila/) (الآية 5)
