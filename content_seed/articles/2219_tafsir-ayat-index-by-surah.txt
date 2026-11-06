@@ -149,6 +149,7 @@ reading: 15
 - [تفسير آيات «فلما جن عليه الليل رأى كوكبا قال هذا ربي فلما أفل قال لا أحب الآفلين» حتى «إني وجهت وجهي»](/blog/tafsir-ayah-la-uhibbu-al-afilin/) (الآية 79)
 - [تفسير آية «الذين آمنوا ولم يلبسوا إيمانهم بظلم أولئك لهم الأمن»](/blog/tafsir-ayah-wa-lam-yalbisu-imanahum-bi-zulm/) (الآية 82)
 - [تفسير آية «لا تدركه الأبصار وهو يدرك الأبصار وهو اللطيف الخبير»](/blog/tafsir-ayah-la-tudrikuhu-al-absar/) (الآية 103)
+- [تفسير آية «فمن يرد الله أن يهديه يشرح صدره للإسلام ومن يرد أن يضله يجعل صدره ضيقا حرجا»](/blog/tafsir-ayah-yashrah-sadrahu-lil-islam/) (الآية 125)
 - [تفسير آية «قل تعالوا أتل ما حرم ربكم عليكم» الوصايا العشر](/blog/tafsir-ayah-qul-taalaw-atlu-ma-harrama/) (الآية 151)
 - [تفسير آية «وأن هذا صراطي مستقيما فاتبعوه ولا تتبعوا السبل»](/blog/tafsir-ayah-wa-anna-hadha-sirati-mustaqima/) (الآية 153)
 - [تفسير آية «من جاء بالحسنة فله عشر أمثالها ومن جاء بالسيئة فلا يجزى إلا مثلها وهم لا يظلمون»](/blog/tafsir-ayah-man-jaa-bil-hasanati-falahu-ashru/) (الآية 160)
@@ -268,6 +269,7 @@ reading: 15
 - [تفسير «واصبر نفسك مع الذين يدعون ربهم بالغداة والعشي»](/blog/tafsir-ayah-wasbir-nafsak/) (الآية 28)
 - [تفسير آية «ولولا إذ دخلت جنتك قلت ما شاء الله لا قوة إلا بالله»](/blog/tafsir-ayah-ma-shaa-allahu-la-quwwata-illa-billah/) (الآية 39)
 - [تفسير آية «المال والبنون زينة الحياة الدنيا والباقيات الصالحات خير»](/blog/tafsir-ayah-al-malu-wal-banuna-zina/) (الآية 46)
+- [تفسير آية «قل هل ننبئكم بالأخسرين أعمالا الذين ضل سعيهم في الحياة الدنيا وهم يحسبون أنهم يحسنون صنعا»](/blog/tafsir-ayah-bil-akhsarina-amala/) (الآية 103)
 - [تفسير آية «قل لو كان البحر مدادا لكلمات ربي لنفد البحر»](/blog/tafsir-ayah-law-kana-al-bahru-midadan/) (الآية 109)
 - [تفسير آية «فمن كان يرجو لقاء ربه فليعمل عملا صالحا ولا يشرك بعبادة ربه أحدا»](/blog/tafsir-ayah-faman-kana-yarju-liqaa-rabbih/) (الآية 110)
 
