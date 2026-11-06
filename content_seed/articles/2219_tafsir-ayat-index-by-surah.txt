@@ -280,6 +280,7 @@ reading: 15
 ### سورة الأنبياء
 - [تفسير آية «وجعلنا من الماء كل شيء حي»](/blog/tafsir-ayah-min-al-mai-kulla-shayin-hayy/) (الآية 30)
 - [تفسير آية «ونبلوكم بالشر والخير فتنة وإلينا ترجعون»](/blog/tafsir-ayah-nablukum-bish-sharri-wal-khayr/) (الآية 35)
+- [تفسير آية «ونضع الموازين القسط ليوم القيامة فلا تظلم نفس شيئا وإن كان مثقال حبة من خردل أتينا بها»](/blog/tafsir-ayah-wa-nadau-al-mawazin-al-qist/) (الآية 47)
 - [تفسير دعاء ذي النون «لا إله إلا أنت سبحانك إني كنت من الظالمين»](/blog/tafsir-ayah-dua-dhi-an-nun/) (الآية 87)
 - [تفسير آية «وزكريا إذ نادى ربه رب لا تذرني فردا وأنت خير الوارثين»](/blog/tafsir-ayah-rabbi-la-tadharni-fardan/) (الآية 89)
 - [تفسير آية «وما أرسلناك إلا رحمة للعالمين»](/blog/tafsir-ayah-rahmatan-lil-alamin/) (الآية 107)
@@ -360,6 +361,7 @@ reading: 15
 - [تفسير آية «اعملوا آل داود شكرا وقليل من عبادي الشكور»](/blog/tafsir-ayah-imalu-ala-dawuda-shukra/) (الآية 13)
 
 ### سورة فاطر
+- [تفسير آية «يا أيها الناس إن وعد الله حق فلا تغرنكم الحياة الدنيا ولا يغرنكم بالله الغرور»](/blog/tafsir-ayah-inna-wada-allahi-haqq-fatir/) (الآية 5)
 - [تفسير آية «إليه يصعد الكلم الطيب والعمل الصالح يرفعه»](/blog/tafsir-ayah-ilayhi-yasadu-al-kalim-at-tayyib/) (الآية 10)
 - [تفسير آية «يا أيها الناس أنتم الفقراء إلى الله»](/blog/tafsir-ayah-antum-al-fuqara-ila-allah/) (الآية 15)
 - [تفسير آية «إنما يخشى الله من عباده العلماء»](/blog/tafsir-ayah-innama-yakhsha-allaha/) (الآية 28)
