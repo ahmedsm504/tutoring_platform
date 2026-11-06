@@ -83,6 +83,7 @@ reading: 15
 
 ### سورة آل عمران
 - [تفسير «ربنا لا تزغ قلوبنا بعد إذ هديتنا»: دعاء الثبات](/blog/tafsir-ayah-rabbana-la-tuzigh-qulubana/) (الآية 8)
+- [تفسير آية «زين للناس حب الشهوات من النساء والبنين والقناطير المقنطرة من الذهب والفضة»](/blog/tafsir-ayah-zuyyina-linnasi-hubbu-ash-shahawat/) (الآية 14)
 - [تفسير آية «الصابرين والصادقين والقانتين والمنفقين والمستغفرين بالأسحار»](/blog/tafsir-ayah-al-mustaghfirina-bil-ashar/) (الآية 17)
 - [تفسير آية «إن الدين عند الله الإسلام وما اختلف الذين أوتوا الكتاب إلا من بعد ما جاءهم العلم بغيا بينهم»](/blog/tafsir-ayah-inna-ad-dina-indallah/) (الآية 19)
 - [تفسير «قل اللهم مالك الملك تؤتي الملك من تشاء»](/blog/tafsir-ayah-qulillahumma-malik-al-mulk/) (الآية 26)
@@ -412,6 +413,7 @@ reading: 15
 - [تفسير آية «شرع لكم من الدين ما وصى به نوحا والذي أوحينا إليك أن أقيموا الدين ولا تتفرقوا فيه»](/blog/tafsir-ayah-sharaa-lakum-min-ad-din/) (الآية 13)
 - [تفسير آية «الله لطيف بعباده يرزق من يشاء وهو القوي العزيز»](/blog/tafsir-ayah-allahu-latifun-bi-ibadih/) (الآية 19)
 - [تفسير آية «وما أصابكم من مصيبة فبما كسبت أيديكم ويعفو عن كثير»](/blog/tafsir-ayah-wa-ma-asabakum-min-musiba/) (الآية 30)
+- [تفسير آية «والذين استجابوا لربهم وأقاموا الصلاة وأمرهم شورى بينهم ومما رزقناهم ينفقون»](/blog/tafsir-ayah-wa-amruhum-shura-baynahum/) (الآية 38)
 - [تفسير آية «وجزاء سيئة سيئة مثلها فمن عفا وأصلح فأجره على الله»](/blog/tafsir-ayah-jazau-sayyiatin-sayyiatun-mithluha/) (الآية 40)
 
 ### سورة الزخرف
