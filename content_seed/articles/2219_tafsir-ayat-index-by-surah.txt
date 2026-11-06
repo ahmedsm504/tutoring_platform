@@ -125,6 +125,7 @@ reading: 15
 - [تفسير آية «إنما يتقبل الله من المتقين»](/blog/tafsir-ayah-innama-yataqabbalu-allah/) (الآية 27)
 - [تفسير آية «من قتل نفسًا بغير نفس أو فساد في الأرض فكأنما قتل الناس جميعًا»](/blog/tafsir-ayah-man-ahyaha-faka-annama-ahya/) (الآية 32)
 - [تفسير آية «من قتل نفسا بغير نفس فكأنما قتل الناس جميعا»](/blog/tafsir-ayah-man-qatala-nafsan/) (الآية 32)
+- [تفسير آية «يا أيها الذين آمنوا اتقوا الله وابتغوا إليه الوسيلة وجاهدوا في سبيله»](/blog/tafsir-ayah-wabtaghu-ilayhi-al-wasila/) (الآية 35)
 - [تفسير آية «يحبهم ويحبونه أذلة على المؤمنين أعزة على الكافرين»](/blog/tafsir-ayah-yuhibbuhum-wa-yuhibbunahu/) (الآية 54)
 - [تفسير آية «يا أيها الذين آمنوا عليكم أنفسكم لا يضركم من ضل إذا اهتديتم»](/blog/tafsir-ayah-alaykum-anfusakum/) (الآية 105)
 
@@ -357,6 +358,7 @@ reading: 15
 
 ### سورة الشورى
 - [تفسير آية «ليس كمثله شيء وهو السميع البصير»](/blog/tafsir-ayah-laysa-kamithlihi-shay/) (الآية 11)
+- [تفسير آية «الله لطيف بعباده يرزق من يشاء وهو القوي العزيز»](/blog/tafsir-ayah-allahu-latifun-bi-ibadih/) (الآية 19)
 - [تفسير آية «وما أصابكم من مصيبة فبما كسبت أيديكم ويعفو عن كثير»](/blog/tafsir-ayah-wa-ma-asabakum-min-musiba/) (الآية 30)
 - [تفسير آية «وجزاء سيئة سيئة مثلها فمن عفا وأصلح فأجره على الله»](/blog/tafsir-ayah-jazau-sayyiatin-sayyiatun-mithluha/) (الآية 40)
 
