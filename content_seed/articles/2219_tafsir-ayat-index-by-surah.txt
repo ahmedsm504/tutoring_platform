@@ -262,6 +262,7 @@ reading: 15
 - [تفسير آية «قل كل يعمل على شاكلته»](/blog/tafsir-ayah-qul-kullun-yamalu-ala-shakilatih/) (الآية 84)
 
 ### سورة الكهف
+- [تفسير آية «إنا جعلنا ما على الأرض زينة لها لنبلوهم أيهم أحسن عملا»](/blog/tafsir-ayah-ja-alna-ma-ala-al-ardi-zinatan/) (الآية 7)
 - [تفسير آية «ربنا آتنا من لدنك رحمة وهيئ لنا من أمرنا رشدا»](/blog/tafsir-ayah-rabbana-atina-min-ladunka-rahma/) (الآية 10)
 - [تفسير آية «ولا تقولن لشيء إني فاعل ذلك غدا إلا أن يشاء الله»](/blog/tafsir-ayah-illa-an-yashaa-allah/) (الآية 23)
 - [تفسير «واصبر نفسك مع الذين يدعون ربهم بالغداة والعشي»](/blog/tafsir-ayah-wasbir-nafsak/) (الآية 28)
@@ -460,6 +461,7 @@ reading: 15
 ### سورة الحديد
 - [تفسير آية «ألم يأن للذين آمنوا أن تخشع قلوبهم لذكر الله»](/blog/tafsir-ayah-alam-yani-lilladhina-amanu/) (الآية 16)
 - [تفسير آية «اعلموا أنما الحياة الدنيا لعب ولهو وزينة وتفاخر بينكم»](/blog/tafsir-ayah-innama-al-hayatu-ad-dunya-laibun/) (الآية 20)
+- [تفسير آية «سابقوا إلى مغفرة من ربكم وجنة عرضها كعرض السماء والأرض أعدت للذين آمنوا بالله ورسله»](/blog/tafsir-ayah-sabiqu-ila-maghfiratin-min-rabbikum/) (الآية 21)
 - [تفسير آية «لكيلا تأسوا على ما فاتكم ولا تفرحوا بما آتاكم»](/blog/tafsir-ayah-likayla-tasaw-ala-ma-fatakum/) (الآية 22)
 
 ### سورة المجادلة
