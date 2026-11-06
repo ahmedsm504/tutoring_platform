@@ -100,6 +100,7 @@ reading: 15
 - [تفسير آية «وتلك الأيام نداولها بين الناس»](/blog/tafsir-ayah-tilka-al-ayyam-nudawiluha/) (الآية 140)
 - [تفسير آية «وكأين من نبي قاتل معه ربيون كثير»](/blog/tafsir-ayah-wallahu-yuhibbu-as-sabirin/) (الآية 146)
 - [تفسير «فبما رحمة من الله لنت لهم» ومنهج القيادة الرحيمة](/blog/tafsir-ayah-fabima-rahmatin-linta-lahum/) (الآية 159)
+- [تفسير آية «إن ينصركم الله فلا غالب لكم وإن يخذلكم فمن ذا الذي ينصركم من بعده»](/blog/tafsir-ayah-in-yansurkumu-allah-fala-ghaliba/) (الآية 160)
 - [تفسير آية «لقد من الله على المؤمنين إذ بعث فيهم رسولا من أنفسهم يتلو عليهم آياته ويزكيهم»](/blog/tafsir-ayah-laqad-manna-allah/) (الآية 164)
 - [تفسير آية «ولا تحسبن الذين قتلوا في سبيل الله أمواتا بل أحياء»](/blog/tafsir-ayah-bal-ahyaun-inda-rabbihim/) (الآية 169)
 - [تفسير آية «ولا تحسبن الذين قتلوا في سبيل الله أمواتا بل أحياء عند ربهم يرزقون»](/blog/tafsir-ayah-wa-la-tahsabanna-alladhina-qutilu/) (الآية 169)
@@ -151,6 +152,7 @@ reading: 15
 
 ### سورة الأعراف
 - [تفسير دعاء آدم «ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا»](/blog/tafsir-ayah-rabbana-zalamna-anfusana/) (الآية 23)
+- [تفسير آية «يا بني آدم قد أنزلنا عليكم لباسا يواري سوءاتكم وريشا ولباس التقوى ذلك خير»](/blog/tafsir-ayah-wa-libasu-at-taqwa/) (الآية 26)
 - [تفسير آية «يا بني آدم خذوا زينتكم عند كل مسجد وكلوا واشربوا ولا تسرفوا»](/blog/tafsir-ayah-khudhu-zinatakum-inda-kulli-masjid/) (الآية 31)
 - [تفسير آية «ادعوا ربكم تضرعا وخفية إنه لا يحب المعتدين»](/blog/tafsir-ayah-udu-rabbakum-tadarruan/) (الآية 55)
 - [تفسير آية «إن رحمت الله قريب من المحسنين»](/blog/tafsir-ayah-inna-rahmata-allahi-qaribun/) (الآية 56)
