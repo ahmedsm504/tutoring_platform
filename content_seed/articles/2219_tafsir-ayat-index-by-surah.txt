@@ -324,6 +324,7 @@ reading: 15
 - [تفسير آية «إن المسلمين والمسلمات والمؤمنين والمؤمنات» وصفاتها العشر](/blog/tafsir-ayah-inna-al-muslimina-wal-muslimat/) (الآية 35)
 - [تفسير آية «ما كان محمد أبا أحد من رجالكم ولكن رسول الله وخاتم النبيين»](/blog/tafsir-ayah-khatam-an-nabiyyin/) (الآية 40)
 - [تفسير آية «اذكروا الله ذكرا كثيرا وسبحوه بكرة وأصيلا»](/blog/tafsir-ayah-udhkuru-allaha-dhikran-kathira/) (الآية 41)
+- [تفسير آية «يا أيها النبي إنا أرسلناك شاهدا ومبشرا ونذيرا وداعيا إلى الله بإذنه وسراجا منيرا»](/blog/tafsir-ayah-shahidan-wa-mubashshiran/) (الآية 45)
 - [تفسير آية «إن الله وملائكته يصلون على النبي»](/blog/tafsir-ayah-inna-allaha-wa-malaikatahu-yusalluna/) (الآية 56)
 - [تفسير آية «يا أيها الذين آمنوا اتقوا الله وقولوا قولا سديدا»](/blog/tafsir-ayah-qulu-qawlan-sadida/) (الآية 70)
 - [تفسير آية «إنا عرضنا الأمانة على السماوات والأرض والجبال»](/blog/tafsir-ayah-inna-aradna-al-amana/) (الآية 72)
@@ -362,6 +363,7 @@ reading: 15
 
 ### سورة الشورى
 - [تفسير آية «ليس كمثله شيء وهو السميع البصير»](/blog/tafsir-ayah-laysa-kamithlihi-shay/) (الآية 11)
+- [تفسير آية «شرع لكم من الدين ما وصى به نوحا والذي أوحينا إليك أن أقيموا الدين ولا تتفرقوا فيه»](/blog/tafsir-ayah-sharaa-lakum-min-ad-din/) (الآية 13)
 - [تفسير آية «الله لطيف بعباده يرزق من يشاء وهو القوي العزيز»](/blog/tafsir-ayah-allahu-latifun-bi-ibadih/) (الآية 19)
 - [تفسير آية «وما أصابكم من مصيبة فبما كسبت أيديكم ويعفو عن كثير»](/blog/tafsir-ayah-wa-ma-asabakum-min-musiba/) (الآية 30)
 - [تفسير آية «وجزاء سيئة سيئة مثلها فمن عفا وأصلح فأجره على الله»](/blog/tafsir-ayah-jazau-sayyiatin-sayyiatun-mithluha/) (الآية 40)
