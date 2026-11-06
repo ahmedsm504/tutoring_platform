@@ -181,6 +181,7 @@ reading: 15
 
 ### سورة هود
 - [تفسير آية «وما من دابة في الأرض إلا على الله رزقها»](/blog/tafsir-ayah-wa-ma-min-dabbatin/) (الآية 6)
+- [تفسير آية «إني توكلت على الله ربي وربكم ما من دابة إلا هو آخذ بناصيتها إن ربي على صراط مستقيم»](/blog/tafsir-ayah-inni-tawakkaltu-ala-allah/) (الآية 56)
 - [تفسير آية «هو أنشأكم من الأرض واستعمركم فيها»](/blog/tafsir-ayah-wastamarakum-fiha/) (الآية 61)
 - [تفسير آية «إن أريد إلا الإصلاح ما استطعت وما توفيقي إلا بالله»](/blog/tafsir-ayah-in-uridu-illa-al-islah/) (الآية 88)
 - [تفسير آية «إن الحسنات يذهبن السيئات ذلك ذكرى للذاكرين»](/blog/tafsir-ayah-al-hasanat-yudhhibna-as-sayyiat/) (الآية 114)
@@ -218,6 +219,7 @@ reading: 15
 - [تفسير «إن الله يأمر بالعدل والإحسان» أجمع آية في القرآن](/blog/tafsir-ayah-inna-allaha-yamuru-bil-adl/) (الآية 90)
 - [تفسير آية «ما عندكم ينفد وما عند الله باق»](/blog/tafsir-ayah-ma-indakum-yanfadu/) (الآية 96)
 - [تفسير آية «من عمل صالحا من ذكر أو أنثى وهو مؤمن فلنحيينه حياة طيبة»](/blog/tafsir-ayah-falanuhyiyannahu-hayatan-tayyiba/) (الآية 97)
+- [تفسير آية «إن إبراهيم كان أمة قانتا لله حنيفا ولم يك من المشركين شاكرا لأنعمه»](/blog/tafsir-ayah-inna-ibrahima-kana-umma/) (الآية 120)
 - [تفسير آية «ادع إلى سبيل ربك بالحكمة والموعظة الحسنة»](/blog/tafsir-ayah-ud-u-ila-sabili-rabbik/) (الآية 125)
 - [تفسير آية «واصبر وما صبرك إلا بالله»](/blog/tafsir-ayah-wasbir-wa-ma-sabruka-illa-billah/) (الآية 127)
 - [تفسير آية «إن الله مع الذين اتقوا والذين هم محسنون»](/blog/tafsir-ayah-inna-allaha-maa-alladhina-ittaqaw/) (الآية 128)
