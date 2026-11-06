@@ -267,6 +267,7 @@ reading: 15
 ### سورة النور
 - [تفسير آية «وليعفوا وليصفحوا ألا تحبون أن يغفر الله لكم»](/blog/tafsir-ayah-wal-yafu-wal-yasfahu/) (الآية 22)
 - [تفسير آية «لا تدخلوا بيوتا غير بيوتكم حتى تستأنسوا وتسلموا على أهلها»](/blog/tafsir-ayah-hatta-tastanisu-wa-tusallimu/) (الآية 27)
+- [تفسير آية «قل للمؤمنين يغضوا من أبصارهم ويحفظوا فروجهم ذلك أزكى لهم»](/blog/tafsir-ayah-yaghuddu-min-absarihim/) (الآية 30)
 - [تفسير آية «وتوبوا إلى الله جميعا أيه المؤمنون لعلكم تفلحون»](/blog/tafsir-ayah-wa-tubu-ila-allahi-jamian/) (الآية 31)
 - [تفسير آية النور «الله نور السماوات والأرض»](/blog/tafsir-ayah-allahu-nuru-as-samawati-wal-ard/) (الآية 35)
 
@@ -382,6 +383,7 @@ reading: 15
 
 ### سورة الحديد
 - [تفسير آية «ألم يأن للذين آمنوا أن تخشع قلوبهم لذكر الله»](/blog/tafsir-ayah-alam-yani-lilladhina-amanu/) (الآية 16)
+- [تفسير آية «اعلموا أنما الحياة الدنيا لعب ولهو وزينة وتفاخر بينكم»](/blog/tafsir-ayah-innama-al-hayatu-ad-dunya-laibun/) (الآية 20)
 - [تفسير آية «لكيلا تأسوا على ما فاتكم ولا تفرحوا بما آتاكم»](/blog/tafsir-ayah-likayla-tasaw-ala-ma-fatakum/) (الآية 22)
 
 ### سورة المجادلة
