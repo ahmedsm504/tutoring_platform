@@ -234,6 +234,7 @@ reading: 15
 - [تفسير آية «وقضى ربك ألا تعبدوا إلا إياه وبالوالدين إحسانا»](/blog/tafsir-ayah-wa-qada-rabbuka/) (الآية 23)
 - [تفسير آيتي «وقضى ربك ألا تعبدوا إلا إياه وبالوالدين إحسانًا» و«واخفض لهما جناح الذل»](/blog/tafsir-ayah-wakhfid-lahuma-janah-adh-dhull/) (الآية 23)
 - [تفسير آية «ولا تقربوا الزنى إنه كان فاحشة وساء سبيلا»](/blog/tafsir-ayah-wala-taqrabu-az-zina/) (الآية 32)
+- [تفسير آيتي «ولا تقربوا مال اليتيم إلا بالتي هي أحسن وأوفوا بالعهد إن العهد كان مسؤولا وأوفوا الكيل إذا كلتم»](/blog/tafsir-ayah-wa-awfu-bil-ahd/) (الآية 34)
 - [تفسير آية «ولا تقف ما ليس لك به علم إن السمع والبصر والفؤاد»](/blog/tafsir-ayah-wala-taqfu-ma-laysa-laka-bihi-ilm/) (الآية 36)
 - [تفسير آية «ولا تمش في الأرض مرحا»](/blog/tafsir-ayah-wala-tamshi-fil-ard-maraha/) (الآية 37)
 - [تفسير آية «وإن من شيء إلا يسبح بحمده ولكن لا تفقهون تسبيحهم»](/blog/tafsir-ayah-wa-in-min-shayin-illa-yusabbihu/) (الآية 44)
@@ -263,6 +264,7 @@ reading: 15
 ### سورة طه
 - [تفسير مطلع سورة طه: «ما أنزلنا عليك القرآن لتشقى إلا تذكرة لمن يخشى»](/blog/tafsir-ayah-ma-anzalna-alayka-al-quran-litashqa/) (الآية 2)
 - [تفسير آيات «إنني أنا الله لا إله إلا أنا فاعبدني وأقم الصلاة لذكري» ونداء موسى بالوادي المقدس](/blog/tafsir-ayah-aqim-as-salata-li-dhikri/) (الآية 14)
+- [تفسير آيتي «إن الساعة آتية أكاد أخفيها لتجزى كل نفس بما تسعى فلا يصدنك عنها من لا يؤمن بها»](/blog/tafsir-ayah-inna-as-saata-atiya/) (الآية 15)
 - [تفسير دعاء موسى «رب اشرح لي صدري ويسر لي أمري»](/blog/tafsir-ayah-rabbi-ishrah-li-sadri/) (الآية 25)
 - [تفسير آية «فقولا له قولا لينا لعله يتذكر أو يخشى»](/blog/tafsir-ayah-faqula-lahu-qawlan-layyina/) (الآية 43)
 - [تفسير آية «وإني لغفار لمن تاب وآمن وعمل صالحا ثم اهتدى»](/blog/tafsir-ayah-wa-inni-laghaffarun-liman-tab/) (الآية 82)
