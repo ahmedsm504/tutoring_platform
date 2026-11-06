@@ -364,6 +364,7 @@ reading: 15
 - [تفسير آية «ونحن أقرب إليه من حبل الوريد»](/blog/tafsir-ayah-nahnu-aqrabu-ilayhi/) (الآية 16)
 
 ### سورة الذاريات
+- [تفسير آية «وفي الأرض آيات للموقنين وفي أنفسكم أفلا تبصرون»](/blog/tafsir-ayah-wa-fi-anfusikum/) (الآية 21)
 - [تفسير آية «وفي السماء رزقكم وما توعدون»](/blog/tafsir-ayah-wafis-samai-rizqukum/) (الآية 22)
 - [تفسير آية «ففروا إلى الله»](/blog/tafsir-ayah-fafirru-ila-allah/) (الآية 50)
 - [تفسير آية «وما خلقت الجن والإنس إلا ليعبدون»: لماذا خلقنا الله؟](/blog/tafsir-ayah-wama-khalaqtu-al-jinna-wal-ins/) (الآية 56)
@@ -434,6 +435,9 @@ reading: 15
 ### سورة المزمل
 - [تفسير آية «ورتل القرآن ترتيلا» ومعنى الترتيل عند المفسرين](/blog/tafsir-ayah-wa-rattili-al-qurana-tartila/) (الآية 4)
 - [تفسير آية «فاقرءوا ما تيسر من القرآن»](/blog/tafsir-ayah-faqrau-ma-tayassara/) (الآية 20)
+
+### سورة الإنسان
+- [تفسير آية «ويطعمون الطعام على حبه مسكينا ويتيما وأسيرا»](/blog/tafsir-ayah-wa-yutimuna-at-taam/) (الآية 8)
 
 ### سورة الانشقاق
 - [تفسير آية «يا أيها الإنسان إنك كادح إلى ربك كدحا فملاقيه»](/blog/tafsir-ayah-innaka-kadihun-ila-rabbik/) (الآية 6)
