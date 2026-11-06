@@ -71,6 +71,7 @@ reading: 15
 - [تفسير آية «الله ولي الذين آمنوا يخرجهم من الظلمات إلى النور»](/blog/tafsir-ayah-allahu-waliyyu-alladhina-amanu/) (الآية 257)
 - [تفسير آية «مثل الذين ينفقون أموالهم في سبيل الله كمثل حبة»](/blog/tafsir-ayah-mathal-alladhina-yunfiqun/) (الآية 261)
 - [تفسير آية «قول معروف ومغفرة خير من صدقة يتبعها أذى»](/blog/tafsir-ayah-qawlun-maruf-wa-maghfira/) (الآية 263)
+- [تفسير آية «يا أيها الذين آمنوا لا تبطلوا صدقاتكم بالمن والأذى كالذي ينفق ماله رئاء الناس»](/blog/tafsir-ayah-la-tubtilu-sadaqatikum-bil-mann/) (الآية 264)
 - [تفسير آية «يؤتي الحكمة من يشاء ومن يؤت الحكمة فقد أوتي خيرا كثيرا وما يذكر إلا أولو الألباب»](/blog/tafsir-ayah-yuti-al-hikmata-man-yasha/) (الآية 269)
 - [تفسير آية «الذين ينفقون أموالهم بالليل والنهار سرا وعلانية»](/blog/tafsir-ayah-yunfiquna-bil-layli-wan-nahar/) (الآية 274)
 - [تفسير آية «يمحق الله الربا ويربي الصدقات»](/blog/tafsir-ayah-yamhaqu-allahu-ar-riba/) (الآية 276)
@@ -141,6 +142,7 @@ reading: 15
 - [تفسير آية «يا أيها الذين آمنوا عليكم أنفسكم لا يضركم من ضل إذا اهتديتم»](/blog/tafsir-ayah-alaykum-anfusakum/) (الآية 105)
 
 ### سورة الأنعام
+- [تفسير آية «وإذا جاءك الذين يؤمنون بآياتنا فقل سلام عليكم كتب ربكم على نفسه الرحمة»](/blog/tafsir-ayah-kataba-rabbukum-ala-nafsihi-ar-rahma/) (الآية 54)
 - [تفسير «وعنده مفاتح الغيب لا يعلمها إلا هو» ومفاتح الغيب الخمس](/blog/tafsir-ayah-wa-indahu-mafatih-al-ghayb/) (الآية 59)
 - [تفسير آيات «فلما جن عليه الليل رأى كوكبا قال هذا ربي فلما أفل قال لا أحب الآفلين» حتى «إني وجهت وجهي»](/blog/tafsir-ayah-la-uhibbu-al-afilin/) (الآية 79)
 - [تفسير آية «الذين آمنوا ولم يلبسوا إيمانهم بظلم أولئك لهم الأمن»](/blog/tafsir-ayah-wa-lam-yalbisu-imanahum-bi-zulm/) (الآية 82)
