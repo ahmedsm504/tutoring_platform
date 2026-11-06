@@ -95,6 +95,7 @@ reading: 15
 - [تفسير آية «وتلك الأيام نداولها بين الناس»](/blog/tafsir-ayah-tilka-al-ayyam-nudawiluha/) (الآية 140)
 - [تفسير آية «وكأين من نبي قاتل معه ربيون كثير»](/blog/tafsir-ayah-wallahu-yuhibbu-as-sabirin/) (الآية 146)
 - [تفسير «فبما رحمة من الله لنت لهم» ومنهج القيادة الرحيمة](/blog/tafsir-ayah-fabima-rahmatin-linta-lahum/) (الآية 159)
+- [تفسير آية «لقد من الله على المؤمنين إذ بعث فيهم رسولا من أنفسهم يتلو عليهم آياته ويزكيهم»](/blog/tafsir-ayah-laqad-manna-allah/) (الآية 164)
 - [تفسير آية «ولا تحسبن الذين قتلوا في سبيل الله أمواتا بل أحياء»](/blog/tafsir-ayah-bal-ahyaun-inda-rabbihim/) (الآية 169)
 - [تفسير آية «ولا تحسبن الذين قتلوا في سبيل الله أمواتا بل أحياء عند ربهم يرزقون»](/blog/tafsir-ayah-wa-la-tahsabanna-alladhina-qutilu/) (الآية 169)
 - [تفسير آية «الذين قال لهم الناس إن الناس قد جمعوا لكم فاخشوهم... حسبنا الله ونعم الوكيل»](/blog/tafsir-ayah-hasbuna-allah-wa-nimal-wakil/) (الآية 173)
@@ -118,6 +119,7 @@ reading: 15
 - [تفسير آية «إن الصلاة كانت على المؤمنين كتابا موقوتا»](/blog/tafsir-ayah-kitaban-mawquta/) (الآية 103)
 - [تفسير آية «ومن يعمل سوءا أو يظلم نفسه ثم يستغفر الله يجد الله غفورا رحيما»](/blog/tafsir-ayah-wa-man-yamal-suan-aw-yazlim-nafsah/) (الآية 110)
 - [تفسير آية «لا خير في كثير من نجواهم إلا من أمر بصدقة أو معروف أو إصلاح»](/blog/tafsir-ayah-la-khayra-fi-kathirin-min-najwahum/) (الآية 114)
+- [تفسير آية «ومن أحسن دينا ممن أسلم وجهه لله وهو محسن واتبع ملة إبراهيم حنيفا واتخذ الله إبراهيم خليلا»](/blog/tafsir-ayah-ittakhadha-ibrahima-khalila/) (الآية 125)
 - [تفسير «كونوا قوامين بالقسط شهداء لله ولو على أنفسكم»](/blog/tafsir-ayah-kunu-qawwamina-bil-qist/) (الآية 135)
 - [تفسير آية «ما يفعل الله بعذابكم إن شكرتم وآمنتم»](/blog/tafsir-ayah-ma-yafalu-allahu-biadhabikum/) (الآية 147)
 
