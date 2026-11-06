@@ -79,6 +79,7 @@ reading: 15
 ### سورة آل عمران
 - [تفسير «ربنا لا تزغ قلوبنا بعد إذ هديتنا»: دعاء الثبات](/blog/tafsir-ayah-rabbana-la-tuzigh-qulubana/) (الآية 8)
 - [تفسير آية «الصابرين والصادقين والقانتين والمنفقين والمستغفرين بالأسحار»](/blog/tafsir-ayah-al-mustaghfirina-bil-ashar/) (الآية 17)
+- [تفسير آية «إن الدين عند الله الإسلام وما اختلف الذين أوتوا الكتاب إلا من بعد ما جاءهم العلم بغيا بينهم»](/blog/tafsir-ayah-inna-ad-dina-indallah/) (الآية 19)
 - [تفسير «قل اللهم مالك الملك تؤتي الملك من تشاء»](/blog/tafsir-ayah-qulillahumma-malik-al-mulk/) (الآية 26)
 - [تفسير آية «قل إن كنتم تحبون الله فاتبعوني يحببكم الله»](/blog/tafsir-ayah-in-kuntum-tuhibbuna-allah/) (الآية 31)
 - [تفسير آية «لن تنالوا البر حتى تنفقوا مما تحبون»](/blog/tafsir-ayah-lan-tanalu-al-birr/) (الآية 92)
@@ -321,6 +322,7 @@ reading: 15
 ### سورة الأحزاب
 - [تفسير آية «لقد كان لكم في رسول الله أسوة حسنة»](/blog/tafsir-ayah-uswa-hasana/) (الآية 21)
 - [تفسير آية «إن المسلمين والمسلمات والمؤمنين والمؤمنات» وصفاتها العشر](/blog/tafsir-ayah-inna-al-muslimina-wal-muslimat/) (الآية 35)
+- [تفسير آية «ما كان محمد أبا أحد من رجالكم ولكن رسول الله وخاتم النبيين»](/blog/tafsir-ayah-khatam-an-nabiyyin/) (الآية 40)
 - [تفسير آية «اذكروا الله ذكرا كثيرا وسبحوه بكرة وأصيلا»](/blog/tafsir-ayah-udhkuru-allaha-dhikran-kathira/) (الآية 41)
 - [تفسير آية «إن الله وملائكته يصلون على النبي»](/blog/tafsir-ayah-inna-allaha-wa-malaikatahu-yusalluna/) (الآية 56)
 - [تفسير آية «يا أيها الذين آمنوا اتقوا الله وقولوا قولا سديدا»](/blog/tafsir-ayah-qulu-qawlan-sadida/) (الآية 70)
