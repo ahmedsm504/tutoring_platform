@@ -70,6 +70,7 @@ reading: 15
 - [تفسير آية «الله ولي الذين آمنوا يخرجهم من الظلمات إلى النور»](/blog/tafsir-ayah-allahu-waliyyu-alladhina-amanu/) (الآية 257)
 - [تفسير آية «مثل الذين ينفقون أموالهم في سبيل الله كمثل حبة»](/blog/tafsir-ayah-mathal-alladhina-yunfiqun/) (الآية 261)
 - [تفسير آية «قول معروف ومغفرة خير من صدقة يتبعها أذى»](/blog/tafsir-ayah-qawlun-maruf-wa-maghfira/) (الآية 263)
+- [تفسير آية «يؤتي الحكمة من يشاء ومن يؤت الحكمة فقد أوتي خيرا كثيرا وما يذكر إلا أولو الألباب»](/blog/tafsir-ayah-yuti-al-hikmata-man-yasha/) (الآية 269)
 - [تفسير آية «الذين ينفقون أموالهم بالليل والنهار سرا وعلانية»](/blog/tafsir-ayah-yunfiquna-bil-layli-wan-nahar/) (الآية 274)
 - [تفسير آية «يمحق الله الربا ويربي الصدقات»](/blog/tafsir-ayah-yamhaqu-allahu-ar-riba/) (الآية 276)
 - [تفسير آية «وإن كان ذو عسرة فنظرة إلى ميسرة»](/blog/tafsir-ayah-fanaziratun-ila-maysara/) (الآية 280)
@@ -380,6 +381,7 @@ reading: 15
 - [تفسير آية «إنما يوفى الصابرون أجرهم بغير حساب»](/blog/tafsir-ayah-ajrahum-bighayri-hisab/) (الآية 10)
 - [تفسير آية «أفمن شرح الله صدره للإسلام فهو على نور من ربه»](/blog/tafsir-ayah-afaman-sharaha-allahu-sadrahu/) (الآية 22)
 - [تفسير آية «الله نزل أحسن الحديث كتابا متشابها مثاني تقشعر منه جلود»](/blog/tafsir-ayah-allahu-nazzala-ahsana-al-hadith/) (الآية 23)
+- [تفسير آية «إنك ميت وإنهم ميتون»](/blog/tafsir-ayah-innaka-mayyitun-wa-innahum-mayyitun/) (الآية 30)
 - [تفسير آية «قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله»](/blog/tafsir-ayah-ya-ibadiya-alladhina-asrafu/) (الآية 53)
 
 ### سورة غافر
