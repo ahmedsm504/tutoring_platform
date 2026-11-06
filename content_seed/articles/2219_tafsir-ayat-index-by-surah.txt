@@ -319,6 +319,9 @@ reading: 15
 - [تفسير آية «يا أيها الذين آمنوا اتقوا الله وقولوا قولا سديدا»](/blog/tafsir-ayah-qulu-qawlan-sadida/) (الآية 70)
 - [تفسير آية «إنا عرضنا الأمانة على السماوات والأرض والجبال»](/blog/tafsir-ayah-inna-aradna-al-amana/) (الآية 72)
 
+### سورة سبأ
+- [تفسير آية «اعملوا آل داود شكرا وقليل من عبادي الشكور»](/blog/tafsir-ayah-imalu-ala-dawuda-shukra/) (الآية 13)
+
 ### سورة فاطر
 - [تفسير آية «إليه يصعد الكلم الطيب والعمل الصالح يرفعه»](/blog/tafsir-ayah-ilayhi-yasadu-al-kalim-at-tayyib/) (الآية 10)
 - [تفسير آية «يا أيها الناس أنتم الفقراء إلى الله»](/blog/tafsir-ayah-antum-al-fuqara-ila-allah/) (الآية 15)
@@ -352,6 +355,9 @@ reading: 15
 - [تفسير آية «ليس كمثله شيء وهو السميع البصير»](/blog/tafsir-ayah-laysa-kamithlihi-shay/) (الآية 11)
 - [تفسير آية «وما أصابكم من مصيبة فبما كسبت أيديكم ويعفو عن كثير»](/blog/tafsir-ayah-wa-ma-asabakum-min-musiba/) (الآية 30)
 - [تفسير آية «وجزاء سيئة سيئة مثلها فمن عفا وأصلح فأجره على الله»](/blog/tafsir-ayah-jazau-sayyiatin-sayyiatun-mithluha/) (الآية 40)
+
+### سورة الزخرف
+- [تفسير آية «الأخلاء يومئذ بعضهم لبعض عدو إلا المتقين»](/blog/tafsir-ayah-al-akhillau-yawmaidhin/) (الآية 67)
 
 ### سورة محمد
 - [تفسير آية «إن تنصروا الله ينصركم ويثبت أقدامكم»](/blog/tafsir-ayah-in-tansuru-allaha-yansurkum/) (الآية 7)
