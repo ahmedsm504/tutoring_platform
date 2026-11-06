@@ -400,6 +400,12 @@ reading: 15
 ### سورة الصف
 - [تفسير آية «يا أيها الذين آمنوا لم تقولون ما لا تفعلون»](/blog/tafsir-ayah-lima-taquluna-ma-la-tafalun/) (الآية 2)
 
+### سورة الجمعة
+- [تفسير آية «إذا نودي للصلاة من يوم الجمعة فاسعوا إلى ذكر الله وذروا البيع»](/blog/tafsir-ayah-idha-nudiya-lis-salat-yawm-al-jumua/) (الآية 9)
+
+### سورة المنافقون
+- [تفسير آية «لا تلهكم أموالكم ولا أولادكم عن ذكر الله»](/blog/tafsir-ayah-la-tulhikum-amwalukum-wa-la-awladukum/) (الآية 9)
+
 ### سورة التغابن
 - [تفسير آية «ما أصاب من مصيبة إلا بإذن الله ومن يؤمن بالله يهد قلبه»](/blog/tafsir-ayah-wa-man-yumin-billah-yahdi-qalbah/) (الآية 11)
 - [تفسير آية «فاتقوا الله ما استطعتم واسمعوا وأطيعوا وأنفقوا خيرا لأنفسكم»](/blog/tafsir-ayah-fattaqu-allaha-ma-istatatum/) (الآية 16)
