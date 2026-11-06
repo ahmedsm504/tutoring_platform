@@ -137,6 +137,7 @@ reading: 15
 
 ### سورة الأنعام
 - [تفسير «وعنده مفاتح الغيب لا يعلمها إلا هو» ومفاتح الغيب الخمس](/blog/tafsir-ayah-wa-indahu-mafatih-al-ghayb/) (الآية 59)
+- [تفسير آيات «فلما جن عليه الليل رأى كوكبا قال هذا ربي فلما أفل قال لا أحب الآفلين» حتى «إني وجهت وجهي»](/blog/tafsir-ayah-la-uhibbu-al-afilin/) (الآية 79)
 - [تفسير آية «الذين آمنوا ولم يلبسوا إيمانهم بظلم أولئك لهم الأمن»](/blog/tafsir-ayah-wa-lam-yalbisu-imanahum-bi-zulm/) (الآية 82)
 - [تفسير آية «قل تعالوا أتل ما حرم ربكم عليكم» الوصايا العشر](/blog/tafsir-ayah-qul-taalaw-atlu-ma-harrama/) (الآية 151)
 - [تفسير آية «وأن هذا صراطي مستقيما فاتبعوه ولا تتبعوا السبل»](/blog/tafsir-ayah-wa-anna-hadha-sirati-mustaqima/) (الآية 153)
@@ -205,6 +206,7 @@ reading: 15
 - [تفسير «لئن شكرتم لأزيدنكم ولئن كفرتم إن عذابي لشديد»](/blog/tafsir-ayah-lain-shakartum/) (الآية 7)
 - [تفسير آية «ألم تر كيف ضرب الله مثلا كلمة طيبة كشجرة طيبة»](/blog/tafsir-ayah-kalimatan-tayyibatan-kashajara/) (الآية 24)
 - [تفسير آية «وإن تعدوا نعمة الله لا تحصوها» في سورتي إبراهيم والنحل](/blog/tafsir-ayah-wa-in-taudduu-nimat-allah/) (الآية 34)
+- [تفسير آية «ربنا إني أسكنت من ذريتي بواد غير ذي زرع عند بيتك المحرم ربنا ليقيموا الصلاة»](/blog/tafsir-ayah-inni-askantu-min-dhurriyyati/) (الآية 37)
 - [تفسير آية «رب اجعلني مقيم الصلاة ومن ذريتي ربنا وتقبل دعاء»](/blog/tafsir-ayah-rabbi-ijalni-muqima-as-salat/) (الآية 40)
 
 ### سورة الحجر
