@@ -252,6 +252,7 @@ reading: 15
 - [تفسير آية «وجعلنا من الماء كل شيء حي»](/blog/tafsir-ayah-min-al-mai-kulla-shayin-hayy/) (الآية 30)
 - [تفسير آية «ونبلوكم بالشر والخير فتنة وإلينا ترجعون»](/blog/tafsir-ayah-nablukum-bish-sharri-wal-khayr/) (الآية 35)
 - [تفسير دعاء ذي النون «لا إله إلا أنت سبحانك إني كنت من الظالمين»](/blog/tafsir-ayah-dua-dhi-an-nun/) (الآية 87)
+- [تفسير آية «وزكريا إذ نادى ربه رب لا تذرني فردا وأنت خير الوارثين»](/blog/tafsir-ayah-rabbi-la-tadharni-fardan/) (الآية 89)
 - [تفسير آية «وما أرسلناك إلا رحمة للعالمين»](/blog/tafsir-ayah-rahmatan-lil-alamin/) (الآية 107)
 
 ### سورة الحج
@@ -405,6 +406,7 @@ reading: 15
 
 ### سورة التحريم
 - [تفسير آية «يا أيها الذين آمنوا قوا أنفسكم وأهليكم نارا»](/blog/tafsir-ayah-qu-anfusakum-wa-ahlikum/) (الآية 6)
+- [تفسير آية «يا أيها الذين آمنوا توبوا إلى الله توبة نصوحا»](/blog/tafsir-ayah-tubu-ila-allah-tawbatan-nasuha/) (الآية 8)
 
 ### سورة الملك
 - [تفسير آية «الذي خلق الموت والحياة ليبلوكم أيكم أحسن عملا»](/blog/tafsir-ayah-khalaqa-al-mawta-wal-hayat/) (الآية 2)
