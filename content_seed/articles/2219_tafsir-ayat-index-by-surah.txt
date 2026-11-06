@@ -310,6 +310,7 @@ reading: 15
 - [تفسير آية «فأولئك يبدل الله سيئاتهم حسنات»](/blog/tafsir-ayah-yubaddilu-allahu-sayyiatihim-hasanat/) (الآية 70)
 - [تفسير آيتي «والذين لا يشهدون الزور وإذا مروا باللغو مروا كراما والذين إذا ذكروا بآيات ربهم لم يخروا عليها صما وعميانا»](/blog/tafsir-ayah-la-yashhaduna-az-zur/) (الآية 72)
 - [تفسير دعاء «ربنا هب لنا من أزواجنا وذرياتنا قرة أعين واجعلنا للمتقين إماما»](/blog/tafsir-ayah-hab-lana-min-azwajina/) (الآية 74)
+- [تفسير آيات «أولئك يجزون الغرفة بما صبروا ويلقون فيها تحية وسلاما» و«قل ما يعبأ بكم ربي لولا دعاؤكم»](/blog/tafsir-ayah-yujzawna-al-ghurfa/) (الآية 75)
 
 ### سورة الشعراء
 - [تفسير آية «وإذا مرضت فهو يشفين» ووصف إبراهيم لربه](/blog/tafsir-ayah-wa-idha-maridtu-fahuwa-yashfin/) (الآية 78)
@@ -477,6 +478,7 @@ reading: 15
 ### سورة المعارج
 - [تفسير آية «فاصبر صبرا جميلا»: ما الصبر الجميل؟](/blog/tafsir-ayah-fasbir-sabran-jamila/) (الآية 5)
 - [تفسير آية «إن الإنسان خلق هلوعا»](/blog/tafsir-ayah-inna-al-insana-khuliqa-halua/) (الآية 19)
+- [تفسير آيات «والذين يصدقون بيوم الدين والذين هم من عذاب ربهم مشفقون إن عذاب ربهم غير مأمون»](/blog/tafsir-ayah-min-adhabi-rabbihim-mushfiqun/) (الآية 28)
 
 ### سورة نوح
 - [تفسير آية «استغفروا ربكم إنه كان غفارا يرسل السماء عليكم مدرارا»](/blog/tafsir-ayah-istaghfiru-rabbakum-ghaffara/) (الآية 10)
