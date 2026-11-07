@@ -261,6 +261,7 @@ reading: 15
 - [تفسير آية «إن الله مع الذين اتقوا والذين هم محسنون»](/blog/tafsir-ayah-inna-allaha-maa-alladhina-ittaqaw/) (الآية 128)
 
 ### سورة الإسراء
+- [تفسير آية «سبحان الذي أسرى بعبده ليلا من المسجد الحرام إلى المسجد الأقصى»](/blog/tafsir-ayah-subhana-alladhi-asra-biabdihi/) (الآية 1)
 - [تفسير آية «إن أحسنتم أحسنتم لأنفسكم وإن أسأتم فلها»](/blog/tafsir-ayah-in-ahsantum-ahsantum-li-anfusikum/) (الآية 7)
 - [تفسير آية «إن هذا القرآن يهدي للتي هي أقوم»](/blog/tafsir-ayah-inna-hadha-al-quran-yahdi/) (الآية 9)
 - [تفسير آية «وقضى ربك ألا تعبدوا إلا إياه وبالوالدين إحسانا»](/blog/tafsir-ayah-wa-qada-rabbuka/) (الآية 23)
@@ -330,6 +331,7 @@ reading: 15
 
 ### سورة المؤمنون
 - [تفسير آية «قد أفلح المؤمنون الذين هم في صلاتهم خاشعون»](/blog/tafsir-ayah-qad-aflaha-al-muminun-khashiun/) (الآية 1)
+- [تفسير آية «يا أيها الرسل كلوا من الطيبات واعملوا صالحا إني بما تعملون عليم»](/blog/tafsir-ayah-ya-ayyuha-ar-rusulu-kulu/) (الآية 51)
 - [تفسير آية «والذين يؤتون ما آتوا وقلوبهم وجلة أنهم إلى ربهم راجعون»](/blog/tafsir-ayah-yutuna-ma-ataw-wa-qulubuhum-wajila/) (الآية 60)
 - [تفسير آية «أفحسبتم أنما خلقناكم عبثا وأنكم إلينا لا ترجعون»](/blog/tafsir-ayah-afahasibtum-annama-khalaqnakum-abathan/) (الآية 115)
 
