@@ -394,6 +394,7 @@ reading: 15
 
 ### سورة السجدة
 - [تفسير آية «تتجافى جنوبهم عن المضاجع يدعون ربهم خوفا وطمعا»](/blog/tafsir-ayah-tatajafa-junubuhum/) (الآية 17)
+- [تفسير آية «وجعلنا منهم أئمة يهدون بأمرنا لما صبروا وكانوا بآياتنا يوقنون»](/blog/tafsir-ayah-aimmatan-yahduna-biamrina-lamma-sabaru/) (الآية 24)
 
 ### سورة الأحزاب
 - [تفسير آية «لقد كان لكم في رسول الله أسوة حسنة»](/blog/tafsir-ayah-uswa-hasana/) (الآية 21)
@@ -434,6 +435,7 @@ reading: 15
 - [تفسير آية «أفمن شرح الله صدره للإسلام فهو على نور من ربه»](/blog/tafsir-ayah-afaman-sharaha-allahu-sadrahu/) (الآية 22)
 - [تفسير آية «الله نزل أحسن الحديث كتابا متشابها مثاني تقشعر منه جلود»](/blog/tafsir-ayah-allahu-nazzala-ahsana-al-hadith/) (الآية 23)
 - [تفسير آية «إنك ميت وإنهم ميتون»](/blog/tafsir-ayah-innaka-mayyitun-wa-innahum-mayyitun/) (الآية 30)
+- [تفسير آية «أليس الله بكاف عبده ويخوفونك بالذين من دونه»](/blog/tafsir-ayah-alaysa-allahu-bikafin-abdah/) (الآية 36)
 - [تفسير آية «الله يتوفى الأنفس حين موتها والتي لم تمت في منامها»](/blog/tafsir-ayah-allahu-yatawaffa-al-anfusa/) (الآية 42)
 - [تفسير آية «قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله»](/blog/tafsir-ayah-ya-ibadiya-alladhina-asrafu/) (الآية 53)
 
