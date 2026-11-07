@@ -237,6 +237,7 @@ reading: 15
 
 ### سورة يوسف
 - [تفسير آية «وما أبرئ نفسي إن النفس لأمارة بالسوء»](/blog/tafsir-ayah-inna-an-nafsa-la-ammaratun/) (الآية 53)
+- [تفسير آية «فالله خير حافظا وهو أرحم الراحمين»](/blog/tafsir-ayah-fallahu-khayrun-hafiza/) (الآية 64)
 - [تفسير آية «إنما أشكو بثي وحزني إلى الله»](/blog/tafsir-ayah-innama-ashku-baththi-wa-huzni/) (الآية 86)
 - [تفسير آية «ولا تيأسوا من روح الله إنه لا ييأس من روح الله إلا القوم الكافرون»](/blog/tafsir-ayah-wala-tayasu-min-rawhillah/) (الآية 87)
 - [تفسير آية «لا تثريب عليكم اليوم يغفر الله لكم»](/blog/tafsir-ayah-la-tathriba-alaykum-al-yawm/) (الآية 92)
@@ -263,6 +264,7 @@ reading: 15
 ### سورة الحجر
 - [تفسير آية «إنا نحن نزلنا الذكر وإنا له لحافظون»](/blog/tafsir-ayah-inna-nahnu-nazzalna-adh-dhikr/) (الآية 9)
 - [تفسير آية «ونزعنا ما في صدورهم من غل إخوانا على سرر متقابلين»](/blog/tafsir-ayah-wa-nazana-ma-fi-sudurihim/) (الآية 46)
+- [تفسير آية «نبئ عبادي أني أنا الغفور الرحيم وأن عذابي هو العذاب الأليم»](/blog/tafsir-ayah-nabbi-ibadi-anni-ana-al-ghafur/) (الآية 49)
 - [تفسير آية «فاصفح الصفح الجميل»](/blog/tafsir-ayah-fasfah-as-safh-al-jamil/) (الآية 85)
 - [تفسير آية «واعبد ربك حتى يأتيك اليقين»](/blog/tafsir-ayah-wabud-rabbaka-hatta-yatiyak/) (الآية 97)
 
