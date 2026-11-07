@@ -193,8 +193,10 @@ reading: 15
 - [تفسير آية «وما كان الله ليعذبهم وأنت فيهم»](/blog/tafsir-ayah-wa-ma-kana-allahu-liyuadhibahum/) (الآية 33)
 - [تفسير آية «ولا تنازعوا فتفشلوا وتذهب ريحكم واصبروا»](/blog/tafsir-ayah-wala-tanazau-fatafshalu/) (الآية 46)
 - [تفسير آية «وإن جنحوا للسلم فاجنح لها وتوكل على الله»](/blog/tafsir-ayah-wa-in-janahu-lis-salm/) (الآية 61)
+- [تفسير آية «وألف بين قلوبهم لو أنفقت ما في الأرض جميعا ما ألفت بين قلوبهم»](/blog/tafsir-ayah-wa-allafa-bayna-qulubihim/) (الآية 63)
 
 ### سورة التوبة
+- [تفسير آية «إنما يعمر مساجد الله من آمن بالله واليوم الآخر»](/blog/tafsir-ayah-innama-yamuru-masajid-allah/) (الآية 18)
 - [تفسير آية «قل إن كان آباؤكم وأبناؤكم وإخوانكم وأزواجكم وعشيرتكم»](/blog/tafsir-ayah-qul-in-kana-abaukum-wa-abnaukum/) (الآية 24)
 - [تفسير آية «إذ يقول لصاحبه لا تحزن إن الله معنا»](/blog/tafsir-ayah-la-tahzan-inna-allaha-maana/) (الآية 40)
 - [تفسير آية «قل لن يصيبنا إلا ما كتب الله لنا هو مولانا»](/blog/tafsir-ayah-lan-yusibana-illa-ma-kataba-allah/) (الآية 51)
