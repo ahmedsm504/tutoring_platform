@@ -340,6 +340,7 @@ reading: 15
 - [تفسير آية «أفحسبتم أنما خلقناكم عبثا وأنكم إلينا لا ترجعون»](/blog/tafsir-ayah-afahasibtum-annama-khalaqnakum-abathan/) (الآية 115)
 
 ### سورة النور
+- [تفسير آية «لا تتبعوا خطوات الشيطان... ولولا فضل الله عليكم ورحمته ما زكى منكم من أحد أبدا»](/blog/tafsir-ayah-la-tattabiu-khutuwat-ash-shaytan-nur/) (الآية 21)
 - [تفسير آية «وليعفوا وليصفحوا ألا تحبون أن يغفر الله لكم»](/blog/tafsir-ayah-wal-yafu-wal-yasfahu/) (الآية 22)
 - [تفسير آية «لا تدخلوا بيوتا غير بيوتكم حتى تستأنسوا وتسلموا على أهلها»](/blog/tafsir-ayah-hatta-tastanisu-wa-tusallimu/) (الآية 27)
 - [تفسير آية «قل للمؤمنين يغضوا من أبصارهم ويحفظوا فروجهم ذلك أزكى لهم»](/blog/tafsir-ayah-yaghuddu-min-absarihim/) (الآية 30)
@@ -422,6 +423,7 @@ reading: 15
 
 ### سورة يس
 - [تفسير آية «إنا نحن نحيي الموتى ونكتب ما قدموا وآثارهم وكل شيء أحصيناه في إمام مبين»](/blog/tafsir-ayah-naktubu-ma-qaddamu-wa-atharahum/) (الآية 12)
+- [تفسير آية «اليوم نختم على أفواههم وتكلمنا أيديهم وتشهد أرجلهم بما كانوا يكسبون»](/blog/tafsir-ayah-al-yawma-nakhtimu-ala-afwahihim/) (الآية 65)
 - [تفسير آية «إنما أمره إذا أراد شيئا أن يقول له كن فيكون»](/blog/tafsir-ayah-innama-amruhu-idha-arada-shayan/) (الآية 82)
 
 ### سورة الصافات
