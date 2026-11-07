@@ -406,8 +406,10 @@ reading: 15
 
 ### سورة سبأ
 - [تفسير آية «اعملوا آل داود شكرا وقليل من عبادي الشكور»](/blog/tafsir-ayah-imalu-ala-dawuda-shukra/) (الآية 13)
+- [تفسير آية «قل إن ربي يبسط الرزق لمن يشاء من عباده ويقدر له وما أنفقتم من شيء فهو يخلفه»](/blog/tafsir-ayah-wa-ma-anfaqtum-fahuwa-yukhlifuh/) (الآية 39)
 
 ### سورة فاطر
+- [تفسير آية «ما يفتح الله للناس من رحمة فلا ممسك لها وما يمسك فلا مرسل له من بعده»](/blog/tafsir-ayah-ma-yaftahi-allahu-linnasi/) (الآية 2)
 - [تفسير آية «يا أيها الناس إن وعد الله حق فلا تغرنكم الحياة الدنيا ولا يغرنكم بالله الغرور»](/blog/tafsir-ayah-inna-wada-allahi-haqq-fatir/) (الآية 5)
 - [تفسير آية «إليه يصعد الكلم الطيب والعمل الصالح يرفعه»](/blog/tafsir-ayah-ilayhi-yasadu-al-kalim-at-tayyib/) (الآية 10)
 - [تفسير آية «يا أيها الناس أنتم الفقراء إلى الله»](/blog/tafsir-ayah-antum-al-fuqara-ila-allah/) (الآية 15)
