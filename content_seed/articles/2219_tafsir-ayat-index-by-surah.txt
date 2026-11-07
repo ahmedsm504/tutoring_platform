@@ -445,6 +445,7 @@ reading: 15
 - [تفسير آية «أليس الله بكاف عبده ويخوفونك بالذين من دونه»](/blog/tafsir-ayah-alaysa-allahu-bikafin-abdah/) (الآية 36)
 - [تفسير آية «الله يتوفى الأنفس حين موتها والتي لم تمت في منامها»](/blog/tafsir-ayah-allahu-yatawaffa-al-anfusa/) (الآية 42)
 - [تفسير آية «قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله»](/blog/tafsir-ayah-ya-ibadiya-alladhina-asrafu/) (الآية 53)
+- [تفسير آية «وسيق الذين اتقوا ربهم إلى الجنة زمرا حتى إذا جاءوها وفتحت أبوابها»](/blog/tafsir-ayah-wa-siqa-alladhina-ittaqaw/) (الآية 73)
 
 ### سورة غافر
 - [تفسير آية «الذين يحملون العرش ومن حوله يستغفرون للذين آمنوا»](/blog/tafsir-ayah-alladhina-yahmiluna-al-arsh/) (الآية 7)
@@ -571,6 +572,9 @@ reading: 15
 ### سورة نوح
 - [تفسير آية «استغفروا ربكم إنه كان غفارا يرسل السماء عليكم مدرارا»](/blog/tafsir-ayah-istaghfiru-rabbakum-ghaffara/) (الآية 10)
 - [تفسير دعاء نوح «رب اغفر لي ولوالدي ولمن دخل بيتي مؤمنا»](/blog/tafsir-ayah-rabbi-ighfir-li-wa-liwalidayya/) (الآية 28)
+
+### سورة الجن
+- [تفسير آية «وألو استقاموا على الطريقة لأسقيناهم ماء غدقا»](/blog/tafsir-ayah-wa-allawi-istaqamu-ala-at-tariqa/) (الآية 16)
 
 ### سورة المزمل
 - [تفسير آية «ورتل القرآن ترتيلا» ومعنى الترتيل عند المفسرين](/blog/tafsir-ayah-wa-rattili-al-qurana-tartila/) (الآية 4)
