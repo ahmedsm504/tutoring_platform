@@ -202,6 +202,7 @@ reading: 15
 - [تفسير آية «قل لن يصيبنا إلا ما كتب الله لنا هو مولانا»](/blog/tafsir-ayah-lan-yusibana-illa-ma-kataba-allah/) (الآية 51)
 - [تفسير آية «والمؤمنون والمؤمنات بعضهم أولياء بعض»](/blog/tafsir-ayah-bauduhum-awliyau-baud/) (الآية 71)
 - [تفسير آية «وعد الله المؤمنين والمؤمنات جنات تجري من تحتها الأنهار... ورضوان من الله أكبر»](/blog/tafsir-ayah-wa-ridwanun-mina-allahi-akbar/) (الآية 72)
+- [تفسير آية «خذ من أموالهم صدقة تطهرهم وتزكيهم بها وصل عليهم»](/blog/tafsir-ayah-khudh-min-amwalihim-sadaqa/) (الآية 103)
 - [تفسير آية «وقل اعملوا فسيرى الله عملكم ورسوله والمؤمنون»](/blog/tafsir-ayah-waquli-amalu-fasayara-allah/) (الآية 105)
 - [تفسير آية «إن الله اشترى من المؤمنين أنفسهم وأموالهم»](/blog/tafsir-ayah-inna-allaha-ishtara-min-al-muminin/) (الآية 111)
 - [تفسير آية «وكونوا مع الصادقين» وقصة صدق كعب بن مالك](/blog/tafsir-ayah-wa-kunu-maa-as-sadiqin/) (الآية 119)
@@ -257,6 +258,7 @@ reading: 15
 - [تفسير آية «واعبد ربك حتى يأتيك اليقين»](/blog/tafsir-ayah-wabud-rabbaka-hatta-yatiyak/) (الآية 97)
 
 ### سورة النحل
+- [تفسير آية «وقيل للذين اتقوا ماذا أنزل ربكم قالوا خيرا»](/blog/tafsir-ayah-madha-anzala-rabbukum-qalu-khayra/) (الآية 30)
 - [تفسير آية «فاسألوا أهل الذكر إن كنتم لا تعلمون»](/blog/tafsir-ayah-fasalu-ahla-adh-dhikr/) (الآية 43)
 - [تفسير آية «وما بكم من نعمة فمن الله»](/blog/tafsir-ayah-wa-ma-bikum-min-nimatin/) (الآية 53)
 - [تفسير آية «والله أخرجكم من بطون أمهاتكم لا تعلمون شيئا وجعل لكم السمع والأبصار والأفئدة لعلكم تشكرون»](/blog/tafsir-ayah-akhrajakum-min-butuni-ummahatikum/) (الآية 78)
