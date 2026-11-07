@@ -286,6 +286,7 @@ reading: 15
 - [تفسير آيتي «إن الساعة آتية أكاد أخفيها لتجزى كل نفس بما تسعى فلا يصدنك عنها من لا يؤمن بها»](/blog/tafsir-ayah-inna-as-saata-atiya/) (الآية 15)
 - [تفسير دعاء موسى «رب اشرح لي صدري ويسر لي أمري»](/blog/tafsir-ayah-rabbi-ishrah-li-sadri/) (الآية 25)
 - [تفسير آية «فقولا له قولا لينا لعله يتذكر أو يخشى»](/blog/tafsir-ayah-faqula-lahu-qawlan-layyina/) (الآية 43)
+- [تفسير آية «قال لا تخافا إنني معكما أسمع وأرى»](/blog/tafsir-ayah-innani-maakuma-asmau-wa-ara/) (الآية 46)
 - [تفسير آية «وإني لغفار لمن تاب وآمن وعمل صالحا ثم اهتدى»](/blog/tafsir-ayah-wa-inni-laghaffarun-liman-tab/) (الآية 82)
 - [تفسير آية «وقل رب زدني علما» وأدب تلقي القرآن](/blog/tafsir-ayah-rabbi-zidni-ilma/) (الآية 114)
 - [تفسير آية «ومن أعرض عن ذكري فإن له معيشة ضنكا»](/blog/tafsir-ayah-maisha-danka/) (الآية 124)
@@ -318,6 +319,7 @@ reading: 15
 - [تفسير آية «قل للمؤمنين يغضوا من أبصارهم ويحفظوا فروجهم ذلك أزكى لهم»](/blog/tafsir-ayah-yaghuddu-min-absarihim/) (الآية 30)
 - [تفسير آية «وتوبوا إلى الله جميعا أيه المؤمنون لعلكم تفلحون»](/blog/tafsir-ayah-wa-tubu-ila-allahi-jamian/) (الآية 31)
 - [تفسير آية النور «الله نور السماوات والأرض»](/blog/tafsir-ayah-allahu-nuru-as-samawati-wal-ard/) (الآية 35)
+- [تفسير آية «وعد الله الذين آمنوا منكم وعملوا الصالحات ليستخلفنهم في الأرض كما استخلف الذين من قبلهم»](/blog/tafsir-ayah-layastakhlifannahum-fil-ard/) (الآية 55)
 
 ### سورة الفرقان
 - [تفسير آية «وقال الرسول يا رب إن قومي اتخذوا هذا القرآن مهجورا»](/blog/tafsir-ayah-ittakhadhu-al-quran-mahjura/) (الآية 30)
