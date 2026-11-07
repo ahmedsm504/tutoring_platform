@@ -360,6 +360,7 @@ reading: 15
 
 ### سورة الشعراء
 - [تفسير آية «وإذا مرضت فهو يشفين» ووصف إبراهيم لربه](/blog/tafsir-ayah-wa-idha-maridtu-fahuwa-yashfin/) (الآية 78)
+- [تفسير آية «رب هب لي حكما وألحقني بالصالحين» ودعاء إبراهيم عليه السلام](/blog/tafsir-ayah-rabbi-hab-li-hukman/) (الآية 83)
 - [تفسير آية «يوم لا ينفع مال ولا بنون إلا من أتى الله بقلب سليم»](/blog/tafsir-ayah-illa-man-ata-allaha-biqalbin-salim/) (الآية 87)
 
 ### سورة النمل
@@ -369,6 +370,7 @@ reading: 15
 ### سورة القصص
 - [تفسير دعاء موسى «رب إني لما أنزلت إلي من خير فقير»](/blog/tafsir-ayah-rabbi-inni-lima-anzalta-ilayya-faqir/) (الآية 24)
 - [تفسير آية «سنشد عضدك بأخيك»: موسى وهارون](/blog/tafsir-ayah-sanashuddu-adudaka-bi-akhik/) (الآية 35)
+- [تفسير آية «وربك يخلق ما يشاء ويختار ما كان لهم الخيرة سبحان الله وتعالى عما يشركون»](/blog/tafsir-ayah-wa-rabbuka-yakhluqu-ma-yasha/) (الآية 68)
 - [تفسير «وابتغ فيما آتاك الله الدار الآخرة ولا تنس نصيبك من الدنيا»](/blog/tafsir-ayah-wabtaghi-fima-ataka-allah/) (الآية 77)
 - [تفسير آية «تلك الدار الآخرة نجعلها للذين لا يريدون علوا في الأرض ولا فسادا»](/blog/tafsir-ayah-tilka-ad-dar-al-akhira/) (الآية 83)
 
