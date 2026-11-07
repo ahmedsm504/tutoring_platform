@@ -73,6 +73,7 @@ reading: 15
 - [تفسير آية «قول معروف ومغفرة خير من صدقة يتبعها أذى»](/blog/tafsir-ayah-qawlun-maruf-wa-maghfira/) (الآية 263)
 - [تفسير آية «يا أيها الذين آمنوا لا تبطلوا صدقاتكم بالمن والأذى كالذي ينفق ماله رئاء الناس»](/blog/tafsir-ayah-la-tubtilu-sadaqatikum-bil-mann/) (الآية 264)
 - [تفسير آية «يؤتي الحكمة من يشاء ومن يؤت الحكمة فقد أوتي خيرا كثيرا وما يذكر إلا أولو الألباب»](/blog/tafsir-ayah-yuti-al-hikmata-man-yasha/) (الآية 269)
+- [تفسير آية «ليس عليك هداهم ولكن الله يهدي من يشاء وما تنفقوا من خير فلأنفسكم»](/blog/tafsir-ayah-laysa-alayka-hudahum/) (الآية 272)
 - [تفسير آية «الذين ينفقون أموالهم بالليل والنهار سرا وعلانية»](/blog/tafsir-ayah-yunfiquna-bil-layli-wan-nahar/) (الآية 274)
 - [تفسير آية «يمحق الله الربا ويربي الصدقات»](/blog/tafsir-ayah-yamhaqu-allahu-ar-riba/) (الآية 276)
 - [تفسير آية «وإن كان ذو عسرة فنظرة إلى ميسرة»](/blog/tafsir-ayah-fanaziratun-ila-maysara/) (الآية 280)
@@ -441,6 +442,9 @@ reading: 15
 - [تفسير آية «إن تنصروا الله ينصركم ويثبت أقدامكم»](/blog/tafsir-ayah-in-tansuru-allaha-yansurkum/) (الآية 7)
 - [تفسير آية «فاعلم أنه لا إله إلا الله واستغفر لذنبك»](/blog/tafsir-ayah-falam-annahu-la-ilaha-illa-allah/) (الآية 19)
 - [تفسير آية «أفلا يتدبرون القرآن أم على قلوب أقفالها»](/blog/tafsir-ayah-afala-yatadabbaruna-al-quran/) (الآية 24)
+
+### سورة الفتح
+- [تفسير آية «محمد رسول الله والذين معه أشداء على الكفار رحماء بينهم»](/blog/tafsir-ayah-muhammadun-rasulu-allah-walladhina/) (الآية 29)
 
 ### سورة الحجرات
 - [تفسير آية «إن جاءكم فاسق بنبأ فتبينوا»](/blog/tafsir-ayah-in-jaakum-fasiqun-bi-naba/) (الآية 6)
