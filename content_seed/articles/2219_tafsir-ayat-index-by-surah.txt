@@ -186,6 +186,7 @@ reading: 15
 - [تفسير آية «إذ يقول لصاحبه لا تحزن إن الله معنا»](/blog/tafsir-ayah-la-tahzan-inna-allaha-maana/) (الآية 40)
 - [تفسير آية «قل لن يصيبنا إلا ما كتب الله لنا هو مولانا»](/blog/tafsir-ayah-lan-yusibana-illa-ma-kataba-allah/) (الآية 51)
 - [تفسير آية «والمؤمنون والمؤمنات بعضهم أولياء بعض»](/blog/tafsir-ayah-bauduhum-awliyau-baud/) (الآية 71)
+- [تفسير آية «وعد الله المؤمنين والمؤمنات جنات تجري من تحتها الأنهار... ورضوان من الله أكبر»](/blog/tafsir-ayah-wa-ridwanun-mina-allahi-akbar/) (الآية 72)
 - [تفسير آية «وقل اعملوا فسيرى الله عملكم ورسوله والمؤمنون»](/blog/tafsir-ayah-waquli-amalu-fasayara-allah/) (الآية 105)
 - [تفسير آية «إن الله اشترى من المؤمنين أنفسهم وأموالهم»](/blog/tafsir-ayah-inna-allaha-ishtara-min-al-muminin/) (الآية 111)
 - [تفسير آية «وكونوا مع الصادقين» وقصة صدق كعب بن مالك](/blog/tafsir-ayah-wa-kunu-maa-as-sadiqin/) (الآية 119)
@@ -212,6 +213,7 @@ reading: 15
 - [تفسير آية «لا تثريب عليكم اليوم يغفر الله لكم»](/blog/tafsir-ayah-la-tathriba-alaykum-al-yawm/) (الآية 92)
 - [تفسير آية «رب قد آتيتني من الملك... توفني مسلما وألحقني بالصالحين»](/blog/tafsir-ayah-tawaffani-musliman-wa-alhiqni/) (الآية 101)
 - [تفسير آية «قل هذه سبيلي أدعو إلى الله على بصيرة أنا ومن اتبعني»](/blog/tafsir-ayah-hadhihi-sabili-ala-basira/) (الآية 108)
+- [تفسير آية «لقد كان في قصصهم عبرة لأولي الألباب ما كان حديثا يفترى»](/blog/tafsir-ayah-laqad-kana-fi-qasasihim-ibra/) (الآية 111)
 
 ### سورة الرعد
 - [تفسير «إن الله لا يغير ما بقوم حتى يغيروا ما بأنفسهم»](/blog/tafsir-ayah-la-yughayyiru-ma-biqawm/) (الآية 11)
