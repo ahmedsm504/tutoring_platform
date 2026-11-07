@@ -150,6 +150,7 @@ reading: 15
 - [تفسير آية «من قتل نفسا بغير نفس فكأنما قتل الناس جميعا»](/blog/tafsir-ayah-man-qatala-nafsan/) (الآية 32)
 - [تفسير آية «يا أيها الذين آمنوا اتقوا الله وابتغوا إليه الوسيلة وجاهدوا في سبيله»](/blog/tafsir-ayah-wabtaghu-ilayhi-al-wasila/) (الآية 35)
 - [تفسير آية «يحبهم ويحبونه أذلة على المؤمنين أعزة على الكافرين»](/blog/tafsir-ayah-yuhibbuhum-wa-yuhibbunahu/) (الآية 54)
+- [تفسير آية «وإذا سمعوا ما أنزل إلى الرسول ترى أعينهم تفيض من الدمع»](/blog/tafsir-ayah-tara-ayunahum-tafidu-mina-ad-dam/) (الآية 83)
 - [تفسير آية «قل لا يستوي الخبيث والطيب ولو أعجبك كثرة الخبيث فاتقوا الله يا أولي الألباب»](/blog/tafsir-ayah-la-yastawi-al-khabithu-wat-tayyib/) (الآية 100)
 - [تفسير آية «يا أيها الذين آمنوا عليكم أنفسكم لا يضركم من ضل إذا اهتديتم»](/blog/tafsir-ayah-alaykum-anfusakum/) (الآية 105)
 
@@ -383,6 +384,7 @@ reading: 15
 - [تفسير آية «أمّن يجيب المضطر إذا دعاه ويكشف السوء»](/blog/tafsir-ayah-amman-yujibu-al-mudtarr/) (الآية 62)
 
 ### سورة القصص
+- [تفسير آية «وأوحينا إلى أم موسى أن أرضعيه فإذا خفت عليه فألقيه في اليم»](/blog/tafsir-ayah-wa-awhayna-ila-ummi-musa/) (الآية 7)
 - [تفسير دعاء موسى «رب إني لما أنزلت إلي من خير فقير»](/blog/tafsir-ayah-rabbi-inni-lima-anzalta-ilayya-faqir/) (الآية 24)
 - [تفسير آية «سنشد عضدك بأخيك»: موسى وهارون](/blog/tafsir-ayah-sanashuddu-adudaka-bi-akhik/) (الآية 35)
 - [تفسير آية «وربك يخلق ما يشاء ويختار ما كان لهم الخيرة سبحان الله وتعالى عما يشركون»](/blog/tafsir-ayah-wa-rabbuka-yakhluqu-ma-yasha/) (الآية 68)
