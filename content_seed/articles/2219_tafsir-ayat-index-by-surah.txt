@@ -204,6 +204,7 @@ reading: 15
 
 ### سورة يونس
 - [تفسير آية «قد جاءتكم موعظة من ربكم وشفاء لما في الصدور»](/blog/tafsir-ayah-qad-jaatkum-mawizatun/) (الآية 57)
+- [تفسير آية «وما تكون في شأن وما تتلو منه من قرآن ولا تعملون من عمل إلا كنا عليكم شهودا»](/blog/tafsir-ayah-wa-ma-takunu-fi-shanin/) (الآية 61)
 - [تفسير آية «ألا إن أولياء الله لا خوف عليهم ولا هم يحزنون»](/blog/tafsir-ayah-ala-inna-awliya-allah/) (الآية 62)
 - [تفسير آية «وإن يمسسك الله بضر فلا كاشف له إلا هو»](/blog/tafsir-ayah-wa-in-yamsaska-allahu-bidurr/) (الآية 107)
 
@@ -212,6 +213,7 @@ reading: 15
 - [تفسير آية «إني توكلت على الله ربي وربكم ما من دابة إلا هو آخذ بناصيتها إن ربي على صراط مستقيم»](/blog/tafsir-ayah-inni-tawakkaltu-ala-allah/) (الآية 56)
 - [تفسير آية «هو أنشأكم من الأرض واستعمركم فيها»](/blog/tafsir-ayah-wastamarakum-fiha/) (الآية 61)
 - [تفسير آية «إن أريد إلا الإصلاح ما استطعت وما توفيقي إلا بالله»](/blog/tafsir-ayah-in-uridu-illa-al-islah/) (الآية 88)
+- [تفسير آية «فاستقم كما أمرت ومن تاب معك ولا تطغوا إنه بما تعملون بصير»](/blog/tafsir-ayah-fastaqim-kama-umirta/) (الآية 112)
 - [تفسير آية «إن الحسنات يذهبن السيئات ذلك ذكرى للذاكرين»](/blog/tafsir-ayah-al-hasanat-yudhhibna-as-sayyiat/) (الآية 114)
 - [تفسير «إن الله لا يضيع أجر المحسنين»](/blog/tafsir-ayah-la-yudiu-ajr-al-muhsinin/) (الآية 115)
 
