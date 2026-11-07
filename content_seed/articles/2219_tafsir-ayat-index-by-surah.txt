@@ -171,6 +171,7 @@ reading: 15
 - [تفسير دعاء آدم «ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا»](/blog/tafsir-ayah-rabbana-zalamna-anfusana/) (الآية 23)
 - [تفسير آية «يا بني آدم قد أنزلنا عليكم لباسا يواري سوءاتكم وريشا ولباس التقوى ذلك خير»](/blog/tafsir-ayah-wa-libasu-at-taqwa/) (الآية 26)
 - [تفسير آية «يا بني آدم خذوا زينتكم عند كل مسجد وكلوا واشربوا ولا تسرفوا»](/blog/tafsir-ayah-khudhu-zinatakum-inda-kulli-masjid/) (الآية 31)
+- [تفسير آية «ونزعنا ما في صدورهم من غل وقالوا الحمد لله الذي هدانا لهذا»](/blog/tafsir-ayah-al-hamdu-lillahi-alladhi-hadana/) (الآية 43)
 - [تفسير آية «ادعوا ربكم تضرعا وخفية إنه لا يحب المعتدين»](/blog/tafsir-ayah-udu-rabbakum-tadarruan/) (الآية 55)
 - [تفسير آية «إن رحمت الله قريب من المحسنين»](/blog/tafsir-ayah-inna-rahmata-allahi-qaribun/) (الآية 56)
 - [تفسير آية «ولا تفسدوا في الأرض بعد إصلاحها وادعوه خوفا وطمعا»](/blog/tafsir-ayah-wala-tufsidu-fil-ard/) (الآية 56)
@@ -180,6 +181,7 @@ reading: 15
 - [تفسير «خذ العفو وأمر بالعرف وأعرض عن الجاهلين» آية مكارم الأخلاق](/blog/tafsir-ayah-khudh-al-afw/) (الآية 199)
 - [تفسير آية «إن الذين اتقوا إذا مسهم طائف من الشيطان تذكروا»](/blog/tafsir-ayah-idha-massahum-taifun-minash-shaytan/) (الآية 201)
 - [تفسير آية «وإذا قرئ القرآن فاستمعوا له وأنصتوا لعلكم ترحمون»](/blog/tafsir-ayah-fastamiu-lahu-wa-ansitu/) (الآية 204)
+- [تفسير آية «واذكر ربك في نفسك تضرعا وخيفة ودون الجهر من القول بالغدو والآصال»](/blog/tafsir-ayah-wadhkur-rabbaka-fi-nafsika/) (الآية 205)
 
 ### سورة الأنفال
 - [تفسير آية «إنما المؤمنون الذين إذا ذكر الله وجلت قلوبهم»](/blog/tafsir-ayah-idha-dhukira-allah-wajilat/) (الآية 2)
