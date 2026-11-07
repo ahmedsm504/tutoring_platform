@@ -216,6 +216,7 @@ reading: 15
 ### سورة الرعد
 - [تفسير «إن الله لا يغير ما بقوم حتى يغيروا ما بأنفسهم»](/blog/tafsir-ayah-la-yughayyiru-ma-biqawm/) (الآية 11)
 - [تفسير آية «فأما الزبد فيذهب جفاء وأما ما ينفع الناس فيمكث في الأرض»](/blog/tafsir-ayah-fa-amma-az-zabadu/) (الآية 17)
+- [تفسير آية «والذين صبروا ابتغاء وجه ربهم وأقاموا الصلاة وأنفقوا مما رزقناهم سرا وعلانية»](/blog/tafsir-ayah-sabaru-ibtighaa-wajhi-rabbihim/) (الآية 22)
 - [تفسير «ألا بذكر الله تطمئن القلوب» وأسباب الطمأنينة](/blog/tafsir-ayah-ala-bidhikrillah-tatmainn-al-qulub/) (الآية 28)
 - [تفسير آية «يمحو الله ما يشاء ويثبت وعنده أم الكتاب»](/blog/tafsir-ayah-yamhu-allahu-ma-yasha/) (الآية 39)
 
@@ -406,6 +407,7 @@ reading: 15
 - [تفسير آية «أفمن شرح الله صدره للإسلام فهو على نور من ربه»](/blog/tafsir-ayah-afaman-sharaha-allahu-sadrahu/) (الآية 22)
 - [تفسير آية «الله نزل أحسن الحديث كتابا متشابها مثاني تقشعر منه جلود»](/blog/tafsir-ayah-allahu-nazzala-ahsana-al-hadith/) (الآية 23)
 - [تفسير آية «إنك ميت وإنهم ميتون»](/blog/tafsir-ayah-innaka-mayyitun-wa-innahum-mayyitun/) (الآية 30)
+- [تفسير آية «الله يتوفى الأنفس حين موتها والتي لم تمت في منامها»](/blog/tafsir-ayah-allahu-yatawaffa-al-anfusa/) (الآية 42)
 - [تفسير آية «قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله»](/blog/tafsir-ayah-ya-ibadiya-alladhina-asrafu/) (الآية 53)
 
 ### سورة غافر
