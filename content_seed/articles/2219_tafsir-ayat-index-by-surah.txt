@@ -275,6 +275,7 @@ reading: 15
 - [تفسير آية «سبحان الذي أسرى بعبده ليلا من المسجد الحرام إلى المسجد الأقصى»](/blog/tafsir-ayah-subhana-alladhi-asra-biabdihi/) (الآية 1)
 - [تفسير آية «إن أحسنتم أحسنتم لأنفسكم وإن أسأتم فلها»](/blog/tafsir-ayah-in-ahsantum-ahsantum-li-anfusikum/) (الآية 7)
 - [تفسير آية «إن هذا القرآن يهدي للتي هي أقوم»](/blog/tafsir-ayah-inna-hadha-al-quran-yahdi/) (الآية 9)
+- [تفسير آية «ومن أراد الآخرة وسعى لها سعيها وهو مؤمن فأولئك كان سعيهم مشكورا»](/blog/tafsir-ayah-wa-man-arada-al-akhira-wa-saa-laha/) (الآية 19)
 - [تفسير آية «وقضى ربك ألا تعبدوا إلا إياه وبالوالدين إحسانا»](/blog/tafsir-ayah-wa-qada-rabbuka/) (الآية 23)
 - [تفسير آيتي «وقضى ربك ألا تعبدوا إلا إياه وبالوالدين إحسانًا» و«واخفض لهما جناح الذل»](/blog/tafsir-ayah-wakhfid-lahuma-janah-adh-dhull/) (الآية 23)
 - [تفسير آيات «وآت ذا القربى حقه والمسكين وابن السبيل ولا تبذر تبذيرا إن المبذرين كانوا إخوان الشياطين»](/blog/tafsir-ayah-wa-ati-dhal-qurba-haqqah/) (الآية 26)
@@ -339,6 +340,7 @@ reading: 15
 ### سورة الحج
 - [تفسير آية «ومن يعظم شعائر الله فإنها من تقوى القلوب»](/blog/tafsir-ayah-wa-man-yuazzim-shaair-allah/) (الآية 32)
 - [تفسير آية «إن الله يدافع عن الذين آمنوا»](/blog/tafsir-ayah-inna-allaha-yudafiu/) (الآية 38)
+- [تفسير آية «الذين إن مكناهم في الأرض أقاموا الصلاة وآتوا الزكاة»](/blog/tafsir-ayah-alladhina-in-makkannahum-fil-ard/) (الآية 41)
 - [تفسير آية «فإنها لا تعمى الأبصار ولكن تعمى القلوب التي في الصدور»](/blog/tafsir-ayah-fa-innaha-la-tama-al-absar/) (الآية 46)
 - [تفسير آية «يا أيها الذين آمنوا اركعوا واسجدوا واعبدوا ربكم وافعلوا الخير»](/blog/tafsir-ayah-irkau-wasjudu/) (الآية 77)
 - [تفسير آية «وجاهدوا في الله حق جهاده هو اجتباكم وما جعل عليكم في الدين من حرج ملة أبيكم إبراهيم»](/blog/tafsir-ayah-wa-jahidu-fillahi-haqqa-jihadih/) (الآية 78)
