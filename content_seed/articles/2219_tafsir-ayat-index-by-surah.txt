@@ -200,6 +200,7 @@ reading: 15
 ### سورة التوبة
 - [تفسير آية «إنما يعمر مساجد الله من آمن بالله واليوم الآخر»](/blog/tafsir-ayah-innama-yamuru-masajid-allah/) (الآية 18)
 - [تفسير آية «قل إن كان آباؤكم وأبناؤكم وإخوانكم وأزواجكم وعشيرتكم»](/blog/tafsir-ayah-qul-in-kana-abaukum-wa-abnaukum/) (الآية 24)
+- [تفسير آية «إن عدة الشهور عند الله اثنا عشر شهرا في كتاب الله»](/blog/tafsir-ayah-inna-iddata-ash-shuhur/) (الآية 36)
 - [تفسير آية «إذ يقول لصاحبه لا تحزن إن الله معنا»](/blog/tafsir-ayah-la-tahzan-inna-allaha-maana/) (الآية 40)
 - [تفسير آية «قل لن يصيبنا إلا ما كتب الله لنا هو مولانا»](/blog/tafsir-ayah-lan-yusibana-illa-ma-kataba-allah/) (الآية 51)
 - [تفسير آية «والمؤمنون والمؤمنات بعضهم أولياء بعض»](/blog/tafsir-ayah-bauduhum-awliyau-baud/) (الآية 71)
@@ -214,6 +215,7 @@ reading: 15
 
 ### سورة يونس
 - [تفسير آية «هو الذي جعل الشمس ضياء والقمر نورا وقدره منازل»](/blog/tafsir-ayah-jaala-ash-shamsa-diyaan/) (الآية 5)
+- [تفسير آية «قل من يرزقكم من السماء والأرض أمن يملك السمع والأبصار»](/blog/tafsir-ayah-qul-man-yarzuqukum-mina-as-sama/) (الآية 31)
 - [تفسير آية «قد جاءتكم موعظة من ربكم وشفاء لما في الصدور»](/blog/tafsir-ayah-qad-jaatkum-mawizatun/) (الآية 57)
 - [تفسير آية «وما تكون في شأن وما تتلو منه من قرآن ولا تعملون من عمل إلا كنا عليكم شهودا»](/blog/tafsir-ayah-wa-ma-takunu-fi-shanin/) (الآية 61)
 - [تفسير آية «ألا إن أولياء الله لا خوف عليهم ولا هم يحزنون»](/blog/tafsir-ayah-ala-inna-awliya-allah/) (الآية 62)
