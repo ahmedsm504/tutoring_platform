@@ -349,6 +349,7 @@ reading: 15
 - [تفسير آية «وعد الله الذين آمنوا منكم وعملوا الصالحات ليستخلفنهم في الأرض كما استخلف الذين من قبلهم»](/blog/tafsir-ayah-layastakhlifannahum-fil-ard/) (الآية 55)
 
 ### سورة الفرقان
+- [تفسير آية «وجعلنا بعضكم لبعض فتنة أتصبرون وكان ربك بصيرا»](/blog/tafsir-ayah-jaalna-badakum-libadin-fitnatan/) (الآية 20)
 - [تفسير آية «وقال الرسول يا رب إن قومي اتخذوا هذا القرآن مهجورا»](/blog/tafsir-ayah-ittakhadhu-al-quran-mahjura/) (الآية 30)
 - [تفسير آية «وتوكل على الحي الذي لا يموت»](/blog/tafsir-ayah-wa-tawakkal-ala-al-hayy/) (الآية 58)
 - [تفسير آية «وعباد الرحمن الذين يمشون على الأرض هونا»](/blog/tafsir-ayah-yamshuna-alal-ardi-hawna/) (الآية 63)
@@ -363,6 +364,7 @@ reading: 15
 - [تفسير آية «وإذا مرضت فهو يشفين» ووصف إبراهيم لربه](/blog/tafsir-ayah-wa-idha-maridtu-fahuwa-yashfin/) (الآية 78)
 - [تفسير آية «رب هب لي حكما وألحقني بالصالحين» ودعاء إبراهيم عليه السلام](/blog/tafsir-ayah-rabbi-hab-li-hukman/) (الآية 83)
 - [تفسير آية «يوم لا ينفع مال ولا بنون إلا من أتى الله بقلب سليم»](/blog/tafsir-ayah-illa-man-ata-allaha-biqalbin-salim/) (الآية 87)
+- [تفسير آية «وتوكل على العزيز الرحيم الذي يراك حين تقوم وتقلبك في الساجدين»](/blog/tafsir-ayah-wa-tawakkal-ala-al-aziz-ar-rahim/) (الآية 217)
 
 ### سورة النمل
 - [تفسير دعاء «رب أوزعني أن أشكر نعمتك»](/blog/tafsir-ayah-rabbi-awzini-an-ashkur/) (الآية 19)
