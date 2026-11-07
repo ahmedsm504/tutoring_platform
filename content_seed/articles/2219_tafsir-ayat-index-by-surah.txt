@@ -39,6 +39,7 @@ reading: 15
 - [تفسير آية «إني جاعل في الأرض خليفة»](/blog/tafsir-ayah-inni-jailun-fil-ard-khalifa/) (الآية 30)
 - [تفسير آية «أتأمرون الناس بالبر وتنسون أنفسكم»](/blog/tafsir-ayah-atamuruna-an-nasa-bil-birr/) (الآية 44)
 - [تفسير آية «وقولوا للناس حسنا»](/blog/tafsir-ayah-wa-qulu-lin-nasi-husna/) (الآية 83)
+- [تفسير آية «وأقيموا الصلاة وآتوا الزكاة وما تقدموا لأنفسكم من خير تجدوه عند الله»](/blog/tafsir-ayah-wa-ma-tuqaddimu-li-anfusikum/) (الآية 110)
 - [تفسير آية «فأينما تولوا فثم وجه الله»](/blog/tafsir-ayah-faaynama-tuwallu-fathamma-wajhullah/) (الآية 115)
 - [تفسير آية «الذين آتيناهم الكتاب يتلونه حق تلاوته»](/blog/tafsir-ayah-yatlunahu-haqqa-tilawatih/) (الآية 121)
 - [تفسير آيات «وإذ يرفع إبراهيم القواعد من البيت وإسماعيل ربنا تقبل منا إنك أنت السميع العليم»](/blog/tafsir-ayah-rabbana-taqabbal-minna/) (الآية 127)
@@ -151,6 +152,7 @@ reading: 15
 - [تفسير آية «يا أيها الذين آمنوا عليكم أنفسكم لا يضركم من ضل إذا اهتديتم»](/blog/tafsir-ayah-alaykum-anfusakum/) (الآية 105)
 
 ### سورة الأنعام
+- [تفسير آية «وما من دابة في الأرض ولا طائر يطير بجناحيه إلا أمم أمثالكم»](/blog/tafsir-ayah-illa-umamun-amthalukum/) (الآية 38)
 - [تفسير آية «وإذا جاءك الذين يؤمنون بآياتنا فقل سلام عليكم كتب ربكم على نفسه الرحمة»](/blog/tafsir-ayah-kataba-rabbukum-ala-nafsihi-ar-rahma/) (الآية 54)
 - [تفسير «وعنده مفاتح الغيب لا يعلمها إلا هو» ومفاتح الغيب الخمس](/blog/tafsir-ayah-wa-indahu-mafatih-al-ghayb/) (الآية 59)
 - [تفسير آيات «فلما جن عليه الليل رأى كوكبا قال هذا ربي فلما أفل قال لا أحب الآفلين» حتى «إني وجهت وجهي»](/blog/tafsir-ayah-la-uhibbu-al-afilin/) (الآية 79)
