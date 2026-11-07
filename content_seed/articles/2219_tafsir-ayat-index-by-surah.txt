@@ -194,6 +194,7 @@ reading: 15
 - [تفسير آية «واتقوا فتنة لا تصيبن الذين ظلموا منكم خاصة واعلموا أن الله شديد العقاب»](/blog/tafsir-ayah-wattaqu-fitnatan-la-tusibanna/) (الآية 25)
 - [تفسير آية «وما كان الله ليعذبهم وأنت فيهم»](/blog/tafsir-ayah-wa-ma-kana-allahu-liyuadhibahum/) (الآية 33)
 - [تفسير آية «ولا تنازعوا فتفشلوا وتذهب ريحكم واصبروا»](/blog/tafsir-ayah-wala-tanazau-fatafshalu/) (الآية 46)
+- [تفسير آية «وأعدوا لهم ما استطعتم من قوة ومن رباط الخيل»](/blog/tafsir-ayah-wa-aiddu-lahum-ma-istatatum/) (الآية 60)
 - [تفسير آية «وإن جنحوا للسلم فاجنح لها وتوكل على الله»](/blog/tafsir-ayah-wa-in-janahu-lis-salm/) (الآية 61)
 - [تفسير آية «وألف بين قلوبهم لو أنفقت ما في الأرض جميعا ما ألفت بين قلوبهم»](/blog/tafsir-ayah-wa-allafa-bayna-qulubihim/) (الآية 63)
 
@@ -205,6 +206,7 @@ reading: 15
 - [تفسير آية «قل لن يصيبنا إلا ما كتب الله لنا هو مولانا»](/blog/tafsir-ayah-lan-yusibana-illa-ma-kataba-allah/) (الآية 51)
 - [تفسير آية «والمؤمنون والمؤمنات بعضهم أولياء بعض»](/blog/tafsir-ayah-bauduhum-awliyau-baud/) (الآية 71)
 - [تفسير آية «وعد الله المؤمنين والمؤمنات جنات تجري من تحتها الأنهار... ورضوان من الله أكبر»](/blog/tafsir-ayah-wa-ridwanun-mina-allahi-akbar/) (الآية 72)
+- [تفسير آية «والسابقون الأولون من المهاجرين والأنصار والذين اتبعوهم بإحسان»](/blog/tafsir-ayah-was-sabiquna-al-awwaluna/) (الآية 100)
 - [تفسير آية «خذ من أموالهم صدقة تطهرهم وتزكيهم بها وصل عليهم»](/blog/tafsir-ayah-khudh-min-amwalihim-sadaqa/) (الآية 103)
 - [تفسير آية «وقل اعملوا فسيرى الله عملكم ورسوله والمؤمنون»](/blog/tafsir-ayah-waquli-amalu-fasayara-allah/) (الآية 105)
 - [تفسير آية «إن الله اشترى من المؤمنين أنفسهم وأموالهم»](/blog/tafsir-ayah-inna-allaha-ishtara-min-al-muminin/) (الآية 111)
