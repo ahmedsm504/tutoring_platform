@@ -425,6 +425,7 @@ reading: 15
 
 ### سورة يس
 - [تفسير آية «إنا نحن نحيي الموتى ونكتب ما قدموا وآثارهم وكل شيء أحصيناه في إمام مبين»](/blog/tafsir-ayah-naktubu-ma-qaddamu-wa-atharahum/) (الآية 12)
+- [تفسير آية «سلام قولا من رب رحيم»](/blog/tafsir-ayah-salamun-qawlan-min-rabbin-rahim/) (الآية 58)
 - [تفسير آية «اليوم نختم على أفواههم وتكلمنا أيديهم وتشهد أرجلهم بما كانوا يكسبون»](/blog/tafsir-ayah-al-yawma-nakhtimu-ala-afwahihim/) (الآية 65)
 - [تفسير آية «إنما أمره إذا أراد شيئا أن يقول له كن فيكون»](/blog/tafsir-ayah-innama-amruhu-idha-arada-shayan/) (الآية 82)
 
@@ -433,6 +434,7 @@ reading: 15
 
 ### سورة ص
 - [تفسير آية «كتاب أنزلناه إليك مبارك ليدبروا آياته»](/blog/tafsir-ayah-kitabun-anzalnahu-mubarakun/) (الآية 29)
+- [تفسير آية «رب اغفر لي وهب لي ملكا لا ينبغي لأحد من بعدي»](/blog/tafsir-ayah-rabbi-ighfir-li-wa-hab-li-mulka/) (الآية 35)
 - [تفسير آية «وأيوب إذ نادى ربه أني مسني الضر وأنت أرحم الراحمين»](/blog/tafsir-ayah-wa-ayyuba-idh-nada-rabbah/) (الآية 44)
 
 ### سورة الزمر
