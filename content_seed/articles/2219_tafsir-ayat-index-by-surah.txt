@@ -468,6 +468,7 @@ reading: 15
 - [تفسير آية «أفلا يتدبرون القرآن أم على قلوب أقفالها»](/blog/tafsir-ayah-afala-yatadabbaruna-al-quran/) (الآية 24)
 
 ### سورة الفتح
+- [تفسير آية «هو الذي أنزل السكينة في قلوب المؤمنين ليزدادوا إيمانا مع إيمانهم»](/blog/tafsir-ayah-anzala-as-sakinata-fi-qulub/) (الآية 4)
 - [تفسير آية «محمد رسول الله والذين معه أشداء على الكفار رحماء بينهم»](/blog/tafsir-ayah-muhammadun-rasulu-allah-walladhina/) (الآية 29)
 
 ### سورة الحجرات
@@ -546,6 +547,7 @@ reading: 15
 
 ### سورة الملك
 - [تفسير آية «الذي خلق الموت والحياة ليبلوكم أيكم أحسن عملا»](/blog/tafsir-ayah-khalaqa-al-mawta-wal-hayat/) (الآية 2)
+- [تفسير آية «ألا يعلم من خلق وهو اللطيف الخبير»](/blog/tafsir-ayah-ala-yalamu-man-khalaq/) (الآية 14)
 - [تفسير آية «هو الذي جعل لكم الأرض ذلولا فامشوا في مناكبها وكلوا من رزقه وإليه النشور»](/blog/tafsir-ayah-al-arda-dhalulan/) (الآية 15)
 
 ### سورة القلم
