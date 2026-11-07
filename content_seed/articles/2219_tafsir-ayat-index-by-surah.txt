@@ -72,6 +72,7 @@ reading: 15
 - [تفسير آية «ربنا أفرغ علينا صبرا وثبت أقدامنا وانصرنا على القوم الكافرين»](/blog/tafsir-ayah-rabbana-afrigh-alayna-sabra/) (الآية 250)
 - [تفسير آية «لا إكراه في الدين قد تبين الرشد من الغي»](/blog/tafsir-ayah-la-ikraha-fid-din/) (الآية 256)
 - [تفسير آية «الله ولي الذين آمنوا يخرجهم من الظلمات إلى النور»](/blog/tafsir-ayah-allahu-waliyyu-alladhina-amanu/) (الآية 257)
+- [تفسير آية «رب أرني كيف تحيي الموتى قال أولم تؤمن قال بلى ولكن ليطمئن قلبي»](/blog/tafsir-ayah-rabbi-arini-kayfa-tuhyi-al-mawta/) (الآية 260)
 - [تفسير آية «مثل الذين ينفقون أموالهم في سبيل الله كمثل حبة»](/blog/tafsir-ayah-mathal-alladhina-yunfiqun/) (الآية 261)
 - [تفسير آية «قول معروف ومغفرة خير من صدقة يتبعها أذى»](/blog/tafsir-ayah-qawlun-maruf-wa-maghfira/) (الآية 263)
 - [تفسير آية «يا أيها الذين آمنوا لا تبطلوا صدقاتكم بالمن والأذى كالذي ينفق ماله رئاء الناس»](/blog/tafsir-ayah-la-tubtilu-sadaqatikum-bil-mann/) (الآية 264)
@@ -194,6 +195,7 @@ reading: 15
 - [تفسير آية «وإن جنحوا للسلم فاجنح لها وتوكل على الله»](/blog/tafsir-ayah-wa-in-janahu-lis-salm/) (الآية 61)
 
 ### سورة التوبة
+- [تفسير آية «قل إن كان آباؤكم وأبناؤكم وإخوانكم وأزواجكم وعشيرتكم»](/blog/tafsir-ayah-qul-in-kana-abaukum-wa-abnaukum/) (الآية 24)
 - [تفسير آية «إذ يقول لصاحبه لا تحزن إن الله معنا»](/blog/tafsir-ayah-la-tahzan-inna-allaha-maana/) (الآية 40)
 - [تفسير آية «قل لن يصيبنا إلا ما كتب الله لنا هو مولانا»](/blog/tafsir-ayah-lan-yusibana-illa-ma-kataba-allah/) (الآية 51)
 - [تفسير آية «والمؤمنون والمؤمنات بعضهم أولياء بعض»](/blog/tafsir-ayah-bauduhum-awliyau-baud/) (الآية 71)
