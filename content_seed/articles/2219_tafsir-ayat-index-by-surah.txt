@@ -35,6 +35,7 @@ reading: 15
 
 ### سورة البقرة
 - [تفسير آية «ذلك الكتاب لا ريب فيه هدى للمتقين»](/blog/tafsir-ayah-dhalika-al-kitabu-la-rayba-fih/) (الآية 2)
+- [تفسير آية «يا أيها الناس اعبدوا ربكم الذي خلقكم والذين من قبلكم لعلكم تتقون»](/blog/tafsir-ayah-ya-ayyuha-an-nasu-ubudu-rabbakum/) (الآية 21)
 - [تفسير آية «إني جاعل في الأرض خليفة»](/blog/tafsir-ayah-inni-jailun-fil-ard-khalifa/) (الآية 30)
 - [تفسير آية «أتأمرون الناس بالبر وتنسون أنفسكم»](/blog/tafsir-ayah-atamuruna-an-nasa-bil-birr/) (الآية 44)
 - [تفسير آية «وقولوا للناس حسنا»](/blog/tafsir-ayah-wa-qulu-lin-nasi-husna/) (الآية 83)
@@ -109,6 +110,7 @@ reading: 15
 - [تفسير آية «ولا تحسبن الذين قتلوا في سبيل الله أمواتا بل أحياء»](/blog/tafsir-ayah-bal-ahyaun-inda-rabbihim/) (الآية 169)
 - [تفسير آية «ولا تحسبن الذين قتلوا في سبيل الله أمواتا بل أحياء عند ربهم يرزقون»](/blog/tafsir-ayah-wa-la-tahsabanna-alladhina-qutilu/) (الآية 169)
 - [تفسير آية «الذين قال لهم الناس إن الناس قد جمعوا لكم فاخشوهم... حسبنا الله ونعم الوكيل»](/blog/tafsir-ayah-hasbuna-allah-wa-nimal-wakil/) (الآية 173)
+- [تفسير آية «ولا يحسبن الذين يبخلون بما آتاهم الله من فضله هو خيرا لهم بل هو شر لهم»](/blog/tafsir-ayah-wala-yahsabanna-alladhina-yabkhalun/) (الآية 180)
 - [تفسير آية «كل نفس ذائقة الموت وإنما توفون أجوركم يوم القيامة»](/blog/tafsir-ayah-kullu-nafsin-dhaiqat-al-mawt/) (الآية 185)
 - [تفسير آية «لتبلون في أموالكم وأنفسكم ولتسمعن من الذين أوتوا الكتاب أذى كثيرا»](/blog/tafsir-ayah-latublawunna-fi-amwalikum/) (الآية 186)
 - [تفسير «إن في خلق السماوات والأرض لآيات لأولي الألباب»](/blog/tafsir-ayah-inna-fi-khalq-as-samawat/) (الآية 190)
