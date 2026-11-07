@@ -299,6 +299,7 @@ reading: 15
 - [تفسير آيات «واذكر في الكتاب إبراهيم إنه كان صديقا نبيا إذ قال لأبيه يا أبت لم تعبد ما لا يسمع ولا يبصر»](/blog/tafsir-ayah-ya-abati-lima-tabudu/) (الآية 42)
 - [تفسير آيات «واذكر في الكتاب موسى إنه كان مخلصا وكان رسولا نبيا وناديناه من جانب الطور الأيمن وقربناه نجيا»](/blog/tafsir-ayah-innahu-kana-mukhlasan/) (الآية 51)
 - [تفسير آيتي «واذكر في الكتاب إسماعيل إنه كان صادق الوعد وكان رسولا نبيا وكان يأمر أهله بالصلاة والزكاة»](/blog/tafsir-ayah-sadiq-al-wad/) (الآية 54)
+- [تفسير آية «فخلف من بعدهم خلف أضاعوا الصلاة واتبعوا الشهوات فسوف يلقون غيا»](/blog/tafsir-ayah-fakhalafa-min-badihim-khalfun/) (الآية 59)
 - [تفسير آية «وما كان ربك نسيا»](/blog/tafsir-ayah-wa-ma-kana-rabbuka-nasiyya/) (الآية 64)
 - [تفسير آية «إن الذين آمنوا وعملوا الصالحات سيجعل لهم الرحمن ودا»](/blog/tafsir-ayah-sayajalu-lahum-ar-rahmanu-wudda/) (الآية 96)
 
@@ -312,6 +313,7 @@ reading: 15
 - [تفسير آية «وإني لغفار لمن تاب وآمن وعمل صالحا ثم اهتدى»](/blog/tafsir-ayah-wa-inni-laghaffarun-liman-tab/) (الآية 82)
 - [تفسير آية «وقل رب زدني علما» وأدب تلقي القرآن](/blog/tafsir-ayah-rabbi-zidni-ilma/) (الآية 114)
 - [تفسير آية «ومن أعرض عن ذكري فإن له معيشة ضنكا»](/blog/tafsir-ayah-maisha-danka/) (الآية 124)
+- [تفسير آية «فاصبر على ما يقولون وسبح بحمد ربك قبل طلوع الشمس وقبل غروبها»](/blog/tafsir-ayah-wa-sabbih-qabla-tuluu-ash-shams/) (الآية 130)
 - [تفسير آية «ولا تمدن عينيك إلى ما متعنا به أزواجا منهم»](/blog/tafsir-ayah-wala-tamuddanna-aynayk/) (الآية 131)
 - [تفسير آية «وأمر أهلك بالصلاة واصطبر عليها»](/blog/tafsir-ayah-wamur-ahlaka-bis-salat/) (الآية 132)
 
