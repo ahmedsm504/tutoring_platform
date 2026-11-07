@@ -132,6 +132,7 @@ reading: 15
 - [تفسير آية «أطيعوا الله وأطيعوا الرسول وأولي الأمر منكم»](/blog/tafsir-ayah-atiullah-wa-atiu-ar-rasul/) (الآية 59)
 - [تفسير آية «فلا وربك لا يؤمنون حتى يحكموك فيما شجر بينهم ثم لا يجدوا في أنفسهم حرجا»](/blog/tafsir-ayah-fala-wa-rabbika-la-yuminun/) (الآية 65)
 - [تفسير آية «ومن يطع الله والرسول فأولئك مع الذين أنعم الله عليهم»](/blog/tafsir-ayah-maa-alladhina-anama-allahu-alayhim/) (الآية 69)
+- [تفسير آية «ما أصابك من حسنة فمن الله وما أصابك من سيئة فمن نفسك»](/blog/tafsir-ayah-ma-asabaka-min-hasanatin-famina-allah/) (الآية 79)
 - [تفسير آية «وإذا حييتم بتحية فحيوا بأحسن منها أو ردوها»](/blog/tafsir-ayah-wa-idha-huyyitum-bitahiyya/) (الآية 86)
 - [تفسير آية «ومن يهاجر في سبيل الله يجد في الأرض مراغما كثيرا وسعة»](/blog/tafsir-ayah-wa-man-yuhajir-fi-sabil-allah/) (الآية 100)
 - [تفسير آية «إن الصلاة كانت على المؤمنين كتابا موقوتا»](/blog/tafsir-ayah-kitaban-mawquta/) (الآية 103)
@@ -207,6 +208,7 @@ reading: 15
 - [تفسير آية «وقل اعملوا فسيرى الله عملكم ورسوله والمؤمنون»](/blog/tafsir-ayah-waquli-amalu-fasayara-allah/) (الآية 105)
 - [تفسير آية «إن الله اشترى من المؤمنين أنفسهم وأموالهم»](/blog/tafsir-ayah-inna-allaha-ishtara-min-al-muminin/) (الآية 111)
 - [تفسير آية «وكونوا مع الصادقين» وقصة صدق كعب بن مالك](/blog/tafsir-ayah-wa-kunu-maa-as-sadiqin/) (الآية 119)
+- [تفسير آية «فلولا نفر من كل فرقة منهم طائفة ليتفقهوا في الدين»](/blog/tafsir-ayah-falawla-nafara-min-kulli-firqa/) (الآية 122)
 - [تفسير «لقد جاءكم رسول من أنفسكم عزيز عليه ما عنتم»](/blog/tafsir-ayah-laqad-jaakum-rasul/) (الآية 128)
 - [تفسير آية «فإن تولوا فقل حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم»](/blog/tafsir-ayah-hasbiya-allahu/) (الآية 129)
 
