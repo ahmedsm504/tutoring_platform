@@ -100,6 +100,7 @@ reading: 15
 - [تفسير آية «والذين إذا فعلوا فاحشة أو ظلموا أنفسهم ذكروا الله فاستغفروا»](/blog/tafsir-ayah-idha-faalu-fahishatan/) (الآية 135)
 - [تفسير آية «ولا تهنوا ولا تحزنوا وأنتم الأعلون إن كنتم مؤمنين»](/blog/tafsir-ayah-wala-tahinu-wala-tahzanu/) (الآية 139)
 - [تفسير آية «وتلك الأيام نداولها بين الناس»](/blog/tafsir-ayah-tilka-al-ayyam-nudawiluha/) (الآية 140)
+- [تفسير آية «وما كان لنفس أن تموت إلا بإذن الله كتابا مؤجلا ومن يرد ثواب الدنيا نؤته منها»](/blog/tafsir-ayah-wa-ma-kana-linafsin-an-tamuta/) (الآية 145)
 - [تفسير آية «وكأين من نبي قاتل معه ربيون كثير»](/blog/tafsir-ayah-wallahu-yuhibbu-as-sabirin/) (الآية 146)
 - [تفسير «فبما رحمة من الله لنت لهم» ومنهج القيادة الرحيمة](/blog/tafsir-ayah-fabima-rahmatin-linta-lahum/) (الآية 159)
 - [تفسير آية «إن ينصركم الله فلا غالب لكم وإن يخذلكم فمن ذا الذي ينصركم من بعده»](/blog/tafsir-ayah-in-yansurkumu-allah-fala-ghaliba/) (الآية 160)
@@ -427,6 +428,7 @@ reading: 15
 - [تفسير آية «وجزاء سيئة سيئة مثلها فمن عفا وأصلح فأجره على الله»](/blog/tafsir-ayah-jazau-sayyiatin-sayyiatun-mithluha/) (الآية 40)
 
 ### سورة الزخرف
+- [تفسير آية «أهم يقسمون رحمت ربك نحن قسمنا بينهم معيشتهم في الحياة الدنيا»](/blog/tafsir-ayah-ahum-yaqsimuna-rahmata-rabbik/) (الآية 32)
 - [تفسير آية «الأخلاء يومئذ بعضهم لبعض عدو إلا المتقين»](/blog/tafsir-ayah-al-akhillau-yawmaidhin/) (الآية 67)
 
 ### سورة محمد
