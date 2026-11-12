@@ -1265,6 +1265,27 @@ class MergedPageTitleTests(TestCase):
         self.assertNotIn('وغيرها', a + b)
 
 
+class FaqSchemaAndFullTafsirTests(TestCase):
+    def test_article_with_faq_section_has_faqpage_jsonld(self):
+        import json, re
+        r = self.client.get('/blog/tafsir-surat-al-ikhlas-kamila/')
+        blocks = [b for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', r.content.decode(), re.S) if 'FAQPage' in b]
+        self.assertEqual(len(blocks), 1)
+        data = json.loads(blocks[0])
+        self.assertGreaterEqual(len(data['mainEntity']), 2)
+        self.assertTrue(all(q['acceptedAnswer']['text'] for q in data['mainEntity']))
+
+    def test_english_full_tafsir_index_links_articles(self):
+        r = self.client.get('/blog/quran-surahs-full-tafsir-english-index/')
+        self.assertContains(r, '/blog/surah-al-mulk-full-tafsir-english/')
+        r = self.client.get('/blog/surah-al-mulk-full-tafsir-english/')
+        self.assertContains(r, '/blog/quran-surahs-full-tafsir-english-index/')
+
+    def test_old_articles_link_full_tafsir(self):
+        from blog.models import Post
+        self.assertTrue(Post.objects.filter(content__contains='/blog/tafsir-surat-al-mulk-kamila/').exclude(slug__in=['tafsir-surahs-index', 'tafsir-surat-al-mulk-kamila']).exists())
+
+
 class SeoLimitsAndQuranLinksTests(TestCase):
     def test_title_and_description_limits(self):
         import html, re
