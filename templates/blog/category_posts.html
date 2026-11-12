@@ -1,5 +1,6 @@
 {% extends 'blog/blog_list.html' %}
 {% load static %}
+{% block adsense %}{% if posts.paginator.count %}{% include "includes/adsense.html" %}{% endif %}{% endblock %}
 
 {% block title %}{{ category.name }} | مدونة مؤسسة العجمي{% if posts.number > 1 %} - صفحة {{ posts.number }}{% endif %}{% endblock %}
 

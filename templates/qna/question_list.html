@@ -12,7 +12,7 @@
 {% block twitter_title %}أسئلة وأجوبة قرآنية - العجمي{% endblock %}
 {% block twitter_description %}أجوبة موثقة عن كل ما يتعلق بتحفيظ القرآن وتلاوته.{% endblock %}
 {% block canonical_url %}{{ SITE_URL }}{{ request.path }}{% if current_category and not current_search and not current_filter %}?category={{ current_category|urlencode }}{% if page_obj.number > 1 %}&page={{ page_obj.number }}{% endif %}{% elif page_obj.number > 1 and not current_search and not current_filter %}?page={{ page_obj.number }}{% endif %}{% endblock %}
-{% block robots %}{% if current_search or current_filter or current_sort != 'newest' %}noindex, follow{% else %}index, follow, max-image-preview:large, max-snippet:-1{% endif %}{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
 
 {% block extra_ldjson %}
 <script type="application/ld+json">

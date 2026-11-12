@@ -37,6 +37,9 @@ def notify_post(post):
 
 @receiver(post_save, sender=Post)
 def on_post_saved(sender, instance, created, **kwargs):
+    from django.core.cache import cache
+    from .models import INDEXABLE_CACHE_KEY
+    cache.delete(INDEXABLE_CACHE_KEY)
     if instance.status != 'published':
         return
 
@@ -51,5 +54,6 @@ def on_post_saved(sender, instance, created, **kwargs):
         except Exception:
             logger.exception('فشل تجهيز إشعار المقال: %s', instance.slug)
 
-    # IndexNow (دالة send_indexnow نفسها مابترميش أخطاء)
-    send_indexnow(f'https://alagme.com/blog/{instance.slug}/')
+    # IndexNow (دالة send_indexnow نفسها مابترميش أخطاء) - للمقالات المفهرسة بس
+    if instance.is_indexable:
+        send_indexnow(f'https://alagme.com/blog/{instance.slug}/')

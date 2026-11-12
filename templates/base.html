@@ -65,7 +65,8 @@
       gtag('config', 'G-RNXPQQNRNP');
       gtag('config', 'AW-18213459162');
     </script>
-    {% block adsense %}<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4253419170065458" crossorigin="anonymous"></script>{% endblock %}
+    {# إعلانات AdSense بتتحمّل في صفحات المحتوى بس (الرئيسية والمدونة والمقالات الطويلة)، مش في الدخول والفورمات والبورتال والأسئلة القصيرة #}
+    {% block adsense %}{% endblock %}
 
     <!-- Schema: المنظمة + الموقع (مع البحث داخل المدونة) -->
     <script type="application/ld+json">

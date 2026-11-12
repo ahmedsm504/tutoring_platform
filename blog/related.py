@@ -41,10 +41,11 @@ def _phrases(keywords):
 
 
 def related_posts(post, limit=4):
-    key = f'blog:related:v1:{post.pk}'
+    key = f'blog:related:v2:{post.pk}'
     ids = cache.get(key)
     if ids is None:
-        qs = Post.objects.filter(status='published').exclude(pk=post.pk)
+        # المقال المفهرس بيرشّح مقالات مفهرسة بس؛ القصير بيرشّح الطويلة الأول عشان القارئ يلاقي محتوى أعمق
+        qs = Post.objects.indexable().exclude(pk=post.pk)
         if post.category_id:
             qs = qs.filter(category_id=post.category_id)
         rows = list(qs.values_list('pk', 'title', 'keywords', 'published_at'))
@@ -77,7 +78,7 @@ def prev_next(post):
     """المقال السابق والتالي في نفس التصنيف (بترتيب النشر)"""
     if not post.published_at:
         return None, None
-    qs = Post.objects.filter(status='published').exclude(pk=post.pk)
+    qs = Post.objects.indexable().exclude(pk=post.pk)
     if post.category_id:
         qs = qs.filter(category_id=post.category_id)
     prev = qs.filter(published_at__lt=post.published_at).order_by('-published_at').only('slug', 'title').first()

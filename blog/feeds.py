@@ -13,7 +13,7 @@ class LatestPostsFeed(Feed):
     language = 'ar'
 
     def items(self):
-        return Post.objects.filter(status='published').order_by('-published_at')[:60]
+        return Post.objects.indexable().order_by('-published_at')[:60]
 
     def item_title(self, item):
         return item.title

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block robots %}noindex, follow{% endblock %}
 {% load static content_tags i18n %}
 
 {% block html_lang %}{% if question.title|is_latin %}en{% else %}ar{% endif %}{% endblock %}

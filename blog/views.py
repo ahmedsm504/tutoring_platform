@@ -5,12 +5,25 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Post, Category, Comment, PostVideo
 
+def _indexable_categories():
+    """التصنيفات اللي فيها مقالات مفهرسة، مع عددها"""
+    counts = {}
+    for cid in Post.objects.indexable().values_list('category_id', flat=True):
+        counts[cid] = counts.get(cid, 0) + 1
+    cats = list(Category.objects.filter(pk__in=[c for c in counts if c]))
+    for c in cats:
+        c.posts_count = counts[c.pk]
+    return cats
+
+
 def blog_list(request):
     """عرض قائمة المقالات مع البحث والفلترة"""
-    posts_list = Post.objects.filter(status='published').select_related('author', 'category')
+    # القوائم العامة بتعرض المقالات الطويلة المفهرسة بس (انظر INDEX_MIN_CHARS)، والبحث بيدور في كل المنشور
+    search_query = request.GET.get('search', '')
+    base_qs = Post.objects.published() if search_query else Post.objects.indexable()
+    posts_list = base_qs.select_related('author', 'category')
     
     # البحث
-    search_query = request.GET.get('search', '')
     if search_query:
         posts_list = posts_list.filter(
             Q(title__icontains=search_query) |
@@ -38,18 +51,16 @@ def blog_list(request):
     posts = paginator.get_page(page_number)
     
     # المقالات المميزة
-    featured_posts = Post.objects.filter(status='published', is_featured=True)[:3]
+    featured_posts = Post.objects.indexable().filter(is_featured=True)[:3]
     
     # التصنيفات مع عدد المقالات
-    categories = Category.objects.annotate(
-        posts_count=Count('posts', filter=Q(posts__status='published'))
-    ).filter(posts_count__gt=0)
+    categories = _indexable_categories()
     
     # المقالات الأكثر قراءة
-    popular_posts = Post.objects.filter(status='published').order_by('-views_count')[:5]
+    popular_posts = Post.objects.indexable().order_by('-views_count')[:5]
     
     # مجموع المشاهدات ✅
-    total_views = Post.objects.filter(status='published').aggregate(
+    total_views = Post.objects.indexable().aggregate(
         total=Sum('views_count')
     )['total'] or 0
 
@@ -59,7 +70,7 @@ def blog_list(request):
     ).select_related('post').order_by('-id')[:4]
 
     # عدادات المدونة (كل المنشور، مش المفلتر)
-    total_posts = Post.objects.filter(status='published').count()
+    total_posts = Post.objects.indexable().count()
     try:
         from qna.models import PublicQuestion
         total_questions = PublicQuestion.objects.filter(status='approved').count()
@@ -151,6 +162,7 @@ def blog_detail(request, slug):
         'next_post': next_post,
         'gallery_images': gallery_images,
         'videos': videos,
+        'indexable': post.is_indexable,
     }
     
     response = render(request, 'blog/blog_detail.html', context)
@@ -165,8 +177,8 @@ def blog_detail(request, slug):
 def category_posts(request, slug):
     """عرض مقالات تصنيف معين"""
     category = get_object_or_404(Category, slug=slug)
-    posts_list = Post.objects.filter(
-        status='published', category=category
+    posts_list = Post.objects.indexable().filter(
+        category=category
     ).select_related('category').order_by('-created_at')
     
     # Pagination
@@ -175,10 +187,8 @@ def category_posts(request, slug):
     posts = paginator.get_page(page_number)
 
     # الشريط الجانبي (نفس بيانات صفحة المدونة)
-    categories = Category.objects.annotate(
-        posts_count=Count('posts', filter=Q(posts__status='published'))
-    ).filter(posts_count__gt=0)
-    popular_posts = Post.objects.filter(status='published').order_by('-views_count')[:5]
+    categories = _indexable_categories()
+    popular_posts = Post.objects.indexable().order_by('-views_count')[:5]
     
     context = {
         'category': category,
