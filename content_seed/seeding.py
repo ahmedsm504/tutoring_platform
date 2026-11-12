@@ -60,8 +60,48 @@ def refresh_articles(apps, slugs):
         Post.objects.filter(slug=slug).update(**fields)
 
 
+def apply_merges(apps, targets, refresh=()):
+    """دمج المقالات القصيرة المتشابهة في صفحات شاملة (لسياسة أدسنس ضد المحتوى منخفض القيمة):
+    - كل مقال مجمِّع (target) بياخد العنوان والمحتوى الجديد من ملفه.
+    - المقالات اللي اتدمجت بتتحول مسودة، والرابط القديم بيتحول 301 للقسم بتاعها (merged_redirects.json).
+    - المقالات اللي روابطها الداخلية اتعدلت بتتحدث من ملفاتها."""
+    import json
+    from pathlib import Path
+    from content_seed import load_articles
+    Post = apps.get_model('blog', 'Post')
+    by_slug = {a['slug']: a for a in load_articles()}
+    now = timezone.now()
+    for slug in targets:
+        a = by_slug.get(slug)
+        if not a:
+            continue
+        Post.objects.filter(slug=slug).update(
+            title=a['title'][:200], image_alt=a['title'][:200], content=a['body'], excerpt=a['excerpt'][:300],
+            meta_description=a['meta'][:160], keywords=a['keywords'][:200],
+            reading_time=int(a.get('reading', 5)), status='published', updated_at=now)
+    redirects = json.loads((Path(__file__).parent / 'merged_redirects.json').read_text(encoding='utf-8'))
+    Post.objects.filter(slug__in=list(redirects)).update(status='draft', updated_at=now)
+    refresh_articles(apps, list(refresh))
+    # أي رابط داخلي لسه بيشاور على مقال اتدمج (مقالات الأدمن، الأسئلة، الإجابات) -> القسم الجديد مباشرة
+    link = re.compile(r'/blog/([a-z0-9-]+)/(#[^)\s"\'<]*)?')
+
+    def fix(m):
+        new = redirects.get(m.group(1))
+        if not new:
+            return m.group(0)
+        slug, _, anchor = new.partition('#')
+        return f'/blog/{slug}/#{anchor}'
+    for model, field in (('blog.Post', 'content'), ('qna.PublicQuestion', 'question_text'),
+                         ('qna.QuestionAnswer', 'answer_text'), ('qna.CommunityAnswer', 'answer_text')):
+        Model = apps.get_model(*model.split('.'))
+        for pk, text in Model.objects.filter(**{f'{field}__contains': '/blog/'}).values_list('pk', field):
+            new = link.sub(fix, text or '')
+            if new != text:
+                Model.objects.filter(pk=pk).update(**{field: new})
+
+
 def _plain(text, limit=155):
-    t = re.sub(r'^\s*(#{2,3}|[-•*>]|\d+[.)])\s+', '', text, flags=re.M)
+    t = re.sub(r'^\s*(#{2,4}|[-•*>]|\d+[.)])\s+', '', text, flags=re.M)
     t = re.sub(r'\*\*(.+?)\*\*', r'\1', t)
     t = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', t)
     t = re.sub(r'^\|.*$', '', t, flags=re.M)

@@ -13,7 +13,7 @@ The juz division is a **practical arrangement** made for ease of reading. The or
 This guide is a **complete map** of all thirty: the popular name memorizers use for each juz, its opening verse, its boundaries, its pages in the Madinah Mushaf, and its main themes in a few lines. Under each juz you will find a link to a **full English guide** to that juz, covering its sections, key verses, tajweed points, similar verses and memorization tips.
 
 ## Why a map of the juz helps
-- **For reading**: reading one juz a day completes the Quran in a month, the most popular khatm in Ramadan. Knowing the themes of a juz before you read it turns reading into reflection. See [How to Finish the Quran: Khatm Schedules for a Year, a Month or a Week](/blog/quran-khatm-schedules-english/).
+- **For reading**: reading one juz a day completes the Quran in a month, the most popular khatm in Ramadan. Knowing the themes of a juz before you read it turns reading into reflection. See [How to Finish the Quran: Khatm Schedules for a Year, a Month or a Week](/blog/learning-arabic-through-quran-english/#How-to-Finish-the-Quran-Khatm-Schedules-for-a-Year-a-Month-o).
 - **For memorization**: memorizers learn and revise by the juz, and teachers test by asking "recite from the start of Juz such-and-such".
 - **For understanding**: once you see the Quran as a sequence of parts with clear themes, the Mushaf becomes a connected map in your mind rather than a run of separate pages.
 
@@ -279,10 +279,10 @@ Read the full guide: [Juz 30 of the Quran (Juz Amma): Summary, Themes and Key Ve
 
 ## How to use this guide
 ### For a Ramadan khatm
-Before each juz, spend five minutes reading its **guide**: the big idea and the main sections. Then read the juz knowing where you are in its argument. Reading becomes a little slower but far deeper, and the famous verses become landmarks you look out for. For other paces (a week, two weeks, two months), see [How to Finish the Quran: Khatm Schedules for a Year, a Month or a Week](/blog/quran-khatm-schedules-english/).
+Before each juz, spend five minutes reading its **guide**: the big idea and the main sections. Then read the juz knowing where you are in its argument. Reading becomes a little slower but far deeper, and the famous verses become landmarks you look out for. For other paces (a week, two weeks, two months), see [How to Finish the Quran: Khatm Schedules for a Year, a Month or a Week](/blog/learning-arabic-through-quran-english/#How-to-Finish-the-Quran-Khatm-Schedules-for-a-Year-a-Month-o).
 
 ### For memorization
-Start where it suits you. Many memorizers begin with **Juz 'Amma**, then **Tabarak**, then **Qad Sami'**, and then go back to the start of the Mushaf. Before memorizing a juz, read its guide: knowing the meaning binds the verses together and reduces confusion between similar passages. If you are just starting out, read [10 Mistakes Beginner Quran Memorizers Make (and How to Fix Them)](/blog/beginner-memorizer-mistakes-english/), and choose a recitation to follow with [how to choose a reciter for memorization](/blog/choosing-reciter-for-memorization-english/).
+Start where it suits you. Many memorizers begin with **Juz 'Amma**, then **Tabarak**, then **Qad Sami'**, and then go back to the start of the Mushaf. Before memorizing a juz, read its guide: knowing the meaning binds the verses together and reduces confusion between similar passages. If you are just starting out, read [10 Mistakes Beginner Quran Memorizers Make (and How to Fix Them)](/blog/arabic-letters-pronunciation-for-non-arabs/#10-Mistakes-Beginner-Quran-Memorizers-Make-and-How-to-Fix-Th), and choose a recitation to follow with [how to choose a reciter for memorization](/blog/arabic-letters-pronunciation-for-non-arabs/#Which-Reciter-Should-You-Listen-to-for-Memorizing-the-Quran).
 
 ### For revision
 Make a **card** for every juz with its name, first verse, main sections and the similar verses to watch. Look over the card before reciting the juz from memory. This map divides the juz in your mind into clearly bounded sections, so if you stop while reciting, you know exactly where you are.

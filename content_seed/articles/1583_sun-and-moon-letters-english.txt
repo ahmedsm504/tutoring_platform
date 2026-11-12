@@ -1,39 +1,373 @@
-title: Sun and Moon Letters (Lam Shamsiyyah and Qamariyyah) Made Simple
+title: Practical Guides to Learning the Quran: Sun and Moon Letters (Lam Shamsiyyah and Qamariyyah) Made Simple and More
 category: english
-excerpt: When is the laam of "al-" pronounced and when does it disappear? The 14 moon letters gathered in "ibghi ḥajjaka wa khaf ʿaqīmah", the 14 sun letters, how the Madinah Mushaf marks each case, examples like "ash-shams" and "al-qamar", and the mistakes English speakers make.
-meta: Sun and moon letters in English: when the laam of al- is pronounced or merged, the 14 moon letters ibghi hajjaka wa khaf aqimah, Mushaf marks, examples and common mistakes.
-keywords: sun and moon letters, lam shamsiyya, lam qamariyya, al lam rules, tajweed in english, definite article quran
-reading: 4
-translation_of: lam-shamsiyya-qamariyya
+excerpt: This page brings together 9 guides under the heading “Practical Guides to Learning the Quran”, each in its own section with evidence from the Quran and authentic Sunnah.
+meta: Practical Guides to Learning the Quran: Sun and Moon Letters (Lam Shamsiyyah and Qamariyyah) Made Simple, Surah Al-Mursalat Meaning, How to Reflect on the…
+keywords: sun and moon letters, surah al mursalat meaning, tadabbur quran, tasmee etiquette, teach arabic alphabet to toddlers, teaching quran to autistic child, waqf in quran, virtues of memorizing quran
+reading: 18
 ---
+This page brings together 9 guides under the heading “Practical Guides to Learning the Quran”, each in its own section with evidence from the Quran and authentic Sunnah.
+
+In this page:
+- **Sun and Moon Letters (Lam Shamsiyyah and Qamariyyah) Made Simple**: When is the laam of "al-" pronounced and when does it disappear? The 14 moon letters gathered in "ibghi ḥajjaka wa khaf ʿaqīmah", the 14 sun letters, how the Madinah Mushaf marks each…
+- **Surah Al-Mursalat Meaning**: The meaning of Surah Al-Mursalat in English: oaths by the winds or angels sent forth, the certainty of the promised Day, the refrain "Woe that Day to the deniers" repeated ten times, the…
+- **How to Reflect on the Quran (Tadabbur)**: A simple method for reflecting on the Quran (tadabbur) in English: why Allah sent the Quran to be pondered, five questions to ask about any ayah, an example applied to a short passage, how…
+- **Etiquette of Reciting to Your Quran Teacher (Tasmee')**: The etiquette of tasmee', reciting your memorization to a teacher: preparing before the session, being in wudu, sitting attentively, starting with seeking refuge, not interrupting…
+- **Teaching Your Child the Arabic Letters Before Age 5**: Before a child can read from the Mushaf, they need to know the letters' shapes and sounds. Simple home games and activities for ages 3 to 5, a suggested letter order, and mistakes to…
+- **Teaching the Quran to an Autistic Child**: Practical, gentle tips for teaching the Quran to a child on the autism spectrum: building on strengths like auditory memory and love of routine, creating a calm environment, listening…
+- **Types of Stops (Waqf) in Quran Recitation**: Not every stop is correct: stopping in the wrong place can change the meaning of a verse. The four types of Waqf explained with examples, when to restart, and what to do when you run out…
+- **The Virtues of Learning and Memorizing the Quran in Authentic Hadith**: Eight authentic hadiths about the reward for learning, teaching, reciting and memorizing the Quran, with their sources and a short explanation, to motivate you and your children.
+- **What Is an Ijazah in Quran**: An Ijazah is a certification with an unbroken chain of teachers back to the Prophet ﷺ. What it means, the types (Hafs, the ten Qira'at, by heart or by reading), typical requirements, and…
+
+## Sun and Moon Letters (Lam Shamsiyyah and Qamariyyah) Made Simple
+
 In Arabic, "the" is **al-** (ال). Sometimes you hear the laam clearly, as in **al-qamar** (the moon). Sometimes it disappears into the next letter, as in **ash-shams** (the sun). This is the rule of sun and moon letters.
 
-## Moon letters (Lam Qamariyyah): the laam is pronounced
+### Moon letters (Lam Qamariyyah): the laam is pronounced
 - **14 letters**, gathered in: **ابۡغِ حَجَّكَ وَخَفۡ عَقِيمَهُ** (*ibghi ḥajjaka wa khaf ʿaqīmah*).
 - The laam has a **sukūn** and is pronounced clearly.
 - **Examples:** ﴿ٱلۡحَمۡدُ﴾, ﴿ٱلۡمُسۡتَقِيمَ﴾, ﴿ٱلۡفَلَقِ﴾, ﴿وَٱلۡقَمَرِ إِذَا﴾.
 
-## Sun letters (Lam Shamsiyyah): the laam is silent
+### Sun letters (Lam Shamsiyyah): the laam is silent
 - **The other 14 letters.**
 - The laam is **not pronounced**, and the next letter is **doubled** (has a shaddah).
 - **Examples:** ﴿ٱلرَّحۡمَٰنِ﴾, ﴿ٱلصِّرَٰطَ﴾, ﴿وَٱلشَّمۡسِ﴾, ﴿ٱلنَّاسِ﴾.
 
-## How the Mushaf shows it
+### How the Mushaf shows it
 | Case | What you see |
 |---|---|
 | Moon letter | A sukūn on the laam, as in ٱلۡـ |
 | Sun letter | No mark on the laam, and a shaddah on the next letter |
 
-## The sun letters
+### The sun letters
 ت ث د ذ ر ز س ش ص ض ط ظ ل ن
 
-## Why the names?
+### Why the names?
 - The word **الشمس** (sun) starts with a sun letter, so its laam disappears.
 - The word **القمر** (moon) starts with a moon letter, so its laam is heard.
 
-## Common mistakes
+### Common mistakes
 1. **Pronouncing the laam before sun letters**, saying *al-raḥmān* instead of *ar-raḥmān*.
 2. **Forgetting to double the sun letter**.
 3. **Dropping the laam before moon letters**, especially before jeem and kaaf.
 
-Read [Hamzat al-Wasl vs Hamzat al-Qat](/blog/hamzat-wasl-qat-english/) and [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/).
+Read [Hamzat al-Wasl vs Hamzat al-Qat](/blog/ghunnah-english/#Hamzat-al-Wasl-vs-Hamzat-al-Qat-The-Two-Hamzas-in-the-Quran-) and [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/#The-10-Arabic-Letters-Non-Arabs-Find-Hardest-in-Quran-Recita).
+
+## Surah Al-Mursalat Meaning: Woe That Day to the Deniers
+
+**Surah Al-Mursalat** (50 ayat) was revealed while the Prophet ﷺ was in a cave at Mina, as ʿAbdullah ibn Masʿud reported [Al-Bukhari].
+
+### The refrain
+﴿وَيۡلࣱ يَوۡمَئِذٖ لِّلۡمُكَذِّبِينَ﴾ — *Woe that Day to the deniers.*
+- Repeated **ten times**, after each argument or scene.
+
+### The oaths
+- By those sent forth in succession, explained by commentators as winds or angels, and those who bring reminders.
+- **The answer**: *What you are promised will surely occur.*
+
+### Arguments between the refrains
+| Ayat | Argument |
+|---|---|
+| 16–19 | Earlier deniers were destroyed |
+| 20–24 | You were created from a humble fluid |
+| 25–28 | The earth holds the living and the dead |
+| 29–34 | The shadow of smoke in Hell |
+| 41–45 | Shade and springs for the righteous |
+
+### For memorizers
+- **Link each refrain to the argument before it**, so you never skip or repeat a section.
+
+### Lessons
+- **Every argument** leads to one choice: believe or deny.
+- *In what statement after this will they believe?*
+
+Read [Surah Al-Insan Meaning](/blog/surah-al-jinn-meaning-english/#Surah-Al-Insan-Meaning-Feeding-Others-for-the-Face-of-Allah) and [Surah An-Naba Meaning](/blog/surah-al-jinn-meaning-english/#Surah-An-Naba-Meaning-The-Great-News-of-the-Day-of-Judgement).
+
+## How to Reflect on the Quran (Tadabbur): A 5-Question Method
+
+Allah says: ﴿كِتَٰبٌ أَنزَلۡنَٰهُ إِلَيۡكَ مُبَٰرَكࣱ لِّيَدَّبَّرُوٓاْ ءَايَٰتِهِۦ وَلِيَتَذَكَّرَ أُوْلُواْ ٱلۡأَلۡبَٰبِ﴾ [Sad: 29]. The Quran was sent **to be pondered**, not only recited.
+
+### Five questions for any ayah
+| # | Question |
+|---|---|
+| 1 | What does it tell me about **Allah**? |
+| 2 | What does it ask me to **do** or **avoid**? |
+| 3 | What **promise** or **warning** does it contain? |
+| 4 | What **story** or example does it give, and what is the lesson? |
+| 5 | How does it apply to **my life today**? |
+
+### An example: Al-ʿAsr
+﴿وَٱلۡعَصۡرِ﴾ ﴿إِنَّ ٱلۡإِنسَٰنَ لَفِي خُسۡرٍ﴾ ﴿إِلَّا ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّـٰلِحَٰتِ وَتَوَاصَوۡاْ بِٱلۡحَقِّ وَتَوَاصَوۡاْ بِٱلصَّبۡرِ﴾
+| Question | Answer |
+|---|---|
+| About Allah | He swears by time, showing its value |
+| To do | Faith, good deeds, advising with truth and patience |
+| Warning | Every person is in loss except these |
+| Application | How am I using my time today? |
+
+### Tools
+- **A trusted translation** and a short tafsir.
+- **A reflection journal**: write one ayah and your answers each day.
+
+### Tadabbur and memorization
+- **Understanding** links ayat together and makes them easier to recall.
+
+Read [Etiquette of Reciting the Quran](/blog/compilation-of-the-quran-english/#Etiquette-of-Reciting-the-Quran-10-Adab-Every-Reader-Should-) and [How to Memorize the Quran Step by Step](/blog/how-to-memorize-quran-step-by-step/).
+
+## Etiquette of Reciting to Your Quran Teacher (Tasmee')
+
+Reciting to a teacher (**tasmīʿ**) is not just reading aloud. It is a gathering of knowledge with its own etiquette.
+
+### Before the session
+1. **Prepare**: read your portion at least three times. The teacher's time is not for memorizing.
+2. **Wudu**: being in a state of purity is best for reciting the Quran.
+3. **Be on time**, especially online.
+
+### During the session
+4. **Sit attentively**, and avoid distractions around you.
+5. **Begin with seeking refuge** and the basmalah where appropriate.
+6. **Recite at a steady pace**, not too fast to hide mistakes.
+7. **Don't argue** when corrected; repeat the correct version.
+
+### Accepting correction
+8. **Mistakes are normal**: that is why you are reciting.
+9. **Write down** every mistake to review later.
+
+### After the session
+10. **Revise** the corrected places the same day.
+11. **Thank** your teacher and make du'a for them.
+12. **Respect privacy**: don't share the teacher's recordings without permission.
+
+### Online lessons
+| Tip | Why |
+|---|---|
+| Good microphone and quiet room | The teacher must hear every letter |
+| Camera on if asked | Helps the teacher see your mouth |
+| Close other apps | Full attention |
+
+Read [Etiquette of Reciting the Quran](/blog/compilation-of-the-quran-english/#Etiquette-of-Reciting-the-Quran-10-Adab-Every-Reader-Should-) and [Choosing an Online Quran Tutor Safely](/blog/arabic-letters-pronunciation-for-non-arabs/#How-to-Choose-an-Online-Quran-Tutor-for-Your-Child-10-Questi).
+
+## Teaching Your Child the Arabic Letters Before Age 5: Games That Prepare Them for the Quran
+
+A child who reaches reading age already knowing the letters and their sounds learns to read the Quran much faster. The good news: teaching letters at ages 3 to 5 doesn't need formal lessons, just **short daily games**.
+
+### The goal at this stage
+- Recognize the **shape** of each letter.
+- Link it to its correct **sound** (not just its name).
+- Enjoy the letters.
+
+The goal is **not** for them to read or write whole words at this age.
+
+### A suggested letter order
+Instead of alphabetical order, start with letters that are **distinctive in shape** and **easy to pronounce**:
+1. **ا ب ت م ن ل:** clear shapes, easy sounds.
+2. **س ر د ك و ي.**
+3. **ج ح خ:** a look-alike group; teach them together so your child notices the dots.
+4. **ع غ ف ق.**
+5. **ص ض ط ظ ذ ث ز ش ه:** letters that need more pronunciation practice.
+
+### Games and activities at home
+#### 1. The letter box
+Large letter cards in a box. Your child draws a card, you both say the letter's sound, then they look for something at home that starts with it: "ب: *bāb* (door)!"
+
+#### 2. Letters through the senses
+- Draw the letter in a tray of sand or flour and let your child trace it with a finger.
+- Shape the letter out of play dough.
+- Write a big letter on paper and let your child stick lentils or stickers along it.
+
+#### 3. Letter hunt
+Stick letters on the wall, say a sound, and your child runs to touch the right letter.
+
+#### 4. Letter of the week
+One letter per week: spot it everywhere, eat a food that starts with it, draw it, and find it in the Mushaf.
+
+#### 5. Letters in the Quran
+Pick a letter and point to it at the start of [Surah Al-Fatihah](/quran/1/) or [Al-Ikhlas](/quran/112/): "Here's the ḥāʾ in *al-ḥamdu*!" This way your child links letters to the Quran from day one.
+
+### Get pronunciation right from the start
+- Teach the **correct sound** of the throat letters (ح ع خ غ) and the heavy letters (ص ض ط ظ) from the first day. Fixing them later is harder.
+- If your child speaks English (or another language) at school or nursery, give these letters extra time, because they have no equivalent there. ح is not "h", and ع has no English match at all.
+
+### Mistakes to avoid
+1. **Long sessions:** 5 to 10 minutes is enough.
+2. **Only memorizing the alphabet song** without recognizing each letter on its own.
+3. **Focusing on letter names** (*bāʾ*, *tāʾ*) instead of their sounds (*ba*, *ta*).
+4. **Forcing writing too early:** hand muscles are still developing at this age.
+
+### When do they start real reading?
+Once your child knows most letters and their sounds, usually around 5 to 6, they can start a structured foundation course like [Nour Al-Bayan](/pricing/#nour-albayan), moving from letters to vowels, words, then reading from the Mushaf.
+
+Until then, keep listening to the short surahs daily. See also [screen-free Quran revision games](/blog/quran-revision-games-kids-english/#10-Screen-Free-Games-to-Help-Kids-Revise-the-Quran-at-Home) and [Juz Amma word meanings for kids](/blog/juz-amma-word-meanings-english/#Meanings-of-Difficult-Words-in-Juz-Amma-for-Kids-30-Words-Ex).
+
+## Teaching the Quran to an Autistic Child: Practical Tips for Parents
+
+> **Note:** These are general teaching tips from experience. They do not replace the guidance of your child's doctor or therapist, and it helps to share your Quran plan with them.
+
+### Strengths to build on
+- **Auditory memory**: many autistic children remember what they hear accurately.
+- **Love of routine and repetition**, which is the heart of memorization.
+- **Attraction to steady rhythm**, and Quran recitation has a steady rhythm.
+
+### 1. A fixed routine
+- **Same time, same place, same order**: greeting, listening, repeating, then a favourite activity.
+- **Warn in advance** about any change, ideally with pictures or a visual schedule.
+
+### 2. A calm environment
+- Reduce noise, bright lights and visual clutter.
+- For online lessons, close other windows and notifications.
+
+### 3. Listen before you ask
+- Play the surah in a calm, clear voice for days before asking the child to repeat.
+- **Don't insist on eye contact**: some children memorize while looking away.
+
+### 4. Short, predictable sessions
+| Age or stage | Session |
+|---|---|
+| Starting out | 5–10 minutes |
+| Settled routine | 15–20 minutes |
+- **End on success**, with something the child already knows.
+
+### 5. Sensory-friendly choices
+- Let the child choose headphones or not.
+- Allow movement, a fidget toy or a favourite cushion if it helps focus.
+
+### 6. Celebrate in the child's way
+- Some children love praise; others prefer a quiet sticker or a favourite activity.
+
+Read [Quran for an ADHD Child](/blog/learning-arabic-through-quran-english/#Helping-a-Child-with-ADHD-Memorize-the-Quran) and [How to Motivate Your Child to Love Learning the Quran](/blog/learning-arabic-through-quran-english/#How-to-Motivate-Your-Child-to-Love-Learning-the-Quran).
+
+## Types of Stops (Waqf) in Quran Recitation: Complete, Sufficient, Good and Bad
+
+Scholars say knowing where to stop and where to start is half of practical Tajweed, because stopping in the wrong place can distort the meaning. They divided the stops a reciter chooses into four types.
+
+### 1. Complete stop (Waqf Tām)
+Stopping where the meaning is **complete** and **unconnected** to what follows, in grammar or meaning.
+- **Example:** stopping at ﴿وَأُوْلَٰٓئِكَ هُمُ ٱلۡمُفۡلِحُونَ﴾ (Al-Baqarah 2:5). The verses before describe the believers; the next verse starts a new topic about the disbelievers.
+- **Ruling:** good to stop, and good to start with what follows.
+
+### 2. Sufficient stop (Waqf Kāfī)
+The meaning is complete and the sentence is grammatically independent, but it's **connected in meaning** to what follows.
+- **Example:** stopping at ﴿لَا يُؤۡمِنُونَ﴾ (2:6), then starting ﴿خَتَمَ ٱللَّهُ عَلَىٰ قُلُوبِهِمۡ﴾. Still about the same people, but a new sentence.
+- **Ruling:** good to stop, and good to start with what follows.
+
+### 3. Good stop (Waqf Ḥasan)
+The phrase is meaningful on its own, but **connected grammatically and in meaning** to what follows.
+- **Example:** stopping at ﴿ٱلۡحَمۡدُ لِلَّهِ﴾; the next words ﴿رَبِّ ٱلۡعَٰلَمِينَ﴾ describe Allah and depend on it.
+- **Ruling:** stopping is fine. Resuming:
+  - at the **end of a verse**: many scholars allow starting with the next verse, since stopping at verse ends is Sunnah;
+  - **mid-verse**: better to go back a few words and restart from a suitable point.
+
+### 4. Bad stop (Waqf Qabīḥ)
+Stopping where **no proper meaning** results, or where a **wrong meaning** is implied.
+- **Examples:**
+  - Stopping at ﴿فَوَيۡلٌ لِّلۡمُصَلِّينَ﴾ ("woe to those who pray") without completing ﴿ٱلَّذِينَ هُمۡ عَن صَلَاتِهِمۡ سَاهُونَ﴾.
+  - Stopping at ﴿إِنَّ ٱللَّهَ لَا يَسۡتَحۡيِۦٓ﴾ without finishing the verse.
+  - Stopping on ﴿بِسۡمِ﴾ without "Allah".
+- **Ruling:** never stop there intentionally. If you run out of breath there, go back and reconnect the phrase.
+
+### Summary
+| Type | Meaning complete? | Connection to next | Stop? | Resume from next? |
+|---|---|---|---|---|
+| Complete | yes | none | yes | yes |
+| Sufficient | yes | meaning only | yes | yes |
+| Good | partly | grammar + meaning | allowed | with conditions |
+| Bad | no / wrong | strong | avoid | must go back |
+
+### Running out of breath
+This happens to everyone (*waqf iḍṭirārī*):
+1. Stop on the word where your breath ran out.
+2. Take a breath.
+3. **Go back** to a word where it's correct to start, and continue.
+
+### The Mushaf signs help you
+The stopping signs in the Madinah Mushaf (مـ compulsory, لا don't stop, ج optional, صلى continuing preferred, قلى stopping preferred) were placed by scholars based on these types. Following them protects you from bad stops. See [signs and symbols in the Madinah Mushaf](/blog/ghunnah-english/#Signs-and-Symbols-in-the-Madinah-Mushaf-Explained-A-Guide-fo).
+
+A teacher guides you to the best stopping points as you recite: [book a free trial class](/contact/).
+
+## The Virtues of Learning and Memorizing the Quran in Authentic Hadith
+
+When a student feels tired or unmotivated, remembering what Allah has prepared for the people of the Quran is often the best medicine. Here are authentic hadiths on the virtues of the Quran, with their sources.
+
+### 1. The best of people
+The Prophet ﷺ said: **"The best of you are those who learn the Quran and teach it."** (Bukhari)
+
+This includes parents teaching their children, mothers teaching toddlers their first surahs, and teachers teaching students.
+
+### 2. Ten rewards for every letter
+The Prophet ﷺ said: **"Whoever recites a letter from the Book of Allah will have a good deed, and a good deed is multiplied ten times. I do not say that *Alif-Lam-Meem* is one letter; rather Alif is a letter, Lam is a letter and Meem is a letter."** (Tirmidhi, who graded it hasan sahih)
+
+### 3. A double reward for those who struggle
+The Prophet ﷺ said: **"The one who is proficient in the Quran will be with the noble, righteous scribes, and the one who recites the Quran and stumbles over it, finding it difficult, will have a double reward."** (Bukhari and Muslim; this wording is Muslim's)
+
+This is one of the most encouraging hadiths for beginners and adult learners: the struggle itself is rewarded.
+
+### 4. The Quran will intercede for its companions
+The Prophet ﷺ said: **"Recite the Quran, for it will come on the Day of Resurrection as an intercessor for its companions."** (Muslim)
+
+### 5. Recite and rise
+The Prophet ﷺ said: **"It will be said to the companion of the Quran: recite and rise, and recite slowly as you used to recite in the world, for your rank will be at the last verse you recite."** (Abu Dawud and Tirmidhi, who graded it hasan sahih)
+
+A powerful motivation to memorize, and to keep what you've memorized.
+
+### 6. The only envy that's praiseworthy
+The Prophet ﷺ said: **"There is no envy except in two cases: a man whom Allah has given the Quran and he recites it night and day, and a man whom Allah has given wealth and he spends it night and day."** (Bukhari and Muslim)
+
+"Envy" here means wishing to have the same blessing, without wishing it removed from the other person.
+
+### 7. The Quran raises people
+The Prophet ﷺ said: **"Allah raises some people by this Book and lowers others by it."** (Muslim)
+
+### 8. Like a citron
+The Prophet ﷺ said: **"The example of the believer who recites the Quran is like a citron: its fragrance is pleasant and its taste is pleasant."** (Bukhari and Muslim)
+
+### Turning these virtues into action
+- **Set a small, fixed daily portion.** See [how to memorize the Quran step by step](/blog/how-to-memorize-quran-step-by-step/).
+- **Teach what you know**, even one surah to your child.
+- **Don't be ashamed of stumbling**: you have a double reward.
+- **Recite in your prayers** from what you've memorized.
+
+We only quote authentic hadiths and mention their sources. If you spot an error, please [let us know](/contact/). Ready to begin? [Book a free trial class](/contact/).
+
+## What Is an Ijazah in Quran? Types, Requirements and How to Get One
+
+One thing that makes Quran learning unique is that it has always been passed down **orally**: from the mouth of the teacher to the ear of the student, generation after generation, all the way back to the Prophet Muhammad ﷺ. An **Ijazah** is the certificate that documents this chain.
+
+### What exactly is an Ijazah?
+An Ijazah is a **licence** from a qualified teacher (*sheikh* or *sheikha*), who himself or herself holds an unbroken chain, allowing the student to recite and teach the Quran in the recitation they completed with that teacher. It is granted after the student recites the **entire Quran** to the teacher with precision.
+
+The **sanad** is the chain of names: the student read to their teacher, who read to their teacher, and so on, back to one of the ten canonical reciters (*qurrāʾ*), then the Companions, then the Prophet ﷺ.
+
+### Why does it matter?
+- **Accuracy:** some aspects of recitation (exact nasal lengths, Madd counts, subtle stops) cannot be learned from books, only by listening to a master.
+- **Preservation:** the Quran is preserved in hearts as well as on pages, and the Ijazah tradition is part of that preservation.
+- **Trust:** a teacher with an Ijazah has been tested before being allowed to teach.
+
+### Types of Ijazah
+#### By recitation (riwāyah)
+- **Hafs from ʿAsim:** the most widespread in the world today.
+- **Warsh or Qalun from Nafiʿ:** common in North and West Africa.
+- **The ten Qira'at:** for those who master all ten readings, the highest level.
+
+#### By method
+- **Ijazah by heart:** reciting the whole Quran from memory to the teacher.
+- **Ijazah by reading:** reciting the whole Quran precisely while reading from the Mushaf.
+
+### Typical requirements
+They vary between teachers, but usually include:
+1. **Mastery of Tajweed in practice**, not just theory.
+2. **Reciting the entire Quran** to the certifying teacher, from start to finish.
+3. **Studying a classical Tajweed text**, such as *Tuḥfat al-Aṭfāl* or *Al-Muqaddimah al-Jazariyyah*, sometimes memorizing it.
+4. **Memorizing the whole Quran**, for an Ijazah by heart.
+
+### How long does it take?
+There's no fixed duration. It depends on your starting level, how many sessions per week you take, and how precise your recitation already is. A strong student who already knows the Quran by heart might finish in months; someone who needs a lot of correction will need longer.
+
+### Does every Quran teacher need an Ijazah?
+Not for teaching beginners and children short surahs: there, mastery and experience are enough. But it's always preferable that the teacher holds an Ijazah or studied with someone who does, especially for advanced Tajweed and full memorization.
+
+### How to start
+1. **Fix your recitation first**: [Arabic letter pronunciation](/blog/arabic-letters-pronunciation-for-non-arabs/#The-10-Arabic-Letters-Non-Arabs-Find-Hardest-in-Quran-Recita) and the [rules of Noon Sakinah](/blog/noon-sakinah-tanween-rules-english/).
+2. **Choose a qualified teacher** with a known sanad, and stay with them.
+3. **Commit to a regular schedule** of recitation sessions.
+4. **Study a Tajweed text** with explanation.
+
+Our teachers hold Ijazahs, and we teach online in your time zone. [Book a free trial class](/contact/) and tell us your goal.

@@ -16,7 +16,7 @@ QUESTIONS_AR19 = [
 
 **الحكمة:** لو أُدغمت لالتبست الكلمة بالمضعّف، فلا يُعرف أصلها.
 
-اقرأ [الإظهار المطلق](/blog/izhar-mutlaq-and-exceptions/).'''),
+اقرأ [الإظهار المطلق](/blog/idgham-mutaqaribayn/#استثناءات-أحكام-النون-الساكنة-الإظهار-المطلق،-ونون-يس-و-ن-،-).'''),
 
 ('tajweed', 'كيف أقف على الكلمة المنتهية بتاء مربوطة؟',
  'لما بقف على كلمة زي «رحمة» بقولها بالتاء ولا بالهاء؟',
@@ -30,7 +30,7 @@ QUESTIONS_AR19 = [
 
 **خطأ شائع:** الوقف على التاء المربوطة بالتاء، فتقول: «القارعةْ».
 
-اقرأ [الوقف على أواخر الكلم](/blog/waqf-on-word-endings/).'''),
+اقرأ [الوقف على أواخر الكلم](/blog/mushaf-symbols-explained/#كيف-تقف-على-آخر-الكلمة-في-القرآن؟-8-حالات-للوقف-بالأمثلة).'''),
 
 ('tajweed', 'ما حكم الواو والياء الساكنتين بعد فتح عند الوصل؟',
  'كلمة زي «خوف» و«بيت» فيها مد ولا لا؟',
@@ -43,7 +43,7 @@ QUESTIONS_AR19 = [
 
 **تنبيه:** يُستحسن أن يكون مقدار مد اللين **مساويًا أو أقل** من مقدار مد العارض للسكون في قراءتك.
 
-اقرأ [مد البدل والعوض واللين](/blog/madd-badal-iwad-lin-comparison/).'''),
+اقرأ [مد البدل والعوض واللين](/blog/idgham-mutaqaribayn/#مد-البدل-ومد-العوض-ومد-اللين-ثلاثة-مدود-يخلط-بينها-المبتدئون).'''),
 
 ('tajweed', 'هل هناك فرق بين الضاد والظاء في النطق؟ أنا أنطقهما واحدًا',
  'في لهجتنا الضاد والظاء بيطلعوا زي بعض تقريبًا، هل ده غلط في القرآن؟',
@@ -60,7 +60,7 @@ QUESTIONS_AR19 = [
 
 **تمرين:** انطق الكلمتين أمام المرآة، وانتبه لظهور طرف اللسان مع الظاء فقط.
 
-اقرأ [الضاد والظاء في الكلمات](/blog/dad-vs-dha-words/).'''),
+اقرأ [الضاد والظاء في الكلمات](/blog/alif-tafkhim-and-tarqiq/#الضاد-والظاء-في-القرآن-كيف-تفرق-بينهما-نطقًا-ورسمًا؟-مع-أشهر).'''),
 
 ('tajweed', 'كيف أبدأ بكلمة أولها همزة وصل في فعل مثل «اهدنا» و«انظر»؟',
  'لما ببدأ بفعل أوله همزة وصل بحركها بإيه؟',
@@ -76,7 +76,7 @@ QUESTIONS_AR19 = [
 
 **تنبيه:** الضم العارض لا يعتد به، كما في ﴿ٱمۡشُواْ﴾ فيُبدأ بالكسر.
 
-اقرأ [همزة الوصل وهمزة القطع](/blog/hamzat-wasl-vs-qat/).'''),
+اقرأ [همزة الوصل وهمزة القطع](/blog/alifs-dropped-in-wasl/#همزة-الوصل-وهمزة-القطع-في-القرآن-كيف-تفرق-بينهما-في-المصحف-و).'''),
 
 ('tajweed', 'ما المقصود بالحركة في مقدار المد؟',
  'المعلم بيقول مد حركتين وأربعة وستة، الحركة دي بتتحسب إزاي؟',
@@ -104,7 +104,7 @@ QUESTIONS_AR19 = [
 
 **نصيحة للإمام:** عوّد نفسك على الست حركات في كل ركعة، فهي أشهر موضع للمد اللازم يسمعه الناس.
 
-اقرأ [المد اللازم وأقسامه](/blog/madd-lazim-four-types/).'''),
+اقرأ [المد اللازم وأقسامه](/blog/idgham-mutaqaribayn/#المد-اللازم-وأنواعه-الأربعة-الكلمي-والحرفي،-المثقل-والمخفف،-).'''),
 
 # ======================= الحفظ =======================
 ('hifz', 'هل أحفظ وأنا ماشٍ أم وأنا جالس؟',
@@ -123,7 +123,7 @@ QUESTIONS_AR19 = [
 
 **تنبيه:** لا تحفظ ماشيًا دون نظر في المصحف أول مرة، حتى لا تحفظ خطأ.
 
-اقرأ [التركيز أثناء الحفظ](/blog/hifz-concentration-tips/).'''),
+اقرأ [التركيز أثناء الحفظ](/blog/beginner-memorizer-mistakes/#التركيز-أثناء-الحفظ-10-أسباب-للتشتت-وحلولها).'''),
 
 ('hifz', 'نسيت سورة كنت أحفظها جيدًا، هل أبدأ حفظها من جديد؟',
  'كنت حافظ سورة الكهف كويس وبعد سنة نسيت نصها، أعيد حفظها من الأول؟',
@@ -137,7 +137,7 @@ QUESTIONS_AR19 = [
 
 **الدرس:** النسيان سببه غالبًا ترك المراجعة، قال النبي ﷺ: «تعاهدوا القرآن» [متفق عليه].
 
-اقرأ [خطة استعادة القرآن المنسي](/blog/relearning-forgotten-quran-plan/).'''),
+اقرأ [خطة استعادة القرآن المنسي](/blog/hifz-summer-intensive-adults/#استرجاع-القرآن-المنسي-خطة-لمن-حفظ-أجزاء-ثم-نسيها-منذ-سنوات).'''),
 
 ('hifz', 'كيف أحفظ في بيت فيه أطفال صغار وضوضاء؟',
  'عندي تلات أطفال والبيت مش هادي أبدًا، أحفظ إمتى وإزاي؟',
@@ -152,7 +152,7 @@ QUESTIONS_AR19 = [
 
 **اجعل المراجعة في الصلاة**، فهي وقت لا يقاطعك فيه أحد غالبًا.
 
-اقرأ [الحفظ للأمهات مع الأطفال الصغار](/blog/hifz-for-mothers-with-toddlers/).'''),
+اقرأ [الحفظ للأمهات مع الأطفال الصغار](/blog/hifz-and-stress/#الحفظ-للأم-مع-أطفال-صغار-كيف-تحفظين-بين-الرضاعة-والنوم-المتق).'''),
 
 ('hifz', 'ما أفضل طريقة لحفظ أرقام الآيات؟',
  'بعض المسابقات بتسأل عن رقم الآية، هل في طريقة لحفظ الأرقام؟',
@@ -164,7 +164,7 @@ QUESTIONS_AR19 = [
 - **بدايات الصفحات:** تعرّف على رقم أول آية في كل صفحة.
 - **التكرار مع الرقم:** عند المراجعة قل رقم كل آية قبلها.
 
-اقرأ [حفظ بدايات الصفحات](/blog/memorizing-page-beginnings/).'''),
+اقرأ [حفظ بدايات الصفحات](/blog/hifz-with-word-meanings/#حفظ-بدايات-الصفحات-مفتاح-التنقل-في-المصحف-من-الذاكرة).'''),
 
 ('hifz', 'أحفظ جيدًا لكن أتوتر عند التسميع أمام الشيخ فأنسى، ما الحل؟',
  'بكون حافظ كويس جدًا في البيت، وأول ما أقعد قدام الشيخ أتلخبط.',
@@ -194,7 +194,7 @@ QUESTIONS_AR19 = [
 
 **تنبيه:** لا تعتمد على السماع وحده دون النظر، حتى لا تخطئ في كلمات متشابهة النطق.
 
-اقرأ [اختيار القارئ للحفظ](/blog/choosing-reciter-for-memorization/).'''),
+اقرأ [اختيار القارئ للحفظ](/blog/after-completing-hifz/#أي-قارئ-أسمعه-لحفظ-القرآن؟-الفرق-بين-المصحف-المرتل-والمعلم-و).'''),
 
 # ======================= الأطفال =======================
 ('kids', 'طفلي في الرابعة، ما المقدار المناسب للحفظ يوميًا؟',
@@ -213,7 +213,7 @@ QUESTIONS_AR19 = [
 - **لا تجبرها** إذا لم تكن في مزاج مناسب.
 - **امدح المحاولة** لا النتيجة.
 
-اقرأ [القرآن للرضع والأطفال الصغار](/blog/quran-for-babies-and-toddlers/).'''),
+اقرأ [القرآن للرضع والأطفال الصغار](/blog/quran-corner-at-home/#القرآن-للرضّع-والأطفال-الصغار-من-الولادة-حتى-الثالثة).'''),
 
 ('kids', 'كيف أعلّم طفلي معاني الكلمات التي يحفظها؟',
  'ابني بيحفظ من غير ما يفهم الكلام، أشرح له إزاي بطريقة سهلة؟',
@@ -227,7 +227,7 @@ QUESTIONS_AR19 = [
 
 **مثال:** ﴿ٱلصَّمَدُ﴾: الذي نحتاج إليه كلنا وهو لا يحتاج أحدًا.
 
-اقرأ [معاني كلمات جزء عم للأطفال](/blog/juz-amma-word-meanings-kids/) و[بطاقات مفردات القرآن للأطفال](/blog/quran-vocabulary-cards-for-kids/).'''),
+اقرأ [معاني كلمات جزء عم للأطفال](/blog/juz-amma-plan-for-adults/#معاني-كلمات-قصار-السور-للأطفال-30-كلمة-من-جزء-عمّ-بشرح-بسيط) و[بطاقات مفردات القرآن للأطفال](/blog/quran-tadabbur-for-kids/#بطاقات-الكلمات-القرآنية-للأطفال-40-كلمة-يفهم-بها-الطفل-ما-يح).'''),
 
 ('kids', 'هل أعطي طفلي مالًا مقابل كل سورة يحفظها؟',
  'جوزي بيدي الولاد فلوس على كل سورة، هل ده صح تربويًا؟',
@@ -243,7 +243,7 @@ QUESTIONS_AR19 = [
 - اجعل المكافآت **متنوعة** وغير متوقعة أحيانًا.
 - اربط الحفظ دائمًا **بحب الله** وفضل القرآن.
 
-اقرأ [مكافآت غير مادية للأطفال](/blog/non-material-rewards-for-kids/).'''),
+اقرأ [مكافآت غير مادية للأطفال](/blog/mushaf-etiquette-for-kids/#20-فكرة-لمكافأة-طفلك-على-حفظ-القرآن-بدون-مال-ولا-هدايا-غالية).'''),
 
 ('kids', 'طفلي يحب الشاشات ولا يحب المصحف، كيف أوازن؟',
  'ابني بيحب التابلت جدًا ولو قلتله يمسك المصحف يزهق، أستخدم التابلت في الحفظ؟',
@@ -277,7 +277,7 @@ QUESTIONS_AR19 = [
 
 **قصة:** الملائكة والكون كله يسجد لله، كما قال تعالى: ﴿وَلِلَّهِ يَسۡجُدُ مَن فِي ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِ﴾ [الرعد: 15].
 
-اقرأ [مواضع سجود التلاوة](/blog/sujud-al-tilawa-places/).'''),
+اقرأ [مواضع سجود التلاوة](/blog/sacred-months-in-the-quran/#مواضع-سجود-التلاوة-الخمسة-عشر-في-المصحف-جدول-كامل-وأحكام-مخت).'''),
 
 ('kids', 'طفلتي تسأل: لماذا نقرأ القرآن بالعربي ولا نفهمه كله؟',
  'بنتي عايشة بره ومش بتفهم عربي كويس، وبتسأل ليه نقرأ حاجة مش فاهمينها.',
@@ -291,7 +291,7 @@ QUESTIONS_AR19 = [
 - **تعلما كلمة عربية** من القرآن كل أسبوع.
 - **قصص القرآن** بلغتها لتحب المعاني.
 
-اقرأ [ربط الأطفال بالقرآن في الغربة](/blog/keep-kids-connected-to-quran-abroad/).'''),
+اقرأ [ربط الأطفال بالقرآن في الغربة](/blog/juz-amma-word-meanings-english/#Raising-Kids-Connected-to-the-Quran-in-the-West-A-Practical-).'''),
 
 ('kids', 'هل أصحح لطفلي كل خطأ أثناء قراءته؟',
  'بنتي بتغلط كتير وأنا بصحح لها كل كلمة، فبقت بتزهق وتعيط.',
@@ -320,7 +320,7 @@ QUESTIONS_AR19 = [
 - **حتى يتعلمها:** جاء في الحديث أن من لم يستطع أخذ شيء من القرآن يقول: «سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر، ولا حول ولا قوة إلا بالله» [أبو داود والنسائي].
 - **الترجمة** يقرؤها خارج الصلاة لفهم المعنى.
 
-اقرأ [تعلم القرآن لحديثي الإسلام](/blog/new-muslims-learning-quran/).'''),
+اقرأ [تعلم القرآن لحديثي الإسلام](/blog/mushaf-or-memory-reading/#المسلم-الجديد-والقرآن-من-أين-يبدأ؟-وماذا-يفعل-إن-لم-يحفظ-الف).'''),
 
 ('quran-general', 'ما معنى أن القرآن «مثاني»؟',
  'في آية بتقول «كتابا متشابها مثاني»، يعني إيه مثاني؟',
@@ -335,7 +335,7 @@ QUESTIONS_AR19 = [
 
 **ومعنى «متشابهًا»:** يشبه بعضه بعضًا في الحسن والإحكام والصدق.
 
-اقرأ [الوعد والوعيد في القرآن](/blog/wad-and-waid-in-the-quran/).'''),
+اقرأ [الوعد والوعيد في القرآن](/blog/shukr-gratitude-in-the-quran/#الوعد-والوعيد-في-القرآن-كيف-يجمع-القرآن-بين-الرجاء-والخوف؟).'''),
 
 ('quran-general', 'ما المقصود بالمحكم والمتشابه في القرآن؟',
  'سمعت إن في القرآن آيات محكمات وآيات متشابهات، يعني إيه؟',
@@ -350,7 +350,7 @@ QUESTIONS_AR19 = [
 
 **تنبيه:** هذا غير **المتشابهات اللفظية** التي يعتني بها الحفاظ، وهي آيات متقاربة الألفاظ.
 
-اقرأ [المحكم والمتشابه](/blog/muhkam-mutashabih/).'''),
+اقرأ [المحكم والمتشابه](/blog/languages-in-the-quran/#المحكم-والمتشابه-في-القرآن-معنى-آية-آل-عمران-7-وموقف-المؤمن).'''),
 
 ('quran-general', 'هل يجوز قراءة القرآن من غير تجويد؟',
  'أنا مش بعرف أحكام التجويد، هل قراءتي من غيرها حرام؟',
@@ -380,7 +380,7 @@ QUESTIONS_AR19 = [
 **للحفظ:** الحصص المتعددة أنفع بوضوح.
 **للتجويد النظري:** حصة أطول قد تناسب.
 
-اقرأ [اختيار معلم القرآن أونلاين](/blog/choose-online-quran-teacher/).'''),
+اقرأ [اختيار معلم القرآن أونلاين](/blog/child-fear-of-mistakes-quran/#كيف-تختار-معلم-قرآن-أونلاين-لطفلك؟-10-أسئلة-اسألها-قبل-الاشت).'''),
 
 ('online', 'المعلم يغيّر مواعيد الحصص كثيرًا، كيف أتصرف؟',
  'المعلمة كل أسبوع تأجل حصة أو تغير المعاد، وده بيلخبطني.',
@@ -393,7 +393,7 @@ QUESTIONS_AR19 = [
 4. **تواصل مع إدارة المنصة** إن استمر الأمر.
 5. **فكّر في التغيير** إذا لم يتحسن، فراحتك واستمرارك أولى.
 
-اقرأ [اختيار معلم القرآن أونلاين](/blog/choose-online-quran-teacher/).'''),
+اقرأ [اختيار معلم القرآن أونلاين](/blog/child-fear-of-mistakes-quran/#كيف-تختار-معلم-قرآن-أونلاين-لطفلك؟-10-أسئلة-اسألها-قبل-الاشت).'''),
 
 # ======================= English =======================
 ('english', 'Is it okay to learn the Quran with transliteration?',
@@ -410,7 +410,7 @@ QUESTIONS_AR19 = [
 2. Start learning the **Arabic letters** at the same time.
 3. Move to the Arabic script within a few months.
 
-Read [Learning the Quran as a New Muslim](/blog/new-muslims-learning-quran-english/).'''),
+Read [Learning the Quran as a New Muslim](/blog/learning-arabic-through-quran-english/#Learning-the-Quran-as-a-New-Muslim-Where-to-Start).'''),
 
 ('english', 'How many pages should I memorize per day as a beginner?',
  'I\'m an adult starting hifz. Is one page a day too much?',
@@ -424,7 +424,7 @@ Read [Learning the Quran as a New Muslim](/blog/new-muslims-learning-quran-engli
 
 **The key rule:** revision comes first. If your old memorization weakens, reduce new memorization.
 
-Read [10 Mistakes Beginner Quran Memorizers Make](/blog/beginner-memorizer-mistakes-english/).'''),
+Read [10 Mistakes Beginner Quran Memorizers Make](/blog/arabic-letters-pronunciation-for-non-arabs/#10-Mistakes-Beginner-Quran-Memorizers-Make-and-How-to-Fix-Th).'''),
 
 ('english', 'How do I find a good female Quran teacher online?',
  'I prefer learning with a sister. What should I look for in a female online teacher?',
@@ -442,7 +442,7 @@ Read [10 Mistakes Beginner Quran Memorizers Make](/blog/beginner-memorizer-mista
 - How do you track my progress?
 - Can I get notes after each lesson?
 
-Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online-for-sisters/) and [Choosing an Online Quran Tutor Safely](/blog/choosing-online-quran-tutor-safety/).'''),
+Read [Female Quran Teacher Online for Sisters](/blog/compilation-of-the-quran-english/#Learning-Quran-Online-With-a-Female-Teacher-What-Sisters-Sho) and [Choosing an Online Quran Tutor Safely](/blog/arabic-letters-pronunciation-for-non-arabs/#How-to-Choose-an-Online-Quran-Tutor-for-Your-Child-10-Questi).'''),
 # ======================= إضافات =======================
 ('tajweed', 'كيف أنطق الهمزة الساكنة في وسط الكلمة مثل «المؤمنون» و«يأكلون»؟',
  'بلاحظ إني بشيل الهمزة في كلمة «المؤمنون» وبقولها «المومنون»، هل ده غلط؟',
@@ -460,7 +460,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **ملاحظة:** تسهيل الهمزة أو إبدالها وارد في روايات أخرى كورش، أما حفص فبالتحقيق إلا مواضع قليلة.
 
-اقرأ [نطق الهمزة](/blog/hamza-pronunciation/).'''),
+اقرأ [نطق الهمزة](/blog/alif-tafkhim-and-tarqiq/#نطق-الهمزة-في-القرآن-5-أخطاء-شائعة-في-الهمز-وكيف-تصححها).'''),
 
 ('tajweed', 'كيف أنطق الكاف والتاء المتحركتين دون نفَس زائد؟',
  'المعلم بيقولي إني بطلع نفس كتير مع الكاف والتاء حتى وهي متحركة، أظبطها إزاي؟',
@@ -475,7 +475,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **تمرين:** ضع ورقة أمام فمك وقل ﴿كَتَبَ﴾ ثم ﴿أَنۡعَمۡتَ﴾، ستتحرك الورقة مع التاء الساكنة أكثر.
 
-اقرأ [صفات الحروف](/blog/sifat-al-huruf/).'''),
+اقرأ [صفات الحروف](/blog/pronouncing-kaf-correctly/#صفات-الحروف-في-التجويد-الصفات-المتضادة-والمنفردة-بجدول-مبسط).'''),
 
 ('tajweed', 'لماذا تُقرأ «ويبصط» في البقرة بالسين مع أنها مكتوبة بالصاد؟',
  'في آية في البقرة مكتوبة «ويبصط» بصاد وعليها سين صغيرة، أقراها إزاي؟',
@@ -490,7 +490,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **القاعدة في المصحف:** السين الصغيرة **فوق** الصاد تعني أن السين مقدمة، و**تحتها** تعني أن الصاد مقدمة.
 
-اقرأ [كلمات خاصة برواية حفص](/blog/hafs-special-words/).'''),
+اقرأ [كلمات خاصة برواية حفص](/blog/four-sakt-positions-hafs/#كلمات-خاصة-في-رواية-حفص-الإمالة-والإشمام-والتسهيل-والسين-وال).'''),
 
 ('hifz', 'هل أكتب بداية كل صفحة في ورقة صغيرة لأراجعها في الطريق؟',
  'فكرت أعمل كروت فيها أول كلمتين من كل صفحة وأراجع بيها في المواصلات، ينفع؟',
@@ -509,7 +509,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **فائدتها:** تقوي الربط بين الصفحات، وهو أضعف نقطة عند كثير من الحفاظ.
 
-اقرأ [حفظ بدايات الصفحات](/blog/memorizing-page-beginnings/) و[طريقة البطاقات في الحفظ](/blog/hifz-flashcards-method/).'''),
+اقرأ [حفظ بدايات الصفحات](/blog/hifz-with-word-meanings/#حفظ-بدايات-الصفحات-مفتاح-التنقل-في-المصحف-من-الذاكرة) و[طريقة البطاقات في الحفظ](/blog/beginner-memorizer-mistakes/#طريقة-البطاقات-في-حفظ-القرآن-ومراجعته-نظام-الصناديق-الخمسة).'''),
 
 ('hifz', 'كيف أراجع السور التي حفظتها في الصغر ولم أراجعها منذ سنوات؟',
  'حفظت جزء عم وتبارك وأنا صغير، ودلوقتي عندي 30 سنة ومش متأكد منهم.',
@@ -544,7 +544,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **إذا اختلفت سرعتكما:** اتفقا على **مقدار أدنى** مشترك، ويزيد الأسرع وحده.
 
-اقرأ [شريك الحفظ](/blog/hifz-partner-system/).'''),
+اقرأ [شريك الحفظ](/blog/hifz-for-shift-workers/#شريك-الحفظ-كيف-تختاره-وتنظم-التسميع-المتبادل-بينكما؟).'''),
 
 ('hifz', 'هل أحفظ الآية كاملة أم أبدأ بمقاطع صغيرة منها؟',
  'في آيات طويلة بحس إني مش قادر أحفظها مرة واحدة، أقسمها؟',
@@ -560,7 +560,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **تنبيه:** لا تقسم في وسط كلمة أو معنى، حتى لا يتشوه الفهم.
 
-اقرأ [حفظ الآيات الطويلة جدًا](/blog/memorizing-very-long-verses/).'''),
+اقرأ [حفظ الآيات الطويلة جدًا](/blog/hifz-with-word-meanings/#كيف-تحفظ-الآيات-الطويلة-جدًا؟-آية-الدين-نموذجًا).'''),
 
 ('kids', 'ابني صار يكره حصة القرآن بعد تجربة سيئة مع معلم، كيف أعيد حبه؟',
  'ابني كان عنده شيخ قاسي وبقى يعيط لما أقوله يلا الحصة، أعمل إيه؟',
@@ -575,7 +575,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **تذكّر:** النبي ﷺ قال: «إن الله رفيق يحب الرفق» [مسلم].
 
-اقرأ [كيف تختار حلقة قرآن لطفلك](/blog/choosing-quran-halaqa-for-child/).'''),
+اقرأ [كيف تختار حلقة قرآن لطفلك](/blog/child-fear-of-mistakes-quran/#كيف-تختار-حلقة-القرآن-المناسبة-لطفلك؟-10-أسئلة-قبل-التسجيل).'''),
 
 ('kids', 'هل أختار لطفلي مصحفًا بخط كبير؟',
  'ابني لسه بيتعلم القراءة، أجيب له مصحف خطه كبير ولا المصحف العادي؟',
@@ -591,7 +591,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 - **عند بدء الحفظ** يُفضل أن يكون بنفس ترتيب صفحات مصحف المدينة الذي سيكمل به.
 - **دعه يختار الغلاف** ليحب مصحفه.
 
-اقرأ [اختيار المصحف للطفل](/blog/choosing-mushaf-for-child/).'''),
+اقرأ [اختيار المصحف للطفل](/blog/child-fear-of-mistakes-quran/#أي-مصحف-أشتري-لطفلي؟-دليل-اختيار-مصحف-الطفل-حسب-العمر-والمست).'''),
 
 ('kids', 'ابنتي تريد أن تصبح معلمة قرآن، كيف أساعدها من الآن؟',
  'بنتي عندها 11 سنة وبتقول عايزة أبقى محفظة قرآن، أساعدها إزاي؟',
@@ -608,7 +608,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 - **تحضر معك** دروسًا في التفسير المبسط.
 - **تسجّل تلاوتها** وتسمعها لتصحح نفسها.
 
-اقرأ [ما هي الإجازة في القرآن؟](/blog/what-is-ijazah-in-quran/).'''),
+اقرأ [ما هي الإجازة في القرآن؟](/blog/uthmani-script-introduction/#ما-هي-الإجازة-في-القرآن-الكريم؟-أنواعها-وشروطها-وكيف-تحصل-عل).'''),
 
 ('quran-general', 'ما معنى «أهل القرآن» في الحديث؟',
  'سمعت حديث إن أهل القرآن هم أهل الله وخاصته، مين دول؟',
@@ -626,7 +626,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 | التخلق بالقرآن | «كان خلقه القرآن» |
 | تعليمه | «خيركم من تعلم القرآن وعلمه» [البخاري] |
 
-اقرأ [فضائل تعلم القرآن](/blog/virtues-of-quran-memorization/).'''),
+اقرأ [فضائل تعلم القرآن](/blog/sunnah-surahs-in-prayers/#فضل-حفظ-القرآن-الكريم-وتعلّمه-في-الأحاديث-الصحيحة).'''),
 
 ('quran-general', 'هل يُثاب المستمع للقرآن كما يُثاب القارئ؟',
  'أنا بسمع القرآن كتير في الشغل، هل ليا أجر زي اللي بيقرأ؟',
@@ -643,7 +643,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **نصيحة:** اجمع بين الاستماع والقراءة بنفسك.
 
-اقرأ [آداب الاستماع للقرآن](/blog/etiquette-of-listening-to-quran/).'''),
+اقرأ [آداب الاستماع للقرآن](/blog/anam-ten-commandments/#آداب-الاستماع-إلى-القرآن-وفضله-كيف-تستمع-استماعًا-يغيّر-قلبك).'''),
 
 ('quran-general', 'هل في السور المكية آيات مدنية والعكس؟',
  'السورة مكتوب عليها مكية، هل كل آياتها نزلت في مكة؟',
@@ -659,7 +659,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **تنبيه:** الاستثناءات المذكورة في بعض المصاحف محل اجتهاد، وبعضها لا يثبت.
 
-اقرأ [خصائص المكي والمدني](/blog/makki-madani-features/).'''),
+اقرأ [خصائص المكي والمدني](/blog/languages-in-the-quran/#خصائص-السور-المكية-والمدنية-كيف-تعرف-السورة-من-أسلوبها؟).'''),
 
 ('quran-general', 'لماذا تُختم كثير من الآيات بأسماء الله الحسنى؟',
  'ليه آيات كتير بتخلص بـ«والله غفور رحيم» أو «عزيز حكيم»؟',
@@ -676,7 +676,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **فائدة للحافظ:** فهم مناسبة الخاتمة يحميك من الخلط بين الخواتيم.
 
-اقرأ [أسماء الله في خواتيم الآيات](/blog/divine-names-at-verse-endings/).'''),
+اقرأ [أسماء الله في خواتيم الآيات](/blog/ayman-human-oaths-in-the-quran/#أسماء-الله-الحسنى-في-خواتيم-الآيات-لماذا-تنتهي-آية-بـ-غفور-ر).'''),
 
 ('quran-general', 'لماذا يكثر نداء «يا أيها الذين آمنوا» في السور المدنية؟',
  'لاحظت إن «يا أيها الذين آمنوا» مش موجودة في السور المكية تقريبًا، ليه؟',
@@ -692,7 +692,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **تنبيه:** هذا ضابط أغلبي، لا قاعدة مطّردة.
 
-اقرأ [نداءات «يا أيها الذين آمنوا»](/blog/ya-ayyuha-alladhina-amanu-calls/).'''),
+اقرأ [نداءات «يا أيها الذين آمنوا»](/blog/ya-ahl-al-kitab-calls/#نداءات-يا-أيها-الذين-آمنوا-في-القرآن-89-نداءً-ومحاورها-الكبر).'''),
 
 ('quran-general', 'ما معنى أن القرآن «تبيان لكل شيء»؟',
  'إزاي القرآن تبيان لكل شيء وهو مفيهوش مثلا تفاصيل الطب والهندسة؟',
@@ -706,7 +706,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **وختام الآية يوضح ذلك:** ﴿وَهُدٗى وَرَحۡمَةࣰ وَبُشۡرَىٰ لِلۡمُسۡلِمِينَ﴾.
 
-اقرأ [هل الإعجاز العلمي صحيح؟](/blog/ijaz-types/).'''),
+اقرأ [هل الإعجاز العلمي صحيح؟](/blog/history-of-printing-the-mushaf/#أنواع-إعجاز-القرآن-البياني-والتشريعي-والغيبي،-والضوابط-في-ال).'''),
 
 ('online', 'هل يمكن أن يتعلم أكثر من فرد في الأسرة في حصة واحدة؟',
  'عندي ولدين وعايزة أوفر، ينفع ياخدوا الحصة مع بعض؟',
@@ -723,7 +723,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 - **تسميع لكل واحد** على حدة داخل الحصة.
 - **منع المقارنة** بينهما.
 
-اقرأ [اختيار معلم القرآن أونلاين](/blog/choose-online-quran-teacher/).'''),
+اقرأ [اختيار معلم القرآن أونلاين](/blog/child-fear-of-mistakes-quran/#كيف-تختار-معلم-قرآن-أونلاين-لطفلك؟-10-أسئلة-اسألها-قبل-الاشت).'''),
 
 ('online', 'هل أطلب من المعلم أن يشرح لي معاني الآيات في الحصة؟',
  'المعلم بيصحح التلاوة بس، ينفع أطلب منه يشرح المعاني كمان؟',
@@ -741,7 +741,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 
 **إن لم يكن المعلم متخصصًا** في التفسير، اطلب منه مرجعًا مختصرًا موثوقًا.
 
-اقرأ [التفسير وسيلة للحفظ](/blog/tafsir-as-hifz-tool/).'''),
+اقرأ [التفسير وسيلة للحفظ](/blog/memory-science-and-hifz/#التفسير-أداة-حفظ-كيف-يثبّت-فهم-المعنى-الآيات-في-ذاكرتك؟).'''),
 
 ('online', 'هل يصح أن أدرس مع أكثر من معلم في الفترة نفسها؟',
  'عندي معلم للحفظ وعايز آخد معلم تاني للتجويد، ده هيلخبطني؟',
@@ -757,7 +757,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 - **اعتمد مرجعًا واحدًا** في الأداء، كالمعلم الأقدم أو الأعلى سندًا.
 - **وحّد المصحف** والقارئ الذي تستمع إليه.
 
-اقرأ [اختيار معلم القرآن أونلاين](/blog/choose-online-quran-teacher/).'''),
+اقرأ [اختيار معلم القرآن أونلاين](/blog/child-fear-of-mistakes-quran/#كيف-تختار-معلم-قرآن-أونلاين-لطفلك؟-10-أسئلة-اسألها-قبل-الاشت).'''),
 
 ('english', 'What does Bismillah ar-Rahman ar-Rahim mean?',
  'I say Bismillah all the time but I want to understand its meaning properly.',
@@ -774,7 +774,7 @@ Read [Female Quran Teacher Online for Sisters](/blog/female-quran-teacher-online
 - At the start of every surah except At-Tawbah.
 - Before eating, entering the home, and many daily actions.
 
-Read [Etiquette of Reciting the Quran](/blog/etiquette-of-quran-recitation-english/).'''),
+Read [Etiquette of Reciting the Quran](/blog/compilation-of-the-quran-english/#Etiquette-of-Reciting-the-Quran-10-Adab-Every-Reader-Should-).'''),
 
 ('english', 'What should I do if I make a mistake while leading prayer?',
  'I sometimes lead my family in prayer and I get stuck or make mistakes. What should I do?',
@@ -791,5 +791,5 @@ Read [Etiquette of Reciting the Quran](/blog/etiquette-of-quran-recitation-engli
 - Choose surahs you know **very well**.
 - Revise your portion before leading.
 
-Read [Common Recitation Mistakes in Prayer](/blog/imam-recitation-mistakes-english/).'''),
+Read [Common Recitation Mistakes in Prayer](/blog/ghunnah-english/#Common-Recitation-Mistakes-in-Prayer-and-How-Imams-Can-Avoid).'''),
 ]

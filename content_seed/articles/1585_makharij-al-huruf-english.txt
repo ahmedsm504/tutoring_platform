@@ -116,7 +116,7 @@ Many points produce more than one letter. What makes hamza different from haa wh
 | tip of the tongue and edges of upper teeth | ظ ذ ث | ẓaa is raised and heavy; dhaal is voiced and light; thaa is whispered |
 | lips | ب and م | baa is strong with no ghunnah; meem is in between, with ghunnah |
 
-If you get the quality wrong while the place is right, you produce a different letter. Ṭaa without its raised tongue becomes taa; ṣaad without it becomes seen; ẓaa without it becomes dhaal. That is why [the qualities of the letters](/blog/sifat-al-huruf-english/) are studied straight after the makharij.
+If you get the quality wrong while the place is right, you produce a different letter. Ṭaa without its raised tongue becomes taa; ṣaad without it becomes seen; ẓaa without it becomes dhaal. That is why [the qualities of the letters](/blog/ghunnah-english/#Sifat-al-Huruf-The-Characteristics-of-Arabic-Letters) are studied straight after the makharij.
 
 ## Pairs that change the meaning
 A wrong makhraj is not just a matter of beauty: it can change the meaning completely. Here are examples from the Quran:
@@ -181,6 +181,6 @@ Videos help you understand where a letter comes from, but judging whether your p
 Once the hardest letters are reasonably correct: ḍaad, ẓaa, dhaal and thaa, qaf, ʿayn and ḥaa. You do not need perfection before starting the rules; correction continues as you read.
 
 ## Conclusion
-The makharij are the foundation of every rule that comes after them. Learn the five areas, then the seventeen points, then practise the hard letters a few minutes every day. When you are ready, read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/) and [Heavy and Light Letters in Tajweed](/blog/heavy-and-light-letters-english/), then move on to [the rules of Noon Sakinah and Tanween](/blog/noon-sakinah-tanween-rules-english/).
+The makharij are the foundation of every rule that comes after them. Learn the five areas, then the seventeen points, then practise the hard letters a few minutes every day. When you are ready, read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/#The-10-Arabic-Letters-Non-Arabs-Find-Hardest-in-Quran-Recita) and [Heavy and Light Letters in Tajweed](/blog/compilation-of-the-quran-english/#Heavy-and-Light-Letters-in-Tajweed-Tafkhim-and-Tarqiq-for-En), then move on to [the rules of Noon Sakinah and Tanween](/blog/noon-sakinah-tanween-rules-english/).
 
 Makharij need direct correction more than any other chapter. Our teachers start every new student with an assessment of their makharij in the [free trial class](/contact/).

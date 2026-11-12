@@ -1,7 +1,7 @@
 """تنسيق المقالات والإجابات بشكل آمن.
 
 الأدمن بيكتب نص عادي، وممكن يستخدم علامات بسيطة:
-  ## عنوان رئيسي        ### عنوان فرعي
+  ## عنوان رئيسي        ### عنوان فرعي     #### عنوان أصغر
   - عنصر في قائمة       1. عنصر مرقّم
   > اقتباس أو تنبيه     **كلام بخط عريض**
   [نص اللينك](/quran/18/)    ﴿آية﴾ بتتكتب بخط المصحف
@@ -89,9 +89,9 @@ def _parse(text):
         if not line:
             flush_all()
             continue
-        if line.startswith('### ') or line.startswith('## '):
+        if line.startswith(('#### ', '### ', '## ')):
             flush_all()
-            level = 3 if line.startswith('### ') else 2
+            level = len(line.split(' ', 1)[0])
             title = line[level + 1:].strip()
             sid = _slug(title, used)
             if level == 2:
@@ -136,7 +136,7 @@ def toc(text):
 @register.filter
 def plain(text):
     """نص من غير علامات التنسيق (للوصف وschema)"""
-    t = re.sub(r'^\s*(#{2,3}|[-•*>]|\d+[.)])\s+', '', text or '', flags=re.M)
+    t = re.sub(r'^\s*(#{2,4}|[-•*>]|\d+[.)])\s+', '', text or '', flags=re.M)
     t = _BOLD.sub(r'\1', t)
     t = _ITAL.sub(r'\1', t)
     t = _LINK.sub(r'\1', t)

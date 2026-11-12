@@ -1,40 +1,333 @@
-title: Learning Arabic Through the Quran: Where to Start
+title: Practical Guides to Learning the Quran: Learning Arabic Through the Quran and More
 category: english
-excerpt: How non-Arabic speakers can learn Arabic through the Quran: starting with the most frequent words, learning the Arabic of Al-Fatihah and short surahs first, simple patterns like root letters, using word-by-word resources, combining memorization with meaning, and a realistic plan for understanding much of what you recite in prayer.
-meta: Learning Arabic through the Quran: frequent words first, the Arabic of Al-Fatihah and short surahs, root letters, word-by-word resources, combining memorization with meaning, and a realistic plan.
-keywords: learn arabic through quran, quranic arabic for beginners, understand quran in arabic, quran word by word, frequent quran words, arabic for non arabs
-reading: 5
-translation_of: hifz-with-arabic-learning
+excerpt: This page brings together 9 guides under the heading “Practical Guides to Learning the Quran”, each in its own section with evidence from the Quran and authentic Sunnah.
+meta: Practical Guides to Learning the Quran: Learning Arabic Through the Quran, Madd Lazim, How to Motivate Your Child to Love Learning the Quran, The Names of…
+keywords: learn arabic through quran, madd lazim, motivate child quran, names of the quran, new muslim quran, no bearer of burdens bears another, adhd child quran, how to finish the quran
+reading: 14
 ---
+This page brings together 9 guides under the heading “Practical Guides to Learning the Quran”, each in its own section with evidence from the Quran and authentic Sunnah.
+
+In this page:
+- **Learning Arabic Through the Quran**: How non-Arabic speakers can learn Arabic through the Quran: starting with the most frequent words, learning the Arabic of Al-Fatihah and short surahs first, simple patterns like root…
+- **Madd Lazim**: Madd lazim, the necessary six-count madd, explained for English speakers: why it is always six counts, its four types (heavy and light in words, heavy and light in letters), examples like…
+- **How to Motivate Your Child to Love Learning the Quran**: Practical ways to motivate children to learn and memorize the Quran without pressure: being a role model, short daily sessions, praising effort, telling the stories behind the surahs…
+- **The Names of the Quran and What They Mean**: The best-known names Allah gave His Book and what each one teaches: Al-Qur'an (the recited), Al-Kitab (the written), Al-Furqan (the criterion), Adh-Dhikr (the reminder) and At-Tanzil (the…
+- **Learning the Quran as a New Muslim**: A gentle guide for new Muslims starting with the Quran: learning Al-Fatihah first for prayer, a few short surahs, reading a trusted translation alongside, why transliteration is a…
+- **No Bearer of Burdens Bears the Burden of Another**: An English explanation of the Quranic principle "wa la taziru waziratun wizra ukhra": individual responsibility, how it fits with carrying the sins of those one misleads, and its effect on…
+- **Helping a Child with ADHD Memorize the Quran**: Practical strategies for helping a child with ADHD learn and memorize the Quran: adjusting expectations, several short sessions instead of one long one, memorizing with movement and hand…
+- **How to Finish the Quran**: Practical schedules for completing the Quran (khatm) at different paces: once a year with two pages a day, once a month with one juz a day, in ten days or a week, how the Prophet ﷺ guided…
+- **Quran Memorization for Busy Professionals and Parents**: Can you memorize the Quran after 30 or 40, with a full-time job and a family? Yes, with a different approach than children. A flexible routine, how to use small pockets of time, and the…
+
+## Learning Arabic Through the Quran: Where to Start
+
 Imagine understanding what you recite in every prayer. You don't need to master all of Arabic to begin: **the Quran itself** can be your textbook.
 
-## 1. Start with frequent words
+### 1. Start with frequent words
 - A relatively small number of words make up a large part of the Quran's text, including **Allah, Rabb, qāla, kāna, alladhīna, āmanū**.
 - Learn **ten words a week** with their meanings.
 
-## 2. Start with what you recite
+### 2. Start with what you recite
 | Surah | Why |
 |---|---|
 | Al-Fatihah | Recited in every rak'ah |
 | Al-Ikhlas, Al-Falaq, An-Nas | Recited daily |
 | Ayat al-Kursi | Recited after prayers and before sleep |
-- Read [Surah Al-Ikhlas Meaning](/blog/surah-al-ikhlas-meaning-english/) and [Ayat al-Kursi Meaning](/blog/ayat-al-kursi-meaning-english/).
+- Read [Surah Al-Ikhlas Meaning](/blog/surah-at-takathur-meaning-english/#Surah-Al-Ikhlas-Meaning-Why-It-Equals-a-Third-of-the-Quran) and [Ayat al-Kursi Meaning](/blog/remember-allah-as-you-remember-fathers-english/#Ayat-al-Kursi-Meaning-The-Greatest-Ayah-in-the-Quran-Explain).
 
-## 3. Discover root letters
+### 3. Discover root letters
 - Most Arabic words come from **three root letters**.
 - **Example:** ʿ-L-M (knowledge): ﴿ٱلۡعَٰلَمِينَ﴾, ﴿عَلَّمَ﴾, ﴿عَلِيمٌ﴾.
 
-## 4. Word-by-word study
+### 4. Word-by-word study
 - Use a **word-by-word** translation to see each Arabic word with its meaning.
 
-## 5. Memorize with meaning
+### 5. Memorize with meaning
 - When you memorize a new ayah, learn the meaning of **every word** in it.
 
-## A realistic plan
+### A realistic plan
 | Month | Goal |
 |---|---|
 | 1 | Words of Al-Fatihah |
 | 2–3 | Words of the last ten surahs |
 | 4–6 | 300 frequent words |
 
-Read [How to Reflect on the Quran](/blog/tadabbur-method-english/) and [Learn Quran as an Adult from Zero](/blog/learn-quran-as-an-adult-from-zero/).
+Read [How to Reflect on the Quran](/blog/sun-and-moon-letters-english/#How-to-Reflect-on-the-Quran-Tadabbur-A-5-Question-Method) and [Learn Quran as an Adult from Zero](/blog/juz-amma-word-meanings-english/#Learning-to-Read-the-Quran-as-an-Adult-From-Zero-A-Step-by-S).
+
+## Madd Lazim: The 6-Count Madd and Its Four Types
+
+**Madd lāzim** happens when a madd letter is followed by a **permanent sukūn** (or a shaddah) in the same word or letter name. It is the longest madd: **six counts**, always.
+
+### The four types
+| Type | Where | Example |
+|---|---|---|
+| Kalimī muthaqqal (in a word, heavy) | Madd + shaddah | ﴿وَلَا ٱلضَّآلِّينَ﴾, ﴿ٱلۡحَآقَّةُ﴾, ﴿ٱلصَّآخَّةُ﴾ |
+| Kalimī mukhaffaf (in a word, light) | Madd + sukūn, no shaddah | ﴿ءَآلۡـَٰٔنَ﴾ in Yunus |
+| Ḥarfī muthaqqal (in a letter, heavy) | Letter name merged into the next | The *lām* in ﴿الٓمٓ﴾ |
+| Ḥarfī mukhaffaf (in a letter, light) | Letter name not merged | The *mīm* at the end of ﴿الٓمٓ﴾ |
+- **Heavy** means there is a shaddah; **light** means a plain sukūn.
+
+### The word "āl-āna"
+- ﴿ءَآلۡـَٰٔنَ﴾ appears **twice** in Surah Yunus (51 and 91). It is the only kalimī mukhaffaf in Hafs.
+
+### The opening letters
+- Letter names spelled with three letters and a madd in the middle take six counts: gathered in **نَقَصَ عَسَلُكُمۡ**.
+- *ʿAyn* may be four or six.
+- Read [The Disconnected Letters](/blog/surah-al-fatiha-meaning-english/#The-Disconnected-Letters-Huruf-Muqatta-at-at-the-Start-of-Su).
+
+### Counting six counts
+- One count is about the time to fold one finger at a steady pace.
+- **Practise** with ﴿وَلَا ٱلضَّآلِّينَ﴾ in every prayer.
+
+### Common mistakes
+1. **Shortening** the madd in ﴿ٱلضَّآلِّينَ﴾ to four counts.
+2. **Rushing** the shaddah after the madd.
+
+Read [Madd Rules in Tajweed](/blog/madd-rules-tajweed-english/) and [Surah Al-Fatiha Common Mistakes](/blog/surah-al-fatiha-common-mistakes/).
+
+## How to Motivate Your Child to Love Learning the Quran
+
+Children learn to love what their parents love. Motivation starts at home, long before the first lesson.
+
+### 1. Be the example
+- Let your child **see you** reading the Quran every day.
+
+### 2. Short and daily
+- **10–15 minutes a day** for young children is better than an hour once a week.
+
+### 3. Praise the effort
+- Say "I loved how hard you tried" rather than only "well done".
+
+### 4. Tell the story behind the surah
+- Before memorizing Al-Fil, tell the story of the elephant. Before Al-Kawthar, tell of the gift of the river.
+
+### 5. Rewards, wisely
+| Do | Avoid |
+|---|---|
+| Small surprises after a surah | Paying per ayah |
+| Special time with a parent | Rewards that become the only goal |
+| Celebrating finishing a juz | Comparing siblings |
+
+### 6. Connect it to life
+- **In prayer**: let them lead the family once with a surah they know.
+- **In the car**: listen together.
+
+### 7. When interest drops
+- **Pause new memorization** and revise what they love.
+- **Change the routine**: a new place, a new teacher, a friend to recite with.
+- **Never use the Quran as punishment.**
+
+Read [A Bedtime Quran Routine for Kids](/blog/arabic-letters-pronunciation-for-non-arabs/#A-Bedtime-Quran-Routine-for-Kids-10-Minutes-Before-Sleep) and [Kids' Mistakes in Short Surahs](/blog/juz-amma-word-meanings-english/#Common-Mistakes-Kids-Make-Reciting-the-Short-Surahs-and-Gent).
+
+## The Names of the Quran and What They Mean
+
+Allah called His Book by several names. Each name shows a different side of it.
+
+### The five best-known names
+| Name | Meaning | Ayah |
+|---|---|---|
+| Al-Qurʾān | The recited | ﴿إِنَّ هَٰذَا ٱلۡقُرۡءَانَ يَهۡدِي لِلَّتِي هِيَ أَقۡوَمُ﴾ [Al-Isra: 9] |
+| Al-Kitāb | The written Book | ﴿ذَٰلِكَ ٱلۡكِتَٰبُ لَا رَيۡبَۛ فِيهِۛ هُدٗى لِّلۡمُتَّقِينَ﴾ [Al-Baqarah: 2] |
+| Al-Furqān | The criterion between truth and falsehood | ﴿تَبَارَكَ ٱلَّذِي نَزَّلَ ٱلۡفُرۡقَانَ عَلَىٰ عَبۡدِهِۦ﴾ [Al-Furqan: 1] |
+| Adh-Dhikr | The reminder | ﴿إِنَّا نَحۡنُ نَزَّلۡنَا ٱلذِّكۡرَ وَإِنَّا لَهُۥ لَحَٰفِظُونَ﴾ [Al-Hijr: 9] |
+| At-Tanzīl | The revelation sent down | ﴿وَإِنَّهُۥ لَتَنزِيلُ رَبِّ ٱلۡعَٰلَمِينَ﴾ [Ash-Shu'ara: 192] |
+
+### Recited and written
+- Some scholars noted that the names **Al-Qurʾān** (recited) and **Al-Kitāb** (written) point to how it is preserved: **in hearts** and **on pages**.
+
+### Descriptions in the Quran
+| Description | Ayah |
+|---|---|
+| Light | ﴿وَأَنزَلۡنَآ إِلَيۡكُمۡ نُورٗا مُّبِينٗا﴾ [An-Nisa: 174] |
+| Blessed | ﴿وَهَٰذَا ذِكۡرࣱ مُّبَارَكٌ أَنزَلۡنَٰهُۚ﴾ [Al-Anbiya: 50] |
+| Healing and mercy | ﴿وَنُنَزِّلُ مِنَ ٱلۡقُرۡءَانِ مَا هُوَ شِفَآءࣱ وَرَحۡمَةࣱ لِّلۡمُؤۡمِنِينَ﴾ [Al-Isra: 82] |
+
+### Why it matters
+- Each name is a **relationship**: recite it, write it, judge by it, be reminded by it.
+
+Read [How the Quran Was Compiled](/blog/compilation-of-the-quran-english/#How-the-Quran-Was-Compiled-From-the-Prophet-ﷺ-to-ʿUthman) and [The Ten Qira'at](/blog/ghunnah-english/#The-Ten-Qira-at-An-Introduction-to-the-Readings-of-the-Quran).
+
+## Learning the Quran as a New Muslim: Where to Start
+
+Welcome. If you have recently embraced Islam, the Quran may feel like a huge book in an unfamiliar language. You don't have to learn it all at once. The Prophet ﷺ said: «The best of you are those who learn the Quran and teach it» [Al-Bukhari].
+
+### Step 1: Al-Fatihah for your prayer
+- **Al-Fatihah is recited in every unit of prayer**, so learn it first.
+- Learn it **ayah by ayah**, with its meaning.
+- Read [Surah Al-Fatiha Common Mistakes](/blog/surah-al-fatiha-common-mistakes/).
+
+### Step 2: A few short surahs
+| Surah | Ayat |
+|---|---|
+| Al-Ikhlas | 4 |
+| Al-Falaq | 5 |
+| An-Nas | 6 |
+| Al-Kawthar | 3 |
+- These are enough to complete your prayers.
+
+### Step 3: Read the meaning
+- Choose a **trusted translation** and read a little every day.
+- Remember: a translation is the meaning in another language, not the Quran itself.
+
+### Step 4: Transliteration is a bridge, not a home
+- Writing Arabic in English letters helps at the very start.
+- But it **cannot show** letters like ع ح ق ض, so move to the Arabic script as soon as you can.
+
+### Step 5: The Arabic letters
+- Read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/#The-10-Arabic-Letters-Non-Arabs-Find-Hardest-in-Quran-Recita).
+
+### A 3-month starter plan
+| Month | Goal |
+|---|---|
+| 1 | Al-Fatihah and Al-Ikhlas, with meaning |
+| 2 | Al-Falaq, An-Nas, Al-Kawthar + Arabic letters |
+| 3 | Reading short words in Arabic with a teacher |
+
+### Be kind to yourself
+- The Prophet ﷺ said the one who recites with difficulty gets **two rewards** [Al-Bukhari and Muslim].
+
+Read [Learn Quran as an Adult from Zero](/blog/juz-amma-word-meanings-english/#Learning-to-Read-the-Quran-as-an-Adult-From-Zero-A-Step-by-S) and [Choosing an Online Quran Tutor Safely](/blog/arabic-letters-pronunciation-for-non-arabs/#How-to-Choose-an-Online-Quran-Tutor-for-Your-Child-10-Questi).
+
+## "No Bearer of Burdens Bears the Burden of Another": The Quranic Principle Explained
+
+﴿وَلَا تَكۡسِبُ كُلُّ نَفۡسٍ إِلَّا عَلَيۡهَاۚ وَلَا تَزِرُ وَازِرَةࣱ وِزۡرَ أُخۡرَىٰۚ﴾ [Al-Anam 6:164]
+
+### The words
+| Word | Meaning |
+|---|---|
+| *Tazir* | Carries |
+| *Waziratun* | A soul carrying |
+| *Wizr* | Sin, heavy load |
+
+### Repeated in the Quran
+- The principle appears in several surahs, including Al-Anam, Al-Isra, Fatir, Az-Zumar and An-Najm.
+
+### No inherited guilt
+- No one is punished for a parent's or ancestor's sin. Every child is born upon the fitrah.
+
+### What about misleaders?
+- Al-Ankabut 29:13 says they will carry *their burdens and burdens with their burdens*. This is not a contradiction: they carry the sin of **misleading**, which is their own deed.
+
+### Peace of mind
+- You are responsible for your choices, not for others' choices you could not control. Advise, then leave the rest.
+
+### Lessons
+- **Focus on your own record.**
+- **Never mislead**, for it adds to your burden.
+
+Read [Quran 53:39-41 Explained](/blog/ma-yalfizu-min-qawl-meaning-english/#Man-Will-Have-Only-What-He-Strives-For-Quran-53-39-41-Explai) and [Quran 17:7 Explained](/blog/surah-an-nahl-meaning-english/#If-You-Do-Good-You-Do-Good-for-Yourselves-Quran-17-7-Explain).
+
+## Helping a Child with ADHD Memorize the Quran
+
+> **Note:** If your child is diagnosed with ADHD, or you suspect it, follow-up with a specialist is essential. These are teaching tips that support memorization, not treatment.
+
+### Change your expectations first
+- Don't expect a child with ADHD to sit still for 40 minutes. That is not stubbornness; it is how they are wired.
+- **Adapt the method to the child**, not the other way round.
+
+### 1. Short, frequent sessions
+- Instead of one 30-minute session, try **three 7–10 minute sessions** across the day.
+
+### 2. Memorize with movement
+- **Walk** around the room while repeating the ayah.
+- **One move per ayah**: a step, a jump or catching a ball after each portion.
+- **Hand signs** for meanings, like raising the hand at ﴿ٱلسَّمَآءِ﴾.
+
+### 3. Quick variety
+| Minute | Activity |
+|---|---|
+| 0–3 | Listen |
+| 3–6 | Repeat with movement |
+| 6–9 | A quick game: fill in the missing word |
+| 9–10 | Celebrate |
+
+### 4. See the progress
+- A **wall chart** with a sticker for every ayah.
+- **Short goals**: one ayah, not one surah.
+
+### 5. Immediate, small rewards
+- Rewards work best **right away** and **often**: a high five, a sticker, a minute of a favourite activity.
+
+### 6. Stay patient
+- Some days will be better than others. **Consistency** over weeks matters more than any single session.
+
+Read [Teaching the Quran to an Autistic Child](/blog/sun-and-moon-letters-english/#Teaching-the-Quran-to-an-Autistic-Child-Practical-Tips-for-P) and [Hifz for Adults with ADHD](/blog/compilation-of-the-quran-english/#Memorizing-the-Quran-as-an-Adult-with-ADHD-Methods-That-Work).
+
+## How to Finish the Quran: Khatm Schedules for a Year, a Month or a Week
+
+The Madinah Mushaf has **604 pages** and **30 juz**. That makes planning a khatm (completion) simple.
+
+### Choose your pace
+| Pace | Daily amount | Time (approx.) |
+|---|---|---|
+| One year | 2 pages | 5–10 minutes |
+| Four months | 5 pages | 15–20 minutes |
+| One month | 1 juz (20 pages) | 40–60 minutes |
+| Ten days | 3 juz | 2–3 hours |
+| One week | About 4.3 juz | 3–4 hours |
+- **Times** depend on your reading speed.
+
+### The Prophetic guidance
+- ʿAbdullah ibn ʿAmr wanted to read the whole Quran every night. The Prophet ﷺ told him: «Read the Quran in a month», and when he insisted he could do more: «Then read it in seven and do not do more than that» [Al-Bukhari and Muslim].
+
+### A month: one juz a day
+- **After each of the five prayers**: 4 pages = 20 pages a day.
+
+### Tips
+- **Fix a time**, such as after Fajr.
+- **Make up** missed days the same week.
+- **Quality first**: a slow, reflective juz is better than a rushed one.
+
+### After the khatm
+- Many people make **duʿāʾ** when they finish. There is no authentic fixed duʿāʾ for khatm from the Prophet ﷺ, so make any sincere duʿāʾ.
+
+Read [Etiquette of Reciting the Quran](/blog/compilation-of-the-quran-english/#Etiquette-of-Reciting-the-Quran-10-Adab-Every-Reader-Should-) and [How to Memorize the Quran Step by Step](/blog/how-to-memorize-quran-step-by-step/).
+
+## Quran Memorization for Busy Professionals and Parents: Is It Too Late, and How to Start?
+
+"I'm over forty. Is it still possible to memorize the Quran?" We hear this often from students in our adult program. The answer is **yes, absolutely**. Many of the Companions accepted Islam as adults, then memorized the Quran and taught it.
+
+### Is memorizing harder for adults?
+Children memorize quickly because their auditory memory is strong and their minds are uncluttered. But adults bring strengths children don't have:
+- **They understand the meaning**, and memorizing with understanding lasts far longer than memorizing sounds.
+- **They're motivated** from within: nobody forces them.
+- **They know how to plan** and set goals.
+- **They can read** and look up meaning and tafsir themselves.
+
+Adults may memorize a little more slowly, but often more solidly.
+
+### The real obstacles, and their fixes
+#### No time
+You don't need hours. **20–30 minutes a day** is enough to memorize half a page and revise. Consistency is the secret, not session length.
+
+#### Embarrassment about mistakes
+Many adults feel shy reading in front of a teacher because their recitation is weak. That's exactly why one-to-one online classes suit adults: nobody hears you except your teacher, who is used to starting from any level.
+
+#### Forgetting because of a busy life
+The solution is a light but steady revision routine. See [how to revise your Hifz](/blog/quran-revision-system-english/).
+
+### A flexible routine for busy people
+| When | What | Time |
+|---|---|---|
+| After Fajr | Memorize the new portion (a quarter to half page) | 15–20 min |
+| Commute | Listen to the new portion on repeat | 10 min |
+| Sunnah prayers | Recite today's and yesterday's portions | built in |
+| Before bed | Revise the last five pages | 10 min |
+| Once a week | Bigger revision + class with your teacher | 30–60 min |
+
+### Use small pockets of time
+- **Listening on the go:** loop the verses you're memorizing. Our [Quran pages](/quran/) let you repeat any verse several times.
+- **A card in your pocket:** write the verse you're memorizing and glance at it while waiting.
+- **Five minutes before each prayer** adds up to a lot over a month.
+
+### For parents especially
+- Memorize while the kids nap, even 15 minutes.
+- Listen to your portion while doing housework.
+- Memorize Juz Amma **with** your children: you teach them and revise at the same time.
+
+### Tajweed first, or memorization first?
+If your reading is mostly correct, start memorizing and polish your Tajweed along the way. If you struggle to read, start with reading and pronunciation first; see [learning to read the Quran as an adult](/blog/juz-amma-word-meanings-english/#Learning-to-Read-the-Quran-as-an-Adult-From-Zero-A-Step-by-S). Memorizing a verse correctly from the start saves a lot of effort.
+
+### A word of encouragement
+The Prophet ﷺ said: "The one who is proficient in the Quran will be with the noble, righteous scribes (angels), and the one who recites it and stumbles over it, finding it difficult, will have a double reward" (Bukhari and Muslim). Even the difficulty itself is rewarded.
+
+Start today, even with one verse. [Book a free trial class](/contact/) and build a plan that fits your day.

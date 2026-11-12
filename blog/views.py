@@ -1,4 +1,11 @@
-from django.http import Http404
+import json
+from functools import lru_cache
+from pathlib import Path
+
+from django.conf import settings
+from django.http import Http404, HttpResponsePermanentRedirect
+from django.urls import reverse
+from django.utils.encoding import iri_to_uri
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q, Count, Sum
 from django.core.paginator import Paginator
@@ -99,6 +106,30 @@ def _surah_link(post):
     return surah_from_title(post.title)
 
 
+def _section_surahs(post, limit=8):
+    """الصفحات الشاملة (مقالات مدموجة): السور اللي أقسامها بتتكلم عنها -> [(رقم، اسم)]"""
+    if _surah_link(post):
+        return []
+    from core.templatetags.content_tags import toc
+    from learning.quran import surah_from_title
+    out = []
+    for _, heading in toc(post.content):
+        s = surah_from_title(heading)
+        if s and s not in out:
+            out.append(s)
+    return out[:limit]
+
+
+@lru_cache(maxsize=1)
+def merged_redirects():
+    """{slug قديم: 'slug_الصفحة_الشاملة#القسم'} للمقالات القصيرة اللي اتدمجت"""
+    path = Path(settings.BASE_DIR) / 'content_seed' / 'merged_redirects.json'
+    try:
+        return json.loads(path.read_text(encoding='utf-8'))
+    except FileNotFoundError:
+        return {}
+
+
 # slugs قديمة اتغيرت -> الـ slug الصحيح
 SLUG_ALIASES = {
     'allah-name-al-awwal-al-akhir-az-zahir-al-batin-meaning': 'allah-names-al-awwal-al-akhir-meaning',
@@ -110,8 +141,14 @@ def blog_detail(request, slug):
     post = Post.objects.filter(slug=slug, status='published').first()
     if post is None:
         alias = SLUG_ALIASES.get(slug)
-        if alias:
+        if alias and alias not in merged_redirects():
             return redirect('blog_detail', slug=alias, permanent=True)
+        # مقالات قصيرة اتدمجت في صفحة شاملة -> 301 للقسم بتاعها جوه الصفحة
+        merged = merged_redirects().get(alias or slug)
+        if merged:
+            target, _, anchor = merged.partition('#')
+            url = reverse('blog_detail', args=[target]) + (f'#{anchor}' if anchor else '')
+            return HttpResponsePermanentRedirect(iri_to_uri(url))
         # لينكات قديمة أو مقطوعة (زي /blog/waqf-and-ibtid/) -> لو في مقال واحد بيبدأ بنفس الكلام نحوّل عليه
         if len(slug) >= 8:
             matches = list(Post.objects.filter(slug__startswith=slug, status='published').values_list('slug', flat=True)[:2])
@@ -158,6 +195,7 @@ def blog_detail(request, slug):
         'comments_count': comments.count(),
         'related_posts': related_posts,
         'quran_surah': _surah_link(post),
+        'quran_surahs': _section_surahs(post),
         'prev_post': prev_post,
         'next_post': next_post,
         'gallery_images': gallery_images,

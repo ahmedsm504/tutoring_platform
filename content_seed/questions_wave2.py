@@ -63,7 +63,7 @@ QUESTIONS_AR2 = [
 
 **قاعدة تساعدك:** في المواضع التي يجوز فيها الوجهان، يُختار ما يوافق حالة الوصل.
 
-وأحكام الراء كاملة في مقال [التفخيم والترقيق](/blog/tafkheem-tarqeeq-raa-lam/).'''),
+وأحكام الراء كاملة في مقال [التفخيم والترقيق](/blog/small-letters-in-mushaf/#التفخيم-والترقيق-متى-تفخم-الراء-واللام-ومتى-ترققهما؟).'''),
 
 ('tajweed', 'ليش كل شيخ يقرأ القرآن بطريقة مختلفة؟ هل التجويد يختلف؟',
  'ألاحظ إن الحصري يقرأ غير المنشاوي غير السديس. هل أحكام التجويد تختلف من شيخ لشيخ؟',
@@ -73,7 +73,7 @@ QUESTIONS_AR2 = [
 2. **الأوجه الجائزة داخل الرواية:** بعض الأحكام لها أكثر من وجه صحيح، كمد المنفصل أربع أو خمس حركات، والمد العارض حركتين أو أربعًا أو ستًا. فقد يختار قارئ وجهًا وآخر وجهًا.
 3. **اختلاف الرواية:** بعض القراء يسجلون بروايات أخرى غير حفص، كورش أو قالون، وفيها اختلافات حقيقية في الأداء.
 
-**نصيحتنا:** اختر قارئًا متقنًا واحدًا للحفظ والتعلم، والتزم بالأوجه التي يأخذها عنك معلمك. اقرأ [أي قارئ أسمعه لحفظ القرآن](/blog/choosing-reciter-for-memorization/).'''),
+**نصيحتنا:** اختر قارئًا متقنًا واحدًا للحفظ والتعلم، والتزم بالأوجه التي يأخذها عنك معلمك. اقرأ [أي قارئ أسمعه لحفظ القرآن](/blog/after-completing-hifz/#أي-قارئ-أسمعه-لحفظ-القرآن؟-الفرق-بين-المصحف-المرتل-والمعلم-و).'''),
 
 ('tajweed', 'هل يجب تعلم المقامات الصوتية لقراءة القرآن؟',
  'سمعت عن المقامات زي البيات والصبا والحجاز في التلاوة. هل لازم أتعلمها عشان أقرأ صح؟',
@@ -210,11 +210,11 @@ QUESTIONS_AR2 = [
 
 **نصائح للكبار:**
 - اقرأ معنى الورد قبل حفظه.
-- اعتمد على المراجعة المتباعدة. اقرأ [التكرار المتباعد في الحفظ](/blog/spaced-repetition-quran/).
+- اعتمد على المراجعة المتباعدة. اقرأ [التكرار المتباعد في الحفظ](/blog/memory-science-and-hifz/#التكرار-المتباعد-في-حفظ-القرآن-كيف-توزع-المراجعة-حتى-لا-تنسى).
 - اقرأ ما تحفظه في الصلاة.
 - لا تقارن نفسك بالأطفال.
 
-اقرأ [حفظ القرآن للكبار والمشغولين](/blog/quran-memorization-for-adults/).'''),
+اقرأ [حفظ القرآن للكبار والمشغولين](/blog/mind-maps-for-long-surahs/#حفظ-القرآن-للكبار-والمشغولين-هل-فات-الأوان؟-وكيف-تبدأ-بخطة-ت).'''),
 
 ('hifz', 'بحفظ الآيات كويس بس بتلخبط في الانتقال من آية للتانية، أعمل إيه؟',
  'كل آية لوحدها حافظها، بس لما أسمّع الصفحة بقف عند نهاية كل آية ومش فاكر اللي بعدها.',
@@ -262,7 +262,7 @@ QUESTIONS_AR2 = [
 - **التركيز:** 5 مرات بتركيز أنفع من 30 مرة وأنت مشتت.
 - **التسميع غيبًا:** القراءة من المصحف وحدها لا تختبر حفظك.
 
-اقرأ [التكرار المتباعد في حفظ القرآن](/blog/spaced-repetition-quran/).'''),
+اقرأ [التكرار المتباعد في حفظ القرآن](/blog/memory-science-and-hifz/#التكرار-المتباعد-في-حفظ-القرآن-كيف-توزع-المراجعة-حتى-لا-تنسى).'''),
 
 ('hifz', 'بدي احفظ جزء عمّ بشهر، هل هالشي ممكن؟',
  'بدي اتحدى حالي واحفظ جزء عمّ كامل بشهر واحد. هل ممكن؟ وكم لازم احفظ باليوم؟',
@@ -283,7 +283,7 @@ QUESTIONS_AR2 = [
 - لا تتجاهل مراجعة ما حفظته في الأسبوع الأول.
 - إن تأخرت، فلا بأس أن تمدّ الخطة لشهرين؛ الثبات أهم من الموعد.
 
-وللأطفال، الخطة الأنسب [6 أشهر](/blog/juz-amma-plan-for-kids/).'''),
+وللأطفال، الخطة الأنسب [6 أشهر](/blog/homeschool-quran-curriculum/#جدول-حفظ-جزء-عمّ-للأطفال-في-6-أشهر-خطة-شهرية-مع-ترتيب-السور).'''),
 
 ('hifz', 'كيف أحفظ القرآن وأنا عندي ضعف في الذاكرة؟',
  'ذاكرتي ضعيفة جدًا وبنسى كتير حتى في حياتي العادية. هل أقدر أحفظ القرآن؟',
@@ -300,7 +300,7 @@ QUESTIONS_AR2 = [
 
 **وإذا كان النسيان شديدًا ويؤثر على حياتك اليومية،** فاستشر طبيبًا، فقد يكون له سبب صحي يمكن علاجه.
 
-وتذكر أن لك أجرًا على المحاولة والمشقة نفسها. اقرأ [فضل حفظ القرآن](/blog/virtues-of-quran-memorization/).'''),
+وتذكر أن لك أجرًا على المحاولة والمشقة نفسها. اقرأ [فضل حفظ القرآن](/blog/sunnah-surahs-in-prayers/#فضل-حفظ-القرآن-الكريم-وتعلّمه-في-الأحاديث-الصحيحة).'''),
 
 ('hifz', 'هل الحفظ من تطبيق على الجوال مثل الحفظ من المصحف الورقي؟',
  'أنا دايمًا معي الجوال وأسهل لي أحفظ منه. هل الحفظ من التطبيق مثل المصحف الورقي؟',
@@ -337,7 +337,7 @@ QUESTIONS_AR2 = [
 - **احتفظ بكراسة أخطاء** وراجعها.
 - **صلِّ بالليل** بما تيسر من حفظك.
 - **سمّع على غيرك** مرة أسبوعيًا على الأقل.
-- **فكّر في الإجازة** إن لم تكن حصلت عليها. اقرأ [ما هي الإجازة في القرآن](/blog/what-is-ijazah-in-quran/).'''),
+- **فكّر في الإجازة** إن لم تكن حصلت عليها. اقرأ [ما هي الإجازة في القرآن](/blog/uthmani-script-introduction/#ما-هي-الإجازة-في-القرآن-الكريم؟-أنواعها-وشروطها-وكيف-تحصل-عل).'''),
 
 ('hifz', 'هل الأفضل أن أحفظ القرآن وحدي أم مع مجموعة؟',
  'أحفظ لوحدي في البيت ولا أدخل حلقة أو مجموعة أونلاين؟ إيه الأحسن؟',
@@ -371,7 +371,7 @@ QUESTIONS_AR2 = [
 5. **ضع أهدافًا صغيرة:** ختم سورة بدل ختم جزء.
 6. **كافئ نفسك:** عند كل إنجاز.
 7. **ابحث عن رفيق:** صديق يحفظ معك، أو معلم يتابعك.
-8. **تذكّر الفضل:** اقرأ [فضل حفظ القرآن في الأحاديث الصحيحة](/blog/virtues-of-quran-memorization/).
+8. **تذكّر الفضل:** اقرأ [فضل حفظ القرآن في الأحاديث الصحيحة](/blog/sunnah-surahs-in-prayers/#فضل-حفظ-القرآن-الكريم-وتعلّمه-في-الأحاديث-الصحيحة).
 
 **والأهم: لا تنقطع تمامًا.** حتى في أشد أيام الفتور، احتفظ بمراجعة صفحة واحدة. فالحبل الرفيع خير من الانقطاع.'''),
 
@@ -487,7 +487,7 @@ QUESTIONS_AR2 = [
 
 **للمعلم:** لا تقبل التسميع السريع غير المتقن، واطلب إعادته بلطف. وهذا ما تفعله معلماتنا في الواجبات الصوتية: تقبل التسجيل أو تطلب إعادته مع توضيح السبب.
 
-اقرأ [الفرق بين التلاوة والتجويد والترتيل](/blog/tilawa-tajweed-tartil-tadabbur/).'''),
+اقرأ [الفرق بين التلاوة والتجويد والترتيل](/blog/sunnah-surahs-in-prayers/#الفرق-بين-التلاوة-والتجويد-والترتيل-والتدبر-أربع-كلمات-يخلط-).'''),
 
 ('kids', 'كيف أحفّز أكثر من طفل في البيت على الحفظ بدون مقارنة؟',
  'عندي 3 أولاد بأعمار مختلفة، واحد يحفظ بسرعة والثاني بطيء. كيف أشجعهم بدون ما أقارن؟',
@@ -528,7 +528,7 @@ QUESTIONS_AR2 = [
 
 **المرحلة الثانية: الأحكام بالأسماء (غالبًا من 8 إلى 10 سنوات)**
 عندما يستطيع الطفل القراءة جيدًا ويفهم التصنيف، يبدأ تعلم الأحكام بأسمائها تدريجيًا:
-1. [اللام الشمسية والقمرية](/blog/lam-shamsiyya-qamariyya/) (أسهلها).
+1. [اللام الشمسية والقمرية](/blog/alif-tafkhim-and-tarqiq/#اللام-الشمسية-واللام-القمرية-الفرق-بينهما-وحروف-كل-منهما-بال) (أسهلها).
 2. [النون الساكنة والتنوين](/blog/noon-sakinah-tanween-rules/).
 3. [الميم الساكنة](/blog/meem-sakinah-rules/).
 4. [المدود](/blog/madd-types-tajweed/).
@@ -574,7 +574,7 @@ QUESTIONS_AR2 = [
 - حصتان أسبوعيًا مع معلمة + 10 دقائق يوميًا في البيت.
 - لا تقارنه بأطفال يعيشون في بلاد عربية.
 
-اقرأ [تعليم القرآن لأبناء المغتربين](/blog/quran-for-children-abroad/)، واحجز [حلقة تجريبية مجانية](/contact/) لتحديد مستواه بدقة.'''),
+اقرأ [تعليم القرآن لأبناء المغتربين](/blog/quran-corner-at-home/#تعليم-القرآن-لأبناء-المغتربين-كيف-تحافظ-على-لغة-طفلك-وقرآنه-)، واحجز [حلقة تجريبية مجانية](/contact/) لتحديد مستواه بدقة.'''),
 
 ('kids', 'طفلي يحفظ القرآن لكن لا يفهم المعنى، هل هذه مشكلة؟',
  'ابني حافظ أجزاء بس لو سألته عن معنى أي آية ما يعرف. هل لازم يفهم؟',
@@ -648,7 +648,7 @@ QUESTIONS_AR2 = [
 - **راحة للخجولين:** الطفل الخجول يتكلم بحرية أكبر.
 - **مرونة المواعيد:** الموعد يُحدد حسب وقت الطالب.
 
-ولهذا نتابع كل طالب أيضًا بواجبات صوتية وتقارير شهرية خاصة به. اقرأ [كيف تختار معلم قرآن أونلاين](/blog/choose-online-quran-teacher/).'''),
+ولهذا نتابع كل طالب أيضًا بواجبات صوتية وتقارير شهرية خاصة به. اقرأ [كيف تختار معلم قرآن أونلاين](/blog/child-fear-of-mistakes-quran/#كيف-تختار-معلم-قرآن-أونلاين-لطفلك؟-10-أسئلة-اسألها-قبل-الاشت).'''),
 
 ('online', 'هل يمكن أن يحضر ابني الحصة من الجوال؟',
  'معنديش لابتوب، ينفع ابني يحضر الحصة من الموبايل؟',
@@ -800,7 +800,7 @@ QUESTIONS_AR2 = [
 - سوره قصيرة، فيشعر الطفل بالإنجاز سريعًا.
 - فيه السور التي نقرؤها كثيرًا في الصلاة والأذكار، كالمعوذتين والإخلاص.
 
-خطة كاملة لحفظه في [جدول حفظ جزء عمّ للأطفال](/blog/juz-amma-plan-for-kids/).'''),
+خطة كاملة لحفظه في [جدول حفظ جزء عمّ للأطفال](/blog/homeschool-quran-curriculum/#جدول-حفظ-جزء-عمّ-للأطفال-في-6-أشهر-خطة-شهرية-مع-ترتيب-السور).'''),
 
 ('quran-general', 'كم عدد سجدات التلاوة في القرآن؟',
  'كام سجدة في القرآن؟ وإزاي أعرف مكانها في المصحف؟',
@@ -843,7 +843,7 @@ QUESTIONS_AR2 = [
 - **إذا بدأت بأول سورة التوبة:** تستعيذ ثم تقرأ دون بسملة.
 - **إذا انتقلت إليها من الأنفال:** يجوز لك الوقف أو السكت أو الوصل، دون بسملة.
 
-التفاصيل في مقال [الاستعاذة والبسملة بين السورتين](/blog/isti3adha-basmala-between-surahs/)، واستمع لأول السورة في [صفحة سورة التوبة](/quran/9/).'''),
+التفاصيل في مقال [الاستعاذة والبسملة بين السورتين](/blog/four-sakt-positions-hafs/#الاستعاذة-والبسملة-بين-السورتين-الأوجه-الجائزة-والممنوعة-وحك)، واستمع لأول السورة في [صفحة سورة التوبة](/quran/9/).'''),
 
 ('quran-general', 'ما معنى الحروف المقطعة في أوائل السور مثل الم وحم؟',
  'يعني إيه الم وحم وطسم في أول بعض السور؟ ليها معنى؟',
@@ -903,7 +903,7 @@ Start with [the 10 Arabic letters non-Arabs find hardest](/blog/arabic-letters-p
 - Read a translation alongside, so you know what you're reciting.
 - One-to-one classes help a lot, because the teacher can focus on your specific difficulties.
 
-Read our roadmap: [learning to read the Quran as an adult from zero](/blog/learn-quran-as-an-adult-from-zero/). When you book a [free trial class](/contact/), let us know your language and level so we can match you with the right teacher.'''),
+Read our roadmap: [learning to read the Quran as an adult from zero](/blog/juz-amma-word-meanings-english/#Learning-to-Read-the-Quran-as-an-Adult-From-Zero-A-Step-by-S). When you book a [free trial class](/contact/), let us know your language and level so we can match you with the right teacher.'''),
 
 ('english', 'At what age should my child start learning the Quran?',
  'My son is 3. When is the right time to start teaching him the Quran?',
@@ -932,7 +932,7 @@ For a 7-year-old, **2–4 short verses a day** is a healthy target, plus revisin
 **Signs the amount is right:** she finishes the session happy and remembers the verses the next day.
 **Signs it's too much:** tears, avoiding sessions, or forgetting everything by the next day.
 
-**Golden rule:** end while she still wants more. A small amount memorized with joy beats a big amount memorized with stress. See our [6-month Juz Amma plan](/blog/juz-amma-memorization-plan-kids/).'''),
+**Golden rule:** end while she still wants more. A small amount memorized with joy beats a big amount memorized with stress. See our [6-month Juz Amma plan](/blog/compilation-of-the-quran-english/#Juz-Amma-Memorization-Plan-for-Kids-Memorize-the-30th-Juz-in).'''),
 
 ('english', 'What is the difference between Noorani Qaida and Nour Al-Bayan?',
  'I keep seeing Noorani Qaida and Nour Al-Bayan for kids learning to read Arabic. What\'s the difference and which is better?',
@@ -968,7 +968,7 @@ Our [Nour Al-Bayan course](/pricing/#nour-albayan) teaches children and adults t
 
 **A simple routine:** 15–20 minutes after Fajr for new memorization, listening during your commute, and 10 minutes of revision before bed.
 
-Read [Quran memorization for busy professionals and parents](/blog/quran-memorization-for-busy-professionals/). And remember: the one who recites with difficulty has a **double reward** (Bukhari and Muslim).'''),
+Read [Quran memorization for busy professionals and parents](/blog/learning-arabic-through-quran-english/#Quran-Memorization-for-Busy-Professionals-and-Parents-Is-It-). And remember: the one who recites with difficulty has a **double reward** (Bukhari and Muslim).'''),
 
 ('english', 'How do I pronounce the Arabic letter ʿAyn (ع)?',
  'I really struggle with the letter Ayn. It always comes out like a glottal stop. Any tips?',
@@ -1041,7 +1041,7 @@ Browse [all 114 surahs](/quran/) with their verse counts, and listen verse by ve
 - These are the surahs they hear most in prayer and daily remembrance.
 - As surahs get longer, your child's memorization skill grows with them.
 
-Follow our [6-month Juz Amma plan for kids](/blog/juz-amma-memorization-plan-kids/).'''),
+Follow our [6-month Juz Amma plan for kids](/blog/compilation-of-the-quran-english/#Juz-Amma-Memorization-Plan-for-Kids-Memorize-the-30th-Juz-in).'''),
 
 ('english', 'How do I stop forgetting the surahs I memorized?',
  'I memorize well, but a few weeks later I forget a lot. How can I keep it?',
@@ -1075,7 +1075,7 @@ Full system: [how to revise your Hifz](/blog/quran-revision-system-english/).'''
 4. Regular progress reports for parents.
 5. A quiet spot at home and a headset.
 
-See [10 questions to ask before choosing an online Quran tutor](/blog/choosing-online-quran-tutor-safety/), or try it yourself with a [free trial class](/contact/).'''),
+See [10 questions to ask before choosing an online Quran tutor](/blog/arabic-letters-pronunciation-for-non-arabs/#How-to-Choose-an-Online-Quran-Tutor-for-Your-Child-10-Questi), or try it yourself with a [free trial class](/contact/).'''),
 
 ('english', 'Do you have female Quran teachers?',
  'I\'d like a female teacher for myself and my daughter. Is that possible?',
@@ -1088,7 +1088,7 @@ See [10 questions to ask before choosing an online Quran tutor](/blog/choosing-o
 
 Many mothers learn alongside their children, each with a teacher, and revise together at home.
 
-Read [learning Quran online with a female teacher](/blog/female-quran-teacher-online-for-sisters/), then [book a free trial class](/contact/).'''),
+Read [learning Quran online with a female teacher](/blog/compilation-of-the-quran-english/#Learning-Quran-Online-With-a-Female-Teacher-What-Sisters-Sho), then [book a free trial class](/contact/).'''),
 
 ('english', 'How long is each online Quran class?',
  'How long do the classes usually last for kids and for adults?',
@@ -1152,7 +1152,7 @@ So you can stay informed at any time, without attending every class.'''),
 - **Admin oversight:** the administration can see all conversations and homework.
 - **Parents have access** to the same portal, so you can see everything your child sees.
 
-Read [10 questions to ask before choosing an online Quran tutor](/blog/choosing-online-quran-tutor-safety/).'''),
+Read [10 questions to ask before choosing an online Quran tutor](/blog/arabic-letters-pronunciation-for-non-arabs/#How-to-Choose-an-Online-Quran-Tutor-for-Your-Child-10-Questi).'''),
 
 ('english', 'What is Juz Amma?',
  'Everyone tells me to start my kids with Juz Amma. What exactly is it?',
@@ -1165,7 +1165,7 @@ Read [10 questions to ask before choosing an online Quran tutor](/blog/choosing-
 
 **Why children start here:** the surahs are short, so children finish whole surahs quickly, and they include the surahs most often recited in prayer, such as Al-Ikhlas, Al-Falaq and An-Nas.
 
-Follow our [Juz Amma memorization plan for kids](/blog/juz-amma-memorization-plan-kids/).'''),
+Follow our [Juz Amma memorization plan for kids](/blog/compilation-of-the-quran-english/#Juz-Amma-Memorization-Plan-for-Kids-Memorize-the-30th-Juz-in).'''),
 
 ('english', 'How long does it take a child to memorize Juz Amma?',
  'Realistically, how long will it take my 8-year-old to memorize the whole of Juz Amma?',
@@ -1181,7 +1181,7 @@ A six-month plan looks roughly like this:
 | 5 | Al-Ala → Al-Infitar | 138 |
 | 6 | At-Takwir → An-Naba | 157 |
 
-The pace speeds up as the child's memorization skills grow. If your child needs extra weeks, that's perfectly fine: finishing with love and solid memorization matters more than the date. Full plan: [Juz Amma in 6 months](/blog/juz-amma-memorization-plan-kids/).'''),
+The pace speeds up as the child's memorization skills grow. If your child needs extra weeks, that's perfectly fine: finishing with love and solid memorization matters more than the date. Full plan: [Juz Amma in 6 months](/blog/compilation-of-the-quran-english/#Juz-Amma-Memorization-Plan-for-Kids-Memorize-the-30th-Juz-in).'''),
 
 ('english', 'What does Ikhfa mean in Tajweed?',
  'My teacher keeps saying "ikhfa". What does it mean and how do I do it?',
@@ -1228,7 +1228,7 @@ Practise with [Surah Al-Falaq](/quran/113/): nearly every verse ends with a Qalq
 - Stick to **one reciter** while your child is memorizing, because the ear memorizes the voice and the stops.
 - Use other reciters (Al-Minshawi, Al-Afasy and others) for general listening and enjoyment.
 
-On our [Quran pages](/quran/) you can choose the reciter for every surah, including Al-Husary's Mu'allim recitation, and repeat each verse up to ten times. See also [which reciter to listen to for memorization](/blog/choosing-reciter-for-memorization/).'''),
+On our [Quran pages](/quran/) you can choose the reciter for every surah, including Al-Husary's Mu'allim recitation, and repeat each verse up to ten times. See also [which reciter to listen to for memorization](/blog/after-completing-hifz/#أي-قارئ-أسمعه-لحفظ-القرآن؟-الفرق-بين-المصحف-المرتل-والمعلم-و).'''),
 
 ('english', 'My child doesn\'t want to memorize the Quran. What should I do?',
  'My 8-year-old says he hates Quran time and cries. How can I make him like it without forcing him?',
@@ -1339,5 +1339,5 @@ In the Madinah Mushaf, Sakt is marked with a **small Seen (س)** above the word.
 
 Times can be adjusted later, including around daylight-saving changes.
 
-[Book a free trial class](/contact/), and read [raising kids connected to the Quran in the West](/blog/keep-kids-connected-to-quran-abroad/).'''),
+[Book a free trial class](/contact/), and read [raising kids connected to the Quran in the West](/blog/juz-amma-word-meanings-english/#Raising-Kids-Connected-to-the-Quran-in-the-West-A-Practical-).'''),
 ]

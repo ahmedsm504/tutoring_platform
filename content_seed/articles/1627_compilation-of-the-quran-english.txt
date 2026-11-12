@@ -1,37 +1,279 @@
-title: How the Quran Was Compiled: From the Prophet ﷺ to ʿUthman
+title: Practical Guides to Learning the Quran: How the Quran Was Compiled and More
 category: english
-excerpt: The history of the compilation of the Quran in three stages: memorization and writing in the Prophet's lifetime ﷺ, the collection into one manuscript under Abu Bakr after the battle of Yamamah led by Zayd ibn Thabit, and the copying of standard Mushafs under ʿUthman, based on authentic reports in Sahih al-Bukhari.
-meta: How the Quran was compiled: memorized and written in the Prophet's lifetime, collected under Abu Bakr by Zayd ibn Thabit after Yamamah, and copied into standard Mushafs under Uthman, from Sahih al-Bukhari.
-keywords: compilation of the quran, history of the quran, uthmani mushaf, zayd ibn thabit, abu bakr quran collection, preservation of the quran
-reading: 5
-translation_of: compilation-of-quran
+excerpt: This page brings together 7 guides under the heading “Practical Guides to Learning the Quran”, each in its own section with evidence from the Quran and authentic Sunnah.
+meta: Practical Guides to Learning the Quran: How the Quran Was Compiled, Etiquette of Reciting the Quran, Learning Quran Online With a Female Teacher, The Four…
+keywords: compilation of the quran, etiquette of reciting quran, female quran teacher online, sakt in quran, heavy letters tajweed, hifz with adhd, juz amma memorization plan
+reading: 12
 ---
+This page brings together 7 guides under the heading “Practical Guides to Learning the Quran”, each in its own section with evidence from the Quran and authentic Sunnah.
+
+In this page:
+- **How the Quran Was Compiled**: The history of the compilation of the Quran in three stages: memorization and writing in the Prophet's lifetime ﷺ, the collection into one manuscript under Abu Bakr after the battle of…
+- **Etiquette of Reciting the Quran**: Ten etiquettes of reciting the Quran in English: sincere intention, purity, seeking refuge from Shaytan, the basmalah, reciting slowly with tarteel, beautifying the voice, reflecting…
+- **Learning Quran Online With a Female Teacher**: Many sisters prefer to learn Quran and Tajweed with a female teacher. How one-to-one online classes with a sheikha work, what you can study, how to fit classes around work and children…
+- **The Four Places of Sakt (Silent Pause) in Hafs Recitation**: What sakt is in Quran recitation and the four places where Hafs makes it: after "ʿiwajā" in Al-Kahf, after "marqadinā" in Ya-Sin, in "man rāq" in Al-Qiyamah and "bal rān" in Al-Mutaffifin…
+- **Heavy and Light Letters in Tajweed (Tafkhim and Tarqiq) for English Speakers**: Tafkhim and tarqiq explained in English: the seven always-heavy letters gathered in "khuṣṣa ḍaghṭin qiẓ", the always-light letters, the letters that change like raa and the laam in…
+- **Memorizing the Quran as an Adult with ADHD**: Practical methods for adults with ADHD who want to memorize the Quran: short timed sessions, linking hifz to a fixed daily anchor, active memorization with writing and walking, reducing…
+- **Juz Amma Memorization Plan for Kids**: A month-by-month plan to help children aged 7–10 memorize all 37 surahs (564 verses) of Juz Amma in six months, with daily targets, a weekly routine and a revision system.
+
+## How the Quran Was Compiled: From the Prophet ﷺ to ʿUthman
+
 Allah promised: ﴿إِنَّا نَحۡنُ نَزَّلۡنَا ٱلذِّكۡرَ وَإِنَّا لَهُۥ لَحَٰفِظُونَ﴾ [Al-Hijr: 9]. History shows how that preservation happened.
 
-## Stage 1: In the Prophet's lifetime ﷺ
+### Stage 1: In the Prophet's lifetime ﷺ
 - The Quran was revealed **over about 23 years**.
 - **Memorized** by many companions.
 - **Written** by scribes such as Zayd ibn Thabit, on materials like parchment, bones and palm stalks, but not yet gathered in one volume.
 
-## Stage 2: Abu Bakr's collection
+### Stage 2: Abu Bakr's collection
 - After the battle of **Yamamah**, many reciters were killed.
 - ʿUmar urged Abu Bakr to collect the Quran, and Abu Bakr assigned **Zayd ibn Thabit**.
 - Zayd gathered it carefully from what was written and memorized, into **one manuscript (ṣuḥuf)** [Al-Bukhari].
 - These ṣuḥuf stayed with Abu Bakr, then ʿUmar, then **Hafsah** bint ʿUmar.
 
-## Stage 3: ʿUthman's copies
+### Stage 3: ʿUthman's copies
 - Hudhayfah ibn al-Yaman saw people differing in recitation and urged ʿUthman to act.
 - ʿUthman borrowed the ṣuḥuf from Hafsah, and a committee led by Zayd made **copies**, sent to major cities [Al-Bukhari].
 - These copies are the basis of the **ʿUthmani script** in every Mushaf today.
 
-## Dots and vowels later
+### Dots and vowels later
 - Dots and vowel marks were added later to help non-Arabs read correctly, without changing the text.
 
-## Summary
+### Summary
 | Stage | When | What |
 |---|---|---|
 | 1 | Prophet's lifetime ﷺ | Memorized and written |
 | 2 | Abu Bakr | Gathered in one manuscript |
 | 3 | ʿUthman | Standard copies distributed |
 
-Read [The Names of the Quran](/blog/names-of-the-quran-english/) and [The Ten Qira'at](/blog/ten-qiraat-introduction-english/).
+Read [The Names of the Quran](/blog/learning-arabic-through-quran-english/#The-Names-of-the-Quran-and-What-They-Mean) and [The Ten Qira'at](/blog/ghunnah-english/#The-Ten-Qira-at-An-Introduction-to-the-Readings-of-the-Quran).
+
+## Etiquette of Reciting the Quran: 10 Adab Every Reader Should Know
+
+The Quran is the speech of Allah, and reciting it has **etiquettes (ādāb)** that bring more reward and more benefit to the heart.
+
+### 1. Sincere intention
+- Recite to seek Allah's pleasure, not to be praised.
+
+### 2. Purity
+- Being in a state of wuḍūʾ is best, especially when touching the Mushaf.
+
+### 3. Seeking refuge
+﴿فَإِذَا قَرَأۡتَ ٱلۡقُرۡءَانَ فَٱسۡتَعِذۡ بِٱللَّهِ مِنَ ٱلشَّيۡطَٰنِ ٱلرَّجِيمِ﴾ [An-Nahl: 98].
+
+### 4. The basmalah
+- Say *Bismillāh ar-Raḥmān ar-Raḥīm* at the start of every surah except At-Tawbah.
+
+### 5. Tarteel: recite slowly
+﴿وَرَتِّلِ ٱلۡقُرۡءَانَ تَرۡتِيلًا﴾ [Al-Muzzammil: 4].
+- Umm Salamah described the Prophet's recitation ﷺ as clear, letter by letter [Abu Dawud and At-Tirmidhi].
+
+### 6. Beautify your voice
+- The Prophet ﷺ said: «Beautify the Quran with your voices» [Abu Dawud].
+
+### 7. Reflect
+﴿أَفَلَا يَتَدَبَّرُونَ ٱلۡقُرۡءَانَۚ﴾ [An-Nisa: 82].
+
+### 8. Respond to the ayat
+- The Prophet ﷺ, when he passed an ayah of mercy, would ask Allah for it, and at an ayah of punishment would seek refuge [Muslim].
+
+### 9. Don't interrupt with chatter
+- Pause if you need to speak, then resume with seeking refuge again.
+
+### 10. Respect the Mushaf
+- Keep it in a clean, raised place, and don't place things on top of it.
+
+Read [Sujud al-Tilawa in English](/blog/ghunnah-english/#Sujud-al-Tilawa-The-15-Places-of-Prostration-in-the-Quran) and [How to Reflect on the Quran](/blog/sun-and-moon-letters-english/#How-to-Reflect-on-the-Quran-Tadabbur-A-5-Question-Method).
+
+## Learning Quran Online With a Female Teacher: What Sisters Should Know
+
+Many sisters prefer to learn the Quran with a **female teacher**: they feel more comfortable reciting, asking questions and making mistakes. With online one-to-one classes, that's now easy to arrange from home, wherever you live.
+
+### Why many women choose a female teacher
+- **Comfort:** reciting aloud, especially at the beginning, can feel exposing. A sister teacher often makes this much easier.
+- **Flexibility around family life:** female teachers understand the reality of balancing children, work and home.
+- **Privacy:** you can learn from home, with your camera on or off as you prefer.
+
+### What can you study?
+- **Reading from zero:** the Arabic alphabet through to fluent reading. See [learning to read the Quran as an adult](/blog/juz-amma-word-meanings-english/#Learning-to-Read-the-Quran-as-an-Adult-From-Zero-A-Step-by-S).
+- **Tajweed:** correcting your recitation, starting with [Surah Al-Fatiha](/blog/surah-al-fatiha-common-mistakes/).
+- **Memorization (Hifz):** with a plan and regular revision. See [how to memorize the Quran step by step](/blog/how-to-memorize-quran-step-by-step/).
+- **Ijazah preparation:** for advanced students. See [what an Ijazah is](/blog/sun-and-moon-letters-english/#What-Is-an-Ijazah-in-Quran-Types-Requirements-and-How-to-Get).
+
+### How online classes work
+1. You choose a time that suits you, in your own time zone.
+2. You join a video call from your phone, tablet or laptop.
+3. Your teacher listens, corrects, and explains in a simple way.
+4. Between classes, you send **audio homework** and receive feedback, so you keep progressing even in busy weeks.
+
+### Fitting classes around your life
+- **30-minute classes** two or three times a week are enough for steady progress.
+- Many sisters choose times when the children are asleep or at school.
+- In difficult weeks, keep a minimum: listening and short revision.
+
+### Learning alongside your children
+A beautiful option: learn while your children learn with their own teacher. You can revise Juz Amma together, and they see you as a role model. Read [how to teach your child the Quran online](/blog/learn-quran-online-for-kids/).
+
+### What to look for in a teacher
+- Proficiency in Tajweed, ideally with an Ijazah.
+- Patience and a gentle teaching style.
+- A free trial class, so you can see if you feel comfortable.
+- A clear plan and regular feedback.
+- Safe communication inside a platform, supervised by the academy.
+
+### Start with a free trial
+Our female teachers teach sisters one-to-one and online, wherever they live. [Book a free trial class](/contact/), mention that you'd like a female teacher, and tell us your preferred times.
+
+## The Four Places of Sakt (Silent Pause) in Hafs Recitation
+
+**Sakt** is a very short pause of about two counts, **without taking a breath**, then continuing. In the Madinah Mushaf it is marked with a small **سـ (sīn)**.
+
+### The four places
+| # | Surah | Words | Read as |
+|---|---|---|---|
+| 1 | Al-Kahf 1–2 | ﴿عِوَجَاۜ﴾ then *qayyiman* | *ʿiwajā* (pause) *qayyiman* |
+| 2 | Ya-Sin 52 | ﴿مِن مَّرۡقَدِنَاۜۗ هَٰذَا﴾ | *marqadinā* (pause) *hādhā* |
+| 3 | Al-Qiyamah 27 | ﴿مَنۡۜ رَاقٖ﴾ | *man* (pause) *rāq* |
+| 4 | Al-Mutaffifin 14 | ﴿بَلۡۜ رَانَ﴾ | *bal* (pause) *rāna* |
+
+### Why sakt?
+| Place | Purpose |
+|---|---|
+| Al-Kahf | So "qayyiman" (straight) is not heard as a description of "ʿiwajā" (crookedness) |
+| Ya-Sin | Separates the words of the disbelievers from the reply that follows |
+| Al-Qiyamah and Al-Mutaffifin | Keeps the noon and laam clear instead of merging them into the raa |
+
+### How to do it
+1. Stop the **sound** for about two counts.
+2. **Don't breathe.**
+3. Continue with the next word.
+
+### Without sakt?
+- In ﴿مَنۡۜ رَاقٖ﴾, without sakt the noon would merge into the raa (*marrāq*). Sakt keeps the noon heard.
+
+### Optional sakt places
+- Between Al-Anfal and At-Tawbah, and in ﴿مَالِيَهۡۜ﴾ in Al-Haqqah, Hafs has more than one option; learn them with a teacher.
+
+Read [Mushaf Symbols in English](/blog/ghunnah-english/#Signs-and-Symbols-in-the-Madinah-Mushaf-Explained-A-Guide-fo) and [How to Stop at the End of a Word](/blog/ghunnah-english/#How-to-Stop-at-the-End-of-a-Word-in-Quran-Recitation).
+
+## Heavy and Light Letters in Tajweed (Tafkhim and Tarqiq) for English Speakers
+
+Arabic has letters pronounced with a **full, heavy** sound (tafkhīm) and others with a **thin, light** sound (tarqīq). English has nothing exactly like this, so it takes practice.
+
+### The seven always-heavy letters
+Gathered in: **خُصَّ ضَغۡطٍ قِظۡ** (*khuṣṣa ḍaghṭin qiẓ*).
+| Letter | Name |
+|---|---|
+| خ | Khaa |
+| ص | Ṣaad |
+| ض | Ḍaad |
+| غ | Ghayn |
+| ط | Ṭaa |
+| ق | Qaf |
+| ظ | Ẓaa |
+- **How:** raise the back of the tongue toward the roof of the mouth.
+- **Strongest:** ṭaa, ḍaad, ṣaad and ẓaa, because the tongue also covers the roof of the mouth.
+
+### Letters that change
+| Letter | Heavy when | Light when |
+|---|---|---|
+| ر Raa | With fatḥah or ḍammah, as in ﴿رَبِّ﴾ | With kasrah, as in ﴿رِجَالࣱ﴾ |
+| ل in "Allah" | After fatḥah or ḍammah: ﴿قَالَ ٱللَّهُ﴾ | After kasrah: ﴿بِسۡمِ ٱللَّهِ﴾ |
+| ا Alif | After a heavy letter: ﴿قَالَ﴾ | After a light letter: ﴿مَٰلِكِ﴾ |
+
+### All other letters are light
+- Including ﴿ٱلۡحَمۡدُ﴾: the ḥaa is light even though it comes from the throat.
+
+### Tips for English speakers
+1. **Don't make light letters heavy** before alif: say *kitāb* lightly, not *kotob*.
+2. **Keep heavy letters heavy** even with kasrah: ﴿قِيلَ﴾ stays heavy, though a little less.
+3. **Record yourself** and compare with a teacher.
+
+Read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/#The-10-Arabic-Letters-Non-Arabs-Find-Hardest-in-Quran-Recita) and [Makharij al-Huruf in English](/blog/makharij-al-huruf-english/).
+
+## Memorizing the Quran as an Adult with ADHD: Methods That Work
+
+> **Note:** These are study tips, not medical advice. If you have ADHD, your treatment plan with a specialist comes first.
+
+### 1. Short, timed sessions
+- Use a timer: **15 minutes on, 5 minutes off**.
+- Stop while it's still going well, so you want to come back.
+
+### 2. A fixed anchor
+- Tie hifz to something you never skip: **after Fajr** or after your morning coffee.
+
+### 3. Make it active
+| Method | How |
+|---|---|
+| Writing | Write the ayah from memory |
+| Walking | Recite while walking around the room |
+| Recording | Record yourself and listen back |
+| Teaching | Explain the meaning to someone |
+
+### 4. Tame the phone
+- Use a **printed Mushaf** for memorizing.
+- Put the phone in another room or on airplane mode.
+
+### 5. Accountability
+- A **teacher** or a **hifz partner** you recite to on fixed days.
+
+### 6. Flexible revision
+- On low-focus days, **revise instead of memorizing** new pages.
+- Use **audio revision** while doing simple tasks.
+
+### 7. Be kind to yourself
+- The Prophet ﷺ said the one who recites with difficulty has **two rewards** [Al-Bukhari and Muslim].
+
+Read [10 Mistakes Beginner Quran Memorizers Make](/blog/arabic-letters-pronunciation-for-non-arabs/#10-Mistakes-Beginner-Quran-Memorizers-Make-and-How-to-Fix-Th) and [Spaced Repetition for Quran Memorization](/blog/quran-revision-games-kids-english/#Spaced-Repetition-for-Quran-Memorization-Remember-More-Forge).
+
+## Juz Amma Memorization Plan for Kids: Memorize the 30th Juz in 6 Months
+
+**Juz Amma** is the 30th and final part of the Quran. It contains **37 surahs**, from [An-Naba (78)](/quran/78/) to [An-Nas (114)](/quran/114/), with a total of **564 verses**. Most children start their memorization journey here, because the surahs are short and every finished surah feels like a victory.
+
+This plan is designed for a child aged **7 to 10**, memorizing **five days a week**. For younger children (4–6), simply double the time to a full year.
+
+### Why start from An-Nas and go backwards?
+- The last surahs are the shortest, so the child finishes a whole surah in just a few days.
+- They are also the surahs children hear most in prayer and daily remembrance.
+- As the surahs get longer, the child's memorization skill grows with them.
+
+**Before starting:** if your child doesn't know [Surah Al-Fatiha](/quran/1/) yet, start there.
+
+### The month-by-month plan
+| Month | Surahs | Verses | Daily target |
+|---|---|---|---|
+| 1 | An-Nas → Al-Kawthar | 32 | 1–2 verses |
+| 2 | Al-Maun → Al-Qariah | 47 | 2–3 verses |
+| 3 | Al-Adiyat → Ash-Sharh | 67 | 3–4 verses |
+| 4 | Ad-Duha → Al-Ghashiyah | 123 | 5–6 short verses |
+| 5 | Al-Ala → Al-Infitar | 138 | 6–7 short verses |
+| 6 | At-Takwir → An-Naba | 157 | 7–8 short verses |
+| **Total** | **37 surahs** | **564** | |
+
+#### Month 1 in detail
+An-Nas, Al-Falaq, Al-Ikhlas, Al-Masad, An-Nasr, Al-Kafirun, Al-Kawthar. The goal this month is to **build the habit**, not to rush.
+
+#### Month 3 note
+Surah Al-Bayyinah (98) has longer verses than the surahs around it. Give it extra days if needed.
+
+### A model week
+| Day | Task |
+|---|---|
+| Days 1–5 | New verses + yesterday's verses + one older surah |
+| Day 6 | Review everything memorized this week |
+| Day 7 | Rest, or a fun family recitation |
+
+### The revision system
+- **Every day:** recite yesterday's verses before starting new ones.
+- **Every week:** review the whole week's work.
+- **Every month:** in the last week, cut new memorization in half and review everything from the start.
+
+### If your child falls behind
+That's completely fine. The plan is a guide, not a rule. If a longer surah needs an extra week, give it. What matters is that your child finishes Juz Amma **loving it and knowing it well**.
+
+### Tools that help
+- **Daily listening:** play the surah recited by Sheikh Al-Husary (the *Mu'allim* teaching recitation is slow and clear, ideal for kids) on our [Quran pages](/quran/), with verse repetition.
+- **Understanding:** tell your child the story behind surahs like Al-Fil (the army of elephants) before memorizing it.
+- **Motivation:** a star chart, and a small celebration after every surah.
+
+Want a teacher to follow this plan with your child, one-to-one, at a time that suits your time zone? [Book a free trial class](/contact/). And read our [complete guide to teaching kids the Quran online](/blog/learn-quran-online-for-kids/).
