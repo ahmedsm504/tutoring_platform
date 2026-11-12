@@ -1,3 +1,4 @@
+import re
 from django.db import models
 from django.db.models import F
 from django.utils.text import slugify
@@ -26,6 +27,43 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+
+
+# أقل طول (بالحروف) لمحتوى المقال عشان يتفهرس ويتعرض عليه إعلانات.
+# المقالات الأقصر من كده (حوالي 1400 كلمة) بتفضل منشورة ومتاحة للزوار، لكن بتاخد noindex
+# وبتتشال من خريطة الموقع وقوائم المدونة ومن غير إعلانات، عشان جوجل أدسنس رفض الموقع
+# بسبب "محتوى منخفض القيمة" (أغلب المقالات القديمة 150-500 كلمة بقالب متكرر).
+# أي مقال يتوسع لحد الطول ده بيرجع يتفهرس لوحده.
+INDEX_MIN_CHARS = 9000
+
+
+_MD_LINK = re.compile(r'\[[^\]]*\]\([^)]*\)')
+INDEXABLE_CACHE_KEY = 'blog:indexable-ids:v1'
+
+
+def prose_length(content):
+    """طول النص الفعلي للمقال من غير اللينكات (صفحات الفهارس اللي أغلبها لينكات مش محتوى)"""
+    return len(_MD_LINK.sub('', content or ''))
+
+
+def indexable_ids():
+    from django.core.cache import cache
+    from django.db.models.functions import Length
+    ids = cache.get(INDEXABLE_CACHE_KEY)
+    if ids is None:
+        rows = (Post.objects.filter(status='published').alias(_clen=Length('content'))
+                .filter(_clen__gte=INDEX_MIN_CHARS).values_list('pk', 'content'))
+        ids = [pk for pk, content in rows if prose_length(content) >= INDEX_MIN_CHARS]
+        cache.set(INDEXABLE_CACHE_KEY, ids, 600)
+    return ids
+
+
+class PostQuerySet(models.QuerySet):
+    def published(self):
+        return self.filter(status='published')
+
+    def indexable(self):
+        return self.filter(status='published', pk__in=indexable_ids())
 
 
 class Post(models.Model):
@@ -69,6 +107,8 @@ class Post(models.Model):
     allow_comments = models.BooleanField(default=True, verbose_name='السماح بالتعليقات')
     # وقت إرسال إشعار المقال (فاضي = لسه ما اتبعتش) - عشان الإشعار ميتبعتش مرتين
     push_sent_at = models.DateTimeField(null=True, blank=True, editable=False, verbose_name='وقت إرسال الإشعار')
+
+    objects = PostQuerySet.as_manager()
     
     class Meta:
         verbose_name = 'مقال'
@@ -111,6 +151,11 @@ class Post(models.Model):
         ومن غير ما نخسر زيادات لو أكتر من زائر دخلوا في نفس اللحظة."""
         Post.objects.filter(pk=self.pk).update(views_count=F('views_count') + 1)
         self.views_count += 1
+
+    @property
+    def is_indexable(self):
+        """المقال طويل ومفيد بما يكفي للفهرسة والإعلانات (انظر INDEX_MIN_CHARS)"""
+        return self.status == 'published' and prose_length(self.content) >= INDEX_MIN_CHARS
 
     @property
     def display_image_alt(self):

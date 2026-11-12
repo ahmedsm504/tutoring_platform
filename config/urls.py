@@ -12,8 +12,7 @@ from accounts import views as accounts_views
 from core.push_status import push_status
 
 from .robots_view import llms_txt, robots_txt
-from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap, QNAQuestionsSitemap,
-                       QuranSitemap, StaticViewSitemap)
+from .sitemaps import BlogCategorySitemap, BlogPostSitemap, QuranSitemap, StaticViewSitemap
 
 
 def indexnow_key(request):
@@ -25,8 +24,7 @@ sitemaps = {
     'static': StaticViewSitemap,
     'blog': BlogPostSitemap,
     'blog-categories': BlogCategorySitemap,
-    'qna-questions': QNAQuestionsSitemap,
-    'qna-categories': QNACategorySitemap,
+    # الأسئلة والأجوبة اتشالت من الخريطة: إجاباتها قصيرة (أقل من 250 كلمة) وعليها noindex لحد ما تتوسع
     'quran': QuranSitemap,
 }
 

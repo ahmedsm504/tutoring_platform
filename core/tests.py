@@ -297,8 +297,20 @@ class SeededContentTests(TestCase):
         self.assertContains(self.client.get('/sitemap.xml'), '/privacy-policy/')
 
     def test_no_ads_on_thin_pages(self):
-        self.assertNotContains(self.client.get('/contact/'), 'adsbygoogle.js')
-        self.assertContains(self.client.get('/blog/madd-types-tajweed/'), 'adsbygoogle.js')
+        # الإعلانات في صفحات المحتوى الطويل بس (سياسة أدسنس: مفيش إعلانات على صفحات من غير محتوى كافي)
+        for url in ['/contact/', '/accounts/login/', '/questions/', '/about/', '/quran/']:
+            self.assertNotContains(self.client.get(url, follow=True), 'adsbygoogle.js', msg_prefix=url)
+        thin_post = Post.objects.published().exclude(pk__in=Post.objects.indexable().values('pk')).first()
+        thin = self.client.get(f'/blog/{thin_post.slug}/')
+        self.assertNotContains(thin, 'adsbygoogle.js')
+        self.assertContains(thin, 'noindex, follow')
+        rich = Post.objects.indexable().first()
+        r = self.client.get(f'/blog/{rich.slug}/')
+        self.assertContains(r, 'adsbygoogle.js')
+        self.assertNotContains(r, 'noindex')
+        self.assertContains(self.client.get('/'), 'adsbygoogle.js')
+        q = self.client.get(reverse('qna:question_list'))
+        self.assertContains(q, 'noindex, follow')
 
 
 @override_settings(SECURE_SSL_REDIRECT=False)
@@ -668,8 +680,12 @@ class SiteIndexAndCachingTests(TestCase):
     def test_site_index_lists_content(self):
         r = self.client.get('/site-index/')
         self.assertEqual(r.status_code, 200)
-        self.assertContains(r, '/blog/nasikh-mansukh/')
-        self.assertContains(r, 'فهرس كل المقالات والأسئلة')
+        rich = Post.objects.indexable().first()
+        self.assertContains(r, f'/blog/{rich.slug}/')
+        # المقالات القصيرة (noindex) والأسئلة مش في الفهرس
+        thin = Post.objects.published().exclude(pk__in=Post.objects.indexable().values('pk')).first()
+        self.assertNotContains(r, f'/blog/{thin.slug}/"')
+        self.assertNotContains(r, '/questions/question/')
         self.assertNotIn('X-Robots-Tag', r.headers)
 
     def test_sitemap_has_site_index(self):
@@ -1202,7 +1218,11 @@ class RelatedPostsTests(TestCase):
         self.assertNotEqual([x.pk for x in rel], [x.pk for x in related_posts(q)])
 
     def test_detail_has_prev_next_and_related(self):
-        r = self.client.get('/blog/amanah-in-the-quran/')
+        from blog.models import Post
+        from blog.related import prev_next
+        # السابق/التالي بيتنقلوا بين المقالات الطويلة (indexable) بس
+        p = next(x for x in Post.objects.indexable() if all(prev_next(x)))
+        r = self.client.get(f'/blog/{p.slug}/')
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, 'rel="prev"')
         self.assertContains(r, 'rel="next"')
@@ -1285,10 +1305,14 @@ class SeoBoostTests(TestCase):
         r = self.client.get('/sitemap.xml')
         root = ET.fromstring(r.content)
         locs = {e.text for e in root.iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')}
-        posts = Post.objects.filter(status='published')
-        self.assertGreater(posts.count(), 1000)
+        # المقالات الطويلة بس في الخريطة؛ القصيرة عليها noindex ومش موجودة
+        posts = Post.objects.indexable()
+        self.assertGreater(posts.count(), 200)
         for p in posts:
             self.assertIn(f'https://alagme.com/blog/{p.slug}/', locs)
+        for p in Post.objects.published().exclude(pk__in=posts.values('pk'))[:50]:
+            self.assertNotIn(f'https://alagme.com/blog/{p.slug}/', locs)
+        self.assertFalse(any('/questions/question/' in l for l in locs))
         images = list(root.iter('{http://www.google.com/schemas/sitemap-image/1.1}loc'))
         self.assertEqual(len(images), posts.exclude(cloud_url__isnull=True).exclude(cloud_url='').count())
 
@@ -1321,9 +1345,9 @@ class SitemapResilienceTests(TestCase):
     def test_bad_slug_post_does_not_break_sitemap(self):
         from django.core.cache import cache
         cache.clear()
-        p = Post.objects.filter(status='published').first()
+        p = Post.objects.indexable().first()
         Post.objects.filter(pk=p.pk).update(slug='bad slug؟')
         r = self.client.get('/sitemap.xml')
         self.assertEqual(r.status_code, 200)
         self.assertNotIn('bad slug', r.content.decode())
-        self.assertGreater(r.content.decode().count('<url>'), 1000)
+        self.assertGreater(r.content.decode().count('<url>'), 300)

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static humanize content_tags %}
+{% block adsense %}{% include "includes/adsense.html" %}{% endblock %}
 
 {% block title %}مدونة تحفيظ القرآن الكريم{% if posts.number > 1 %} - صفحة {{ posts.number }}{% endif %} | مؤسسة العجمي{% endblock %}
 

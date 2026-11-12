@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static content_tags i18n %}
+{% block adsense %}{% if indexable %}{% include "includes/adsense.html" %}{% endif %}{% endblock %}
+{% block robots %}{% if indexable %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% else %}noindex, follow{% endif %}{% endblock %}
 
 {% block html_lang %}{% if post.title|is_latin %}en{% else %}ar{% endif %}{% endblock %}
 {% block og_locale %}{% if post.title|is_latin %}en_US{% else %}ar_AR{% endif %}{% endblock %}

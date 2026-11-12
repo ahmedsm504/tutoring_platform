@@ -53,7 +53,6 @@ class StaticViewSitemap(Sitemap):
         ('privacy', 0.3, 'yearly'),
         ('terms', 0.3, 'yearly'),
         ('blog_list', 0.8, 'daily'),
-        ('qna:question_list', 0.85, 'daily'),
         ('site_index', 0.6, 'daily'),
     ]
 
@@ -91,7 +90,8 @@ class BlogPostSitemap(Sitemap):
         """جلب جميع المقالات المنشورة"""
         if not HAS_BLOG:
             return []
-        return _reversible(Post.objects.filter(status='published').exclude(slug='').exclude(slug__isnull=True)
+        # المقالات الطويلة بس (المقالات القصيرة عليها noindex - انظر blog.models.INDEX_MIN_CHARS)
+        return _reversible(Post.objects.indexable().exclude(slug='').exclude(slug__isnull=True)
                            .order_by('-published_at'), 'blog_detail')
 
     def lastmod(self, obj):
@@ -131,7 +131,7 @@ class BlogCategorySitemap(Sitemap):
     def items(self):
         if not HAS_BLOG:
             return []
-        return Category.objects.all().order_by('name')
+        return Category.objects.filter(pk__in=Post.objects.indexable().values('category_id')).order_by('name')
 
     def lastmod(self, obj):
         if not HAS_BLOG:
