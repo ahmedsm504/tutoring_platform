@@ -1268,9 +1268,12 @@ class SeoLimitsAndQuranLinksTests(TestCase):
 
     def test_surah_page_links_articles_and_back(self):
         r = self.client.get('/quran/49/')
-        # مقال الحجرات اتدمج: صفحة السورة بتلينك على قسمه جوه الصفحة الشاملة
-        self.assertContains(r, f"/blog/{live_slug('tafsir-surat-al-hujurat')}/#")
+        # صفحة السورة بتلينك على التفسير الكامل للسورة، وأقسام الصفحات الشاملة اللي عن السورة
+        self.assertContains(r, '/blog/tafsir-surat-al-hujurat-kamila/')
+        self.assertContains(r, '/blog/tafsir-ayah-ijtanibu-kathiran-min-az-zann/#')
         self.assertContains(r, 'بصوت كبار القراء')
+        r = self.client.get('/blog/tafsir-surat-al-hujurat-kamila/')
+        self.assertContains(r, '/quran/49/')
         r = self.client.get(f"/blog/{live_slug('tafsir-surat-al-hujurat')}/")
         self.assertContains(r, '/quran/49/')
 
