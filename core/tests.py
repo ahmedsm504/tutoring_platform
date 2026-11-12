@@ -1254,6 +1254,17 @@ class RelatedPostsTests(TestCase):
 
 
 
+class MergedPageTitleTests(TestCase):
+    """عناوين الصفحات الشاملة «المجموعة: مقال وغيرها» لازم <title> بتاعها مايتكررش بين صفحات المجموعة."""
+    def test_merged_titles_keep_part_of_subtitle(self):
+        from core.templatetags.content_tags import _clip_title
+        a = _clip_title('الصحابة والتابعون مع القرآن: عبد الله بن عمرو بن العاص والقرآن وغيرها')
+        b = _clip_title('الصحابة والتابعون مع القرآن: جعفر بن أبي طالب وسورة مريم وغيرها')
+        self.assertNotEqual(a, b)
+        self.assertLessEqual(max(len(a), len(b)), 60)
+        self.assertNotIn('وغيرها', a + b)
+
+
 class SeoLimitsAndQuranLinksTests(TestCase):
     def test_title_and_description_limits(self):
         import html, re

@@ -232,6 +232,9 @@ def seo_clip_title(title):
     return mark_safe(escape(_clip_title(_unesc(title))))
 
 
+_EN_DANGLING = {'a', 'an', 'the', 'of', 'to', 'in', 'on', 'for', 'and', 'or', 'with', 'is', 'are', 'was', 'were', 'how', 'what', 'why', 'from', 'by'}
+
+
 def _clip_title(title):
     t = ' '.join(title.split())
     if len(t) <= TITLE_MAX:
@@ -240,6 +243,29 @@ def _clip_title(title):
         t = t.rsplit(' | ', 1)[0].strip()
         if len(t) <= TITLE_MAX:
             return t
+    merged = re.match(r'^(.+?):\s*(.+?)\s+(?:وغيرها|and More)$', t)
+    if merged:
+        # الصفحات الشاملة (المدموجة) عناوينها «المجموعة: أول مقال وغيرها» والمجموعة متكررة بين صفحات كتير،
+        # فلازم يدخل جزء من العنوان الفرعي عشان <title> مايتكررش.
+        head, sub = merged.group(1).strip(), merged.group(2).strip()
+        room = TITLE_MAX - len(head) - 2
+        words, out = sub.split(), []
+        for w in words:
+            if len(' '.join(out + [w])) > room:
+                break
+            out.append(w)
+        while len(out) > 1 and (out[-1].lower() in _DANGLING or out[-1].lower() in _EN_DANGLING or out[-1].startswith('و') and len(out[-1]) <= 2):
+            out.pop()
+        clipped = ' '.join(out)
+        if len(out) < len(words):
+            # لو العنوان الفرعي قائمة «أ، ب، ج» نقف عند آخر عنصر كامل بدل ما نقص كلمة في النص
+            for sep in ('،', ','):
+                if sep in clipped:
+                    clipped = clipped.rsplit(sep, 1)[0]
+                    break
+        if room >= 15 and clipped:
+            return f'{head}: ' + clipped.rstrip(' ،,:-–|(')
+        return _clip_words(sub, TITLE_MAX)
     for sep in (':', '؟', '?', ' - ', '،'):
         if sep in t:
             head, rest = t.split(sep, 1)
