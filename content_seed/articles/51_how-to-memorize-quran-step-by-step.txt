@@ -26,7 +26,7 @@ Every verse you memorize is a step up, and every effort is rewarded. You do not 
 There is no single required order, and each approach has advantages:
 - **From the end of the Mushaf**: start with Juz 'Amma, then Tabarak, then Qad Sami', and work backwards. This suits most beginners and children: the surahs are short, progress is quick and motivating, and these are the surahs recited most in prayer.
 - **From the beginning**: start with Al-Baqarah and go in order. This suits people with strong motivation and a fixed schedule, because long surahs need stamina.
-- **With favourite surahs**: start with surahs you love or recite often, such as [Al-Mulk](/blog/memorize-surah-al-mulk-english/), [Al-Kahf](/blog/memorize-surah-al-kahf-english/) and [Ya-Sin](/blog/memorize-surah-yasin-english/), then continue with a system. Fine as a start, but don't make it your permanent method, or your memorization will be scattered.
+- **With favourite surahs**: start with surahs you love or recite often, such as [Al-Mulk](/blog/khalaqa-al-mawta-wal-hayat-meaning-english/#How-to-Memorize-Surah-Al-Mulk-A-2-Week-Plan-for-Adults-and-4), [Al-Kahf](/blog/surah-al-kahf-lessons-english/#How-to-Memorize-Surah-Al-Kahf-in-One-Month-A-Plan-Built-Arou) and [Ya-Sin](/blog/surah-saba-meaning-english/#How-to-Memorize-Surah-Yasin-in-6-Weeks-and-a-Note-on-Weak-Ha), then continue with a system. Fine as a start, but don't make it your permanent method, or your memorization will be scattered.
 
 Whatever you choose, choose one way and stick to it.
 
@@ -111,7 +111,7 @@ The more you memorize, the bigger the far revision becomes, until it is larger t
 | After Maghrib or Isha | far revision | 20 min |
 | In Sunnah and night prayers | recite the new portion and some revision | within prayer |
 
-That's about an hour and a quarter a day. If you can't manage it, cut the new portion, not the revision. Using your night prayer for revision is especially powerful: see [revising in night prayer](/blog/revision-in-night-prayer-english/).
+That's about an hour and a quarter a day. If you can't manage it, cut the new portion, not the revision. Using your night prayer for revision is especially powerful: see [revising in night prayer](/blog/quran-revision-games-kids-english/#Revising-Your-Quran-in-Night-Prayer-Qiyam-A-Practical-Method).
 
 ## A weekly schedule
 - **Saturday to Wednesday**: new memorization plus near and far revision.
@@ -143,7 +143,7 @@ Memorize half a page five days a week, and you can finish in under five years, w
 7. **Neglecting page beginnings.** Memorizers often stumble moving from one page to the next.
 8. **Memorizing when exhausted.** Memorizing after a long workday wastes your time. Memorize at your freshest time and revise at other times.
 
-For more pitfalls, read [10 mistakes beginner memorizers make](/blog/beginner-memorizer-mistakes-english/).
+For more pitfalls, read [10 mistakes beginner memorizers make](/blog/arabic-letters-pronunciation-for-non-arabs/#10-Mistakes-Beginner-Quran-Memorizers-Make-and-How-to-Fix-Th).
 
 ## A worked example: one page of Surah Al-Mulk
 Suppose today's portion is the first page of Surah Al-Mulk, about twelve verses:
@@ -173,7 +173,7 @@ Every memorizer goes through dry spells. What helps:
 
 ## Frequently asked questions
 ### Can I memorize the Quran after forty?
-Yes, and many people have done it in their forties and fifties. Choose a small, steady portion, give revision its full share, and use understanding to help your memory. Adults with attention difficulties can read [hifz for adults with ADHD](/blog/hifz-for-adults-with-adhd-english/).
+Yes, and many people have done it in their forties and fifties. Choose a small, steady portion, give revision its full share, and use understanding to help your memory. Adults with attention difficulties can read [hifz for adults with ADHD](/blog/compilation-of-the-quran-english/#Memorizing-the-Quran-as-an-Adult-with-ADHD-Methods-That-Work).
 
 ### What if I forget what I memorized?
 Don't despair and don't start over. Re-memorize what you forgot; the second time is much easier than the first. Then increase your revision.
@@ -182,9 +182,9 @@ Don't despair and don't start over. Re-memorize what you forgot; the second time
 Alone is possible, but harder to sustain and harder to correct. A teacher or partner keeps you committed and catches mistakes before they settle.
 
 ### Should I memorize from an app or a printed Mushaf?
-What matters most is **one fixed layout**. If you use an app, choose a page view that matches the Madinah Mushaf and don't change it. Choosing a reciter to follow matters too: see [how to choose a reciter for memorization](/blog/choosing-reciter-for-memorization-english/).
+What matters most is **one fixed layout**. If you use an app, choose a page view that matches the Madinah Mushaf and don't change it. Choosing a reciter to follow matters too: see [how to choose a reciter for memorization](/blog/arabic-letters-pronunciation-for-non-arabs/#Which-Reciter-Should-You-Listen-to-for-Memorizing-the-Quran).
 
 ## Why a teacher helps
 A qualified teacher corrects your recitation before you memorize, sets the right portion for you, follows your revision and lifts you when motivation dips. With us, the teacher follows up with audio homework that you record and send between classes.
 
-Start with a clear plan and a certified teacher: [book a free trial class](/contact/). Busy schedule? Read [Quran memorization for busy professionals](/blog/quran-memorization-for-busy-professionals/).
+Start with a clear plan and a certified teacher: [book a free trial class](/contact/). Busy schedule? Read [Quran memorization for busy professionals](/blog/learning-arabic-through-quran-english/#Quran-Memorization-for-Busy-Professionals-and-Parents-Is-It-).

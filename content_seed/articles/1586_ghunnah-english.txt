@@ -1,21 +1,37 @@
-title: Ghunnah in Tajweed: The Nasal Sound and Its Five Levels
+title: Tajweed Essentials: Ghunnah in Tajweed and More
 category: english
-excerpt: What ghunnah is and how long to hold it: the nasal sound of noon and meem, why doubled noon and meem always carry a full two-count ghunnah, the five levels of ghunnah from strongest to weakest, how to test it by holding your nose, and the mistakes that cut it short or stretch it too long.
-meta: Ghunnah in English: the nasal sound of noon and meem, the two-count ghunnah in doubled letters, the five levels of ghunnah, the nose test, and common mistakes in its length.
-keywords: ghunnah tajweed, ghunnah rules english, nasal sound quran, noon and meem mushaddad, levels of ghunnah, tajweed for beginners
-reading: 4
-translation_of: ghunnah-levels
+excerpt: This page brings together 11 guides under the heading “Tajweed Essentials”, each in its own section with evidence from the Quran and authentic Sunnah.
+meta: Tajweed Essentials: Ghunnah in Tajweed, Hamzat al-Wasl vs Hamzat al-Qat, How Long Does It Take to Learn Tajweed, Common Recitation Mistakes in Prayer (and…
+keywords: ghunnah tajweed, hamzat al wasl, how long to learn tajweed, recitation mistakes in prayer, madinah mushaf symbols, rolling raa quran, sifat al huruf, waqf rules english, sujud al tilawa, ten qiraat
+reading: 19
 ---
+This page brings together 11 guides under the heading “Tajweed Essentials”, each in its own section with evidence from the Quran and authentic Sunnah.
+
+In this page:
+- **Ghunnah in Tajweed**: What ghunnah is and how long to hold it: the nasal sound of noon and meem, why doubled noon and meem always carry a full two-count ghunnah, the five levels of ghunnah from strongest to…
+- **Hamzat al-Wasl vs Hamzat al-Qat**: Why is the hamza in "anʿamta" always pronounced, while the one in "ihdinā" disappears when you join it to the previous word? The difference between the two hamzas, their marks in the…
+- **How Long Does It Take to Learn Tajweed**: Realistic timelines for learning tajweed as an adult or child: how long it takes to read Arabic letters, to learn the core rules, and to recite fluently, what speeds it up or slows it…
+- **Common Recitation Mistakes in Prayer (and How Imams Can Avoid Them)**: Common Quran recitation mistakes heard in prayer and how to fix them: errors in Al-Fatihah that can change meaning, rushing madd and ghunnah, joining and stopping in the wrong places…
+- **Signs and Symbols in the Madinah Mushaf Explained (A Guide for Non-Arabs)**: Small circles, upright ovals, tiny Meems, stacked tanween and little letters: what every symbol in the Madinah Mushaf means and how it changes your recitation.
+- **Over-Rolling the Raa**: Why scholars say you should know the "takrir" (repetition) quality of raa in order to avoid it: what over-rolling sounds like, the words where it happens most such as "ar-raḥmān" and…
+- **Sifat al-Huruf**: The characteristics of Arabic letters (sifat al-huruf) in plain English: the five pairs of opposite qualities such as whispered and voiced, strong and soft, heavy and light, and the…
+- **How to Stop at the End of a Word in Quran Recitation**: What happens to the last letter when you stop (waqf) in Quran recitation: replacing the final vowel with sukūn, turning tanween with fatḥah into an alif, pronouncing taa marbutah as haa…
+- **Sujud al-Tilawa**: A clear guide to the prostration of recitation (sujud al-tilawa) in English: the 15 places marked in the Madinah Mushaf in a table, its ruling according to most scholars, whether wudu is…
+- **The Ten Qira'at**: An introduction to the ten mutawatir readings (qira'at) of the Quran in English: what a qira'ah and a riwayah are, the ten imams and their twenty narrators in a table, which readings are…
+- **The Six Throat Letters in Arabic**: A practical guide to the six throat letters in Arabic for English speakers: the three levels of the throat, how to pronounce hamza, haa, ʿayn, ḥaa, ghayn and khaa, the pairs that English…
+
+## Ghunnah in Tajweed: The Nasal Sound and Its Five Levels
+
 **Ghunnah** is the nasal sound that comes from the **nose** (al-khayshūm). It belongs to two letters only: **noon** and **meem**.
 
-## The nose test
+### The nose test
 - Say ﴿إِنَّ﴾ and gently hold your nose: the sound stops. That is ghunnah.
 
-## Doubled noon and meem
+### Doubled noon and meem
 - Every **noon or meem with a shaddah** has a full ghunnah of **two counts**.
 - **Examples:** ﴿إِنَّ﴾, ﴿ثُمَّ﴾, ﴿ٱلنَّاسِ﴾.
 
-## The five levels
+### The five levels
 | Level | Case | Example | Length |
 |---|---|---|---|
 | 1 (strongest) | Doubled | ﴿إِنَّ﴾ | 2 counts |
@@ -24,16 +40,399 @@ translation_of: ghunnah-levels
 | 4 | Clear with sukūn | ﴿أَنۡعَمۡتَ﴾ | Natural, not held |
 | 5 (weakest) | With a vowel | ﴿نَعۡبُدُ﴾ | Natural, not held |
 
-## How long is two counts?
+### How long is two counts?
 - About the time it takes to fold or unfold a finger at a steady pace.
 - **Keep it equal**: every full ghunnah in your recitation should be the same length.
 
-## Heavy or light?
+### Heavy or light?
 - In ikhfa, the ghunnah **follows the next letter**: heavy before a heavy letter, as in ﴿مِن قَبۡلُ﴾, and light otherwise.
 
-## Common mistakes
+### Common mistakes
 1. **Rushing** the doubled noon in ﴿إِنَّا أَعۡطَيۡنَٰكَ﴾.
 2. **Holding** the ghunnah in clear noon, as in ﴿أَنۡعَمۡتَ﴾.
 3. **Uneven lengths** across the recitation.
 
 Read [Noon Sakinah and Tanween Rules](/blog/noon-sakinah-tanween-rules-english/) and [Meem Sakinah Rules](/blog/meem-sakinah-rules-english/).
+
+## Hamzat al-Wasl vs Hamzat al-Qat: The Two Hamzas in the Quran Explained
+
+A question students often ask: "Why do we pronounce the hamza of ﴿ٱهۡدِنَا﴾ at the start of the verse, but it disappears when we join it to the word before?" The answer lies in two kinds of hamza: **Hamzat al-Qaṭʿ** (the cutting hamza) and **Hamzat al-Waṣl** (the connecting hamza).
+
+### Hamzat al-Qaṭʿ (cutting hamza)
+- **Always pronounced**, at the start or in the middle of speech, whether you join or start fresh.
+- **Its mark in the Mushaf:** a small ʿayn-head (ء) above or below the alif: أَ، إِ، أُ.
+- **Examples:** ﴿أَنۡعَمۡتَ﴾, ﴿إِيَّاكَ﴾, ﴿أَحَدٌ﴾, ﴿إِنَّا أَعۡطَيۡنَٰكَ﴾.
+
+### Hamzat al-Waṣl (connecting hamza)
+- **Pronounced only when you start with it**, and **dropped when joined** to what comes before.
+- **Its mark in the Madinah Mushaf:** a small ṣād-head above the alif: **ٱ**.
+- **Examples:** ﴿ٱهۡدِنَا﴾, ﴿ٱلۡحَمۡدُ﴾, ﴿ٱلصِّرَٰطَ﴾, ﴿ٱسۡمِ﴾.
+
+#### How it drops when joining
+- ﴿بِسۡمِ ٱللَّهِ﴾: not *bismi a-llāh*, but *bismi-llāh*. The hamza drops and the Laam is pronounced.
+- ﴿مَٰلِكِ يَوۡمِ ٱلدِّينِ﴾: *yawmi-d-dīn*.
+- ﴿وَقَالَ ٱلَّذِينَ﴾: *wa qāla-lladhīna*.
+
+### Comparison table
+| | Hamzat al-Qaṭʿ | Hamzat al-Waṣl |
+|---|---|---|
+| When starting | Pronounced | Pronounced |
+| When joining | Pronounced | Dropped |
+| Madinah Mushaf mark | ء (ʿayn-head) | ٱ (ṣād-head) |
+| Example | ﴿أَنۡعَمۡتَ﴾ | ﴿ٱهۡدِنَا﴾ |
+
+### Which vowel do you start Hamzat al-Waṣl with?
+- **In the definite article "al-":** always *a* (fatḥah).
+- **In verbs:** *u* if the third letter has a permanent ḍammah (﴿ٱنظُرۡ﴾ = *unẓur*), and *i* if it has a fatḥah or kasrah (﴿ٱذۡهَبۡ﴾ = *idh-hab*, ﴿ٱهۡدِنَا﴾ = *ihdinā*).
+- **In nouns:** *i*, as in ﴿ٱسۡمُهُۥ﴾ and ﴿ٱبۡنَ﴾.
+
+### Common mistakes
+1. **Pronouncing Hamzat al-Waṣl when joining:** reading ﴿إِيَّاكَ نَسۡتَعِينُ ٱهۡدِنَا﴾ as *nastaʿīnu ihdinā*. Correct when joining: *nastaʿīnu-hdinā*.
+2. **Dropping Hamzat al-Qaṭʿ:** reading ﴿قُلۡ أَعُوذُ﴾ as *qulaʿūdhu*. The hamza must be clear: *qul aʿūdhu*.
+3. **Starting Hamzat al-Waṣl with the wrong vowel:** starting ﴿ٱنظُرۡ﴾ with *i* instead of *u*.
+
+### Why this matters for memorizers
+Memorizers join verses constantly in recitation and prayer. Without knowing the difference, you'll cut what should be joined or drop what should be pronounced, and teachers catch these mistakes quickly in recitation tests.
+
+See [the symbols of the Mushaf explained](/blog/ghunnah-english/#Signs-and-Symbols-in-the-Madinah-Mushaf-Explained-A-Guide-fo) and [the types of Waqf (stopping)](/blog/sun-and-moon-letters-english/#Types-of-Stops-Waqf-in-Quran-Recitation-Complete-Sufficient-).
+
+## How Long Does It Take to Learn Tajweed? Realistic Timelines
+
+"How long until I can read the Quran properly?" It depends on where you start and how often you practise, but here are realistic ranges.
+
+### Typical timelines
+| Goal | With 3–4 lessons a week |
+|---|---|
+| Reading Arabic letters and vowels | 1–3 months |
+| Core rules (noon, meem, madd) | 2–4 months more |
+| Fluent recitation of Juz ʿAmma | 6–12 months in total |
+| Detailed makharij and ṣifāt | Ongoing, often 1–2 years |
+- These are **estimates**, not promises.
+
+### Knowing vs applying
+- You can **learn** a rule in a day.
+- **Applying it automatically** takes weeks of recitation to a teacher.
+
+### What speeds it up
+- **Regular short sessions**: 20 minutes daily beats a long weekly session.
+- **Reciting to a teacher**, not only watching videos.
+- **Listening** to a careful reciter.
+
+### What slows it down
+- **Skipping the letters** to rush to rules.
+- **Transliteration** for too long.
+- **Long gaps** between lessons.
+
+### A sample week
+| Day | Task |
+|---|---|
+| Sat, Mon, Wed | Lesson with a teacher (30 min) |
+| Sun, Tue, Thu | 20 minutes review and listening |
+| Fri | Recite Al-Kahf or a favourite surah slowly |
+
+Read [Learn Tajweed Step by Step](/blog/learn-tajweed-roadmap-english/) and [Learn Quran as an Adult from Zero](/blog/juz-amma-word-meanings-english/#Learning-to-Read-the-Quran-as-an-Adult-From-Zero-A-Step-by-S).
+
+## Common Recitation Mistakes in Prayer (and How Imams Can Avoid Them)
+
+Whether you lead your family at home or a congregation at the mosque, your recitation matters. Here are the most common mistakes.
+
+### Mistakes in Al-Fatihah
+| Mistake | Correct | Why it matters |
+|---|---|---|
+| ﴿أَنۡعَمۡتَ﴾ with ḍammah on the taa | *anʿamta* | With ḍammah it would mean "I favoured" |
+| Light ḥaa in ﴿ٱلۡحَمۡدُ﴾ said as haa | Clear ḥaa | A different letter |
+| Dropping the shaddah in ﴿إِيَّاكَ﴾ | *iyyāka* | Without it the meaning changes |
+| Short madd in ﴿ٱلضَّآلِّينَ﴾ | Six counts | Madd lāzim |
+- Read [Surah Al-Fatiha Common Mistakes](/blog/surah-al-fatiha-common-mistakes/).
+
+### Other common mistakes
+1. **Rushing** the ghunnah and madd.
+2. **Stopping** in the middle of a meaning.
+3. **Thin heavy letters**, like ṣaad sounding like sīn.
+4. **Mixing up similar verses** from different surahs.
+
+### Preparation tips
+| Tip | How |
+|---|---|
+| Revise before leading | Read your portion that day |
+| Choose what you know well | Not your newest memorization |
+| Recite at a steady pace | Not too fast, not too slow |
+| Know where to stop | Use the waqf signs |
+| If you forget | Repeat the previous ayah or move to another passage you know |
+
+### If someone corrects you
+- Accept the correction calmly and continue. The Prophet ﷺ was once reminded of a verse he skipped in prayer [Abu Dawud].
+
+Read [Sifat al-Huruf in English](/blog/ghunnah-english/#Sifat-al-Huruf-The-Characteristics-of-Arabic-Letters) and [Types of Waqf](/blog/sun-and-moon-letters-english/#Types-of-Stops-Waqf-in-Quran-Recitation-Complete-Sufficient-).
+
+## Signs and Symbols in the Madinah Mushaf Explained (A Guide for Non-Arabs)
+
+Open any page of the Madinah Mushaf and you'll see tiny marks above and below the letters. These are **pronunciation marks** (*ḍabṭ*), added by scholars to guide you to correct recitation in the Hafs reading. Once you understand them, it's like having a teacher whispering on every line.
+
+### 1. The round zero ( ۟ )
+Above a long-vowel letter (Alif, Waw or Yaa), it means that letter is **extra and never pronounced**, whether you stop or continue.
+- Example: the Alif after the plural Waw in ﴿قَالُواْ﴾ is read *qālū*, with no Alif sound.
+
+### 2. The upright oval zero ( ۠ )
+Placed on an Alif followed by a vowelled letter: the Alif is **dropped when continuing, but pronounced when stopping**.
+- Example: ﴿أَنَا۠﴾ is read *ana* when you continue, *anā* when you stop on it.
+
+### 3. The sukoon ( ْ )
+A small head of the letter Khaa (without its dot). It means the letter is **silent and pronounced clearly**, e.g. ﴿مَنۡ ءَامَنَ﴾.
+
+#### When the sukoon is missing
+- If a silent letter has **no sukoon and the next letter has a shadda**, it's **full merging** (Idgham), e.g. ﴿مِن رَّبِّهِمۡ﴾.
+- If it has **no sukoon and the next letter has no shadda**, it's **hiding** (Ikhfa), e.g. ﴿مِن قَبۡلُ﴾.
+
+### 4. The small Meem ( ۢ )
+Above a Noon Sakinah or replacing the second vowel of tanween: it signals **Iqlab**, turning the Noon into a hidden Meem with nasal sound, e.g. ﴿مِنۢ بَعۡدِ﴾.
+
+### 5. Consecutive vs. stacked tanween
+- **Consecutive** (one vowel after the other): **Izhar** (clear), e.g. ﴿عَذَابٌ أَلِيمٌ﴾.
+- **Stacked** (one vowel directly above the other): **Idgham or Ikhfa**, e.g. ﴿غَفُورٌ رَّحِيمٌ﴾.
+
+This single detail tells you the Tanween rule as you read.
+
+### 6. Small letters
+They indicate letters **not written in the original script but pronounced**:
+- **Small (dagger) Alif:** ﴿ذَٰلِكَ﴾, ﴿ٱلرَّحۡمَٰنِ﴾.
+- **Small Waw:** ﴿دَاوُۥدَ﴾. **Small Yaa:** ﴿يُحۡيِۦ﴾.
+- **After the pronoun "hu/hi":** they mark *ṣilah* (lengthening the pronoun), e.g. ﴿إِنَّهُۥ كَانَ﴾.
+
+### 7. The Madd sign ( ~ )
+A wavy line over a long vowel means **elongation beyond the natural 2 counts**: connected, separated or compulsory Madd, e.g. ﴿جَآءَ﴾, ﴿ٱلضَّآلِّينَ﴾. See [Madd rules in English](/blog/madd-rules-tajweed-english/).
+
+### 8. The small Seen
+- **Above the last letter of a word:** a *sakt* (brief pause without breath), e.g. ﴿عِوَجَاۜ﴾.
+- **Above a Ṣaad:** the word is read with a Seen, e.g. ﴿وَيَبۡصُۜطُ﴾ in Al-Baqarah.
+
+### 9. Other marks
+- **۞** marks the start of a Hizb or quarter.
+- **۩** marks a place of prostration (sajdah).
+- **مـ، لا، ج، صلى، قلى** are stopping signs: compulsory stop, don't stop, optional, continuing preferred, stopping preferred. See [types of stops in Quran recitation](/blog/sun-and-moon-letters-english/#Types-of-Stops-Waqf-in-Quran-Recitation-Complete-Sufficient-).
+
+### A practical tip
+Each week, focus on **one symbol** while you read and notice every occurrence. Within a month, these marks will guide you automatically.
+
+Learning to read from scratch? Start with [learning to read the Quran as an adult](/blog/juz-amma-word-meanings-english/#Learning-to-Read-the-Quran-as-an-Adult-From-Zero-A-Step-by-S), or [book a free trial class](/contact/).
+
+## Over-Rolling the Raa: The Takrir Mistake and How to Fix It
+
+The Arabic raa has a quality called **takrīr** (repetition): the tongue is ready to vibrate. Scholars of tajweed say you should **know it in order to avoid it**, not to show it.
+
+### What over-rolling sounds like
+- *Ar-rrrraḥmān* instead of *ar-raḥmān*.
+- It is especially noticeable when the raa has a **shaddah** or a **sukūn**.
+
+### Words to watch
+| Word | Why |
+|---|---|
+| ﴿ٱلرَّحۡمَٰنِ﴾ | Doubled raa |
+| ﴿رَبِّ﴾ | Raa at the start, heavy |
+| ﴿وَٱنۡحَرۡ﴾ | Raa with sukūn when stopping |
+| ﴿خَيۡرࣱ﴾ | Raa between letters |
+
+### How to fix it
+1. **Touch** the tip of the tongue to the ridge behind the upper teeth **once**.
+2. **Keep the tongue firm**, not loose.
+3. For a doubled raa, **hold** the contact a little longer instead of tapping many times.
+
+### Exercises
+- Say *ar-raḥmān* slowly ten times, counting one tap only.
+- Read Al-Fatihah and mark every raa.
+- Record and listen: can you hear more than one tap?
+
+### Don't overcorrect
+- Removing all vibration makes the raa sound like a *d* or *l*. Aim for **one clean tap**.
+
+Read [Heavy and Light Letters in Tajweed](/blog/compilation-of-the-quran-english/#Heavy-and-Light-Letters-in-Tajweed-Tafkhim-and-Tarqiq-for-En) and [Sifat al-Huruf in English](/blog/ghunnah-english/#Sifat-al-Huruf-The-Characteristics-of-Arabic-Letters).
+
+## Sifat al-Huruf: The Characteristics of Arabic Letters
+
+If **makharij** tell you *where* a letter comes from, **ṣifāt** tell you *how* it sounds. Two letters can share a makhraj but differ in their qualities, like س and ص.
+
+### Qualities with opposites
+| Quality | Opposite | Meaning |
+|---|---|---|
+| Hams (whisper) | Jahr (voiced) | Breath flows with the letter, or is held |
+| Shiddah (strong) | Rakhāwah (soft), with Tawassuṭ (middle) between them | Sound is blocked, flows, or is in between |
+| Istiʿlāʾ (raising) | Istifāl (lowering) | Back of the tongue rises, or stays low |
+| Iṭbāq (covering) | Infitāḥ (opening) | Tongue covers the roof of the mouth, or not |
+| Idhlāq (fluency) | Iṣmāt (restraint) | Ease of pronunciation |
+
+### The whispered letters
+- Gathered in **فَحَثَّهُ شَخۡصٌ سَكَتَ**.
+- **Tip:** let a little breath out with ت and ك when they have a sukūn, as in ﴿أَنۡعَمۡتَ﴾.
+
+### The strong letters
+- Gathered in **أَجِدُ قَطٍ بَكَتۡ**.
+
+### Qualities without opposites
+| Quality | Letters | Example |
+|---|---|---|
+| Ṣafīr (whistling) | ص ز س | ﴿ٱلصِّرَٰطَ﴾ |
+| Qalqalah (echo) | ق ط ب ج د | ﴿ٱلۡفَلَقِ﴾ |
+| Līn (softness) | و ي with sukūn after fatḥah | ﴿قُرَيۡشٍ﴾ |
+| Inḥirāf (deviation) | ل ر | |
+| Takrīr (repetition) | ر | Avoid rolling it too much |
+| Tafashshī (spreading) | ش | ﴿ٱلشَّيۡطَٰنِ﴾ |
+| Istiṭālah (extension) | ض | ﴿وَلَا ٱلضَّآلِّينَ﴾ |
+
+### Why it matters
+- Without ṣifāt, س and ص sound the same, and so do ذ and ظ.
+- A wrong letter can change the meaning of a word.
+
+Read [Makharij al-Huruf in English](/blog/makharij-al-huruf-english/) and [Qalqalah in Tajweed](/blog/qalqalah-rules-english/).
+
+## How to Stop at the End of a Word in Quran Recitation
+
+When you stop at the end of an ayah, or anywhere you need to breathe, the last letter changes. Here are the rules every reader needs.
+
+### 1. The vowel becomes sukūn
+- ﴿ٱلۡعَٰلَمِينَ﴾ is read *al-ʿālamīn* when stopping, not *al-ʿālamīna*.
+
+### 2. Tanween
+| Tanween | When stopping | Example |
+|---|---|---|
+| ـٌ ـٍ (ḍammah or kasrah) | Becomes sukūn | ﴿أَحَدٌ﴾ → *aḥad* |
+| ـً (fatḥah) | Becomes a long *ā* | ﴿تَوَّابَۢا﴾ → *tawwābā* |
+
+### 3. Taa marbutah (ة)
+- Becomes a **haa with sukūn**: ﴿ٱلۡحَآقَّةُ﴾ → *al-ḥāqqah*.
+
+### 4. Madd when stopping
+- If a madd letter comes before the last letter, you may stretch **2, 4 or 6 counts**: ﴿ٱلرَّحِيمِ﴾ → *ar-raḥīm*.
+- **Be consistent**: use the same length throughout your recitation.
+- Read [Madd Rules in Tajweed](/blog/madd-rules-tajweed-english/).
+
+### 5. Rawm and ishmam (advanced)
+| Option | What it is | Allowed on |
+|---|---|---|
+| Rawm | Saying part of the vowel quietly | Ḍammah and kasrah |
+| Ishmam | Rounding the lips without sound | Ḍammah only |
+- These are learned from a teacher by listening.
+
+### Common mistakes
+1. **Keeping the vowel** when stopping.
+2. **Pronouncing taa marbutah as t** when stopping.
+3. **Dropping the alif** of tanween with fatḥah.
+4. **Changing madd length** from one ayah to the next.
+
+Read [Types of Waqf in English](/blog/sun-and-moon-letters-english/#Types-of-Stops-Waqf-in-Quran-Recitation-Complete-Sufficient-) and [Qalqalah in Tajweed](/blog/qalqalah-rules-english/).
+
+## Sujud al-Tilawa: The 15 Places of Prostration in the Quran
+
+When you reach certain ayat, you will see the sign **۩** in the Mushaf. This is a place of **sujūd al-tilāwah**, the prostration of recitation.
+
+### The 15 places
+| # | Surah | Ayah |
+|---|---|---|
+| 1 | Al-Aʿraf | 206 |
+| 2 | Ar-Raʿd | 15 |
+| 3 | An-Nahl | 50 |
+| 4 | Al-Isra | 109 |
+| 5 | Maryam | 58 |
+| 6 | Al-Hajj | 18 |
+| 7 | Al-Hajj | 77 |
+| 8 | Al-Furqan | 60 |
+| 9 | An-Naml | 26 |
+| 10 | As-Sajdah | 15 |
+| 11 | Sad | 24 |
+| 12 | Fussilat | 38 |
+| 13 | An-Najm | 62 |
+| 14 | Al-Inshiqaq | 21 |
+| 15 | Al-ʿAlaq | 19 |
+- Scholars differed about the **second place in Al-Hajj** and the one in **Sad**, and both are marked in the Madinah Mushaf.
+
+### Ruling
+- **A confirmed Sunnah** according to most scholars; the Hanafis consider it obligatory.
+- ʿUmar recited a prostration ayah on the minbar and did not prostrate, saying: "Allah has not made it obligatory unless we wish" [Al-Bukhari].
+
+### Is wudu required?
+- Most scholars require purity, as for prayer; some, like Ibn Taymiyyah, did not.
+- **The safest** is to prostrate with wuḍūʾ.
+
+### What to say
+- «Sajada wajhī lilladhī khalaqahu, wa shaqqa samʿahu wa baṣarahu, bi-ḥawlihi wa quwwatih» [Abu Dawud, At-Tirmidhi and An-Nasa'i].
+- Saying *Subḥāna Rabbiyal-Aʿlā* is also fine.
+
+### How
+- **In prayer**: say *Allāhu akbar*, prostrate once, then rise with *Allāhu akbar* and continue.
+- **Outside prayer**: a single prostration.
+
+### The listener
+- It is Sunnah for one **intentionally listening**; less emphasised for someone who hears by chance.
+
+Read [Etiquette of Reciting the Quran](/blog/compilation-of-the-quran-english/#Etiquette-of-Reciting-the-Quran-10-Adab-Every-Reader-Should-) and [Mushaf Symbols in English](/blog/ghunnah-english/#Signs-and-Symbols-in-the-Madinah-Mushaf-Explained-A-Guide-fo).
+
+## The Ten Qira'at: An Introduction to the Readings of the Quran
+
+Most Muslims today recite in **Hafs ʿan ʿĀṣim**. But it is one of **twenty narrations** from **ten readings**, all transmitted by mass, authentic chains (mutawātir).
+
+### Key terms
+| Term | Meaning |
+|---|---|
+| Qirāʾah | A reading attributed to one of the ten imams |
+| Riwāyah | A narration of that reading by one of the imam's students |
+| Mutawātir | Transmitted by so many that error is impossible |
+
+### The ten imams and their narrators
+| Imam | City | Narrators |
+|---|---|---|
+| Nāfiʿ | Madinah | Qālūn, Warsh |
+| Ibn Kathīr | Makkah | Al-Bazzī, Qunbul |
+| Abū ʿAmr | Basra | Ad-Dūrī, As-Sūsī |
+| Ibn ʿĀmir | Damascus | Hishām, Ibn Dhakwān |
+| ʿĀṣim | Kufa | Shuʿbah, Ḥafṣ |
+| Ḥamzah | Kufa | Khalaf, Khallād |
+| Al-Kisāʾī | Kufa | Abul-Ḥārith, Ad-Dūrī |
+| Abū Jaʿfar | Madinah | Ibn Wardān, Ibn Jammāz |
+| Yaʿqūb | Basra | Ruways, Rawḥ |
+| Khalaf al-ʿĀshir | Baghdad | Isḥāq, Idrīs |
+
+### Where they are recited today
+| Riwāyah | Common in |
+|---|---|
+| Ḥafṣ | Most of the Muslim world |
+| Warsh | North and West Africa |
+| Qālūn | Libya and parts of Tunisia |
+| Ad-Dūrī ʿan Abī ʿAmr | Parts of Sudan |
+
+### Qira'at are not the seven ahruf
+- The **seven ahruf** were modes of revelation mentioned in hadith.
+- The **ten qira'at** are readings preserved within the ʿUthmani script, and scholars discussed how they relate to the ahruf.
+
+### An example
+- ﴿مَٰلِكِ يَوۡمِ ٱلدِّينِ﴾ is read *Māliki* by ʿĀṣim, Al-Kisāʾī, Yaʿqūb and Khalaf, and *Maliki* by the others: Owner and King, both true.
+
+Read [What Is an Ijazah?](/blog/sun-and-moon-letters-english/#What-Is-an-Ijazah-in-Quran-Types-Requirements-and-How-to-Get) and [Hamzat al-Wasl vs Hamzat al-Qat](/blog/ghunnah-english/#Hamzat-al-Wasl-vs-Hamzat-al-Qat-The-Two-Hamzas-in-the-Quran-).
+
+## The Six Throat Letters in Arabic: ء هـ ع ح غ خ
+
+Six letters come from the **throat** (al-ḥalq). English has only two of them (the glottal stop and *h*), so the other four need practice.
+
+### The three levels
+| Level | Letters | Tip |
+|---|---|---|
+| Deepest | ء hamza, هـ haa | Like the catch in "uh-oh" and a soft English h |
+| Middle | ع ʿayn, ح ḥaa | Tighten the middle of the throat |
+| Closest to the mouth | غ ghayn, خ khaa | Like a gargle; khaa is the breathy one |
+
+### Pairs English speakers mix up
+| Pair | Difference | Example |
+|---|---|---|
+| هـ / ح | ح is tighter, from the middle of the throat | ﴿ٱلۡحَمۡدُ﴾ |
+| ء / ع | ع has a squeezed, voiced sound | ﴿نَعۡبُدُ﴾ |
+| غ / خ | غ is voiced, خ is whispered | ﴿ٱلۡمَغۡضُوبِ﴾ |
+
+### Izhar before throat letters
+- When **noon sakinah or tanween** comes before any throat letter, the noon is pronounced **clearly**, with no extra ghunnah.
+- **Example:** ﴿أَنۡعَمۡتَ﴾.
+- Read [Noon Sakinah and Tanween Rules](/blog/noon-sakinah-tanween-rules-english/).
+
+### Exercises
+1. Say *aʿ*, *aḥ*, *agh*, *akh* slowly, feeling where each stops.
+2. Read Al-Fatihah and underline every throat letter.
+3. Record yourself and compare with a teacher.
+
+Read [Makharij al-Huruf in English](/blog/makharij-al-huruf-english/) and [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/#The-10-Arabic-Letters-Non-Arabs-Find-Hardest-in-Quran-Recita).

@@ -86,15 +86,31 @@ def surah_from_title(title):
 
 
 def surah_articles(n, limit=6):
-    """مقالات المدونة الخاصة بالسورة (تفسير، خطة حفظ، تطبيق تجويد...) عشان صفحة السورة تلينك عليها."""
+    """مقالات المدونة الخاصة بالسورة (تفسير، خطة حفظ، تطبيق تجويد...) عشان صفحة السورة تلينك عليها.
+    بترجع [(رابط، عنوان)]: المقالات اللي عنوانها عن السورة، وبعدها أقسام الصفحات الشاملة
+    (اللي اتجمعت فيها المقالات القصيرة) اللي عنوان القسم فيها عن السورة -> رابط للقسم نفسه."""
     from django.core.cache import cache
-    key = f'quran:articles:v1:{n}'
+    key = f'quran:articles:v2:{n}'
     items = cache.get(key)
     if items is None:
+        from django.urls import reverse
         from blog.models import Post
+        from core.templatetags.content_tags import toc
         name = index()[n - 1]['name']
         rx = [p for p in _title_patterns() if p[1] == n][0][3]
-        qs = Post.objects.filter(status='published', title__contains=name).values_list('slug', 'title')
-        items = [(slug, title) for slug, title in qs if rx.search(title) and surah_from_title(title) == (n, name)][:limit]
+
+        def about(text):
+            return rx.search(text) and surah_from_title(text) == (n, name)
+        posts = list(Post.objects.filter(status='published', content__contains=name).values_list('slug', 'title', 'content'))
+        items = [(reverse('blog_detail', args=[s]), t) for s, t, _ in posts if about(t)]
+        for s, t, content in posts:
+            if len(items) >= limit:
+                break
+            if about(t):
+                continue
+            for sid, heading in toc(content):
+                if about(heading) and len(items) < limit:
+                    items.append((reverse('blog_detail', args=[s]) + f'#{sid}', heading))
+        items = items[:limit]
         cache.set(key, items, 6 * 3600)
     return items

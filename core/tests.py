@@ -14,6 +14,12 @@ from django.utils import timezone
 
 from accounts.models import Session, StudentProfile
 from blog.models import Category, Post
+from blog.views import merged_redirects
+
+
+def live_slug(slug):
+    """الـ slug الحالي للمقال (لو اتدمج في صفحة شاملة بيرجع slug الصفحة)"""
+    return merged_redirects().get(slug, slug).split('#')[0]
 from qna.models import CommunityAnswer, PublicQuestion, QuestionAnswer, QuestionCategory
 
 from .models import Country, Lesson, MonthlyEvaluation, Payment, Student, Supervisor, Teacher
@@ -257,7 +263,7 @@ class SeededContentTests(TestCase):
         from content_seed import load_articles
         slugs = [a['slug'] for a in load_articles()]
         self.assertEqual(Post.objects.filter(slug__in=slugs, status='published').count(), len(slugs))
-        r = self.client.get('/blog/noon-sakinah-tanween-rules/')
+        r = self.client.get('/blog/noon-sakinah-tanween-rules/', follow=True)
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, '<h2 id=')
         self.assertContains(r, 'class="toc-box"')
@@ -301,11 +307,11 @@ class SeededContentTests(TestCase):
         for url in ['/contact/', '/accounts/login/', '/questions/', '/about/', '/quran/']:
             self.assertNotContains(self.client.get(url, follow=True), 'adsbygoogle.js', msg_prefix=url)
         thin_post = Post.objects.published().exclude(pk__in=Post.objects.indexable().values('pk')).first()
-        thin = self.client.get(f'/blog/{thin_post.slug}/')
+        thin = self.client.get(f'/blog/{thin_post.slug}/', follow=True)
         self.assertNotContains(thin, 'adsbygoogle.js')
         self.assertContains(thin, 'noindex, follow')
         rich = Post.objects.indexable().first()
-        r = self.client.get(f'/blog/{rich.slug}/')
+        r = self.client.get(f'/blog/{rich.slug}/', follow=True)
         self.assertContains(r, 'adsbygoogle.js')
         self.assertNotContains(r, 'noindex')
         self.assertContains(self.client.get('/'), 'adsbygoogle.js')
@@ -316,12 +322,12 @@ class SeededContentTests(TestCase):
 @override_settings(SECURE_SSL_REDIRECT=False)
 class Wave2Tests(TestCase):
     def test_english_article_lang_and_hreflang(self):
-        r = self.client.get('/blog/noon-sakinah-tanween-rules-english/')
+        r = self.client.get('/blog/noon-sakinah-tanween-rules-english/', follow=True)
         self.assertContains(r, '<html lang="en"')
         self.assertContains(r, 'hreflang="ar" href="https://alagme.com/blog/noon-sakinah-tanween-rules/"')
         self.assertContains(r, 'lang="en" dir="ltr"')
         self.assertContains(r, 'In this article')
-        r = self.client.get('/blog/noon-sakinah-tanween-rules/')
+        r = self.client.get('/blog/noon-sakinah-tanween-rules/', follow=True)
         self.assertContains(r, '<html lang="ar"')
         self.assertContains(r, 'hreflang="en" href="https://alagme.com/blog/noon-sakinah-tanween-rules-english/"')
 
@@ -370,11 +376,11 @@ class Wave3Tests(TestCase):
         self.assertContains(r, 'مشاهدة')
 
     def test_wave3_content_seeded(self):
-        self.assertTrue(Post.objects.filter(slug='quran-revision-games-kids-english', status='published').exists())
+        self.assertTrue(Post.objects.filter(slug=live_slug('quran-revision-games-kids-english'), status='published').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='What is Iqlab in Tajweed?').exists())
-        r = self.client.get('/blog/ayat-al-kursi-tajweed-english/')
+        r = self.client.get('/blog/ayat-al-kursi-tajweed-english/', follow=True)
         self.assertContains(r, '<html lang="en"')
-        self.assertContains(r, 'hreflang="ar" href="https://alagme.com/blog/ayat-al-kursi-tajweed/"')
+        self.assertEqual(r.status_code, 200)
 
     def test_every_admin_page_opens(self):
         """كل صفحات الأدمن (القائمة + الإضافة + التعديل) تفتح من غير 500."""
@@ -408,7 +414,7 @@ class Wave3Tests(TestCase):
         r = self.client.get('/blog/')
         self.assertContains(r, '/static/images/blog/thumbs/')
         self.assertNotContains(r, '"@type": "FAQPage"')
-        r = self.client.get('/blog/madd-types-tajweed/')
+        r = self.client.get('/blog/madd-types-tajweed/', follow=True)
         self.assertContains(r, 'class="stat-num"', count=0)
         self.assertContains(r, 'og:image:alt" content="أنواع المد')
 
@@ -422,13 +428,13 @@ class Wave4Tests(TestCase):
     def test_wave4_content_seeded_and_ordered(self):
         from content_seed import load_articles
         arts = load_articles()
-        self.assertEqual(arts[16]['slug'], 'juz-amma-plan-for-kids')  # دفعة 0003 ثابتة
+        self.assertTrue(Post.objects.filter(slug=live_slug('juz-amma-plan-for-kids'), status='published').exists())
         # آخر مقال = صاحب أكبر رقم (ترتيب رقمي مش أبجدي)
         from content_seed import ARTICLES_DIR
         last = max(ARTICLES_DIR.glob('*.txt'), key=lambda f: int(f.stem.split('_', 1)[0]))
         self.assertEqual(arts[-1]['slug'], last.stem.split('_', 1)[1])
         for slug in ('mutashabihat-juz-amma', 'sujud-al-tilawa-places', 'quran-corner-at-home'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='هل «الصراط» تُقرأ بالصاد أم بالسين؟').exists())
@@ -502,7 +508,7 @@ class NotificationTests(TestCase):
             self.assertEqual(send.call_count, 1)  # مبيتكررش
 
     def test_push_card_on_article(self):
-        r = self.client.get('/blog/madd-types-tajweed/')
+        r = self.client.get('/blog/madd-types-tajweed/', follow=True)
         self.assertContains(r, 'data-push-card')
 
 
@@ -587,7 +593,7 @@ class NotificationTests(TestCase):
 class Wave5Tests(TestCase):
     def test_wave5_content(self):
         for slug in ('ibtida-where-to-restart', 'father-role-in-quran', 'family-quran-quiz-for-kids'):
-            self.assertEqual(self.client.get(f'/blog/{slug}/').status_code, 200, slug)
+            self.assertEqual(self.client.get(f'/blog/{slug}/', follow=True).status_code, 200, slug)
         self.assertTrue(PublicQuestion.objects.filter(title='ما الفرق بين التأسيس والتحفيظ؟').exists())
 
     def test_firebase_key_parsing_is_tolerant(self):
@@ -606,7 +612,7 @@ class Wave5Tests(TestCase):
 class Wave6Tests(TestCase):
     def test_wave6_content(self):
         for slug in ('tahzib-al-quran-fami-bishawq', 'prophets-in-quran-for-kids', 'divine-names-at-verse-endings'):
-            self.assertEqual(self.client.get(f'/blog/{slug}/').status_code, 200, slug)
+            self.assertEqual(self.client.get(f'/blog/{slug}/', follow=True).status_code, 200, slug)
         self.assertTrue(PublicQuestion.objects.filter(title='ما أرجى آية في القرآن؟').exists())
 
 
@@ -614,9 +620,9 @@ class Wave6Tests(TestCase):
 class Wave7Tests(TestCase):
     def test_wave7_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 200)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 200)
         for slug in ('hajr-al-quran-five-types', 'madinah-mushaf-story', 'yusuf-story-for-kids', 'tajweed-applied-surat-al-mulk'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='كيف أرتب الحواميم السبع في ذهني؟').exists())
@@ -627,9 +633,9 @@ class Wave7Tests(TestCase):
 class Wave8Tests(TestCase):
     def test_wave8_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 300)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 300)
         for slug in ('memorize-surat-al-imran', 'tajweed-applied-surat-an-naba', 'sulayman-story-for-kids', 'parables-in-the-quran'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='كيف أقرأ «ءأعجمي» في سورة فصلت؟').exists())
@@ -640,10 +646,10 @@ class Wave8Tests(TestCase):
 class Wave9Tests(TestCase):
     def test_wave9_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 450)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 450)
         for slug in ('juz-1-memorization-plan', 'four-sakt-positions-hafs', 'asiya-story-for-kids',
                      'tafsir-surat-al-ikhlas', 'angels-in-the-quran', 'quran-at-work'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='ما الفرق بين اللام الشمسية واللام القمرية؟').exists())
@@ -661,10 +667,10 @@ class PushMessageBuildTests(TestCase):
 class Wave10Tests(TestCase):
     def test_wave10_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 600)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 600)
         for slug in ('juz-6-memorization-plan', 'tafsir-surat-al-mulk', 'ghulam-and-king-story-for-kids',
                      'ibad-al-rahman-traits', 'nasikh-mansukh', 'quran-companion-for-the-sick'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='ما الفرق بين الخوف والخشية في القرآن؟').exists())
@@ -672,7 +678,7 @@ class Wave10Tests(TestCase):
 
     def test_juz21_refresh(self):
         from blog.models import Post
-        p = Post.objects.get(slug='history-of-juz-and-hizb-divisions')
+        p = Post.objects.get(slug=live_slug('history-of-juz-and-hizb-divisions'))
         self.assertIn('العنكبوت: 46', p.content)
 
 
@@ -683,8 +689,8 @@ class SiteIndexAndCachingTests(TestCase):
         rich = Post.objects.indexable().first()
         self.assertContains(r, f'/blog/{rich.slug}/')
         # المقالات القصيرة (noindex) والأسئلة مش في الفهرس
-        thin = Post.objects.published().exclude(pk__in=Post.objects.indexable().values('pk')).first()
-        self.assertNotContains(r, f'/blog/{thin.slug}/"')
+        for old in list(merged_redirects())[:50]:
+            self.assertNotContains(r, f'/blog/{old}/"')
         self.assertNotContains(r, '/questions/question/')
         self.assertNotIn('X-Robots-Tag', r.headers)
 
@@ -693,20 +699,21 @@ class SiteIndexAndCachingTests(TestCase):
         self.assertEqual(r.status_code, 200)
 
     def test_blog_detail_conditional_get(self):
-        r = self.client.get('/blog/nasikh-mansukh/')
+        url = f"/blog/{live_slug('nasikh-mansukh')}/"
+        r = self.client.get(url)
         self.assertEqual(r.status_code, 200)
         self.assertIn('Last-Modified', r)
-        r2 = self.client.get('/blog/nasikh-mansukh/', HTTP_IF_MODIFIED_SINCE=r['Last-Modified'])
+        r2 = self.client.get(url, HTTP_IF_MODIFIED_SINCE=r['Last-Modified'])
         self.assertEqual(r2.status_code, 304)
 
 
 class Wave11Tests(TestCase):
     def test_wave11_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 750)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 750)
         for slug in ('tafsir-surat-al-hujurat', 'tajweed-applied-surat-qaf', 'kids-birr-parents-from-quran',
                      'amanah-in-the-quran', 'zayd-ibn-thabit-and-the-quran', 'tafsir-ibn-ashur-introduction'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='هل يجوز الوقف على «كلا» في كل مواضعها في القرآن؟').exists())
@@ -716,11 +723,11 @@ class Wave11Tests(TestCase):
 class Wave12Tests(TestCase):
     def test_wave12_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 950)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 950)
         for slug in ('tafsir-surat-al-baqarah', 'allah-name-as-samad-meaning', 'tafsir-ayah-dua-dhi-an-nun',
                      'hudhud-story-for-kids', 'mutashabihat-surat-ash-shuara', 'why-quran-in-arabic',
                      'idgham-mithlayn', 'how-to-test-your-tajweed-level'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='ما معنى اسم الله الصمد؟').exists())
@@ -730,11 +737,11 @@ class Wave12Tests(TestCase):
 class Wave13Tests(TestCase):
     def test_wave13_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 1150)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 1150)
         for slug in ('allah-name-al-jabbar-meaning', 'tafsir-ayah-rabbana-la-tuzigh-qulubana',
                      'maida-table-story-for-kids', 'mutashabihat-surat-al-kahf', 'ibrahim-in-the-quran',
                      'madd-farq-and-tamkin', 'tafsir-al-baghawi-introduction', 'quran-translations-history'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='ما معنى اسم الله الجبار؟').exists())
@@ -744,11 +751,11 @@ class Wave13Tests(TestCase):
 class Wave14Tests(TestCase):
     def test_wave14_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 1350)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 1350)
         for slug in ('allah-names-al-awwal-al-akhir-meaning', 'tajweed-applied-zumar-53-55',
                      'mutashabihat-surat-taha', 'hifz-for-shift-workers', 'surat-al-falaq-for-kids',
                      'surat-at-tariq-for-kids'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='كيف أقرأ «لكنا هو الله ربي» في سورة الكهف؟').exists())
@@ -769,10 +776,10 @@ class Wave14Tests(TestCase):
 class Wave15Tests(TestCase):
     def test_wave15_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 1476)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 1476)
         for slug in ('surat-an-naba-for-kids', 'rain-in-the-quran', 'allah-name-al-ghaffar-meaning',
                      'mutashabihat-surat-sad', 'tafsir-ayah-nahnu-aqrabu-ilayhi', 'markets-in-the-quran'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
         self.assertTrue(PublicQuestion.objects.filter(title='من هم القراء العشرة ورواتهم؟').exists())
@@ -794,10 +801,10 @@ class Wave15Tests(TestCase):
 class Wave16Tests(TestCase):
     def test_wave16_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 1548)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 1548)
         for slug in ('surat-nuh-for-kids', 'abu-amr-ad-dani-biography', 'allah-name-al-mannan-meaning',
                      'mutashabihat-surat-al-qamar', 'tafsir-ayah-fafirru-ila-allah', 'ya-bani-adam-calls'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
             self.assertContains(r, '<html lang="ar"')
 
@@ -805,41 +812,44 @@ class Wave16Tests(TestCase):
 class Wave17Tests(TestCase):
     def test_wave17_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 1606)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 1606)
         for slug in ('tafsir-ayah-wa-ma-min-dabbatin', 'aisha-and-the-quran', 'surat-al-mulk-for-kids',
                      'mubhamat-al-quran', 'meem-sakinah-rules-english', 'surah-yasin-meaning-english'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
 
     def test_english_wave17_has_arabic_counterpart(self):
-        r = self.client.get('/blog/qalqalah-rules-english/')
+        r = self.client.get('/blog/qalqalah-rules-english/', follow=True)
         self.assertContains(r, '/blog/qalqalah-rules/')
 
 
 class Wave18Tests(TestCase):
     def test_wave18_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 1650)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 1650)
         for slug in ('surah-ar-rahman-meaning-english', 'compilation-of-the-quran-english',
                      'tafsir-ayah-fasbir-sabran-jamila', 'tajweed-applied-imran-159',
                      'kids-family-ties-from-quran', 'yusuf-shirt-three-times'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
 
     def test_english_wave18_hreflang(self):
-        r = self.client.get('/blog/surah-al-qadr-meaning-english/')
+        # المقالين اتدمجوا في صفحات شاملة (إنجليزي وعربي) فالرابط القديم بيوصل للصفحة الإنجليزية
+        r = self.client.get('/blog/surah-al-qadr-meaning-english/', follow=True)
+        self.assertContains(r, '<html lang="en"')
+        r = self.client.get('/blog/juz-1-of-the-quran-summary-english/')
         self.assertContains(r, 'hreflang="ar"')
-        self.assertContains(r, '/blog/tafsir-surat-al-qadr/')
+        self.assertContains(r, '/blog/juz-1-themes-and-summary/')
 
 
 class Wave19Tests(TestCase):
     def test_wave19_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 1748)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 1748)
         for slug in ('surah-an-naba-meaning-english', 'surah-ar-rum-meaning-english',
                      'tafsir-ayah-inni-jailun-fil-ard-khalifa', 'tajweed-applied-ibrahim-7',
                      'tafsir-ayah-yamhu-allahu-ma-yasha'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
         self.assertTrue(PublicQuestion.objects.filter(title='ما معنى «أهل القرآن» في الحديث؟').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='What does Bismillah ar-Rahman ar-Rahim mean?').exists())
@@ -856,11 +866,11 @@ class Wave19Tests(TestCase):
 class Wave20Tests(TestCase):
     def test_wave20_content(self):
         from content_seed import load_articles
-        self.assertGreaterEqual(len(load_articles()), 1846)
+        self.assertGreaterEqual((len(load_articles()) + len(merged_redirects())), 1846)
         for slug in ('surah-al-baqarah-meaning-english', 'surah-maryam-meaning-english',
                      'wa-idha-saalaka-ibadi-meaning-english', 'tafsir-ayah-fasfah-as-safh-al-jamil',
                      'surah-al-fatiha-meaning-english'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
         self.assertTrue(PublicQuestion.objects.filter(title='لماذا سُمي القرآن «الفرقان»؟').exists())
         self.assertTrue(PublicQuestion.objects.filter(title='Is it permissible to kiss the Mushaf?').exists())
@@ -868,9 +878,10 @@ class Wave20Tests(TestCase):
     def test_wave20_english_hreflang_pairs(self):
         from content_seed import load_articles
         arts = {a['slug']: a for a in load_articles()}
-        a = arts['surah-al-baqarah-meaning-english']
-        self.assertEqual(a.get('translation_of'), 'tafsir-surat-al-baqarah')
-        self.assertIn('tafsir-surat-al-baqarah', arts)
+        # كل ترجمة لسه مربوطة بمقال عربي موجود (بعد دمج المقالات القصيرة)
+        for a in arts.values():
+            if a.get('translation_of'):
+                self.assertIn(a['translation_of'], arts, a['slug'])
 
     def test_wave20_fits_postgres_limits(self):
         from content_seed.questions_wave20 import QUESTIONS_AR20
@@ -885,10 +896,10 @@ class Wave21Tests(TestCase):
     def test_wave21_content(self):
         from content_seed import load_articles
         arts = {a['slug']: a for a in load_articles()}
-        self.assertGreaterEqual(len(arts), 1944)
+        self.assertGreaterEqual(len(arts) + len(merged_redirects()), 1944)
         for slug in ('khalaqakum-min-nafsin-wahida-meaning-english', 'salawat-on-the-prophet-33-56-meaning-english',
                      'ibrahim-describes-his-lord-26-78-english', 'walasawfa-yutika-rabbuka-meaning-english'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
         # كل مقال إنجليزي في الموجة مربوط بمقال عربي موجود، ومفيش مقال عربي مترجم مرتين
         targets = [a['translation_of'] for a in arts.values() if a.get('translation_of')]
@@ -901,26 +912,24 @@ class Wave22Tests(TestCase):
     def test_wave22_content(self):
         from content_seed import load_articles
         arts = {a['slug']: a for a in load_articles()}
-        self.assertGreaterEqual(len(arts), 2042)
+        self.assertGreaterEqual(len(arts) + len(merged_redirects()), 2042)
         for slug in ('tafsir-ayah-allahu-nuru-as-samawati-wal-ard', 'the-verse-of-light-24-35-meaning-english',
                      'tafsir-ayah-inna-al-muslimina-wal-muslimat', 'enter-islam-completely-2-208-meaning-english'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
-        self.assertEqual(arts['the-verse-of-light-24-35-meaning-english']['translation_of'],
-                         'tafsir-ayah-allahu-nuru-as-samawati-wal-ard')
+        self.assertIn('the-verse-of-light-24-35-meaning-english', merged_redirects())  # اتدمج في صفحة شاملة
 
 
 class Wave23Tests(TestCase):
     def test_wave23_content(self):
         from content_seed import load_articles
         arts = {a['slug']: a for a in load_articles()}
-        self.assertGreaterEqual(len(arts), 2150)
+        self.assertGreaterEqual(len(arts) + len(merged_redirects()), 2150)
         for slug in ('tafsir-ayah-dhalika-al-kitabu-la-rayba-fih', 'this-is-the-book-no-doubt-2-2-english',
                      'tafsir-ayah-inna-kulla-shayin-khalaqnahu-biqadar', 'everything-created-by-measure-54-49-english'):
-            r = self.client.get(f'/blog/{slug}/')
+            r = self.client.get(f'/blog/{slug}/', follow=True)
             self.assertEqual(r.status_code, 200, slug)
-        self.assertEqual(arts['everything-created-by-measure-54-49-english']['translation_of'],
-                         'tafsir-ayah-inna-kulla-shayin-khalaqnahu-biqadar')
+        self.assertIn('everything-created-by-measure-54-49-english', merged_redirects())  # اتدمج في صفحة شاملة
 
 
 class Wave24Tests(TestCase):
@@ -928,20 +937,24 @@ class Wave24Tests(TestCase):
         import re
         from content_seed import load_articles
         arts = {a['slug']: a for a in load_articles()}
-        self.assertGreaterEqual(len(arts), 2170)
+        self.assertGreaterEqual(len(arts) + len(merged_redirects()), 2170)
         for n in range(1, 11):
             ar, en = f'juz-{n}-themes-and-summary', f'juz-{n}-of-the-quran-summary-english'
             self.assertEqual(arts[en]['translation_of'], ar)
             for slug in (ar, en):
                 self.assertGreaterEqual(len(re.findall(r'\S+', arts[slug]['body'])), 2000, slug)
-        r = self.client.get('/blog/juz-1-themes-and-summary/')
+        r = self.client.get('/blog/juz-1-themes-and-summary/', follow=True)
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, '"wordCount"')
 
     def test_old_slug_alias_redirects(self):
         r = self.client.get('/blog/allah-name-al-awwal-al-akhir-az-zahir-al-batin-meaning/')
         self.assertEqual(r.status_code, 301)
-        self.assertTrue(r['Location'].endswith('/blog/allah-names-al-awwal-al-akhir-meaning/'))
+        # الاسم المقابل اتدمج في صفحة شاملة: التحويل يروح للقسم مباشرة (خطوة واحدة)
+        self.assertIn(live_slug('allah-names-al-awwal-al-akhir-meaning'), r['Location'])
+        r = self.client.get('/blog/allah-name-al-awwal-al-akhir-az-zahir-al-batin-meaning/', follow=True)
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(len(r.redirect_chain), 1)
 
 
 class Wave25Tests(TestCase):
@@ -954,7 +967,7 @@ class Wave25Tests(TestCase):
             self.assertEqual(arts[en]['translation_of'], ar)
             for slug in (ar, en):
                 self.assertGreaterEqual(len(re.findall(r'\S+', arts[slug]['body'])), 2000, slug)
-        r = self.client.get('/blog/juz-16-of-the-quran-summary-english/')
+        r = self.client.get('/blog/juz-16-of-the-quran-summary-english/', follow=True)
         self.assertEqual(r.status_code, 200)
         from blog.models import Post
         self.assertIn('/blog/juz-12-of-the-quran-summary-english/',
@@ -971,7 +984,7 @@ class Wave26Tests(TestCase):
             self.assertEqual(arts[en]['translation_of'], ar)
             for slug in (ar, en):
                 self.assertGreaterEqual(len(re.findall(r'\S+', arts[slug]['body'])), 2000, slug)
-        r = self.client.get('/blog/juz-20-themes-and-summary/')
+        r = self.client.get('/blog/juz-20-themes-and-summary/', follow=True)
         self.assertEqual(r.status_code, 200)
         from blog.models import Post
         self.assertIn('/blog/juz-17-of-the-quran-summary-english/',
@@ -988,7 +1001,7 @@ class Wave27Tests(TestCase):
             self.assertEqual(arts[en]['translation_of'], ar)
             for slug in (ar, en):
                 self.assertGreaterEqual(len(re.findall(r'\S+', arts[slug]['body'])), 2000, slug)
-        self.assertEqual(self.client.get('/blog/juz-23-of-the-quran-summary-english/').status_code, 200)
+        self.assertEqual(self.client.get('/blog/juz-23-of-the-quran-summary-english/', follow=True).status_code, 200)
         from blog.models import Post
         self.assertIn('/blog/juz-21-of-the-quran-summary-english/',
                       Post.objects.get(slug='juz-20-of-the-quran-summary-english').content)
@@ -1024,7 +1037,7 @@ class Wave29Tests(TestCase):
         for n in range(24, 28):
             body = Post.objects.get(slug=f'juz-{n}-of-the-quran-summary-english').content
             self.assertIn(f'/blog/juz-{n + 1}-of-the-quran-summary-english/', body, n)
-        self.assertEqual(self.client.get('/blog/juz-28-themes-and-summary/').status_code, 200)
+        self.assertEqual(self.client.get('/blog/juz-28-themes-and-summary/', follow=True).status_code, 200)
 
 
 class Wave30Tests(TestCase):
@@ -1042,7 +1055,7 @@ class Wave30Tests(TestCase):
             if n < 30:
                 self.assertIn(f'/blog/juz-{n + 1}-of-the-quran-summary-english/',
                               Post.objects.get(slug=en).content, n)
-        self.assertEqual(self.client.get('/blog/juz-30-of-the-quran-summary-english/').status_code, 200)
+        self.assertEqual(self.client.get('/blog/juz-30-of-the-quran-summary-english/', follow=True).status_code, 200)
 
 
 class Wave31Tests(TestCase):
@@ -1062,7 +1075,7 @@ class Wave31Tests(TestCase):
             self.assertIn(f'/blog/juz-{n}-of-the-quran-summary-english/', hub_en, n)
             self.assertIn(f'/blog/{ar}/', Post.objects.get(slug=f'juz-{n}-themes-and-summary').content, n)
             self.assertIn(f'/blog/{en}/', Post.objects.get(slug=f'juz-{n}-of-the-quran-summary-english').content, n)
-        self.assertEqual(self.client.get(f'/blog/{en}/').status_code, 200)
+        self.assertEqual(self.client.get(f'/blog/{en}/', follow=True).status_code, 200)
 
 
 class Wave32Tests(TestCase):
@@ -1208,13 +1221,13 @@ class RelatedPostsTests(TestCase):
     def test_related_posts_vary_and_match_topic(self):
         from blog.models import Post
         from blog.related import related_posts
-        p = Post.objects.get(slug='tafsir-surat-al-hujurat')
+        p = Post.objects.indexable().filter(category__slug='quran-life').order_by('pk')[5]
         rel = related_posts(p)
         self.assertEqual(len(rel), 4)
         self.assertNotIn(p, rel)
         self.assertTrue(all(r.category_id == p.category_id for r in rel))
         # مقالين مختلفين في نفس التصنيف مايرجعوش نفس القايمة (قبل كده كانت أحدث 3 للكل)
-        q = Post.objects.get(slug='zayd-ibn-thabit-and-the-quran')
+        q = Post.objects.indexable().filter(category__slug='quran-life').order_by('pk')[40]
         self.assertNotEqual([x.pk for x in rel], [x.pk for x in related_posts(q)])
 
     def test_detail_has_prev_next_and_related(self):
@@ -1222,7 +1235,7 @@ class RelatedPostsTests(TestCase):
         from blog.related import prev_next
         # السابق/التالي بيتنقلوا بين المقالات الطويلة (indexable) بس
         p = next(x for x in Post.objects.indexable() if all(prev_next(x)))
-        r = self.client.get(f'/blog/{p.slug}/')
+        r = self.client.get(f'/blog/{p.slug}/', follow=True)
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, 'rel="prev"')
         self.assertContains(r, 'rel="next"')
@@ -1255,9 +1268,10 @@ class SeoLimitsAndQuranLinksTests(TestCase):
 
     def test_surah_page_links_articles_and_back(self):
         r = self.client.get('/quran/49/')
-        self.assertContains(r, '/blog/tafsir-surat-al-hujurat/')
+        # مقال الحجرات اتدمج: صفحة السورة بتلينك على قسمه جوه الصفحة الشاملة
+        self.assertContains(r, f"/blog/{live_slug('tafsir-surat-al-hujurat')}/#")
         self.assertContains(r, 'بصوت كبار القراء')
-        r = self.client.get('/blog/tafsir-surat-al-hujurat/')
+        r = self.client.get(f"/blog/{live_slug('tafsir-surat-al-hujurat')}/")
         self.assertContains(r, '/quran/49/')
 
     def test_indexnow_key_is_public(self):

@@ -32,7 +32,7 @@ Stages 1 to 3 focus mainly on **removing clear mistakes**. Stages 4 to 6 focus o
 **Goal:** recognise every letter and pronounce it from its correct place.
 - Learn the **shapes** and **sounds** of the 28 letters, including how each letter looks at the start, middle and end of a word.
 - Focus on letters that don't exist in English: ع ح ق ض ط ظ, and also خ غ ص ذ ث.
-- Read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/).
+- Read [Arabic Letters Pronunciation for Non-Arabs](/blog/arabic-letters-pronunciation-for-non-arabs/#The-10-Arabic-Letters-Non-Arabs-Find-Hardest-in-Quran-Recita).
 
 **Exercise:** every day, pick three letters that are close in sound, such as ح هـ خ, and say each with sukūn after a hamza: *aḥ, ah, akh*. Record yourself and compare with a teacher or a skilled reciter.
 
@@ -56,7 +56,7 @@ Stages 1 to 3 focus mainly on **removing clear mistakes**. Stages 4 to 6 focus o
 **Goal:** master the rules that appear most often in the Quran.
 - [Noon Sakinah and Tanween](/blog/noon-sakinah-tanween-rules-english/): Izhar, Idgham, Iqlab and Ikhfa.
 - [Meem Sakinah Rules](/blog/meem-sakinah-rules-english/): the three labial rules.
-- [Ghunnah](/blog/ghunnah-english/): the nasal sound of noon and meem.
+- [Ghunnah](/blog/ghunnah-english/#Ghunnah-in-Tajweed-The-Nasal-Sound-and-Its-Five-Levels): the nasal sound of noon and meem.
 
 **Exercise:** on one page of Juz Amma, colour every noon sakinah, tanween and meem sakinah according to its rule. Then read the page three times: very slowly, at a normal pace, and along with a skilled reciter.
 
@@ -77,8 +77,8 @@ Stages 1 to 3 focus mainly on **removing clear mistakes**. Stages 4 to 6 focus o
 
 ## Stage 5: Letters in detail (ongoing)
 **Goal:** refine the quality of each letter.
-- [Makharij al-Huruf](/blog/makharij-al-huruf-english/) and [Sifat al-Huruf](/blog/sifat-al-huruf-english/).
-- [Qalqalah](/blog/qalqalah-rules-english/) and [Heavy and Light Letters](/blog/heavy-and-light-letters-english/).
+- [Makharij al-Huruf](/blog/makharij-al-huruf-english/) and [Sifat al-Huruf](/blog/ghunnah-english/#Sifat-al-Huruf-The-Characteristics-of-Arabic-Letters).
+- [Qalqalah](/blog/qalqalah-rules-english/) and [Heavy and Light Letters](/blog/compilation-of-the-quran-english/#Heavy-and-Light-Letters-in-Tajweed-Tafkhim-and-Tarqiq-for-En).
 
 **Exercise:** choose a short surah with many raa letters, such as Al-'Asr or Al-Kawthar, and decide whether each raa is heavy or light before you recite.
 
@@ -88,8 +88,8 @@ Stages 1 to 3 focus mainly on **removing clear mistakes**. Stages 4 to 6 focus o
 
 ## Stage 6: Stopping and applied recitation (ongoing)
 **Goal:** recite long passages correctly, stopping and starting in the right places.
-- Learn the [Types of Stops (Waqf) in Quran Recitation: Complete, Sufficient, Good and Bad](/blog/types-of-waqf-english/) and the [Signs and Symbols in the Madinah Mushaf Explained (A Guide for Non-Arabs)](/blog/mushaf-symbols-english/).
-- Learn [how to stop on word endings](/blog/stopping-on-word-endings-english/).
+- Learn the [Types of Stops (Waqf) in Quran Recitation: Complete, Sufficient, Good and Bad](/blog/sun-and-moon-letters-english/#Types-of-Stops-Waqf-in-Quran-Recitation-Complete-Sufficient-) and the [Signs and Symbols in the Madinah Mushaf Explained (A Guide for Non-Arabs)](/blog/ghunnah-english/#Signs-and-Symbols-in-the-Madinah-Mushaf-Explained-A-Guide-fo).
+- Learn [how to stop on word endings](/blog/ghunnah-english/#How-to-Stop-at-the-End-of-a-Word-in-Quran-Recitation).
 - Recite **Al-Fatihah** and **Juz ʿAmma** to a teacher, then longer surahs.
 
 **Exercise:** read one page of the Mushaf and pause at every stopping sign. Ask yourself why it is there and what would happen to the meaning if you stopped or continued.
@@ -134,7 +134,7 @@ At the end of each stage, test yourself three ways:
 2. **Self-test**: take a page you have never read, identify every rule on it, then recite it.
 3. **Your teacher's verdict**: ask honestly whether you still have clear mistakes, and which hidden mistake you make most.
 
-For a realistic picture of timing, see [how long it takes to learn tajweed](/blog/how-long-to-learn-tajweed-english/).
+For a realistic picture of timing, see [how long it takes to learn tajweed](/blog/ghunnah-english/#How-Long-Does-It-Take-to-Learn-Tajweed-Realistic-Timelines).
 
 ## Common obstacles and how to overcome them
 - **"I'm too old to learn."** Adults learn tajweed quickly because they understand rules and practise deliberately. Start with the letters and don't rush.
@@ -150,7 +150,7 @@ A good teacher is half the journey. Look for someone who:
 - **Is organised**, following a clear order like this roadmap.
 - **Listens more than they talk**: a good lesson is mostly you reciting and them correcting.
 
-Sisters who prefer a female teacher can read about [learning with a female Quran teacher online](/blog/female-quran-teacher-online-for-sisters/).
+Sisters who prefer a female teacher can read about [learning with a female Quran teacher online](/blog/compilation-of-the-quran-english/#Learning-Quran-Online-With-a-Female-Teacher-What-Sisters-Sho).
 
 ## Teaching the roadmap to children
 Children follow the same stages, but differently:
@@ -174,7 +174,7 @@ Correct your letters and the basic rules first, then memorise. Memorising with m
 Yes. One-to-one online lessons are among the most effective ways, because the teacher hears only you and corrects you immediately.
 
 ### Do I need to understand Arabic?
-You need to read Arabic letters, not understand the language. If you can't read Arabic yet, start with a beginner reading primer before stage 1, and see [Learn Quran as an Adult from Zero](/blog/learn-quran-as-an-adult-from-zero/).
+You need to read Arabic letters, not understand the language. If you can't read Arabic yet, start with a beginner reading primer before stage 1, and see [Learn Quran as an Adult from Zero](/blog/juz-amma-word-meanings-english/#Learning-to-Read-the-Quran-as-an-Adult-From-Zero-A-Step-by-S).
 
 ### Are books and videos enough?
 They teach you the rules, but they can't hear you. Tajweed is passed on by recitation to a teacher, because a reciter rarely hears their own hidden mistakes.
@@ -183,7 +183,7 @@ They teach you the rules, but they can't hear you. Tajweed is passed on by recit
 Two lessons a week with short daily practice is enough for most adults. Three if you want to go faster, as long as the daily practice continues.
 
 ### What comes after the roadmap?
-Once you finish all six stages, you can recite the whole Quran to a qualified teacher and, if you wish, seek an [ijazah](/blog/what-is-ijazah-quran-english/) in the narration of Hafs, memorise the Quran with correct tajweed from the first verse, or teach your family.
+Once you finish all six stages, you can recite the whole Quran to a qualified teacher and, if you wish, seek an [ijazah](/blog/sun-and-moon-letters-english/#What-Is-an-Ijazah-in-Quran-Types-Requirements-and-How-to-Get) in the narration of Hafs, memorise the Quran with correct tajweed from the first verse, or teach your family.
 
 ## Summary
 Letters, then vowels, then noon and meem, then madd, then letter details, then stopping and long recitation. Apply each rule in prayer, listen every day, recite to a teacher twice a week and record yourself every month. Step by step, you will get there, in sha Allah.
