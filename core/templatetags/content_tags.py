@@ -263,7 +263,7 @@ def _clip_title(title):
                 if sep in clipped:
                     clipped = clipped.rsplit(sep, 1)[0]
                     break
-        if room >= 15 and clipped:
+        if room >= 28 and clipped:
             return f'{head}: ' + clipped.rstrip(' ،,:-–|(')
         return _clip_words(sub, TITLE_MAX)
     for sep in (':', '؟', '?', ' - ', '،'):
@@ -295,3 +295,52 @@ def _fill_desc(desc):
         if len(d) < DESC_MIN:
             d += ' احجز حلقة تجريبية مجانية الآن.'
     return _clip_words(d, DESC_MAX)
+
+
+_FAQ_H2 = re.compile(r'^##\s+(?:أسئلة|الأسئلة|Frequently Asked|FAQ|Common Questions)', re.I)
+
+
+def _plain(md):
+    md = re.sub(r'!\[[^\]]*\]\([^)]*\)', '', md)
+    md = re.sub(r'\[([^\]]+)\]\([^)]*\)', r'\1', md)
+    md = re.sub(r'\*\*|__|`', '', md)
+    md = re.sub(r'^\s*(?:[-*]|\d+\.)\s+', '', md, flags=re.M)
+    return ' '.join(md.split())
+
+
+@lru_cache(maxsize=512)
+def _faq_items(text, limit=15):
+    items, in_faq, q, ans = [], False, None, []
+
+    def flush():
+        if q and ans:
+            a = _plain('\n'.join(ans))
+            if a:
+                items.append((_plain(q), a))
+    for line in (text or '').split('\n'):
+        if line.startswith('## '):
+            flush(); q, ans = None, []
+            in_faq = bool(_FAQ_H2.match(line))
+        elif in_faq and line.startswith('### '):
+            flush(); q, ans = line[4:].strip(), []
+        elif in_faq and q:
+            ans.append(line)
+    flush()
+    seen, out = set(), []
+    for qq, a in items:
+        if qq not in seen:
+            seen.add(qq); out.append((qq, a))
+    return tuple(out[:limit])
+
+
+@register.filter
+def faq_jsonld(text):
+    """FAQPage JSON-LD من قسم «أسئلة شائعة» في المقال (سؤال ### وإجابته تحته) — ظاهر في الصفحة فعلًا."""
+    import json
+    items = _faq_items(text or '')
+    if len(items) < 2:
+        return ''
+    data = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+        {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in items]}
+    js = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
+    return mark_safe(f'<script type="application/ld+json">{js}</script>')
