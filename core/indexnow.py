@@ -13,7 +13,7 @@ ENDPOINTS = (ENDPOINT, "https://www.bing.com/indexnow", "https://yandex.com/inde
 
 def _payload(urls):
     host = getattr(settings, 'CANONICAL_HOST', 'alagme.com')
-    key = getattr(settings, 'INDEXNOW_KEY', '800e60e37753412893002525b148ce17')
+    key = settings.INDEXNOW_KEY
     return {"host": host, "key": key, "keyLocation": f"https://{host}/{key}.txt", "urlList": list(urls)}
 
 
