@@ -16,5 +16,6 @@ def seo(request):
         'canonical_url': canonical,
         'SITE_NAME': getattr(settings, 'SITE_NAME', ''),
         'WHATSAPP_PUBLIC_NUMBER': wa,
+        'BING_SITE_VERIFICATION': getattr(settings, 'BING_SITE_VERIFICATION', ''),
         'WHATSAPP_LINK': f'https://wa.me/{wa}' if wa else '',
     }
