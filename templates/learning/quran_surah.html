@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static content_tags %}
 {% block title %}سورة {{ meta.name }} مكتوبة كاملة بالتشكيل واستماع بصوت الحصري | العجمي{% endblock %}
 {% block meta_description %}سورة {{ meta.name }} مكتوبة كاملة بالرسم العثماني ({{ meta.count }} آية، {% if meta.type == 'meccan' %}مكية{% else %}مدنية{% endif %}) مع استماع آية بآية بصوت الحصري والمنشاوي وعبد الباسط والعفاسي، وتكرار الآيات لتسهيل الحفظ.{% endblock %}
 {% block meta_keywords %}سورة {{ meta.name }}, سورة {{ meta.name }} مكتوبة, سورة {{ meta.name }} بصوت الحصري, سورة {{ meta.name }} المنشاوي, حفظ سورة {{ meta.name }}, سورة {{ meta.name }} مكررة, سورة {{ meta.name }} للأطفال{% endblock %}
@@ -42,6 +42,7 @@
     <a href="{% url 'quran_index' %}">كل السور</a>
     {% if next %}<a href="{% url 'quran_surah' next.id %}" rel="next">سورة {{ next.name }} ←</a>{% endif %}
   </nav>
+  {% include 'includes/hifz_quiz.html' with n=meta.id name=meta.name %}
   {% if surah_articles %}<aside class="related-learn" aria-labelledby="surah-art-title"><h2 id="surah-art-title" style="font-size:1.2rem;">عن سورة {{ meta.name }} في مدونتنا</h2>
     <ul>{% for url, t in surah_articles %}<li><a href="{{ url }}">{{ t }}</a></li>{% endfor %}</ul></aside>{% endif %}
   <section aria-labelledby="reciters-title" style="margin-top:22px;"><h2 id="reciters-title" style="font-size:1.2rem;">استمع إلى سورة {{ meta.name }} بصوت كبار القراء</h2>
@@ -52,4 +53,5 @@
 </div></section>
 {{ reciters|json_script:"qp-reciters" }}
 {% endblock %}
-{% block extra_js %}<script src="{% static 'js/quran-player.js' %}" defer></script>{% endblock %}
+{% block extra_js %}<script src="{% static 'js/quran-player.js' %}" defer></script>
+<script src="{% static 'js/hifz-quiz.js' %}" defer></script>{% endblock %}

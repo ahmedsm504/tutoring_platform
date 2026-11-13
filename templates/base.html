@@ -45,8 +45,8 @@
     <link rel="manifest" href="{% static 'site.webmanifest' %}">
 
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{% static 'fonts/noto-kufi-arabic-arabic-700-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+    {% block font_preload %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/noto-kufi-arabic-arabic-700-normal.woff2' %}" as="font" type="font/woff2" crossorigin>{% endblock %}
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'css/site.css' %}">
     {% block legacy_css %}{% endblock %}
@@ -212,6 +212,7 @@
             <li><a href="{% url 'about' %}">من نحن</a></li>
             <li><a href="{% url 'quality_standards' %}">مواثيق الجودة</a></li>
             <li><a href="{% url 'quran_index' %}">القرآن الكريم مكتوب واستماع</a></li>
+            <li><a href="{% url 'quran_tracker' %}">متابعة حفظ القرآن</a></li>
             <li><a href="{% url 'blog_list' %}">المدونة</a></li>
             <li><a href="{% url 'qna:question_list' %}">أسئلة وأجوبة</a></li>
             <li><a href="{% url 'site_index' %}">فهرس كل المقالات والأسئلة</a></li>

@@ -322,6 +322,11 @@ def quran_index(request):
     return render(request, 'learning/quran_index.html', _player_ctx({'surahs': quran.index()}))
 
 
+def quran_tracker(request):
+    """متابعة الحفظ: الزائر يعلّم السور اللي حفظها وآخر مراجعة - محفوظة على جهازه (localStorage)"""
+    return render(request, 'learning/quran_tracker.html', {'surahs': quran.index()})
+
+
 def quran_surah(request, n):
     if not 1 <= n <= 114:
         raise Http404
@@ -337,6 +342,7 @@ def quran_surah(request, n):
         related.insert(0, ('/blog/juz-amma-plan-for-kids/', 'جدول حفظ جزء عمّ للأطفال في 6 أشهر'))
     else:
         related.insert(0, ('/blog/quran-revision-system/', 'كيف تراجع حفظك ولا تنساه'))
+    related.append((reverse('quran_tracker'), 'متابعة حفظ القرآن: سجّل السور اللي حفظتها ومواعيد مراجعتها'))
     return render(request, 'learning/quran_surah.html', _player_ctx({
         'surah': s, 'meta': meta, 'verses': list(enumerate(s['verses'], start=1)),
         'prev': idx[n - 2] if n > 1 else None, 'next': idx[n] if n < 114 else None,

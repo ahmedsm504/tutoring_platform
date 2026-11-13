@@ -106,6 +106,23 @@ def _surah_link(post):
     return surah_from_title(post.title)
 
 
+def _listen_surah(post):
+    """السورة اللي المقال عنها (للمشغل الصوتي): من العنوان العربي، أو للمقال الإنجليزي من المقال العربي المقابل"""
+    r = _surah_link(post)
+    if r:
+        return r
+    try:
+        from content_seed import translation_pairs
+        other = translation_pairs().get(post.slug)
+    except Exception:
+        other = None
+    if other:
+        title = Post.objects.filter(slug=other, status='published').values_list('title', flat=True).first()
+        if title:
+            return _surah_link(Post(title=title))
+    return None
+
+
 def _section_surahs(post, limit=8):
     """الصفحات الشاملة (مقالات مدموجة): السور اللي أقسامها بتتكلم عنها -> [(رقم، اسم)]"""
     if _surah_link(post):
@@ -184,17 +201,17 @@ def blog_detail(request, slug):
                 author_email=author_email,
                 content=content
             )
-            messages.success(request, 'تم إرسال تعليقك بنجاح! سيتم عرضه بعد الموافقة عليه.')
+            messages.success(request, 'Thank you! Your comment will appear after review.' if post.title.isascii() or post.title[:1].isascii() else 'تم إرسال تعليقك بنجاح! سيتم عرضه بعد الموافقة عليه.')
             return redirect('blog_detail', slug=slug)
         else:
-            messages.error(request, 'الرجاء ملء جميع الحقول!')
+            messages.error(request, 'Please fill in all fields.' if post.title[:1].isascii() else 'الرجاء ملء جميع الحقول!')
     
     context = {
         'post': post,
         'comments': comments,
         'comments_count': comments.count(),
         'related_posts': related_posts,
-        'quran_surah': _surah_link(post),
+        'quran_surah': _listen_surah(post),
         'quran_surahs': _section_surahs(post),
         'prev_post': prev_post,
         'next_post': next_post,
@@ -203,6 +220,9 @@ def blog_detail(request, slug):
         'indexable': post.is_indexable,
     }
     
+    from django.template.loader import render_to_string
+    from core.templatetags.content_tags import is_latin
+    context['mid_cta_html'] = render_to_string('blog/_mid_cta.html', {'en': is_latin(post.title)}, request=request)
     response = render(request, 'blog/blog_detail.html', context)
     if request.method == 'GET' and not request.user.is_authenticated:
         from django.utils.http import http_date

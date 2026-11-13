@@ -3,6 +3,8 @@
 {% block adsense %}{% if indexable %}{% include "includes/adsense.html" %}{% endif %}{% endblock %}
 {% block robots %}{% if indexable %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% else %}noindex, follow{% endif %}{% endblock %}
 
+{% block font_preload %}{% if post.title|is_latin %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-latin-700-normal.woff2' %}" as="font" type="font/woff2" crossorigin>{% else %}{{ block.super }}{% endif %}{% endblock %}
 {% block html_lang %}{% if post.title|is_latin %}en{% else %}ar{% endif %}{% endblock %}
 {% block og_locale %}{% if post.title|is_latin %}en_US{% else %}ar_AR{% endif %}{% endblock %}
 {% block hreflang %}{% with alt=post.slug|translation_of en=post.title|is_latin %}<link rel="alternate" hreflang="{% if en %}en{% else %}ar{% endif %}" href="{{ canonical_url }}">
@@ -182,13 +184,34 @@
         <ol>{% for id, t in items %}<li><a href="#{{ id }}">{{ t }}</a></li>{% endfor %}</ol>
       </nav>
       {% endif %}{% endwith %}
+      {% if quran_surah %}
+      <aside class="surah-listen" data-surah="{{ quran_surah.0 }}" data-count="{{ quran_surah.0|ayah_count }}" data-en="{% if en %}1{% endif %}" aria-label="{% if en %}Listen to the surah{% else %}استمع للسورة{% endif %}">
+        <div class="sl-head">
+          <strong>{% if en %}🎧 Listen to the surah while you read{% else %}🎧 استمع لسورة {{ quran_surah.1 }} وأنت بتقرأ{% endif %}</strong>
+          <select class="sl-reciter" aria-label="{% if en %}Reciter{% else %}القارئ{% endif %}">
+            <option value="Husary_128kbps">{% if en %}Mahmoud Khalil Al-Husary{% else %}محمود خليل الحصري{% endif %}</option>
+            <option value="Minshawy_Murattal_128kbps">{% if en %}Muhammad Siddiq Al-Minshawi{% else %}محمد صديق المنشاوي{% endif %}</option>
+            <option value="Abdul_Basit_Murattal_192kbps">{% if en %}Abdul Basit Abdus-Samad{% else %}عبد الباسط عبد الصمد{% endif %}</option>
+            <option value="Alafasy_128kbps">{% if en %}Mishary Alafasy{% else %}مشاري العفاسي{% endif %}</option>
+          </select>
+        </div>
+        <div class="sl-controls">
+          <button type="button" class="btn btn-primary sl-play" aria-pressed="false">{% if en %}▶ Play{% else %}▶ تشغيل{% endif %}</button>
+          <button type="button" class="sl-prev" aria-label="{% if en %}Previous verse{% else %}الآية السابقة{% endif %}">{% if en %}⏮{% else %}⏭{% endif %}</button>
+          <button type="button" class="sl-next" aria-label="{% if en %}Next verse{% else %}الآية التالية{% endif %}">{% if en %}⏭{% else %}⏮{% endif %}</button>
+          <span class="sl-pos" aria-live="polite"></span>
+        </div>
+        <audio class="sl-audio" preload="none"></audio>
+      </aside>
+      {% endif %}
       <article class="article-body">
-        {{ post.content|rich }}
+        {{ post.content|rich|mid_cta:mid_cta_html }}
       </article>
       {% if quran_surah %}
-      <aside class="inline-cta" style="margin-top:28px;" aria-label="اقرأ واستمع للسورة">
-        <p><strong>اقرأ سورة {{ quran_surah.1 }} كاملة واستمع لها آية آية</strong> بصوت الحصري والمنشاوي وعبد الباسط وكبار القراء، مع تكرار الآيات للحفظ.</p>
-        <a class="btn btn-primary" href="{% url 'quran_surah' quran_surah.0 %}">سورة {{ quran_surah.1 }} مكتوبة بصوت الشيوخ</a>
+      <aside class="inline-cta" style="margin-top:28px;" aria-label="{% if en %}Read and listen to the surah{% else %}اقرأ واستمع للسورة{% endif %}">
+        {% if en %}<p><strong>Read the full Arabic text of this surah and listen verse by verse</strong> with Al-Husary, Al-Minshawi, Abdul Basit and other great reciters, with verse repetition for memorisation.</p>
+        <a class="btn btn-primary" href="{% url 'quran_surah' quran_surah.0 %}">Open the surah with audio</a>{% else %}<p><strong>اقرأ سورة {{ quran_surah.1 }} كاملة واستمع لها آية آية</strong> بصوت الحصري والمنشاوي وعبد الباسط وكبار القراء، مع تكرار الآيات للحفظ.</p>
+        <a class="btn btn-primary" href="{% url 'quran_surah' quran_surah.0 %}">سورة {{ quran_surah.1 }} مكتوبة بصوت الشيوخ</a>{% endif %}
       </aside>
       {% endif %}
       {% if quran_surahs %}
@@ -224,40 +247,43 @@
       </section>
       {% endif %}
 
+      {% if quran_surah %}{% include 'includes/hifz_quiz.html' with n=quran_surah.0 name=quran_surah.1 %}{% endif %}
+
       <div class="inline-cta">
-        <p>{% if en %}Want your child to learn Quran with a qualified tutor? The first class is free.{% else %}عايز طفلك يحفظ القرآن مع معلمة متقنة؟ أول حلقة مجانية.{% endif %}</p>
-        <a class="btn btn-primary" href="{% url 'contact' %}">{% if en %}Book a free trial class{% else %}احجز حلقة تجريبية مجانية{% endif %}</a>
+        <p>{% if en %}Want to learn Quran with a qualified tutor, for yourself or your child? The first class is free.{% else %}عايز طفلك يحفظ القرآن مع معلمة متقنة؟ أول حلقة مجانية.{% endif %}</p>
+        <a class="btn btn-primary" data-cta="end" href="{% url 'contact' %}">{% if en %}Book a free trial class{% else %}احجز حلقة تجريبية مجانية{% endif %}</a>
+        {% if WHATSAPP_LINK %}<a class="btn" data-cta="whatsapp" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">{% if en %}Chat on WhatsApp{% else %}كلمنا واتساب{% endif %}</a>{% endif %}
       </div>
 
       {% if not en %}{% include 'includes/push_card.html' with push_title="يوصلك كل مقال جديد أول ما ينزل" %}{% endif %}
 
       <div class="share">
         <strong>{% if en %}Share:{% else %}شارك المقال:{% endif %}</strong>
-        <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ canonical_url|urlencode }}" target="_blank" rel="noopener">واتساب</a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_url|urlencode }}" target="_blank" rel="noopener">فيسبوك</a>
-        <a href="https://twitter.com/intent/tweet?url={{ canonical_url|urlencode }}&text={{ post.title|urlencode }}" target="_blank" rel="noopener">إكس</a>
-        <a href="https://t.me/share/url?url={{ canonical_url|urlencode }}&text={{ post.title|urlencode }}" target="_blank" rel="noopener">تليجرام</a>
-        <button type="button" id="copy-link" data-url="{{ canonical_url }}">نسخ الرابط</button>
+        <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ canonical_url|urlencode }}" target="_blank" rel="noopener">{% if en %}WhatsApp{% else %}واتساب{% endif %}</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_url|urlencode }}" target="_blank" rel="noopener">{% if en %}Facebook{% else %}فيسبوك{% endif %}</a>
+        <a href="https://twitter.com/intent/tweet?url={{ canonical_url|urlencode }}&text={{ post.title|urlencode }}" target="_blank" rel="noopener">{% if en %}X{% else %}إكس{% endif %}</a>
+        <a href="https://t.me/share/url?url={{ canonical_url|urlencode }}&text={{ post.title|urlencode }}" target="_blank" rel="noopener">{% if en %}Telegram{% else %}تليجرام{% endif %}</a>
+        <button type="button" id="copy-link" data-url="{{ canonical_url }}" data-done="{% if en %}Copied ✓{% else %}اتنسخ ✓{% endif %}" data-label="{% if en %}Copy link{% else %}نسخ الرابط{% endif %}">{% if en %}Copy link{% else %}نسخ الرابط{% endif %}</button>
       </div>
 
       <section aria-labelledby="comments-title">
-        <h2 id="comments-title">التعليقات ({{ comments_count }})</h2>
+        <h2 id="comments-title">{% if en %}Comments{% else %}التعليقات{% endif %} ({{ comments_count }})</h2>
         {% for comment in comments %}
           <div class="comment"><strong>{{ comment.author_name }}</strong><time datetime="{{ comment.created_at|date:'c' }}">{{ comment.created_at|date:"j F Y" }}</time><p>{{ comment.content|linebreaksbr }}</p></div>
         {% empty %}
-          <p style="color:var(--muted);">لسه مفيش تعليقات. شاركنا رأيك.</p>
+          <p style="color:var(--muted);">{% if en %}No comments yet. Share your thoughts.{% else %}لسه مفيش تعليقات. شاركنا رأيك.{% endif %}</p>
         {% endfor %}
         {% if post.allow_comments %}
         <form method="post" class="form-card" style="margin-top:28px;">
           {% csrf_token %}
-          <h3 style="margin-top:0;">اكتب تعليقك</h3>
+          <h3 style="margin-top:0;">{% if en %}Leave a comment{% else %}اكتب تعليقك{% endif %}</h3>
           <div class="field-row">
-            <div class="field"><label for="author_name">الاسم<span class="req" aria-hidden="true">*</span></label><input type="text" id="author_name" name="author_name" required autocomplete="name"></div>
-            <div class="field"><label for="author_email">البريد الإلكتروني<span class="req" aria-hidden="true">*</span></label><input type="email" id="author_email" name="author_email" required autocomplete="email" dir="ltr" style="text-align:right"></div>
+            <div class="field"><label for="author_name">{% if en %}Name{% else %}الاسم{% endif %}<span class="req" aria-hidden="true">*</span></label><input type="text" id="author_name" name="author_name" required autocomplete="name"></div>
+            <div class="field"><label for="author_email">{% if en %}Email{% else %}البريد الإلكتروني{% endif %}<span class="req" aria-hidden="true">*</span></label><input type="email" id="author_email" name="author_email" required autocomplete="email" dir="ltr" style="text-align:right"></div>
           </div>
-          <div class="field"><label for="content">التعليق<span class="req" aria-hidden="true">*</span></label><textarea id="content" name="content" required></textarea></div>
-          <button type="submit" class="btn btn-primary">إرسال التعليق</button>
-          <p style="color:var(--muted); font-size:.88rem; margin:10px 0 0;">التعليق بيظهر بعد مراجعته. البريد الإلكتروني مش بيظهر لحد.</p>
+          <div class="field"><label for="content">{% if en %}Comment{% else %}التعليق{% endif %}<span class="req" aria-hidden="true">*</span></label><textarea id="content" name="content" required></textarea></div>
+          <button type="submit" class="btn btn-primary">{% if en %}Post comment{% else %}إرسال التعليق{% endif %}</button>
+          <p style="color:var(--muted); font-size:.88rem; margin:10px 0 0;">{% if en %}Comments appear after review. Your email is never shown.{% else %}التعليق بيظهر بعد مراجعته. البريد الإلكتروني مش بيظهر لحد.{% endif %}</p>
         </form>
         {% endif %}
       </section>
@@ -286,13 +312,16 @@
 {% endwith %}{% endblock %}
 
 {% block extra_js %}
+{% if quran_surah %}<script src="{% static 'js/surah-listen.js' %}" defer></script>
+<script src="{% static 'js/hifz-quiz.js' %}" defer></script>{% endif %}
 <script>
 (function(){
   var bar = document.getElementById('progress');
   function upd(){ var h = document.documentElement.scrollHeight - innerHeight; bar.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%'; }
   addEventListener('scroll', upd, {passive: true}); upd();
+  document.querySelectorAll('[data-cta]').forEach(function(a){ a.addEventListener('click', function(){ if(window.gtag) gtag('event', 'blog_cta_click', {position: a.dataset.cta, page: location.pathname}); }); });
   var c = document.getElementById('copy-link');
-  if(c) c.addEventListener('click', function(){ navigator.clipboard && navigator.clipboard.writeText(c.dataset.url).then(function(){ c.textContent = 'اتنسخ ✓'; setTimeout(function(){ c.textContent = 'نسخ الرابط'; }, 2000); }); });
+  if(c) c.addEventListener('click', function(){ navigator.clipboard && navigator.clipboard.writeText(c.dataset.url).then(function(){ c.textContent = c.dataset.done; setTimeout(function(){ c.textContent = c.dataset.label; }, 2000); }); });
   var lb = document.getElementById('lightbox'), li = document.getElementById('lightbox-img');
   document.querySelectorAll('.gallery figure').forEach(function(f){ f.addEventListener('click', function(){ li.src = f.dataset.full; li.alt = f.querySelector('img').alt; lb.classList.add('open'); }); });
   function close(){ lb.classList.remove('open'); li.src = ''; }
