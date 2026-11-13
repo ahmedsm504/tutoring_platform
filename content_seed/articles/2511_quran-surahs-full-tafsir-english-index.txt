@@ -6,7 +6,7 @@ keywords: full tafsir in english, quran tafsir english, surah explanation englis
 reading: 12
 translation_of: tafsir-surahs-index
 ---
-This page is an **index of our complete English tafsir articles**: one long article for each surah, explaining it from beginning to end. It currently lists **25 surahs**, arranged in **Mushaf order**, and grows as we add more.
+This page is an **index of our complete English tafsir articles**: one long article for each surah, explaining it from beginning to end. It now covers **all 114 surahs of the Quran**, arranged in **Mushaf order**.
 
 If you want the meaning of a single verse instead, use our [index of Quran verses explained in English](/blog/quran-verses-explained-english-index/). If you are looking for an overview of a whole juz, start with the juz summaries, then come back here for the surah you want to study in depth.
 
@@ -36,14 +36,32 @@ The Quranic text in every article is taken directly from the Madinah Mushaf data
 These are the surahs most Muslims memorise first and recite most often in prayer, so they are a natural place to begin.
 
 - **Surah 78** (40 verses): [Surah An-Naba Full Tafsir in English: The Great News of the Day of Sorting](/blog/surah-an-naba-full-tafsir-english/)
+- **Surah 79** (46 verses): [Surah An-Naziat Full Tafsir in English: Restraining the Soul](/blog/surah-an-naziat-full-tafsir-english/)
+- **Surah 80** (42 verses): [Surah Abasa Full Tafsir in English: The Blind Man and the Lesson](/blog/surah-abasa-full-tafsir-english/)
+- **Surah 81** (29 verses): [Surah At-Takwir Full Tafsir in English: When the Sun Is Wrapped](/blog/surah-at-takwir-full-tafsir-english/)
+- **Surah 82** (19 verses): [Surah Al-Infitar Full Tafsir in English: What Deceived You?](/blog/surah-al-infitar-full-tafsir-english/)
+- **Surah 83** (36 verses): [Surah Al-Mutaffifin Full Tafsir in English: Sijjin and Illiyyin](/blog/surah-al-mutaffifin-full-tafsir-english/)
+- **Surah 84** (25 verses): [Surah Al-Inshiqaq Full Tafsir in English: Labouring Towards Your Lord](/blog/surah-al-inshiqaq-full-tafsir-english/)
+- **Surah 85** (22 verses): [Surah Al-Buruj Full Tafsir in English: The People of the Ditch](/blog/surah-al-buruj-full-tafsir-english/)
+- **Surah 86** (17 verses): [Surah At-Tariq Full Tafsir in English: The Day Secrets Are Tested](/blog/surah-at-tariq-full-tafsir-english/)
+- **Surah 87** (19 verses): [Surah Al-Ala Full Tafsir in English: Glorify Your Lord, the Most High](/blog/surah-al-ala-full-tafsir-english/)
+- **Surah 88** (26 verses): [Surah Al-Ghashiyah Full Tafsir in English: The Overwhelming Event](/blog/surah-al-ghashiyah-full-tafsir-english/)
+- **Surah 89** (30 verses): [Surah Al-Fajr Full Tafsir in English: O Tranquil Soul](/blog/surah-al-fajr-full-tafsir-english/)
+- **Surah 90** (20 verses): [Surah Al-Balad Full Tafsir in English: Taking the Steep Path](/blog/surah-al-balad-full-tafsir-english/)
+- **Surah 91** (15 verses): [Surah Ash-Shams Full Tafsir in English: Success Through Purification](/blog/surah-ash-shams-full-tafsir-english/)
+- **Surah 92** (21 verses): [Surah Al-Layl Full Tafsir in English: We Will Ease Him Towards Ease](/blog/surah-al-layl-full-tafsir-english/)
 - **Surah 93** (11 verses): [Surah Ad-Duha Full Tafsir in English: Your Lord Has Not Abandoned You](/blog/surah-ad-duha-full-tafsir-english/)
+- **Surah 94** (8 verses): [Surah Ash-Sharh Full Tafsir in English: With Hardship Comes Ease](/blog/surah-ash-sharh-full-tafsir-english/)
 - **Surah 95** (8 verses): [Surah At-Tin Full Tafsir in English: Created in the Best Form](/blog/surah-at-tin-full-tafsir-english/)
 - **Surah 96** (19 verses): [Surah Al-Alaq Full Tafsir in English: Read in the Name of Your Lord](/blog/surah-al-alaq-full-tafsir-english/)
 - **Surah 97** (5 verses): [Surah Al-Qadr Full Tafsir in English: The Night Better Than a Thousand Months](/blog/surah-al-qadr-full-tafsir-english/)
+- **Surah 98** (8 verses): [Surah Al-Bayyinah Full Tafsir in English: The Clear Evidence](/blog/surah-al-bayyinah-full-tafsir-english/)
 - **Surah 99** (8 verses): [Surah Az-Zalzalah Full Tafsir in English: Every Atom's Weight of Good](/blog/surah-az-zalzalah-full-tafsir-english/)
 - **Surah 100** (11 verses): [Surah Al-Adiyat Full Tafsir in English: Man Is Ungrateful to His Lord](/blog/surah-al-adiyat-full-tafsir-english/)
 - **Surah 101** (11 verses): [Surah Al-Qari'ah Full Tafsir in English: The Day of the Scales](/blog/surah-al-qariah-full-tafsir-english/)
+- **Surah 102** (8 verses): [Surah At-Takathur Full Tafsir in English: The Race for More](/blog/surah-at-takathur-full-tafsir-english/)
 - **Surah 103** (3 verses): [Surah Al-Asr Full Tafsir in English: The Formula for Success in Three Verses](/blog/surah-al-asr-full-tafsir-english/)
+- **Surah 104** (9 verses): [Surah Al-Humazah Full Tafsir in English: Woe to Every Slanderer](/blog/surah-al-humazah-full-tafsir-english/)
 - **Surah 105** (5 verses): [Surah Al-Fil Full Tafsir in English: The Story of the People of the Elephant](/blog/surah-al-fil-full-tafsir-english/)
 - **Surah 106** (4 verses): [Surah Quraysh Full Tafsir in English: Fed Against Hunger, Safe From Fear](/blog/surah-quraysh-full-tafsir-english/)
 - **Surah 107** (7 verses): [Surah Al-Ma'un Full Tafsir in English: Faith That Shows in Prayer and Kindness](/blog/surah-al-maun-full-tafsir-english/)
@@ -58,12 +76,83 @@ These are the surahs most Muslims memorise first and recite most often in prayer
 ## Longer Surahs
 These articles cover longer surahs section by section, with the key passages quoted in full.
 
+- **Surah 1** (7 verses): [Surah Al-Fatiha Full Tafsir in English: The Mother of the Book](/blog/surah-al-fatiha-full-tafsir-english/)
+- **Surah 2** (286 verses): [Surah Al-Baqarah Full Tafsir in English: The Longest Surah Explained](/blog/surah-al-baqarah-full-tafsir-english/)
+- **Surah 3** (200 verses): [Surah Al Imran Full Tafsir in English: Steadfastness After Trial](/blog/surah-al-imran-full-tafsir-english/)
+- **Surah 4** (176 verses): [Surah An-Nisa Full Tafsir in English: Justice for Women and Families](/blog/surah-an-nisa-full-tafsir-english/)
+- **Surah 5** (120 verses): [Surah Al-Maidah Full Tafsir in English: Fulfil Your Contracts](/blog/surah-al-maidah-full-tafsir-english/)
+- **Surah 6** (165 verses): [Surah Al-Anam Full Tafsir in English: The Surah of Tawhid](/blog/surah-al-anam-full-tafsir-english/)
+- **Surah 7** (206 verses): [Surah Al-Araf Full Tafsir in English: Adam, Iblis and the Heights](/blog/surah-al-araf-full-tafsir-english/)
+- **Surah 8** (75 verses): [Surah Al-Anfal Full Tafsir in English: Lessons From the Battle of Badr](/blog/surah-al-anfal-full-tafsir-english/)
+- **Surah 9** (129 verses): [Surah At-Tawbah Full Tafsir in English: Repentance and Sincerity](/blog/surah-at-tawbah-full-tafsir-english/)
+- **Surah 10** (109 verses): [Surah Yunus Full Tafsir in English: The Friends of Allah](/blog/surah-yunus-full-tafsir-english/)
+- **Surah 11** (123 verses): [Surah Hud Full Tafsir in English: Stand Firm as You Are Commanded](/blog/surah-hud-full-tafsir-english/)
 - **Surah 12** (111 verses): [Surah Yusuf Full Tafsir in English: The Best of Stories and Its Lessons](/blog/surah-yusuf-full-tafsir-english/)
+- **Surah 13** (43 verses): [Surah Ar-Rad Full Tafsir in English: Hearts Find Rest in Remembrance](/blog/surah-ar-rad-full-tafsir-english/)
+- **Surah 14** (52 verses): [Surah Ibrahim Full Tafsir in English: Gratitude Brings Increase](/blog/surah-ibrahim-full-tafsir-english/)
+- **Surah 15** (99 verses): [Surah Al-Hijr Full Tafsir in English: We Will Preserve the Quran](/blog/surah-al-hijr-full-tafsir-english/)
+- **Surah 16** (128 verses): [Surah An-Nahl Full Tafsir in English: The Surah of Blessings](/blog/surah-an-nahl-full-tafsir-english/)
+- **Surah 17** (111 verses): [Surah Al-Isra Full Tafsir in English: The Night Journey](/blog/surah-al-isra-full-tafsir-english/)
+- **Surah 18** (110 verses): [Surah Al-Kahf Full Tafsir in English: Four Stories, Four Trials](/blog/surah-al-kahf-full-tafsir-english/)
 - **Surah 19** (98 verses): [Surah Maryam Full Tafsir in English: Mercy Through the Stories of the Prophets](/blog/surah-maryam-full-tafsir-english/)
+- **Surah 20** (135 verses): [Surah Taha Full Tafsir in English: Not Sent Down to Distress You](/blog/surah-taha-full-tafsir-english/)
+- **Surah 21** (112 verses): [Surah Al-Anbiya Full Tafsir in English: The Procession of the Prophets](/blog/surah-al-anbiya-full-tafsir-english/)
+- **Surah 22** (78 verses): [Surah Al-Hajj Full Tafsir in English: The Call to the House](/blog/surah-al-hajj-full-tafsir-english/)
+- **Surah 23** (118 verses): [Surah Al-Muminun Full Tafsir in English: Successful Are the Believers](/blog/surah-al-muminun-full-tafsir-english/)
+- **Surah 24** (64 verses): [Surah An-Nur Full Tafsir in English: Light Upon Light](/blog/surah-an-nur-full-tafsir-english/)
+- **Surah 25** (77 verses): [Surah Al-Furqan Full Tafsir in English: The Servants of the Most Merciful](/blog/surah-al-furqan-full-tafsir-english/)
+- **Surah 26** (227 verses): [Surah Ash-Shuara Full Tafsir in English: The Almighty, the Merciful](/blog/surah-ash-shuara-full-tafsir-english/)
+- **Surah 27** (93 verses): [Surah An-Naml Full Tafsir in English: Sulayman, the Ant and the Hoopoe](/blog/surah-an-naml-full-tafsir-english/)
+- **Surah 28** (88 verses): [Surah Al-Qasas Full Tafsir in English: The Story of Musa](/blog/surah-al-qasas-full-tafsir-english/)
+- **Surah 29** (69 verses): [Surah Al-Ankabut Full Tafsir in English: Faith Will Be Tested](/blog/surah-al-ankabut-full-tafsir-english/)
+- **Surah 30** (60 verses): [Surah Ar-Rum Full Tafsir in English: The Romans and the Signs](/blog/surah-ar-rum-full-tafsir-english/)
+- **Surah 31** (34 verses): [Surah Luqman Full Tafsir in English: A Wise Father's Advice to His Son](/blog/surah-luqman-full-tafsir-english/)
+- **Surah 32** (30 verses): [Surah As-Sajdah Full Tafsir in English: Their Sides Leave Their Beds](/blog/surah-as-sajdah-full-tafsir-english/)
+- **Surah 33** (73 verses): [Surah Al-Ahzab Full Tafsir in English: The Excellent Example](/blog/surah-al-ahzab-full-tafsir-english/)
+- **Surah 34** (54 verses): [Surah Saba Full Tafsir in English: Gratitude and Its Loss](/blog/surah-saba-full-tafsir-english/)
+- **Surah 35** (45 verses): [Surah Fatir Full Tafsir in English: You Are the Needy of Allah](/blog/surah-fatir-full-tafsir-english/)
 - **Surah 36** (83 verses): [Surah Ya-Sin Full Tafsir in English: Meaning, Themes and Lessons](/blog/surah-ya-sin-full-tafsir-english/)
+- **Surah 37** (182 verses): [Surah As-Saffat Full Tafsir in English: Peace Upon the Messengers](/blog/surah-as-saffat-full-tafsir-english/)
+- **Surah 38** (88 verses): [Surah Sad Full Tafsir in English: The Repenting Prophets](/blog/surah-sad-full-tafsir-english/)
+- **Surah 39** (75 verses): [Surah Az-Zumar Full Tafsir in English: Do Not Despair of Allah's Mercy](/blog/surah-az-zumar-full-tafsir-english/)
+- **Surah 40** (85 verses): [Surah Ghafir Full Tafsir in English: Call Upon Me, I Will Respond](/blog/surah-ghafir-full-tafsir-english/)
+- **Surah 41** (54 verses): [Surah Fussilat Full Tafsir in English: Repel Evil With Good](/blog/surah-fussilat-full-tafsir-english/)
+- **Surah 42** (53 verses): [Surah Ash-Shura Full Tafsir in English: There Is Nothing Like Him](/blog/surah-ash-shura-full-tafsir-english/)
+- **Surah 43** (89 verses): [Surah Az-Zukhruf Full Tafsir in English: Ornaments of This World](/blog/surah-az-zukhruf-full-tafsir-english/)
+- **Surah 44** (59 verses): [Surah Ad-Dukhan Full Tafsir in English: The Blessed Night and the Smoke](/blog/surah-ad-dukhan-full-tafsir-english/)
+- **Surah 45** (37 verses): [Surah Al-Jathiyah Full Tafsir in English: Every Nation Kneeling](/blog/surah-al-jathiyah-full-tafsir-english/)
+- **Surah 46** (35 verses): [Surah Al-Ahqaf Full Tafsir in English: Kindness to Parents and the Jinn](/blog/surah-al-ahqaf-full-tafsir-english/)
+- **Surah 47** (38 verses): [Surah Muhammad Full Tafsir in English: Do They Not Reflect on the Quran?](/blog/surah-muhammad-full-tafsir-english/)
+- **Surah 48** (29 verses): [Surah Al-Fath Full Tafsir in English: A Clear Victory at Hudaybiyyah](/blog/surah-al-fath-full-tafsir-english/)
+- **Surah 49** (18 verses): [Surah Al-Hujurat Full Tafsir in English: The Surah of Manners](/blog/surah-al-hujurat-full-tafsir-english/)
+- **Surah 50** (45 verses): [Surah Qaf Full Tafsir in English: Closer Than the Jugular Vein](/blog/surah-qaf-full-tafsir-english/)
+- **Surah 51** (60 verses): [Surah Adh-Dhariyat Full Tafsir in English: So Flee to Allah](/blog/surah-adh-dhariyat-full-tafsir-english/)
+- **Surah 52** (49 verses): [Surah At-Tur Full Tafsir in English: You Are in Our Eyes](/blog/surah-at-tur-full-tafsir-english/)
+- **Surah 53** (62 verses): [Surah An-Najm Full Tafsir in English: He Does Not Speak From Desire](/blog/surah-an-najm-full-tafsir-english/)
+- **Surah 54** (55 verses): [Surah Al-Qamar Full Tafsir in English: Is There Any Who Will Remember?](/blog/surah-al-qamar-full-tafsir-english/)
 - **Surah 55** (78 verses): [Surah Ar-Rahman Full Tafsir in English: Which of the Favours Will You Deny?](/blog/surah-ar-rahman-full-tafsir-english/)
 - **Surah 56** (96 verses): [Surah Al-Waqiah Full Tafsir in English: The Inevitable Event and the Three Groups](/blog/surah-al-waqiah-full-tafsir-english/)
+- **Surah 57** (29 verses): [Surah Al-Hadid Full Tafsir in English: Has the Time Not Come?](/blog/surah-al-hadid-full-tafsir-english/)
+- **Surah 58** (22 verses): [Surah Al-Mujadilah Full Tafsir in English: Allah Has Heard Her](/blog/surah-al-mujadilah-full-tafsir-english/)
+- **Surah 59** (24 verses): [Surah Al-Hashr Full Tafsir in English: Let Every Soul Look Ahead](/blog/surah-al-hashr-full-tafsir-english/)
+- **Surah 60** (13 verses): [Surah Al-Mumtahanah Full Tafsir in English: Loyalty, Kindness and Justice](/blog/surah-al-mumtahanah-full-tafsir-english/)
+- **Surah 61** (14 verses): [Surah As-Saff Full Tafsir in English: Why Do You Say What You Do Not Do?](/blog/surah-as-saff-full-tafsir-english/)
+- **Surah 62** (11 verses): [Surah Al-Jumuah Full Tafsir in English: Hasten to the Remembrance of Allah](/blog/surah-al-jumuah-full-tafsir-english/)
+- **Surah 63** (11 verses): [Surah Al-Munafiqun Full Tafsir in English: Signs of the Hypocrites](/blog/surah-al-munafiqun-full-tafsir-english/)
+- **Surah 64** (18 verses): [Surah At-Taghabun Full Tafsir in English: The Day of Mutual Loss and Gain](/blog/surah-at-taghabun-full-tafsir-english/)
+- **Surah 65** (12 verses): [Surah At-Talaq Full Tafsir in English: Allah Will Make a Way Out](/blog/surah-at-talaq-full-tafsir-english/)
+- **Surah 66** (12 verses): [Surah At-Tahrim Full Tafsir in English: Protect Yourselves and Your Families](/blog/surah-at-tahrim-full-tafsir-english/)
 - **Surah 67** (30 verses): [Surah Al-Mulk Full Tafsir in English: The Surah That Intercedes](/blog/surah-al-mulk-full-tafsir-english/)
+- **Surah 68** (52 verses): [Surah Al-Qalam Full Tafsir in English: You Are of a Great Character](/blog/surah-al-qalam-full-tafsir-english/)
+- **Surah 69** (52 verses): [Surah Al-Haqqah Full Tafsir in English: Here, Read My Record](/blog/surah-al-haqqah-full-tafsir-english/)
+- **Surah 70** (44 verses): [Surah Al-Maarij Full Tafsir in English: Anxious Man and the Worshippers](/blog/surah-al-maarij-full-tafsir-english/)
+- **Surah 71** (28 verses): [Surah Nuh Full Tafsir in English: 950 Years of Calling to Allah](/blog/surah-nuh-full-tafsir-english/)
+- **Surah 72** (28 verses): [Surah Al-Jinn Full Tafsir in English: When the Jinn Heard the Quran](/blog/surah-al-jinn-full-tafsir-english/)
+- **Surah 73** (20 verses): [Surah Al-Muzzammil Full Tafsir in English: Night Prayer and Tartil](/blog/surah-al-muzzammil-full-tafsir-english/)
+- **Surah 74** (56 verses): [Surah Al-Muddaththir Full Tafsir in English: Arise and Warn](/blog/surah-al-muddaththir-full-tafsir-english/)
+- **Surah 75** (40 verses): [Surah Al-Qiyamah Full Tafsir in English: The Self-Reproaching Soul](/blog/surah-al-qiyamah-full-tafsir-english/)
+- **Surah 76** (31 verses): [Surah Al-Insan Full Tafsir in English: Feeding for the Face of Allah](/blog/surah-al-insan-full-tafsir-english/)
+- **Surah 77** (50 verses): [Surah Al-Mursalat Full Tafsir in English: Woe That Day to the Deniers](/blog/surah-al-mursalat-full-tafsir-english/)
 
 ## What Is Tafsir, and Why Read a Full Tafsir?
 *Tafsir* is the explanation of the meaning of the Quran: what its words mean, what situation a passage addressed, how its verses relate to one another, and what guidance it carries for life. A translation tells you roughly what a verse says; tafsir tells you what it means, why it was revealed, and how it connects to the rest of the surah.
@@ -99,8 +188,8 @@ Read **Al-Qadr** for the Night of Decree, and **Al-Mulk**, which many people rec
 ### Is this a complete translation of the Quran?
 No. Each article explains the meaning of a surah in depth, quoting its key verses. For a complete translation, use a reliable printed translation alongside these articles.
 
-### Why are some surahs missing?
-We are adding full tafsir articles surah by surah. This index is updated as new articles are published.
+### Does this index cover every surah?
+Yes. Every one of the 114 surahs has its own full English tafsir article, listed here in Mushaf order, and each one links to its Arabic counterpart.
 
 ### Are the hadith in these articles authentic?
 We quote al-Bukhari and Muslim first, and for other collections we state the grading. Weak narrations that are popular are mentioned only to point out that they are weak.
@@ -115,7 +204,7 @@ If you are unsure, start with the short surahs of Juz 'Amma that you already rec
 Most articles take between fifteen and twenty minutes to read in full. You can also read one section a day alongside your recitation of that part of the surah.
 
 ### Is there an Arabic version?
-Yes. Most of these surahs also have a full Arabic tafsir, which you can reach from the language link at the top of each article.
+Yes. Every one of these surahs also has a full Arabic tafsir, which you can reach from the language link at the top of each article.
 
 ## Conclusion
 A surah you understand is a surah you recite differently. Choose one surah from this index, read its full tafsir slowly, recite it in your prayers this week, and let its lessons settle before moving to the next. If you would like a teacher to guide you through the Quran and correct your recitation, you can [book a free trial lesson](/contact/).
