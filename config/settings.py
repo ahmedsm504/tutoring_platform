@@ -264,7 +264,8 @@ MANAGERS = ADMINS
 # =========================================================
 # كود التحقق من Bing Webmaster (msvalidate.01) - اختياري لو الموقع اتضاف من غير الاستيراد من Search Console
 BING_SITE_VERIFICATION = os.environ.get('BING_SITE_VERIFICATION', '')
-INDEXNOW_KEY = os.environ.get('INDEXNOW_KEY', '800e60e37753412893002525b148ce17')
+# مفتاح جديد اتولّد من Bing (11/2026): القديم Bing كان رافضه (UserForbiddedToAccessSite) غالبًا بسبب فشل تحقق قديم متخزن عندهم
+INDEXNOW_KEY = os.environ.get('INDEXNOW_API_KEY', 'b2965e1f5a0a4a6d83fb2c737ef5df31')
 SITE_NAME = 'مؤسسة العجمي'
 
 # =========================================================
