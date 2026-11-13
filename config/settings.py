@@ -262,6 +262,8 @@ MANAGERS = ADMINS
 # =========================================================
 # SEO / IndexNow
 # =========================================================
+# كود التحقق من Bing Webmaster (msvalidate.01) - اختياري لو الموقع اتضاف من غير الاستيراد من Search Console
+BING_SITE_VERIFICATION = os.environ.get('BING_SITE_VERIFICATION', '')
 INDEXNOW_KEY = os.environ.get('INDEXNOW_KEY', '800e60e37753412893002525b148ce17')
 SITE_NAME = 'مؤسسة العجمي'
 

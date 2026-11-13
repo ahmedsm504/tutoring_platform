@@ -7,8 +7,8 @@ from django.conf import settings
 
 logger = logging.getLogger(__name__)
 ENDPOINT = "https://api.indexnow.org/indexnow"
-# بنبعت لـ Bing مباشرة كمان: Bing Webmaster بيحسب الإرسال اللي واصله هو، والمشترك أحيانًا بيتأخر
-ENDPOINTS = (ENDPOINT, "https://www.bing.com/indexnow")
+# بنبعت لـ Bing وYandex مباشرة كمان (كل واحد بيعرض في أدوات المشرفين بتاعته اللي واصله هو): Bing Webmaster بيحسب الإرسال اللي واصله هو، والمشترك أحيانًا بيتأخر
+ENDPOINTS = (ENDPOINT, "https://www.bing.com/indexnow", "https://yandex.com/indexnow")
 
 
 def _payload(urls):

@@ -1326,6 +1326,12 @@ class IndexNowEndpointsTests(TestCase):
         hosts = [c.args[0] for c in post.call_args_list]
         self.assertIn('https://api.indexnow.org/indexnow', hosts)
         self.assertIn('https://www.bing.com/indexnow', hosts)
+        self.assertIn('https://yandex.com/indexnow', hosts)
+
+    def test_bing_verification_meta_only_when_set(self):
+        self.assertNotContains(self.client.get('/'), 'msvalidate.01')
+        with self.settings(BING_SITE_VERIFICATION='ABC123'):
+            self.assertContains(self.client.get('/'), '<meta name="msvalidate.01" content="ABC123">')
 
 
 class VarcharLimitsTests(TestCase):
