@@ -237,12 +237,16 @@ class QuranSitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        return ['index'] + list(range(1, 115))
+        return ['index', 'tracker'] + list(range(1, 115))
 
     def location(self, obj):
+        if obj == 'tracker':
+            return reverse('quran_tracker')
         return reverse('quran_index') if obj == 'index' else reverse('quran_surah', args=[obj])
 
     def priority(self, obj):
         if obj == 'index':
             return 0.85
+        if obj == 'tracker':
+            return 0.7
         return 0.75 if obj in (1, 2, 18, 36, 55, 56, 67, 112, 113, 114) else 0.6

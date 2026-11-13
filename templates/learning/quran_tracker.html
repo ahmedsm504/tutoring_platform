@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}متابعة حفظ القرآن: سجّل السور اللي حفظتها ومواعيد مراجعتها | العجمي{% endblock %}
+{% block meta_description %}أداة مجانية لمتابعة حفظ القرآن الكريم: علّم السور اللي حفظتها، واعرف نسبة حفظك من المصحف وعدد الآيات، وسجّل آخر مراجعة لكل سورة عشان متنساش حفظك.{% endblock %}
+{% block meta_keywords %}متابعة حفظ القرآن, جدول حفظ القرآن, تطبيق متابعة الحفظ, مراجعة حفظ القرآن, نسبة حفظ القرآن, سجل الحفظ{% endblock %}
+{% block og_title %}متابعة حفظ القرآن ومراجعته | مؤسسة العجمي{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}{% url 'quran_tracker' %}{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},{"@type":"ListItem","position":2,"name":"القرآن الكريم","item":"{{ SITE_URL }}{% url 'quran_index' %}"},{"@type":"ListItem","position":3,"name":"متابعة الحفظ","item":"{{ SITE_URL }}{% url 'quran_tracker' %}"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"فين بيتحفظ تقدمي في الحفظ؟","acceptedAnswer":{"@type":"Answer","text":"على جهازك أنت في المتصفح، من غير تسجيل دخول. لو مسحت بيانات المتصفح أو فتحت الصفحة من جهاز تاني، مش هتلاقي تقدمك."}},
+{"@type":"Question","name":"كل قد إيه أراجع السورة اللي حفظتها؟","acceptedAnswer":{"@type":"Answer","text":"الأفضل تراجع المحفوظ الجديد يوميًا في أول أسبوع، وبعدها تخلي كل سورة تيجي عليها المراجعة مرة على الأقل كل أسبوع. الأداة بتنبهك للسور اللي عدّى على مراجعتها أكتر من 7 أيام."}},
+{"@type":"Question","name":"إزاي بتتحسب نسبة الحفظ؟","acceptedAnswer":{"@type":"Answer","text":"بعدد الآيات اللي في السور اللي علّمتها محفوظة، مقسومة على 6236 آية، وهو عدد آيات المصحف في رواية حفص."}}]}</script>
+{% endblock %}
+{% block extra_css %}
+<style>
+.ht-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 18px}
+.ht-stat{background:var(--green-tint);border-radius:14px;padding:14px 16px}
+.ht-stat strong{display:block;font-size:1.5rem;color:var(--green-deep)}
+.ht-bar{height:12px;border-radius:999px;background:var(--line,#e5e5e5);overflow:hidden;margin:0 0 18px}
+.ht-bar span{display:block;height:100%;width:0;background:var(--green-deep);transition:width .3s}
+.ht-tools{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;align-items:center}
+.ht-tools input{flex:1 1 220px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);font:inherit;background:var(--surface)}
+.ht-tools select{padding:10px;border-radius:12px;border:1px solid var(--line);font:inherit;background:var(--surface)}
+.ht-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.ht-list li{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.ht-list li.done{border-color:var(--green-deep)}
+.ht-list li.due{border-color:#c9952c;background:#fffaf0}
+.ht-list label{display:flex;align-items:center;gap:10px;flex:1 1 200px;cursor:pointer;min-height:44px}
+.ht-list input[type=checkbox]{width:22px;height:22px;accent-color:var(--green-deep)}
+.ht-name{font-family:'Amiri Quran',serif;font-size:1.2rem}
+.ht-meta{font-size:.82rem;color:var(--ink-soft)}
+.ht-rev{min-height:40px;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font:inherit;font-size:.88rem}
+.ht-list a{font-size:.88rem}
+</style>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'quran_index' %}">القرآن الكريم</a></li><li aria-current="page">متابعة الحفظ</li></ol>
+  <h1>متابعة حفظ القرآن ومراجعته</h1>
+  <p>علّم السور اللي حفظتها، وسجّل كل مرة تراجعها. الأداة بتحسبلك نسبة حفظك من المصحف، وبتنبهك للسور اللي محتاجة مراجعة قبل ما تتنسي.</p>
+</div></header>
+<section class="section"><div class="container">
+  <div class="ht-stats" aria-live="polite">
+    <div class="ht-stat"><strong id="ht-surahs">0</strong>سورة محفوظة من 114</div>
+    <div class="ht-stat"><strong id="ht-ayat">0</strong>آية محفوظة من 6236</div>
+    <div class="ht-stat"><strong id="ht-pct">0%</strong>من القرآن الكريم</div>
+    <div class="ht-stat"><strong id="ht-due">0</strong>سورة محتاجة مراجعة</div>
+  </div>
+  <div class="ht-bar" role="progressbar" aria-label="نسبة الحفظ" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="ht-barfill"></span></div>
+  <div class="ht-tools">
+    <label class="sr-only" for="ht-find">ابحث عن سورة</label>
+    <input id="ht-find" type="search" placeholder="🔎 ابحث باسم السورة أو رقمها">
+    <label class="sr-only" for="ht-filter">عرض</label>
+    <select id="ht-filter"><option value="all">كل السور</option><option value="done">المحفوظة</option><option value="due">محتاجة مراجعة</option><option value="todo">لسه محفظتهاش</option><option value="amma">جزء عمّ (78–114)</option></select>
+  </div>
+  <ul class="ht-list" id="ht-list">
+    {% for s in surahs %}<li data-n="{{ s.id }}" data-c="{{ s.count }}" data-k="{{ s.id }} {{ s.name }}">
+      <label><input type="checkbox" aria-label="حفظت سورة {{ s.name }}"><span><span class="ht-name">سورة {{ s.name }}</span> <span class="ht-meta">({{ s.id }})</span><br><span class="ht-meta">{{ s.count }} آية · <span class="ht-last">لسه مش محفوظة</span></span></span></label>
+      <button type="button" class="ht-rev" hidden>راجعتها النهارده ✓</button>
+      <a href="{% url 'quran_surah' s.id %}">اقرأ واسمع</a>
+    </li>{% endfor %}
+  </ul>
+  <p class="ht-meta" style="margin-top:14px;">تقدمك محفوظ على جهازك ده بس (من غير تسجيل)، ولو مسحت بيانات المتصفح هيتمسح.</p>
+
+  <div class="article" style="margin-top:40px;">
+    <h2>إزاي تستخدم متابعة الحفظ؟</h2>
+    <ol>
+      <li><strong>علّم السورة لما تحفظها كاملة</strong>، وهتتسجل النهارده كأول مراجعة ليها.</li>
+      <li><strong>كل ما تراجع سورة دوس «راجعتها النهارده»</strong>، عشان الأداة تعرف آخر مرة راجعتها.</li>
+      <li><strong>السور اللي عدّى على مراجعتها أكتر من 7 أيام بتتلوّن</strong>، واختار «محتاجة مراجعة» عشان تشوفها لوحدها وتبدأ بيها.</li>
+      <li><strong>اختبر نفسك</strong> من صفحة السورة نفسها: فيها اختبار «إيه الآية اللي بعدها؟» من نص المصحف.</li>
+    </ol>
+    <h2>نصايح عشان حفظك ميتنسيش</h2>
+    <ul>
+      <li><strong>قسّم مراجعتك</strong>: المحفوظ الجديد كل يوم، والقديم على دورة أسبوعية.</li>
+      <li><strong>راجع في الصلاة</strong>: اقرأ من محفوظك في السنن والقيام، دي أقوى مراجعة.</li>
+      <li><strong>اسمع لقارئ متقن</strong> قبل الحفظ وبعده، عشان تثبت النطق الصحيح.</li>
+      <li><strong>سمّع لحد</strong>: التسميع على معلم بيكشف الأخطاء اللي متحسش بيها لوحدك.</li>
+    </ul>
+    <p>ولو عايز خطة مفصلة، اقرأ <a href="/blog/how-to-memorize-quran-plan/">كيف تحفظ القرآن وتثبّته: خطة خطوة بخطوة</a> و<a href="/blog/quran-revision-system/">كيف تراجع حفظك ولا تنساه</a>.</p>
+    <h2>أسئلة شائعة</h2>
+    <h3>فين بيتحفظ تقدمي في الحفظ؟</h3>
+    <p>على جهازك أنت في المتصفح، من غير تسجيل دخول. لو مسحت بيانات المتصفح أو فتحت الصفحة من جهاز تاني، مش هتلاقي تقدمك.</p>
+    <h3>كل قد إيه أراجع السورة اللي حفظتها؟</h3>
+    <p>الأفضل تراجع المحفوظ الجديد يوميًا في أول أسبوع، وبعدها تخلي كل سورة تيجي عليها المراجعة مرة على الأقل كل أسبوع. الأداة بتنبهك للسور اللي عدّى على مراجعتها أكتر من 7 أيام.</p>
+    <h3>إزاي بتتحسب نسبة الحفظ؟</h3>
+    <p>بعدد الآيات اللي في السور اللي علّمتها محفوظة، مقسومة على 6236 آية، وهو عدد آيات المصحف في رواية حفص.</p>
+  </div>
+  <div class="inline-cta" style="margin-top:28px;"><p><strong>عايز حد يتابع حفظك ويسمّعلك؟</strong> أول حلقة تحفيظ أونلاين مع معلمة متقنة مجانية.</p><a class="btn btn-primary" data-cta="tracker" href="{% url 'contact' %}">احجز حلقة تجريبية مجانية</a></div>
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function(){
+  var KEY='hifz-tracker-v1', data={};
+  try{ data=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ data={}; }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){} }
+  function today(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+  function days(iso){ return Math.floor((new Date(today())-new Date(iso))/864e5); }
+  var items=[].slice.call(document.querySelectorAll('#ht-list li'));
+  function render(){
+    var ns=0, na=0, due=0;
+    items.forEach(function(li){
+      var n=li.dataset.n, d=data[n], cb=li.querySelector('input'), last=li.querySelector('.ht-last'), rev=li.querySelector('.ht-rev');
+      cb.checked=!!d; rev.hidden=!d; li.classList.toggle('done', !!d); li.classList.remove('due');
+      if(d){
+        ns++; na+=+li.dataset.c; var k=days(d.r);
+        last.textContent = k<=0 ? 'محفوظة · اتراجعت النهارده' : k===1 ? 'محفوظة · آخر مراجعة امبارح' : 'محفوظة · آخر مراجعة من '+k+' يوم';
+        if(k>7){ due++; li.classList.add('due'); }
+      } else last.textContent='لسه مش محفوظة';
+    });
+    var pct=Math.round(na/6236*1000)/10;
+    document.getElementById('ht-surahs').textContent=ns;
+    document.getElementById('ht-ayat').textContent=na;
+    document.getElementById('ht-pct').textContent=pct+'%';
+    document.getElementById('ht-due').textContent=due;
+    document.getElementById('ht-barfill').style.width=pct+'%';
+    document.querySelector('.ht-bar').setAttribute('aria-valuenow', pct);
+    filter();
+  }
+  var find=document.getElementById('ht-find'), sel=document.getElementById('ht-filter');
+  function filter(){
+    var q=find.value.trim(), f=sel.value;
+    items.forEach(function(li){
+      var n=+li.dataset.n, ok=!q || li.dataset.k.indexOf(q)!==-1;
+      if(f==='done') ok=ok && li.classList.contains('done');
+      else if(f==='due') ok=ok && li.classList.contains('due');
+      else if(f==='todo') ok=ok && !li.classList.contains('done');
+      else if(f==='amma') ok=ok && n>=78;
+      li.hidden=!ok;
+    });
+  }
+  items.forEach(function(li){
+    li.querySelector('input').addEventListener('change', function(e){
+      if(e.target.checked){ data[li.dataset.n]={r:today()}; if(window.gtag) gtag('event','hifz_mark',{surah:+li.dataset.n}); }
+      else delete data[li.dataset.n];
+      save(); render();
+    });
+    li.querySelector('.ht-rev').addEventListener('click', function(){ data[li.dataset.n]={r:today()}; save(); render(); });
+  });
+  find.addEventListener('input', filter); sel.addEventListener('change', filter);
+  render();
+})();
+</script>
+{% endblock %}

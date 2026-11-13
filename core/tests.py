@@ -1400,3 +1400,33 @@ class SitemapResilienceTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertNotIn('bad slug', r.content.decode())
         self.assertGreater(r.content.decode().count('<url>'), 300)
+
+
+class EngagementToolsTests(TestCase):
+    """مشغل التلاوة واختبار الحفظ ودعوة الحجز في المقالات + صفحة متابعة الحفظ"""
+
+    def test_full_tafsir_has_player_quiz_and_mid_cta(self):
+        for url in ('/blog/tafsir-surat-al-kahf-kamila/', '/blog/surah-al-kahf-full-tafsir-english/'):
+            r = self.client.get(url)
+            self.assertEqual(r.status_code, 200, url)
+            self.assertContains(r, 'class="surah-listen" data-surah="18" data-count="110"')
+            self.assertContains(r, 'class="hifz-quiz"')
+            self.assertContains(r, 'mid-cta')
+            self.assertContains(r, '/quran/18/')
+        r = self.client.get('/blog/surah-al-kahf-full-tafsir-english/')
+        self.assertContains(r, 'Copy link')
+        self.assertContains(r, 'Listen to the surah while you read')
+
+    def test_short_surah_has_no_quiz(self):
+        r = self.client.get('/blog/tafsir-surat-al-kawthar-kamila/', follow=True)
+        self.assertEqual(r.status_code, 200)
+        self.assertNotContains(r, 'class="hifz-quiz"')
+
+    def test_tracker_page_and_sitemap(self):
+        r = self.client.get('/quran/hifz-tracker/')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'id="ht-list"')
+        self.assertContains(r, 'سورة الناس')
+        self.assertNotIn('noindex', r.get('X-Robots-Tag', ''))
+        self.assertContains(self.client.get('/sitemap.xml'), '/quran/hifz-tracker/')
+        self.assertContains(self.client.get('/quran/18/'), 'class="hifz-quiz"')

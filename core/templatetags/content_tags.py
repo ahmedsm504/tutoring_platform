@@ -344,3 +344,35 @@ def faq_jsonld(text):
         {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in items]}
     js = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
     return mark_safe(f'<script type="application/ld+json">{js}</script>')
+
+
+@register.filter
+def ayah_count(n):
+    """عدد آيات السورة رقم n (للمشغل الصوتي في المقالات)"""
+    try:
+        from learning.quran import ayah_count as _c
+        return _c(int(n))
+    except Exception:
+        return 0
+
+
+@register.filter
+def mid_cta(html, cta_html):
+    """يحط دعوة الحجز في نص المقال تقريبًا (قبل أقرب عنوان h2 للنص) - لو المقال طويل كفاية."""
+    html = str(html)
+    starts = [m.start() for m in re.finditer(r'<h2[\s>]', html)]
+    if len(html) < 6000 or len(starts) < 4:
+        return mark_safe(html)
+    mid = len(html) // 2
+    k = min(starts[1:-1], key=lambda i: abs(i - mid))
+    return mark_safe(html[:k] + str(cta_html) + html[k:])
+
+
+@register.filter
+def quran_json(n):
+    """رابط ملف نص السورة (static/quran/N.json) بعد التجزئة - للاختبار التفاعلي"""
+    from django.contrib.staticfiles.storage import staticfiles_storage
+    try:
+        return staticfiles_storage.url(f'quran/{int(n)}.json')
+    except Exception:
+        return ''

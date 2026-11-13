@@ -1,0 +1,15 @@
+{% load content_tags %}{# n=رقم السورة name=اسمها en=إنجليزي؟ #}{% with cnt=n|ayah_count %}{% if cnt >= 5 %}
+<section class="hifz-quiz" data-src="{{ n|quran_json }}" data-en="{% if en %}1{% endif %}" aria-labelledby="hq-title-{{ n }}">
+  <h2 id="hq-title-{{ n }}">{% if en %}Test your memorisation: what comes next?{% else %}اختبر حفظك: إيه الآية اللي بعدها؟{% endif %}</h2>
+  <p class="hq-intro">{% if en %}We show you a verse from this surah; choose the verse that follows it. Ten questions, straight from the Mushaf text.{% else %}هنعرض عليك آية من سورة {{ name }}، واختار الآية اللي بعدها. عشر أسئلة من نص المصحف.{% endif %}</p>
+  <button type="button" class="btn btn-primary hq-start">{% if en %}Start the quiz{% else %}ابدأ الاختبار{% endif %}</button>
+  <div class="hq-body" hidden>
+    <p class="hq-progress"></p>
+    <p class="hq-verse" lang="ar" dir="rtl"></p>
+    <p class="hq-ask">{% if en %}Which verse comes next?{% else %}الآية اللي بعدها:{% endif %}</p>
+    <div class="hq-options" role="group"></div>
+    <p class="hq-feedback" aria-live="polite"></p>
+    <button type="button" class="btn hq-next" hidden>{% if en %}Next question{% else %}السؤال التالي{% endif %}</button>
+  </div>
+</section>
+{% endif %}{% endwith %}

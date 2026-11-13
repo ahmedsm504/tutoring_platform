@@ -22,5 +22,6 @@ urlpatterns = [
     path('learning/admin/<int:pk>/', views.admin_detail, name='learning_admin_detail'),
     # عام (سيو)
     path('quran/', views.quran_index, name='quran_index'),
+    path('quran/hifz-tracker/', views.quran_tracker, name='quran_tracker'),
     path('quran/<int:n>/', views.quran_surah, name='quran_surah'),
 ]
