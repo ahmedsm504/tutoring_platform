@@ -1,0 +1,155 @@
+title: Madinah Mushaf vs IndoPak Mushaf: Differences in Script, Symbols and Layout, and Which to Choose
+category: english
+excerpt: Why does the Quran look different in a Madinah Mushaf and an IndoPak (South Asian) Mushaf? The same words and the same narration, but different script styles, vowel and sukun marks, symbols for silent letters, pause signs, divisions and page layouts. A clear comparison, with advice on which to choose for reading, memorising and teaching children.
+meta: Madinah vs IndoPak Mushaf: the differences in script, vowel and sukun marks, silent letters, pause signs, divisions and layout, and which to choose for hifz.
+keywords: madinah mushaf vs indopak, indopak quran vs uthmani, difference between arabic and indopak quran, 15 line quran, 13 line quran, indopak script, uthmani script quran, which mushaf for hifz
+reading: 16
+---
+If you grew up in South Asia, South Africa or the UK, you may have learned to read the Quran from a Mushaf with bold, thick letters and many vowel marks: the **IndoPak** (or South Asian) Mushaf. Then you open a Mushaf printed in Madinah, or a popular Quran app, and the page looks unfamiliar: thinner letters, some marks missing, unfamiliar small circles, a different page layout. Many learners wonder: Is this a different Quran? Is one more correct? Which one should I memorise from?
+
+The answer is reassuring. **Both contain the same Quran, word for word, in the same narration (usually Hafs from 'Asim).** What differs is the **style of handwriting**, the **system of marks** that helps readers pronounce the text, and the **layout and divisions** on the page. This guide explains those differences clearly, so you can read either with confidence and choose wisely.
+
+## What Stays the Same
+Before the differences, it is important to be clear about what does not change:
+- **The words of the Quran**: every verse, every word, in the same order.
+- **The narration**: most IndoPak and Madinah Mushafs follow the narration of **Hafs from 'Asim**, the most widely recited narration today.
+- **The verse count**: both generally follow the Kufan count of **6,236 verses** for Hafs.
+- **The basis in the Uthmani rasm**: both aim to follow the way the Companions wrote the Quran in the Mushafs of 'Uthman, though editions differ slightly in how they apply it to some words.
+
+Allah has guaranteed the preservation of His Book:
+
+﴿إِنَّا نَحۡنُ نَزَّلۡنَا ٱلذِّكۡرَ وَإِنَّا لَهُۥ لَحَٰفِظُونَ﴾ (Quran 15:9)
+
+Differences in calligraphy and marking are like different fonts and teaching aids. They help readers; they do not change what is read.
+
+## A Little History
+### The Madinah Mushaf
+The Mushaf most people call the "Madinah Mushaf" is printed by the **King Fahd Complex for the Printing of the Holy Quran** in Madinah, established in the 1980s. Its text was written by the Syrian calligrapher **'Uthman Taha**, in a clear Naskh style. Its system of marks follows the standard established in the well-known Egyptian edition of the 1920s, which itself followed the classical works on the Quranic script and its marking. Millions of copies have been distributed worldwide, and most Quran apps use its layout.
+
+### The IndoPak Mushaf
+The IndoPak Mushaf developed in the Indian subcontinent, where generations of Muslims learned the Quran from printed and handwritten copies in a distinctive South Asian style. Publishers in India, Pakistan and South Africa have printed many editions, with layouts of 13, 15 and 16 lines per page. It remains the most familiar Mushaf for many Muslims in South Asia and the South Asian diaspora.
+
+## Difference 1: The Style of Writing
+- **Madinah**: a refined Naskh script with relatively thin strokes and elegant proportions, typical of Arab calligraphy.
+- **IndoPak**: a heavier, bolder South Asian script, with thicker strokes and letter shapes that resemble the script used for Urdu. Many readers find it very easy to read, especially in large print.
+
+Someone used to one style may need a few days to get used to the other, but the letters are the same.
+
+## Difference 2: Vowel Marks and Sukun
+### Marking every letter
+**IndoPak** editions tend to mark nearly every letter explicitly: vowels on voweled letters and a sukun (often shaped like a small crescent or a "head of jim") on silent consonants.
+
+**Madinah** editions use a more selective system based on the classical rules of marking. For example:
+- A consonant that is **pronounced with sukun** has a small sukun sign (shaped like the head of the letter Kha without its dot).
+- A consonant that is **not pronounced clearly** because it merges into the next letter (idgham) or is hidden (ikhfa') is **left without a sukun**, and the following letter may carry a shaddah. The absence of the sukun is a signal to the reader.
+
+### The "standing fatha"
+Both styles use small marks to indicate a long vowel that is not written as a full letter. In the IndoPak style you will often see a **vertical (standing) fatha** where Madinah shows a **small dagger alif**. They tell the reader the same thing: lengthen the vowel.
+
+## Difference 3: Silent Letters
+Some letters are written in the Uthmani rasm but not pronounced. The two styles mark them differently:
+- **Madinah** uses a **small round circle** (like a zero) above a letter that is **never pronounced**, whether you continue or stop. For example, the extra alif in some words.
+- **Madinah** uses a **small oval (elongated zero)** above an alif that is **pronounced when you stop on it but not when you continue**, as in the word *ana* (أنا), whose final alif is dropped when joining but pronounced when stopping.
+- **IndoPak** usually indicates a silent letter simply by **leaving it without any vowel or sukun**, relying on the reader's training.
+
+## Difference 4: Tanween Before Idgham and Ikhfa'
+This is one of the most useful features of the Madinah marking system:
+- When tanween is **pronounced clearly** (izhar), its two marks are written **stacked directly** on top of each other.
+- When tanween is **merged or hidden** (idgham or ikhfa'), its two marks are written **staggered**, one slightly after the other.
+- When tanween is followed by Ba (**iqlab**), a **small mim** is written instead of the second mark.
+
+IndoPak editions also mark iqlab with a small mim in many editions, but generally do not use the stacked-versus-staggered distinction in the same way, so the reader relies more on knowing the rules.
+
+## Difference 5: Pause Signs (Waqf Marks)
+Both use small letters above the text to guide stopping and continuing, but the sets differ:
+
+| Meaning | Madinah | Common IndoPak signs |
+|---|---|---|
+| Necessary stop | م | م |
+| Do not stop | لا | لا |
+| Stopping and continuing both permitted | ج | ج |
+| Continuing is better | صلى | صل, ز |
+| Stopping is better | قلى | ط, قف |
+| Stop at one of two places, not both | ∴ ∴ | ∴ ∴ |
+| Brief pause without breath (saktah) | س | س, سكتة, وقفة |
+
+IndoPak editions often contain **more pause signs**, including some (such as ط, ز and ص) that reflect classical South Asian teaching traditions. Madinah editions use a smaller, standardised set. If you switch between them, take a few minutes to learn the key at the back of the Mushaf.
+
+## Difference 6: Divisions in the Margin
+- **Madinah**: divides the Quran into **30 juz'**, each juz' into **two hizb**, and each hizb into **quarters**, marked with a decorative sign (۞) in the text and labels in the margin.
+- **IndoPak**: also uses the 30 juz', but is well known for the **ruku'** divisions, marked in the margin with the letter **'Ayn (ع)** and numbers. A ruku' is a passage of related verses, traditionally used to decide how much to recite in each unit of prayer, especially in Taraweeh. Many IndoPak editions also mark the **seven manzils**, a division for completing the Quran in a week.
+
+## Difference 7: Page Layout
+- **Madinah**: **15 lines per page** and **604 pages**, with every page ending at the end of a verse. Each juz' begins at the top of a new page, and most juz' are exactly **20 pages**. This consistency is a great help for memorisers.
+- **IndoPak**: comes in several layouts, including **13-line**, **15-line** and **16-line** editions. The 13-line edition is especially popular in South Africa and the UK. Different IndoPak editions have different page breaks, so page numbers do not match between them.
+
+## Is One More Correct?
+**No.** Both are valid ways of writing and marking the same Quran in the same narration. Scholars and Quran institutions in many countries approve both. The differences are in calligraphy and teaching symbols, which developed in different regions to help readers.
+
+What matters is that the edition you use is printed by a **trusted publisher** and checked by qualified reviewers, and that you understand its system of marks.
+
+## Which Should You Choose?
+### For daily reading
+Choose the one you **read most comfortably**. If you learned with IndoPak and read fluently, there is no need to switch. If you are a new learner, the Madinah style is the most widely used internationally and in apps.
+
+### For memorisation (hifz)
+**Choose one Mushaf and never switch layouts** during your memorisation. Memorisers rely heavily on visual memory: where a verse sits on the page, which line, which side. If you memorise with a 13-line IndoPak and later revise from a 15-line Madinah, the pages will look unfamiliar and you may lose fluency.
+- Many international hifz programmes use the **15-line Madinah Mushaf** because of its consistent pages and its alignment with most apps.
+- Many South Asian and South African institutions use the **13-line or 15-line IndoPak** traditionally.
+- Follow your teacher's choice, and make sure your app shows the **same layout** as your printed copy.
+
+### For teaching children
+Children who learn the Noorani Qaida or similar courses in the Madinah style move most easily to a Madinah Mushaf. Children who learn the South Asian Qaida style move most easily to an IndoPak Mushaf. Consistency between the primer and the Mushaf matters more than which style you choose.
+
+## Switching from One to the Other
+If you need to switch, for example moving abroad or joining a new class:
+1. **Learn the key**: read the explanation of symbols at the back of your new Mushaf.
+2. **Practise with short surahs** you already know by heart, so you can focus on the script, not the words.
+3. **Pay attention to silent letters and tanween marks**, which differ most.
+4. **Read slowly for the first two weeks**; fluency returns quickly.
+5. **Do not switch your memorisation Mushaf** unless absolutely necessary; if you must, revise juz' by juz' with patience.
+
+## Other Mushafs You May See
+You may also see Mushafs in the **Warsh** narration, common in North and West Africa, or **Qalun** in parts of Libya and Tunisia. These are not just different scripts: they reflect **different authentic narrations**, with real differences in some words and pronunciations. If you recite Hafs, use a Hafs Mushaf.
+
+## Reading Apps and Digital Mushafs
+Most Quran apps let you choose a script style. Some offer both the Madinah (often called "Uthmani") layout and an IndoPak layout, sometimes in several line formats. A few tips:
+- **Match your printed copy**: if you memorise from a 15-line Madinah Mushaf, set your app to the same layout so the pages are identical.
+- **Check the font**: some apps display the text in a generic font rather than the original calligraphy, and certain small marks, such as the round and oval circles, may be missing or misplaced. Prefer apps that reproduce the original pages as images or with a dedicated Quranic font.
+- **Do not judge a script by an app**: if a mark looks strange, compare it with a printed Mushaf from a trusted publisher.
+
+## A Quick Comparison Checklist
+- **Same Quran, same narration**: yes.
+- **Script style**: thinner Naskh (Madinah) versus bolder South Asian style (IndoPak).
+- **Silent letters**: marked with circles (Madinah) versus left unmarked (IndoPak).
+- **Idgham and ikhfa'**: shown by the absence of sukun and staggered tanween (Madinah) versus learned from the rules (IndoPak).
+- **Divisions**: hizb and quarters (Madinah) versus ruku' and manzils (IndoPak), with 30 juz' in both.
+- **Layout**: fixed 604 pages of 15 lines (Madinah) versus several layouts (IndoPak).
+
+## Frequently Asked Questions
+### Is the IndoPak Quran different from the Madinah Quran?
+The words and narration are the same; the differences are in script style, marks, divisions and layout.
+
+### Why does the Madinah Mushaf have small circles above some letters?
+A round circle marks a letter that is never pronounced; an oval marks an alif pronounced only when stopping.
+
+### Which Mushaf is better for hifz?
+Either, as long as you stay with one layout; many international programmes use the 15-line Madinah Mushaf.
+
+### Why does IndoPak have ruku' markings?
+They divide the Quran into passages of related verses, traditionally used to plan recitation in prayer.
+
+### Can I read from both?
+Yes, after learning the symbols, but keep one for memorisation.
+
+### How many pages does the Madinah Mushaf have?
+604 pages of 15 lines, with each page ending at the end of a verse.
+
+### Do Quran apps use the Madinah or IndoPak layout?
+Many default to the Madinah layout, and some offer IndoPak as an option; choose the one that matches your printed Mushaf.
+
+### Are the pause signs the same in both?
+Many are shared, such as م and لا, but IndoPak editions often include additional signs; check the key at the back.
+
+## Conclusion
+The Madinah Mushaf and the IndoPak Mushaf carry the same Quran in the same narration. They differ in calligraphy, in how they mark vowels, silent letters and tanween, in their pause signs, and in their divisions and page layouts. Neither is more correct. Read the one you read best, learn the key if you switch, and above all keep one fixed layout for memorisation. Whatever its style, every Mushaf printed with care carries the same preserved words of Allah.
