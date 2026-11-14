@@ -1,0 +1,200 @@
+title: Letters Written but Not Pronounced in the Quran: Silent Alif, Waw and Ya and the Small Circle Signs
+category: english
+excerpt: Why is "mi'ah" written with an alif that is not read, "ula'ika" with a waw that is silent, and "la-adhbahannahu" with an extra alif? A guide to the letters written but not pronounced in the Mushaf, the round and oval zero signs, alifs dropped when joining but read when stopping (ana, lakinna, adh-dhununa, qawarira), with examples and common mistakes.
+meta: Silent letters in the Quran: the alif in mi'ah, the waw in ula'ika, the round and oval zero signs, and alifs read only when stopping, like ana and qawarira.
+keywords: silent letters in quran, letters not pronounced in quran, small circle above letter quran, oval zero quran mushaf, ana pronunciation quran, ulaika pronunciation, mi'ah alif, quran spelling for beginners
+reading: 15
+translation_of: letters-written-not-pronounced
+---
+One of the first things a learner notices when moving from a beginner's primer to the Mushaf is that **some letters are written but the teacher does not read them**. The Mushaf shows مائة, and the teacher reads *mi'ah* without an alif. It shows أولئك, and he reads *ula'ika* without a waw. It shows قالوا with an alif at the end that is not pronounced. And there are small signs, like little circles above certain letters, whose meaning the learner does not know. Without knowing these places, a learner can make serious mistakes: pronouncing what should be silent, or dropping what should be pronounced.
+
+This guide gathers the most important letters written but not pronounced in the Mushaf in the narration of Hafs from 'Asim, explains the signs scholars placed to indicate them, and distinguishes between letters that are never pronounced and letters pronounced only when stopping.
+
+## Why Are There Silent Letters?
+The Mushaf was written in the time of 'Uthman ibn 'Affan in what is called **the Uthmani script**, which differs in some places from modern spelling, including **additions**: letters written but not pronounced. Scholars suggested reasons, such as distinguishing between words that look alike before dots and vowel marks were added, and accommodating certain readings. But the basic principle is that **we follow the script as the Companions wrote it**, and pronounce as we received it from the reciters through connected chains back to the Prophet ﷺ.
+
+The golden rule: **pronunciation is taken by oral transmission; spelling is taken by following the script**. Pronunciation is never deduced from spelling alone.
+
+## The Signs That Help You
+Scholars of marking (*dabt*) placed signs in the Madinah Mushaf and similar editions:
+
+### 1. The round zero
+A small empty circle placed above a vowel letter means that the letter is **extra and never pronounced, whether you continue or stop**. Examples:
+- The alif in *mi'ah* and *mi'atayn*.
+- The waw in *ula'ika*, *ulu* and *ulat*.
+- The alif after the plural waw in *qalu*, *amanu* and *kafaru*.
+- The alif in *la-adhbahannahu* and *la-ilallah*.
+- The second ya in *bi-aydin*.
+
+### 2. The oval (upright elongated) zero
+A small oval placed above an alif means the alif is **dropped when continuing and pronounced when stopping**. Examples:
+- The alif in *ana* (I) wherever it occurs.
+- The alif in *lakinna* in Surah Al-Kahf.
+- The alif in *adh-dhununa*, *ar-rasula* and *as-sabila* in Surah Al-Ahzab.
+- The alif in the first *qawarira* in Surah Al-Insan.
+
+### 3. No mark at all
+When a letter has no vowel and no sukun and no zero sign, in some places this indicates merging or hiding, as with a noon sakinah before the letters of idgham. That is a different topic from silent additions.
+
+## Letters Never Pronounced
+### The alif in mi'ah
+مائة is written with an alif after the meem but pronounced *mi'ah*.
+
+﴿أَوۡ كَٱلَّذِي مَرَّ عَلَىٰ قَرۡيَةٖ وَهِيَ خَاوِيَةٌ عَلَىٰ عُرُوشِهَا قَالَ أَنَّىٰ يُحۡيِۦ هَٰذِهِ ٱللَّهُ بَعۡدَ مَوۡتِهَاۖ فَأَمَاتَهُ ٱللَّهُ مِاْئَةَ عَامٖ ثُمَّ بَعَثَهُۥۖ قَالَ كَمۡ لَبِثۡتَۖ قَالَ لَبِثۡتُ يَوۡمًا أَوۡ بَعۡضَ يَوۡمٖۖ قَالَ بَل لَّبِثۡتَ مِاْئَةَ عَامٖ فَٱنظُرۡ إِلَىٰ طَعَامِكَ وَشَرَابِكَ لَمۡ يَتَسَنَّهۡۖ وَٱنظُرۡ إِلَىٰ حِمَارِكَ وَلِنَجۡعَلَكَ ءَايَةٗ لِّلنَّاسِۖ وَٱنظُرۡ إِلَى ٱلۡعِظَامِ كَيۡفَ نُنشِزُهَا ثُمَّ نَكۡسُوهَا لَحۡمٗاۚ فَلَمَّا تَبَيَّنَ لَهُۥ قَالَ أَعۡلَمُ أَنَّ ٱللَّهَ عَلَىٰ كُلِّ شَيۡءٖ قَدِيرࣱ﴾ (Quran 2:259)
+
+Likewise مائتين is pronounced *mi'atayn*. Scholars mentioned that the alif was added to distinguish it visually from منه before dots and vowels were used.
+
+### The alif after the plural waw
+Every verb ending with the plural waw is followed by a written alif that is not pronounced: قالوا, آمنوا, فاستبقوا الخيرات. This is called the **separating alif**, because it distinguishes the plural waw from a waw that is part of the root.
+
+### La-adhbahannahu
+In the story of Sulayman and the hoopoe:
+
+﴿لَأُعَذِّبَنَّهُۥ عَذَابٗا شَدِيدًا أَوۡ لَأَاْذۡبَحَنَّهُۥٓ أَوۡ لَيَأۡتِيَنِّي بِسُلۡطَٰنٖ مُّبِينٖ﴾ (Quran 27:21)
+
+It is written with an extra alif after lam-alif, but pronounced *la-adhbahannahu* (I will surely slaughter him). Pronouncing the alif would turn it into *la adhbahannahu* (I will not slaughter him), reversing the meaning: a clear error.
+
+### La-ilallah
+In Al 'Imran: "Wa la'in muttum aw qutiltum la-ilallahi tuhsharun", written with an extra alif after the lam, pronounced *la-ilallah*.
+
+### Afa'in
+In "Afa'in mata aw qutila" (Al 'Imran) and "Afa'in mitta fahumul-khalidun" (Al-Anbiya'), written with a ya after the hamzah, pronounced *afa'in*.
+
+### Thamuda
+Written with an alif in Hud, Al-Furqan, Al-'Ankabut and An-Najm. Hafs reads it **without tanwin**, *Thamuda*, when continuing, so the alif is not pronounced in continuation or when stopping; he stops on *Thamud* with sukun.
+
+### Alif after a root waw in some verbs
+For example "lan nad'uwa min dunihi ilaha" (Al-Kahf), "li tatluwa 'alayhim" (Ar-Ra'd), "li yarbuwa fi amwalin-nas" (Ar-Rum), and "wa nabluwa akhbarakum" and "li yabluwa ba'dakum bi ba'd" (Muhammad). The alif is not pronounced.
+
+## The Silent Waw
+### Ula'ika, ulu, ulat, uli
+These are written with a waw after the hamzah but pronounced with a short u only: *ula'ika*, *ulul-albab*, *ulatul-ahmal*, *ulil-absar*.
+
+﴿أُوْلَـٰٓئِكَ عَلَىٰ هُدٗى مِّن رَّبِّهِمۡۖ وَأُوْلَـٰٓئِكَ هُمُ ٱلۡمُفۡلِحُونَ﴾ (Quran 2:5)
+
+﴿إِنَّ فِي خَلۡقِ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِ وَٱخۡتِلَٰفِ ٱلَّيۡلِ وَٱلنَّهَارِ لَأٓيَٰتٖ لِّأُوْلِي ٱلۡأَلۡبَٰبِ﴾ (Quran 3:190)
+
+Scholars said the waw was added to distinguish أولئك from إليك, and أولي from إلى, before vowel marks.
+
+### Sa-urikum
+In "sa-urikum dar al-fasiqin" (Al-A'raf) and "sa-urikum ayati fala tasta'jilun" (Al-Anbiya'), written with a waw after the hamzah, pronounced *sa-urikum*.
+
+## The Silent Ya
+### Bi-aydin
+﴿وَٱلسَّمَآءَ بَنَيۡنَٰهَا بِأَيۡيْدٖ وَإِنَّا لَمُوسِعُونَ﴾ (Quran 51:47)
+
+Written with two ya's, pronounced *bi-aydin* with one. The word means strength.
+
+### Naba'i
+In "wa laqad ja'aka min naba'il-mursalin" (Al-An'am), written with a ya after the hamzah, pronounced *naba'i* without a long ya.
+
+## Alifs Dropped When Joining, Pronounced When Stopping
+### Ana
+The pronoun *ana* (I) is written with a final alif. In Hafs, **the alif is dropped when continuing and pronounced when stopping**. So you say *ana-n-nadhirul-mubin* with a short a on the noon when continuing, and *ana* with two counts when stopping.
+
+﴿وَقُلۡ إِنِّيٓ أَنَا ٱلنَّذِيرُ ٱلۡمُبِينُ﴾ (Quran 15:89)
+
+A common mistake is to stretch the noon of *ana* in continuation.
+
+### Lakinna
+﴿لَّـٰكِنَّا۠ هُوَ ٱللَّهُ رَبِّي وَلَآ أُشۡرِكُ بِرَبِّيٓ أَحَدٗا﴾ (Quran 18:38)
+
+The alif is dropped when continuing: *lakinna huwallahu rabbi*, and pronounced if you stop on it: *lakinna*. Its origin is *lakin ana*.
+
+### Adh-dhununa, ar-rasula, as-sabila in Al-Ahzab
+Written with a final alif, dropped when continuing and pronounced when stopping in Hafs.
+
+﴿إِذۡ جَآءُوكُم مِّن فَوۡقِكُمۡ وَمِنۡ أَسۡفَلَ مِنكُمۡ وَإِذۡ زَاغَتِ ٱلۡأَبۡصَٰرُ وَبَلَغَتِ ٱلۡقُلُوبُ ٱلۡحَنَاجِرَ وَتَظُنُّونَ بِٱللَّهِ ٱلظُّنُونَا۠﴾ (Quran 33:10)
+
+Since these words come at verse endings, reciters usually stop on them and pronounce the alif with two counts.
+
+### Qawarira and salasila in Al-Insan
+- **The first qawarira** (verse 15): the alif is dropped when continuing and pronounced when stopping.
+- **The second qawarira** (verse 16): the alif is not pronounced at all in Hafs, so he stops on *qawarir* with sukun.
+- **Salasila** (verse 4): the alif is dropped when continuing; when stopping, Hafs has two options: pronouncing the alif or stopping with sukun.
+
+﴿وَيُطَافُ عَلَيۡهِم بِـَٔانِيَةٖ مِّن فِضَّةٖ وَأَكۡوَابٖ كَانَتۡ قَوَارِيرَا۠﴾ ﴿قَوَارِيرَاْ مِن فِضَّةٖ قَدَّرُوهَا تَقۡدِيرٗا﴾ (Quran 76:15-16)
+
+These are delicate places tested in ijazah examinations, and they are mastered only through oral learning.
+
+## The Pausal Ha
+Related to this is the **ha of pause** (*ha' as-sakt*), a silent ha at the end of some words that Hafs pronounces in continuation and stopping: *kitabiyah*, *hisabiyah*, *maliyah*, *sultaniyah* in Al-Haqqah, *ma hiyah* in Al-Qari'ah, *lam yatasannah* in Al-Baqarah and *fabihudahumuqtadih* in Al-An'am. In *maliyah halak* (Al-Haqqah), Hafs has two ways: clear pronunciation with a slight pause, or merging.
+
+## Common Mistakes
+1. **Pronouncing the alif in mi'ah**: saying "ma'ah" or "mayah"; the correct reading is *mi'ah*.
+2. **Pronouncing the waw in ula'ika**: saying "uwla'ika"; the correct reading is *ula'ika*.
+3. **Pronouncing the alif in la-adhbahannahu**, reversing the meaning.
+4. **Stretching ana in continuation**.
+5. **Pronouncing the alif of the second qawarira** when stopping.
+6. **Pronouncing two ya's in bi-aydin**.
+7. **Ignoring the signs** and reading without noticing the round and oval zeros.
+
+## How to Master This Topic
+- **Read to a skilled teacher**: these places are learned by oral transmission.
+- **Learn the marking signs** explained at the end of the Mushaf.
+- **Collect the places in a notebook** and revise them.
+- **Mark the words** you get wrong in your memorisation Mushaf.
+- **Listen to a skilled reciter**, such as the teaching recordings of al-Husary, and notice how he pronounces them.
+
+## Letters Omitted but Pronounced
+Just as the Mushaf has letters **added** but not pronounced, it has letters **omitted** in writing but pronounced:
+- **The omitted alif** in many words such as *ar-Rahman*, *al-'alamin*, *as-samawat* and *al-kitab*; the marking scholars placed a **small alif** (often called the dagger alif) in its place to show it is pronounced.
+- **The small waw and small ya** after a pronoun ha, as in *innahu kana* and *bihi basira*, indicating that the ha is lengthened.
+- **The omitted ya** in words such as *yawma ya'ti* in Hud and *ad-da'i* in Al-Qamar, which Hafs reads without the ya in most places.
+
+A skilled reciter knows both: what is added in writing is not pronounced, and what is omitted in writing is pronounced. The small signs in the Mushaf guide him in both cases.
+
+## Examples from Al-Fatihah and Short Surahs
+- **Ar-Rahmanir-Rahim**: an omitted alif after the meem in *ar-Rahman*, shown with a small alif, is pronounced.
+- **Al-'alamin**: an omitted alif after the 'ayn is pronounced.
+- **Maliki yawmid-din**: a small alif after the meem; Hafs reads *Maliki* with a long a.
+- **"Wa la ana 'abidun ma 'abadtum"** (Al-Kafirun): the alif of *ana* is dropped in continuation, and it carries the oval zero.
+- **"Alladhina amanu wa 'amilus-salihat"** (Al-'Asr): the alif after the plural waw in *amanu* and *'amilu* is not pronounced, and carries the round zero.
+
+﴿إِلَّا ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّـٰلِحَٰتِ وَتَوَاصَوۡاْ بِٱلۡحَقِّ وَتَوَاصَوۡاْ بِٱلصَّبۡرِ﴾ (Quran 103:3)
+
+## A One-Week Plan
+- **Day 1**: learn the meaning of the round and oval zeros from the end of your Mushaf.
+- **Day 2**: the separating alif after the plural waw, and the waw in *ula'ika* and *ulu*.
+- **Day 3**: *mi'ah*, *la-adhbahannahu*, *la-ilallah* and *afa'in*.
+- **Day 4**: *ana*, *lakinna*, *adh-dhununa* and similar.
+- **Day 5**: *qawarira*, *salasila* and *Thamuda*.
+- **Day 6**: the pausal ha in Al-Haqqah and Al-Qari'ah.
+- **Day 7**: read all these places to your teacher.
+
+## Teaching Children
+- **A simple rule**: "A little circle means: don't read me."
+- **The sleeping letter game**: a letter with a circle above it is "asleep" and does not speak.
+- **Start with the most frequent**: the alif after the plural waw and the waw of *ula'ika*.
+- **Correct gently**, without too much theory.
+
+## Frequently Asked Questions
+### What does the small circle above a letter mean?
+The round zero means the letter is extra and never pronounced, whether you continue or stop.
+
+### What does the oval sign above an alif mean?
+The oval zero means the alif is dropped when continuing and pronounced when stopping, as in *ana*.
+
+### How is مائة pronounced?
+*Mi'ah*, without an alif.
+
+### How is أولئك pronounced?
+*Ula'ika*, with a short u and no waw.
+
+### How does Hafs stop on the second qawarira?
+With sukun, without the alif.
+
+### Why were these letters added?
+To follow the Companions' script; scholars mentioned reasons such as distinguishing similar-looking words before dots and vowels.
+
+### What is the small alif above some words?
+It shows an alif omitted from the script but pronounced, as in *ar-Rahman*.
+
+### Is the alif after the waw in "amanu" pronounced?
+No. It is the separating alif after the plural waw and is silent.
+
+### How do I teach children about silent letters?
+Use a simple rule: a small circle means the letter is "asleep" and not read, starting with the most common examples.
+
+## Conclusion
+The Mushaf contains letters written but not pronounced: the alif in *mi'ah*, the waw in *ula'ika*, the separating alif after the plural waw, the alif in *la-adhbahannahu*, the extra ya in *bi-aydin*, and more. Scholars of marking placed a round zero for letters never pronounced, and an oval zero for alifs dropped when continuing and read when stopping, such as *ana* and *adh-dhununa*. These places are mastered by reading to a skilled teacher, knowing the Mushaf's signs and paying attention while memorising, so your recitation is free of mistakes that can change the meaning.

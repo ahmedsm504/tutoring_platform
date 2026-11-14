@@ -1,0 +1,184 @@
+title: Tahqiq, Tadwir and Hadr: The Three Speeds of Quran Recitation and How to Choose Yours
+category: english
+excerpt: What is the difference between tahqiq, tadwir and hadr in Quran recitation? Is tartil a fourth level? A clear guide to the three speeds, how long Hafs stretches the madd in each, whether it is better to recite a lot quickly or a little slowly, when to use each speed for learning, memorising and prayer, and the common mistakes of fast recitation.
+meta: Tahqiq, tadwir and hadr: the three speeds of Quran recitation, madd lengths for Hafs, tartil, quantity vs reflection, and mistakes of fast reading.
+keywords: tahqiq tadwir hadr, speeds of quran recitation, how fast should i read quran, hadr recitation, tartil meaning, madd length in hadr, reading quran fast, quran recitation pace
+reading: 15
+translation_of: recitation-speeds-tahqiq-tadwir-hadr
+---
+You hear one reciter in a mosque reading very slowly, stretching every madd and articulating every letter fully, and you feel the majesty of the Quran. Then you hear a hafiz revising a whole juz' in a quarter of an hour, very fast but without dropping a letter. Which is correct? Is it allowed to recite the Quran quickly? And what speed is right for you?
+
+Scholars call this topic **the levels of recitation** (*maratib at-tilawah*), and they divided it into three levels: **tahqiq**, **tadwir** and **hadr**. This guide explains each level, its ruling, the length of the madd in each, when to use it, which is better, and the mistakes that happen in fast recitation.
+
+## The Foundation: Tartil
+Allah says:
+
+﴿أَوۡ زِدۡ عَلَيۡهِ وَرَتِّلِ ٱلۡقُرۡءَانَ تَرۡتِيلًا﴾ (Quran 73:4)
+
+*Tartil* means measured, unhurried and well-ordered recitation. Al-Bukhari reported that Anas was asked about the Prophet's recitation and said: "It was drawn out." Then he recited "Bismillahir-Rahmanir-Rahim", drawing out *Bismillah*, *ar-Rahman* and *ar-Rahim*.
+
+Abu Dawud and at-Tirmidhi reported from Umm Salamah that the Prophet ﷺ would recite verse by verse, pausing at the end of each, and al-Albani graded it authentic.
+
+Scholars explained that **tartil is a quality that covers all three levels**: in every level the letters must come from their proper places with their proper qualities, and the rules must be observed. The difference between the levels is **speed only**, not abandoning the rules.
+
+## Level 1: Tahqiq
+**Definition**: recitation with **great calm and deliberateness**, giving every letter its full right, stretching the madd to its maximum permitted length, articulating the hamzahs fully, completing the vowels and giving the ghunnah its full measure.
+
+**When it is used**:
+- **In teaching**: the teacher recites with tahqiq so the student can learn, and the student recites with tahqiq to train articulation.
+- **In examination**: when presenting recitation to a teacher, sometimes for ijazah.
+- **For reflection**: for those who want to dwell on the verses.
+
+**Warning**: scholars said tahqiq must not become **over-stretching** and affectation: lengthening madd beyond its right, giving vowels to silent letters, exaggerating the ghunnah, or generating extra letters from vowels. That is blameworthy excess.
+
+## Level 2: Hadr
+**Definition**: recitation **at speed** while keeping the rules of tajweed: no letter is dropped, no natural madd is cut, no ghunnah is skipped, and no vowel is swallowed.
+
+**When it is used**:
+- **In revision**: a hafiz revises with hadr to cover many juz' in a short time.
+- **For those who want to recite a lot** and have mastered the rules.
+- **In long night prayers**, for those who recite many juz', while still reflecting.
+
+**Condition**: hadr is only for someone who has mastered the rules and is safe from errors. Hadr from a beginner leads to mistakes.
+
+## Level 3: Tadwir
+**Definition**: the **middle level** between tahqiq and hadr: neither very slow nor very fast.
+
+**When it is used**:
+- **Daily recitation** for most people.
+- **In prayer**: many imams recite with tadwir.
+- **Recorded recitations**: many murattal recordings are close to tadwir.
+
+Some scholars said tadwir is the level preferred by most masters of recitation.
+
+## Is Tartil a Fourth Level?
+Scholars expressed it differently:
+- **Some made four levels**: tahqiq, tartil, tadwir and hadr, with tartil close to tahqiq but slightly less slow, intended for reflection rather than teaching.
+- **Others made three levels** and treated tartil as a general description covering them all, since the commanded tartil is "perfecting the letters and knowing the stops", required at every level.
+
+The difference is mostly in terminology.
+
+## Madd Lengths for Hafs in Each Level
+Through the Shatibiyyah route, Hafs stretches the **connected madd** (*muttasil*) and **separated madd** (*munfasil*) **four or five counts**. The reciter chooses according to the level:
+- **Tahqiq**: usually the higher length, five counts.
+- **Tadwir**: usually four counts.
+- **Hadr**: the lowest permitted length through the Shatibiyyah, four counts.
+
+Through the Tayyibah route, Hafs may shorten the separated madd to two counts, a well-known option in hadr for those reciting by that route; but someone reciting by the Shatibiyyah does not shorten the separated madd.
+
+**Important rule**: **consistency**. If you stretch the separated madd four counts at the start of a session, stretch every separated madd four counts in that session.
+
+The **necessary madd** (*lazim*) is six counts at every level, and the **natural madd** is two counts at every level; they do not change with speed.
+
+## Quantity or Reflection?
+Scholars have long discussed this:
+- **View one**: slow, reflective recitation of a little is better than a lot quickly, because the aim of the Quran is understanding, reflection and action. This is reported from Ibn 'Abbas and Ibn Mas'ud. It is narrated that Ibn Mas'ud said: "Do not scatter it like poor dates, nor rush through it like poetry; stop at its wonders and move the hearts with it, and do not let your concern be reaching the end of the surah."
+- **View two**: reciting a lot is better, because every letter brings ten good deeds.
+- **View three**, considered the most precise by many: slow reflection is **higher in value**, while quantity is **greater in number**; the first is like giving a precious jewel in charity, the second like giving many coins. Ibn al-Qayyim and others expressed this meaning.
+
+The best practice is to **combine both**: a portion for slow reflection, and a portion of hadr for revision and quantity.
+
+## Hadhdh: The Blameworthy Rush
+**Hadhdh** is extreme speed that drops letters and rules, and the early generations criticised it. In al-Bukhari and Muslim, a man told Ibn Mas'ud: "I recite all the short surahs (al-mufassal) in one rak'ah." Ibn Mas'ud said: "Rushing like rushing through poetry? Some people recite the Quran and it does not go beyond their throats, but when it enters the heart and settles there, it benefits."
+
+The difference:
+- **Hadr**: speed with mastery of the rules.
+- **Hadhdh**: speed that drops letters, breaks rules and prevents reflection.
+
+## Common Mistakes in Fast Recitation
+1. **Cutting the natural madd**, so long vowels disappear.
+2. **Skipping ghunnah** on doubled noon and meem.
+3. **Swallowing vowels** until the word becomes silent.
+4. **Merging what should not be merged**, such as the lam in *qul na'am*, which must be pronounced clearly.
+5. **Dropping qalqalah**.
+6. **Inconsistent madd lengths** within one session.
+7. **Bad stops** due to running out of breath at speed.
+
+## Choosing Your Level
+| Your situation | Suitable level |
+|---|---|
+| Beginner learning articulation and rules | Tahqiq |
+| Intermediate reader doing a daily portion | Tadwir |
+| Skilled hafiz revising | Hadr |
+| Imam in prayer | Usually tadwir; hadr in long night prayers |
+| Someone seeking reflection | Slow tartil |
+| Student presenting for ijazah | As the teacher requests, usually tahqiq or tadwir |
+
+## How Long Does a Juz' Take?
+Roughly, and it varies by reciter:
+- **Hadr**: about twenty to thirty minutes for a skilled reciter.
+- **Tadwir**: about thirty to forty minutes.
+- **Tahqiq**: an hour or more.
+
+These are rough planning figures; mastery matters more than time.
+
+## Night Prayer: How Did the Prophet ﷺ Recite?
+The Prophet ﷺ combined long recitation with deep reflection. In Sahih Muslim, Hudhayfah prayed with him one night: he recited Al-Baqarah, then An-Nisa', then Al 'Imran in a single rak'ah, reciting slowly, glorifying Allah at verses of glorification, asking at verses of asking, and seeking refuge at verses of refuge. And an-Nasa'i and Ibn Majah reported from Abu Dharr that the Prophet ﷺ stood the whole night repeating a single verse until morning:
+
+﴿إِن تُعَذِّبۡهُمۡ فَإِنَّهُمۡ عِبَادُكَۖ وَإِن تَغۡفِرۡ لَهُمۡ فَإِنَّكَ أَنتَ ٱلۡعَزِيزُ ٱلۡحَكِيمُ﴾ (Quran 5:118)
+
+So both lengthy recitation and repeating one verse all night are part of the Sunnah. The pace is chosen according to the situation and purpose.
+
+## Speed and Memorisation
+Quran teachers note important points about speed and memorisation:
+- **New memorisation** should be done with tahqiq or tadwir, because the words need to be clear in the mind.
+- **Recent revision** with tadwir, to fix the new portion.
+- **Distant revision** with hadr, to cover a juz' or more daily.
+- **Hadr exposes weak spots**: where a hafiz stumbles at speed is where memorisation needs strengthening.
+
+## Moving from Tahqiq to Hadr
+Progress gradually:
+1. **Tahqiq stage**: read very slowly, checking every articulation, quality and rule.
+2. **Tadwir stage**: once the rules are stable, increase the pace a little while monitoring yourself.
+3. **Light hadr**: increase speed in surahs you know very well.
+4. **Full hadr**: after reading to your teacher at speed and having your rules approved.
+
+A sign you are ready: read a page quickly, record it and listen back; if no letter is dropped and no rule missed, you are ready.
+
+## The Imam and the Congregation
+In al-Bukhari and Muslim, the Prophet ﷺ said: "When one of you leads the people in prayer, let him make it light, for among them are the weak, the sick and the elderly; and when he prays alone, let him make it as long as he wishes." So an imam usually recites with tadwir, neither lengthening in a way that burdens people nor rushing in a way that breaks the rules.
+
+## Ramadan
+In Ramadan many people aim for multiple completions and tend to speed up. A good plan is one completion with accurate hadr for reward and revision, plus a short daily portion recited slowly with tafsir, even a single page. This way you gain both the virtue of quantity and the virtue of reflection, and leave Ramadan with deeper understanding, not just a higher count.
+
+## A One-Week Plan to Find Your Pace
+- **Day 1**: read one page with tahqiq and record it.
+- **Day 2**: read the same page with tadwir and record it.
+- **Day 3**: read it with hadr and record it; compare all three.
+- **Day 4**: note the mistakes that appeared only in hadr and practise them.
+- **Day 5**: repeat the hadr after correction.
+- **Day 6**: read a whole juz' at the pace that suits your revision.
+- **Day 7**: present your hadr to your teacher.
+
+Repeating this with different pages helps you discover the speed at which you can recite without breaking the rules: your ideal revision pace.
+
+## Frequently Asked Questions
+### What are the levels of recitation?
+Tahqiq, tadwir and hadr; some add tartil.
+
+### Is it allowed to recite the Quran quickly?
+Hadr with mastery of the rules is allowed; hadhdh, which drops letters, is blameworthy.
+
+### How long does Hafs stretch the separated madd in hadr?
+Four counts through the Shatibiyyah; two counts are allowed through the Tayyibah.
+
+### Is one juz' with reflection better than three quickly?
+Reflection is higher in value and quantity greater in number; it is best to combine both.
+
+### Which level suits a beginner?
+Tahqiq, until articulation and rules are mastered.
+
+### Does the necessary madd change in hadr?
+No. It is six counts at every level.
+
+### Did the Prophet ﷺ recite long portions at night?
+Yes. In Sahih Muslim he recited Al-Baqarah, An-Nisa' and Al 'Imran in one rak'ah, and he once repeated a single verse until morning.
+
+### How do I know I am ready for hadr?
+Record yourself reading fast; if nothing is dropped and no rule is missed, you are ready.
+
+### Should I keep the same madd length throughout a session?
+Yes. Choose a length for the connected and separated madd and keep it consistent in that session.
+
+## Conclusion
+There are three levels of recitation: tahqiq, very slow, for teaching and reflection; tadwir, moderate, for daily reading; and hadr, fast, for revision with full mastery of the rules. Tartil is a quality required in all of them. The natural and necessary madd never change, while the connected and separated madd range between four and five counts for Hafs through the Shatibiyyah, with consistency. Combine a portion for reflection with a portion for revision, and avoid the rush that drops letters: the Quran is recited to be understood and acted upon, not just to reach the end of the surah.
