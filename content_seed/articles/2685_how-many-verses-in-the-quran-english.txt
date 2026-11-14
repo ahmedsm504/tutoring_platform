@@ -1,0 +1,143 @@
+title: How Many Verses Are in the Quran? Why It Is 6,236, Not 6,666, and Why Counts Differ
+category: english
+excerpt: The Quran has 6,236 verses in the Kufan count followed by the Hafs Mushaf, and the popular figure of 6,666 has no basis. A clear explanation of the science of counting verses, the six classical counts, why verse numbers differ between Hafs and Warsh Mushafs, examples of where counts differ, and why none of this affects the preservation of the Quran.
+meta: How many verses are in the Quran? 6,236 in the Kufan count of the Hafs Mushaf; why 6,666 is wrong, the six classical counts, and Hafs vs Warsh numbering.
+keywords: how many verses in the quran, number of ayat in quran, 6236 verses, 6666 verses myth, how many ayahs in quran, quran verse count, kufan count, hafs warsh verse numbering
+reading: 15
+translation_of: number-of-quran-verses-6236
+---
+For years, many Muslims have repeated that the Quran contains **6,666 verses**. You will find it in some older books, on posters and in social media posts, and some speakers mention it in sermons. Then a curious reader opens a standard Madinah Mushaf, adds up the verses of each surah, and gets **6,236**. Which number is correct? And why does a Mushaf printed in North Africa number the last verse of Al-Baqarah as 285 when the Madinah Mushaf has 286? Is there a difference in the Quran itself?
+
+The answer lies in a precise science of the Quran called **'ilm 'add al-ay**, the science of counting verses. Understanding it reassures you that the Quran is one preserved text, and that the differences are in numbering, not in content.
+
+## The Correct Number: 6,236
+In the Madinah Mushaf in the narration of Hafs from 'Asim, and in most Mushafs printed in the Muslim East, **the number of verses is 6,236**. This is the **Kufan count**, attributed to Abu 'Abdir-Rahman as-Sulami from 'Ali ibn Abi Talib. You can check it yourself by adding the verse counts written at the top of each surah.
+
+## Where Does 6,666 Come From?
+The figure of 6,666 **has no basis** in the books of the scholars of verse counting. None of the masters of this science mention it among the accepted counts. It seems to have spread because it is easy to remember and has an appealing repetition, and was then copied from book to book without checking. All of the accepted counts are lower: the difference between 6,666 and the highest accepted count is over four hundred verses.
+
+So if you hear 6,666, know that it is a common mistake. The correct statement is: the Quran has 6,236 verses in the Kufan count, which our Mushafs follow.
+
+## What Is the Science of Counting Verses?
+It is the science through which we know **the number of verses in each surah and where each verse ends**, that is, where one verse finishes and the next begins. In its origin it is based on transmission from the Companions, who learned it from the Prophet ﷺ, because he would pause at the ends of verses in his recitation, so they knew where verses ended.
+
+Its benefits include:
+1. **Knowing the verse endings**, where it is recommended to pause.
+2. **Precision in worship**, such as reciting a certain number of verses in prayer, and virtues tied to particular verses.
+3. **Knowing the places of certain recitation rules** in some readings, which are connected to verse endings.
+4. **Understanding differences between Mushafs** and removing doubts about them.
+
+## Why Do Counts Differ?
+Sometimes the Prophet ﷺ paused at a place to teach that it was the end of a verse, and at other times he joined it to what follows to complete the meaning. Some who heard him concluded the place was not the end of a verse, while others counted it as an end, and so differences arose. The crucial point is that the difference is **about where a verse ends, not about the text**. The words are the same, in the same order; one count places a verse number after a certain word, and another places it a little later.
+
+## The Six Classical Counts
+Six counts became famous, named after the cities where they spread:
+1. **The First Madinan count.**
+2. **The Last Madinan count.**
+3. **The Makkan count.**
+4. **The Basran count.**
+5. **The Syrian count.**
+6. **The Kufan count**: 6,236 verses, followed by the Hafs Mushaf.
+
+In the best-known figures recorded in the books of this science, the other counts range from about **6,204** to about **6,226** verses, so the Kufan count has the most verses. The differences amount to only a few dozen verses, spread over specific, well-documented places that are listed in works such as the poem *Nazimat az-Zuhr* by Imam ash-Shatibi.
+
+## Examples of Where Counts Differ
+### Al-Fatihah: seven verses in every count, but divided differently
+﴿بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ﴾ (Quran 1:1)
+
+In the **Kufan count**, the Basmalah is counted as the first verse of Al-Fatihah, and "the path of those You have blessed, not of those who earned anger, nor of those astray" is one verse. In the **Madinan count**, the Basmalah is not counted as a verse; instead "the path of those You have blessed" is one verse, and "not of those who earned anger, nor of those astray" is another. Either way, Al-Fatihah has seven verses, as the Prophet ﷺ called it "the seven oft-repeated verses".
+
+### The disconnected letters
+﴿الٓمٓ﴾ (Quran 2:1)
+
+In the Kufan count, "Alif Lam Mim" at the beginning of Al-Baqarah is counted as **a separate verse**, as are "Ta Ha", "Ya Sin" and "Ha Mim". In some other counts it is not a separate verse but joined with what follows. That is one reason Al-Baqarah has **286 verses in the Kufan count**, **285 in the Madinan count**, and **287 in the Basran count**.
+
+### "Ha Mim, 'Ayn Sin Qaf" at the start of Ash-Shura
+﴿حمٓ﴾ ﴿عٓسٓقٓ﴾ (Quran 42:1-2)
+
+In the Kufan count, these are **two verses**: "Ha Mim" is one verse and "'Ayn Sin Qaf" is another. This is a unique place in the Mushaf.
+
+### Sad, Qaf and Nun
+Interestingly, while the Kufan count treats "Alif Lam Mim" and "Ha Mim" as separate verses, it does **not** treat "Sad", "Qaf" or "Nun" as separate verses. "Sad. By the Quran full of remembrance" is one verse, "Qaf. By the glorious Quran" is one verse, and "Nun. By the pen and what they write" is one verse. This shows that counting is based on transmission, not on reasoning by analogy.
+
+## Hafs and Warsh Mushafs: Same Verses, Different Numbering
+If you compare a Madinah Mushaf in the narration of Hafs with a Mushaf in the narration of Warsh printed in North Africa, you will find different verse numbers, because Warsh Mushafs generally follow the **Last Madinan count**. This can cause confusion when someone quotes "Al-Baqarah 286" and another person looks for it in a Warsh Mushaf and does not find it at the same number.
+
+The two narrations also differ in a small number of words and pronunciations, such as *maliki* and *maaliki* in Al-Fatihah. These are authentic variants transmitted from the Prophet ﷺ, and they are separate from the question of counting. The numbering difference is only about where verses end.
+
+The rule: **the verses are the same, and the numbering differs according to the count**. That is why, when quoting verses, it is best to give the text of the verse with its number, or specify that the numbering follows the Madinah Mushaf.
+
+## Verse Counts of Some Well-Known Surahs (Kufan Count)
+| Surah | Verses |
+|---|---|
+| Al-Fatihah | 7 |
+| Al-Baqarah | 286 |
+| Al 'Imran | 200 |
+| An-Nisa' | 176 |
+| Al-A'raf | 206 |
+| Al-Kahf | 110 |
+| Ash-Shu'ara' | 227 |
+| Ya Sin | 83 |
+| Ar-Rahman | 78 |
+| Al-Waqi'ah | 96 |
+| Al-Mulk | 30 |
+| Al-Ikhlas | 4 |
+
+**The longest surah** is Al-Baqarah with 286 verses. **The shortest** is Al-Kawthar with 3 verses; Al-'Asr and An-Nasr also have 3, but Al-Kawthar has the fewest words.
+
+## Are the Numbers of Words and Letters Known Exactly?
+Early scholars counted the words and letters of the Quran, and they reported figures that are close but **not identical**, because the method of counting differs: Is "bismi" one word or two? Is a doubled letter one letter or two? Is an alif that is not written counted? So you will not find a single agreed figure for words and letters, and any precise number you see depends on the method used.
+
+## A Word of Caution About "Numerical Miracles"
+In recent decades many claims of a "numerical miracle" in the Quran have spread, based on verse numbers and word counts. Many scholars have warned that such claims:
+- **Rely on one count** and ignore that the accepted counts differ.
+- **Select what fits** and ignore what does not.
+- **Can backfire** if the calculation is shown to be wrong.
+
+The inimitability of the Quran is established by its eloquence, guidance, law and its knowledge of the unseen. It does not need calculations that can be disproved.
+
+## Did the Prophet ﷺ Teach the Companions Where Verses End?
+Yes. The Companions spoke of verses by number, as in the authentic hadith in Sahih Muslim: "Whoever memorises ten verses from the beginning of Surah Al-Kahf will be protected from the Dajjal." And in al-Bukhari and Muslim: "Whoever recites the last two verses of Surah Al-Baqarah at night, they will suffice him." Such statements assume that verse endings were known.
+
+It is also reported that the Prophet ﷺ would recite verse by verse, pausing at "Al-hamdu lillahi Rabbil-'alamin", then pausing at "Ar-Rahmanir-Rahim". This is one of the foundations of knowing verse endings, and many scholars recommended pausing at the ends of verses even when the meaning connects to what follows.
+
+## Who Were the Masters of Counting?
+Each count is attributed to scholars of a city who received it from the Companions:
+- **Madinan**: Abu Ja'far Yazid ibn al-Qa'qa', Shaybah ibn Nisah and Isma'il ibn Ja'far, reciters of Madinah.
+- **Makkan**: 'Abdullah ibn Kathir and others of Makkah.
+- **Basran**: 'Asim al-Jahdari and Ayyub ibn al-Mutawakkil of Basra.
+- **Syrian**: 'Abdullah ibn 'Amir and the people of Syria.
+- **Kufan**: Abu 'Abdir-Rahman as-Sulami from 'Ali ibn Abi Talib; it spread with the readings of 'Asim, Hamzah and al-Kisa'i.
+
+Among the most famous works on this science are *al-Bayan fi 'Add Ay al-Qur'an* by Abu 'Amr ad-Dani and the poem *Nazimat az-Zuhr* by ash-Shatibi.
+
+## Verse Endings vs Pause Signs
+A common misunderstanding is to think that a **pause sign** (such as a small mim or "qala") marks the end of a verse. In fact, pause signs and verse endings are different things: there may be a necessary pause in the middle of a verse, and the end of a verse may be connected in meaning to the next verse. In the Madinah Mushaf, each verse ends with a decorated circle containing its number; that circle is the verse ending.
+
+## Answering a Doubt
+Some people use the difference in verse numbering to question the preservation of the Quran: "How can it be preserved if the number of verses differs?" The answer has three parts:
+1. **A difference in counting is not a difference in the text.** The words of the verses do not change when the count changes; only the placement of the numbers changes.
+2. **The scholars of counting recorded the differences honestly.** They did not hide them; they wrote books listing every place of difference, which shows the precision of the transmission, not confusion.
+3. **The differences are limited and known.** They occur in a fixed number of places that can all be listed.
+
+## Frequently Asked Questions
+### How many verses are in the Quran?
+6,236 verses in the Kufan count, which the Hafs Mushaf follows.
+
+### Is it true that the Quran has 6,666 verses?
+No. That figure has no basis in the books of verse counting.
+
+### Why does Al-Baqarah have 285 verses in a Warsh Mushaf?
+Because Warsh Mushafs generally follow the Madinan count, which does not count "Alif Lam Mim" as a separate verse.
+
+### Is the Basmalah a verse of Al-Fatihah?
+In the Kufan count, yes; in the Madinan count, no. Al-Fatihah has seven verses in both.
+
+### Does the difference in counting mean the Quran differs?
+No. The difference is only in where verse numbers are placed, not in the words.
+
+### What is the longest surah?
+Al-Baqarah, with 286 verses in the Kufan count.
+
+## Conclusion
+The Quran has 6,236 verses in the Kufan count followed by the Hafs Mushaf, and the figure of 6,666 has no basis. The six classical counts differ only in where some verses end, in a limited number of known places, while the verses themselves are the same. Correct the common figure gently when you hear it, quote verses with their text and the numbering you are using, and let this precise science increase your confidence in how carefully the Book of Allah has been preserved.
