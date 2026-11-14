@@ -1,0 +1,165 @@
+title: Why Is "Rahmat" Written with an Open Ta in the Quran? Ta Marbuta vs Ta Maftuha and How to Stop on Them
+category: english
+excerpt: In the Mushaf you will find "rahmat Allah", "ni'mat Allah" and "imra'at al-'Aziz" written with a long open ta (ت) instead of the round ta marbuta (ة). Why? A clear guide to the two forms of ta in the Uthmani script, the best-known words written with the open ta and how often, how Hafs stops on each, the wisdom scholars suggested, and common mistakes.
+meta: Ta marbuta vs open ta in the Mushaf: why rahmat, ni'mat and imra'at use an open ta, where they occur, how Hafs stops on each, and common mistakes.
+keywords: ta marbuta in quran, open ta quran, rahmat with open ta, ni'mat allah spelling quran, how to stop on ta marbuta, waqf on ta, uthmani script spelling, imraat al aziz
+reading: 15
+translation_of: taa-maftuha-marbuta-waqf
+---
+As you read the Mushaf, you may notice a familiar word written in an unfamiliar way: "rahmat Allah" (the mercy of Allah) written with a long, open ta (ت), when you would normally write it رحمة with the round ta marbuta (ة). A few pages later you find رحمة written with the round ta, as you expected. Is this a printing error? Why was the spelling not made uniform? And if you stop on this word, do you stop with a "t" or an "h"?
+
+This topic belongs to the sciences of **the Uthmani script** (*rasm*) and **stopping** (*waqf*), and every reciter needs it, because how you stop depends on how the word is written. This guide explains the two forms of ta, the best-known words written with the open ta, how Hafs stops on them, the wisdom scholars suggested, and the most common mistakes.
+
+## The Two Forms of Ta
+**Ta marbuta** (the "tied" ta, ة) looks like a ha with two dots above it. It usually appears at the end of feminine nouns: *rahmah* (mercy), *ni'mah* (blessing), *jannah* (garden), *shajarah* (tree). It is **pronounced "t" when you continue** and **changes to a silent "h" when you stop**. So you say *rahmatan min rabbik* when continuing, and *rahmah* when stopping.
+
+**Ta maftuha** or **mabsuta** (the "open" or "long" ta, ت) is written stretched out. It normally appears in verbs such as *qalat* (she said), in sound feminine plurals such as *al-mu'minat* (the believing women), and in some nouns such as *bayt* (house). It is **pronounced "t" whether you continue or stop**.
+
+What stands out in the Mushaf is that **some words that would be written with ta marbuta in modern spelling**, because they are singular feminine nouns, are written in specific places **with the open ta**. These words are our subject.
+
+## Why the Mushaf Differs from Modern Spelling
+The spelling of the Mushaf does not follow the spelling rules taught in schools. It follows **the script in which the Mushafs were written in the time of 'Uthman ibn 'Affan**, when he united the Muslims on one Mushaf written by Companions who had learned the Quran from the Prophet ﷺ. This is called **the Uthmani script** (*ar-rasm al-'Uthmani*).
+
+The majority of scholars hold that **the Uthmani script must be preserved** when writing the Mushaf, and must not be changed to modern spelling, because the Companions agreed upon it and it carries benefits related to the recitations and meanings. Imam Malik was asked whether the Mushaf should be written according to the spelling people had newly adopted, and he said: "No, only according to the first writing."
+
+So words such as رحمت and نعمت remained written with the open ta in their places, as the Companions wrote them, preserved by copyists with great precision generation after generation.
+
+## The Best-Known Words with the Open Ta
+Scholars of the script listed specific words written with the open ta in specific places, and with ta marbuta elsewhere. The best known:
+
+### 1. Rahmat (mercy): seven places
+For example:
+
+﴿إِنَّ ٱلَّذِينَ ءَامَنُواْ وَٱلَّذِينَ هَاجَرُواْ وَجَٰهَدُواْ فِي سَبِيلِ ٱللَّهِ أُوْلَـٰٓئِكَ يَرۡجُونَ رَحۡمَتَ ٱللَّهِۚ وَٱللَّهُ غَفُورࣱ رَّحِيمࣱ﴾ (Quran 2:218)
+
+Others include "Inna rahmat Allahi qaribun minal-muhsinin" in Al-A'raf, "Rahmatullahi wa barakatuhu 'alaykum ahlal-bayt" in Hud, "Dhikru rahmati rabbika 'abdahu Zakariyya" at the start of Maryam, "Fanzur ila athari rahmatillah" in Ar-Rum, and two places in Az-Zukhruf. Elsewhere it is written with ta marbuta.
+
+### 2. Ni'mat (blessing): eleven places
+For example:
+
+﴿وَإِذَا طَلَّقۡتُمُ ٱلنِّسَآءَ فَبَلَغۡنَ أَجَلَهُنَّ فَأَمۡسِكُوهُنَّ بِمَعۡرُوفٍ أَوۡ سَرِّحُوهُنَّ بِمَعۡرُوفٖۚ وَلَا تُمۡسِكُوهُنَّ ضِرَارٗا لِّتَعۡتَدُواْۚ وَمَن يَفۡعَلۡ ذَٰلِكَ فَقَدۡ ظَلَمَ نَفۡسَهُۥۚ وَلَا تَتَّخِذُوٓاْ ءَايَٰتِ ٱللَّهِ هُزُوٗاۚ وَٱذۡكُرُواْ نِعۡمَتَ ٱللَّهِ عَلَيۡكُمۡ وَمَآ أَنزَلَ عَلَيۡكُم مِّنَ ٱلۡكِتَٰبِ وَٱلۡحِكۡمَةِ يَعِظُكُم بِهِۦۚ وَٱتَّقُواْ ٱللَّهَ وَٱعۡلَمُوٓاْ أَنَّ ٱللَّهَ بِكُلِّ شَيۡءٍ عَلِيمࣱ﴾ (Quran 2:231)
+
+Others are in Al 'Imran, Al-Ma'idah, Ibrahim, An-Nahl, Luqman, Fatir and At-Tur, such as "Wa in ta'uddu ni'matallahi la tuhsuha" in Ibrahim and An-Nahl.
+
+### 3. Imra'at (wife of): seven places
+All seven are where a woman is mentioned **in relation to her husband**: the wife of 'Imran, the wife of al-'Aziz, the wives of Nuh and Lut, and the wife of Pharaoh.
+
+﴿۞وَقَالَ نِسۡوَةࣱ فِي ٱلۡمَدِينَةِ ٱمۡرَأَتُ ٱلۡعَزِيزِ تُرَٰوِدُ فَتَىٰهَا عَن نَّفۡسِهِۦۖ قَدۡ شَغَفَهَا حُبًّاۖ إِنَّا لَنَرَىٰهَا فِي ضَلَٰلٖ مُّبِينٖ﴾ (Quran 12:30)
+
+﴿ضَرَبَ ٱللَّهُ مَثَلٗا لِّلَّذِينَ كَفَرُواْ ٱمۡرَأَتَ نُوحٖ وَٱمۡرَأَتَ لُوطٖۖ كَانَتَا تَحۡتَ عَبۡدَيۡنِ مِنۡ عِبَادِنَا صَٰلِحَيۡنِ فَخَانَتَاهُمَا فَلَمۡ يُغۡنِيَا عَنۡهُمَا مِنَ ٱللَّهِ شَيۡـٔٗا وَقِيلَ ٱدۡخُلَا ٱلنَّارَ مَعَ ٱلدَّـٰخِلِينَ﴾ ﴿وَضَرَبَ ٱللَّهُ مَثَلٗا لِّلَّذِينَ ءَامَنُواْ ٱمۡرَأَتَ فِرۡعَوۡنَ إِذۡ قَالَتۡ رَبِّ ٱبۡنِ لِي عِندَكَ بَيۡتٗا فِي ٱلۡجَنَّةِ وَنَجِّنِي مِن فِرۡعَوۡنَ وَعَمَلِهِۦ وَنَجِّنِي مِنَ ٱلۡقَوۡمِ ٱلظَّـٰلِمِينَ﴾ (Quran 66:10-11)
+
+When "imra'ah" appears without being attached to a husband, it is written with ta marbuta, as in "Wa inimra'atun khafat min ba'liha nushuzan".
+
+### 4. Sunnat (way, practice): five places
+One in Al-Anfal ("faqad madat sunnatul-awwalin"), three at the end of Fatir, and one in Ghafir.
+
+### 5. La'nat (curse): two places
+In Al 'Imran ("fanaj'al la'natallahi 'alal-kadhibin") and An-Nur.
+
+### 6. Ma'siyat (disobedience): two places
+Both in Al-Mujadilah: "wa ma'siyatir-rasul".
+
+### 7. Single occurrences
+- **Shajarat** in "Inna shajarataz-zaqqum" (Ad-Dukhan).
+- **Qurrat** in "qurratu 'aynin li wa lak" (Al-Qasas).
+- **Jannat** in "fa rawhun wa rayhanun wa jannatu na'im" (Al-Waqi'ah).
+- **Fitrat** in "fitratallahil-lati fataran-nasa 'alayha" (Ar-Rum).
+- **Baqiyyat** in "baqiyyatullahi khayrun lakum" (Hud).
+- **Ibnat** in "wa Maryamabnata 'Imran" (At-Tahrim).
+- **Kalimat** in places such as "wa tammat kalimatu rabbikal-husna 'ala Bani Isra'il" (Al-A'raf).
+
+## How Hafs Stops on Them
+The rule in the narration of Hafs from 'Asim:
+
+**Stop according to how the word is written in the Mushaf**:
+- **Words written with ta marbuta are stopped on with "h"**: *rahmah*.
+- **Words written with the open ta are stopped on with "t"**: *rahmat*, with a silent t.
+
+So if you have to stop for breath at "ula'ika yarjuna rahmat", you stop on *rahmat* with a silent t, then resume from a suitable place.
+
+### Other reciters
+Some of the ten reciters, such as Ibn Kathir, Abu 'Amr, al-Kisa'i and Ya'qub, stop on many of these words **with "h"** despite the open-ta spelling, while the rest, including Hafs, stop **with "t"** in line with the script. This shows that stopping is transmitted by narration.
+
+### Test stops
+Tajweed teachers use what is called a **test stop** (*waqf ikhtibari*): the teacher asks the student to stop on a word where one would not normally stop, to test whether he knows how it is written. For example: "Stop on *ni'mat* in Surah Ibrahim." The student stops on *ni'mat* with a "t", then continues. This is only for teaching.
+
+## Should You Stop on These Words?
+Most of these words are **attached** (*mudaf*) to what follows: *rahmat Allah*, *ni'mat rabbik*, *imra'at al-'Aziz*, *sunnat al-awwalin*. The two words form one unit of meaning, so scholars said **stopping on them is not good except out of necessity**, such as running out of breath or sneezing, after which the reciter goes back and joins them.
+
+So knowing the stopping rule here is for **necessity and testing**, not for deliberately stopping. A skilled reciter plans his breath before the attached phrase, not in the middle of it.
+
+## The Wisdom Scholars Suggested
+Scholars tried to explain why these words are written with the open ta in some places but not others:
+1. **Accommodating the recitations**: the script was written to accommodate the authentic readings, and the open ta matches the readings that stop with "t".
+2. **Rhetorical subtleties**: some scholars, such as al-Marrakushi in *'Unwan ad-Dalil*, suggested that the open ta indicates something manifest and extended, as though the mercy in those places is visible and connected to its effects, and that the wife linked to her husband is shown in connection with him in the story. These are suggested subtleties, not certainties.
+3. **Following the Companions**: this is the basis. The majority treat the script as something to be followed, whether or not we grasp its wisdom.
+
+## How Memorisers Can Remember Them
+Someone reading from the Mushaf sees the spelling in front of him. But **a hafiz reciting from memory** must remember the spelling as well as the sound:
+- **Mark the Mushaf** lightly in pencil above the open-ta words.
+- **Learn the lists by surah**: *rahmat* in Al-Baqarah, Al-A'raf, Hud, Maryam, Ar-Rum and Az-Zukhruf.
+- **Memorise the poems** scholars wrote, such as the chapter on the open ta's in **al-Muqaddimah al-Jazariyyah** by Ibn al-Jazari.
+- **Ask your teacher** to test you with test stops.
+
+## Common Mistakes
+1. **Stopping on an open-ta word with "h"** in Hafs, for example *imra'ah al-'Aziz*.
+2. **Stopping on a ta marbuta word with "t"**, for example *al-jannat* instead of *al-jannah*.
+3. **Thinking the spelling is a printing error**, and "correcting" it in printed material.
+4. **Deliberately stopping on an attached word** without need.
+5. **Ignoring the spelling while memorising**, so you do not know the stopping rule when you need it.
+
+## Practice
+Imagine you had to stop on the word in bold:
+- "Fanzur ila athari **rahmati**llah": stop with "t": *rahmat*.
+- "Wa ma arsalnaka illa **rahmatan** lil-'alamin": stop with "h": *rahmah*.
+- "Idh qalati**mra'atu** 'Imran": stop with "t": *imra'at*.
+- "Inna **shajarata**z-zaqqum": stop with "t": *shajarat*.
+- "Kamathali **habbatin** anbatat sab'a sanabil": stop with "h": *habbah*.
+
+﴿إِنَّ شَجَرَتَ ٱلزَّقُّومِ﴾ ﴿طَعَامُ ٱلۡأَثِيمِ﴾ (Quran 44:43-44)
+
+## Original Open Ta's: No Disagreement
+To avoid confusion, note that some open ta's are **original** and are not part of this topic, because they are written with an open ta in modern spelling too, and all reciters stop on them with "t":
+- **The ta of verbs**: *qalat*, *kanat*, *anbatat*.
+- **The ta of sound feminine plurals**: *al-mu'minat*, *as-salihat*, *az-zulumat*.
+- **An original ta in the word**: *bayt*, *mawt*, *sawt*.
+- **The ta in "lat"**: in "wa lata hina manas" (Sad), on which Hafs stops with "t".
+
+Our topic is only words **whose modern spelling would use ta marbuta** but which are written with the open ta in particular places of the Mushaf.
+
+## Singular or Plural Readings
+Some of these words were read by some reciters in the **plural** and by others in the **singular**, and the script allows both, such as *kalimat* in certain places, and *ghayabat al-jubb* in Surah Yusuf. Hafs reads *ghayabat al-jubb* in the singular and stops on it with "t" in line with the script. This is another example of how the Uthmani script was written to accommodate the authentic recitations.
+
+## Advice for Teachers
+- **Do not overwhelm beginners** with lists of places. Teach the rule first: what is written with an open ta is stopped on with "t", and what is written with ta marbuta is stopped on with "h".
+- **Teach students to look at the spelling** before stopping.
+- **Add the places gradually** with memorisation, pointing out each word as the student reaches it.
+- **Use test stops** in revision to fix the rule in the student's mind.
+
+## Frequently Asked Questions
+### Why is "rahmat" written with an open ta in some places?
+Because the Companions wrote it that way in the Uthmani Mushafs, and we follow their script.
+
+### How does Hafs stop on open-ta words?
+With a silent "t", following the script.
+
+### Can verses be written in modern spelling?
+Not in the Mushaf according to the majority; when quoting verses elsewhere, it is better to follow the Uthmani script where possible.
+
+### Is it good to stop on "ni'mat Allah"?
+No, because the attached words should not be separated, except out of necessity.
+
+### How many times is "ni'mat" written with an open ta?
+Eleven times, according to scholars of the script.
+
+### What is a test stop?
+A teacher asks the student to stop on a word to test his knowledge of its spelling, and then the student continues.
+
+### Does Hafs stop on "ghayabat al-jubb" with "t"?
+Yes, following the script; he reads it in the singular.
+
+### Are "qalat" and "al-mu'minat" part of this topic?
+No. Their open ta is original, and all reciters stop on them with "t".
+
+## Conclusion
+The open ta in words such as *rahmat*, *ni'mat*, *imra'at*, *sunnat* and *la'nat* is not a printing error but part of the Uthmani script written by the Companions. In the narration of Hafs, you stop on them with "t", and on ta marbuta with "h". Because most of these words are attached to what follows, stopping on them is only for necessity or testing. Learn their places, mark them in your Mushaf, and ask your teacher to test you, so your recitation joins correct pronunciation with knowledge of the script.
