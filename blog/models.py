@@ -34,11 +34,13 @@ class Category(models.Model):
 # وبتتشال من خريطة الموقع وقوائم المدونة ومن غير إعلانات، عشان جوجل أدسنس رفض الموقع
 # بسبب "محتوى منخفض القيمة" (أغلب المقالات القديمة 150-500 كلمة بقالب متكرر).
 # أي مقال يتوسع لحد الطول ده بيرجع يتفهرس لوحده.
-INDEX_MIN_CHARS = 9000
+INDEX_MIN_CHARS = 600
+# الإعلانات (أدسنس) بتفضل على المقالات الطويلة بس - عشان سياسة "المحتوى منخفض القيمة"
+ADS_MIN_CHARS = 9000
 
 
 _MD_LINK = re.compile(r'\[[^\]]*\]\([^)]*\)')
-INDEXABLE_CACHE_KEY = 'blog:indexable-ids:v1'
+INDEXABLE_CACHE_KEY = 'blog:indexable-ids:v2'
 
 
 def prose_length(content):
@@ -156,6 +158,10 @@ class Post(models.Model):
     def is_indexable(self):
         """المقال طويل ومفيد بما يكفي للفهرسة والإعلانات (انظر INDEX_MIN_CHARS)"""
         return self.status == 'published' and prose_length(self.content) >= INDEX_MIN_CHARS
+
+    @property
+    def shows_ads(self):
+        return self.status == 'published' and prose_length(self.content) >= ADS_MIN_CHARS
 
     @property
     def display_image_alt(self):

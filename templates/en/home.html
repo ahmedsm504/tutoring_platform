@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block adsense %}{% include "includes/adsense.html" %}{% endblock %}
+
+{% block title %}Online Quran Classes for Kids & Adults | Free Trial | Al-Agmi{% endblock %}
+{% block meta_description %}Learn Quran online with certified teachers: one-to-one Hifz, Tajweed and Arabic reading classes for kids and adults, in your time zone. Book a free trial class.{% endblock %}
+{% block meta_keywords %}online Quran classes, learn Quran online, online Quran tutor, Quran classes for kids, Quran memorization online, Hifz program online, Tajweed classes online, female Quran teacher, Noorani Qaida online{% endblock %}
+{% block og_title %}Online Quran Classes with Certified Teachers - Free Trial | Al-Agmi{% endblock %}
+{% block og_description %}One-to-one online Quran classes for kids and adults: memorisation, Tajweed and Arabic reading, from any country. Book your free trial class.{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}/en/{% endblock %}
+
+{% block extra_meta %}
+<link rel="preconnect" href="https://i.ytimg.com">
+<link rel="preload" as="image" href="https://i.ytimg.com/vi/yUpz_m5kWBE/hqdefault.jpg" fetchpriority="high">
+{% endblock %}
+
+{% block extra_ldjson %}
+<script type="application/ld+json">{{ faq_ldjson|safe }}</script>
+{% endblock %}
+
+{% block content %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-inner">
+    <div>
+      <h1 id="hero-title">Online Quran classes with a certified teacher, for your child or for you</h1>
+      <p class="hero-lead">One-to-one classes with Tajweed and correct oral transmission, scheduled in your own time zone, with a written monthly progress report. Your first class is free.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="{% url 'en_contact' %}">Book a free trial class</a>
+        <a class="btn btn-light" href="{% url 'en_pricing' %}">See the programmes</a>
+      </div>
+      <ul class="hero-facts">
+        <li><svg aria-hidden="true"><use href="#i-user"/></svg>100% one-to-one</li>
+        <li><svg aria-hidden="true"><use href="#i-star"/></svg>Teachers with ijazah</li>
+        <li><svg aria-hidden="true"><use href="#i-globe"/></svg>From any country</li>
+      </ul>
+    </div>
+
+    <figure class="mushaf" style="margin:0;">
+      <div class="mushaf-frame">
+        <svg class="mushaf-border" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="0.4" y="0.4" width="99.2" height="99.2" rx="1" pathLength="1" vector-effect="non-scaling-stroke"/></svg>
+        <span class="corner tr" aria-hidden="true"></span><span class="corner tl" aria-hidden="true"></span>
+        <span class="corner br" aria-hidden="true"></span><span class="corner bl" aria-hidden="true"></span>
+        <div class="cartouche">
+          <p class="verse" lang="ar" dir="rtl">يَا يَحْيَىٰ خُذِ الْكِتَابَ بِقُوَّةٍ</p>
+          <span class="verse-ref">"O Yahya, take hold of the Book with strength" · Surah Maryam 19:12</span>
+        </div>
+        <button class="video-facade" type="button" id="hero-video" aria-label="Play the Al-Agmi introduction video">
+          <img src="https://i.ytimg.com/vi/yUpz_m5kWBE/hqdefault.jpg" alt="Introduction video of Al-Agmi Quran Academy" width="480" height="360" fetchpriority="high">
+          <span class="play" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
+        </button>
+        <figcaption class="mushaf-caption">See what a class with our teachers looks like (video in Arabic)</figcaption>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="steps-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="steps-title">Start in 3 steps</h2>
+      <p>No commitment before you have tried it yourself.</p>
+    </div>
+    <ol class="steps">
+      {% for title, text in steps %}
+      <li>
+        <span class="step-num" aria-hidden="true">{{ forloop.counter }}</span>
+        <h3>{{ title }}</h3>
+        <p>{{ text }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section band" aria-labelledby="programs-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="programs-title">Programmes for every age and level</h2>
+      <p>Every programme is a one-to-one online class, and you choose how many classes and how long they are.</p>
+    </div>
+    <ul class="programs">
+      {% for p in programs %}
+      <li>
+        <span class="prog-kind">{{ p.kind }}</span>
+        <div>
+          <h3><a href="{% url 'en_pricing' %}#{{ p.slug }}">{{ p.name }}</a></h3>
+          <p class="prog-aud">{{ p.audience }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="section-foot">
+      <a class="btn btn-primary" href="{% url 'en_pricing' %}">Programme details and schedules</a>
+      <a class="btn btn-ghost" href="{% url 'en_contact' %}">Not sure which one? Ask us</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="features-title">Why families choose us</h2>
+    </div>
+    <ul class="features">
+      {% for title, text in features %}
+      <li><h3>{{ title }}</h3><p>{{ text }}</p></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="container" aria-labelledby="offer-title">
+  <div class="offer">
+    <div class="offer-badge">Free<small>first class</small></div>
+    <div>
+      <h2 id="offer-title">Try before you subscribe</h2>
+      <p>The first class is a completely free trial: we assess the student's level and suggest the right programme.</p>
+    </div>
+    <a class="btn btn-gold" href="{% url 'en_contact' %}">Book your class</a>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="reviews-title">
+  <div class="container">
+    <div class="row-head">
+      <div class="section-head">
+        <h2 id="reviews-title">Messages from parents</h2>
+        <p>Real screenshots of chats with our students' parents (in Arabic).</p>
+      </div>
+      <div class="reviews-nav">
+        <button class="icon-btn" type="button" data-dir="-1" aria-label="Previous messages"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button class="icon-btn" type="button" data-dir="1" aria-label="Next messages"><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></button>
+      </div>
+    </div>
+    <div class="reviews" id="reviews" tabindex="0" aria-label="Messages from parents">
+      {% for r in reviews %}
+      <figure><img src="{% static 'images/'|add:r %}" alt="Message from a parent about their experience with Al-Agmi ({{ forloop.counter }})" width="360" height="360" loading="lazy" decoding="async"></figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if latest_videos %}
+<section class="section band" aria-labelledby="videos-title">
+  <div class="container">
+    <div class="row-head">
+      <div class="section-head"><h2 id="videos-title">🎬 Latest videos</h2><p>Short lessons from our teachers, free to watch (mostly in Arabic).</p></div>
+      <a class="btn btn-ghost" href="{% url 'video_list' %}">All videos</a>
+    </div>
+    {% include 'videos/_styles.html' %}
+    <ul class="vgrid">{% for v in latest_videos %}<li>{% include 'videos/_card.html' %}</li>{% endfor %}</ul>
+  </div>
+</section>
+{% endif %}
+
+<section class="section" aria-labelledby="learn-title">
+  <div class="container">
+    <div class="row-head">
+      <div class="section-head">
+        <h2 id="learn-title">Learn for free before you start</h2>
+        <p>English guides on Tajweed, memorisation methods and teaching children, plus the full Quran in Arabic with audio by great reciters.</p>
+      </div>
+      <a class="btn btn-ghost" href="{% url 'en_blog_list' %}">All English articles</a>
+    </div>
+    {% if latest_posts %}<ul class="posts">{% for post in latest_posts %}<li>{% include 'blog/_post_card.html' %}</li>{% endfor %}</ul>{% endif %}
+    <div class="learn-links">
+      <a href="{% url 'en_quran_index' %}"><strong>📖 Read and listen to the Quran</strong><span>All 114 surahs verse by verse, with repetition for memorising</span></a>
+      <a href="{% url 'en_blog_list' %}"><strong>🎙️ Tajweed in English</strong><span>Rules explained step by step with examples</span></a>
+      <a href="{% url 'en_pricing' %}#nour-albayan"><strong>🔤 Learn to read Arabic</strong><span>Noor Al-Bayan: from the alphabet to fluent reading</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section band" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-head center"><h2 id="faq-title">Frequently asked questions</h2></div>
+    <div class="faq">
+      {% for q, a in faq %}
+      <details{% if forloop.first %} open{% endif %}><summary>{{ q }}</summary><p>{{ a }}</p></details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section cta" aria-labelledby="cta-title">
+  <div class="container">
+    <h2 id="cta-title">Ready to start your journey with the Quran?</h2>
+    <p>Book the free trial class and we will get back to you within 24 hours to set the time.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'en_contact' %}">Book a free trial class</a>
+      <a class="btn btn-ghost" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">Message us on WhatsApp</a>
+    </div>
+    <ul class="contact-strip">
+      <li><svg aria-hidden="true"><use href="#i-phone"/></svg><div><strong><a href="tel:+201044568181" dir="ltr">+20 104 456 8181</a></strong><span>Call or WhatsApp</span></div></li>
+      <li><svg aria-hidden="true"><use href="#i-clock"/></svg><div><strong>Saturday – Thursday</strong><span>9 am to midnight, Cairo time</span></div></li>
+      <li><svg aria-hidden="true"><use href="#i-globe"/></svg><div><strong>Fully online</strong><span>For students in every country</span></div></li>
+    </ul>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function(){
+    var v = document.getElementById('hero-video');
+    if(v) v.addEventListener('click', function(){
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/yUpz_m5kWBE?autoplay=1&rel=0';
+      f.title = 'Introduction video - Al-Agmi Quran Academy';
+      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      f.allowFullscreen = true;
+      v.replaceChildren(f);
+    }, {once: true});
+    var r = document.getElementById('reviews');
+    document.querySelectorAll('.reviews-nav button').forEach(function(b){
+      b.addEventListener('click', function(){ r.scrollBy({left: parseInt(b.dataset.dir, 10) * r.clientWidth * 0.8, behavior: 'smooth'}); });
+    });
+  })();
+</script>
+{% endblock %}

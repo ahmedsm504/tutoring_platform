@@ -257,6 +257,9 @@ class TeacherSalaryRecord(models.Model):
     bonus = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="المكافآت")
     deduction = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="الخصومات")
     leave_days = models.PositiveIntegerField(default=0, verbose_name="عدد أيام الإجازة")
+    # لو الصرف اتعمل بعدد حلقات مكتوب يدويًا (حلقات ممكن تبقى على شهرين): العدد × سعر الحصة وقت الصرف
+    lessons_count = models.PositiveIntegerField(null=True, blank=True, verbose_name="عدد الحلقات المدفوعة")
+    lesson_rate = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True, verbose_name="سعر الحصة وقت الصرف")
     notes = models.TextField(blank=True, null=True, verbose_name="ملاحظات")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ التسجيل")
 

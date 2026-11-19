@@ -19,3 +19,21 @@ def seo(request):
         'BING_SITE_VERIFICATION': getattr(settings, 'BING_SITE_VERIFICATION', ''),
         'WHATSAPP_LINK': f'https://wa.me/{wa}' if wa else '',
     }
+
+
+def lang(request):
+    """لغة الصفحة: كل اللي تحت /en/ إنجليزي (LTR)، والباقي عربي.
+    ALT_URL = رابط نفس الصفحة باللغة التانية (لزرار تبديل اللغة و hreflang). الـ view تقدر تبعت LANG/ALT_URL بنفسها
+    (زي المقالات الإنجليزي) وده بيغلب على القيم هنا."""
+    from django.urls import NoReverseMatch, reverse
+    from core.en_content import PAIRS
+    path = request.path or '/'
+    is_en = path == '/en' or path.startswith('/en/')
+    alt = ''
+    m = getattr(request, 'resolver_match', None)
+    if m and m.url_name in PAIRS and not m.namespace:
+        try:
+            alt = reverse(PAIRS[m.url_name])
+        except NoReverseMatch:
+            alt = ''
+    return {'LANG': 'en' if is_en else 'ar', 'ALT_URL': alt}

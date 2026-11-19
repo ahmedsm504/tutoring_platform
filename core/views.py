@@ -105,7 +105,16 @@ def home(request):
     return render(request, 'core/home.html', _public_ctx(
         faq_ldjson=json.dumps(sc.faq_schema(), ensure_ascii=False).replace('<', '\\u003c'),
         latest_posts=latest,
+        latest_videos=_latest_videos(),
     ))
+
+
+def _latest_videos(lang=None):
+    from videos.models import Video
+    qs = Video.objects.filter(is_published=True)
+    if lang:
+        qs = qs.filter(language=lang)
+    return list(qs[:4])
 
 
 def about(request):
@@ -152,8 +161,16 @@ def site_index(request):
     for p in posts:
         by_cat.setdefault(p.category_id, []).append(p)
     blog_groups = [(c, by_cat[c.id]) for c in Category.objects.order_by('name') if c.id in by_cat]
-    # الأسئلة والأجوبة قصيرة (noindex) فمش بنعرضها في فهرس الموقع
-    qs, qna_groups = [], []
+    # الأسئلة المُجابة (هي اللي بتتفهرس) مقسمة بالتصنيف
+    from qna.models import PublicQuestion, QuestionCategory
+    qs = list(PublicQuestion.objects.filter(status='approved', official_answer__isnull=False)
+              .exclude(slug='').only('slug', 'title', 'category_id').order_by('-created_at'))
+    by_qcat = {}
+    for q in qs:
+        by_qcat.setdefault(q.category_id, []).append(q)
+    qna_groups = [(c, by_qcat[c.id]) for c in QuestionCategory.objects.order_by('name') if c.id in by_qcat]
+    if None in by_qcat:
+        qna_groups.append((None, by_qcat[None]))
     return render(request, 'core/site_index.html', {
         'blog_groups': blog_groups, 'qna_groups': qna_groups,
         'posts_count': len(posts), 'questions_count': len(qs),
@@ -1113,11 +1130,22 @@ def add_salary_record(request):
         else:
             teacher = get_object_or_404(Teacher, pk=teacher_id)
 
-            # الأساسي = حلقات تمت × سعر الحصة - اللي اتصرف قبل كده عن نفس الشهر (عشان ميتدفعش مرتين)
-            base_amount = teacher.remaining_salary(year=salary_year, month=salary_month)
+            # طريقتين للحساب:
+            # 1) عدد حلقات مكتوب يدويًا (حلقات ممكن تكون على شهرين): العدد × سعر الحصة
+            # 2) تلقائي: حلقات تمت في الشهر × سعر الحصة - اللي اتصرف قبل كده عن نفس الشهر
+            lessons_count = _to_int_or_none(request.POST.get('lessons_count'))
+            rate = Decimal(str(_to_decimal_or_zero(request.POST.get('lesson_rate')) or teacher.lesson_rate))
+            if lessons_count is not None and lessons_count < 0:
+                messages.error(request, 'عدد الحلقات لازم يكون رقم موجب.')
+                return redirect(f"{reverse('add_salary_record')}?teacher={teacher_id}&salary_year={salary_year}&salary_month={salary_month}")
+            if lessons_count:
+                base_amount = round(float(rate) * lessons_count, 2)
+            else:
+                lessons_count, rate = None, None
+                base_amount = teacher.remaining_salary(year=salary_year, month=salary_month)
 
             # لو اتصرف المستحق كله قبل كده منسجلش تاني إلا بتأكيد صريح (مثلاً مكافأة إضافية)
-            if teacher.has_salary_record_for(salary_year, salary_month) and base_amount <= 0 and not force:
+            if lessons_count is None and teacher.has_salary_record_for(salary_year, salary_month) and base_amount <= 0 and not force:
                 messages.error(
                     request,
                     f'"{teacher.name}" اتصرفلها مستحق شهر {ARABIC_MONTHS.get(salary_month, salary_month)}/{salary_year} بالكامل قبل كده ومفيش متبقي. '
@@ -1136,12 +1164,15 @@ def add_salary_record(request):
                 bonus=_to_decimal_or_zero(request.POST.get('bonus')),
                 deduction=_to_decimal_or_zero(request.POST.get('deduction')),
                 leave_days=_to_int_or_none(request.POST.get('leave_days')) or 0,
+                lessons_count=lessons_count,
+                lesson_rate=rate,
                 notes=request.POST.get('notes', '').strip(),
             )
             messages.success(
                 request,
                 f'تم تسجيل صرف راتب "{teacher.name}" عن شهر {ARABIC_MONTHS.get(salary_month, salary_month)}/{salary_year} '
-                f'بقيمة {base_amount} جنيه.'
+                f'بقيمة {base_amount} جنيه'
+                + (f' ({lessons_count} حلقة × {rate} جنيه).' if lessons_count else '.')
             )
             return redirect('salaries_list')
 
@@ -1152,6 +1183,7 @@ def add_salary_record(request):
         teachers_data.append({
             'teacher': t,
             'calculated_salary': remaining,  # اللي هيتسجل كأساسي = المتبقي
+            'completed_count': t.completed_lessons_count(salary_year, salary_month),
             'already_paid_this_month': has_record,
             'fully_paid': has_record and remaining <= 0,
         })

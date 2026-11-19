@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static content_tags i18n %}
-{% block adsense %}{% if indexable %}{% include "includes/adsense.html" %}{% endif %}{% endblock %}
+{% block adsense %}{% if shows_ads %}{% include "includes/adsense.html" %}{% endif %}{% endblock %}
 {% block robots %}{% if indexable %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% else %}noindex, follow{% endif %}{% endblock %}
 
 {% block font_preload %}{% if post.title|is_latin %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
@@ -41,14 +41,14 @@
     {
       "@type": "ListItem",
       "position": 1,
-      "name": "الرئيسية",
-      "item": "{{ SITE_URL }}{% url 'home' %}"
+      "name": "{% if post.title|is_latin %}Home{% else %}الرئيسية{% endif %}",
+      "item": "{{ SITE_URL }}{% if post.title|is_latin %}{% url 'en_home' %}{% else %}{% url 'home' %}{% endif %}"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "المدونة",
-      "item": "{{ SITE_URL }}{% url 'blog_list' %}"
+      "name": "{% if post.title|is_latin %}Articles{% else %}المدونة{% endif %}",
+      "item": "{{ SITE_URL }}{% if post.title|is_latin %}{% url 'en_blog_list' %}{% else %}{% url 'blog_list' %}{% endif %}"
     }
     {% if post.category %}
     ,{
@@ -154,8 +154,8 @@
 <header class="page-head">
   <div class="container article-head"{% if post.title|is_latin %} lang="en" dir="ltr"{% endif %}>
     <ol class="crumbs">
-      <li><a href="{% url 'home' %}">{% if en %}Home{% else %}الرئيسية{% endif %}</a></li>
-      <li><a href="{% url 'blog_list' %}">{% if en %}Blog{% else %}المدونة{% endif %}</a></li>
+      <li><a href="{% if en %}{% url 'en_home' %}{% else %}{% url 'home' %}{% endif %}">{% if en %}Home{% else %}الرئيسية{% endif %}</a></li>
+      <li><a href="{% if en %}{% url 'en_blog_list' %}{% else %}{% url 'blog_list' %}{% endif %}">{% if en %}Blog{% else %}المدونة{% endif %}</a></li>
       {% if post.category %}<li><a href="{% url 'category_posts' post.category.slug %}">{{ post.category.name }}</a></li>{% endif %}
     </ol>
     <h1>{{ post.title }}</h1>
@@ -251,7 +251,7 @@
 
       <div class="inline-cta">
         <p>{% if en %}Want to learn Quran with a qualified tutor, for yourself or your child? The first class is free.{% else %}عايز طفلك يحفظ القرآن مع معلمة متقنة؟ أول حلقة مجانية.{% endif %}</p>
-        <a class="btn btn-primary" data-cta="end" href="{% url 'contact' %}">{% if en %}Book a free trial class{% else %}احجز حلقة تجريبية مجانية{% endif %}</a>
+        <a class="btn btn-primary" data-cta="end" href="{% if en %}{% url 'en_contact' %}{% else %}{% url 'contact' %}{% endif %}">{% if en %}Book a free trial class{% else %}احجز حلقة تجريبية مجانية{% endif %}</a>
         {% if WHATSAPP_LINK %}<a class="btn" data-cta="whatsapp" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">{% if en %}Chat on WhatsApp{% else %}كلمنا واتساب{% endif %}</a>{% endif %}
       </div>
 

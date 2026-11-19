@@ -107,6 +107,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'blog.apps.BlogConfig',
     'qna.apps.QnaConfig',
+    'videos.apps.VideosConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'config.middleware.PrivatePagesNoIndexMiddleware',
+    # تبليغ IndexNow تلقائي كل 3 ساعات (thread في الخلفية، مابيأخرش الزائر)
+    'core.indexnow_scheduler.IndexNowSchedulerMiddleware',
 ]
+
+import sys as _sys
+TESTING = len(_sys.argv) > 1 and _sys.argv[1] == 'test'
 
 ROOT_URLCONF = 'config.urls'
 
@@ -141,6 +147,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'config.context_processors.seo',
+                'config.context_processors.lang',
                 'chat.context_processors.chat_counts',
                 'learning.context_processors.learning_counts',
             ],

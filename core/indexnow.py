@@ -42,6 +42,6 @@ def send_indexnow_batch(urls, timeout=15):
 
 def send_indexnow(url):
     """رابط واحد (بيستخدمه الأدمن لما ينشر مقال أو يعتمد سؤال)"""
-    if settings.DEBUG:
+    if settings.DEBUG or getattr(settings, 'TESTING', False):
         return False
     return send_indexnow_batch([url], timeout=5)

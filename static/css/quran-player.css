@@ -1,5 +1,5 @@
 /* مشغّل القرآن - بياخد ألوان الصفحة من المتغيرات دي */
-.qp{--qp-accent:var(--qp-accent-c,#0f5e55);--qp-gold:#c49a2c;--qp-paper:#fbf8ef;--qp-ink:#1d2b28;--qp-line:rgba(0,0,0,.08);position:relative}
+.qp{--qp-accent:var(--qp-accent-c,#2747d9);--qp-gold:#f5a524;--qp-paper:#fbf8ef;--qp-ink:#1d2b28;--qp-line:rgba(0,0,0,.08);position:relative}
 .qp-bar{position:sticky;top:var(--qp-sticky,0);z-index:5;background:var(--qp-bar-bg,#fff);border:1px solid var(--qp-line);border-radius:18px;padding:10px 12px;box-shadow:0 6px 18px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
 .qp-main{display:flex;align-items:center;gap:8px;min-width:0}
 .qp-btn{width:42px;height:42px;border-radius:50%;border:none;background:color-mix(in srgb,var(--qp-accent) 12%,transparent);color:var(--qp-accent);font-size:1rem;cursor:pointer;flex-shrink:0;display:grid;place-items:center}

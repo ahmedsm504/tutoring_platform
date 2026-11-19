@@ -8,12 +8,14 @@
 <header class="page-head"><div class="container">
   <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">فهرس الموقع</li></ol>
   <h1>فهرس كل المقالات والأسئلة</h1>
-  <p>{{ posts_count }} مقال عن حفظ القرآن الكريم والتجويد والتربية القرآنية، مرتبة حسب التصنيف.</p>
+  <p>{{ posts_count }} مقال و{{ questions_count }} سؤال مُجاب عن حفظ القرآن الكريم والتجويد والتربية القرآنية، مرتبة حسب التصنيف.</p>
 </div></header>
 <section class="section"><div class="container"><div class="prose" style="max-width:980px;">
   <nav aria-label="أقسام الفهرس">
     <p><strong>المقالات:</strong>
     {% for cat, items in blog_groups %}<a href="#blog-{{ cat.slug }}">{{ cat.name }} ({{ items|length }})</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>
+    {% if qna_groups %}<p><strong>الأسئلة والأجوبة:</strong>
+    {% for cat, items in qna_groups %}<a href="#q-{% if cat %}{{ cat.slug }}{% else %}other{% endif %}">{% if cat %}{{ cat.name }}{% else %}أسئلة متنوعة{% endif %} ({{ items|length }})</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>{% endif %}
   </nav>
 
   <h2>الأدلة والفهارس الكبرى</h2>
@@ -37,6 +39,16 @@
     {% for p in items %}<li><a href="{% url 'blog_detail' p.slug %}">{{ p.title }}</a></li>{% endfor %}
   </ul>
   {% endfor %}
+
+  {% if qna_groups %}
+  <h2 id="questions">الأسئلة والأجوبة ({{ questions_count }})</h2>
+  {% for cat, items in qna_groups %}
+  <h3 id="q-{% if cat %}{{ cat.slug }}{% else %}other{% endif %}">{% if cat %}<a href="{% url 'qna:question_list' %}?category={{ cat.slug|urlencode }}">{{ cat.name }}</a>{% else %}أسئلة متنوعة{% endif %}</h3>
+  <ul>
+    {% for q in items %}<li><a href="{% url 'qna:question_detail' q.slug %}">{{ q.title }}</a></li>{% endfor %}
+  </ul>
+  {% endfor %}
+  {% endif %}
 
 </div></div></section>
 {% endblock %}

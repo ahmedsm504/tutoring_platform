@@ -306,17 +306,22 @@ class SeededContentTests(TestCase):
         # الإعلانات في صفحات المحتوى الطويل بس (سياسة أدسنس: مفيش إعلانات على صفحات من غير محتوى كافي)
         for url in ['/contact/', '/accounts/login/', '/questions/', '/about/', '/quran/']:
             self.assertNotContains(self.client.get(url, follow=True), 'adsbygoogle.js', msg_prefix=url)
-        thin_post = Post.objects.published().exclude(pk__in=Post.objects.indexable().values('pk')).first()
+        # مقال قصير (فهرس روابط مثلًا): بيتفهرس، بس من غير إعلانات
+        thin_post = next(p for p in Post.objects.indexable() if not p.shows_ads)
         thin = self.client.get(f'/blog/{thin_post.slug}/', follow=True)
         self.assertNotContains(thin, 'adsbygoogle.js')
-        self.assertContains(thin, 'noindex, follow')
-        rich = Post.objects.indexable().first()
+        self.assertNotContains(thin, 'noindex')
+        rich = next(p for p in Post.objects.indexable() if p.shows_ads)
         r = self.client.get(f'/blog/{rich.slug}/', follow=True)
         self.assertContains(r, 'adsbygoogle.js')
         self.assertNotContains(r, 'noindex')
         self.assertContains(self.client.get('/'), 'adsbygoogle.js')
-        q = self.client.get(reverse('qna:question_list'))
-        self.assertContains(q, 'noindex, follow')
+        # الأسئلة المجابة بتتفهرس (كانت noindex وده كان سبب "تم استثناء الصفحة بواسطة noindex" في Search Console)
+        self.assertNotContains(self.client.get(reverse('qna:question_list')), 'noindex')
+        from qna.models import PublicQuestion
+        answered = PublicQuestion.objects.filter(status='approved', official_answer__isnull=False).first()
+        self.assertNotContains(self.client.get(reverse('qna:question_detail', args=[answered.slug])), 'noindex')
+        self.assertContains(self.client.get(reverse('qna:question_list') + '?search=x'), 'noindex, follow')
 
 
 @override_settings(SECURE_SSL_REDIRECT=False)
@@ -688,10 +693,10 @@ class SiteIndexAndCachingTests(TestCase):
         self.assertEqual(r.status_code, 200)
         rich = Post.objects.indexable().first()
         self.assertContains(r, f'/blog/{rich.slug}/')
-        # المقالات القصيرة (noindex) والأسئلة مش في الفهرس
+        # المقالات المدموجة (redirect) مش في الفهرس، والأسئلة المجابة فيه
         for old in list(merged_redirects())[:50]:
             self.assertNotContains(r, f'/blog/{old}/"')
-        self.assertNotContains(r, '/questions/question/')
+        self.assertContains(r, '/questions/question/')
         self.assertNotIn('X-Robots-Tag', r.headers)
 
     def test_sitemap_has_site_index(self):
@@ -1367,7 +1372,12 @@ class SeoBoostTests(TestCase):
             self.assertIn(f'https://alagme.com/blog/{p.slug}/', locs)
         for p in Post.objects.published().exclude(pk__in=posts.values('pk'))[:50]:
             self.assertNotIn(f'https://alagme.com/blog/{p.slug}/', locs)
-        self.assertFalse(any('/questions/question/' in l for l in locs))
+        from qna.models import PublicQuestion
+        for q in PublicQuestion.objects.filter(status='approved', official_answer__isnull=False)[:50]:
+            from django.utils.encoding import iri_to_uri
+            self.assertIn(iri_to_uri(f'https://alagme.com/questions/question/{q.slug}/'), locs)
+        for path in ['/en/', '/en/pricing/', '/en/contact/', '/videos/']:
+            self.assertIn('https://alagme.com' + path, locs)
         images = list(root.iter('{http://www.google.com/schemas/sitemap-image/1.1}loc'))
         self.assertEqual(len(images), posts.exclude(cloud_url__isnull=True).exclude(cloud_url='').count())
 
@@ -1436,3 +1446,72 @@ class EngagementToolsTests(TestCase):
         self.assertNotIn('noindex', r.get('X-Robots-Tag', ''))
         self.assertContains(self.client.get('/sitemap.xml'), '/quran/hifz-tracker/')
         self.assertContains(self.client.get('/quran/18/'), 'class="hifz-quiz"')
+
+
+class EnglishSiteTests(TestCase):
+    """النسخة الإنجليزية /en/: LTR، hreflang متبادل، زرار تبديل اللغة، والحجز بيشتغل"""
+    def test_english_pages_ltr_and_paired(self):
+        for path, ar in [('/en/', '/'), ('/en/pricing/', '/pricing/'), ('/en/about/', '/about/'),
+                         ('/en/contact/', '/contact/'), ('/en/quran/', '/quran/'), ('/en/blog/', '/blog/'),
+                         ('/en/privacy-policy/', '/privacy-policy/'), ('/en/terms/', '/terms/'),
+                         ('/en/quality-standards/', '/quality-standards/'), ('/en/editorial-policy/', '/editorial-policy/')]:
+            r = self.client.get(path)
+            self.assertEqual(r.status_code, 200, path)
+            self.assertContains(r, '<html lang="en" dir="ltr">', msg_prefix=path)
+            self.assertContains(r, f'hreflang="ar" href="https://alagme.com{ar}"', msg_prefix=path)
+            self.assertNotIn('X-Robots-Tag', r.headers, path)
+            back = self.client.get(ar)
+            self.assertContains(back, f'hreflang="en" href="https://alagme.com{path}"', msg_prefix=ar)
+
+    def test_english_booking(self):
+        from accounts.models import TrialBooking
+        r = self.client.post('/en/contact/', {'name': 'John Smith', 'country': 'UK', 'gender': 'male',
+                                              'phone': '+447700900123', 'email': '', 'notes': 'age 9'})
+        self.assertRedirects(r, '/en/contact/thank-you/')
+        self.assertTrue(TrialBooking.objects.filter(name='John Smith', notes__startswith='[EN site]').exists())
+        bad = self.client.post('/en/contact/', {'name': ''})
+        self.assertContains(bad, 'This field is required')
+
+    def test_english_post_uses_english_chrome(self):
+        p = Post.objects.indexable().filter(category__slug='english').first()
+        r = self.client.get(f'/blog/{p.slug}/')
+        self.assertContains(r, 'dir="ltr"')
+        self.assertContains(r, 'Free trial class')
+
+
+class VideoLibraryTests(TestCase):
+    def test_video_pages(self):
+        from videos.models import Video
+        v = Video.objects.create(youtube_url='https://youtu.be/yUpz_m5kWBE?t=3', title='شرح القلقلة للأطفال',
+                                 description='درس مبسط', duration='5:07', category='tajweed')
+        self.assertEqual(v.youtube_id, 'yUpz_m5kWBE')
+        self.assertEqual(v.iso_duration, 'PT5M7S')
+        r = self.client.get(v.get_absolute_url())
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, '"@type":"VideoObject"')
+        self.assertContains(r, 'PT5M7S')
+        lst = self.client.get('/videos/')
+        self.assertContains(lst, v.title)
+        self.assertNotIn('X-Robots-Tag', lst.headers)
+        self.assertContains(self.client.get('/'), v.get_absolute_url())
+        short = Video.objects.create(youtube_url='https://www.youtube.com/shorts/aqz-KE-bpKQ', title='x')
+        self.assertTrue(short.is_short)
+
+
+class SalaryByLessonCountTests(TestCase):
+    def test_pay_by_count(self):
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        from core.models import Teacher, TeacherSalaryRecord
+        admin = User.objects.create_superuser('boss', 'b@x.com', 'pw')
+        self.client.force_login(admin)
+        t = Teacher.objects.create(name='أ. سارة', lesson_rate=25)
+        r = self.client.post(reverse('add_salary_record'), {'teacher': t.pk, 'lessons_count': '13', 'lesson_rate': '25',
+                                                           'bonus': '10', 'deduction': '0'})
+        self.assertEqual(r.status_code, 302)
+        rec = TeacherSalaryRecord.objects.get(teacher=t)
+        self.assertEqual(float(rec.base_amount), 325.0)
+        self.assertEqual(rec.lessons_count, 13)
+        self.assertEqual(rec.net_amount(), 335.0)
+        page = self.client.get(reverse('add_salary_record'))
+        self.assertContains(page, 'name="lessons_count"')

@@ -1,38 +1,40 @@
 {% load static content_tags %}
 <!DOCTYPE html>
-<html lang="{% block html_lang %}ar{% endblock %}" dir="rtl">
+<html lang="{% block html_lang %}{{ LANG }}{% endblock %}" dir="{% if LANG == 'en' %}ltr{% else %}rtl{% endif %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% filter seo_clip_title %}{% block title %}مؤسسة العجمي | تحفيظ القرآن الكريم أونلاين لجميع الدول{% endblock %}{% endfilter %}</title>
-    <meta name="description" content="{% filter seo_fill_desc %}{% block meta_description %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين للأطفال والكبار، من أي دولة وبتوقيت يناسبك. احجز حلقتك التجريبية المجانية الآن.{% endblock %}{% endfilter %}">
-    <meta name="keywords" content="{% block meta_keywords %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endblock %}">
+    <title>{% filter seo_clip_title %}{% block title %}{% if LANG == 'en' %}Al-Agmi Quran Academy | Online Quran Classes Worldwide{% else %}مؤسسة العجمي | تحفيظ القرآن الكريم أونلاين لجميع الدول{% endif %}{% endblock %}{% endfilter %}</title>
+    <meta name="description" content="{% filter seo_fill_desc %}{% block meta_description %}{% if LANG == 'en' %}One-to-one online Quran classes with certified teachers for kids and adults, from any country and in your time zone. Book your free trial class.{% else %}مؤسسة العجمي: حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين للأطفال والكبار، من أي دولة وبتوقيت يناسبك. احجز حلقتك التجريبية المجانية الآن.{% endif %}{% endblock %}{% endfilter %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% if LANG == 'en' %}online Quran classes, learn Quran online, Quran tutor, Quran for kids, Tajweed classes, Hifz online, Noorani Qaida, Quran teacher for adults{% else %}تحفيظ القرآن الكريم, تحفيظ قرآن اونلاين, معلم قرآن عن بعد, حصص قرآن فردية, تعليم القرآن للأطفال, تعليم القرآن للكبار, دروس تجويد, نور البيان, الأربعون النووية, معلمة قرآن, مؤسسة العجمي, حفظ القرآن, تلاوة القرآن{% endif %}{% endblock %}">
     <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock %}">
     <link rel="canonical" href="{% block canonical_url %}{{ canonical_url }}{% endblock %}">
-    {% block hreflang %}<link rel="alternate" hreflang="ar" href="{{ canonical_url }}">
-    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endblock %}
+    {% block hreflang %}{% if ALT_URL %}<link rel="alternate" hreflang="{{ LANG }}" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="{% if LANG == 'en' %}ar{% else %}en{% endif %}" href="{{ SITE_URL }}{{ ALT_URL }}">
+    <link rel="alternate" hreflang="x-default" href="{% if LANG == 'en' %}{{ SITE_URL }}{{ ALT_URL }}{% else %}{{ canonical_url }}{% endif %}">{% else %}<link rel="alternate" hreflang="{{ LANG }}" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endif %}{% endblock %}
     <link rel="alternate" type="application/rss+xml" title="مقالات مؤسسة العجمي" href="{{ SITE_URL }}/blog/feed/">
     <link rel="alternate" type="application/rss+xml" title="أسئلة وأجوبة مؤسسة العجمي" href="{{ SITE_URL }}/questions/feed/">
-    <meta name="author" content="مؤسسة العجمي">
-    <meta name="theme-color" content="#0a3f39">
+    <meta name="author" content="{% if LANG == 'en' %}Al-Agmi Quran Academy{% else %}مؤسسة العجمي{% endif %}">
+    <meta name="theme-color" content="#152a8f">
     <meta name="yandex-verification" content="2e1b6302af7d6340" />
     {% if BING_SITE_VERIFICATION %}<meta name="msvalidate.01" content="{{ BING_SITE_VERIFICATION }}">{% endif %}
     <meta name="6ccf56db95ea081a7d94b3dce02408c2179346ca" content="6ccf56db95ea081a7d94b3dce02408c2179346ca" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="is-supervisor" content="{% if user.is_authenticated and user.user_type == 'supervisor' %}1{% else %}0{% endif %}">
 
-    <meta property="og:locale" content="{% block og_locale %}ar_AR{% endblock %}">
+    <meta property="og:locale" content="{% block og_locale %}{% if LANG == 'en' %}en_US{% else %}ar_AR{% endif %}{% endblock %}">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:site_name" content="مؤسسة العجمي">
-    <meta property="og:title" content="{% block og_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد لجميع الدول{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين. برامج للأطفال والكبار، والحجز متاح من أي دولة. حلقة تجريبية مجانية.{% endblock %}">
+    <meta property="og:site_name" content="{% if LANG == 'en' %}Al-Agmi Quran Academy{% else %}مؤسسة العجمي{% endif %}">
+    <meta property="og:title" content="{% block og_title %}{% if LANG == 'en' %}Al-Agmi Quran Academy - Online Quran Classes Worldwide{% else %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد لجميع الدول{% endif %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% if LANG == 'en' %}One-to-one online Quran classes with certified teachers. Programmes for kids and adults, bookable from any country. Free trial class.{% else %}حصص فردية لتحفيظ القرآن الكريم عن بُعد مع معلمين متقنين. برامج للأطفال والكبار، والحجز متاح من أي دولة. حلقة تجريبية مجانية.{% endif %}{% endblock %}">
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'images/og-image.jpg' %}{% endblock %}">
-    <meta property="og:image:alt" content="{% block og_image_alt %}مؤسسة العجمي - تحفيظ القرآن الكريم أونلاين{% endblock %}">
+    <meta property="og:image:alt" content="{% block og_image_alt %}{% if LANG == 'en' %}Al-Agmi Quran Academy - online Quran classes{% else %}مؤسسة العجمي - تحفيظ القرآن الكريم أونلاين{% endif %}{% endblock %}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@alagme_12">
-    <meta name="twitter:title" content="{% block twitter_title %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}حصص فردية لتحفيظ القرآن عن بُعد من أي دولة. معلمون متقنون. حلقة تجريبية مجانية.{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}{% if LANG == 'en' %}Al-Agmi Quran Academy - Online Quran Classes{% else %}مؤسسة العجمي - تحفيظ القرآن الكريم عن بُعد{% endif %}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{% if LANG == 'en' %}One-to-one online Quran classes from any country. Certified teachers. Free trial class.{% else %}حصص فردية لتحفيظ القرآن عن بُعد من أي دولة. معلمون متقنون. حلقة تجريبية مجانية.{% endif %}{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}{{ SITE_URL }}{% static 'images/og-image.jpg' %}{% endblock %}">
     {% block extra_meta %}{% endblock %}
 
@@ -46,8 +48,9 @@
     <link rel="manifest" href="{% static 'site.webmanifest' %}">
 
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    {% block font_preload %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{% static 'fonts/noto-kufi-arabic-arabic-700-normal.woff2' %}" as="font" type="font/woff2" crossorigin>{% endblock %}
+    {% block font_preload %}{% if LANG == 'en' %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/baloo-bhaijaan-2-latin-800-normal.woff2' %}" as="font" type="font/woff2" crossorigin>{% else %}<link rel="preload" href="{% static 'fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/baloo-bhaijaan-2-arabic-800-normal.woff2' %}" as="font" type="font/woff2" crossorigin>{% endif %}{% endblock %}
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'css/site.css' %}">
     {% block legacy_css %}{% endblock %}
@@ -84,14 +87,14 @@
           "image": "{{ SITE_URL }}{% static 'images/og-image.jpg' %}",
           "description": "مؤسسة تعليمية متخصصة في تحفيظ القرآن الكريم وتعليم التجويد عن بُعد (أونلاين) لطلاب من جميع الدول، بحصص فردية ومعلمين متقنين.",
           "areaServed": "Worldwide",
-          "knowsLanguage": "ar",
+          "knowsLanguage": ["ar", "en"],
           "address": {"@type": "PostalAddress", "addressCountry": "EG", "addressLocality": "القاهرة"},
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+20-104-456-8181",
             "contactType": "customer service",
             "areaServed": "Worldwide",
-            "availableLanguage": ["ar"],
+            "availableLanguage": ["ar", "en"],
             "hoursAvailable": {
               "@type": "OpeningHoursSpecification",
               "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
@@ -112,7 +115,7 @@
           "@id": "{{ SITE_URL }}/#website",
           "url": "{{ SITE_URL }}/",
           "name": "مؤسسة العجمي لتحفيظ القرآن الكريم",
-          "inLanguage": "ar",
+          "inLanguage": ["ar", "en"],
           "publisher": {"@id": "{{ SITE_URL }}/#organization"},
           "potentialAction": {
             "@type": "SearchAction",
@@ -129,7 +132,7 @@
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLL77QGN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <a href="#main" class="skip-link">انتقل إلى المحتوى</a>
+    <a href="#main" class="skip-link">{% if LANG == 'en' %}Skip to content{% else %}انتقل إلى المحتوى{% endif %}</a>
 
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5l3 5.7 6-2.7-2.7 6L24 12l-5.7 3 2.7 6-6-2.7-3 5.7-3-5.7-6 2.7 2.7-6L0 12l5.7-3L3 3l6 2.7z"/></symbol>
@@ -144,10 +147,11 @@
       <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></g></symbol>
     </svg>
 
+    {% if LANG == 'en' %}{% include 'en/_header.html' %}{% else %}
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="{% url 'home' %}" aria-label="مؤسسة العجمي - الصفحة الرئيسية">
-          <img src="{% static 'images/logo.jpeg' %}" alt="" width="46" height="46">
+          <img src="{% static 'images/logo-mark.svg' %}" alt="" width="46" height="46">
           <span class="brand-name">العجمي<small>لتحفيظ القرآن الكريم</small></span>
         </a>
         {% with u=request.resolver_match.url_name ns=request.resolver_match.namespace %}
@@ -155,9 +159,9 @@
           <a href="{% url 'home' %}" {% if u == 'home' %}aria-current="page"{% endif %}>الرئيسية</a>
           <a href="{% url 'pricing' %}" {% if u == 'pricing' %}aria-current="page"{% endif %}>الباقات</a>
           <a href="{% url 'about' %}" {% if u == 'about' %}aria-current="page"{% endif %}>من نحن</a>
-          <a href="{% url 'quality_standards' %}" {% if u == 'quality_standards' %}aria-current="page"{% endif %}>مواثيق الجودة</a>
           <a href="{% url 'quran_index' %}" {% if '/quran/' in request.path %}aria-current="page"{% endif %}>المصحف</a>
           <a href="{% url 'blog_list' %}" {% if '/blog/' in request.path %}aria-current="page"{% endif %}>المدونة</a>
+          <a href="{% url 'video_list' %}" {% if '/videos/' in request.path %}aria-current="page"{% endif %}>الفيديوهات</a>
           <a href="{% url 'qna:question_list' %}" {% if ns == 'qna' %}aria-current="page"{% endif %}>أسئلة وأجوبة</a>
           <a href="{% url 'contact' %}" {% if u == 'contact' %}aria-current="page"{% endif %}>تواصل معنا</a>
           {% if user.is_authenticated %}
@@ -171,21 +175,24 @@
         </nav>
         {% endwith %}
         <div class="header-actions">
+          <a class="lang-switch" href="{{ ALT_URL|default:'/en/' }}" hreflang="en" lang="en"><svg aria-hidden="true"><use href="#i-globe"/></svg>English</a>
           <a class="btn btn-primary" href="{% url 'contact' %}">احجز حلقة مجانية</a>
         </div>
         <button class="menu-btn" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="القائمة"><span></span><span></span><span></span></button>
       </div>
     </header>
+    {% endif %}
 
     <main id="main">
       {% block content %}{% endblock %}
     </main>
 
+    {% if LANG == 'en' %}{% include 'en/_footer.html' %}{% else %}
     <footer class="site-footer">
       <div class="container footer-inner">
         <div class="footer-brand">
           <a class="brand" href="{% url 'home' %}">
-            <img src="{% static 'images/logo.jpeg' %}" alt="" width="46" height="46" loading="lazy">
+            <img src="{% static 'images/logo-mark.svg' %}" alt="" width="46" height="46" loading="lazy">
             <span class="brand-name">مؤسسة العجمي<small>لتحفيظ القرآن الكريم أونلاين</small></span>
           </a>
           <p>حصص فردية لتحفيظ القرآن الكريم وتعليم التجويد عن بُعد، لطلاب من كل الدول والأعمار.</p>
@@ -215,6 +222,7 @@
             <li><a href="{% url 'quran_index' %}">القرآن الكريم مكتوب واستماع</a></li>
             <li><a href="{% url 'quran_tracker' %}">متابعة حفظ القرآن</a></li>
             <li><a href="{% url 'blog_list' %}">المدونة</a></li>
+            <li><a href="{% url 'video_list' %}">الفيديوهات</a></li>
             <li><a href="{% url 'qna:question_list' %}">أسئلة وأجوبة</a></li>
             <li><a href="{% url 'site_index' %}">فهرس كل المقالات والأسئلة</a></li>
             <li><a href="{% url 'editorial_policy' %}">منهجية المحتوى</a></li>
@@ -239,9 +247,10 @@
         <a href="{% url 'contact' %}">احجز حلقتك التجريبية المجانية</a>
       </div>
     </footer>
+    {% endif %}
 
-    <a class="fab-wa" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener" aria-label="كلمنا على واتساب">
-      <svg aria-hidden="true"><use href="#i-chat"/></svg><span>واتساب</span>
+    <a class="fab-wa" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener" aria-label="{% if LANG == 'en' %}Chat with us on WhatsApp{% else %}كلمنا على واتساب{% endif %}">
+      <svg aria-hidden="true"><use href="#i-chat"/></svg><span>{% if LANG == 'en' %}WhatsApp{% else %}واتساب{% endif %}</span>
     </a>
 
     <script>
