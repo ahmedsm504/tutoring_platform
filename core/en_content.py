@@ -242,5 +242,6 @@ PAIRS = {
     'quality_standards': 'en_quality_standards', 'privacy': 'en_privacy', 'terms': 'en_terms',
     'editorial_policy': 'en_editorial_policy', 'quran_index': 'en_quran_index', 'blog_list': 'en_blog_list',
     'thank_you': 'en_thank_you',
+    'khatma_planner': 'en_khatma_planner', 'hifz_planner': 'en_hifz_planner',
 }
 PAIRS.update({v: k for k, v in list(PAIRS.items())})

@@ -13,7 +13,7 @@ from core.push_status import push_status
 
 from .robots_view import llms_txt, robots_txt
 from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap, QNAQuestionsSitemap,
-                       QuranSitemap, StaticViewSitemap, VideoSitemap)
+                       PlannerSitemap, QuranSitemap, StaticViewSitemap, VideoSitemap)
 
 
 def indexnow_key(request):
@@ -29,6 +29,7 @@ sitemaps = {
     'questions': QNAQuestionsSitemap,
     'question-categories': QNACategorySitemap,
     'quran': QuranSitemap,
+    'quran-tools': PlannerSitemap,
     'videos': VideoSitemap,
 }
 

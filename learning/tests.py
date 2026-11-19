@@ -199,3 +199,67 @@ class HomeworkTests(TestCase):
         self.login(self.t_user)
         self.assertEqual(self.client.get(reverse('learning_teacher_list')).status_code, 200)
         self.assertEqual(self.client.get(reverse('learning_teacher_new')).status_code, 200)
+
+
+@override_settings(SECURE_SSL_REDIRECT=False)
+class PlannerTests(TestCase):
+    """حاسبة ختم القرآن وخطة الحفظ (عربي + إنجليزي)"""
+
+    def test_mushaf_data(self):
+        from .mushaf import JUZ_FIRST, JUZ_START, PAGE_START
+        self.assertEqual(len(PAGE_START), 604)
+        self.assertEqual(PAGE_START[1], (2, 1))
+        self.assertEqual(JUZ_START[1], 22)
+        self.assertEqual(JUZ_START[29], 582)
+        self.assertEqual(JUZ_FIRST[6], (5, 82))
+
+    def test_ramadan_rows_follow_juz(self):
+        from . import planner as P
+        rows, weekly = P.khatma_rows(30)
+        self.assertFalse(weekly)
+        self.assertEqual(len(rows), 30)
+        self.assertEqual((rows[0]['from'], rows[0]['to']), ((1, 1), (2, 141)))
+        self.assertEqual((rows[6]['from'], rows[5]['to']), ((5, 82), (5, 81)))
+        self.assertEqual(rows[-1]['to'], (114, 6))
+        self.assertTrue(rows[-1]['khatma_done'])
+        rows, _ = P.khatma_rows(30, 2)
+        self.assertEqual([r['day'] for r in rows if r['khatma_done']], [15, 30])
+
+    def test_other_plans_cover_whole_mushaf(self):
+        from . import planner as P
+        for days in (7, 20, 40, 90, 365):
+            rows, _ = P.khatma_rows(days)
+            self.assertEqual(sum(r['pages'] for r in rows), 604, days)
+            self.assertEqual(rows[-1]['to'], (114, 6))
+        h = P.hifz_rows(3)
+        self.assertEqual(len(h), 36)
+        self.assertEqual(sum(r['pages'] for r in h), 604)
+        self.assertEqual(h[0]['runs'][0]['from'], (78, 1))  # البداية من جزء عمّ
+
+    def test_pages_render_with_seo(self):
+        from .views_planner import all_urls
+        urls = all_urls()
+        self.assertGreater(len(urls), 30)
+        for u in urls:
+            r = self.client.get(u)
+            self.assertEqual(r.status_code, 200, u)
+            html = r.content.decode()
+            self.assertIn('"@type": "FAQPage"', html, u)
+            self.assertIn('"@type": "WebApplication"', html, u)
+            self.assertIn('hreflang="en"', html, u)
+            self.assertIn('hreflang="ar"', html, u)
+            self.assertNotIn('noindex', html, u)
+        r = self.client.get('/quran/khatma/ramadan/')
+        self.assertContains(r, 'جدول ختم القرآن في رمضان')
+        self.assertContains(r, 'href="https://alagme.com/en/quran/khatam-planner/ramadan/"')
+        self.assertContains(self.client.get('/en/quran/memorization-planner/1-year/'), 'Quran Memorization Plan in 1 Year')
+
+    def test_unknown_preset_404(self):
+        self.assertEqual(self.client.get('/quran/khatma/99-days/').status_code, 404)
+        self.assertEqual(self.client.get('/en/quran/memorization-planner/9-years/').status_code, 404)
+
+    def test_in_sitemap(self):
+        xml = self.client.get('/sitemap.xml').content.decode()
+        for u in ('/quran/khatma/', '/quran/khatma/ramadan/', '/quran/hifz-plan/3-years/',
+                  '/en/quran/khatam-planner/30-days/', '/en/quran/memorization-planner/'):
+            self.assertIn('https://alagme.com' + u, xml)

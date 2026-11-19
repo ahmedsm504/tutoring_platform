@@ -39,6 +39,10 @@ def llms_txt(request):
 - [المدونة]({site}/blog/): مقالات عن الحفظ والتجويد والتربية القرآنية
 - [أسئلة وأجوبة]({site}/questions/): أسئلة الناس عن القرآن والتجويد وإجاباتها
 - [القرآن الكريم مكتوب واستماع]({site}/quran/): نص المصحف بالرسم العثماني لكل السور مع استماع آية بآية بصوت الحصري والمنشاوي وغيرهم
+- [حاسبة ختم القرآن]({site}/quran/khatma/): جدول ختمة يوم بيوم بالصفحات والسور والآيات (رمضان، شهر، أسبوع، سنة) مع تقسيم على الصلوات
+- [خطة حفظ القرآن]({site}/quran/hifz-plan/): كم صفحة تحفظ يوميًا لحفظ القرآن في سنة أو 3 أو 5 سنوات، مع جدول شهري بالسور والأجزاء
+- [Quran Khatam Planner (English)]({site}/en/quran/khatam-planner/): day-by-day Quran reading schedule for Ramadan, 30 days or any plan
+- [Quran Memorization Planner (English)]({site}/en/quran/memorization-planner/): hifz calculator with a monthly schedule by surah and juz
 
 ## تواصل
 - واتساب: https://wa.me/{getattr(settings, 'WHATSAPP_PUBLIC_NUMBER', '')}

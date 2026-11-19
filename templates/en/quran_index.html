@@ -25,6 +25,8 @@
   <p>Choose a surah, read it in the Uthmani script, and listen to your favourite reciter. You can repeat each verse and hide the text to test your memorisation. The surah pages are in Arabic.</p>
 </div></header>
 <section class="section"><div class="container">
+  <p style="margin:0 0 14px;display:flex;flex-wrap:wrap;gap:8px;"><a class="btn btn-primary" href="{% url 'en_khatma_planner' %}">📖 Quran khatam planner</a>
+  <a class="btn btn-primary" href="{% url 'en_hifz_planner' %}">🗓️ Quran memorization planner</a></p>
   <label class="sr-only" for="sfind">Search for a surah</label>
   <input id="sfind" class="sfind" type="search" placeholder="🔎 Search by surah name or number">
   <ul class="sgrid" id="sgrid">
