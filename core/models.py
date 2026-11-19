@@ -838,3 +838,30 @@ class PushLog(models.Model):
 
     def __str__(self):
         return f'{self.get_kind_display()} {self.success}/{self.tokens} {self.created_at:%Y-%m-%d %H:%M}'
+
+
+class GscUrlStatus(models.Model):
+    """حالة فهرسة كل رابط في جوجل زي ما بيقولها Search Console (URL Inspection API).
+    بيتحدّث تلقائي يوميًا من manage.py gsc_sync (من غير ما حد يفتح Search Console)."""
+    url = models.CharField(max_length=500, unique=True)
+    verdict = models.CharField('الحكم', max_length=40, blank=True)  # PASS / NEUTRAL / FAIL
+    coverage_state = models.CharField('حالة الفهرسة', max_length=200, blank=True)
+    indexing_state = models.CharField(max_length=60, blank=True)
+    page_fetch_state = models.CharField(max_length=60, blank=True)
+    robots_state = models.CharField(max_length=40, blank=True)
+    google_canonical = models.CharField(max_length=500, blank=True)
+    last_crawl = models.DateTimeField('آخر زحف', null=True, blank=True)
+    problem = models.CharField('مشكلة من ناحية الموقع', max_length=200, blank=True)
+    checked_at = models.DateTimeField('آخر فحص', default=timezone.now)
+
+    class Meta:
+        verbose_name = 'حالة فهرسة جوجل'
+        verbose_name_plural = 'حالة الفهرسة في جوجل'
+        ordering = ['-checked_at']
+
+    def __str__(self):
+        return self.url
+
+    @property
+    def indexed(self):
+        return self.verdict == 'PASS'

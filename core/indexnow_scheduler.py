@@ -15,16 +15,18 @@ logger = logging.getLogger(__name__)
 
 INTERVAL = timedelta(hours=3)
 LOCK_URL = '__scheduler__/indexnow'
+GSC_INTERVAL = timedelta(hours=20)
+GSC_LOCK_URL = '__scheduler__/gsc'
 _next_check = 0.0
 _guard = threading.Lock()
 
 
-def _claim():
+def _claim(lock_url=LOCK_URL, interval=INTERVAL):
     """True لو العملية دي هي اللي هتشغّل الدورة الجاية (قفل ذرّي في قاعدة البيانات)"""
     from core.models import IndexNowPing
     now = timezone.now()
-    IndexNowPing.objects.get_or_create(url=LOCK_URL, defaults={'pinged_at': now - INTERVAL * 2})
-    return IndexNowPing.objects.filter(url=LOCK_URL, pinged_at__lt=now - INTERVAL).update(pinged_at=now) == 1
+    IndexNowPing.objects.get_or_create(url=lock_url, defaults={'pinged_at': now - interval * 2})
+    return IndexNowPing.objects.filter(url=lock_url, pinged_at__lt=now - interval).update(pinged_at=now) == 1
 
 
 def _run():
@@ -37,6 +39,11 @@ def _run():
             call_command('indexnow_ping', '--refresh')
     except Exception:
         logger.exception('IndexNow scheduler فشل')
+    try:
+        if _claim(GSC_LOCK_URL, GSC_INTERVAL):
+            call_command('gsc_sync')  # جوجل: إعادة إرسال السايت ماب + فحص الفهرسة + تقرير المشاكل
+    except Exception:
+        logger.exception('GSC sync فشل')
     finally:
         close_old_connections()
 

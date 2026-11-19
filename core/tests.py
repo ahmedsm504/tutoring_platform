@@ -1548,3 +1548,98 @@ class ChannelVideosTests(TestCase):
         self.assertEqual(v.category, 'tajweed')
         self.assertTrue(v.is_short)
         self.assertIn('منصة العجمي', v.description)
+
+
+class GscSyncTests(TestCase):
+    """Search Console التلقائي: من غير نت، بنقلّد ردود جوجل"""
+
+    class _Resp:
+        def __init__(self, code=200, data=None):
+            self.status_code, self._d = code, data or {}
+
+        def json(self):
+            return self._d
+
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise RuntimeError(self.status_code)
+
+    class _Session:
+        def __init__(self, results):
+            self.results, self.put_urls, self.inspected = results, [], []
+
+        def put(self, url, timeout=None):
+            self.put_urls.append(url)
+            return GscSyncTests._Resp(204)
+
+        def post(self, url, json=None, timeout=None):
+            self.inspected.append(json['inspectionUrl'])
+            res = self.results(json['inspectionUrl'])
+            if res is None:
+                return GscSyncTests._Resp(429)
+            return GscSyncTests._Resp(200, {'inspectionResult': {'indexStatusResult': res}})
+
+    def _run(self, results, urls, limit=10):
+        from unittest import mock
+        from core import gsc
+        sess = self._Session(results)
+        with mock.patch.object(gsc, 'session', return_value=sess), \
+                mock.patch.object(gsc, 'sitemap_urls', return_value={u: None for u in urls}):
+            out = gsc.run(limit=limit, report=False)
+        return sess, out
+
+    def test_submits_sitemap_and_records_status(self):
+        from core.models import GscUrlStatus
+        urls = ['https://alagme.com/a/', 'https://alagme.com/b/', 'https://alagme.com/c/']
+
+        def res(u):
+            if u.endswith('/a/'):
+                return {'verdict': 'PASS', 'coverageState': 'Submitted and indexed', 'indexingState': 'INDEXING_ALLOWED',
+                        'pageFetchState': 'SUCCESSFUL', 'lastCrawlTime': '2026-11-01T10:00:00Z'}
+            if u.endswith('/b/'):
+                return {'verdict': 'NEUTRAL', 'coverageState': 'Discovered - currently not indexed'}
+            return {'verdict': 'FAIL', 'coverageState': "Excluded by 'noindex' tag",
+                    'indexingState': 'BLOCKED_BY_META_TAG', 'pageFetchState': 'SUCCESSFUL'}
+
+        sess, (checked, problems) = self._run(res, urls)
+        self.assertEqual(checked, 3)
+        self.assertIn('sitemap.xml', sess.put_urls[0])
+        self.assertIn('sc-domain%3Aalagme.com', sess.put_urls[0])
+        self.assertTrue(GscUrlStatus.objects.get(url=urls[0]).indexed)
+        self.assertEqual(GscUrlStatus.objects.get(url=urls[1]).problem, '')  # لسه ماتفهرستش ≠ مشكلة
+        self.assertEqual(GscUrlStatus.objects.get(url=urls[2]).problem, 'عليها noindex')
+        self.assertEqual(problems, [(urls[2], 'عليها noindex')])
+
+    def test_quota_stops_and_recent_not_rechecked(self):
+        from core.models import GscUrlStatus
+        urls = [f'https://alagme.com/p{i}/' for i in range(5)]
+        calls = {'n': 0}
+
+        def res(u):
+            calls['n'] += 1
+            return None if calls['n'] > 2 else {'verdict': 'PASS', 'coverageState': 'Submitted and indexed'}
+
+        _, (checked, _) = self._run(res, urls)
+        self.assertEqual(checked, 2)
+        self.assertEqual(GscUrlStatus.objects.count(), 2)
+        # المرة الجاية: اللي اتفحص حالًا (ومتفهرس) مايتفحصش تاني، والباقي ياخد الأولوية
+        sess, _ = self._run(lambda u: {'verdict': 'PASS'}, urls)
+        self.assertEqual(sorted(sess.inspected), sorted(urls[2:]))
+
+    def test_not_configured_is_reported_not_crashing(self):
+        import os
+        from io import StringIO
+        from unittest import mock
+        from django.core.management import call_command
+        env = {k: v for k, v in os.environ.items()
+               if not k.startswith(('FIREBASE', 'GSC_CREDENTIALS', 'GOOGLE_CREDENTIALS'))}
+        err = StringIO()
+        with mock.patch.dict(os.environ, env, clear=True):
+            call_command('gsc_sync', stderr=err, stdout=StringIO())
+        self.assertIn('GSC مش متظبط', err.getvalue())
+
+    def test_real_sitemap_urls_are_absolute(self):
+        from core import gsc
+        urls = gsc.sitemap_urls()
+        self.assertTrue(urls)
+        self.assertTrue(all(u.startswith('https://') for u in urls))

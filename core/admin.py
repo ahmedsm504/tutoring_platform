@@ -116,3 +116,32 @@ class TeacherActivityAdmin(admin.ModelAdmin):
     list_filter = ('kind', 'status', 'teacher')
     search_fields = ('teacher__name', 'student_name')
     readonly_fields = ('created_at',)
+
+
+from .models import GscUrlStatus  # noqa: E402
+
+
+class GscIndexedFilter(admin.SimpleListFilter):
+    title = 'متفهرسة؟'
+    parameter_name = 'indexed'
+
+    def lookups(self, request, model_admin):
+        return (('yes', 'متفهرسة'), ('no', 'مش متفهرسة'), ('problem', 'فيها مشكلة من ناحية الموقع'))
+
+    def queryset(self, request, qs):
+        if self.value() == 'yes':
+            return qs.filter(verdict='PASS')
+        if self.value() == 'no':
+            return qs.exclude(verdict='PASS')
+        if self.value() == 'problem':
+            return qs.exclude(problem='')
+        return qs
+
+
+@admin.register(GscUrlStatus)
+class GscUrlStatusAdmin(admin.ModelAdmin):
+    list_display = ('url', 'verdict', 'coverage_state', 'problem', 'last_crawl', 'checked_at')
+    list_filter = (GscIndexedFilter, 'coverage_state', 'verdict')
+    search_fields = ('url', 'coverage_state', 'problem')
+    readonly_fields = [f.name for f in GscUrlStatus._meta.fields]
+    date_hierarchy = 'checked_at'
