@@ -151,7 +151,9 @@
     boxes.forEach(function (b) { if (b.checked) n++; });
     var pct = boxes.length ? Math.round(100 * n / boxes.length) : 0;
     $('p-bar').style.width = pct + '%';
-    if (n) $('p-txt').textContent = (EN ? 'Completed: ' : 'أنجزت: ') + n + ' / ' + boxes.length + ' (' + pct + '%)';
+    var t = $('p-txt');
+    if (!t.dataset.def) t.dataset.def = t.textContent;
+    t.textContent = n ? (EN ? 'Completed: ' : 'أنجزت: ') + n + ' / ' + boxes.length + ' (' + pct + '%)' : t.dataset.def;
   }
   function setParams(obj) {
     var u = new URL(location.href);
