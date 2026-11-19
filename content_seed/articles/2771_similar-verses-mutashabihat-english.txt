@@ -1,0 +1,195 @@
+title: Similar Verses in the Quran (Mutashabihat): 7 Practical Methods to Stop Mixing Them Up in Hifz
+category: english
+translation_of: mutashabihat-lafziyya-dabt
+excerpt: Do you keep jumping from one verse to a similar one in another surah while reciting from memory? A practical guide to mutashabihat for memorizers: what similar verses are, the main types with real examples, seven methods to secure them, common mistakes, a weekly revision table, and answers to the questions memorizers ask most.
+meta: How to stop mixing up similar verses (mutashabihat) in Quran memorization: types with real examples, 7 practical methods, mistakes to avoid and a weekly plan.
+keywords: mutashabihat quran, similar verses in quran memorization, how to not mix up similar ayat, mutashabihat al quran hifz tips, confusing similar verses quran, quran memorization similar verses, mutashabih lafzi
+reading: 15
+---
+Every memorizer knows the moment: you are reciting confidently, and suddenly you find yourself in a different surah. A phrase that appears in two places pulled you from one to the other. Or you recite a verse perfectly except for one small word that belongs to its "twin" elsewhere. These are the **mutashabihat**, verses or phrases that are similar in wording but differ in small details, and securing them is one of the true tests of strong hifz.
+
+This guide explains what similar verses are, shows real examples, and gives you seven practical methods that memorizers and teachers have used for generations.
+
+## What Are Verbal Mutashabihat?
+
+In the context of memorization, **al-mutashabih al-lafzi** refers to passages whose wording closely resembles another passage, with differences such as an added letter, a changed word, a different order or a different verse ending. (This is different from the theological discussion of "mutashabih" verses in Surah Al 'Imran, which concerns meanings, not memorization.)
+
+### Why are there similar verses in the Quran?
+Stories such as those of Musa, Ibrahim and Nuh are told in several surahs, each time from a different angle and with a different emphasis suited to the surah's context. Scholars have written whole books on the wisdom behind each difference, showing that every word is precisely chosen for its place. For the memorizer, the practical result is clear: similar wording in different places, which must be secured carefully.
+
+## Types of Verbal Similarity
+
+| Type | Description | Short example |
+|---|---|---|
+| An added or missing letter | A waw, fa' or min present in one place and absent in another | "yudhabbihuna" and "wa yudhabbihuna" |
+| A replaced word | A word in one place matched by a different word in the similar place | "yudhabbihuna" and "yuqattiluna" |
+| Different order | The same phrases in a different sequence | "enter the gate prostrating and say: relieve us" and the reverse |
+| Different grammatical ending | A word in one case here and another case there | "as-sabi'ina" and "as-sabi'una" |
+| Different verse endings | The same opening, a different ending | "'alimun hakim" and "'azizun hakim" |
+| Singular/plural or masculine/feminine | A singular in one place, plural in another | "khatayakum" and "khati'atikum" |
+
+## Famous Examples
+
+### Example 1: Entering the town, in Al-Baqarah and Al-A'raf
+
+﴿وَإِذۡ قُلۡنَا ٱدۡخُلُواْ هَٰذِهِ ٱلۡقَرۡيَةَ فَكُلُواْ مِنۡهَا حَيۡثُ شِئۡتُمۡ رَغَدٗا وَٱدۡخُلُواْ ٱلۡبَابَ سُجَّدٗا وَقُولُواْ حِطَّةࣱ نَّغۡفِرۡ لَكُمۡ خَطَٰيَٰكُمۡۚ وَسَنَزِيدُ ٱلۡمُحۡسِنِينَ﴾ (Quran 2:58)
+
+﴿وَإِذۡ قِيلَ لَهُمُ ٱسۡكُنُواْ هَٰذِهِ ٱلۡقَرۡيَةَ وَكُلُواْ مِنۡهَا حَيۡثُ شِئۡتُمۡ وَقُولُواْ حِطَّةࣱ وَٱدۡخُلُواْ ٱلۡبَابَ سُجَّدٗا نَّغۡفِرۡ لَكُمۡ خَطِيٓـَٰٔتِكُمۡۚ سَنَزِيدُ ٱلۡمُحۡسِنِينَ﴾ (Quran 7:161)
+
+Look at the differences:
+- "Wa idh qulna" (when **We** said) in Al-Baqarah; "wa idh qila lahum" (when **it was said** to them) in Al-A'raf.
+- "Udkhulu" (enter) versus "uskunu" (dwell).
+- "Fa kulu" with fa' versus "wa kulu" with waw.
+- "Raghadan" appears only in Al-Baqarah.
+- The order of "enter the gate prostrating" and "say: relieve us" is reversed.
+- "Khatayakum" versus "khati'atikum".
+- "Wa sanazidu" with waw in Al-Baqarah; "sanazidu" without waw in Al-A'raf.
+
+A memorizer who notes these seven differences once, carefully, will rarely confuse these verses again.
+
+### Example 2: "Yudhabbihuna", "wa yudhabbihuna" and "yuqattiluna"
+
+﴿وَإِذۡ نَجَّيۡنَٰكُم مِّنۡ ءَالِ فِرۡعَوۡنَ يَسُومُونَكُمۡ سُوٓءَ ٱلۡعَذَابِ يُذَبِّحُونَ أَبۡنَآءَكُمۡ وَيَسۡتَحۡيُونَ نِسَآءَكُمۡۚ وَفِي ذَٰلِكُم بَلَآءࣱ مِّن رَّبِّكُمۡ عَظِيمࣱ﴾ (Quran 2:49)
+
+﴿وَإِذۡ أَنجَيۡنَٰكُم مِّنۡ ءَالِ فِرۡعَوۡنَ يَسُومُونَكُمۡ سُوٓءَ ٱلۡعَذَابِ يُقَتِّلُونَ أَبۡنَآءَكُمۡ وَيَسۡتَحۡيُونَ نِسَآءَكُمۡۚ وَفِي ذَٰلِكُم بَلَآءࣱ مِّن رَّبِّكُمۡ عَظِيمࣱ﴾ (Quran 7:141)
+
+﴿وَإِذۡ قَالَ مُوسَىٰ لِقَوۡمِهِ ٱذۡكُرُواْ نِعۡمَةَ ٱللَّهِ عَلَيۡكُمۡ إِذۡ أَنجَىٰكُم مِّنۡ ءَالِ فِرۡعَوۡنَ يَسُومُونَكُمۡ سُوٓءَ ٱلۡعَذَابِ وَيُذَبِّحُونَ أَبۡنَآءَكُمۡ وَيَسۡتَحۡيُونَ نِسَآءَكُمۡۚ وَفِي ذَٰلِكُم بَلَآءࣱ مِّن رَّبِّكُمۡ عَظِيمࣱ﴾ (Quran 14:6)
+
+- Al-Baqarah 49: "yudhabbihuna" (slaughtering), without waw.
+- Al-A'raf 141: "yuqattiluna" (killing).
+- Ibrahim 6: "wa yudhabbihuna", with waw.
+
+Notice also that Al-Baqarah has "najjaynakum" while Al-A'raf has "anjaynakum", and Ibrahim has "anjakum" because the speaker there is Musa.
+
+### Example 3: "As-sabi'ina" and "as-sabi'una"
+
+﴿إِنَّ ٱلَّذِينَ ءَامَنُواْ وَٱلَّذِينَ هَادُواْ وَٱلنَّصَٰرَىٰ وَٱلصَّـٰبِـِٔينَ مَنۡ ءَامَنَ بِٱللَّهِ وَٱلۡيَوۡمِ ٱلۡأٓخِرِ وَعَمِلَ صَٰلِحٗا فَلَهُمۡ أَجۡرُهُمۡ عِندَ رَبِّهِمۡ وَلَا خَوۡفٌ عَلَيۡهِمۡ وَلَا هُمۡ يَحۡزَنُونَ﴾ (Quran 2:62)
+
+﴿إِنَّ ٱلَّذِينَ ءَامَنُواْ وَٱلَّذِينَ هَادُواْ وَٱلصَّـٰبِـُٔونَ وَٱلنَّصَٰرَىٰ مَنۡ ءَامَنَ بِٱللَّهِ وَٱلۡيَوۡمِ ٱلۡأٓخِرِ وَعَمِلَ صَٰلِحٗا فَلَا خَوۡفٌ عَلَيۡهِمۡ وَلَا هُمۡ يَحۡزَنُونَ﴾ (Quran 5:69)
+
+- Al-Baqarah 62: "wan-nasara was-sabi'ina": the Christians before the Sabians, and "as-sabi'ina" in the accusative.
+- Al-Ma'idah 69: "was-sabi'una wan-nasara": the Sabians first, and "as-sabi'una" in the nominative.
+- Al-Baqarah 62 also has "fa lahum ajruhum 'inda rabbihim" before "wa la khawfun 'alayhim", which Al-Ma'idah 69 does not.
+
+### Example 4: Killing the prophets
+- Al-Baqarah 61: "wa yaqtuluna an-nabiyyina bighayri al-haqq" (with "al").
+- Al 'Imran 21: "wa yaqtuluna an-nabiyyina bighayri haqq" (without "al").
+- Al 'Imran 112: "wa yaqtuluna al-anbiya'a bighayri haqq" (a different plural).
+- An-Nisa' 155: "wa qatlihimu al-anbiya'a bighayri haqq".
+
+## Seven Practical Methods to Secure Similar Verses
+
+### Method 1: A mutashabihat notebook
+Keep a dedicated notebook. Whenever you notice (or your teacher notices) a confusion, write both passages side by side, underline the differences, and note the surah and verse. Review the notebook regularly. Over time it becomes a personal map of your weak points.
+
+### Method 2: Master the first occurrence before the second
+When you memorize a passage that resembles something you already know, go back and recite the first one before memorizing the new one. Make the first one rock-solid; then memorize the second one deliberately "against" it.
+
+### Method 3: Secure it through meaning and context
+Ask why the wording differs. In Al-Baqarah, Allah speaks in the first person: "when **We** said", and the passage is full of reminders of His favours, which fits "raghadan" (abundantly) and "wa sanazidu". Even when you cannot know every wisdom, linking a word to its surah's context makes it stick.
+
+### Method 4: Short rules and mnemonics
+Memorizers have long used short phrases to remember differences, such as: "Baqarah has no waw in yudhabbihuna; Ibrahim adds it; A'raf kills (yuqattiluna)." Create your own; the sillier, the more memorable.
+
+### Method 5: Counting and ordering
+Some phrases appear a fixed number of times. Knowing that a phrase appears, for example, three times, and in which surahs, lets you check yourself. Lists of where each version appears are very helpful for long stories such as Musa's.
+
+### Method 6: Cross-revision
+Revise similar passages back to back, deliberately. After reciting the passage in Al-Baqarah, immediately recite the one in Al-A'raf. Comparing them aloud, close together, trains your memory to keep them apart.
+
+### Method 7: A mark in your Mushaf
+Use a light pencil mark or small symbol on the word that differs, in your personal memorization Mushaf. When you revise, your eye catches it. (Keep marks discreet and minimal.)
+
+## Common Mistakes With Similar Verses
+
+- **Ignoring them until they cause problems**: they are easier to secure when first memorized than after a confusion has settled in.
+- **Relying on "feel" alone**: similar verses need deliberate attention, not just more repetition.
+- **Revising similar passages far apart**: you never compare them, so the confusion persists.
+- **Getting discouraged**: confusing similar verses is normal, even for strong memorizers. It is a stage, not a verdict.
+
+## When Should You Start Focusing on Them?
+
+From your very first similar passage. Even in Juz' Amma there are similarities: "inna al-abrara lafi na'im" appears in both Al-Infitar (verse 13) and Al-Mutaffifin (verse 22), followed by different verses. But the issue becomes central once you memorize long surahs, especially Al-Baqarah, Al 'Imran, An-Nisa', Al-A'raf and the stories of the prophets.
+
+## How a Teacher Helps
+
+A teacher with experience in hifz will:
+- test you from random points, which exposes confusions you didn't know you had;
+- point out upcoming similar passages before you memorize them;
+- suggest mnemonics and the classic "rules" scholars have used;
+- help you build your notebook.
+
+Reciting to a teacher weekly is one of the most effective ways to catch mutashabihat early.
+
+## A Practical Exercise
+
+1. Choose two similar passages from this article (for example Al-Baqarah 58 and Al-A'raf 161).
+2. Write both by hand, one above the other.
+3. Circle every difference.
+4. Recite each one three times, then recite them back to back.
+5. Tomorrow, recite them again without looking, starting with the one you feel less sure about.
+
+## Similar Verse Endings
+
+A very common type of confusion is the ending of a verse: "wallahu 'alimun hakim" versus "wallahu 'azizun hakim", "inna Allaha ghafurun rahim" versus "inna Allaha 'alimun khabir". Two tips:
+- Link the ending to the content: a verse about knowledge of hidden things often ends with names of knowledge; a verse about forgiveness often ends with "ghafurun rahim."
+- Before memorizing a new page, read only the verse endings to fix them first.
+
+## Similar Stories
+
+The story of Musa (peace be upon him) appears in many surahs, as do those of Ibrahim, Nuh, Hud, Salih, Lut and Shu'ayb. For each:
+- Note what details appear in which surah (for example, which surahs mention the staff becoming a snake, or the sea parting).
+- Learn the "headline" of each surah's version: what that surah focuses on.
+- Revise the versions of one story back to back once you have memorized them.
+
+## Modern Tools That Help
+
+- **Mushaf apps with search**: type a phrase to see every place it appears.
+- **Books and charts of mutashabihat**: classic works and modern charts list similar passages by surah.
+- **Recordings**: record yourself reciting two similar passages one after the other, and listen.
+
+Tools help, but your notebook and your teacher remain the core.
+
+## A Weekly Revision Table for Mutashabihat
+
+| Day | Revision |
+|---|---|
+| Saturday | Similar passages in Juz' 1–5 from your notebook |
+| Monday | Similar passages in Juz' 6–10 |
+| Wednesday | Similar stories (Musa, Ibrahim, Nuh…) |
+| Friday | The ten places you made mistakes this week |
+
+## A Word of Encouragement
+
+The Prophet ﷺ said: "Keep refreshing your knowledge of the Quran, for by the One in whose hand is my soul, it escapes more readily than camels from their tethers" (al-Bukhari and Muslim). Mutashabihat are part of why the Quran needs constant attention, and that attention is itself worship. Every time you pause to separate two similar verses, you are looking closely at the words of Allah.
+
+﴿وَلَقَدۡ يَسَّرۡنَا ٱلۡقُرۡءَانَ لِلذِّكۡرِ فَهَلۡ مِن مُّدَّكِرٖ﴾ (Quran 54:17)
+
+Meaning: "And We have certainly made the Quran easy for remembrance, so is there any who will remember?"
+
+## Frequently Asked Questions
+
+### Does mixing up similar verses mean my memorization is weak?
+No. Even strong memorizers face it. It means you need targeted work on those passages, not that your hifz as a whole is weak.
+
+### Should I buy a book on mutashabihat?
+A good book is helpful, especially once you have memorized several juz'. But your own notebook, built from your real mistakes, is the most powerful tool.
+
+### What should I do if I make a mutashabih mistake in prayer?
+Correct it if you notice, and continue. Then add it to your notebook and revise it after the prayer.
+
+### Are mutashabihat related to Tajweed?
+Not directly; they are about wording, not pronunciation. But careful, measured recitation helps you notice small differences.
+
+### Do some surahs have more similar verses than others?
+Yes. Surahs with long stories and many laws, such as Al-Baqarah, Al 'Imran, Al-A'raf, Hud and the surahs of Musa's story, have many.
+
+### Should I revise mutashabihat before or after new memorization?
+Before, when the new passage resembles something you already know; and regularly afterwards as part of your weekly revision.
+
+### Is it helpful for beginners to memorize classical poems on mutashabihat?
+Usually not at the start. Begin with your notebook and simple rules. Classical poems are excellent later for advanced memorizers.
+
+---
+
+If similar verses keep tripping you up, a teacher who tests you from random points and helps you build a mutashabihat notebook can make a big difference. You can book a free trial lesson: tell us how much you have memorized and where you get confused, and we will suggest a revision plan.
