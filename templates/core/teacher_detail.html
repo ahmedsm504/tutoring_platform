@@ -151,7 +151,7 @@
             {% for r in salary_records %}
             <tr>
                 <td>{{ r.payout_date|date:"Y/m/d" }}</td>
-                <td>{{ r.base_amount|floatformat:2 }}</td>
+                <td>{{ r.base_amount|floatformat:2 }}{% if r.lessons_count %}<br><small class="text-muted">{{ r.lessons_count }} حلقة × {{ r.lesson_rate|floatformat:2 }}</small>{% endif %}</td>
                 <td>{{ r.bonus|floatformat:2 }}</td>
                 <td>{{ r.deduction|floatformat:2 }}</td>
                 <td>{{ r.leave_days }}</td>

@@ -54,6 +54,18 @@ class StaticViewSitemap(Sitemap):
         ('terms', 0.3, 'yearly'),
         ('blog_list', 0.8, 'daily'),
         ('site_index', 0.6, 'daily'),
+        ('qna:question_list', 0.8, 'daily'),
+        # النسخة الإنجليزية (/en/) للزوار من برا الدول العربية
+        ('en_home', 0.9, 'weekly'),
+        ('en_pricing', 0.8, 'monthly'),
+        ('en_contact', 0.7, 'monthly'),
+        ('en_about', 0.6, 'monthly'),
+        ('en_quality_standards', 0.6, 'monthly'),
+        ('en_blog_list', 0.7, 'weekly'),
+        ('en_quran_index', 0.7, 'monthly'),
+        ('en_editorial_policy', 0.3, 'yearly'),
+        ('en_privacy', 0.3, 'yearly'),
+        ('en_terms', 0.3, 'yearly'),
     ]
 
     def items(self):
@@ -70,7 +82,7 @@ class StaticViewSitemap(Sitemap):
 
     def lastmod(self, obj):
         # آخر تحديث حقيقي للصفحات اللي محتواها بيتغير (بدل "دلوقتي" كل مرة - جوجل بيتجاهل ده)
-        if obj[0] in ('blog_list', 'home', 'site_index') and HAS_BLOG:
+        if obj[0] in ('blog_list', 'home', 'site_index', 'en_home', 'en_blog_list') and HAS_BLOG:
             p = Post.objects.filter(status='published').order_by('-published_at').values_list('published_at', flat=True).first()
             return p
         if obj[0] == 'qna:question_list' and HAS_QNA:
@@ -158,7 +170,7 @@ class QNAQuestionsSitemap(Sitemap):
         if not HAS_QNA:
             return []
         from django.db.models import Exists, OuterRef
-        return _reversible(PublicQuestion.objects.filter(status='approved').exclude(slug='').exclude(slug__isnull=True)
+        return _reversible(PublicQuestion.objects.filter(status='approved', official_answer__isnull=False).exclude(slug='').exclude(slug__isnull=True)
                            .annotate(has_answer=Exists(QuestionAnswer.objects.filter(question=OuterRef('pk'))))
                            .order_by('-created_at'), 'qna:question_detail')
 
@@ -250,3 +262,28 @@ class QuranSitemap(Sitemap):
         if obj == 'tracker':
             return 0.7
         return 0.75 if obj in (1, 2, 18, 36, 55, 56, 67, 112, 113, 114) else 0.6
+
+
+class VideoSitemap(Sitemap):
+    """صفحة لكل فيديو (عليها VideoObject) + صفحة الفيديوهات"""
+    protocol = 'https'
+    changefreq = 'weekly'
+
+    def items(self):
+        try:
+            from videos.models import Video
+        except ImportError:
+            return []
+        return ['index'] + list(Video.objects.filter(is_published=True).order_by('-published_at'))
+
+    def location(self, obj):
+        return reverse('video_list') if obj == 'index' else obj.get_absolute_url()
+
+    def lastmod(self, obj):
+        if obj == 'index':
+            from videos.models import Video
+            return Video.objects.filter(is_published=True).order_by('-updated_at').values_list('updated_at', flat=True).first()
+        return obj.updated_at
+
+    def priority(self, obj):
+        return 0.8 if obj == 'index' else 0.7

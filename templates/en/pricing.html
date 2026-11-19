@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Online Quran Classes: Programmes & Schedules | Al-Agmi{% endblock %}
+{% block meta_description %}Online Quran programmes for kids and adults: Quran memorisation, recitation correction, Noor Al-Bayan Arabic reading and An-Nawawi's Forty Hadith. Free trial class.{% endblock %}
+{% block meta_keywords %}online Quran classes for kids, Quran memorization program, Hifz classes online, Quran classes for adults, Tajweed correction online, learn to read Arabic, Noor Al-Bayan, Forty Hadith course{% endblock %}
+{% block og_title %}Online Quran Programmes for Kids and Adults - Al-Agmi{% endblock %}
+{% block og_description %}One-to-one Quran memorisation, recitation correction and specialised courses. Choose your programme and book a free trial class from any country.{% endblock %}
+{% block twitter_title %}Online Quran Programmes - Al-Agmi{% endblock %}
+{% block twitter_description %}Programmes for kids and adults. Book your free trial class from any country.{% endblock %}
+
+{% block extra_ldjson %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},
+ {"@type":"ListItem","position":2,"name":"Programmes","item":"{{ SITE_URL }}{% url 'en_pricing' %}"}]}
+</script>
+<script type="application/ld+json">{{ courses_ldjson|safe }}</script>
+{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li aria-current="page">Programmes</li></ol>
+    <h1>Online Quran programmes and courses</h1>
+    <p>Every programme is one-to-one with a certified teacher. Choose how many classes a month and how long each class is. The first class is a free trial.</p>
+    <ul class="plans-jump" aria-label="Jump to a programme">
+      {% for p in programs %}<li><a href="#{{ p.slug }}">{{ p.name }}</a></li>{% endfor %}
+    </ul>
+  </div>
+</header>
+
+<div class="section">
+  <div class="container">
+    {% for p in programs %}
+    <article class="plan" id="{{ p.slug }}" aria-labelledby="{{ p.slug }}-title">
+      <div>
+        <div class="plan-head">
+          <span class="prog-kind">{{ p.kind }}</span>
+          <h2 id="{{ p.slug }}-title">{{ p.name }}</h2>
+        </div>
+        <p class="plan-aud">{{ p.audience }}</p>
+        <p class="plan-sum">{{ p.summary }}</p>
+        <div class="plan-cols">
+          {% for title, items in p.sections %}
+          <div>
+            <h3>{{ title }}</h3>
+            <ul class="checklist">{% for it in items %}<li>{{ it }}</li>{% endfor %}</ul>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <aside class="plan-side" aria-label="{{ p.name }} schedule">
+        <table>
+          <caption>{% if p.kind == 'Course' %}Class length{% else %}Monthly options{% endif %}</caption>
+          <thead><tr><th scope="col">{% if p.kind == 'Course' %}Type{% else %}Classes per month{% endif %}</th><th scope="col">Class length</th></tr></thead>
+          <tbody>{% for count, dur in p.schedule %}<tr><td>{{ count }}</td><td>{{ dur }}</td></tr>{% endfor %}</tbody>
+        </table>
+        {% if p.tip %}<p class="plan-tip">{{ p.tip }}</p>{% endif %}
+        <a class="btn btn-primary btn-block" href="{% url 'en_contact' %}?program={{ p.slug }}">Book a free trial class</a>
+        <p class="plan-note">We set the times in your own time zone.</p>
+      </aside>
+    </article>
+    {% endfor %}
+  </div>
+</div>
+
+<section class="section band cta" aria-labelledby="pcta">
+  <div class="container">
+    <h2 id="pcta">Not sure which programme suits you?</h2>
+    <p>In the trial class we assess the student's level and recommend the right programme. Fees depend on the number and length of classes; message us for the current fees.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'en_contact' %}">Book a free trial class</a>
+      <a class="btn btn-ghost" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">Ask us on WhatsApp</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

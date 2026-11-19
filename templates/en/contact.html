@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block adsense %}{% endblock %}
+{% block title %}Book a Free Trial Quran Class | Contact Al-Agmi{% endblock %}
+{% block meta_description %}Book your free online Quran trial class with Al-Agmi. Fill in a short form or message us on WhatsApp (+20 104 456 8181) and we will reply within 24 hours.{% endblock %}
+{% block meta_keywords %}free trial Quran class, book online Quran class, contact Quran academy, online Quran teacher contact, WhatsApp Quran classes{% endblock %}
+{% block og_title %}Book a Free Trial Quran Class - Al-Agmi{% endblock %}
+{% block og_description %}Free online trial class with a certified Quran teacher. Book from any country.{% endblock %}
+{% block twitter_title %}Book a free Quran class - Al-Agmi{% endblock %}
+{% block twitter_description %}Free online trial class with a certified Quran teacher.{% endblock %}
+
+{% block extra_ldjson %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ContactPage","name":"Contact Al-Agmi Quran Academy","inLanguage":"en","url":"{{ canonical_url }}",
+ "mainEntity":{"@id":"{{ SITE_URL }}/#organization"},
+ "breadcrumb":{"@type":"BreadcrumbList","itemListElement":[
+  {"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},
+  {"@type":"ListItem","position":2,"name":"Contact","item":"{{ canonical_url }}"}]}}
+</script>
+{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li aria-current="page">Contact</li></ol>
+    <h1>Book your free trial class</h1>
+    <p>Fill in your details and one of our supervisors will contact you within 24 hours to set a time that suits your time zone.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container form-layout">
+    <div class="form-card">
+      <h2 style="font-size:1.4rem;">Booking details</h2>
+      {% if form.non_field_errors or form.errors %}<div class="notice notice-error" role="alert">Please check the fields marked below.</div>{% endif %}
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% with f=form.name %}<div class="field"><label for="{{ f.id_for_label }}">Name<span class="req" aria-hidden="true">*</span></label>
+          <input type="text" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="name" placeholder="Student's or parent's name">
+          {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+        <div class="field-row">
+          {% with f=form.country %}<div class="field"><label for="{{ f.id_for_label }}">Country<span class="req" aria-hidden="true">*</span></label>
+            <input type="text" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="country-name" placeholder="e.g. United Kingdom, USA, Canada">
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+          {% with f=form.gender %}<div class="field"><label for="{{ f.id_for_label }}">Student<span class="req" aria-hidden="true">*</span></label>
+            <select name="{{ f.html_name }}" id="{{ f.id_for_label }}" required>
+              <option value="">Choose</option>
+              {% for value, label in f.field.choices %}{% if value %}<option value="{{ value }}" {% if f.value == value %}selected{% endif %}>{% if value == 'male' %}Male / boy{% elif value == 'female' %}Female / girl{% else %}{{ label }}{% endif %}</option>{% endif %}{% endfor %}
+            </select>
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+        </div>
+        <div class="field-row">
+          {% with f=form.phone %}<div class="field"><label for="{{ f.id_for_label }}">Phone or WhatsApp number<span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="tel" placeholder="+44 7700 000000">
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+          {% with f=form.email %}<div class="field"><label for="{{ f.id_for_label }}">Email (optional)</label>
+            <input type="email" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" autocomplete="email">
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+        </div>
+        {% with f=form.notes %}<div class="field"><label for="{{ f.id_for_label }}">Student's age, level, language and preferred times (optional)</label>
+          <textarea name="{{ f.html_name }}" id="{{ f.id_for_label }}" rows="4" placeholder="e.g. 8 years old, knows the Arabic letters, speaks English, free after 5 pm London time">{{ f.value|default_if_none:'' }}</textarea>
+          {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+        <button type="submit" class="btn btn-primary btn-block">Book my free class</button>
+        <p style="color:var(--muted); font-size:.9rem; margin:12px 0 0; text-align:center;">Your details are only used to contact you about your booking.</p>
+      </form>
+    </div>
+
+    <aside aria-labelledby="other-ways">
+      <h2 id="other-ways" style="font-size:1.4rem;">Or contact us directly</h2>
+      <ul class="side-list">
+        <li><svg aria-hidden="true"><use href="#i-chat"/></svg><div><strong>WhatsApp</strong><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">Send us a message</a></div></li>
+        <li><svg aria-hidden="true"><use href="#i-phone"/></svg><div><strong>Call</strong><a href="tel:+201044568181" dir="ltr">+20 104 456 8181</a></div></li>
+        <li><svg aria-hidden="true"><use href="#i-clock"/></svg><div><strong>Reply hours</strong><span>Saturday – Thursday, 9 am – midnight (Cairo time)</span></div></li>
+        <li><svg aria-hidden="true"><use href="#i-globe"/></svg><div><strong>From any country</strong><span>All classes are online, scheduled in your time zone.</span></div></li>
+      </ul>
+      <h3 style="margin-top:28px;">What happens next</h3>
+      <ol class="checklist" style="list-style:none;">
+        <li>A supervisor contacts you within 24 hours.</li>
+        <li>We agree the time of your free trial class.</li>
+        <li>After the class we recommend a programme; the decision is yours.</li>
+      </ol>
+    </aside>
+  </div>
+</section>
+{% endblock %}

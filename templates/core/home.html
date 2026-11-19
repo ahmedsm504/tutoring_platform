@@ -136,11 +136,24 @@
     </div>
     <div class="reviews" id="reviews" tabindex="0" aria-label="آراء أولياء الأمور">
       {% for r in reviews %}
-      <figure><img src="{% static 'images/'|add:r %}" alt="رسالة من ولي أمر عن تجربته مع مؤسسة العجمي ({{ forloop.counter }})" width="300" height="400" loading="lazy" decoding="async"></figure>
+      <figure><img src="{% static 'images/'|add:r %}" alt="رسالة من ولي أمر عن تجربته مع مؤسسة العجمي ({{ forloop.counter }})" width="360" height="360" loading="lazy" decoding="async"></figure>
       {% endfor %}
     </div>
   </div>
 </section>
+
+{% if latest_videos %}
+<section class="section band" aria-labelledby="videos-title">
+  <div class="container">
+    <div class="row-head">
+      <div class="section-head"><h2 id="videos-title">🎬 أحدث الفيديوهات</h2><p>دروس ومقاطع قصيرة من معلماتنا، تتفرج عليها مجانًا.</p></div>
+      <a class="btn btn-ghost" href="{% url 'video_list' %}">كل الفيديوهات</a>
+    </div>
+    {% include 'videos/_styles.html' %}
+    <ul class="vgrid">{% for v in latest_videos %}<li>{% include 'videos/_card.html' %}</li>{% endfor %}</ul>
+  </div>
+</section>
+{% endif %}
 
 <section class="section" aria-labelledby="learn-title">
   <div class="container">

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block adsense %}{% include "includes/adsense.html" %}{% endblock %}
+{% block title %}{% if posts.number > 1 %}Page {{ posts.number }} - {% endif %}Quran, Tajweed & Hifz Articles in English | Al-Agmi{% endblock %}
+{% block meta_description %}Free English guides on Tajweed rules, Quran memorisation methods, teaching children the Quran and living with the Quran, written by the Al-Agmi teaching team.{% endblock %}
+{% block meta_keywords %}Tajweed rules in English, how to memorize Quran, Quran for kids, Hifz tips, learn Quran articles, Quran blog English{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}{{ request.path }}{% if posts.number > 1 %}?page={{ posts.number }}{% endif %}{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Al-Agmi articles in English","inLanguage":"en","url":"{{ canonical_url }}",
+ "breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"{{ SITE_URL }}{% url 'en_blog_list' %}"}]}}</script>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li aria-current="page">Articles</li></ol>
+  <h1>Quran, Tajweed and memorisation articles in English</h1>
+  <p>Practical guides from our teaching team: Tajweed rules explained step by step, memorisation and revision plans, and how to raise children who love the Quran. {{ posts.paginator.count }} articles so far.</p>
+</div></header>
+<section class="section"><div class="container">
+  {% if posts %}<ul class="posts">{% for post in posts %}<li>{% include 'blog/_post_card.html' %}</li>{% endfor %}</ul>
+  {% else %}<p class="empty">No articles yet.</p>{% endif %}
+  {% if posts.has_other_pages %}
+  <nav class="pager" aria-label="Article pages">
+    {% if posts.has_previous %}<a class="btn btn-ghost" rel="prev" href="{% if posts.previous_page_number > 1 %}?page={{ posts.previous_page_number }}{% else %}{{ request.path }}{% endif %}">Previous</a>{% endif %}
+    <span>Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+    {% if posts.has_next %}<a class="btn btn-ghost" rel="next" href="?page={{ posts.next_page_number }}">Next</a>{% endif %}
+  </nav>
+  {% endif %}
+  <div class="inline-cta" style="margin-top:28px;"><p><strong>Prefer learning with a teacher?</strong> One-to-one online Quran classes, first class free.</p><a class="btn btn-gold" href="{% url 'en_contact' %}">Book a free trial class</a></div>
+</div></section>
+{% endblock %}

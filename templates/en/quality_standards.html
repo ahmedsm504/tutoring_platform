@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Quality Standards in Quran Teaching | Al-Agmi{% endblock %}
+{% block meta_description %}The standards we commit to in online Quran teaching: the teacher's charter, lesson structure, progress tracking, our child-safety policy, privacy and student rights.{% endblock %}
+{% block meta_keywords %}Quran teaching standards, online Quran quality, child safety online classes, Quran teacher code of conduct, student rights, online Quran academy{% endblock %}
+{% block og_title %}Quality Standards - Al-Agmi Online Quran Academy{% endblock %}
+{% block og_description %}How we look after students and parents: the teacher's charter, lesson standards, child-safety policy and our quality guarantees.{% endblock %}
+{% block twitter_title %}Quality standards - Al-Agmi{% endblock %}
+{% block twitter_description %}The professional standards behind every Al-Agmi class.{% endblock %}
+
+{% block extra_ldjson %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Quality standards","inLanguage":"en","url":"{{ canonical_url }}",
+ "breadcrumb":{"@type":"BreadcrumbList","itemListElement":[
+  {"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},
+  {"@type":"ListItem","position":2,"name":"Quality standards"}]}}
+</script>
+{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li aria-current="page">Quality standards</li></ol>
+    <h1>Our quality standards in Quran teaching</h1>
+    <p>Teaching the Quran is a great responsibility. These are the standards we commit to in front of every student and parent, for a safe, respectful and excellent learning experience.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container split">
+    <ul class="toc" aria-label="Standards">
+      <li><a href="#teacher">The teacher's charter</a></li>
+      <li><a href="#lesson">Lesson standards</a></li>
+      <li><a href="#followup">Progress tracking</a></li>
+      <li><a href="#kids">Working with children</a></li>
+      <li><a href="#privacy">Respect and privacy</a></li>
+      <li><a href="#guarantee">Quality guarantee</a></li>
+      <li><a href="#rights">Student rights</a></li>
+    </ul>
+    <div class="prose">
+      <h2 id="teacher" style="margin-top:0;">The teacher's charter</h2>
+      <ul class="checklist">
+        <li>Patience and kindness with every student, young and old, in a calm and motivating environment.</li>
+        <li>A model recitation based on the highest standards of Tajweed and authentic readings.</li>
+        <li>Modest dress and Islamic etiquette in video classes, for dignity and professionalism.</li>
+        <li>Respect for the student's privacy: no part of a class is recorded or shared without prior permission.</li>
+        <li>Punctuality: no lateness except for genuine emergencies, reported to the management in advance.</li>
+        <li>Teaching step by step at each student's level, without unnecessary complexity or pressure.</li>
+        <li>Constant encouragement, using positive words that build the student's confidence.</li>
+        <li>Courteous communication with parents through the platform.</li>
+        <li>Continuous professional development through training workshops and regular review of teaching methods.</li>
+        <li>Fairness between students, with no favouritism.</li>
+      </ul>
+
+      <h2 id="lesson">Lesson standards</h2>
+      <p>Every class follows this order:</p>
+      <ol class="checklist">
+        <li>A short recitation to consolidate memorisation or skills.</li>
+        <li>Careful recitation correction, explaining mistakes simply.</li>
+        <li>Practical training on the articulation points and qualities of the letters.</li>
+        <li>A part of the Tajweed rules, simplified to the student's level.</li>
+        <li>A quick check that the student has understood.</li>
+        <li>A suitable daily or weekly homework task.</li>
+        <li>A short plan of what to revise before the next class.</li>
+      </ol>
+
+      <h2 id="followup">Progress tracking</h2>
+      <ul class="checklist">
+        <li>An initial assessment to place the student accurately.</li>
+        <li>A personal learning plan matching age, ability and level.</li>
+        <li>Written monthly reports on the student's level, strengths, weaknesses and next steps.</li>
+        <li>Updating the plan when needed to get the best results.</li>
+      </ul>
+
+      <h2 id="kids">Working with children</h2>
+      <ul class="checklist">
+        <li>No intimidation or psychological pressure on a child, ever.</li>
+        <li>Encouragement and age-appropriate educational play.</li>
+        <li>Respect for differences in children's abilities, patience and focus.</li>
+        <li>Weekly contact with the parent to explain progress.</li>
+        <li>A calm, safe environment during lessons.</li>
+        <li>No comparing a child with other children.</li>
+      </ul>
+
+      <h2 id="privacy">Respect and privacy</h2>
+      <ul class="checklist">
+        <li>No class is recorded without permission.</li>
+        <li>No data is shared with any outside party.</li>
+        <li>Students' photos or voices are never used for any purpose without consent.</li>
+        <li>Communication between the teacher and the student or parent happens only through the platform, supervised by the management.</li>
+      </ul>
+
+      <h2 id="guarantee">Quality guarantee</h2>
+      <ul class="checklist">
+        <li>A free or discounted trial class for new students.</li>
+        <li>Re-explaining anything not yet mastered at no extra cost.</li>
+        <li>A monthly internal review of teachers' performance.</li>
+        <li>Regular development plans using modern teaching methods.</li>
+        <li>Working towards a mastery level of at least 85% in recitation and memorisation across the learning stages.</li>
+      </ul>
+
+      <h2 id="rights">Student rights</h2>
+      <ul class="checklist">
+        <li>To learn with respect and in safety.</li>
+        <li>To change teacher when needed.</li>
+        <li>To a clear learning plan and ongoing follow-up.</li>
+        <li>To a partial refund of fees where there is a valid reason.</li>
+        <li>To a certificate at the end of each level.</li>
+      </ul>
+
+      <p class="pullquote">Our quality standards are a promise to our students and their parents: Quran teaching that is refined, professional and safe, worthy of the words of Allah and of those who seek them.</p>
+      <a class="btn btn-primary" href="{% url 'en_contact' %}">Book a free trial class</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

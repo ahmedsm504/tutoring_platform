@@ -1,0 +1,32 @@
+{% load static %}    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="{% url 'en_home' %}" aria-label="Al-Agmi Quran Academy - home">
+          <img src="{% static 'images/logo-mark.svg' %}" alt="" width="46" height="46">
+          <span class="brand-name">Al-Agmi<small>Online Quran Academy</small></span>
+        </a>
+        {% with u=request.resolver_match.url_name %}
+        <nav class="nav" id="site-nav" aria-label="Main menu">
+          <a href="{% url 'en_home' %}" {% if u == 'en_home' %}aria-current="page"{% endif %}>Home</a>
+          <a href="{% url 'en_pricing' %}" {% if u == 'en_pricing' %}aria-current="page"{% endif %}>Programmes</a>
+          <a href="{% url 'en_about' %}" {% if u == 'en_about' %}aria-current="page"{% endif %}>About us</a>
+          <a href="{% url 'en_quran_index' %}" {% if u == 'en_quran_index' %}aria-current="page"{% endif %}>Read the Quran</a>
+          <a href="{% url 'en_blog_list' %}" {% if u == 'en_blog_list' or u == 'blog_detail' %}aria-current="page"{% endif %}>Articles</a>
+          <a href="{% url 'video_list' %}" {% if u == 'video_detail' or u == 'video_list' %}aria-current="page"{% endif %}>Videos</a>
+          <a href="{% url 'en_contact' %}" {% if u == 'en_contact' %}aria-current="page"{% endif %}>Contact</a>
+          {% if user.is_authenticated %}
+            {% if user.core_student %}<a href="{% url 'student_portal_home' %}">Student portal</a>
+            {% elif user.teacher_profile %}<a href="{% url 'teacher_portal_home' %}">Teacher portal</a>
+            {% elif user.is_staff %}<a href="{% url 'dashboard_home' %}">Dashboard</a>{% endif %}
+            <a href="{% url 'logout' %}">Log out</a>
+          {% else %}
+            <a href="{% url 'student_login' %}">Student login</a>
+          {% endif %}
+        </nav>
+        {% endwith %}
+        <div class="header-actions">
+          <a class="lang-switch" href="{{ ALT_URL|default:'/' }}" hreflang="ar" lang="ar"><svg aria-hidden="true"><use href="#i-globe"/></svg>العربية</a>
+          <a class="btn btn-primary" href="{% url 'en_contact' %}">Free trial class</a>
+        </div>
+        <button class="menu-btn" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </header>

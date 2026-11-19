@@ -30,7 +30,7 @@
             <select name="teacher" id="teacherSelect" required onchange="updateBasePreview()">
                 <option value="">--- اختاري المعلمة ---</option>
                 {% for row in teachers_data %}
-                <option value="{{ row.teacher.id }}" data-salary="{{ row.calculated_salary }}" data-paid="{{ row.fully_paid|yesno:'1,0' }}"
+                <option value="{{ row.teacher.id }}" data-salary="{{ row.calculated_salary }}" data-paid="{{ row.fully_paid|yesno:'1,0' }}" data-rate="{{ row.teacher.lesson_rate|stringformat:'s' }}" data-done="{{ row.completed_count }}"
                         {% if preselected_teacher == row.teacher.id|stringformat:'s' %}selected{% endif %}>
                     {{ row.teacher.name }}{% if row.fully_paid %} (اتصرف لها مستحق الشهر ده بالكامل){% endif %}
                 </option>
@@ -38,8 +38,20 @@
             </select>
         </div>
 
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:14px; padding:14px 16px; margin-top:16px;">
+            <strong style="display:block; margin-bottom:8px;">🔢 ادفعي بعدد الحلقات</strong>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div class="field"><label for="lessonsCount">عدد الحلقات</label>
+                    <input type="number" name="lessons_count" id="lessonsCount" min="0" step="1" inputmode="numeric" placeholder="مثلاً 12" oninput="updateBasePreview()"></div>
+                <div class="field"><label for="lessonRate">سعر الحصة (جنيه)</label>
+                    <input type="number" name="lesson_rate" id="lessonRate" min="0" step="0.01" oninput="updateBasePreview()"></div>
+            </div>
+            <p class="text-muted" style="font-size:.82rem; margin:6px 0 0;">اكتبي عدد الحلقات اللي هتدفعيها (حتى لو بعضها من الشهر اللي فات) والمجموع هيظهر تحت. سيبيه فاضي عشان يتحسب تلقائي من الحلقات اللي تمت في الشهر المختار<span id="doneHint"></span>.</p>
+        </div>
+
         <div id="basePreview" style="background:var(--violet-50); border-radius:12px; padding:12px 16px; margin-top:14px; font-weight:700; color:var(--violet-700); display:none;">
-            الأساسي اللي هيتسجل (حلقات تمت × سعر الحصة − اللي اتصرف قبل كده): <span id="basePreviewValue">0</span> جنيه
+            <div><span id="baseLabel">الأساسي</span>: <span id="basePreviewValue">0</span> جنيه</div>
+            <div style="font-size:1.15rem; margin-top:6px;">💵 الصافي اللي هتدفعيه: <span id="netValue">0</span> جنيه</div>
         </div>
 
         <div id="alreadyPaidWarning" style="background:var(--amber-soft); color:var(--amber); border-radius:12px; padding:12px 16px; margin-top:10px; font-weight:600; display:none;">
@@ -52,8 +64,8 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 20px;">
             <div class="field"><label>تاريخ الصرف</label><input type="date" name="payout_date"></div>
             <div class="field"><label>عدد أيام الإجازة</label><input type="number" name="leave_days" min="0" value="0"></div>
-            <div class="field"><label>مكافآت</label><input type="number" name="bonus" step="0.01" value="0"></div>
-            <div class="field"><label>خصومات</label><input type="number" name="deduction" step="0.01" value="0"></div>
+            <div class="field"><label>مكافآت</label><input type="number" name="bonus" id="bonusInput" step="0.01" value="0" oninput="updateBasePreview()"></div>
+            <div class="field"><label>خصومات</label><input type="number" name="deduction" id="deductionInput" step="0.01" value="0" oninput="updateBasePreview()"></div>
         </div>
 
         <div class="field" style="margin-top:18px;">
@@ -73,16 +85,33 @@
 </div>
 
 <script>
+let lastTeacher = null;
+function num(id){ const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? 0 : v; }
 function updateBasePreview(){
     const select = document.getElementById('teacherSelect');
     const option = select.options[select.selectedIndex];
     const preview = document.getElementById('basePreview');
     const value = document.getElementById('basePreviewValue');
     const warning = document.getElementById('alreadyPaidWarning');
+    const rateInput = document.getElementById('lessonRate');
+    const countInput = document.getElementById('lessonsCount');
     if(option && option.value){
-        value.textContent = parseFloat(option.dataset.salary || 0).toFixed(2);
+        if(lastTeacher !== option.value){ rateInput.value = parseFloat(option.dataset.rate || 0); lastTeacher = option.value; }
+        document.getElementById('doneHint').textContent = ' (تمت ' + (option.dataset.done || 0) + ' حلقة في الشهر ده)';
+        const count = parseInt(countInput.value, 10);
+        let base;
+        if(count > 0){
+            base = count * num('lessonRate');
+            document.getElementById('baseLabel').textContent = count + ' حلقة × ' + num('lessonRate') + ' جنيه';
+            warning.style.display = 'none';
+        } else {
+            base = parseFloat(option.dataset.salary || 0);
+            document.getElementById('baseLabel').textContent = 'الأساسي التلقائي (حلقات تمت × سعر الحصة − اللي اتصرف قبل كده)';
+            warning.style.display = (option.dataset.paid === '1') ? 'block' : 'none';
+        }
+        value.textContent = base.toFixed(2);
+        document.getElementById('netValue').textContent = (base + num('bonusInput') - num('deductionInput')).toFixed(2);
         preview.style.display = 'block';
-        warning.style.display = (option.dataset.paid === '1') ? 'block' : 'none';
     } else {
         preview.style.display = 'none';
         warning.style.display = 'none';

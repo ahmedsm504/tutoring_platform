@@ -12,7 +12,8 @@ from accounts import views as accounts_views
 from core.push_status import push_status
 
 from .robots_view import llms_txt, robots_txt
-from .sitemaps import BlogCategorySitemap, BlogPostSitemap, QuranSitemap, StaticViewSitemap
+from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap, QNAQuestionsSitemap,
+                       QuranSitemap, StaticViewSitemap, VideoSitemap)
 
 
 def indexnow_key(request):
@@ -24,8 +25,11 @@ sitemaps = {
     'static': StaticViewSitemap,
     'blog': BlogPostSitemap,
     'blog-categories': BlogCategorySitemap,
-    # الأسئلة والأجوبة اتشالت من الخريطة: إجاباتها قصيرة (أقل من 250 كلمة) وعليها noindex لحد ما تتوسع
+    # الأسئلة المُجابة بس (السؤال من غير إجابة عليه noindex)
+    'questions': QNAQuestionsSitemap,
+    'question-categories': QNACategorySitemap,
     'quran': QuranSitemap,
+    'videos': VideoSitemap,
 }
 
 
@@ -70,12 +74,14 @@ urlpatterns = [
     # صفحة التواصل الأساسية بقت /contact/ - الرابط القديم بيتحول عليها (من غير صفحتين مكررتين)
     path('accounts/contact/', RedirectView.as_view(pattern_name='contact', permanent=True)),
 
+    path('en/', include('core.urls_en')),
     path('', include('core.urls')),
     path('', include('chat.urls')),
     path('', include('learning.urls')),
     path('accounts/', include('accounts.urls')),
     path('blog/', include('blog.urls')),
     path('questions/', include('qna.urls', namespace='qna')),
+    path('videos/', include('videos.urls')),
     path('firebase-messaging-sw.js', TemplateView.as_view(
         template_name='firebase-messaging-sw.js', content_type='application/javascript'
     ), name='firebase-sw'),

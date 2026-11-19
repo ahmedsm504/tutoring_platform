@@ -1,0 +1,57 @@
+{% load static %}    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <a class="brand" href="{% url 'en_home' %}">
+            <img src="{% static 'images/logo-mark.svg' %}" alt="" width="46" height="46" loading="lazy">
+            <span class="brand-name">Al-Agmi Quran Academy<small>Online Quran classes</small></span>
+          </a>
+          <p>One-to-one online classes in Quran memorisation, recitation and Tajweed, for students of every age in every country.</p>
+          <div class="socials">
+            <a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="me noopener">Facebook</a>
+            <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="me noopener">Instagram</a>
+            <a href="https://youtube.com/@alagme-c5h" target="_blank" rel="me noopener">YouTube</a>
+            <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="me noopener">TikTok</a>
+            <a href="https://x.com/alagme_12" target="_blank" rel="me noopener">X</a>
+          </div>
+        </div>
+        <div>
+          <h2>Programmes</h2>
+          <ul>
+            <li><a href="{% url 'en_pricing' %}#nourania">Noorani Beginnings (kids)</a></li>
+            <li><a href="{% url 'en_pricing' %}#himma">High Ambition (ages 10–15)</a></li>
+            <li><a href="{% url 'en_pricing' %}#sufaraa">Ambassadors of the Quran (adults)</a></li>
+            <li><a href="{% url 'en_pricing' %}#ghiras">Recitation correction</a></li>
+            <li><a href="{% url 'en_pricing' %}#nour-albayan">Noor Al-Bayan reading course</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Academy</h2>
+          <ul>
+            <li><a href="{% url 'en_about' %}">About us</a></li>
+            <li><a href="{% url 'en_quality_standards' %}">Our quality standards</a></li>
+            <li><a href="{% url 'en_quran_index' %}">Read and listen to the Quran</a></li>
+            <li><a href="{% url 'en_blog_list' %}">Articles in English</a></li>
+            <li><a href="{% url 'video_list' %}">Videos</a></li>
+            <li><a href="{% url 'en_editorial_policy' %}">Editorial policy</a></li>
+            <li><a href="{% url 'en_privacy' %}">Privacy policy</a></li>
+            <li><a href="{% url 'en_terms' %}">Terms and conditions</a></li>
+            <li><a href="{% url 'student_login' %}">Student portal</a></li>
+            <li><a href="{% url 'home' %}" hreflang="ar" lang="ar">الموقع بالعربي</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Contact us</h2>
+          <ul>
+            <li><a href="tel:+201044568181" dir="ltr">+20 104 456 8181</a></li>
+            <li><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li>Saturday – Thursday, 9 am – midnight (Cairo time, GMT+2/+3)</li>
+            <li>Based in Egypt · Teaching online worldwide</li>
+          </ul>
+          <button type="button" class="push-btn" id="enable-push" hidden>🔔 New article notifications</button>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© {% now "Y" %} Al-Agmi Quran Academy</span>
+        <a href="{% url 'en_contact' %}">Book your free trial class</a>
+      </div>
+    </footer>

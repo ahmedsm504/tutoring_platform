@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us | Al-Agmi Online Quran Academy{% endblock %}
+{% block meta_description %}Meet Al-Agmi, an online Quran academy that puts understanding before memorisation and teaches recitation and Tajweed step by step. Our vision, mission, values and team.{% endblock %}
+{% block meta_keywords %}Al-Agmi Quran Academy, about us, online Quran academy, Tajweed teaching, Quran recitation, understanding the Quran, online Quran school, vision and mission{% endblock %}
+{% block og_title %}About Al-Agmi - Online Quran Academy{% endblock %}
+{% block og_description %}An online Quran academy that combines sound transmission with clear explanation, to build readers who understand and live the Quran.{% endblock %}
+{% block twitter_title %}About Al-Agmi{% endblock %}
+{% block twitter_description %}Knowledge that is understood, and an impact that lasts. Our story and team.{% endblock %}
+
+{% block extra_ldjson %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About us - Al-Agmi Quran Academy",
+  "inLanguage": "en",
+  "url": "{{ canonical_url }}",
+  "mainEntity": {"@id": "{{ SITE_URL }}/#organization"}
+}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},
+ {"@type":"ListItem","position":2,"name":"About us","item":"{{ canonical_url }}"}]}
+</script>
+{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li aria-current="page">About us</li></ol>
+    <h1>Al-Agmi: knowledge that is understood, an impact that lasts</h1>
+    <p>An online Quran academy that believes a real relationship with the Quran begins with understanding before memorisation, and with method before quantity.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container split">
+    <ul class="toc" aria-label="On this page">
+      <li><a href="#who">Who we are</a></li>
+      <li><a href="#vision">Our vision</a></li>
+      <li><a href="#mission">Our mission</a></li>
+      <li><a href="#values">Our values</a></li>
+      <li><a href="#team">Our team</a></li>
+      <li><a href="#why">Why choose us</a></li>
+    </ul>
+    <div class="prose">
+      <h2 id="who" style="margin-top:0;">Who we are</h2>
+      <p>We aim to offer Quran teaching that combines sound transmission with clear explanation, without complication or dry rote learning. We teach recitation and Tajweed step by step, respecting each student's level, so the Quran lives in the heart before the tongue.</p>
+      <p>Our goal is to build readers who understand what they recite, know its rules, and stay connected to the Quran in their character and conduct.</p>
+      <p class="pullquote">Our academy exists for everyone looking for knowledge that is understood, teaching that is precise, and a Quran that is lived, not just passed over.</p>
+
+      <h2 id="vision">Our vision</h2>
+      <p>We know the value of knowledge and good values, so we help build people and spread the teaching of the Quran in an easy, meaningful way, so that its light reaches every home, heart and mind, and those who memorise it become ambassadors of goodness and faith wherever they are.</p>
+
+      <h2 id="mission">Our mission</h2>
+      <p>To spread the message of the Holy Quran and teach it to Arabic speakers and non-Arabic speakers alike, in a safe and effective environment. We do not just provide a teacher: we provide a companion and guide who walks with you on this journey in this life, so that we may be together in the next.</p>
+
+      <h2 id="values">Our values</h2>
+      <ul class="checklist">
+        <li>Living by the manners of the Holy Quran</li>
+        <li>Sincerity in our work</li>
+        <li>Excellence and quality in teaching</li>
+        <li>Mutual respect and courteous dealings</li>
+        <li>Continuous development and innovation</li>
+        <li>Responsibility and trustworthiness in teaching</li>
+      </ul>
+
+      <h2 id="team">Our team</h2>
+      <ul class="team">
+        <li><span class="avatar" aria-hidden="true">A</span><div><strong>Ahmed Samir</strong><span>Platform developer and co-founder</span></div></li>
+        <li><span class="avatar" aria-hidden="true">R</span><div><strong>Rowayda Al-Agmi</strong><span>Educational content specialist and co-founder</span></div></li>
+      </ul>
+
+      <h2 id="why">Why choose Al-Agmi for learning the Quran?</h2>
+      <ul class="checklist">
+        <li>Qualified teachers holding ijazah certificates in the Holy Quran</li>
+        <li>One-to-one classes tailored to each student</li>
+        <li>Flexible choice of class times</li>
+        <li>Online classes open to students in every country</li>
+        <li>Ongoing follow-up and regular assessment</li>
+        <li>A free trial class</li>
+        <li>Programmes for every age and level</li>
+      </ul>
+      <div class="hero-actions" style="margin-top:28px;">
+        <a class="btn btn-primary" href="{% url 'en_contact' %}">Book a free trial class</a>
+        <a class="btn btn-ghost" href="{% url 'en_quality_standards' %}">Read our quality standards</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

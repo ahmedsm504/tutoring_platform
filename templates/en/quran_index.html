@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Read the Quran Online in Arabic with Audio, Verse by Verse | Al-Agmi{% endblock %}
+{% block meta_description %}Read the Holy Quran online in the Uthmani script and listen verse by verse to Al-Husary, Al-Minshawi, Abdul Basit and Alafasy, with verse repeat for memorising. All 114 surahs, free.{% endblock %}
+{% block meta_keywords %}read Quran online, Quran with audio, listen to Quran verse by verse, Quran in Arabic, surah list, Quran memorization tool, Husary, Minshawi, Abdul Basit{% endblock %}
+{% block og_title %}Read and Listen to the Quran Verse by Verse - Al-Agmi{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},{"@type":"ListItem","position":2,"name":"The Holy Quran","item":"{{ canonical_url }}"}]}</script>
+{% endblock %}
+{% block extra_css %}
+<style>
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;padding:0;margin:0;list-style:none}
+.sgrid a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
+.sgrid a:hover{border-color:var(--gold);transform:translateY(-2px)}
+.snum{width:40px;height:40px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;background:color-mix(in srgb,var(--gold) 14%,transparent);color:var(--green-deep);font-weight:700;font-size:.9rem}
+.sbody{flex:1;min-width:0}
+.sar{font-family:'Amiri Quran',serif;font-size:1.15rem;line-height:1.5;float:right;margin-left:6px}
+.smeta{font-size:.8rem;color:var(--ink-soft);display:block}
+.sfind{width:100%;max-width:420px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);font:inherit;margin-bottom:16px;background:var(--surface)}
+</style>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li aria-current="page">The Holy Quran</li></ol>
+  <h1>Read and listen to the Quran, verse by verse</h1>
+  <p>Choose a surah, read it in the Uthmani script, and listen to your favourite reciter. You can repeat each verse and hide the text to test your memorisation. The surah pages are in Arabic.</p>
+</div></header>
+<section class="section"><div class="container">
+  <label class="sr-only" for="sfind">Search for a surah</label>
+  <input id="sfind" class="sfind" type="search" placeholder="🔎 Search by surah name or number">
+  <ul class="sgrid" id="sgrid">
+    {% for s in surahs %}<li data-k="{{ s.id }} {{ s.en|lower }} {{ s.meaning|lower }} {{ s.name }}"><a href="{% url 'quran_surah' s.id %}" hreflang="ar"><span class="snum">{{ s.id }}</span><span class="sbody"><span class="sar" lang="ar">{{ s.name }}</span><span class="sname-en">{{ s.en }}</span><span class="smeta">{{ s.meaning }} · {{ s.count }} verses · {% if s.type == 'meccan' %}Meccan{% else %}Medinan{% endif %}</span></span></a></li>{% endfor %}
+  </ul>
+  <div class="inline-cta" style="margin-top:28px;"><p><strong>Want to memorise with a certified teacher?</strong> Your first online class is free.</p><a class="btn btn-gold" href="{% url 'en_contact' %}">Book a free trial class</a></div>
+  <p style="font-size:.8rem;color:var(--ink-soft);margin-top:18px;">Quran text: QuranEnc, the Noble Quran Encyclopedia (<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license noopener" target="_blank">CC BY-SA 4.0</a>) · Recitations: EveryAyah.com</p>
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function(){ var i=document.getElementById('sfind'), items=document.querySelectorAll('#sgrid li');
+  function norm(s){ return s.toLowerCase().replace(/[-'’\s]/g,''); }
+  i.addEventListener('input', function(){ var q=norm(i.value.trim()); items.forEach(function(li){ li.hidden = q && norm(li.dataset.k).indexOf(q) < 0; }); }); })();
+</script>
+{% endblock %}

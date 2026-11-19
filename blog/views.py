@@ -218,11 +218,20 @@ def blog_detail(request, slug):
         'gallery_images': gallery_images,
         'videos': videos,
         'indexable': post.is_indexable,
+        'shows_ads': post.shows_ads,
     }
     
     from django.template.loader import render_to_string
     from core.templatetags.content_tags import is_latin
     context['mid_cta_html'] = render_to_string('blog/_mid_cta.html', {'en': is_latin(post.title)}, request=request)
+    # المقال الإنجليزي بيتعرض بهيدر وفوتر إنجليزي (LTR)، وزرار اللغة بيودّي لترجمته لو موجودة
+    from core.templatetags.content_tags import translation_of
+    _alt = translation_of(post.slug)
+    if is_latin(post.title):
+        context['LANG'] = 'en'
+        context['ALT_URL'] = f'/blog/{_alt}/' if _alt else '/'
+    else:
+        context['ALT_URL'] = f'/blog/{_alt}/' if _alt else '/en/'
     response = render(request, 'blog/blog_detail.html', context)
     if request.method == 'GET' and not request.user.is_authenticated:
         from django.utils.http import http_date
