@@ -1,0 +1,209 @@
+title: Hamzat al-Wasl in the Quran: How to Start a Word Correctly (Fatha, Damma or Kasra?)
+category: english
+translation_of: hamzat-wasl-ibtida
+excerpt: A clear, beginner-friendly guide to hamzat al-wasl (the connecting hamza) in Quran recitation: how it differs from hamzat al-qat', why it disappears when you join words, and exactly which vowel to use when you start with it, in "al-", in nouns and in verbs, including the famous exceptions and the word "al-ism" in Surah Al-Hujurat.
+meta: Hamzat al-wasl explained: how it differs from hamzat al-qat', which vowel to start with in al-, nouns and verbs, the exceptions, and worked examples.
+keywords: hamzat al wasl, hamzat al wasl rules, connecting hamza quran, how to start with hamzat al wasl, hamzat al wasl vs hamzat al qat, tajweed hamza rules, starting a word in quran recitation
+reading: 15
+---
+Open a Madinah Mushaf and look at words such as «ٱهۡدِنَا», «ٱلۡحَمۡدُ» or «ٱدۡخُلُواْ». The first alif has a small mark above it that looks like the head of the letter saad, and no vowel. This is **hamzat al-wasl**, the connecting hamza. It is pronounced when you start with it and **dropped** when you join the word to what comes before.
+
+The question that confuses many learners is simple: when I start with it, **which vowel do I use?** Is it "a", "u" or "i"? This guide explains the complete rule step by step, with examples and exceptions, so you never start a word incorrectly again.
+
+## Hamzat al-Wasl vs Hamzat al-Qat'
+
+### Hamzat al-qat' (the cutting hamza)
+A hamza that is **always pronounced**, whether you start with it or join it to the previous word. In the Mushaf it is written as a small hamza (ء) on or under the alif, with its vowel. Examples: «أَنۡعَمۡتَ», «إِيَّاكَ», «أَحَدٌ». When you recite «صِرَٰطَ ٱلَّذِينَ أَنۡعَمۡتَ», you pronounce the hamza of «أَنۡعَمۡتَ» clearly.
+
+### Hamzat al-wasl (the connecting hamza)
+An **extra** hamza at the start of a word, added only so that we can pronounce the sukoon letter after it, because Arabic does not begin a word with a sukoon. When you join the word to the previous one, it **disappears from pronunciation**. When you start with it, it **is pronounced** with a vowel.
+
+Example from Al-Fatihah: if you join «نَسۡتَعِينُ» to «ٱهۡدِنَا», you say "nasta'eenu-hdinaa", and the hamza disappears. If you start a new breath with «ٱهۡدِنَا», you say "ihdinaa", with a kasra.
+
+## Where Does Hamzat al-Wasl Appear?
+
+It appears in three kinds of words:
+1. **The definite article "al-"** (and words built on it).
+2. **Certain nouns**: seven specific nouns, plus the verbal nouns (masdars) of certain verb forms.
+3. **Certain verbs**: the past tense of five- and six-letter verbs, their commands, and the command of three-letter verbs.
+
+Each kind has its own rule for the starting vowel.
+
+## Rule 1: "Al-" Always Starts With Fatha
+
+When you start with a word containing the definite article, you always open hamzat al-wasl with a **fatha**, whether the laam is "moon" (pronounced) or "sun" (assimilated):
+- «ٱلۡحَمۡدُ» → "**a**l-hamdu".
+- «ٱلرَّحۡمَٰنِ» → "**a**r-rahmaan" (the laam merges into the raa).
+- «ٱللَّهُ» → "**A**llaahu", as at the start of Ayat al-Kursi.
+- «ٱلَّذِينَ» → "**a**lladheena".
+
+Be careful: «أَلَمۡ تَرَ» is **not** this case. Its hamza is a question hamza (hamzat al-qat') and is always pronounced.
+
+## Rule 2: Nouns Start With Kasra
+
+When hamzat al-wasl is in a noun (other than "al-"), you start with a **kasra**. These nouns are of two kinds.
+
+### The seven specific nouns
+These seven nouns occur in the Quran with hamzat al-wasl:
+- «ٱبۡن» (son): starting at «ٱبۡنُ مَرۡيَمَ» → "**i**bnu maryam".
+- «ٱبۡنَت» (daughter): «ٱبۡنَتَ عِمۡرَٰنَ» → "**i**bnata 'imraan".
+- «ٱمۡرُؤٌ» (a man): «ٱمۡرُؤٌاْ هَلَكَ» → "**i**mru'un halak".
+- «ٱمۡرَأَت» (woman, wife): «ٱمۡرَأَتُ ٱلۡعَزِيزِ» → "**i**mra'atul-'azeez".
+- «ٱسۡم» (name): «ٱسۡمَ رَبِّكَ» → "**i**sma rabbik".
+- «ٱثۡنَيۡنِ» (two): → "**i**thnayn".
+- «ٱثۡنَتَيۡنِ» (two, feminine): → "**i**thnatayn".
+
+### Verbal nouns (masdars) of five- and six-letter verbs
+- «ٱسۡتِكۡبَارٗا» → "**i**stikbaaran".
+- «ٱفۡتِرَآءً» → "**i**ftiraa'an".
+- «ٱبۡتِغَآءَ» → "**i**btighaa'a".
+
+## Rule 3: Verbs Depend on the Third Letter
+
+This is the most important rule, and the one people get wrong most often. When hamzat al-wasl is in a **verb**, count the hamza as the first letter and look at the **third letter**:
+
+### If the third letter has an original damma → start with damma
+- «ٱدۡخُلُواْ» → third letter خ has damma → "**u**dkhuloo".
+- «ٱنظُرۡ» → third letter ظ has damma → "**u**ndhur".
+- «ٱقۡتُلُواْ يُوسُفَ» → third letter ت has damma → "**u**qtuloo".
+- «ٱدۡعُ إِلَىٰ سَبِيلِ رَبِّكَ» → third letter ع has damma → "**u**d'u".
+
+### If the third letter has fatha → start with kasra
+- «ٱذۡهَبۡ إِلَىٰ فِرۡعَوۡنَ» → third letter ه has fatha → "**i**dhhab".
+- «ٱقۡرَأۡ بِٱسۡمِ رَبِّكَ» → third letter ر has fatha → "**i**qra'".
+- «ٱعۡلَمُوٓاْ» → third letter ل has fatha → "**i**'lamoo".
+
+### If the third letter has kasra → start with kasra
+- «ٱضۡرِب بِّعَصَاكَ» → third letter ر has kasra → "**i**drib".
+- «ٱرۡجِعُوٓاْ» → third letter ج has kasra → "**i**rji'oo".
+- «ٱهۡدِنَا» → third letter د has kasra → "**i**hdinaa".
+
+### The rule in one line
+**If the third letter of the verb has an original damma, start with damma; otherwise, start with kasra.**
+
+Imam Ibn al-Jazari summarised all of this in his famous poem on Tajweed, al-Muqaddimah al-Jazariyyah: start the connecting hamza of a verb with damma if its third letter has damma, and with kasra when it has kasra or fatha; and in nouns other than "al-", use kasra, as in ibn, ibnah, imru', ithnayn, imra'ah, ism and ithnatayn.
+
+## An Example From the First Revelation
+
+The very first words revealed contain hamzat al-wasl:
+
+﴿ٱقۡرَأۡ بِٱسۡمِ رَبِّكَ ٱلَّذِي خَلَقَ﴾ (Quran 96:1)
+
+Meaning: "Read in the name of your Lord who created." If you start the verse, you say "**i**qra'" with kasra, because the third letter (raa) has fatha. The word «بِٱسۡمِ» also contains hamzat al-wasl, in the noun "ism", but because it comes after the letter baa in the middle of speech, it is not pronounced: "bismi rabbika".
+
+## The Important Exceptions in Verbs
+
+Some verbs have a damma on their third letter that is **not original**. In these verbs you start with **kasra**, not damma. The five best-known examples in the Quran are:
+
+| Verb | Where it appears (examples) | Correct start | Why |
+|---|---|---|---|
+| ٱمۡشُواْ (walk) | Surah Sad, Surah Al-Mulk | **i**mshoo | Originally "imshiyoo": the shin originally had kasra |
+| ٱقۡضُوٓاْ (carry out) | Surah Yunus | **i**qdoo | Originally "iqdiyoo" |
+| ٱبۡنُواْ (build) | Surah Al-Kahf, Surah As-Saffat | **i**bnoo | Originally "ibniyoo" |
+| ٱئۡتُواْ (bring / come) | Many places, e.g. «ٱئۡتُونِي» | **i**ytoo | Originally "i'tiyoo"; the second hamza becomes a long "ee" when starting |
+| ٱمۡضُواْ (proceed) | Surah Al-Hijr | **i**mdoo | Originally "imdiyoo" |
+
+In all these verbs a ya was dropped and the damma of the following waw moved back onto the third letter. Since the original vowel of that letter was a kasra, we start with kasra.
+
+### Starting with «ٱئۡتُونِي» and «ٱؤۡتُمِنَ»
+When hamzat al-wasl is followed by a hamza with sukoon, that second hamza turns into a long vowel matching the starting vowel:
+- «ٱئۡتُونِي» → start: "**ee**toonee" (kasra + long ee).
+- «ٱلَّذِي ٱؤۡتُمِنَ أَمَٰنَتَهُۥ», starting at «ٱؤۡتُمِنَ» → "**oo**tumina" (damma, because the third letter ت has damma, + long oo).
+
+## The Special Case of «ٱلِٱسۡمُ» in Surah Al-Hujurat
+
+In Surah Al-Hujurat (49:11) you find the phrase «بِئۡسَ ٱلِٱسۡمُ ٱلۡفُسُوقُ», "wretched is the name of disobedience". Here two connecting hamzas meet: the hamza of "al-" and the hamza of "ism". When joined, you read "bi'sa-**lismu**l-fusooq", with a kasra on the laam.
+
+If you **start** at «ٱلِٱسۡمُ» (for example, after an emergency stop or in a test), Hafs has two ways:
+1. "**a-lismu**": start with fatha on the hamza of "al-" and kasra on the laam. This is the preferred way.
+2. "**lismu**": start directly with the laam with kasra.
+
+This word is a favourite question in recitation tests and ijazah readings, so practise it with your teacher.
+
+## Hamzat al-Wasl After a Question Hamza
+
+In three words in the Quran, a question hamza comes before "al-": «ءَآلذَّكَرَيۡنِ» (two places in Al-An'am), «ءَآلۡـَٰٔنَ» (two places in Yunus) and «ءَآللَّهُ» (in Yunus and An-Naml). Here the connecting hamza is not simply dropped, so that the question is not confused with a statement. Hafs has two ways:
+1. **Ibdaal**: change it into a long alif and stretch it **six counts** (madd laazim). This is the preferred and most common way.
+2. **Tas-heel**: pronounce it softly between a hamza and an alif, without stretching.
+
+## Common Mistakes
+
+1. **Always starting command verbs with damma**: "udhhab", "u'lamoo". Correct: "idhhab", "i'lamoo".
+2. **Starting the five exceptions with damma**: "umshoo", "ubnoo". Correct: "imshoo", "ibnoo".
+3. **Starting "al-" with kasra**: "il-hamdu". Correct: "al-hamdu".
+4. **Pronouncing hamzat al-wasl in the middle of joined speech**: "nasta'eenu ihdinaa". Correct: "nasta'eenu-hdinaa".
+5. **Confusing a question hamza with hamzat al-wasl**: «أَلَمۡ» always keeps its hamza.
+6. **Forgetting to change the second hamza**: "i'toonee" with two hamzas. Correct: "eetoonee".
+
+## Practice: How Would You Start These Words?
+
+1. «ٱلۡحَمۡدُ»
+2. «ٱهۡدِنَا»
+3. «ٱدۡخُلُواْ»
+4. «ٱذۡهَبۡ»
+5. «ٱبۡنَ مَرۡيَمَ»
+6. «ٱسۡتَكۡبَرُواْ»
+7. «ٱمۡشُواْ»
+8. «ٱنظُرۡ»
+9. «ٱثۡنَيۡنِ»
+10. «ٱئۡتُونِي»
+
+**Answers**:
+1. "al-hamdu": fatha, because it is "al-".
+2. "ihdinaa": kasra, third letter د has kasra.
+3. "udkhuloo": damma, third letter خ has an original damma.
+4. "idhhab": kasra, third letter ه has fatha.
+5. "ibna maryam": kasra, because it is a noun.
+6. "istakbaroo": kasra, third letter ت has fatha.
+7. "imshoo": kasra, because the damma on the shin is not original.
+8. "undhur": damma, third letter ظ has damma.
+9. "ithnayn": kasra, because it is a noun.
+10. "eetoonee": kasra on the connecting hamza, and the second hamza becomes a long "ee".
+
+## Quick Reference Table
+
+| Word type | Starting vowel | Examples |
+|---|---|---|
+| "Al-" | Fatha, always | al-hamdu, Allaahu, alladheena |
+| The seven nouns | Kasra | ibn, ibnah, imru', imra'ah, ism, ithnayn, ithnatayn |
+| Masdars of 5–6 letter verbs | Kasra | istikbaaran, iftiraa'an, ibtighaa'a |
+| Verb, third letter with original damma | Damma | udkhuloo, undhur, ud'u |
+| Verb, third letter with fatha or kasra | Kasra | idhhab, iqra', ihdinaa, irji'oo |
+| Verb, third letter with non-original damma | Kasra | imshoo, iqdoo, ibnoo, eetoo, imdoo |
+
+## When Will You Actually Need This?
+
+It might seem theoretical, but you will meet hamzat al-wasl on almost every page:
+- **Starting your recitation** at a verse that begins with it, such as Ayat al-Kursi («ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ») or the first verse of Surah Al-'Alaq.
+- **After stopping for breath**, when the next word begins with a connecting hamza.
+- **In prayer**, when you begin the second rak'ah from a passage that starts with one.
+- **When reciting to a teacher**, who may ask you to continue from the middle of a verse.
+- **In tests and ijazah readings**, where the exceptions and «ٱلِٱسۡمُ» are classic questions.
+
+## How to Practise
+
+- **Mark them on your page**: each day, put your finger on every connecting hamza on the page you read and ask: if I started here, which vowel would I use?
+- **Stop-and-start drills**: ask your teacher to stop you at random words and have you start again from the next word.
+- **Memorise the five exceptions**: imshoo, iqdoo, ibnoo, eetoo, imdoo. They come up again and again.
+- **Watch the sign**: the small saad-like mark on the alif is your cue that this is a connecting hamza.
+
+## Frequently Asked Questions
+
+### How do I recognise hamzat al-wasl in the Mushaf?
+In the Madinah Mushaf it is an alif with a small saad-like mark on top (ٱ) and no vowel or hamza sign. Hamzat al-qat' has a visible hamza (ء) with its vowel.
+
+### Can I start a word with a sukoon?
+No. Arabic does not begin with a sukoon, which is exactly why hamzat al-wasl exists. It must be given a vowel according to the rules above.
+
+### Is starting with the wrong vowel a serious mistake?
+It is a recitation error that should be corrected through learning and practice with a teacher, since it can change the form of the word.
+
+### Do these rules differ between the qira'at?
+The core rules for the starting vowel are broadly agreed upon. This guide follows the narration of Hafs from 'Asim, which is the most widely used today.
+
+### How do I start with «ٱللَّذَانِ» or «ٱلَّٰٓـِٔي»?
+They begin with "al-", so you start with fatha: "alladhaani", "allaa'ee".
+
+---
+
+The rules of stopping and starting are best mastered with a teacher who can listen and correct you in real time. If you would like to practise starting correctly from any place in your daily recitation, you can book a free trial lesson with one of our teachers.
