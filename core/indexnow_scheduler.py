@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 INTERVAL = timedelta(hours=3)
 LOCK_URL = '__scheduler__/indexnow'
 GSC_INTERVAL = timedelta(hours=20)
-GSC_LOCK_URL = '__scheduler__/gsc'
+GSC_LOCK_URL = '__scheduler__/gsc-v2'
+GSC_RETRY = timedelta(hours=1)
 _next_check = 0.0
 _guard = threading.Lock()
 
@@ -42,7 +43,15 @@ def _run():
         logger.exception('IndexNow scheduler فشل')
     try:
         if _claim(GSC_LOCK_URL, GSC_INTERVAL):
-            call_command('gsc_sync')  # جوجل: إعادة إرسال السايت ماب + فحص الفهرسة + تقرير المشاكل
+            from core import gsc
+            try:
+                gsc.run()  # جوجل: إعادة إرسال السايت ماب + فحص الفهرسة + تقرير المشاكل
+            except Exception:
+                # لو فشل (صلاحيات/شبكة) نحاول تاني بعد ساعة بدل ما نستنى يوم كامل
+                from core.models import IndexNowPing
+                IndexNowPing.objects.filter(url=GSC_LOCK_URL).update(
+                    pinged_at=timezone.now() - GSC_INTERVAL + GSC_RETRY)
+                raise
     except Exception:
         logger.exception('GSC sync فشل')
     finally:
