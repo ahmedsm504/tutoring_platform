@@ -33,6 +33,7 @@ def _run():
     try:
         close_old_connections()
         if _claim():
+            call_command('sync_youtube_channel')  # فيديوهات جديدة على قناة يوتيوب -> مكتبة الفيديوهات
             call_command('indexnow_ping', '--refresh')
     except Exception:
         logger.exception('IndexNow scheduler فشل')

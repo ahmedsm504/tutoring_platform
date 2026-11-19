@@ -1515,3 +1515,36 @@ class SalaryByLessonCountTests(TestCase):
         self.assertEqual(rec.net_amount(), 335.0)
         page = self.client.get(reverse('add_salary_record'))
         self.assertContains(page, 'name="lessons_count"')
+
+
+class ChannelVideosTests(TestCase):
+    def test_channel_videos_seeded_with_descriptions(self):
+        from videos.models import Video
+        from videos.channel_seed import VIDEOS
+        self.assertEqual(Video.objects.filter(youtube_id__in=[v['youtube_url'].rsplit('/', 1)[-1].split('=')[-1] for v in VIDEOS]).count(), len(VIDEOS))
+        for v in Video.objects.all():
+            self.assertGreater(len(v.description), 120, v.slug)
+            self.assertNotIn('#', v.title)
+            r = self.client.get(v.get_absolute_url())
+            self.assertEqual(r.status_code, 200)
+            self.assertNotContains(r, 'noindex')
+
+    def test_sync_adds_new_channel_videos_only(self):
+        from unittest import mock
+        from django.core.management import call_command
+        from videos.models import Video
+        feed = '''<?xml version="1.0"?><feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+<entry><yt:videoId>G2aixqFDz8U</yt:videoId><title>old</title><link rel="alternate" href="https://www.youtube.com/watch?v=G2aixqFDz8U"/><published>2026-09-14T17:36:41+00:00</published><media:group><media:description/></media:group></entry>
+<entry><yt:videoId>NEWvid12345</yt:videoId><title>شرح القلقلة للأطفال #اكسبلور</title><link rel="alternate" href="https://www.youtube.com/shorts/NEWvid12345"/><published>2026-11-20T10:00:00+00:00</published><media:group><media:description/></media:group></entry>
+</feed>'''.encode()
+        resp = mock.Mock(content=feed, raise_for_status=lambda: None)
+        before = Video.objects.count()
+        with mock.patch('requests.get', return_value=resp):
+            call_command('sync_youtube_channel')
+            call_command('sync_youtube_channel')
+        self.assertEqual(Video.objects.count(), before + 1)
+        v = Video.objects.get(youtube_id='NEWvid12345')
+        self.assertEqual(v.title, 'شرح القلقلة للأطفال')
+        self.assertEqual(v.category, 'tajweed')
+        self.assertTrue(v.is_short)
+        self.assertIn('منصة العجمي', v.description)
