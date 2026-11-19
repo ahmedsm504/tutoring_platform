@@ -1,6 +1,6 @@
 """فيديوهات قناة يوتيوب "منصة العجمي التعليمية" (UCG09H0ukaAr8JK8-FFfC0lw) بوصف مكتوب لكل فيديو.
 بيتزرعوا مرة واحدة من migration (videos/0002). أي فيديو جديد بيترفع على القناة بعد كده بيتضاف لوحده
-من RSS القناة (core/indexnow_scheduler.py -> manage.py sync_youtube_channel)."""
+من RSS القناة يدويًا بس (manage.py sync_youtube_channel) - مفيش استيراد تلقائي."""
 
 CHANNEL_ID = 'UCG09H0ukaAr8JK8-FFfC0lw'
 
