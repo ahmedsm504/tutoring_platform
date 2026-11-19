@@ -26,7 +26,9 @@
   <p>اختار السورة، واقرأها بالرسم العثماني، واسمعها بصوت الشيخ اللي تحبه. تقدر تكرر كل آية وتخفي النص عشان تختبر حفظك.</p>
 </div></header>
 <section class="section"><div class="container">
-  <p style="margin:0 0 14px;"><a class="btn btn-primary" href="{% url 'quran_tracker' %}">📋 تابع حفظك: علّم السور اللي حفظتها ومواعيد مراجعتها</a></p>
+  <p style="margin:0 0 14px;display:flex;flex-wrap:wrap;gap:8px;"><a class="btn btn-primary" href="{% url 'quran_tracker' %}">📋 تابع حفظك: علّم السور اللي حفظتها ومواعيد مراجعتها</a>
+  <a class="btn btn-primary" href="{% url 'khatma_planner' %}">📖 حاسبة ختم القرآن وجدول الختمة</a>
+  <a class="btn btn-primary" href="{% url 'hifz_planner' %}">🗓️ خطة حفظ القرآن: كم صفحة يوميًا؟</a></p>
   <label class="sr-only" for="sfind">ابحث عن سورة</label>
   <input id="sfind" class="sfind" type="search" placeholder="🔎 ابحث باسم السورة أو رقمها">
   <ul class="sgrid" id="sgrid">

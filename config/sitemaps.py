@@ -264,6 +264,24 @@ class QuranSitemap(Sitemap):
         return 0.75 if obj in (1, 2, 18, 36, 55, 56, 67, 112, 113, 114) else 0.6
 
 
+class PlannerSitemap(Sitemap):
+    """حاسبة ختم القرآن وخطة الحفظ (عربي + إنجليزي) والصفحات الجاهزة (رمضان، 30 يوم، سنة…)"""
+    protocol = 'https'
+    changefreq = 'monthly'
+
+    def items(self):
+        from learning.views_planner import all_urls
+        return all_urls()
+
+    def location(self, obj):
+        return obj
+
+    def priority(self, obj):
+        if obj.rstrip('/').endswith(('khatma', 'hifz-plan', 'khatam-planner', 'memorization-planner', 'ramadan')):
+            return 0.85
+        return 0.7
+
+
 class VideoSitemap(Sitemap):
     """صفحة لكل فيديو (عليها VideoObject) + صفحة الفيديوهات"""
     protocol = 'https'

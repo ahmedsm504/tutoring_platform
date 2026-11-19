@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from . import views_planner as vp
 
 urlpatterns = [
     # المعلمة
@@ -23,5 +24,9 @@ urlpatterns = [
     # عام (سيو)
     path('quran/', views.quran_index, name='quran_index'),
     path('quran/hifz-tracker/', views.quran_tracker, name='quran_tracker'),
+    path('quran/khatma/', vp.khatma, name='khatma_planner'),
+    path('quran/khatma/<slug:slug>/', vp.khatma, name='khatma_preset'),
+    path('quran/hifz-plan/', vp.hifz, name='hifz_planner'),
+    path('quran/hifz-plan/<slug:slug>/', vp.hifz, name='hifz_preset'),
     path('quran/<int:n>/', views.quran_surah, name='quran_surah'),
 ]

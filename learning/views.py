@@ -334,7 +334,9 @@ def quran_surah(request, n):
     idx = quran.index()
     meta = idx[n - 1]
     rec = request.GET.get('r')
-    related = [('/blog/how-to-memorize-quran-plan/', 'كيف تحفظ القرآن وتثبّته: خطة خطوة بخطوة'),
+    related = [('/quran/khatma/', 'حاسبة ختم القرآن: جدول ختمتك يوم بيوم'),
+               ('/quran/hifz-plan/', 'خطة حفظ القرآن: كم صفحة تحفظ يوميًا؟'),
+               ('/blog/how-to-memorize-quran-plan/', 'كيف تحفظ القرآن وتثبّته: خطة خطوة بخطوة'),
                ('/blog/madd-types-tajweed/', 'أنواع المد في التجويد وعدد حركاته')]
     if n == 1:
         related.insert(0, ('/blog/common-mistakes-surat-al-fatiha/', 'أخطاء شائعة في قراءة سورة الفاتحة وتصحيحها'))

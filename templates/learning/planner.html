@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ c.title }}{% endblock %}
+{% block meta_description %}{{ c.meta }}{% endblock %}
+{% block meta_keywords %}{% if mode == 'khatma' %}{% if en %}quran khatam planner, how many pages a day to finish quran, finish quran in 30 days, ramadan quran schedule, quran reading plan, khatam schedule pdf, quran in a month{% else %}جدول ختم القرآن, حاسبة ختم القرآن, ختم القرآن في رمضان, ختم القرآن في شهر, كم صفحة في اليوم لختم القرآن, ختمة رمضان, جدول ختمة pdf, ورد يومي من القرآن{% endif %}{% else %}{% if en %}quran memorization planner, hifz calculator, how many pages a day to memorize quran, memorize quran in one year, hifz schedule, quran memorization plan{% else %}خطة حفظ القرآن, حاسبة حفظ القرآن, حفظ القرآن في سنة, كم صفحة يوميا لحفظ القرآن, جدول حفظ القرآن, خطة حفظ القرآن في 3 سنوات{% endif %}{% endif %}{% endblock %}
+{% block og_title %}{{ c.h1 }}{% endblock %}
+{% block og_description %}{{ c.meta }}{% endblock %}
+{% block twitter_title %}{{ c.h1 }}{% endblock %}
+{% block twitter_description %}{{ c.meta }}{% endblock %}
+{% block og_image %}{{ SITE_URL }}{% static og_image %}{% endblock %}
+{% block twitter_image %}{{ SITE_URL }}{% static og_image %}{% endblock %}
+{% block og_image_alt %}{{ c.h1 }}{% endblock %}
+{% block extra_ldjson %}{% for ld in ldjson %}
+<script type="application/ld+json">{{ ld|safe }}</script>{% endfor %}
+{% endblock %}
+{% block extra_css %}
+<style>
+.pl-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.pl-stat{background:var(--green-tint);border-radius:16px;padding:14px 16px}
+.pl-stat strong{display:block;font-size:1.6rem;color:var(--green-deep);line-height:1.3}
+.pl-stat span{font-size:.9rem;color:var(--ink-soft)}
+.pl-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin:0 0 18px;box-shadow:0 6px 24px rgba(20,40,90,.06)}
+.pl-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;align-items:end}
+.pl-form label{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.92rem}
+.pl-form input,.pl-form select{padding:10px 12px;border-radius:12px;border:1px solid var(--line);font:inherit;background:var(--surface);min-height:44px}
+.pl-actions{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.pl-actions .btn{min-height:44px}
+.pl-actions .btn:not(.btn-primary){background:var(--surface);border:1px solid var(--line);color:var(--ink,inherit)}
+.pl-prog{display:flex;align-items:center;gap:10px;margin:12px 0 0;font-size:.92rem;color:var(--ink-soft)}
+.pl-bar{flex:1;height:10px;border-radius:999px;background:var(--line);overflow:hidden}
+.pl-bar span{display:block;height:100%;width:0;background:var(--green-deep);transition:width .3s}
+.pl-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table.pl-table{width:100%;border-collapse:collapse;font-size:.95rem}
+.pl-table th,.pl-table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+.pl-table th{background:var(--green-tint);position:sticky;top:0;font-size:.88rem}
+.pl-table tr.done td{background:#eef7ee;color:var(--ink-soft)}
+.pl-table tr.khatm td{border-bottom:2px solid #c9952c}
+.pl-table .ref{white-space:nowrap}
+.pl-table input[type=checkbox]{width:22px;height:22px;accent-color:var(--green-deep)}
+.pl-badge{display:inline-block;background:#fff4d6;color:#7a5200;border-radius:999px;padding:1px 8px;font-size:.78rem;margin-inline-start:6px}
+.pl-presets{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;padding:0;list-style:none}
+.pl-presets a{display:block;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);text-decoration:none;font-weight:600}
+.pl-presets a[aria-current]{border-color:var(--green-deep);background:var(--green-tint)}
+.pl-note{font-size:.85rem;color:var(--ink-soft)}
+.pl-faq details{border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:0 0 8px;background:var(--surface)}
+.pl-faq summary{font-weight:700;cursor:pointer}
+.pl-cta{background:linear-gradient(120deg,var(--green-deep),#3a63e0);color:#fff;border-radius:20px;padding:22px;margin:28px 0}
+.pl-cta a{color:#fff}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media print{
+  header.site-header,footer,.fab-wa,.pl-noprint,.page-head,nav,.skip-link,.pl-stats{display:none!important}
+  .section{padding-top:0!important}
+  .pl-table th{position:static}
+  .pl-table-wrap{border:0;overflow:visible}
+  body{background:#fff}
+  .pl-print-title{display:block!important}
+}
+.pl-print-title{display:none}
+</style>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs">{% for n, u in crumbs %}{% if forloop.last %}<li aria-current="page">{{ n }}</li>{% else %}<li><a href="{{ u }}">{{ n }}</a></li>{% endif %}{% endfor %}</ol>
+  <h1>{{ c.h1 }}</h1>
+  {% for p in c.intro %}<p>{{ p|safe }}</p>{% endfor %}
+</div></header>
+
+<section class="section" style="padding-top:24px"><div class="container">
+  <p class="pl-print-title"><strong>{{ c.h1 }}</strong> — alagme.com</p>
+
+  <div class="pl-stats" aria-live="polite">
+    {% if mode == 'khatma' %}
+    <div class="pl-stat"><strong id="st-ppd">{{ c.stats.pages_per_day_txt }}</strong><span>{% if en %}pages a day{% else %}صفحة يوميًا{% endif %}</span></div>
+    <div class="pl-stat"><strong id="st-juz">{{ c.stats.juz_per_day_txt }}</strong><span>{% if en %}juz a day{% else %}جزء يوميًا{% endif %}</span></div>
+    <div class="pl-stat"><strong id="st-min">{{ c.stats.minutes }}</strong><span>{% if en %}minutes a day (approx.){% else %}دقيقة يوميًا تقريبًا{% endif %}</span></div>
+    <div class="pl-stat"><strong id="st-pray">{{ c.stats.per_prayer_txt }}</strong><span>{% if en %}pages after each prayer{% else %}صفحة بعد كل صلاة{% endif %}</span></div>
+    {% else %}
+    <div class="pl-stat"><strong id="st-ppd">{{ c.stats.pages_per_day_txt }}</strong><span>{% if en %}pages per memorization day{% else %}صفحة في يوم الحفظ{% endif %}</span></div>
+    <div class="pl-stat"><strong id="st-lines">{{ c.stats.lines_per_day }}</strong><span>{% if en %}lines a day{% else %}سطرًا يوميًا{% endif %}</span></div>
+    <div class="pl-stat"><strong id="st-week">{{ c.stats.pages_per_week_txt }}</strong><span>{% if en %}pages a week{% else %}صفحة في الأسبوع{% endif %}</span></div>
+    <div class="pl-stat"><strong id="st-min">{{ c.stats.minutes }}</strong><span>{% if en %}minutes of new memorization{% else %}دقيقة حفظ جديد تقريبًا{% endif %}</span></div>
+    {% endif %}
+  </div>
+
+  <form class="pl-card pl-noprint" id="pl-form" onsubmit="return false" aria-label="{% if en %}Planner settings{% else %}إعدادات الخطة{% endif %}">
+    <div class="pl-form">
+      {% if mode == 'khatma' %}
+      <label>{% if en %}Number of days{% else %}عدد الأيام{% endif %}<input type="number" id="f-days" min="1" max="730" value="{{ c.days }}" inputmode="numeric"></label>
+      <label>{% if en %}Number of khatams{% else %}عدد الختمات{% endif %}<select id="f-kh">{% for k in "12345" %}<option value="{{ k }}"{% if k|add:0 == c.khatmas %} selected{% endif %}>{{ k }}</option>{% endfor %}</select></label>
+      <label>{% if en %}Start from page{% else %}البداية من صفحة{% endif %}<input type="number" id="f-start" min="1" max="604" value="1" inputmode="numeric"></label>
+      <label>{% if en %}Start date (optional){% else %}تاريخ البداية (اختياري){% endif %}<input type="date" id="f-date"></label>
+      {% else %}
+      <label>{% if en %}Time frame{% else %}المدة{% endif %}<select id="f-years">{% for y in "12345678" %}<option value="{{ y }}"{% if y|add:0 == c.years %} selected{% endif %} data-years="{{ y }}">{% if en %}{{ y }} year{% if y != "1" %}s{% endif %}{% else %}{% if y == "1" %}سنة{% elif y == "2" %}سنتان{% else %}{{ y }} سنوات{% endif %}{% endif %}</option>{% endfor %}</select></label>
+      <label>{% if en %}Memorization days a week{% else %}أيام الحفظ في الأسبوع{% endif %}<select id="f-dpw">{% for d in "34567" %}<option value="{{ d }}"{% if d == "5" %} selected{% endif %}>{{ d }}</option>{% endfor %}</select></label>
+      <label>{% if en %}Start from{% else %}البداية من{% endif %}<select id="f-dir"><option value="end">{% if en %}Juz' Amma (end of the Mushaf){% else %}جزء عمّ (آخر المصحف){% endif %}</option><option value="start">{% if en %}Al-Fatihah & Al-Baqarah{% else %}الفاتحة والبقرة (أول المصحف){% endif %}</option></select></label>
+      {% endif %}
+    </div>
+    <div class="pl-actions">
+      <button type="button" class="btn btn-primary" id="a-print">🖨️ {% if en %}Print / Save as PDF{% else %}اطبع أو احفظ PDF{% endif %}</button>
+      <a class="btn" id="a-wa" href="https://wa.me/?text={{ c.h1|urlencode }}%20{{ canonical_url|urlencode }}" target="_blank" rel="noopener">💬 {% if en %}Share on WhatsApp{% else %}شارك على واتساب{% endif %}</a>
+      <button type="button" class="btn" id="a-copy">🔗 {% if en %}Copy link{% else %}انسخ الرابط{% endif %}</button>
+      {% if mode == 'khatma' %}<button type="button" class="btn" id="a-ics">📅 {% if en %}Daily calendar reminders{% else %}تذكير يومي في التقويم{% endif %}</button>{% endif %}
+    </div>
+    <div class="pl-prog"><span id="p-txt">{% if en %}Tick the {% if mode == 'khatma' %}days{% else %}months{% endif %} you complete to track your progress.{% else %}علّم {% if mode == 'khatma' %}الأيام{% else %}الشهور{% endif %} التي أنجزتها ليظهر تقدمك.{% endif %}</span><div class="pl-bar"><span id="p-bar"></span></div></div>
+  </form>
+
+  <h2 id="tbl-title">{% if mode == 'khatma' %}{% if en %}{% if weekly %}Week-by-week schedule{% else %}Day-by-day schedule{% endif %}{% else %}{% if weekly %}الجدول أسبوعًا بأسبوع{% else %}الجدول يومًا بيوم{% endif %}{% endif %}{% else %}{% if en %}Month-by-month schedule{% else %}الجدول شهرًا بشهر{% endif %}{% endif %}</h2>
+  <div class="pl-table-wrap">
+  <table class="pl-table" id="pl-table">
+    {% if mode == 'khatma' %}
+    <thead><tr><th class="pl-noprint" scope="col"><span class="sr-only">{% if en %}Done{% else %}تم{% endif %}</span>✓</th><th scope="col">{% if en %}{% if weekly %}Days{% else %}Day{% endif %}{% else %}{% if weekly %}الأيام{% else %}اليوم{% endif %}{% endif %}</th><th scope="col" class="c-date" hidden>{% if en %}Date{% else %}التاريخ{% endif %}</th><th scope="col">{% if en %}Pages{% else %}الصفحات{% endif %}</th><th scope="col">{% if en %}From{% else %}من{% endif %}</th><th scope="col">{% if en %}To{% else %}إلى{% endif %}</th><th scope="col">{% if en %}Juz{% else %}الجزء{% endif %}</th></tr></thead>
+    <tbody>{% for r in rows %}<tr{% if r.khatma_done %} class="khatm"{% endif %}><td class="pl-noprint"><input type="checkbox" aria-label="{% if en %}Done{% else %}تم{% endif %} {{ r.day }}"></td><td><bdi dir="ltr">{{ r.day }}</bdi></td><td class="c-date" hidden></td><td><bdi dir="ltr">{{ r.from_page }}–{{ r.to_page }}</bdi> <span class="pl-note">({{ r.pages }})</span></td><td class="ref">{{ r.from_txt }}</td><td class="ref">{{ r.to_txt }}{% if r.khatma_done %}<span class="pl-badge">{% if en %}Khatam ✓{% else %}ختمة ✓{% endif %}</span>{% endif %}</td><td><bdi dir="ltr">{% if r.juz_from == r.juz_to %}{{ r.juz_from }}{% else %}{{ r.juz_from }}–{{ r.juz_to }}{% endif %}</bdi></td></tr>{% endfor %}</tbody>
+    {% else %}
+    <thead><tr><th class="pl-noprint" scope="col"><span class="sr-only">{% if en %}Done{% else %}تم{% endif %}</span>✓</th><th scope="col">{% if en %}Month{% else %}الشهر{% endif %}</th><th scope="col">{% if en %}What to memorize{% else %}المطلوب حفظه{% endif %}</th><th scope="col">{% if en %}Pages{% else %}الصفحات{% endif %}</th><th scope="col">{% if en %}Total memorized{% else %}إجمالي المحفوظ{% endif %}</th></tr></thead>
+    <tbody>{% for r in rows %}<tr><td class="pl-noprint"><input type="checkbox" aria-label="{% if en %}Done{% else %}تم{% endif %} {{ r.month }}"></td><td>{{ r.month }}</td><td>{% for run in r.runs %}<div class="ref">{% if en %}Juz {{ run.juz }}{% if run.juz_to != run.juz %}–{{ run.juz_to }}{% endif %}: {{ run.from_txt }} → {{ run.to_txt }}{% else %}{% if run.juz_to != run.juz %}الأجزاء <bdi dir="ltr">{{ run.juz }}–{{ run.juz_to }}</bdi>{% else %}الجزء {{ run.juz }}{% endif %}: من {{ run.from_txt }} إلى {{ run.to_txt }}{% endif %} <span class="pl-note">({% if en %}p.{% else %}ص{% endif %} <bdi dir="ltr">{{ run.from_page }}–{{ run.to_page }}</bdi>)</span></div>{% endfor %}</td><td>{{ r.pages }}</td><td>{{ r.done_pct }}%</td></tr>{% endfor %}</tbody>
+    {% endif %}
+  </table>
+  </div>
+  <p class="pl-note">{% if en %}Based on the standard Madinah Mushaf (Hafs, 604 pages). Your ticks are saved on this device only.{% else %}على ترقيم مصحف المدينة (رواية حفص، 604 صفحة). علامات الإنجاز محفوظة على جهازك فقط.{% endif %}</p>
+
+  <div class="article pl-noprint" style="margin-top:34px;">
+    <h2>{% if mode == 'khatma' %}{% if en %}Ready-made khatam schedules{% else %}جداول ختمة جاهزة{% endif %}{% else %}{% if en %}Ready-made memorization plans{% else %}خطط حفظ جاهزة{% endif %}{% endif %}</h2>
+    <ul class="pl-presets">{% for s, t, u in presets %}<li><a href="{{ u }}"{% if s == slug %} aria-current="page"{% endif %}>{{ t }}</a></li>{% endfor %}</ul>
+
+    {% if mode == 'khatma' %}
+    <h2>{% if en %}How to use the planner{% else %}كيف تستخدم حاسبة الختمة؟{% endif %}</h2>
+    <ol>{% if en %}
+      <li><strong>Choose the number of days</strong> (for example 30 for Ramadan) and how many khatams you want.</li>
+      <li><strong>Set your starting page</strong> if you are already part-way through the Mushaf.</li>
+      <li><strong>Add a start date</strong> to see the date of each day, and download daily calendar reminders.</li>
+      <li><strong>Print it or share it</strong> with your family so you can complete the khatam together.</li>
+    {% else %}
+      <li><strong>اختر عدد الأيام</strong> (مثلًا 30 لرمضان) وعدد الختمات التي تريدها.</li>
+      <li><strong>حدد صفحة البداية</strong> إذا كنت قد قرأت جزءًا من المصحف بالفعل.</li>
+      <li><strong>أضف تاريخ البداية</strong> ليظهر تاريخ كل يوم، ويمكنك تنزيل تذكير يومي في التقويم.</li>
+      <li><strong>اطبع الجدول أو شاركه</strong> مع أهلك لتختموا معًا.</li>
+    {% endif %}</ol>
+    {% else %}
+    <h2>{% if en %}How to use the memorization planner{% else %}كيف تستخدم خطة الحفظ؟{% endif %}</h2>
+    <ol>{% if en %}
+      <li><strong>Choose your time frame</strong> and how many days a week you will memorize.</li>
+      <li><strong>Choose where to start</strong>: from Juz' Amma backwards, or from Al-Fatihah and Al-Baqarah.</li>
+      <li><strong>Follow the monthly table</strong>, and split each month's pages across your memorization days.</li>
+      <li><strong>Tick each month</strong> you complete, and keep your daily revision going.</li>
+    {% else %}
+      <li><strong>اختر المدة</strong> وعدد أيام الحفظ في الأسبوع.</li>
+      <li><strong>اختر البداية</strong>: من جزء عمّ إلى الخلف، أو من الفاتحة والبقرة.</li>
+      <li><strong>اتبع الجدول الشهري</strong>، ووزّع صفحات كل شهر على أيام الحفظ.</li>
+      <li><strong>علّم كل شهر تنجزه</strong>، واستمر في المراجعة اليومية.</li>
+    {% endif %}</ol>
+    {% endif %}
+
+    <h2>{% if en %}Tips to stay consistent{% else %}نصائح للاستمرار{% endif %}</h2>
+    <ul>{% for t in c.tips %}<li>{{ t }}</li>{% endfor %}</ul>
+
+    <h2>{% if en %}Frequently asked questions{% else %}أسئلة شائعة{% endif %}</h2>
+    <div class="pl-faq">{% for q, a in c.faq %}<details{% if forloop.first %} open{% endif %}><summary>{{ q }}</summary><p>{{ a }}</p></details>{% endfor %}</div>
+
+    <h2>{% if en %}More free Quran tools{% else %}أدوات قرآنية مجانية أخرى{% endif %}</h2>
+    <ul>{% if en %}
+      <li><a href="{{ other_hub }}">{% if mode == 'khatma' %}Quran memorization planner (hifz calculator){% else %}Quran khatam planner{% endif %}</a></li>
+      <li><a href="/en/quran/">Read and listen to the Quran, surah by surah</a></li>
+      <li><a href="/blog/quran-revision-system-english/">A revision system that keeps your hifz strong</a></li>
+      <li><a href="/blog/surah-baqarah-memorization-plan-english/">How to memorize Surah Al-Baqarah in 100 days</a></li>
+    {% else %}
+      <li><a href="{{ other_hub }}">{% if mode == 'khatma' %}حاسبة خطة حفظ القرآن{% else %}حاسبة ختم القرآن وجدول الختمة{% endif %}</a></li>
+      <li><a href="{% url 'quran_tracker' %}">متابعة حفظ القرآن ومراجعته</a></li>
+      <li><a href="{% url 'quran_index' %}">القرآن الكريم مكتوبًا مع الاستماع</a></li>
+      <li><a href="/blog/how-to-memorize-quran-plan/">كيف تحفظ القرآن وتثبّته: خطة خطوة بخطوة</a></li>
+      <li><a href="/blog/surah-al-baqarah-hifz-plan/">خطة حفظ سورة البقرة في 100 يوم</a></li>
+    {% endif %}</ul>
+
+    <div class="pl-cta">
+      <h2 style="color:#fff;margin-top:0">{% if en %}Want a teacher to keep you on track?{% else %}تريد معلمًا يتابعك في خطتك؟{% endif %}</h2>
+      <p>{% if en %}One-to-one online Quran classes to correct your recitation, test your memorization and keep you consistent. Your first class is a free trial.{% else %}حصص فردية أونلاين لتصحيح التلاوة وتسميع الحفظ ومتابعة خطتك أسبوعيًا، والحصة الأولى تجريبية مجانية.{% endif %}</p>
+      <a class="btn" style="background:#fff;color:var(--green-deep)" href="{% if en %}/en/contact/{% else %}/contact/{% endif %}">{% if en %}Book a free trial class{% else %}احجز حصتك التجريبية المجانية{% endif %}</a>
+    </div>
+  </div>
+</div></section>
+{{ cfg|json_script:"planner-cfg" }}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/planner.js' %}" defer></script>{% endblock %}
