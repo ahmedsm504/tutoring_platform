@@ -163,6 +163,7 @@
           <a href="{% url 'blog_list' %}" {% if '/blog/' in request.path %}aria-current="page"{% endif %}>المدونة</a>
           <a href="{% url 'video_list' %}" {% if '/videos/' in request.path %}aria-current="page"{% endif %}>الفيديوهات</a>
           <a href="{% url 'qna:question_list' %}" {% if ns == 'qna' %}aria-current="page"{% endif %}>أسئلة وأجوبة</a>
+          <a href="{% url 'careers:list' %}" {% if '/jobs/' in request.path %}aria-current="page"{% endif %}>وظائف</a>
           <a href="{% url 'contact' %}" {% if u == 'contact' %}aria-current="page"{% endif %}>تواصل معنا</a>
           {% if user.is_authenticated %}
             {% if user.core_student %}<a href="{% url 'student_portal_home' %}">بوابة الطالب</a>
