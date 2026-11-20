@@ -180,8 +180,9 @@ def blog_detail(request, slug):
     comments = post.comments.filter(is_approved=True).order_by('-created_at')
     
     # مقالات ذات صلة (من نفس التصنيف)
-    from .related import related_posts as _related, prev_next
+    from .related import related_posts as _related, prev_next, discover_posts
     related_posts = _related(post, limit=4)
+    new_posts = discover_posts(post, exclude=[p.pk for p in related_posts])
     prev_post, next_post = prev_next(post)
 
     # ✅ جديد: معرض الصور وفيديوهات المقال
@@ -211,6 +212,7 @@ def blog_detail(request, slug):
         'comments': comments,
         'comments_count': comments.count(),
         'related_posts': related_posts,
+        'new_posts': new_posts,
         'quran_surah': _listen_surah(post),
         'quran_surahs': _section_surahs(post),
         'prev_post': prev_post,

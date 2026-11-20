@@ -296,6 +296,13 @@
     </nav>
     {% endif %}
 
+    {% if new_posts %}
+    <section aria-labelledby="new-posts-title" style="margin-top:56px;">
+      <h2 id="new-posts-title" style="font-size:1.25rem;">{% if en %}New on the blog{% else %}جديد في المدونة{% endif %}</h2>
+      <ul style="margin:14px 0 0; padding-inline-start:20px; line-height:2;">{% for p in new_posts %}<li><a href="{% url 'blog_detail' p.slug %}">{{ p.title }}</a></li>{% endfor %}</ul>
+    </section>
+    {% endif %}
+
     {% if related_posts %}
     <section aria-labelledby="related-title" style="margin-top:72px;">
       <h2 id="related-title">{% if en %}Related articles{% else %}مقالات قريبة من الموضوع{% endif %}</h2>
