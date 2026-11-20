@@ -396,9 +396,13 @@ class Wave3Tests(TestCase):
         Comment.objects.create(post=post, author_name='t', author_email='t@example.com', content='hi', is_approved=False)
         Post.objects.filter(pk=post.pk).update(is_featured=True)
         self.client.force_login(admin_user)
-        for model in admin.site._registry:
+        from django.test import RequestFactory
+        req = RequestFactory().get('/admin/')
+        req.user = admin_user
+        for model, model_admin in admin.site._registry.items():
             opts = model._meta
-            for name in ('changelist', 'add'):
+            names = ('changelist', 'add') if model_admin.has_add_permission(req) else ('changelist',)
+            for name in names:
                 url = reverse(f'admin:{opts.app_label}_{opts.model_name}_{name}')
                 self.assertEqual(self.client.get(url).status_code, 200, url)
             obj = model.objects.first()

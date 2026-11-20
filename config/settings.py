@@ -99,6 +99,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'accounts',
     'core',
+    'careers',
     'payments',
     'chat.apps.ChatConfig',
     'learning.apps.LearningConfig',

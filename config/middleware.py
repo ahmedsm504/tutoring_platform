@@ -9,7 +9,7 @@ from django.http import HttpResponse, HttpResponsePermanentRedirect
 # المراسلات، تقارير الطلاب الخاصة...) بتاخد X-Robots-Tag: noindex تلقائيًا
 PUBLIC_PREFIXES = (
     '/about/', '/contact/', '/pricing/', '/quality-standards/', '/privacy-policy/', '/terms/', '/editorial-policy/', '/site-index/',
-    '/blog/', '/questions/', '/quran/', '/en/', '/videos/', '/static/', '/media/',
+    '/blog/', '/questions/', '/quran/', '/en/', '/videos/', '/jobs/', '/static/', '/media/',
     '/sitemap.xml', '/robots.txt', '/ads.txt', '/llms.txt', '/favicon.ico', '/firebase-messaging-sw.js',
 )
 PRIVATE_UNDER_PUBLIC = ('/questions/vote', '/questions/vote-community', '/questions/verify-community',

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block adsense %}{% endblock %}
+{% block title %}وظائف مؤسسة العجمي: معلمات ومشرفات قرآن أونلاين من البيت{% endblock %}
+{% block meta_description %}وظائف متاحة في مؤسسة العجمي لتحفيظ القرآن: معلمات قرآن وتجويد ومشرفات حلقات أونلاين من المنزل. اختاري الوظيفة وقدّمي في دقائق.{% endblock %}
+{% block meta_keywords %}وظائف معلمات قرآن, وظائف اونلاين من البيت للبنات, مطلوب معلمات قرآن, وظيفة مشرفة قرآن, اكاديمية قرآن تطلب معلمات{% endblock %}
+{% block og_image %}{{ SITE_URL }}{% static 'images/og-jobs.jpg' %}{% endblock %}
+{% block twitter_image %}{{ SITE_URL }}{% static 'images/og-jobs.jpg' %}{% endblock %}
+{% block extra_ldjson %}{% for ld in ldjson %}
+<script type="application/ld+json">{{ ld|safe }}</script>{% endfor %}
+{% endblock %}
+{% block extra_css %}<style>
+.jl{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.jl a{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;text-decoration:none;color:inherit;box-shadow:var(--shadow);transition:transform .15s}
+.jl a:hover{transform:translateY(-3px);border-color:var(--green)}
+.jl i{font-style:normal;font-size:2.2rem}
+.jl b{font-family:var(--font-display);font-size:1.25rem;color:var(--ink)}
+.jl span{color:var(--muted)}
+.jl em{font-style:normal;margin-top:auto;color:var(--green);font-weight:700}
+.jl .note{background:var(--green-tint);border-radius:12px;padding:8px 12px;font-size:.92rem;color:var(--green-deep)}
+</style>{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">الوظائف</li></ol>
+  <h1>انضمي لفريق مؤسسة العجمي</h1>
+  <p>نبحث دائمًا عن معلمات ومشرفات متقنات للقرآن، يحببن العمل مع الأطفال والكبار، للعمل أونلاين من البيت. اختاري الوظيفة المناسبة لك وقدّمي في دقائق.</p>
+</div></header>
+<section class="section"><div class="container">
+  {% if jobs %}<div class="jl">{% for j in jobs %}<a href="{{ j.get_absolute_url }}"><i aria-hidden="true">{{ j.icon }}</i><b>{{ j.title }}</b><span>{{ j.card_text }}</span>{% if j.important_note %}<span class="note">{{ j.important_note }}</span>{% endif %}<em>قدّمي الآن ←</em></a>{% endfor %}</div>
+  {% else %}<p>لا توجد وظائف متاحة حاليًا. تابعي الصفحة قريبًا إن شاء الله.</p>{% endif %}
+</div></section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% if q.policy_text %}<div class="ja-policy">{% if q.policy_title %}<strong>ⓘ {{ q.policy_title }}</strong>{% endif %}<p>{{ q.policy_text|linebreaksbr }}</p></div>{% endif %}
+{% if q.qtype == 'info' %}<div class="ja-info">{% if q.label %}<strong>{{ q.label }}</strong>{% endif %}{% if q.intro or q.help_text %}<p>{{ q.intro|default:q.help_text|linebreaksbr }}</p>{% endif %}</div>{% else %}
+<div class="field ja-field{% if q.half_width %} ja-half{% endif %}{% if q.highlight %} ja-star{% endif %}{% if q.qtype == 'files' or q.qtype == 'audio' %} ja-up{% endif %}{% if q.error %} has-err{% endif %}"
+     data-name="{{ q.key }}" data-type="{{ q.qtype }}"{% if q.required %} data-req="1"{% endif %}{% if q.required_answer %} data-must="{{ q.required_answer }}" data-reject="{{ q.reject_message }}"{% endif %}{% if q.min_words %} data-words="{{ q.min_words }}"{% endif %}{% if q.min_length %} data-minlen="{{ q.min_length }}"{% endif %}{% if q.min_value is not None %} data-min="{{ q.min_value }}"{% endif %}{% if q.max_value is not None %} data-max="{{ q.max_value }}"{% endif %}{% if q.reject_message %} data-msg="{{ q.reject_message }}"{% endif %}{% if q.qtype == 'files' %} data-maxfiles="{{ q.max_files }}"{% endif %}>
+{% if q.qtype == 'agree' %}
+  <label class="ja-agree"><input type="checkbox" name="{{ q.key }}" value="on"{% if q.value == 'on' %} checked{% endif %}><span>{{ q.label }}</span></label>
+{% elif q.qtype == 'radio' or q.qtype == 'yesno' or q.qtype == 'checkboxes' %}
+  <fieldset class="ja-fs"><legend>{{ q.label }}{% if q.required %}<span class="req" aria-hidden="true">*</span>{% endif %}</legend>
+  {% if q.intro %}<p class="ja-intro">{{ q.intro|linebreaksbr }}</p>{% endif %}
+  <div class="ja-opts">{% for c in q.choice_list %}<label class="ja-opt"><input type="{% if q.qtype == 'checkboxes' %}checkbox{% else %}radio{% endif %}" name="{{ q.key }}" value="{{ c }}"{% if q.value == c or c in q.values %} checked{% endif %}><span>{{ c }}</span></label>{% endfor %}</div>
+  </fieldset>
+{% elif q.qtype == 'files' or q.qtype == 'audio' %}
+  <h4>{{ q.label }}{% if q.required %}<span class="req" aria-hidden="true">*</span>{% endif %}</h4>
+  {% if q.help_text %}<p>{{ q.help_text }}</p>{% endif %}{% if q.intro %}<p>{{ q.intro|linebreaksbr }}</p>{% endif %}
+  {% if q.qtype == 'audio' %}
+    {% if q.verses %}<details><summary class="ja-sum-link">📖 عرض الآيات للقراءة منها أثناء التسجيل</summary><div class="ja-mushaf" dir="rtl" lang="ar">{% for a, t in q.verses %}{{ t }} <sup>﴿{{ a }}﴾</sup> {% endfor %}</div></details>{% endif %}
+    <div class="ja-rec"><button type="button" class="ja-recbtn" data-rec><i></i><span>ابدئي التسجيل</span></button><span class="ja-timer">00:00</span><span class="ja-or">أو</span>
+    <label class="ja-pick">🎵 ارفعي ملفًا صوتيًا<input type="file" name="{{ q.key }}" accept="audio/*,.mp3,.m4a,.ogg,.opus,.webm,.wav,.aac,.amr"></label></div>
+    <div class="ja-audio"></div>
+  {% else %}
+    <label class="ja-pick">📎 {% if q.max_files > 1 %}اختاري الصور أو الملفات · حتى {{ q.max_files }}{% else %}اختاري الملف{% endif %}<input type="file" name="{{ q.key }}" accept="{% if q.file_kind == 'docs' %}.pdf,.doc,.docx,image/*{% else %}image/*,.pdf{% endif %}"{% if q.max_files > 1 %} multiple{% endif %}></label>
+    <div class="ja-thumbs"></div>
+  {% endif %}
+{% else %}
+  <label for="f-{{ q.key }}">{{ q.label }}{% if q.required %}<span class="req" aria-hidden="true">*</span>{% endif %}</label>
+  {% if q.intro %}<p class="ja-intro">{{ q.intro|linebreaksbr }}</p>{% endif %}
+  {% if q.qtype == 'textarea' %}<textarea id="f-{{ q.key }}" name="{{ q.key }}" rows="{% if q.highlight %}7{% else %}3{% endif %}" placeholder="{{ q.placeholder }}">{{ q.value }}</textarea>
+  {% elif q.qtype == 'select' %}<select id="f-{{ q.key }}" name="{{ q.key }}"><option value="">اختاري…</option>{% for c in q.choice_list %}<option value="{{ c }}"{% if q.value == c %} selected{% endif %}>{{ c }}</option>{% endfor %}</select>
+  {% elif q.qtype == 'suggest' %}<input id="f-{{ q.key }}" name="{{ q.key }}" type="text" list="dl-{{ q.key }}" value="{{ q.value }}" placeholder="{{ q.placeholder }}" autocomplete="off"><datalist id="dl-{{ q.key }}">{% for c in q.choice_list %}<option value="{{ c }}">{% endfor %}</datalist>
+  {% elif q.qtype == 'number' %}<input id="f-{{ q.key }}" name="{{ q.key }}" type="text" inputmode="numeric" value="{{ q.value }}" placeholder="{{ q.placeholder }}">
+  {% elif q.qtype == 'phone' %}<input id="f-{{ q.key }}" name="{{ q.key }}" type="tel" dir="ltr" style="text-align:right" inputmode="tel" value="{{ q.value }}" placeholder="{{ q.placeholder }}" autocomplete="tel">
+  {% else %}<input id="f-{{ q.key }}" name="{{ q.key }}" type="text" value="{{ q.value }}" placeholder="{{ q.placeholder }}"{% if q.role == 'name' %} autocomplete="name"{% endif %}>{% endif %}
+{% endif %}
+  {% if q.help_text and q.qtype != 'files' and q.qtype != 'audio' %}<div class="ja-help">{{ q.help_text }}</div>{% endif %}
+  <div class="err" role="alert">{{ q.error }}</div>
+</div>{% endif %}
