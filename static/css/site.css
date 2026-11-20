@@ -92,7 +92,7 @@ p { margin: 0 0 1em; }
 .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
   .menu-btn { display: block; margin-inline-start: auto; }
   .header-inner { gap: 12px; }
   .nav { display: none; position: absolute; top: 100%; right: 0; left: 0; flex-direction: column; align-items: stretch; gap: 2px;
@@ -554,7 +554,7 @@ html[dir="ltr"] .fab-wa { left: auto; right: 18px; padding: 12px 14px 12px 18px;
 html[dir="ltr"] .video-facade .play svg { margin-right: 0; margin-left: 4px; }
 html[dir="ltr"] .share strong { margin-left: 0; margin-right: 6px; }
 html[dir="ltr"] .progress { right: auto; left: 0; }
-@media (max-width: 1080px) { html[dir="ltr"] .nav a[aria-current="page"] { box-shadow: inset 3px 0 0 var(--gold); } }
+@media (max-width: 1180px) { html[dir="ltr"] .nav a[aria-current="page"] { box-shadow: inset 3px 0 0 var(--gold); } }
 html[dir="ltr"] .sname-en { font-family: var(--font-body); font-size: 1.05rem; font-weight: 600; display: block; }
 
 /* زرار تبديل اللغة */
@@ -638,6 +638,6 @@ html[dir="rtl"] .features li::before { box-shadow: -18px 0 0 #ffc83d, -36px 0 0 
 @media (prefers-reduced-motion: reduce) { .btn, .programs li { transition: none; } .programs li:hover, .btn:hover { transform: none; } }
 .header-actions { display: flex; align-items: center; gap: 8px; }
 .header-actions .btn { white-space: nowrap; }
-@media (max-width: 1280px) and (min-width: 1081px) { .nav a { padding-inline: 8px; font-size: .92rem; } .brand-name small { display: none; } }
+@media (max-width: 1480px) and (min-width: 1181px) { .nav a { padding-inline: 7px; font-size: .9rem; } .header-inner { gap: 16px; } .brand-name small { display: none; } }
 @media (max-width: 440px) { .header-actions .btn { padding: 8px 11px; font-size: .8rem; } .brand-name { font-size: 1.05rem; } .lang-switch { padding: 6px 9px; } }
 @media (max-width: 600px) { .hero::before, .page-head::before { opacity: .3; } }
