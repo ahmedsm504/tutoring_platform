@@ -13,7 +13,7 @@ from core.push_status import push_status
 
 from .robots_view import llms_txt, robots_txt
 from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap, QNAQuestionsSitemap,
-                       PlannerSitemap, QuranSitemap, StaticViewSitemap, VideoSitemap)
+                       JobSitemap, PlannerSitemap, QuranSitemap, StaticViewSitemap, VideoSitemap)
 
 
 def indexnow_key(request):
@@ -30,6 +30,7 @@ sitemaps = {
     'question-categories': QNACategorySitemap,
     'quran': QuranSitemap,
     'quran-tools': PlannerSitemap,
+    'jobs': JobSitemap,
     'videos': VideoSitemap,
 }
 
@@ -83,6 +84,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('questions/', include('qna.urls', namespace='qna')),
     path('videos/', include('videos.urls')),
+    path('', include('careers.urls')),
     path('firebase-messaging-sw.js', TemplateView.as_view(
         template_name='firebase-messaging-sw.js', content_type='application/javascript'
     ), name='firebase-sw'),

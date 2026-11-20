@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block adsense %}{% endblock %}
+{% block title %}{{ job.meta_title|default:job.title }}{% endblock %}
+{% block meta_description %}{{ job.meta_description|default:job.card_text }}{% endblock %}
+{% block meta_keywords %}{{ job.keywords }}{% endblock %}
+{% block og_title %}{{ job.h1 }} – مؤسسة العجمي{% endblock %}
+{% block og_description %}{{ job.meta_description|default:job.card_text }}{% endblock %}
+{% block twitter_title %}{{ job.h1 }}{% endblock %}
+{% block twitter_description %}{{ job.meta_description|default:job.card_text }}{% endblock %}
+{% block og_image %}{{ SITE_URL }}{% static job.og_image|default:'images/og-jobs.jpg' %}{% endblock %}
+{% block twitter_image %}{{ SITE_URL }}{% static job.og_image|default:'images/og-jobs.jpg' %}{% endblock %}
+{% block og_image_alt %}{{ job.h1 }}{% endblock %}
+{% block extra_ldjson %}{% for ld in ldjson %}
+<script type="application/ld+json">{{ ld|safe }}</script>{% endfor %}
+{% endblock %}
+{% block extra_css %}
+<script>document.documentElement.classList.add('js')</script>
+<style>
+.ja-hero{display:grid;grid-template-columns:1.25fr .9fr;gap:28px;align-items:center}
+@media (max-width:900px){.ja-hero{grid-template-columns:1fr}}
+.ja-chip{display:inline-flex;gap:6px;align-items:center;background:var(--gold-soft);color:#6b4700;border-radius:999px;padding:4px 14px;font-weight:700;font-size:.9rem;margin-bottom:10px}
+.ja-hero h1{margin-bottom:.25em}
+.ja-hero .ja-sub{font-family:var(--font-display);font-size:1.25rem;opacity:.95;margin:0 0 10px}
+.ja-cta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 8px}
+.ja-cta .btn-ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.45)}
+.ja-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+@media (max-width:560px){.ja-mini{grid-template-columns:1fr}}
+.ja-mini div{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:16px;padding:12px 14px;font-size:.92rem}
+.ja-mini strong{display:block;font-size:1rem}
+.ja-sum{background:#fff;color:var(--ink);border-radius:24px;padding:22px;box-shadow:0 18px 50px rgba(8,20,80,.28)}
+.ja-sum h2{font-size:1.25rem;display:flex;gap:10px;align-items:center}
+.ja-sum h2 img{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold)}
+.ja-sum ul{list-style:none;padding:0;margin:0 0 12px}
+.ja-sum li{display:flex;gap:8px;padding:6px 0;font-size:.95rem}
+.ja-note{background:var(--green-tint);border-radius:16px;padding:12px 14px;margin:8px 0 14px}
+.ja-note strong{color:var(--green-deep)}
+.ja-req{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.ja-req div{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.ja-req b{display:block;font-size:1.02rem;margin:4px 0}
+.ja-req span{color:var(--muted);font-size:.92rem}
+.ja-req i{font-style:normal;font-size:1.5rem}
+.ja-steps-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;list-style:none;padding:0;margin:0 0 18px;counter-reset:s}
+.ja-steps-nav li{text-align:center;font-size:.8rem;color:var(--muted);position:relative}
+.ja-steps-nav li b{display:grid;place-items:center;width:38px;height:38px;margin:0 auto 4px;border-radius:50%;background:var(--line);color:var(--ink-soft);font-size:1rem}
+.ja-steps-nav li.on b{background:var(--green);color:#fff;box-shadow:0 0 0 5px rgba(39,71,217,.15)}
+.ja-steps-nav li.ok b{background:#1f9d55;color:#fff}
+.ja-steps-nav li.on{color:var(--ink);font-weight:700}
+@media (max-width:560px){.ja-steps-nav li span{display:none}}
+.ja-step{border:0;padding:0;margin:0}
+.js .ja-step:not(.on){display:none}
+.ja-step-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:16px}
+.ja-step-h h3{margin:0;font-family:var(--font-display);font-size:1.3rem}
+.ja-step-h small{color:var(--muted)}
+.ja-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.ja-grid>.field:not(.ja-half),.ja-grid>.ja-policy{grid-column:1/-1}
+@media (max-width:620px){.ja-grid{grid-template-columns:1fr}}
+.ja-fs{border:0;padding:0;margin:0}
+.ja-fs legend{font-weight:600;margin-bottom:8px;font-size:.97rem;padding:0}
+.ja-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.ja-opt{display:flex!important;gap:10px;align-items:center;margin:0!important;padding:11px 14px;border:1.5px solid var(--line);border-radius:14px;background:#f7f9ff;cursor:pointer;font-weight:500!important;min-height:48px}
+.ja-opt input{width:20px!important;height:20px;min-height:0!important;margin:0;accent-color:var(--green)}
+.ja-opt:has(input:checked){border-color:var(--green);background:var(--green-tint);font-weight:700!important}
+.ja-agree{display:flex!important;gap:10px;align-items:flex-start;padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;font-weight:600!important}
+.ja-agree input{width:22px!important;height:22px;min-height:0!important;margin:3px 0 0;accent-color:var(--green);flex-shrink:0}
+.ja-agree:has(input:checked){border-color:#1f9d55;background:#effaf3}
+.ja-policy{background:#f4f7ff;border:1px solid var(--line);border-radius:16px;padding:12px 16px;margin:0 0 8px}
+.ja-policy p{margin:4px 0 0;color:var(--ink-soft);font-size:.93rem}
+.ja-help{color:var(--muted);font-size:.85rem;margin-top:4px}
+.ja-intro{color:var(--ink-soft);font-size:.92rem;margin:0 0 8px}
+.ja-star{background:#f3f7ff;border:2px solid #c8d6ff;border-radius:18px;padding:16px}
+.ja-star textarea{border-style:dashed!important;background:#fff}
+.field.has-err input,.field.has-err select,.field.has-err textarea,.field.has-err .ja-opt,.field.has-err .ja-agree{border-color:var(--danger)!important}
+.field .err:empty{display:none}
+.ja-navbtns{display:flex;justify-content:space-between;gap:10px;margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+.ja-navbtns .btn{min-width:130px;min-height:48px}
+.ja-navbtns .btn-light{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.ja-saved{color:var(--muted);font-size:.82rem;text-align:center;margin-top:8px}
+.ja-up{border:2px dashed #c8d6ff;border-radius:18px;padding:16px;background:#fafbff;margin-bottom:16px}
+.ja-up h4{margin:0 0 4px;font-size:1.05rem}
+.ja-up p{margin:0 0 10px;color:var(--muted);font-size:.9rem}
+.ja-pick{position:relative;display:inline-flex;gap:8px;align-items:center;padding:10px 18px;min-height:48px;border:1.5px solid var(--green);border-radius:999px;color:var(--green);font-weight:700!important;cursor:pointer;background:#fff;margin:0!important}
+.ja-pick:hover{background:var(--green-tint)}
+.ja-pick input{position:absolute;inset:0;opacity:0;width:100%!important;cursor:pointer}
+.ja-pick:focus-within{outline:3px solid var(--gold);outline-offset:2px}
+.ja-thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ja-thumbs figure{margin:0;position:relative;width:96px;height:96px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff;display:grid;place-items:center;font-size:.75rem;text-align:center;padding:4px}
+.ja-thumbs img{width:100%;height:100%;object-fit:cover}
+.ja-thumbs button{position:absolute;top:4px;left:4px;width:26px;height:26px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;cursor:pointer;line-height:1}
+.ja-rec{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+html:not(.js) .ja-recbtn,html:not(.js) .ja-timer,html:not(.js) .ja-or,.ja-norec .ja-recbtn,.ja-norec .ja-timer,.ja-norec .ja-or{display:none}
+.ja-rec .ja-pick{order:3}
+.ja-recbtn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 20px;font:inherit;font-weight:700;cursor:pointer;background:#e5383b;color:#fff;min-height:48px}
+.ja-recbtn.stop{background:var(--ink)}
+.ja-recbtn i{width:12px;height:12px;border-radius:50%;background:#fff;display:inline-block}
+.ja-recbtn.stop i{border-radius:2px}
+.ja-recbtn.live i{animation:ja-pulse 1s infinite}
+@keyframes ja-pulse{50%{opacity:.25}}
+.ja-timer{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink-soft);min-width:52px}
+.ja-or{color:var(--muted);font-size:.88rem}
+.ja-audio{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.ja-audio audio{max-width:100%;height:44px}
+.ja-linkbtn{background:none;border:0;color:var(--danger);font:inherit;cursor:pointer;text-decoration:underline}
+.ja-mushaf{background:#fffdf5;border:1px solid #f0e3b5;border-radius:16px;padding:14px 16px;margin:6px 0 12px;max-height:260px;overflow:auto;font-family:'Amiri Quran','KFGQPC Uthmanic Script HAFS','Amiri',serif;font-size:1.35rem;line-height:2.3;text-align:justify}
+.ja-mushaf sup{font-family:var(--font-body);font-size:.75rem;color:#8a6a00;margin:0 3px}
+.ja-progress{display:none;margin-top:12px}
+.ja-progress.on{display:block}
+.ja-bar{height:12px;border-radius:999px;background:var(--line);overflow:hidden}
+.ja-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#5b8cff);transition:width .2s}
+.ja-proc{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;counter-reset:p;list-style:none;padding:0}
+.ja-proc li{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;position:relative}
+.ja-proc li::before{counter-increment:p;content:counter(p);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--gold);color:#3b2a00;font-weight:800;margin-bottom:6px}
+.ja-faq details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:8px}
+.ja-faq summary{font-weight:700;cursor:pointer}
+.ja-info{background:#fff8e6;border:1px solid #f3dc9b;border-radius:16px;padding:12px 16px;margin:0 0 14px;grid-column:1/-1}
+.ja-info p{margin:4px 0 0}
+.ja-sum-link{cursor:pointer;color:var(--green);font-weight:600}
+.ja-others{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.ja-others a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;text-decoration:none;color:inherit}
+.hp-field{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+</style>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'careers:list' %}">الوظائف</a></li><li aria-current="page">{{ job.title }}</li></ol>
+  <div class="ja-hero">
+    <div>
+      {% if job.chip %}<span class="ja-chip">{{ job.chip }}</span>{% endif %}
+      <h1>{{ job.h1 }}</h1>
+      {% if job.subtitle %}<p class="ja-sub">{{ job.subtitle }}</p>{% endif %}
+      {% if job.intro %}<p>{{ job.intro|linebreaksbr }}</p>{% endif %}
+      {% if not job.is_active %}<p class="notice notice-error">هذه الوظيفة مغلقة حاليًا (تظهر للإدارة فقط).</p>{% endif %}
+      <div class="ja-cta"><a class="btn btn-primary" href="#apply">ابدئي التقديم</a>{% if job.requirements %}<a class="btn btn-ghost" href="#requirements">الاطلاع على الشروط</a>{% endif %}</div>
+      {% with fl=job.features_list %}{% if fl %}<div class="ja-mini">{% for i, t, d in fl %}<div><strong>{{ i }} {{ t }}</strong>{{ d }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+    </div>
+    <aside class="ja-sum" aria-labelledby="sum-h">
+      <h2 id="sum-h"><img src="{% static 'images/logo.jpeg' %}" alt="" width="44" height="44">ملخص سريع</h2>
+      <ul>{% for p in job.summary_list %}<li>{{ p }}</li>{% endfor %}</ul>
+      {% if job.important_note %}<div class="ja-note"><strong>معلومة مهمة:</strong><br>{{ job.important_note }}</div>{% endif %}
+      <a class="btn btn-primary btn-block" href="#apply">ابدئي الآن</a>
+    </aside>
+  </div>
+</div></header>
+
+{% with req=job.requirements_list %}{% if req %}
+<section class="section" id="requirements"><div class="container">
+  <h2>الشروط الأساسية</h2>
+  <div class="ja-req">{% for i, t, d in req %}<div>{% if i %}<i aria-hidden="true">{{ i }}</i>{% endif %}<b>{{ t }}</b><span>{{ d }}</span></div>{% endfor %}</div>
+</div></section>{% endif %}{% endwith %}
+
+<section class="section" id="apply" style="padding-top:0"><div class="container">
+  <div class="form-card">
+    <h2 style="font-size:1.5rem;margin-bottom:4px">نموذج التقديم: {{ job.title }}</h2>
+    <p style="color:var(--muted);margin-top:0">املئي البيانات بدقة. الحقول المعلَّمة بـ <span style="color:var(--danger)">*</span> مطلوبة.</p>
+    <ol class="ja-steps-nav" style="grid-template-columns:repeat({{ n_steps }},1fr)" aria-label="خطوات التقديم">{% for s in steps %}<li data-i="{{ forloop.counter }}"{% if forloop.first %} class="on"{% endif %}><b>{{ forloop.counter }}</b><span>{{ s.step.title }}</span></li>{% endfor %}</ol>
+    <div class="notice notice-error" id="ja-top-err" role="alert"{% if not errors %} hidden{% endif %}>{% if top_error %}{{ top_error }}{% else %}من فضلك راجعي الحقول اللي عليها ملاحظة.{% if bound %} (لو كنتِ رفعتِ ملفات، ارفعيها مرة أخرى){% endif %}{% endif %}</div>
+    <form method="post" enctype="multipart/form-data" novalidate id="ja-form" action="{{ job.get_absolute_url }}" data-slug="{{ job.slug }}">
+      {% csrf_token %}
+      <div class="hp-field" aria-hidden="true"><label>اتركي هذا الحقل فارغًا<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      {% for s in steps %}
+      <fieldset class="ja-step{% if forloop.first %} on{% endif %}" data-step="{{ forloop.counter }}">
+        <div class="ja-step-h"><h3>{{ s.step.title }}</h3><small>الخطوة {{ forloop.counter }} من {{ n_steps }}</small></div>
+        <div class="ja-grid">{% for q in s.questions %}{% include 'careers/_question.html' %}{% endfor %}</div>
+        {% if forloop.last %}<div class="ja-progress" id="ja-progress"><div class="ja-bar"><span></span></div><p class="ja-help" id="ja-progress-txt">جارٍ رفع الطلب…</p></div>{% endif %}
+        <div class="ja-navbtns">{% if not forloop.first %}<button type="button" class="btn btn-light" data-prev>→ السابق</button>{% else %}<span></span>{% endif %}{% if forloop.last %}<button type="submit" class="btn btn-primary" id="ja-submit">إرسال الطلب ✈️</button>{% else %}<button type="button" class="btn btn-primary" data-next>التالي ←</button>{% endif %}</div>
+      </fieldset>
+      {% endfor %}
+      <p class="ja-saved" id="ja-saved" hidden>💾 تم حفظ إجاباتك على هذا الجهاز، ويمكنك إكمال النموذج لاحقًا.</p>
+    </form>
+  </div>
+</div></section>
+
+<section class="section" style="padding-top:0"><div class="container">
+  {% with pr=job.process_list %}{% if pr %}<h2>خطوات التوظيف بعد التقديم</h2>
+  <ol class="ja-proc">{% for t, d in pr %}<li><b>{{ t }}</b><br><span style="color:var(--muted);font-size:.93rem">{{ d }}</span></li>{% endfor %}</ol>{% endif %}{% endwith %}
+  {% with fq=job.faq_list %}{% if fq %}<h2 style="margin-top:34px">أسئلة شائعة</h2>
+  <div class="ja-faq">{% for q, a in fq %}<details{% if forloop.first %} open{% endif %}><summary>{{ q }}</summary><p>{{ a }}</p></details>{% endfor %}</div>{% endif %}{% endwith %}
+  {% if others %}<h2 style="margin-top:34px">وظائف أخرى متاحة</h2>
+  <div class="ja-others">{% for o in others %}<a href="{{ o.get_absolute_url }}"><b>{{ o.icon }} {{ o.title }}</b><br><span style="color:var(--muted);font-size:.93rem">{{ o.card_text }}</span></a>{% endfor %}</div>{% endif %}
+  <p style="margin-top:24px">تعرّفي أكثر على <a href="{% url 'about' %}">مؤسسة العجمي</a> و<a href="{% url 'quality_standards' %}">مواثيق الجودة</a>، أو شاهدي <a href="{% url 'careers:list' %}">كل الوظائف المتاحة</a>.</p>
+</div></section>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/job-apply.js' %}" defer></script>{% endblock %}

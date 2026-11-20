@@ -282,6 +282,21 @@ class PlannerSitemap(Sitemap):
         return 0.7
 
 
+class JobSitemap(Sitemap):
+    """صفحة الوظائف وكل وظيفة مفتوحة (جوجل للوظائف)"""
+    protocol = 'https'
+    changefreq = 'weekly'
+    priority = 0.7
+
+    def items(self):
+        from careers.models import JobOpening
+        return ['__list__'] + list(JobOpening.objects.filter(is_active=True))
+
+    def location(self, obj):
+        from django.urls import reverse
+        return reverse('careers:list') if obj == '__list__' else obj.get_absolute_url()
+
+
 class VideoSitemap(Sitemap):
     """صفحة لكل فيديو (عليها VideoObject) + صفحة الفيديوهات"""
     protocol = 'https'

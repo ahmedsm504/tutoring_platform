@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block adsense %}{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
+{% block title %}تم استلام طلبك – {{ job.title }} | مؤسسة العجمي{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <h1>تم إرسال طلبك بنجاح ✅</h1>
+  <p>{{ job.thanks_text|linebreaksbr }}</p>
+</div></header>
+<section class="section"><div class="container" style="max-width:760px">
+  <div class="form-card" style="text-align:center">
+    <p style="font-size:2.6rem;margin:0">🤲</p>
+    <h2>جزاكِ الله خيرًا على اهتمامك بتعليم القرآن</h2>
+    <p>تأكدي أن رقم الواتساب الذي كتبتِه يعمل، فهو وسيلة التواصل معك.</p>
+    <p style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn btn-primary" href="{% url 'home' %}">العودة للرئيسية</a><a class="btn" href="{% url 'careers:list' %}">كل الوظائف</a></p>
+  </div>
+</div></section>
+<script>try{Object.keys(localStorage).forEach(function(k){if(k.indexOf('jobapply:')===0)localStorage.removeItem(k)})}catch(e){}</script>
+{% endblock %}
