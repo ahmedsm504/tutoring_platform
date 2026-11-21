@@ -96,7 +96,11 @@ def on_question_saved(sender, instance, created, **kwargs):
             notify_question(instance, answered=True)
 
         if instance.status == 'approved' and getattr(instance, '_old_status', None) != 'approved':
-            send_indexnow(BASE + _question_url(instance))
+            # الصفحة اللي بتتفهرس هي صفحة التجميع اللي فيها السؤال (صفحة السؤال نفسها noindex)
+            from .hubs import question_hub_url
+            hub = question_hub_url(instance)
+            if hub:
+                send_indexnow(BASE + hub.split('#')[0])
     except Exception:
         logger.exception('فشل تجهيز إشعار السؤال %s', instance.pk)
 

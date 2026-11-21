@@ -12,7 +12,8 @@
 {% block twitter_title %}أسئلة وأجوبة قرآنية - العجمي{% endblock %}
 {% block twitter_description %}أجوبة موثقة عن كل ما يتعلق بتحفيظ القرآن وتلاوته.{% endblock %}
 {% block canonical_url %}{{ SITE_URL }}{{ request.path }}{% if current_category and not current_search and not current_filter %}?category={{ current_category|urlencode }}{% if page_obj.number > 1 %}&page={{ page_obj.number }}{% endif %}{% elif page_obj.number > 1 and not current_search and not current_filter %}?page={{ page_obj.number }}{% endif %}{% endblock %}
-{% block robots %}{% if current_search or current_filter or not page_obj.object_list %}noindex, follow{% else %}index, follow, max-image-preview:large, max-snippet:-1{% endif %}{% endblock %}
+{# بيتفهرس بس الصفحة الأولى العامة؛ صفحات التصنيفات المفهرسة هي صفحات التجميع /questions/topic/<slug>/ #}
+{% block robots %}{% if current_search or current_filter or current_category or page_obj.number > 1 or request.GET.sort or not page_obj.object_list %}noindex, follow{% else %}index, follow, max-image-preview:large, max-snippet:-1{% endif %}{% endblock %}
 
 {% block extra_ldjson %}
 <script type="application/ld+json">
@@ -101,6 +102,13 @@
       </ul>
     </div>
 
+    {% if categories and not current_search and not current_filter and not current_category %}
+    <div class="aside-block" style="margin-bottom:26px;">
+      <h2 style="font-size:1.2rem;">الأسئلة الشائعة مجمعة حسب الموضوع</h2>
+      <p style="color:var(--muted); margin:4px 0 10px;">كل قسم في صفحات مجمعة فيها الأسئلة بإجاباتها كاملة.</p>
+      <ul class="chips">{% for cat in categories %}<li><a href="{% url 'qna:topic_hub' cat.slug %}">{{ cat.name }} ({{ cat.question_count }})</a></li>{% endfor %}</ul>
+    </div>
+    {% endif %}
     <div class="with-aside">
       <div>
         <h2 class="sr-only">الأسئلة</h2>
@@ -113,7 +121,7 @@
               {% if question.has_official %}<span class="tag{% if question.has_featured %} tag-gold{% endif %}">{% if question.has_featured %}إجابة مميزة{% else %}تمت الإجابة{% endif %}</span>
               {% elif question.has_community_answers %}<span class="tag">إجابات من الزوار</span>
               {% else %}<span class="tag tag-wait">بانتظار إجابة</span>{% endif %}
-              {% if question.category %}<a href="?category={{ question.category.slug }}">{{ question.category.name }}</a>{% endif %}
+              {% if question.category %}<a href="{% url 'qna:topic_hub' question.category.slug %}">{{ question.category.name }}</a>{% endif %}
             </div>
             <h3><a href="{% url 'qna:question_detail' question.slug %}">{{ question.title }}</a></h3>
             <p>{{ question.question_text|striptags|truncatewords:28 }}</p>
@@ -141,7 +149,7 @@
           <h2>الأقسام</h2>
           <ul class="aside-list">
             <li><a href="{% url 'qna:question_list' %}" {% if not current_category %}aria-current="page"{% endif %}><span>كل الأقسام</span><small>{{ total_questions }}</small></a></li>
-            {% for cat in categories %}<li><a href="?category={{ cat.slug }}" {% if current_category == cat.slug %}aria-current="page"{% endif %}><span>{{ cat.name }}</span><small>{{ cat.question_count }}</small></a></li>{% endfor %}
+            {% for cat in categories %}<li><a href="{% url 'qna:topic_hub' cat.slug %}" {% if current_category == cat.slug %}aria-current="page"{% endif %}><span>{{ cat.name }}</span><small>{{ cat.question_count }}</small></a></li>{% endfor %}
           </ul>
         </div>
         <div class="aside-block">

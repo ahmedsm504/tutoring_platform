@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load content_tags %}
+{% block html_lang %}{% if en %}en{% else %}ar{% endif %}{% endblock %}
+{% block hreflang %}<link rel="alternate" hreflang="{% if en %}en{% else %}ar{% endif %}" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endblock %}
+{% block title %}{% if en %}Quran &amp; Tajweed Questions Answered{% if page > 1 %} (Part {{ page }}){% endif %} | Al-Agmi Quran Academy{% else %}أسئلة وأجوبة عن {{ category.name }}{% if page > 1 %} (الجزء {{ page }}){% endif %} | مؤسسة العجمي{% endif %}{% endblock %}
+{% block meta_description %}{% if en %}{{ items|length }} questions answered{% if page > 1 %} (part {{ page }}){% endif %}: {% for q in items|slice:":3" %}{{ q.title }}{% if not forloop.last %} · {% endif %}{% endfor %}{% else %}إجابات {{ items|length }} سؤالًا عن {{ category.name }}{% if page > 1 %} (الجزء {{ page }}){% endif %}: {% for q in items|slice:":3" %}{{ q.title }}{% if not forloop.last %}، {% endif %}{% endfor %}{% endif %}{% endblock %}
+{% block og_title %}{% if en %}Quran &amp; Tajweed Questions Answered{% else %}أسئلة وأجوبة عن {{ category.name }}{% endif %}{% if page > 1 %} ({{ page }}){% endif %}{% endblock %}
+{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}
+{% block adsense %}{% include "includes/adsense.html" %}{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"{% if en %}Home{% else %}الرئيسية{% endif %}","item":"{{ SITE_URL }}/"},
+{"@type":"ListItem","position":2,"name":"{% if en %}Q&A{% else %}أسئلة وأجوبة{% endif %}","item":"{{ SITE_URL }}{% url 'qna:question_list' %}"},
+{"@type":"ListItem","position":3,"name":"{{ category.name|escapejs }}","item":"{{ canonical_url }}"}]}
+</script>
+{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <div class="container article-head"{% if en %} lang="en" dir="ltr"{% endif %}>
+    <ol class="crumbs">
+      <li><a href="{% url 'home' %}">{% if en %}Home{% else %}الرئيسية{% endif %}</a></li>
+      <li><a href="{% url 'qna:question_list' %}">{% if en %}Q&amp;A{% else %}أسئلة وأجوبة{% endif %}</a></li>
+      <li aria-current="page">{{ category.name }}</li>
+    </ol>
+    <h1>{% if en %}Quran &amp; Tajweed Questions Answered{% if page > 1 %} (Part {{ page }}){% endif %}{% else %}أسئلة وأجوبة عن {{ category.name }}{% if page > 1 %} (الجزء {{ page }}){% endif %}{% endif %}</h1>
+    <p>{% if en %}{{ category.description }} Questions {{ first_number }}–{{ last_number }} of {{ total }}, answered by the teachers and supervisors of Al-Agmi Quran Academy.{% else %}{{ category.description }} في هذه الصفحة الأسئلة من {{ first_number }} إلى {{ last_number }} من {{ total }} سؤالًا، بإجاباتها كاملة من معلمات ومشرفات مؤسسة العجمي.{% endif %}</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:clamp(30px,4vw,50px);">
+  <div class="container with-aside">
+    <div{% if en %} lang="en" dir="ltr"{% endif %}>
+      <nav class="aside-block" aria-label="{% if en %}Questions on this page{% else %}أسئلة هذه الصفحة{% endif %}" style="margin-bottom:28px;">
+        <h2 style="font-size:1.15rem;">{% if en %}On this page{% else %}أسئلة هذه الصفحة{% endif %}</h2>
+        <ol start="{{ first_number }}" style="margin:0; padding-inline-start:1.4em; line-height:1.9;">
+          {% for q in items %}<li><a href="#q-{{ q.id }}">{{ q.title }}</a></li>{% endfor %}
+        </ol>
+      </nav>
+
+      {% for q in items %}
+      <article class="answer official" id="q-{{ q.id }}" style="margin-bottom:26px; scroll-margin-top:90px;">
+        <h2 style="font-size:1.3rem; margin:0 0 10px;">{{ q.title }}</h2>
+        {% with qt=q.question_text|plain|striptags %}{% if qt|length > q.title|length|add:"15" %}<div class="article-body" style="color:var(--muted); margin-bottom:10px;">{{ q.question_text|rich }}</div>{% endif %}{% endwith %}
+        <div class="answer-body">{{ q.official_answer.answer_text|rich }}</div>
+      </article>
+      {% endfor %}
+
+      {% if pages > 1 %}
+      <nav class="pager" aria-label="{% if en %}Pages{% else %}صفحات الأسئلة{% endif %}" style="flex-wrap:wrap; gap:8px;">
+        {% if prev_url %}<a class="btn btn-ghost" rel="prev" href="{{ prev_url }}">{% if en %}Previous{% else %}السابق{% endif %}</a>{% endif %}
+        {% for n, u in page_links %}{% if n == page %}<span aria-current="page"><strong>{{ n }}</strong></span>{% else %}<a href="{{ u }}">{{ n }}</a>{% endif %}{% endfor %}
+        {% if next_url %}<a class="btn btn-ghost" rel="next" href="{{ next_url }}">{% if en %}Next{% else %}التالي{% endif %}</a>{% endif %}
+      </nav>
+      {% endif %}
+    </div>
+
+    <aside aria-label="أقسام الأسئلة">
+      {% if other_topics %}
+      <div class="aside-block">
+        <h2>أقسام أخرى</h2>
+        <ul class="aside-list">{% for c, u in other_topics %}<li><a href="{{ u }}"><span>{{ c.name }}</span></a></li>{% endfor %}</ul>
+      </div>
+      {% endif %}
+      <div class="aside-cta">
+        <h2>عندك سؤال؟</h2>
+        <p>اكتب سؤالك وترد عليك معلمة متخصصة، أو اسألها مباشرة في الحلقة التجريبية المجانية.</p>
+        <a class="btn btn-gold btn-block" href="{% url 'qna:ask' %}">اسأل سؤالك</a>
+        <a class="btn btn-ghost btn-block" style="margin-top:8px;" href="{% url 'contact' %}">احجز حلقة مجانية</a>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

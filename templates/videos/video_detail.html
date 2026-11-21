@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block adsense %}{% include "includes/adsense.html" %}{% endblock %}
+{% block adsense %}{% endblock %}{# صفحات فيديو نصها قليل: من غير إعلانات (سياسة أدسنس) #}
 {% block html_lang %}{{ video.language }}{% endblock %}
 {% block hreflang %}<link rel="alternate" hreflang="{{ video.language }}" href="{{ canonical_url }}">
     <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">{% endblock %}

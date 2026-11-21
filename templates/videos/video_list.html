@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block adsense %}{% include "includes/adsense.html" %}{% endblock %}
+{% block adsense %}{% endblock %}{# صفحات فيديو نصها قليل: من غير إعلانات (سياسة أدسنس) #}
 {% block title %}فيديوهات تعليم القرآن والتجويد للأطفال والكبار{% if videos.number > 1 %} - صفحة {{ videos.number }}{% endif %} | العجمي{% endblock %}
 {% block meta_description %}شاهد فيديوهات مؤسسة العجمي: دروس تجويد مبسطة، طرق حفظ القرآن ومراجعته، فيديوهات قرآنية للأطفال، ومقاطع من حلقاتنا أونلاين. {{ total }} فيديو مجانًا.{% endblock %}
 {% block meta_keywords %}فيديوهات تعليم القرآن, دروس تجويد فيديو, تحفيظ القرآن للأطفال فيديو, تعليم القرآن للأطفال, حلقات تحفيظ أونلاين, فيديوهات قرآنية{% endblock %}

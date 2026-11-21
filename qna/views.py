@@ -265,6 +265,8 @@ class QuestionDetailView(DetailView):
         rel_map = {q.pk: q for q in related_qs.filter(pk__in=rel_ids)}
         context['related_questions'] = [rel_map[i] for i in rel_ids if i in rel_map]
 
+        from .hubs import question_hub_url
+        context['hub_url'] = question_hub_url(self.object)
         context['schema_markup'] = self.generate_schema_markup()
         context['user_ip'] = self.get_client_ip()
 
@@ -584,3 +586,30 @@ def subscribe_to_question(request, slug):
     except Exception as e:
         logger.exception("Subscribe error")
         return JsonResponse({'success': False, 'message': 'حدث خطأ أثناء الاشتراك'}, status=500)
+
+def topic_hub(request, slug, page=1):
+    """صفحة كبيرة فيها أسئلة تصنيف كامل بإجاباتها (25 سؤال في الصفحة)."""
+    from django.http import Http404
+    from django.shortcuts import redirect, render
+    from .hubs import PER_PAGE, hub_questions, hub_url, num_pages
+    category = get_object_or_404(QuestionCategory, slug=slug)
+    if 'page' in request.resolver_match.kwargs and page == 1:
+        return redirect(hub_url(category), permanent=True)
+    questions = list(hub_questions(category))
+    pages = num_pages(len(questions))
+    if not questions or page < 1 or page > pages:
+        raise Http404
+    items = questions[(page - 1) * PER_PAGE:page * PER_PAGE]
+    others = [c for c in QuestionCategory.objects.order_by('order', 'name')
+              if c.pk != category.pk and hub_questions(c).exists()]
+    return render(request, 'qna/topic_hub.html', {
+        'category': category, 'items': items, 'page': page, 'pages': pages,
+        'page_links': [(n, hub_url(category, n)) for n in range(1, pages + 1)],
+        'prev_url': hub_url(category, page - 1) if page > 1 else None,
+        'next_url': hub_url(category, page + 1) if page < pages else None,
+        'first_number': (page - 1) * PER_PAGE + 1,
+        'last_number': (page - 1) * PER_PAGE + len(items),
+        'total': len(questions),
+        'other_topics': [(c, hub_url(c)) for c in others],
+        'en': category.slug == 'english',
+    })
