@@ -61,9 +61,12 @@ def job_posting(job, url):
     if job.valid_through:
         data['validThrough'] = job.valid_through.isoformat() + 'T23:59'
     if job.salary_value:
-        data['baseSalary'] = {'@type': 'MonetaryAmount', 'currency': job.salary_currency,
-                              'value': {'@type': 'QuantitativeValue', 'value': float(job.salary_value),
-                                        'unitText': job.salary_unit}}
+        value = {'@type': 'QuantitativeValue', 'unitText': job.salary_unit}
+        if job.salary_max and job.salary_max > job.salary_value:
+            value.update(minValue=float(job.salary_value), maxValue=float(job.salary_max))
+        else:
+            value['value'] = float(job.salary_value)
+        data['baseSalary'] = {'@type': 'MonetaryAmount', 'currency': job.salary_currency, 'value': value}
     if job.experience_months:
         data['experienceRequirements'] = {'@type': 'OccupationalExperienceRequirements',
                                           'monthsOfExperience': job.experience_months}
