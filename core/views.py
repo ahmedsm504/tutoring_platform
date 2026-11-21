@@ -117,8 +117,30 @@ def _latest_videos(lang=None):
     return list(qs[:4])
 
 
+def _live_stats():
+    """أرقام حقيقية من نظام إدارة المؤسسة نفسه (مش أرقام مكتوبة باليد)، متخزنة 6 ساعات."""
+    from django.core.cache import cache
+    stats = cache.get('about_live_stats')
+    if stats is None:
+        from .models import Country, Lesson, Student, Teacher
+        try:
+            countries = list(Country.objects.filter(students__isnull=False).distinct()
+                             .order_by('name').values_list('name', flat=True))
+            stats = {
+                'students': Student.objects.count(),
+                'active_students': Student.objects.filter(status='active').count(),
+                'teachers': Teacher.objects.filter(students__isnull=False).distinct().count(),
+                'lessons': Lesson.objects.filter(status='completed').count(),
+                'countries': countries,
+            }
+        except Exception:
+            stats = {}
+        cache.set('about_live_stats', stats, 6 * 3600)
+    return stats
+
+
 def about(request):
-    return render(request, 'core/about.html')
+    return render(request, 'core/about.html', {'live': _live_stats()})
 
 
 def contact(request):

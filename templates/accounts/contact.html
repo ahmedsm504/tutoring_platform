@@ -145,4 +145,20 @@
     </aside>
   </div>
 </section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container prose">
+    <h2>طرق تانية للتواصل</h2>
+    <ul class="checklist">
+      <li><strong>استفسار عن الباقات والأسعار:</strong> كل التفاصيل في <a href="{% url 'pricing' %}">صفحة الباقات</a>، ولو محتار بين باقتين اكتب عمر الطالب ومستواه في الملاحظات وهنرشحلك.</li>
+      <li><strong>سؤال عن الحفظ أو التجويد:</strong> ممكن تكتبه في <a href="{% url 'qna:ask' %}">صفحة اسأل سؤالك</a> وترد عليك معلمة، أو تدور عليه في <a href="{% url 'qna:question_list' %}">الأسئلة الشائعة</a>.</li>
+      <li><strong>التقديم كمعلمة أو مشرفة:</strong> من <a href="{% url 'careers:list' %}">صفحة الوظائف</a> مباشرة، مش من نموذج الحجز.</li>
+      <li><strong>الإبلاغ عن خطأ في مقال أو آية:</strong> ابعتلنا على واتساب أو اكتبه في الملاحظات هنا، وهنراجعه ونصححه زي ما هو موضح في <a href="{% url 'editorial_policy' %}">منهجية المحتوى</a>.</li>
+      <li><strong>طالب مشترك عندنا:</strong> تقدر تتواصل مع المشرفة والمعلمة من <a href="{% url 'login' %}">حساب الطالب</a> على المنصة.</li>
+    </ul>
+    <h2>تابعنا</h2>
+    <p><a href="https://www.facebook.com/profile.php?id=61587497605651" target="_blank" rel="me noopener">فيسبوك</a> · <a href="https://www.instagram.com/ala.gme/" target="_blank" rel="me noopener">إنستجرام</a> · <a href="https://youtube.com/@alagme-c5h" target="_blank" rel="me noopener">يوتيوب</a> · <a href="https://www.tiktok.com/@alagme_12" target="_blank" rel="me noopener">تيك توك</a></p>
+    <p>مؤسسة العجمي لتحفيظ القرآن الكريم أونلاين، مصر. اعرف أكتر عننا في <a href="{% url 'about' %}">من نحن</a>، واقرأ <a href="{% url 'privacy' %}">سياسة الخصوصية</a> عشان تعرف إزاي بنتعامل مع بياناتك.</p>
+  </div>
+</section>
 {% endblock %}
