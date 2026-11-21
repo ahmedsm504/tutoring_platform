@@ -210,7 +210,7 @@ class QNAQuestionsSitemap(Sitemap):
 
 
 class QNACategorySitemap(Sitemap):
-    """Sitemap لتصنيفات الأسئلة"""
+    """صفحات الأسئلة الشائعة المجمعة لكل تصنيف (qna/hubs.py). دي اللي بتتفهرس بدل الأسئلة الفردية القصيرة."""
     changefreq = "weekly"
     priority = 0.75
     protocol = 'https'
@@ -218,21 +218,15 @@ class QNACategorySitemap(Sitemap):
     def items(self):
         if not HAS_QNA:
             return []
-        return QuestionCategory.objects.all().order_by('name')
+        from qna.hubs import hub_pages
+        return hub_pages()
 
     def lastmod(self, obj):
-        if not HAS_QNA:
-            return timezone.now()
-            
-        latest_question = PublicQuestion.objects.filter(
-            category=obj, 
-            status='approved'
-        ).order_by('-created_at').first()
-        
-        return latest_question.created_at if latest_question else timezone.now()
+        return obj[2]
 
     def location(self, obj):
-        return f"{reverse('qna:question_list')}?category={obj.slug}"
+        from qna.hubs import hub_url
+        return hub_url(obj[0], obj[1])
 
 
 # ملاحظة: تمت إزالة الخرائط التالية لتجنب التكرار:

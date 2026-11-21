@@ -161,19 +161,20 @@ def site_index(request):
     for p in posts:
         by_cat.setdefault(p.category_id, []).append(p)
     blog_groups = [(c, by_cat[c.id]) for c in Category.objects.order_by('name') if c.id in by_cat]
-    # الأسئلة المُجابة (هي اللي بتتفهرس) مقسمة بالتصنيف
-    from qna.models import PublicQuestion, QuestionCategory
-    qs = list(PublicQuestion.objects.filter(status='approved', official_answer__isnull=False)
-              .exclude(slug='').only('slug', 'title', 'category_id').order_by('-created_at'))
-    by_qcat = {}
-    for q in qs:
-        by_qcat.setdefault(q.category_id, []).append(q)
-    qna_groups = [(c, by_qcat[c.id]) for c in QuestionCategory.objects.order_by('name') if c.id in by_qcat]
-    if None in by_qcat:
-        qna_groups.append((None, by_qcat[None]))
+    # الأسئلة: روابط صفحات التجميع لكل تصنيف (هي اللي بتتفهرس)، وكل سؤال بيشاور على مكانه فيها
+    from qna.hubs import PER_PAGE, hub_questions, hub_url
+    from qna.models import QuestionCategory
+    qna_groups, questions_count = [], 0
+    for c in QuestionCategory.objects.order_by('order', 'name'):
+        items = list(hub_questions(c).select_related(None).only('id', 'slug', 'title', 'created_at'))
+        if not items:
+            continue
+        questions_count += len(items)
+        links = [(q, f"{hub_url(c, i // PER_PAGE + 1)}#q-{q.id}") for i, q in enumerate(items)]
+        qna_groups.append((c, hub_url(c), links))
     return render(request, 'core/site_index.html', {
         'blog_groups': blog_groups, 'qna_groups': qna_groups,
-        'posts_count': len(posts), 'questions_count': len(qs),
+        'posts_count': len(posts), 'questions_count': questions_count,
     })
 
 

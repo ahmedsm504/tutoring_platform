@@ -12,7 +12,7 @@ from accounts import views as accounts_views
 from core.push_status import push_status
 
 from .robots_view import llms_txt, robots_txt
-from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap, QNAQuestionsSitemap,
+from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap,
                        JobSitemap, PlannerSitemap, QuranSitemap, StaticViewSitemap, VideoSitemap)
 
 
@@ -26,7 +26,7 @@ sitemaps = {
     'blog': BlogPostSitemap,
     'blog-categories': BlogCategorySitemap,
     # الأسئلة المُجابة بس (السؤال من غير إجابة عليه noindex)
-    'questions': QNAQuestionsSitemap,
+    # الأسئلة الفردية برا السايت ماب (إجاباتها قصيرة، noindex)؛ بتتفهرس جوه صفحات التجميع تحت
     'question-categories': QNACategorySitemap,
     'quran': QuranSitemap,
     'quran-tools': PlannerSitemap,

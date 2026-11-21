@@ -15,7 +15,7 @@
     <p><strong>المقالات:</strong>
     {% for cat, items in blog_groups %}<a href="#blog-{{ cat.slug }}">{{ cat.name }} ({{ items|length }})</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>
     {% if qna_groups %}<p><strong>الأسئلة والأجوبة:</strong>
-    {% for cat, items in qna_groups %}<a href="#q-{% if cat %}{{ cat.slug }}{% else %}other{% endif %}">{% if cat %}{{ cat.name }}{% else %}أسئلة متنوعة{% endif %} ({{ items|length }})</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+    {% for cat, hub, items in qna_groups %}<a href="#q-{{ cat.slug }}">{{ cat.name }} ({{ items|length }})</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>{% endif %}
   </nav>
 
   <h2>الأدلة والفهارس الكبرى</h2>
@@ -42,10 +42,10 @@
 
   {% if qna_groups %}
   <h2 id="questions">الأسئلة والأجوبة ({{ questions_count }})</h2>
-  {% for cat, items in qna_groups %}
-  <h3 id="q-{% if cat %}{{ cat.slug }}{% else %}other{% endif %}">{% if cat %}<a href="{% url 'qna:question_list' %}?category={{ cat.slug|urlencode }}">{{ cat.name }}</a>{% else %}أسئلة متنوعة{% endif %}</h3>
+  {% for cat, hub, items in qna_groups %}
+  <h3 id="q-{{ cat.slug }}"><a href="{{ hub }}">{{ cat.name }}</a></h3>
   <ul>
-    {% for q in items %}<li><a href="{% url 'qna:question_detail' q.slug %}">{{ q.title }}</a></li>{% endfor %}
+    {% for q, u in items %}<li><a href="{{ u }}">{{ q.title }}</a></li>{% endfor %}
   </ul>
   {% endfor %}
   {% endif %}

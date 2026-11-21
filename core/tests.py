@@ -316,11 +316,20 @@ class SeededContentTests(TestCase):
         self.assertContains(r, 'adsbygoogle.js')
         self.assertNotContains(r, 'noindex')
         self.assertContains(self.client.get('/'), 'adsbygoogle.js')
-        # الأسئلة المجابة بتتفهرس (كانت noindex وده كان سبب "تم استثناء الصفحة بواسطة noindex" في Search Console)
+        # صفحة الأسئلة العامة بتتفهرس؛ السؤال الفردي (إجابة قصيرة) noindex وبيتفهرس جوه صفحة التجميع بتاعة تصنيفه
         self.assertNotContains(self.client.get(reverse('qna:question_list')), 'noindex')
         from qna.models import PublicQuestion
+        from qna.hubs import question_hub_url
         answered = PublicQuestion.objects.filter(status='approved', official_answer__isnull=False).first()
-        self.assertNotContains(self.client.get(reverse('qna:question_detail', args=[answered.slug])), 'noindex')
+        detail = self.client.get(reverse('qna:question_detail', args=[answered.slug]))
+        self.assertContains(detail, 'noindex, follow')
+        hub = question_hub_url(answered)
+        self.assertContains(detail, hub)
+        hub_page = self.client.get(hub.split('#')[0])
+        self.assertNotContains(hub_page, 'noindex')
+        self.assertContains(hub_page, f'id="q-{answered.id}"')
+        self.assertContains(hub_page, 'adsbygoogle.js')
+        self.assertContains(self.client.get(reverse('qna:question_list') + '?category=hifz'), 'noindex, follow')
         self.assertContains(self.client.get(reverse('qna:question_list') + '?search=x'), 'noindex, follow')
 
 
@@ -700,7 +709,8 @@ class SiteIndexAndCachingTests(TestCase):
         # المقالات المدموجة (redirect) مش في الفهرس، والأسئلة المجابة فيه
         for old in list(merged_redirects())[:50]:
             self.assertNotContains(r, f'/blog/{old}/"')
-        self.assertContains(r, '/questions/question/')
+        self.assertContains(r, '/questions/topic/')
+        self.assertNotContains(r, '/questions/question/')
         self.assertNotIn('X-Robots-Tag', r.headers)
 
     def test_sitemap_has_site_index(self):
@@ -1377,9 +1387,10 @@ class SeoBoostTests(TestCase):
         for p in Post.objects.published().exclude(pk__in=posts.values('pk'))[:50]:
             self.assertNotIn(f'https://alagme.com/blog/{p.slug}/', locs)
         from qna.models import PublicQuestion
-        for q in PublicQuestion.objects.filter(status='approved', official_answer__isnull=False)[:50]:
-            from django.utils.encoding import iri_to_uri
-            self.assertIn(iri_to_uri(f'https://alagme.com/questions/question/{q.slug}/'), locs)
+        from qna.hubs import hub_pages, hub_url
+        self.assertFalse([l for l in locs if '/questions/question/' in l])
+        for cat, page, _ in hub_pages():
+            self.assertIn('https://alagme.com' + hub_url(cat, page), locs)
         for path in ['/en/', '/en/pricing/', '/en/contact/', '/videos/']:
             self.assertIn('https://alagme.com' + path, locs)
         images = list(root.iter('{http://www.google.com/schemas/sitemap-image/1.1}loc'))

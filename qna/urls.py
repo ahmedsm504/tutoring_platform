@@ -11,6 +11,10 @@ urlpatterns = [
     path('', views.QuestionListView.as_view(), name='question_list'),
     path('feed/', LatestQuestionsFeed(), name='feed'),
     path('ask/', views.AskQuestionView.as_view(), name='ask'),
+
+    # صفحات الأسئلة الشائعة المجمعة لكل تصنيف (هي اللي بتتفهرس)
+    path('topic/<slug:slug>/', views.topic_hub, name='topic_hub'),
+    path('topic/<slug:slug>/<int:page>/', views.topic_hub, name='topic_hub_page'),
     
     # صفحة السؤال - تدعم GET و POST
     re_path(r'^question/(?P<slug>[\w\-]+)/$', views.QuestionDetailView.as_view(), name='question_detail'),
