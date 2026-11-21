@@ -44,6 +44,8 @@ class JobOpening(models.Model):
     og_image = models.CharField('صورة المشاركة (مسار في static)', max_length=120, blank=True, default='images/og-jobs.jpg')
     employment_type = models.CharField('نوع العمل', max_length=12, choices=EMPLOYMENT, default='PART_TIME')
     salary_value = models.DecimalField('الراتب (رقم فقط، اختياري)', max_digits=9, decimal_places=2, null=True, blank=True)
+    salary_max = models.DecimalField('أقصى راتب (لو فيه نطاق «من … إلى»)', max_digits=9, decimal_places=2,
+                                     null=True, blank=True)
     salary_unit = models.CharField('الراتب لكل', max_length=6, choices=UNIT, default='HOUR')
     salary_currency = models.CharField('العملة', max_length=3, default='EGP')
     experience_months = models.PositiveSmallIntegerField('أقل خبرة بالشهور (اختياري)', null=True, blank=True)

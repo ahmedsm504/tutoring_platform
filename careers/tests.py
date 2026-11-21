@@ -61,6 +61,13 @@ class CareersTests(TestCase):
             self.assertIn('"@type": "JobPosting"', html)
             self.assertNotIn('noindex', html.split('</head>')[0])
 
+    def test_supervisor_salary_range_in_jobposting(self):
+        from .views import job_posting
+        sup = JobOpening.objects.get(slug='quran-supervisor')
+        v = job_posting(sup, 'https://alagme.com/jobs/quran-supervisor/')['baseSalary']['value']
+        self.assertEqual((v['minValue'], v['maxValue'], v['unitText']), (50.0, 80.0, 'HOUR'))
+        self.assertIn('50 إلى 80', sup.faq)
+
     def test_teacher_has_requested_questions(self):
         labels = ' | '.join(self.job.questions.values_list('label', flat=True))
         for s in ('صورة البطاقة', 'الشهادات', 'سورة الطلاق', 'الإدغام', 'السيرة الذاتية', 'الجنسية', 'المحافظة'):

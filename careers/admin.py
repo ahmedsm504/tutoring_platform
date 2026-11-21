@@ -55,7 +55,7 @@ class JobOpeningAdmin(admin.ModelAdmin):
         ('الشروط والخطوات والأسئلة الشائعة', {'fields': ('requirements', 'process', 'faq', 'thanks_text')}),
         ('جوجل والسيو', {'classes': ['collapse'], 'fields': (
             'meta_title', 'meta_description', 'keywords', 'og_image', ('employment_type', 'date_posted', 'valid_through'),
-            ('salary_value', 'salary_unit', 'salary_currency'), ('experience_months', 'requires_degree'))}),
+            ('salary_value', 'salary_max', 'salary_unit', 'salary_currency'), ('experience_months', 'requires_degree'))}),
     )
 
     def get_queryset(self, request):
