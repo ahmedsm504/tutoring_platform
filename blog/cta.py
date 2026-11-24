@@ -69,8 +69,31 @@ def topic_for(post):
     return _CATEGORY.get(cat, 'general')
 
 
+RAMADAN_UNTIL = (2027, 3, 12)  # بعد العيد بيومين بنشيل رابط رمضان من المقالات العامة
+
+
+def tools_for(post, key):
+    """روابط أدوات مجانية مناسبة لموضوع المقال (روابط داخلية بتساعد جوجل يكتشف الصفحات دي ويرتبها)"""
+    from datetime import date
+    title = f'{post.title} {post.slug}'
+    ramadan_season = date.today() <= date(*RAMADAN_UNTIL)
+    tools = []
+    if re.search(r'رمضان|ramadan', title, re.I) or (ramadan_season and key == 'general'):
+        tools.append(('/ramadan/', 'خطة رمضان مع القرآن 🌙'))
+    if key in ('kids', 'teens'):
+        tools += [('/quran/juz-amma-challenge/', 'تحدي جزء عمّ في 30 يوم'), ('/quran/certificate/', 'شهادة حفظ باسم طفلك 🏅')]
+    elif key == 'hifz':
+        tools += [('/quran/hifz-tracker/', 'متابعة الحفظ والمراجعة'), ('/quran/juz-amma-challenge/', 'تحدي جزء عمّ في 30 يوم')]
+    elif key in ('tajweed', 'reading'):
+        tools += [('/level-test/', 'اختبار تحديد المستوى'), ('/quran/', 'المصحف مع الاستماع لكل آية')]
+    else:
+        tools.append(('/quran/khatma/', 'حاسبة ختم القرآن'))
+    return tools[:3]
+
+
 def for_post(post, en=False):
     key = topic_for(post)
     t = TOPICS[key]
     text, button, program_label = t['en' if en else 'ar']
-    return {'topic': key, 'program': t['program'], 'text': text, 'button': button, 'program_label': program_label}
+    return {'topic': key, 'program': t['program'], 'text': text, 'button': button, 'program_label': program_label,
+            'tools': [] if en else tools_for(post, key)}
