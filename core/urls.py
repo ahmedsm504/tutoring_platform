@@ -1,12 +1,16 @@
 from django.urls import path
 from . import student_views, views
+from accounts.views import booking_start
 
 urlpatterns = [
     # الصفحات العامة
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('contact/start/', booking_start, name='booking_start'),
     path('pricing/', views.pricing, name='pricing'),
+    path('online-quran/', views.countries_index, name='countries'),
+    path('online-quran/<slug:slug>/', views.country_page, name='country_page'),
     path('quality-standards/', views.quality_standards, name='quality_standards'),
     path('privacy-policy/', views.privacy, name='privacy'),
     path('terms/', views.terms, name='terms'),

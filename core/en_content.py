@@ -2,7 +2,8 @@
 Same programmes and facts as core/site_content.py (the Arabic source of truth), translated.
 If you change a programme in site_content.py, update its English twin here too."""
 
-STANDARD_SCHEDULE = [('8 classes', '30 minutes'), ('12 classes', '30 minutes'), ('8 classes', '60 minutes')]
+# prices live in core/pricing.py
+STANDARD_SCHEDULE = [('4 classes', '30 or 60 minutes'), ('8 classes', '30 or 60 minutes'), ('12 classes', '30 or 60 minutes')]
 
 PROGRAMS = [
     {
@@ -173,6 +174,15 @@ def faq_schema():
     }
 
 
+def _offer(p, currency):
+    """سعر أرخص باقة (4 حصص × 30 دقيقة) من core/pricing.py؛ الدورات من غير سعر"""
+    o = {'@type': 'Offer', 'category': 'Paid', 'availability': 'https://schema.org/InStock'}
+    if p.get('schedule') is STANDARD_SCHEDULE:
+        from core.pricing import package_price
+        o.update({'price': str(package_price(currency, 4).normalize()), 'priceCurrency': currency})
+    return o
+
+
 def courses_schema(site_url):
     items = []
     for i, p in enumerate(PROGRAMS, start=1):
@@ -187,7 +197,7 @@ def courses_schema(site_url):
                 'provider': {'@type': 'EducationalOrganization', 'name': 'Al-Agmi Quran Academy', 'sameAs': site_url + '/'},
                 'hasCourseInstance': {'@type': 'CourseInstance', 'courseMode': 'online',
                                       'courseWorkload': 'PT' + ('40M' if p['kind'] == 'Course' else '30M')},
-                'offers': {'@type': 'Offer', 'category': 'Paid', 'availability': 'https://schema.org/InStock'},
+                'offers': _offer(p, 'USD'),
             },
         })
     return {'@context': 'https://schema.org', '@type': 'ItemList', 'name': 'Online Quran memorisation packages and courses', 'itemListElement': items}

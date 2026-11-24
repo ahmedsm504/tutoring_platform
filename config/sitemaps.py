@@ -46,6 +46,7 @@ class StaticViewSitemap(Sitemap):
     PAGES = [
         ('home', 1.0, 'daily'),
         ('pricing', 0.9, 'weekly'),
+        ('countries', 0.7, 'monthly'),
         ('contact', 0.8, 'monthly'),
         ('about', 0.7, 'monthly'),
         ('quality_standards', 0.7, 'monthly'),
@@ -88,6 +89,20 @@ class StaticViewSitemap(Sitemap):
         if obj[0] == 'qna:question_list' and HAS_QNA:
             return PublicQuestion.objects.filter(status='approved').order_by('-created_at').values_list('created_at', flat=True).first()
         return None
+
+
+class CountrySitemap(Sitemap):
+    """صفحات تحفيظ القرآن أونلاين لكل دولة (core/countries.py)"""
+    protocol = 'https'
+    priority = 0.7
+    changefreq = 'monthly'
+
+    def items(self):
+        from core.countries import COUNTRIES
+        return [c['slug'] for c in COUNTRIES]
+
+    def location(self, slug):
+        return reverse('country_page', args=[slug])
 
 
 class BlogPostSitemap(Sitemap):

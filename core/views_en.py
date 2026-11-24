@@ -33,9 +33,11 @@ def home(request):
 
 
 def pricing(request):
+    from core.pricing import context as pricing_ctx
     site = settings.CANONICAL_URL.rstrip('/')
     return render(request, 'en/pricing.html', {
         'programs': en.PROGRAMS, 'courses_ldjson': _ld(en.courses_schema(site)),
+        **pricing_ctx(en=True),
     })
 
 
@@ -66,11 +68,9 @@ def contact(request):
         if request.method == 'POST':
             form = TrialBookingForm(request.POST)
             if form.is_valid():
-                booking = form.save(commit=False)
-                note = (booking.notes or '').strip()
-                # علامة للإدارة إن الحجز جه من النسخة الإنجليزي (يعني الأغلب محتاج معلم بيتكلم إنجليزي)
-                booking.notes = ('[EN site] ' + note).strip()
-                booking.save()
+                # علامة [EN site] للإدارة إن الحجز جه من النسخة الإنجليزي (الأغلب محتاج معلم بيتكلم إنجليزي)
+                from accounts.views import save_booking
+                save_booking(request, form, en=True)
                 return redirect('en_thank_you')
         else:
             initial = {}

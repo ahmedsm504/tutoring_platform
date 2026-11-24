@@ -96,12 +96,25 @@
     <div class="form-card">
       <h2 style="font-size:1.4rem;">بيانات الحجز</h2>
       {% if form.non_field_errors or form.errors %}<div class="notice notice-error" role="alert">من فضلك راجع الحقول اللي عليها ملاحظة تحت.</div>{% endif %}
-      <form method="post" novalidate>
+      <form method="post" novalidate data-booking data-start-url="{% url 'booking_start' %}">
         {% csrf_token %}
-        {% with f=form.name %}<div class="field"><label for="{{ f.id_for_label }}">الاسم<span class="req" aria-hidden="true">*</span></label>
+        <input type="hidden" name="trk_first" value=""><input type="hidden" name="trk_prev" value="">
+        <input type="hidden" name="ref" value="{{ request.GET.ref|default:'' }}"><input type="hidden" name="program" value="{{ request.GET.program|default:'' }}">
+        <input type="hidden" name="booking_token" value="{{ request.POST.booking_token|default:'' }}">
+        <div class="hp-field" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div data-step="1">
+          <p class="step-label" hidden>الخطوة 1 من 2: الاسم ورقم الواتساب</p>
+          {% with f=form.name %}<div class="field"><label for="{{ f.id_for_label }}">الاسم<span class="req" aria-hidden="true">*</span></label>
           <input type="text" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="name" placeholder="اسم الطالب أو ولي الأمر">
           {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
-        <div class="field-row">
+          {% with f=form.phone %}<div class="field"><label for="{{ f.id_for_label }}">رقم الهاتف أو واتساب<span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" dir="ltr" style="text-align:right" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="tel" placeholder="+20 100 000 0000">
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+          <button type="button" class="btn btn-primary btn-block" data-next hidden>التالي</button>
+        </div>
+        <div data-step="2">
+          <p class="step-label" hidden>الخطوة 2 من 2: تفاصيل بسيطة عشان نختار المعلمة المناسبة</p>
+          <div class="field-row">
           {% with f=form.country %}<div class="field"><label for="{{ f.id_for_label }}">الدولة<span class="req" aria-hidden="true">*</span></label>
             <input type="text" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="country-name" placeholder="مثلاً: مصر، السعودية، الكويت">
             {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
@@ -111,19 +124,16 @@
               {% for value, label in f.field.choices %}{% if value %}<option value="{{ value }}" {% if f.value == value %}selected{% endif %}>{{ label }}</option>{% endif %}{% endfor %}
             </select>
             {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
-        </div>
-        <div class="field-row">
-          {% with f=form.phone %}<div class="field"><label for="{{ f.id_for_label }}">رقم الهاتف أو واتساب<span class="req" aria-hidden="true">*</span></label>
-            <input type="tel" dir="ltr" style="text-align:right" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="tel" placeholder="+20 100 000 0000">
-            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+          </div>
           {% with f=form.email %}<div class="field"><label for="{{ f.id_for_label }}">البريد الإلكتروني (اختياري)</label>
             <input type="email" dir="ltr" style="text-align:right" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" autocomplete="email">
             {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
-        </div>
-        {% with f=form.notes %}<div class="field"><label for="{{ f.id_for_label }}">عمر الطالب ومستواه أو أي ملاحظة (اختياري)</label>
+          {% with f=form.notes %}<div class="field"><label for="{{ f.id_for_label }}">عمر الطالب ومستواه أو أي ملاحظة (اختياري)</label>
           <textarea name="{{ f.html_name }}" id="{{ f.id_for_label }}" rows="4" placeholder="مثلاً: عمره 8 سنين، حافظ جزء عمّ، والمواعيد المناسبة بعد العصر">{{ f.value|default_if_none:'' }}</textarea>
           {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
-        <button type="submit" class="btn btn-primary btn-block">احجز الحلقة المجانية</button>
+          <button type="submit" class="btn btn-primary btn-block">احجز الحلقة المجانية</button>
+          <button type="button" class="btn btn-ghost btn-block" data-back hidden style="margin-top:8px;">رجوع</button>
+        </div>
         <p style="color:var(--muted); font-size:.9rem; margin:12px 0 0; text-align:center;">بياناتك بتستخدم بس للتواصل معاك بخصوص الحجز.</p>
       </form>
     </div>
@@ -161,4 +171,5 @@
     <p>مؤسسة العجمي لتحفيظ القرآن الكريم أونلاين، مصر. اعرف أكتر عننا في <a href="{% url 'about' %}">من نحن</a>، واقرأ <a href="{% url 'privacy' %}">سياسة الخصوصية</a> عشان تعرف إزاي بنتعامل مع بياناتك.</p>
   </div>
 </section>
+<script src="{% static 'js/booking.js' %}" defer></script>
 {% endblock %}

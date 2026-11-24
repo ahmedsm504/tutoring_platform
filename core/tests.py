@@ -1658,3 +1658,102 @@ class GscSyncTests(TestCase):
         urls = gsc.sitemap_urls()
         self.assertTrue(urls)
         self.assertTrue(all(u.startswith('https://') for u in urls))
+
+
+class BookingAndPricingTests(TestCase):
+    """الأسعار بالعملات، صفحات الدول، الحجز على خطوتين، ومصدر الحجز"""
+
+    def test_prices(self):
+        from core.pricing import package_price, table
+        self.assertEqual([r[1] for r in table('SAR')], ['28', '56', '84'])
+        self.assertEqual([r[1] for r in table('EGP')], ['200', '350', '500'])
+        self.assertEqual(str(package_price('EGP', 12, 60)), '1000')
+        r = self.client.get(reverse('pricing'))
+        self.assertContains(r, 'data-price-table')
+        self.assertContains(r, 'id="prices-data"')
+        self.assertContains(self.client.get('/en/pricing/'), 'data-price-table')
+
+    def test_country_pages(self):
+        from core.countries import COUNTRIES
+        self.assertEqual(self.client.get(reverse('countries')).status_code, 200)
+        for c in COUNTRIES:
+            r = self.client.get(reverse('country_page', args=[c['slug']]))
+            self.assertEqual(r.status_code, 200, c['slug'])
+            self.assertContains(r, 'data-price-table')
+        self.assertEqual(self.client.get('/online-quran/narnia/').status_code, 404)
+        egypt = self.client.get('/online-quran/egypt/')
+        self.assertContains(egypt, '>200<')
+        self.assertContains(egypt, '>500<')
+
+    def test_two_step_booking_and_source(self):
+        import json
+        from accounts.models import TrialBooking
+        first = json.dumps({'l': '/blog/x/', 'r': 'https://www.google.com/', 'u': '', 'c': ''})
+        r = self.client.post(reverse('booking_start'), {'name': 'أم سلمى', 'phone': '+966500000000', 'trk_first': first,
+                                                        'trk_prev': '/blog/x/', 'ref': 'article-end', 'program': 'nourania'})
+        self.assertEqual(r.status_code, 200)
+        token = r.json()['token']
+        b = TrialBooking.objects.get(phone='+966500000000')
+        self.assertFalse(b.is_complete)
+        self.assertEqual((b.source, b.from_page, b.cta, b.program), ('google', '/blog/x/', 'article-end', 'nourania'))
+        r = self.client.post(reverse('contact'), {'name': 'أم سلمى', 'phone': '+966500000000', 'country': 'السعودية',
+                                                  'gender': 'female', 'booking_token': token, 'trk_first': first,
+                                                  'trk_prev': '/blog/x/', 'ref': 'article-end'})
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(TrialBooking.objects.filter(phone='+966500000000').count(), 1)
+        b.refresh_from_db()
+        self.assertTrue(b.is_complete)
+        self.assertEqual(b.gender, 'female')
+        # الحقل المخفي (بوت) بيترفض
+        self.assertEqual(self.client.post(reverse('booking_start'), {'name': 'x', 'phone': '0100000000', 'website': 'y'}).status_code, 400)
+
+    def test_source_classifier(self):
+        from accounts.tracking import classify
+        self.assertEqual(classify('', '', 'gclid'), 'google_ads')
+        self.assertEqual(classify('', 'facebook|paid|nov', 'fbclid'), 'facebook_ads')
+        self.assertEqual(classify('https://l.facebook.com/', '', ''), 'facebook')
+        self.assertEqual(classify('https://www.bing.com/', '', ''), 'bing')
+        self.assertEqual(classify('', '', ''), 'direct')
+
+    def test_sources_report_admin(self):
+        from django.contrib.auth import get_user_model
+        U = get_user_model()
+        admin = U.objects.create_superuser('adm_src', 'a@example.com', 'x-pass-123')
+        self.client.force_login(admin)
+        self.assertEqual(self.client.get(reverse('admin:trialbooking_sources')).status_code, 200)
+
+    def test_gsc_performance_sync(self):
+        from core import gsc
+        from core.models import GscPagePerformance
+
+        class FakeResp:
+            def raise_for_status(self):
+                pass
+
+            def json(self):
+                return {'rows': [
+                    {'keys': ['https://alagme.com/blog/a/', 'تحفيظ'], 'clicks': 1, 'impressions': 500, 'position': 3.0},
+                    {'keys': ['https://alagme.com/blog/a/', 'قرآن'], 'clicks': 0, 'impressions': 100, 'position': 5.0},
+                    {'keys': ['https://alagme.com/blog/b/', 'تجويد'], 'clicks': 20, 'impressions': 100, 'position': 2.0},
+                ]}
+
+        class FakeSession:
+            def post(self, *a, **k):
+                return FakeResp()
+
+        self.assertEqual(gsc.sync_performance(FakeSession()), 2)
+        top = GscPagePerformance.objects.first()
+        self.assertEqual(top.url, 'https://alagme.com/blog/a/')
+        self.assertEqual(top.impressions, 600)
+        self.assertIn('تحفيظ (500)', top.top_queries)
+
+    def test_article_cta_matches_topic(self):
+        from types import SimpleNamespace
+        from blog.cta import topic_for
+        P = lambda t, c='': SimpleNamespace(title=t, slug='', category=SimpleNamespace(slug=c))
+        self.assertEqual(topic_for(P('أحكام النون الساكنة والتنوين')), 'tajweed')
+        self.assertEqual(topic_for(P('كيف أحفظ القرآن لطفلي')), 'kids')
+        self.assertEqual(topic_for(P('خطة حفظ سورة البقرة')), 'hifz')
+        self.assertEqual(topic_for(P('تفسير سورة الكهف')), 'general')
+        r = self.client.get('/blog/noon-sakinah-tanween-rules/')
+        self.assertContains(r, 'program=ghiras&amp;ref=article-end')

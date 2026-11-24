@@ -3,7 +3,7 @@
 
 {% block title %}باقات تحفيظ القرآن الكريم أونلاين لجميع الدول | مؤسسة العجمي{% endblock %}
 
-{% block meta_description %}باقات تحفيظ القرآن أونلاين للأطفال والكبار: البداية النورانية، الغراس الطيب، الهمة العالية، سفراء القرآن، ونور البيان. احجز حلقة تجريبية مجانية من أي دولة.{% endblock %}
+{% block meta_description %}أسعار باقات تحفيظ القرآن أونلاين بعملة بلدك: 4 أو 8 أو 12 حصة فردية في الشهر للأطفال والكبار، 30 أو 60 دقيقة. أول حلقة مجانية من أي دولة.{% endblock %}
 
 {% block meta_keywords %}باقات تحفيظ القرآن, حجز حلقة قرآن, تحفيظ قرآن لجميع الدول, حصص قرآن للأطفال, دورة نور البيان, دورة الأربعين النووية, تحفيظ قرآن للكبار, تصحيح التلاوة أونلاين{% endblock %}
 
@@ -27,6 +27,9 @@
     <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">الباقات</li></ol>
     <h1>باقات تحفيظ القرآن الكريم أونلاين</h1>
     <p>كل الباقات حصص فردية مع معلمة أو معلم مُجاز. اختار عدد الحصص في الشهر ومدة الحلقة، والحلقة الأولى تجريبية ومجانية.</p>
+    <p style="margin-top:6px;">الحصة 30 دقيقة، والـ 60 دقيقة بضعف السعر. الدفع شهري، والحلقة الأولى مجانية.</p>
+    {% include 'includes/currency_picker.html' %}
+    <p style="margin:4px 0 0;"><a href="{% url 'countries' %}" style="color:inherit; text-decoration:underline;">مواعيد الحصص بتوقيت بلدك</a></p>
     <ul class="plans-jump" aria-label="انتقل إلى باقة">
       {% for p in programs %}<li><a href="#{{ p.slug }}">{{ p.name }}</a></li>{% endfor %}
     </ul>
@@ -54,13 +57,16 @@
         </div>
       </div>
       <aside class="plan-side" aria-label="مواعيد {{ p.name }}">
+        {% if p.kind == 'دورة' %}
         <table>
-          <caption>{% if p.kind == 'دورة' %}مدة الحلقة{% else %}الخيارات الشهرية{% endif %}</caption>
-          <thead><tr><th scope="col">{% if p.kind == 'دورة' %}النوع{% else %}عدد الحصص شهريًا{% endif %}</th><th scope="col">مدة الحلقة</th></tr></thead>
+          <caption>مدة الحلقة</caption>
+          <thead><tr><th scope="col">النوع</th><th scope="col">مدة الحلقة</th></tr></thead>
           <tbody>{% for count, dur in p.schedule %}<tr><td>{{ count }}</td><td>{{ dur }}</td></tr>{% endfor %}</tbody>
         </table>
+        <p class="plan-note">السعر بيتحدد حسب عدد الحلقات، اسألنا على واتساب.</p>
+        {% else %}{% include 'includes/price_table.html' %}{% endif %}
         {% if p.tip %}<p class="plan-tip">{{ p.tip }}</p>{% endif %}
-        <a class="btn btn-primary btn-block" href="{% url 'contact' %}?program={{ p.slug }}">احجز حلقة تجريبية مجانية</a>
+        <a class="btn btn-primary btn-block" href="{% url 'contact' %}?program={{ p.slug }}&amp;ref=pricing">احجز حلقة تجريبية مجانية</a>
         <p class="plan-note">بنحدد معاك المواعيد على توقيت بلدك.</p>
       </aside>
     </article>
@@ -78,4 +84,5 @@
     </div>
   </div>
 </section>
+<script src="{% static 'js/prices.js' %}" defer></script>
 {% endblock %}

@@ -277,11 +277,13 @@ class TrialBooking(models.Model):
     )
     country = models.CharField(
         max_length=100,
+        blank=True, default='',
         verbose_name="الدولة"
     )
     gender = models.CharField(
         max_length=10,
         choices=GENDER_CHOICES,
+        blank=True, default='',
         verbose_name="الجنس"
     )
     phone = models.CharField(
@@ -306,6 +308,18 @@ class TrialBooking(models.Model):
         default=False,
         verbose_name="تم التواصل"
     )
+    # الحجز على خطوتين: الخطوة الأولى (الاسم والرقم) بتتسجل فورًا حتى لو الزائر مكملش
+    is_complete = models.BooleanField(default=True, verbose_name="الحجز مكتمل",
+                                      help_text="لو مش مكتمل: الزائر كتب اسمه ورقمه ومكملش باقي البيانات، كلمه")
+    # مصدر الحجز (accounts/tracking.py)
+    source = models.CharField('المصدر', max_length=20, blank=True, default='', db_index=True)
+    from_page = models.CharField('الصفحة اللي جه منها', max_length=255, blank=True, default='',
+                                 help_text='آخر صفحة شافها قبل صفحة الحجز (مثلًا المقال)')
+    landing_page = models.CharField('أول صفحة دخلها', max_length=255, blank=True, default='')
+    referrer = models.CharField('الموقع اللي جه منه', max_length=255, blank=True, default='')
+    campaign = models.CharField('الحملة (UTM)', max_length=200, blank=True, default='')
+    cta = models.CharField('الزرار اللي داس عليه', max_length=60, blank=True, default='')
+    program = models.CharField('البرنامج', max_length=30, blank=True, default='')
 
     class Meta:
         verbose_name = "حجز تجربة"

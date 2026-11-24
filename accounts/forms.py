@@ -50,3 +50,14 @@ class TrialBookingForm(forms.ModelForm):
             'email': 'البريد الإلكتروني',
             'notes': 'ملاحظات',
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # في الموديل بقوا اختياريين (عشان حجز الخطوة الأولى)، لكن الحجز الكامل لازم فيه الدولة والنوع
+        self.fields['country'].required = True
+        self.fields['gender'].required = True
+
+    def clean(self):
+        data = super().clean()
+        if self.data.get('website'):  # حقل مخفي: لو اتملا يبقى بوت
+            raise forms.ValidationError('spam')
+        return data

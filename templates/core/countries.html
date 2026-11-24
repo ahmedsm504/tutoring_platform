@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}تحفيظ القرآن أونلاين حسب الدولة: المواعيد والأسعار بعملة بلدك | مؤسسة العجمي{% endblock %}
+{% block meta_description %}اختار بلدك واعرف مواعيد حصص تحفيظ القرآن أونلاين بتوقيتك والأسعار بعملتك: السعودية والإمارات والكويت وقطر ومصر وأمريكا وكندا وبريطانيا وألمانيا وفرنسا.{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">حسب الدولة</li></ol>
+    <h1>تحفيظ القرآن أونلاين حسب الدولة</h1>
+    <p>الحصص كلها أونلاين وفردية، والمعلمات بيشتغلوا على توقيت القاهرة. اختار بلدك عشان تشوف المواعيد المتاحة بتوقيتك والأسعار بعملتك.</p>
+  </div>
+</header>
+<section class="section">
+  <div class="container prose">
+    <table>
+      <thead><tr><th scope="col">الدولة</th><th scope="col">العملة</th><th scope="col">باقة 4 حصص (30 دقيقة)</th></tr></thead>
+      <tbody>{% for c, cur, p in rows %}<tr><td><a href="{% url 'country_page' c.slug %}">تحفيظ القرآن أونلاين {{ c.in }}</a></td><td>{{ cur }}</td><td>{{ p }}</td></tr>{% endfor %}</tbody>
+    </table>
+    <p>بلدك مش موجودة؟ <a href="{% url 'pricing' %}">صفحة الباقات</a> بتعرض الأسعار بأكتر من عملة، والمواعيد بنظبطها معاك على توقيتك.</p>
+    <div class="hero-actions" style="margin-top:24px;"><a class="btn btn-primary" href="{% url 'contact' %}?ref=countries">احجز حلقة تجريبية مجانية</a></div>
+  </div>
+</section>
+{% endblock %}

@@ -185,25 +185,65 @@ class MessageAdmin(admin.ModelAdmin):
 # ==========================================
 @admin.register(TrialBooking)
 class TrialBookingAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone', 'gender', 'country', 'is_contacted', 'created_at')
-    list_filter = ('is_contacted', 'gender', 'country', 'created_at')
-    search_fields = ('name', 'phone', 'email', 'country')
+    list_display = ('name', 'phone', 'gender', 'country', 'complete_badge', 'source_label', 'from_page', 'is_contacted', 'created_at')
+    list_filter = ('is_complete', 'is_contacted', 'source', 'program', 'cta', 'gender', 'country', 'created_at')
+    search_fields = ('name', 'phone', 'email', 'country', 'from_page', 'campaign')
     ordering = ('-created_at',)
     date_hierarchy = 'created_at'
-    
+    change_list_template = 'admin/accounts/trialbooking/change_list.html'
+
     fieldsets = (
         ('معلومات الحجز', {
-            'fields': ('name', 'gender', 'country', 'phone', 'email')
+            'fields': ('name', 'gender', 'country', 'phone', 'email', 'program')
         }),
         ('ملاحظات', {
             'fields': ('notes',)
         }),
         ('الحالة', {
-            'fields': ('is_contacted', 'created_at'),
+            'fields': ('is_complete', 'is_contacted', 'created_at'),
+        }),
+        ('مصدر الحجز', {
+            'fields': ('source', 'from_page', 'cta', 'landing_page', 'referrer', 'campaign'),
         }),
     )
-    
-    readonly_fields = ('created_at',)
+
+    readonly_fields = ('created_at', 'source', 'from_page', 'cta', 'landing_page', 'referrer', 'campaign')
+
+    @admin.display(description='الحالة', ordering='is_complete')
+    def complete_badge(self, obj):
+        return 'مكتمل' if obj.is_complete else '⚠ الخطوة الأولى بس (كلمه)'
+
+    @admin.display(description='المصدر', ordering='source')
+    def source_label(self, obj):
+        from .tracking import SOURCE_LABELS
+        return SOURCE_LABELS.get(obj.source, obj.source or '—')
+
+    def get_urls(self):
+        from django.urls import path
+        return [path('sources/', self.admin_site.admin_view(self.sources_report), name='trialbooking_sources')] + super().get_urls()
+
+    def sources_report(self, request):
+        """تقرير: الحجوزات جت منين (المصدر، الصفحة، الزرار) في آخر 30 و90 يوم"""
+        from datetime import timedelta
+        from django.db.models import Count, Q
+        from django.shortcuts import render
+        from django.utils import timezone
+        from .tracking import SOURCE_LABELS
+        days = 90 if request.GET.get('days') == '90' else 30
+        qs = TrialBooking.objects.filter(created_at__gte=timezone.now() - timedelta(days=days))
+        def group(field, limit=None):
+            rows = (qs.values(field).annotate(total=Count('id'), done=Count('id', filter=Q(is_complete=True)))
+                    .order_by('-total'))
+            rows = list(rows[:limit] if limit else rows)
+            for r in rows:
+                r['label'] = SOURCE_LABELS.get(r[field], r[field]) if field == 'source' else r[field]
+                r['label'] = r['label'] or '— (قبل التتبع أو من غير مصدر)'
+            return rows
+        ctx = dict(self.admin_site.each_context(request), title='الحجوزات جت منين', days=days,
+                   total=qs.count(), complete=qs.filter(is_complete=True).count(),
+                   by_source=group('source'), by_page=group('from_page', 30), by_cta=group('cta'),
+                   by_program=group('program'), opts=self.model._meta)
+        return render(request, 'admin/accounts/trialbooking/sources.html', ctx)
     
     actions = ['mark_as_contacted', 'mark_as_not_contacted']
     

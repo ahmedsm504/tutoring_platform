@@ -12,7 +12,7 @@ from accounts import views as accounts_views
 from core.push_status import push_status
 
 from .robots_view import llms_txt, robots_txt
-from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap,
+from .sitemaps import (BlogCategorySitemap, BlogPostSitemap, QNACategorySitemap, CountrySitemap,
                        JobSitemap, PlannerSitemap, QuranSitemap, StaticViewSitemap, VideoSitemap)
 
 
@@ -23,6 +23,7 @@ def indexnow_key(request):
 
 sitemaps = {
     'static': StaticViewSitemap,
+    'countries': CountrySitemap,
     'blog': BlogPostSitemap,
     'blog-categories': BlogCategorySitemap,
     # الأسئلة المُجابة بس (السؤال من غير إجابة عليه noindex)

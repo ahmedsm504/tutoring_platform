@@ -24,6 +24,8 @@
     <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li aria-current="page">Programmes</li></ol>
     <h1>Online Quran programmes and courses</h1>
     <p>Every programme is one-to-one with a certified teacher. Choose how many classes a month and how long each class is. The first class is a free trial.</p>
+    <p style="margin-top:6px;">Each class is 30 minutes; 60-minute classes cost double. Paid monthly, and the first class is free.</p>
+    {% include 'includes/currency_picker.html' with en=True %}
     <ul class="plans-jump" aria-label="Jump to a programme">
       {% for p in programs %}<li><a href="#{{ p.slug }}">{{ p.name }}</a></li>{% endfor %}
     </ul>
@@ -51,13 +53,16 @@
         </div>
       </div>
       <aside class="plan-side" aria-label="{{ p.name }} schedule">
+        {% if p.kind == 'Course' %}
         <table>
-          <caption>{% if p.kind == 'Course' %}Class length{% else %}Monthly options{% endif %}</caption>
-          <thead><tr><th scope="col">{% if p.kind == 'Course' %}Type{% else %}Classes per month{% endif %}</th><th scope="col">Class length</th></tr></thead>
+          <caption>Class length</caption>
+          <thead><tr><th scope="col">Type</th><th scope="col">Class length</th></tr></thead>
           <tbody>{% for count, dur in p.schedule %}<tr><td>{{ count }}</td><td>{{ dur }}</td></tr>{% endfor %}</tbody>
         </table>
+        <p class="plan-note">Fees depend on the number of classes; ask us on WhatsApp.</p>
+        {% else %}{% include 'includes/price_table.html' with en=True %}{% endif %}
         {% if p.tip %}<p class="plan-tip">{{ p.tip }}</p>{% endif %}
-        <a class="btn btn-primary btn-block" href="{% url 'en_contact' %}?program={{ p.slug }}">Book a free trial class</a>
+        <a class="btn btn-primary btn-block" href="{% url 'en_contact' %}?program={{ p.slug }}&amp;ref=pricing">Book a free trial class</a>
         <p class="plan-note">We set the times in your own time zone.</p>
       </aside>
     </article>
@@ -68,11 +73,12 @@
 <section class="section band cta" aria-labelledby="pcta">
   <div class="container">
     <h2 id="pcta">Not sure which programme suits you?</h2>
-    <p>In the trial class we assess the student's level and recommend the right programme. Fees depend on the number and length of classes; message us for the current fees.</p>
+    <p>In the trial class we assess the student's level and recommend the right programme. Prices are shown in your currency above; the trial class is free.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="{% url 'en_contact' %}">Book a free trial class</a>
       <a class="btn btn-ghost" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">Ask us on WhatsApp</a>
     </div>
   </div>
 </section>
+<script src="{% static 'js/prices.js' %}" defer></script>
 {% endblock %}

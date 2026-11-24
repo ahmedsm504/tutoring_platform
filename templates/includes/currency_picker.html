@@ -1,0 +1,8 @@
+{# اختيار العملة + بيانات الأسعار لكل العملات (static/js/prices.js بيختار تلقائيًا من توقيت الجهاز) #}
+<div class="currency-picker">
+  <label for="currency-select">{% if en %}Show prices in:{% else %}اعرض الأسعار بـ:{% endif %}</label>
+  <select id="currency-select" data-currency-select>
+    {% for code, name in price_currencies %}<option value="{{ code }}"{% if code == price_currency %} selected{% endif %}>{{ name }}</option>{% endfor %}
+  </select>
+</div>
+<script type="application/json" id="prices-data">{{ prices_json|safe }}</script>

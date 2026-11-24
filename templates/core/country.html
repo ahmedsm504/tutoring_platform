@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}تحفيظ القرآن أونلاين {{ country.in }}: المواعيد بتوقيتك والأسعار بـ{{ price_name }} | مؤسسة العجمي{% endblock %}
+{% block meta_description %}حصص قرآن وتجويد فردية أونلاين لـ{{ country.people }}: مواعيد الحصص بتوقيت {{ country.name }}، والأسعار بـ{{ price_name }}، ونصائح تناسب الدراسة هناك. أول حلقة مجانية.{% endblock %}
+{% block og_title %}تحفيظ القرآن أونلاين {{ country.in }} - مؤسسة العجمي{% endblock %}
+{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},
+ {"@type":"ListItem","position":2,"name":"تحفيظ القرآن أونلاين حسب الدولة","item":"{{ SITE_URL }}{% url 'countries' %}"},
+ {"@type":"ListItem","position":3,"name":"{{ country.name }}","item":"{{ canonical_url }}"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{% for q, a in country.faq %}{"@type":"Question","name":"{{ q|escapejs }}","acceptedAnswer":{"@type":"Answer","text":"{{ a|escapejs }}"}}{% if not forloop.last %},{% endif %}{% endfor %}]}
+</script>
+{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'countries' %}">حسب الدولة</a></li><li aria-current="page">{{ country.name }}</li></ol>
+    <h1>تحفيظ القرآن الكريم أونلاين {{ country.in }}</h1>
+    <p>{{ country.intro }}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'contact' %}?ref=country-{{ country.slug }}">احجز حلقة تجريبية مجانية</a>
+      <a class="btn btn-ghost" href="#prices">الأسعار بـ{{ price_name }}</a>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container prose">
+    <h2 id="times">مواعيد الحصص بتوقيت {{ country.name }}</h2>
+    <p>المعلمات بيشتغلوا {{ teacher_days }} من 9 الصبح لـ 12 بالليل بتوقيت القاهرة، والجمعة إجازة. يعني المواعيد المتاحة عندك:</p>
+    <table>
+      <thead><tr>{% if not times.same_all_year %}<th scope="col">الفترة</th>{% endif %}<th scope="col">فرق التوقيت</th><th scope="col">المواعيد المتاحة بتوقيتك</th></tr></thead>
+      <tbody>{% for r in times.rows %}<tr>{% if not times.same_all_year %}<td>{{ r.season }}</td>{% endif %}<td>{{ r.offset }}</td><td>{{ r.window }}</td></tr>{% endfor %}</tbody>
+    </table>
+    {% for z in extra_times %}
+    <p><strong>{{ z.name }}:</strong> {% for r in z.rows %}{{ r.offset }}، والمواعيد المتاحة {{ r.window }}{% if not forloop.last %} — {% endif %}{% endfor %}.</p>
+    {% endfor %}
+    <h3>مواعيد شائعة عندك، متاحة ولا لأ؟</h3>
+    <table>
+      <thead><tr><th scope="col">الوقت عندك</th><th scope="col">الساعة عند المعلمة (القاهرة)</th><th scope="col">متاح؟</th></tr></thead>
+      <tbody>{% for x in slots %}<tr><td>{{ x.label }} ({{ x.local }})</td><td>{{ x.cairo }}</td><td>{% if x.ok %}✓ متاح{% else %}✗ برا مواعيد المعلمات{% endif %}</td></tr>{% endfor %}</tbody>
+    </table>
+    <p>الإجازة الأسبوعية {{ country.in }}: {{ country.weekend }}. وبنثبت معاك موعد الحصة على توقيت بلدك، والمعلمة هي اللي بتحسب الفرق.</p>
+
+    <h2 id="prices">الأسعار بـ{{ price_name }}</h2>
+    <p>كل الباقات حصص فردية (طالب واحد مع معلمة)، والسعر شهري. الحصة 30 دقيقة، والـ 60 دقيقة بضعف السعر.</p>
+    <div class="plan-side" style="position:static; max-width:520px;">
+      {% include 'includes/price_table.html' %}
+      <p class="plan-note">أول حلقة مجانية، وبعدها بتختار الباقة اللي تناسبك. تفاصيل كل باقة في <a href="{% url 'pricing' %}">صفحة الباقات</a>.</p>
+    </div>
+
+    <h2 id="tips">نصايح لـ{{ country.people }}</h2>
+    <ul class="checklist">{% for t in country.tips %}<li>{{ t }}</li>{% endfor %}</ul>
+
+    <h2 id="programs">البرامج المتاحة</h2>
+    <ul class="checklist">
+      {% for p in programs %}<li><a href="{% url 'pricing' %}#{{ p.slug }}"><strong>{{ p.kind }} {{ p.name }}</strong></a>: {{ p.audience }}.</li>{% endfor %}
+    </ul>
+
+    <h2 id="how">إزاي تبدأ</h2>
+    <ol>
+      <li>تملا فورم الحجز (اسمك ورقم الواتساب بس في الأول).</li>
+      <li>مشرف من المؤسسة بيكلمك خلال 24 ساعة ويحدد معاك موعد الحلقة التجريبية بتوقيت {{ country.name }}.</li>
+      <li>في الحلقة المعلمة بتحدد مستوى الطالب وترشحلك الباقة، والقرار ليك.</li>
+    </ol>
+
+    <h2 id="faq">أسئلة بتتكرر من {{ country.name }}</h2>
+    {% for q, a in country.faq %}<h3>{{ q }}</h3><p>{{ a }}</p>{% endfor %}
+    <h3>الحصص بتبقى على أنهي برنامج؟</h3>
+    <p>على زووم أو جوجل ميت من الموبايل أو الكمبيوتر، والكاميرا مفتوحة عند المعلمة.</p>
+
+    <div class="hero-actions" style="margin-top:28px;">
+      <a class="btn btn-primary" href="{% url 'contact' %}?ref=country-{{ country.slug }}">احجز حلقة تجريبية مجانية</a>
+      <a class="btn btn-ghost" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">اسألنا على واتساب</a>
+    </div>
+
+    <h2 style="font-size:1.2rem; margin-top:40px;">دول تانية</h2>
+    <p>{% for o in others %}<a href="{% url 'country_page' o.slug %}">{{ o.name }}</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>
+  </div>
+</section>
+{% endblock %}

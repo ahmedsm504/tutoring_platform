@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">الرئيسية</a> › <a href="{% url 'admin:accounts_trialbooking_changelist' %}">حجوزات التجربة</a> › الحجوزات جت منين</div>{% endblock %}
+{% block content %}
+<p>
+  آخر {{ days }} يوم: <strong>{{ total }}</strong> حجز، منهم <strong>{{ complete }}</strong> مكتمل
+  (الباقي كتبوا الاسم والرقم بس، كلمهم).
+  — {% if days == 30 %}<a href="?days=90">اعرض آخر 90 يوم</a>{% else %}<a href="?">اعرض آخر 30 يوم</a>{% endif %}
+</p>
+<h2>حسب المصدر</h2>
+<table><thead><tr><th>المصدر</th><th>كل الحجوزات</th><th>المكتملة</th></tr></thead>
+<tbody>{% for r in by_source %}<tr><td>{{ r.label }}</td><td>{{ r.total }}</td><td>{{ r.done }}</td></tr>{% empty %}<tr><td colspan="3">لسه مفيش</td></tr>{% endfor %}</tbody></table>
+<h2>حسب الصفحة اللي جه منها (آخر صفحة قبل الحجز)</h2>
+<table><thead><tr><th>الصفحة</th><th>كل الحجوزات</th><th>المكتملة</th></tr></thead>
+<tbody>{% for r in by_page %}<tr><td>{% if r.from_page %}<a href="{{ r.from_page }}" target="_blank" rel="noopener">{{ r.label }}</a>{% else %}{{ r.label }}{% endif %}</td><td>{{ r.total }}</td><td>{{ r.done }}</td></tr>{% empty %}<tr><td colspan="3">لسه مفيش</td></tr>{% endfor %}</tbody></table>
+<h2>حسب الزرار</h2>
+<table><thead><tr><th>الزرار</th><th>كل الحجوزات</th><th>المكتملة</th></tr></thead>
+<tbody>{% for r in by_cta %}<tr><td>{{ r.label }}</td><td>{{ r.total }}</td><td>{{ r.done }}</td></tr>{% empty %}<tr><td colspan="3">لسه مفيش</td></tr>{% endfor %}</tbody></table>
+<h2>حسب البرنامج</h2>
+<table><thead><tr><th>البرنامج</th><th>كل الحجوزات</th><th>المكتملة</th></tr></thead>
+<tbody>{% for r in by_program %}<tr><td>{{ r.label }}</td><td>{{ r.total }}</td><td>{{ r.done }}</td></tr>{% empty %}<tr><td colspan="3">لسه مفيش</td></tr>{% endfor %}</tbody></table>
+<p style="margin-top:20px;color:#666">أسماء الزراير: article-mid / article-end = زرار في نص/آخر المقال، pricing = صفحة الباقات، country-xx = صفحة دولة.</p>
+{% endblock %}
