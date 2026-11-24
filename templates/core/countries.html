@@ -12,8 +12,8 @@
 <section class="section">
   <div class="container prose">
     <table>
-      <thead><tr><th scope="col">الدولة</th><th scope="col">العملة</th><th scope="col">باقة 4 حصص (أقصر حصة)</th></tr></thead>
-      <tbody>{% for c, cur, p, d in rows %}<tr><td><a href="{% url 'country_page' c.slug %}">تحفيظ القرآن أونلاين {{ c.in }}</a></td><td>{{ cur }}</td><td>{{ p }} ({{ d }} دقيقة)</td></tr>{% endfor %}</tbody>
+      <thead><tr><th scope="col">الدولة</th><th scope="col">العملة</th><th scope="col">باقة 4 حصص (40 دقيقة)</th></tr></thead>
+      <tbody>{% for c, cur, p, d in rows %}<tr><td><a href="{% url 'country_page' c.slug %}">تحفيظ القرآن أونلاين {{ c.in }}</a></td><td>{{ cur }}</td><td>{{ p }}</td></tr>{% endfor %}</tbody>
     </table>
     <p>بلدك مش موجودة؟ <a href="{% url 'pricing' %}">صفحة الباقات</a> بتعرض الأسعار بأكتر من عملة، والمواعيد بنظبطها معاك على توقيتك.</p>
     <div class="hero-actions" style="margin-top:24px;"><a class="btn btn-primary" href="{% url 'contact' %}?ref=countries">احجز حلقة تجريبية مجانية</a></div>

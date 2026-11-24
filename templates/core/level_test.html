@@ -21,7 +21,7 @@
     {% if is_course %}
     <p><strong>{{ prog.kind }} {{ prog.name }}</strong>، حلقة 40 دقيقة. السعر حسب عدد الحلقات، اسألنا على واتساب.</p>
     {% else %}
-    <p><strong>{{ count }} {% if count > 10 %}حصة{% else %}حصص{% endif %} في الشهر، {% if minutes == 60 %}ساعة للحصة{% else %}40 دقيقة للحصة (30 دقيقة لو في مصر){% endif %}.</strong> ودي أسعار الباقات بعملة بلدك:</p>
+    <p><strong>{{ count }} {% if count > 10 %}حصة{% else %}حصص{% endif %} في الشهر، {% if minutes == 60 %}ساعة للحصة{% else %}40 دقيقة للحصة{% endif %}.</strong> ودي أسعار الباقات بعملة بلدك:</p>
     {% include 'includes/currency_picker.html' %}
     <div class="plan-side" style="position:static; max-width:520px;">{% include 'includes/price_table.html' %}</div>
     {% endif %}
