@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}تحدي حفظ جزء عمّ في 30 يوم للأطفال: جدول يومي ومتابعة وشهادة | مؤسسة العجمي{% endblock %}
+{% block meta_description %}خطة مجانية لحفظ جزء عمّ في 30 يوم: ورد يومي من سورة الناس لحد النبأ، علّم على اللي حفظه طفلك، وتابع التقدم، وخد شهادة في آخر كل سورة.{% endblock %}
+{% block og_title %}تحدي حفظ جزء عمّ في 30 يوم{% endblock %}
+{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},{"@type":"ListItem","position":2,"name":"المصحف","item":"{{ SITE_URL }}{% url 'quran_index' %}"},{"@type":"ListItem","position":3,"name":"تحدي جزء عمّ في 30 يوم","item":"{{ canonical_url }}"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"حفظ جزء عمّ في 30 يوم","totalTime":"P30D","step":[{% for d in days %}{"@type":"HowToStep","position":{{ d.n }},"name":"اليوم {{ d.n }}","text":"{% if d.kind == 'review' %}{{ d.title|escapejs }}{% else %}{% for it in d.items %}{{ it.label|escapejs }}{% if not forloop.last %}، {% endif %}{% endfor %}{% endif %}"}{% if not forloop.last %},{% endif %}{% endfor %}]}</script>
+{% endblock %}
+{% block content %}
+<style>
+.ch-top{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-bottom:22px}
+.ch-bar{flex:1 1 280px;background:var(--green-tint);border-radius:999px;height:16px;overflow:hidden}
+.ch-bar span{display:block;height:100%;width:0;margin-inline-start:0;margin-inline-end:auto;background:linear-gradient(90deg,var(--gold),#ffd166);transition:width .4s}
+.ch-stat{font-weight:700;color:var(--ink)}
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.ch-day{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;position:relative;box-shadow:var(--shadow)}
+.ch-day.today{border:2px solid var(--green);}
+.ch-day.done{background:linear-gradient(180deg,#fffaf0,#fff);border-color:var(--gold)}
+.ch-day.review{background:var(--green-tint)}
+.ch-n{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-family:'Baloo Bhaijaan 2',var(--font-display)}
+.ch-day.done .ch-n{background:var(--gold)}
+.ch-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ch-head small{color:var(--muted)}
+.ch-items{list-style:none;margin:0 0 12px;padding:0;line-height:1.9}
+.ch-items a{font-weight:600}
+.ch-check{display:flex;align-items:center;gap:10px;font-weight:600;cursor:pointer;padding:8px 10px;border-radius:12px;background:var(--page)}
+.ch-check input{width:22px;height:22px;accent-color:var(--gold);margin:0}
+.ch-cert{display:inline-block;margin-top:10px;font-weight:700}.ch-cert[hidden]{display:none}
+.ch-badge{position:absolute;top:12px;left:12px;font-size:.8rem;font-weight:700;color:var(--green);background:var(--green-tint);padding:3px 10px;border-radius:999px}
+.ch-start{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ch-start input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:10px}
+</style>
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'quran_index' %}">المصحف</a></li><li aria-current="page">تحدي جزء عمّ</li></ol>
+    <h1>تحدي حفظ جزء عمّ في 30 يوم</h1>
+    <p>ورد صغير كل يوم ({{ total_ayat }} آية على 28 يوم، ويومين مراجعة)، بنبدأ من السور القصيرة اللي الطفل بيحبها: الناس والفلق والإخلاص، ونطلع واحدة واحدة لحد سورة النبأ. علّم على كل يوم يخلصه طفلك، وخد له شهادة في آخر كل سورة.</p>
+  </div>
+</header>
+<section class="section">
+  <div class="container">
+    <div class="ch-top">
+      <div class="ch-stat" id="ch-stat">ابدأ اليوم الأول 👇</div>
+      <div class="ch-bar" aria-hidden="true"><span id="ch-bar"></span></div>
+      <div class="ch-start">
+        <label for="ch-start">بدأنا يوم:</label><input type="date" id="ch-start">
+        <button type="button" class="btn btn-ghost" id="ch-reset">ابدأ من جديد</button>
+      </div>
+    </div>
+    <p style="color:var(--muted);margin:-8px 0 20px">التقدم بيتحفظ على الجهاز ده بس. اضغط على اسم السورة عشان تقرأها وتسمعها بصوت الشيخ.</p>
+
+    <div class="ch-grid" id="ch-grid">
+      {% for d in days %}
+      <article class="ch-day{% if d.kind == 'review' %} review{% endif %}" data-n="{{ d.n }}" data-completes="{{ d.completes|join:',' }}">
+        <div class="ch-head"><span class="ch-n">{{ d.n }}</span><div><strong>اليوم {{ d.n }}</strong><br><small>{% if d.kind == 'review' %}مراجعة{% else %}{{ d.ayat }} آية{% endif %}</small></div></div>
+        {% if d.kind == 'review' %}<p style="margin:0 0 12px;font-weight:600">{{ d.title }}</p>
+        {% else %}<ul class="ch-items">{% for it in d.items %}<li><a href="{{ it.url }}">{{ it.label }}</a></li>{% endfor %}</ul>{% endif %}
+        <label class="ch-check"><input type="checkbox" data-day="{{ d.n }}"> {% if d.kind == 'review' %}راجعناه{% else %}حفظنا ورد اليوم{% endif %}</label>
+        <a class="ch-cert" hidden href="{% url 'quran_certificate' %}">🏅 شهادة</a>
+      </article>
+      {% endfor %}
+    </div>
+
+    <div class="prose" style="max-width:820px;margin-top:44px">
+      <h2>إزاي تمشي في التحدي مع طفلك؟</h2>
+      <ol>
+        <li><strong>اسمع الأول:</strong> شغّل الورد بصوت القارئ 3 مرات والطفل بيبص في المصحف.</li>
+        <li><strong>كرّر آية آية:</strong> الطفل يكرر كل آية لحد ما يقولها من غير ما يبص، وبعدين يربطها باللي قبلها.</li>
+        <li><strong>سمّع في الصلاة:</strong> خليه يقرأ ورد امبارح في صلاة النهارده، ده أقوى تثبيت.</li>
+        <li><strong>علّم على اليوم:</strong> لما يخلص، علّم عليه هنا وخليه يشوف الشريط وهو بيتملا.</li>
+        <li><strong>احتفل في آخر السورة:</strong> اعمله <a href="{% url 'quran_certificate' %}">شهادة باسمه</a>، وعلّقها في أوضته.</li>
+      </ol>
+      <h2>لو اليوم تقيل على طفلك؟</h2>
+      <p>عادي جدًا. الأطفال الصغيرين (5–7 سنين) ممكن ياخدوا ورد اليوم على يومين، والمهم الاستمرار مش السرعة. والأيام الأولى فيها سور كتير لكنها قصيرة جدًا، فلو طفلك حافظ بعضها هيخلص أسرع.</p>
+      <h2>بعد ما يخلص جزء عمّ</h2>
+      <p>سجّل السور اللي حفظها في <a href="{% url 'quran_tracker' %}">متابعة الحفظ</a> عشان مواعيد المراجعة، واستعمل <a href="{% url 'hifz_planner' %}">خطة الحفظ</a> لجزء تبارك.</p>
+      <div class="inline-cta" style="margin-top:24px">
+        <p>عايز طفلك يحفظ بالتجويد مع معلمة بتصحح له كل حرف وتشجعه؟ أول حلقة مجانية، والمعلمة بتكمل معاه التحدي.</p>
+        <a class="btn btn-primary" href="{% url 'contact' %}?program=nourania&amp;ref=challenge">احجز حلقة تجريبية مجانية</a>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var KEY='al_juz_amma_challenge', st={};
+  try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){st={}}
+  st.done=st.done||[];
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  var startI=document.getElementById('ch-start');
+  if(st.start)startI.value=st.start;
+  var boxes=document.querySelectorAll('[data-day]'), cards=document.querySelectorAll('.ch-day'), total=cards.length;
+  var cert="{% url 'quran_certificate' %}";
+  function today(){for(var i=1;i<=total;i++){if(st.done.indexOf(i)<0)return i}return 0}
+  function render(){
+    var t=today();
+    cards.forEach(function(c){var n=+c.dataset.n,done=st.done.indexOf(n)>=0;c.classList.toggle('done',done);c.classList.toggle('today',n===t&&!done);
+      var b=c.querySelector('.ch-badge');if(n===t&&!done){if(!b){b=document.createElement('span');b.className='ch-badge';b.textContent='الورد الجاي';c.appendChild(b)}}else if(b)b.remove();
+      var a=c.querySelector('.ch-cert'),comp=(c.dataset.completes||'').split(',').filter(Boolean);
+      if(done&&(comp.length||n===total)){a.hidden=false;a.href=cert+(n===total?'?surah=juz30':'?surah='+comp[comp.length-1]);a.textContent=n===total?'🏅 شهادة ختم جزء عمّ':'🏅 شهادة سورة '+c.querySelector('.ch-items li:last-child a').textContent.replace(/^سورة /,'').replace(/ \(.*\)$/,'')}else a.hidden=true});
+    boxes.forEach(function(x){x.checked=st.done.indexOf(+x.dataset.day)>=0});
+    var p=Math.round(100*st.done.length/total);document.getElementById('ch-bar').style.width=p+'%';
+    document.getElementById('ch-stat').textContent=st.done.length?('خلصتوا '+st.done.length+' من '+total+' يوم ('+p+'%)'+(st.done.length===total?' 🎉 مبروك!':' · كمّلوا 💪')):'ابدأ اليوم الأول 👇';
+  }
+  boxes.forEach(function(x){x.addEventListener('change',function(){var n=+x.dataset.day,i=st.done.indexOf(n);if(x.checked&&i<0)st.done.push(n);if(!x.checked&&i>=0)st.done.splice(i,1);if(!st.start){var d=new Date();st.start=d.toISOString().slice(0,10);startI.value=st.start}save();render();if(x.checked&&window.gtag)gtag('event','challenge_day_done',{day:n})})});
+  startI.addEventListener('change',function(){st.start=startI.value||null;save();render()});
+  document.getElementById('ch-reset').addEventListener('click',function(){st={done:[]};startI.value='';save();render()});
+  render();
+})();
+</script>
+{% endblock %}

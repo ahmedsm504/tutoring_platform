@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}رمضان 2027 مع القرآن: خطة ختمة يومية وجدول حفظ للأطفال وأنشطة | مؤسسة العجمي{% endblock %}
+{% block meta_description %}استعد لرمضان 2027: كم صفحة تقرأ يوميًا عشان تختم مرة أو مرتين أو 3، وخطة حفظ آخر 10 سور للأطفال، و30 نشاط رمضاني للطفل، وأدعية العشر الأواخر.{% endblock %}
+{% block og_title %}رمضان 2027 مع القرآن: ختمة وحفظ وأنشطة للأطفال{% endblock %}
+{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},{"@type":"ListItem","position":2,"name":"رمضان مع القرآن","item":"{{ canonical_url }}"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"كم صفحة أقرأ يوميًا عشان أختم القرآن في رمضان؟","acceptedAnswer":{"@type":"Answer","text":"المصحف 604 صفحة، يعني حوالي 20 صفحة في اليوم لختمة واحدة في 30 يوم، أو 4 صفحات بعد كل صلاة من الصلوات الخمس."}},
+{"@type":"Question","name":"إمتى يبدأ رمضان 2027؟","acceptedAnswer":{"@type":"Answer","text":"حسب الحسابات الفلكية المتوقع أن يبدأ رمضان 1448 هـ يوم الاثنين 8 فبراير 2027 تقريبًا، والإعلان الرسمي بيكون برؤية الهلال في كل دولة."}},
+{"@type":"Question","name":"الطفل يحفظ إيه في رمضان؟","acceptedAnswer":{"@type":"Answer","text":"هدف مناسب لأغلب الأطفال: آخر 10 سور من جزء عمّ (من الفيل للناس)، سورة كل 3 أيام مع مراجعة اللي قبلها، ولو الطفل حافظها يكمّل بباقي جزء عمّ."}},
+{"@type":"Question","name":"أبدأ الاستعداد لرمضان إمتى؟","acceptedAnswer":{"@type":"Answer","text":"من شهر شعبان أو قبله: عوّد نفسك على ورد يومي ولو صغير، وصحح قراءتك مع معلم، عشان تدخل رمضان والقراءة سهلة عليك."}}
+]}</script>
+{% endblock %}
+{% block content %}
+<style>
+.rm-count{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+.rm-count div{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:10px 16px;min-width:78px;text-align:center}
+.rm-count strong{display:block;font-size:1.8rem;font-family:'Baloo Bhaijaan 2',var(--font-display);line-height:1.1}
+.rm-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.rm-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.rm-card h3{margin:0 0 6px;font-size:1.15rem}
+.rm-card .big{font-size:2rem;font-weight:800;color:var(--green-deep);font-family:'Baloo Bhaijaan 2',var(--font-display)}
+.rm-acts{columns:2 260px;column-gap:28px}
+.rm-acts li{break-inside:avoid;margin-bottom:6px}
+</style>
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li aria-current="page">رمضان مع القرآن</li></ol>
+    <h1>رمضان 2027 مع القرآن 🌙</h1>
+    <p>رمضان شهر القرآن، وأحسن رمضان هو اللي بنستعد له من بدري. هنا هتلاقي خطة ختمة يومية على قد وقتك، وخطة حفظ للأطفال، وأنشطة رمضانية للبيت، وأدعية العشر الأواخر.</p>
+    <div class="rm-count" id="rm-count" aria-live="polite"><div><strong id="rm-d">--</strong>يوم</div><div><strong id="rm-h">--</strong>ساعة</div></div>
+    <p style="font-size:.92rem;opacity:.9;margin:0">باقي على رمضان 1448 هـ (متوقع يبدأ يوم الاثنين 8 فبراير 2027 حسب الحسابات الفلكية، والإعلان الرسمي بيكون برؤية الهلال).</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container prose" style="max-width:900px">
+    <h2 id="khatma">كم صفحة أقرأ يوميًا عشان أختم في رمضان؟</h2>
+    <p>المصحف 604 صفحة. قسّمها على أيام الشهر، ووزّعها على الصلوات الخمس عشان الورد يبقى خفيف:</p>
+    <div class="rm-cards">
+      <div class="rm-card"><h3>ختمة واحدة</h3><div class="big">20 صفحة</div><p style="margin:4px 0 10px">في اليوم = 4 صفحات بعد كل صلاة (جزء كل يوم تقريبًا)</p><a href="{% url 'khatma_preset' 'ramadan' %}">جدولها يوم بيوم ←</a></div>
+      <div class="rm-card"><h3>ختمتين</h3><div class="big">40 صفحة</div><p style="margin:4px 0 10px">في اليوم = 8 صفحات بعد كل صلاة</p><a href="{% url 'khatma_preset' 'ramadan-2-khatmas' %}">جدولها يوم بيوم ←</a></div>
+      <div class="rm-card"><h3>3 ختمات</h3><div class="big">60 صفحة</div><p style="margin:4px 0 10px">في اليوم = 12 صفحة بعد كل صلاة</p><a href="{% url 'khatma_preset' 'ramadan-3-khatmas' %}">جدولها يوم بيوم ←</a></div>
+    </div>
+    <p>لو وقتك ضيق، ابدأ بختمة واحدة بهدوء وتدبر، أحسن من ختمات سريعة من غير فهم. وجرّب <a href="{% url 'khatma_planner' %}">حاسبة الختمة</a> لو عايز عدد أيام مختلف (مثلًا لو بدأت متأخر).</p>
+    <p>وكان النبي ﷺ أجود ما يكون في رمضان، وكان جبريل يلقاه في كل ليلة من رمضان فيدارسه القرآن (رواه البخاري ومسلم). فرمضان مش بس قراءة، كمان مدارسة وفهم.</p>
+
+    <h2 id="kids">خطة حفظ للأطفال في رمضان</h2>
+    <p>هدف مناسب لأغلب الأطفال من 5 لـ 10 سنين: <strong>آخر 10 سور من جزء عمّ</strong>، سورة كل 3 أيام تقريبًا، ومراجعة اللي قبلها في صلاة التراويح أو قبل النوم:</p>
+    <table>
+      <thead><tr><th scope="col">الأيام</th><th scope="col">السورة</th><th scope="col">ملاحظة</th></tr></thead>
+      <tbody>
+        <tr><td>1–3</td><td><a href="/quran/114/">الناس</a></td><td>نبدأ بالأسهل</td></tr>
+        <tr><td>4–6</td><td><a href="/quran/113/">الفلق</a></td><td>يقرأها مع الناس قبل النوم</td></tr>
+        <tr><td>7–9</td><td><a href="/quran/112/">الإخلاص</a></td><td>نحكي له إنها تعدل ثلث القرآن</td></tr>
+        <tr><td>10–12</td><td><a href="/quran/111/">المسد</a></td><td>قصة أبي لهب ببساطة</td></tr>
+        <tr><td>13–15</td><td><a href="/quran/110/">النصر</a></td><td>نربطها بفتح مكة</td></tr>
+        <tr><td>16–18</td><td><a href="/quran/109/">الكافرون</a></td><td>مراجعة الأسبوعين اللي فاتوا</td></tr>
+        <tr><td>19–21</td><td><a href="/quran/108/">الكوثر</a></td><td>أقصر سورة، فرحة سريعة</td></tr>
+        <tr><td>22–24</td><td><a href="/quran/107/">الماعون</a></td><td>نربطها بإطعام المسكين في رمضان</td></tr>
+        <tr><td>25–27</td><td><a href="/quran/106/">قريش</a></td><td>العشر الأواخر: تسميع في البيت</td></tr>
+        <tr><td>28–30</td><td><a href="/quran/105/">الفيل</a></td><td>تسميع العشر سور كلها و<a href="{% url 'quran_certificate' %}">شهادة</a> 🎉</td></tr>
+      </tbody>
+    </table>
+    <p>طفلك حافظهم؟ خليه يدخل <a href="{% url 'juz_amma_challenge' %}">تحدي جزء عمّ في 30 يوم</a>، ورمضان أحسن وقت له.</p>
+
+    <h2 id="activities">30 نشاط رمضاني للطفل</h2>
+    <ol class="rm-acts">
+      <li>يعلّق فانوس ورقي عمله بإيده</li><li>يعمل «حصالة الصدقة» ويحط فيها كل يوم</li><li>يساعد في تحضير الفطار (التمر والعصير)</li>
+      <li>يقرأ آية ويشرح معناها للعيلة</li><li>يكتب دعاء ويعلقه على الثلاجة</li><li>يسقي الناس مية وتمر قبل المغرب (مع الكبار)</li>
+      <li>يصلي التراويح ولو ركعتين</li><li>يحفظ دعاء الإفطار: «ذهب الظمأ وابتلت العروق…» (رواه أبو داود، وحسّنه الألباني)</li><li>يرسم «تقويم رمضان» ويلوّن كل يوم</li>
+      <li>يتصل بجده وجدته يسأل عليهم</li><li>يجهز كيس هدايا لطفل محتاج</li><li>يتعلم حكم تجويد واحد بسيط</li>
+      <li>يسمع قصة نبي ويحكيها تاني</li><li>يرتب سجادة الصلاة لكل العيلة</li><li>يصوم لحد الضهر (حسب سنه وقدرته)</li>
+      <li>يقرأ سورة الملك قبل النوم</li><li>يعمل بطاقة تهنئة لجيرانه</li><li>يعد التسبيحات بعد الصلاة على أصابعه</li>
+      <li>يشارك في تزيين البيت</li><li>يتعلم «اللهم إنك عفو تحب العفو فاعف عني»</li><li>يختار كتاب قصص ويقرأ منه كل يوم</li>
+      <li>يطفي التلفزيون ساعة كاملة للقرآن</li><li>يكتب 3 نعم يحمد ربنا عليها</li><li>يعتذر لحد زعله</li>
+      <li>يوزع تمر على الجيران قبل المغرب</li><li>يسمّع سورة قدام العيلة</li><li>يحضر درس في المسجد مع أبوه</li>
+      <li>يجهز «صندوق العيد» للأطفال الأقل حظًا</li><li>يتعلم زكاة الفطر وليه بنطلعها</li><li>يكتب رسالة لنفسه لرمضان الجاي</li>
+    </ol>
+
+    <h2 id="last-ten">العشر الأواخر وليلة القدر</h2>
+    <p>قال النبي ﷺ: «من قام رمضان إيمانًا واحتسابًا غُفر له ما تقدم من ذنبه» (رواه البخاري ومسلم). وسألت السيدة عائشة رضي الله عنها النبي ﷺ: إن علمتُ أي ليلة ليلة القدر ما أقول فيها؟ قال: «قولي: اللهم إنك عفو تحب العفو فاعفُ عني» (رواه الترمذي وقال: حسن صحيح).</p>
+    <ul class="checklist">
+      <li>خصص للعشر الأواخر وقت قراءة أطول، حتى لو قللت في حاجات تانية.</li>
+      <li>علّم أولادك الدعاء ده، وخليهم يقولوه معاك في الليالي الوترية.</li>
+      <li>الصدقة في العشر الأواخر، ولو صغيرة، ويشارك فيها الأطفال بإيدهم.</li>
+    </ul>
+
+    <h2 id="prepare">استعد من دلوقتي</h2>
+    <p>أكتر حاجة بتضيّع رمضان على الناس إن القراءة تبقى تقيلة عليهم في أول أسبوع. عشان كده:</p>
+    <ul class="checklist">
+      <li>ابدأ ورد يومي صغير من دلوقتي، صفحتين في اليوم، وزوده تدريجيًا.</li>
+      <li>صحح قراءتك وأحكام التجويد قبل رمضان، عشان تقرأ صح وبسهولة.</li>
+      <li>سجّل السور اللي حافظها في <a href="{% url 'quran_tracker' %}">متابعة الحفظ</a> وراجعها قبل رمضان.</li>
+    </ul>
+    <div class="inline-cta" style="margin-top:24px">
+      <p>ابدأ مع معلمة قبل رمضان: تصحح قراءتك أو تحفّظ طفلك، وتدخلوا رمضان جاهزين. أول حلقة مجانية، والمواعيد على توقيت بلدك.</p>
+      <a class="btn btn-primary" href="{% url 'contact' %}?ref=ramadan">احجز حلقة تجريبية مجانية</a>
+      <a class="btn" href="{% url 'level_test' %}">اختبار تحديد المستوى</a>
+    </div>
+
+    <h2 id="faq">أسئلة بتتكرر عن رمضان والقرآن</h2>
+    <h3>كم صفحة أقرأ يوميًا عشان أختم القرآن في رمضان؟</h3>
+    <p>حوالي 20 صفحة في اليوم لختمة واحدة في 30 يوم، يعني 4 صفحات بعد كل صلاة. ولو الشهر طلع 29 يوم، زوّد صفحة في كام يوم.</p>
+    <h3>إمتى يبدأ رمضان 2027؟</h3>
+    <p>المتوقع حسب الحسابات الفلكية يوم الاثنين 8 فبراير 2027 تقريبًا، والإعلان الرسمي بيكون برؤية الهلال في كل دولة، فممكن يفرق يوم.</p>
+    <h3>الطفل يحفظ إيه في رمضان؟</h3>
+    <p>آخر 10 سور من جزء عمّ هدف مناسب لأغلب الأطفال. ولو حافظهم، يكمّل بباقي جزء عمّ في التحدي.</p>
+    <h3>أبدأ الاستعداد لرمضان إمتى؟</h3>
+    <p>من دلوقتي أو من شهر شعبان: ورد يومي صغير، وتصحيح القراءة، ومراجعة المحفوظ.</p>
+  </div>
+</section>
+<script>
+(function(){
+  var target=new Date('2027-02-08T00:00:00+02:00').getTime();
+  function tick(){var ms=target-Date.now();var box=document.getElementById('rm-count');if(ms<=0){box.innerHTML='<div><strong>🌙</strong>رمضان كريم</div>';return}
+    document.getElementById('rm-d').textContent=Math.floor(ms/864e5);document.getElementById('rm-h').textContent=Math.floor(ms%864e5/36e5)}
+  tick();setInterval(tick,60000);
+})();
+</script>
+{% endblock %}

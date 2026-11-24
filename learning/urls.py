@@ -24,6 +24,9 @@ urlpatterns = [
     # عام (سيو)
     path('quran/', views.quran_index, name='quran_index'),
     path('quran/hifz-tracker/', views.quran_tracker, name='quran_tracker'),
+    path('quran/juz-amma-challenge/', views.juz_amma_challenge, name='juz_amma_challenge'),
+    path('quran/certificate/', views.certificate, name='quran_certificate'),
+    path('ramadan/', views.ramadan, name='ramadan'),
     path('quran/khatma/', vp.khatma, name='khatma_planner'),
     path('quran/khatma/<slug:slug>/', vp.khatma, name='khatma_preset'),
     path('quran/hifz-plan/', vp.hifz, name='hifz_planner'),

@@ -1794,3 +1794,27 @@ class LevelTestAndAlertsTests(TestCase):
             self.assertEqual(notify_abandoned(), 1)
             self.assertEqual(notify_abandoned(), 0)
             self.assertEqual(send.call_count, 1)
+
+
+class RamadanChallengeCertificateTests(TestCase):
+    def test_pages_render_and_indexed(self):
+        for name in ('ramadan', 'juz_amma_challenge', 'quran_certificate'):
+            r = self.client.get(reverse(name))
+            self.assertEqual(r.status_code, 200, name)
+            self.assertNotContains(r, 'noindex')
+        sm = self.client.get('/sitemap.xml').content.decode()
+        for path in ('/ramadan/', '/quran/juz-amma-challenge/', '/quran/certificate/'):
+            self.assertIn(path, sm)
+
+    def test_challenge_plan_covers_juz_amma(self):
+        from learning.challenge import plan
+        from learning.quran import ayah_count
+        days = plan()
+        self.assertEqual(len(days), 30)
+        covered = {}
+        for d in days:
+            for it in d['items']:
+                covered.setdefault(it['surah'], set()).update(range(it['from'], it['to'] + 1))
+        for s in range(78, 115):
+            self.assertEqual(covered[s], set(range(1, ayah_count(s) + 1)), s)
+        self.assertEqual(days[0]['items'][0]['surah'], 114)
