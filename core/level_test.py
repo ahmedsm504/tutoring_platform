@@ -47,7 +47,7 @@ def recommend(a):
     if a['memorized'] == 'more' and slug in ('himma', 'sufaraa', 'nourania'):
         reasons.append('حافظ أكتر من جزء، فالخطة هتهتم بالمراجعة والتثبيت مع الجديد.')
     count = {'1': 4, '2': 8, '3': 12}[a['times']]
-    minutes = 30 if a['who'] == 'kid' else (60 if a['times'] == '1' and a['who'] == 'adult' else 30)
+    minutes = 60 if a['times'] == '1' and a['who'] == 'adult' else 40
     if minutes == 60:
         reasons.append('حصة واحدة في الأسبوع للكبار الأحسن تبقى ساعة، عشان يبقى فيه وقت للتسميع والجديد.')
     return slug, count, minutes, reasons

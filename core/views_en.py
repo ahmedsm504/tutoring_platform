@@ -102,7 +102,7 @@ def blog_list(request):
 def countries(request):
     from core.countries import EN, BY_SLUG
     from core.pricing import CURRENCIES, package_price
-    rows = [(slug, e, CURRENCIES[BY_SLUG[slug]['currency']]['en'], package_price(BY_SLUG[slug]['currency'], 4).normalize())
+    rows = [(slug, e, CURRENCIES[BY_SLUG[slug]['currency']]['en'], package_price(BY_SLUG[slug]['currency'], 4))
             for slug, e in EN.items()]
     return render(request, 'en/countries.html', {'rows': rows, 'ALT_URL': '/online-quran/'})
 

@@ -2,7 +2,7 @@
 بيقروا من هنا، فلو عدّلتي باقة أو سؤال بيتغير في كل مكان مرة واحدة."""
 
 # الأسعار نفسها في core/pricing.py
-STANDARD_SCHEDULE = [('4 حصص', '30 أو 60 دقيقة'), ('8 حصص', '30 أو 60 دقيقة'), ('12 حصة', '30 أو 60 دقيقة')]
+STANDARD_SCHEDULE = [('4 حصص', '40 أو 60 دقيقة'), ('8 حصص', '40 أو 60 دقيقة'), ('12 حصة', '40 أو 60 دقيقة')]
 
 PROGRAMS = [
     {
@@ -175,11 +175,11 @@ def faq_schema():
 
 
 def _offer(p, currency):
-    """سعر أرخص باقة (4 حصص × 30 دقيقة) من core/pricing.py؛ الدورات من غير سعر"""
+    """سعر أرخص باقة (4 حصص، أقصر حصة) من core/pricing.py؛ الدورات من غير سعر"""
     o = {'@type': 'Offer', 'category': 'Paid', 'availability': 'https://schema.org/InStock'}
     if p.get('schedule') is STANDARD_SCHEDULE:
         from core.pricing import package_price
-        o.update({'price': str(package_price(currency, 4).normalize()), 'priceCurrency': currency})
+        o.update({'price': str(package_price(currency, 4)), 'priceCurrency': currency})
     return o
 
 

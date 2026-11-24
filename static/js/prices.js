@@ -11,7 +11,11 @@
     document.querySelectorAll('[data-price-table]').forEach(function (tb) {
       tb.querySelectorAll('[data-p]').forEach(function (td) {
         var k = td.getAttribute('data-p').split('-'), row = t.rows[+k[0]];
-        if (row) td.textContent = k[1] === '60' ? row[2] : row[1];
+        if (row) td.textContent = k[1] === '1' ? row[2] : row[1];
+      });
+      tb.querySelectorAll('[data-dur]').forEach(function (th) {
+        var d = t.dur && t.dur[+th.getAttribute('data-dur')];
+        if (d) th.textContent = d + (lang === 'en' ? ' min' : ' دقيقة');
       });
       tb.querySelectorAll('[data-price-name]').forEach(function (s) { s.textContent = lang === 'en' ? t.en : t.ar; });
     });
