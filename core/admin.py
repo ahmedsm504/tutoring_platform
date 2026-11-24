@@ -145,3 +145,21 @@ class GscUrlStatusAdmin(admin.ModelAdmin):
     search_fields = ('url', 'coverage_state', 'problem')
     readonly_fields = [f.name for f in GscUrlStatus._meta.fields]
     date_hierarchy = 'checked_at'
+
+
+from .models import GscPagePerformance  # noqa: E402
+
+
+@admin.register(GscPagePerformance)
+class GscPagePerformanceAdmin(admin.ModelAdmin):
+    """الصفحات اللي بتظهر في جوجل ومحدش بيدوس عليها: أول الجدول = أكبر فرصة لتحسين العنوان والوصف"""
+    list_display = ('url', 'impressions', 'clicks', 'ctr', 'position', 'opportunity', 'short_queries')
+    search_fields = ('url', 'top_queries')
+    readonly_fields = [f.name for f in GscPagePerformance._meta.fields]
+
+    @admin.display(description='أهم كلمات البحث')
+    def short_queries(self, obj):
+        return obj.top_queries[:120]
+
+    def has_add_permission(self, request):
+        return False

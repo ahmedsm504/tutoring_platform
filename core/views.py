@@ -152,10 +152,30 @@ def contact(request):
 
 def pricing(request):
     from . import site_content as sc
+    from .pricing import context as pricing_context
     site = settings.CANONICAL_URL.rstrip('/')
     return render(request, 'core/pricing.html', _public_ctx(
         courses_ldjson=json.dumps(sc.courses_schema(site), ensure_ascii=False).replace('<', '\\u003c'),
+        **pricing_context(),
     ))
+
+
+def countries_index(request):
+    from .countries import COUNTRIES
+    from .pricing import CURRENCIES, package_price
+    rows = [(c, CURRENCIES[c['currency']]['ar'], package_price(c['currency'], 4).normalize()) for c in COUNTRIES]
+    return render(request, 'core/countries.html', {'rows': rows})
+
+
+def country_page(request, slug):
+    from django.http import Http404
+    from .countries import BY_SLUG, COUNTRIES, context
+    c = BY_SLUG.get(slug)
+    if not c:
+        raise Http404
+    ctx = context(c)
+    ctx['others'] = [x for x in COUNTRIES if x['slug'] != slug]
+    return render(request, 'core/country.html', _public_ctx(**ctx))
 
 
 def quality_standards(request):

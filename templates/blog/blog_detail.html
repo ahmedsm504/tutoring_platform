@@ -250,8 +250,9 @@
       {% if quran_surah %}{% include 'includes/hifz_quiz.html' with n=quran_surah.0 name=quran_surah.1 %}{% endif %}
 
       <div class="inline-cta">
-        <p>{% if en %}Want to learn Quran with a qualified tutor, for yourself or your child? The first class is free.{% else %}عايز طفلك يحفظ القرآن مع معلمة متقنة؟ أول حلقة مجانية.{% endif %}</p>
-        <a class="btn btn-primary" data-cta="end" href="{% if en %}{% url 'en_contact' %}{% else %}{% url 'contact' %}{% endif %}">{% if en %}Book a free trial class{% else %}احجز حلقة تجريبية مجانية{% endif %}</a>
+        <p>{{ cta.text }}</p>
+        <a class="btn btn-primary" data-cta="end" href="{% if en %}{% url 'en_contact' %}{% else %}{% url 'contact' %}{% endif %}?{% if cta.program %}program={{ cta.program }}&amp;{% endif %}ref=article-end">{{ cta.button }}</a>
+        <a class="btn" data-cta="pricing" href="{% if en %}{% url 'en_pricing' %}{% else %}{% url 'pricing' %}{% endif %}{% if cta.program %}#{{ cta.program }}{% endif %}">{{ cta.program_label }}</a>
         {% if WHATSAPP_LINK %}<a class="btn" data-cta="whatsapp" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">{% if en %}Chat on WhatsApp{% else %}كلمنا واتساب{% endif %}</a>{% endif %}
       </div>
 

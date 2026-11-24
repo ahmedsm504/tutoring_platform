@@ -212,6 +212,7 @@
             <li><a href="{% url 'pricing' %}#himma">الهمة العالية (10–15 سنة)</a></li>
             <li><a href="{% url 'pricing' %}#sufaraa">سفراء القرآن (الكبار)</a></li>
             <li><a href="{% url 'pricing' %}#ghiras">تصحيح التلاوة</a></li>
+            <li><a href="{% url 'countries' %}">الأسعار والمواعيد حسب الدولة</a></li>
             <li><a href="{% url 'pricing' %}#nour-albayan">دورة نور البيان</a></li>
           </ul>
         </div>
@@ -351,5 +352,6 @@
       }
     </script>
     {% block extra_js %}{% endblock %}
+    <script src="{% static 'js/track.js' %}" defer></script>
 </body>
 </html>

@@ -1,7 +1,8 @@
 """محتوى الصفحات العامة في مكان واحد: الرئيسية والباقات والـ structured data
 بيقروا من هنا، فلو عدّلتي باقة أو سؤال بيتغير في كل مكان مرة واحدة."""
 
-STANDARD_SCHEDULE = [('8 حصص', '30 دقيقة'), ('12 حصة', '30 دقيقة'), ('8 حصص', '60 دقيقة')]
+# الأسعار نفسها في core/pricing.py
+STANDARD_SCHEDULE = [('4 حصص', '30 أو 60 دقيقة'), ('8 حصص', '30 أو 60 دقيقة'), ('12 حصة', '30 أو 60 دقيقة')]
 
 PROGRAMS = [
     {
@@ -173,6 +174,15 @@ def faq_schema():
     }
 
 
+def _offer(p, currency):
+    """سعر أرخص باقة (4 حصص × 30 دقيقة) من core/pricing.py؛ الدورات من غير سعر"""
+    o = {'@type': 'Offer', 'category': 'Paid', 'availability': 'https://schema.org/InStock'}
+    if p.get('schedule') is STANDARD_SCHEDULE:
+        from core.pricing import package_price
+        o.update({'price': str(package_price(currency, 4).normalize()), 'priceCurrency': currency})
+    return o
+
+
 def courses_schema(site_url):
     items = []
     for i, p in enumerate(PROGRAMS, start=1):
@@ -187,7 +197,7 @@ def courses_schema(site_url):
                 'provider': {'@type': 'EducationalOrganization', 'name': 'مؤسسة العجمي', 'sameAs': site_url + '/'},
                 'hasCourseInstance': {'@type': 'CourseInstance', 'courseMode': 'online',
                                       'courseWorkload': 'PT' + ('40M' if p['kind'] == 'دورة' else '30M')},
-                'offers': {'@type': 'Offer', 'category': 'Paid', 'availability': 'https://schema.org/InStock'},
+                'offers': _offer(p, 'SAR'),
             },
         })
     return {'@context': 'https://schema.org', '@type': 'ItemList', 'name': 'باقات ودورات تحفيظ القرآن الكريم', 'itemListElement': items}

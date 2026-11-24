@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from .models import StudentProfile, Message, Session, TrialBooking
 from .forms import TrialBookingForm
 
@@ -138,11 +139,49 @@ def thank_you(request):
 # ==========================================
 # صفحة التواصل وحجز التجربة
 # ==========================================
+def _partial_booking(token):
+    """الحجز اللي اتسجل من الخطوة الأولى (لو التوكن سليم ولسه مش مكتمل)"""
+    from django.core import signing
+    if not token:
+        return None
+    try:
+        pk = signing.loads(token, salt='trial-booking', max_age=2 * 86400)
+    except signing.BadSignature:
+        return None
+    return TrialBooking.objects.filter(pk=pk, is_complete=False).first()
+
+
+def _recent_partial(phone):
+    """حجز خطوة أولى بنفس الرقم في آخر يومين (لو التوكن ملحقش يوصل)"""
+    from datetime import timedelta
+    from django.utils import timezone
+    if not phone:
+        return None
+    return (TrialBooking.objects.filter(phone=phone.strip(), is_complete=False,
+                                        created_at__gte=timezone.now() - timedelta(days=2))
+            .order_by('-created_at').first())
+
+
+def save_booking(request, form, en=False):
+    """يحفظ الحجز الكامل: يكمّل حجز الخطوة الأولى لو موجود، ويسجل المصدر"""
+    from . import tracking
+    partial = _partial_booking(request.POST.get('booking_token')) or _recent_partial(form.cleaned_data.get('phone'))
+    booking = form.save(commit=False)
+    if partial:
+        booking.pk, booking.created_at = partial.pk, partial.created_at
+    booking.is_complete = True
+    if en:
+        booking.notes = ('[EN site] ' + (booking.notes or '').strip()).strip()
+    tracking.apply(booking, request.POST, request.GET)
+    booking.save()
+    return booking
+
+
 def contact_view(request):
     if request.method == "POST":
         form = TrialBookingForm(request.POST)
         if form.is_valid():
-            form.save()
+            save_booking(request, form)
             return redirect('thank_you')
         else:
             messages.error(request, "حدث خطأ في الحجز. الرجاء المحاولة مرة أخرى.")
@@ -156,6 +195,28 @@ def contact_view(request):
         form = TrialBookingForm(initial=initial)
 
     return render(request, 'accounts/contact.html', {'form': form})
+
+
+@require_POST
+def booking_start(request):
+    """الخطوة الأولى من فورم الحجز (الاسم + رقم الواتساب): بتتسجل فورًا كحجز «مش مكتمل»
+    عشان لو الزائر مكملش، الإدارة تقدر تكلمه برضه."""
+    import re
+    from django.core import signing
+    from django.http import JsonResponse
+    from . import tracking
+    name = (request.POST.get('name') or '').strip()[:100]
+    phone = (request.POST.get('phone') or '').strip()[:20]
+    if not name or len(re.sub(r'\D', '', phone)) < 7 or request.POST.get('website'):
+        return JsonResponse({'ok': False}, status=400)
+    partial = _partial_booking(request.POST.get('booking_token')) or _recent_partial(phone)
+    booking = partial or TrialBooking(is_complete=False)
+    booking.name, booking.phone = name, phone
+    if request.POST.get('lang') == 'en' and not booking.notes:
+        booking.notes = '[EN site]'
+    tracking.apply(booking, request.POST)
+    booking.save()
+    return JsonResponse({'ok': True, 'token': signing.dumps(booking.pk, salt='trial-booking')})
 
 
 # ==========================================

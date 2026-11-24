@@ -225,7 +225,9 @@ def blog_detail(request, slug):
     
     from django.template.loader import render_to_string
     from core.templatetags.content_tags import is_latin
-    context['mid_cta_html'] = render_to_string('blog/_mid_cta.html', {'en': is_latin(post.title)}, request=request)
+    from .cta import for_post as cta_for_post
+    context['cta'] = cta_for_post(post, en=is_latin(post.title))
+    context['mid_cta_html'] = render_to_string('blog/_mid_cta.html', {'en': is_latin(post.title), 'cta': context['cta']}, request=request)
     # المقال الإنجليزي بيتعرض بهيدر وفوتر إنجليزي (LTR)، وزرار اللغة بيودّي لترجمته لو موجودة
     from core.templatetags.content_tags import translation_of
     _alt = translation_of(post.slug)

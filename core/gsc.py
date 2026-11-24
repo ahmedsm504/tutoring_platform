@@ -150,6 +150,56 @@ def pick_urls(found, limit):
     return out
 
 
+# نسبة النقر المتوقعة تقريبًا حسب الترتيب في جوجل (متوسطات عامة منشورة، للمقارنة بس)
+EXPECTED_CTR = {1: 28.0, 2: 15.0, 3: 11.0, 4: 8.0, 5: 6.0, 6: 4.5, 7: 3.5, 8: 3.0, 9: 2.5, 10: 2.0}
+
+
+def expected_ctr(position):
+    p = max(1, int(round(position or 99)))
+    return EXPECTED_CTR.get(p, 1.0 if p <= 20 else 0.3)
+
+
+def sync_performance(s, days=28, write=None):
+    """يسحب أداء الصفحات والكلمات من Search Analytics ويحسب «النقرات الضايعة» لكل صفحة"""
+    from collections import defaultdict
+    from datetime import date
+    from core.models import GscPagePerformance
+    end = date.today() - timedelta(days=2)
+    start = end - timedelta(days=days)
+    url = f'https://www.googleapis.com/webmasters/v3/sites/{quote(SITE, safe="")}/searchAnalytics/query'
+    rows, start_row = [], 0
+    while True:
+        r = s.post(url, json={'startDate': str(start), 'endDate': str(end), 'dimensions': ['page', 'query'],
+                              'rowLimit': 25000, 'startRow': start_row}, timeout=60)
+        r.raise_for_status()
+        batch = r.json().get('rows', [])
+        rows += batch
+        if len(batch) < 25000 or start_row > 100000:
+            break
+        start_row += 25000
+    pages = defaultdict(lambda: {'clicks': 0, 'impr': 0, 'pos_w': 0.0, 'queries': []})
+    for row in rows:
+        page, query = row['keys']
+        d = pages[page]
+        d['clicks'] += row.get('clicks', 0)
+        d['impr'] += row.get('impressions', 0)
+        d['pos_w'] += row.get('position', 0) * row.get('impressions', 0)
+        d['queries'].append((row.get('impressions', 0), query))
+    now = timezone.now()
+    for page, d in pages.items():
+        pos = d['pos_w'] / d['impr'] if d['impr'] else 0
+        ctr = 100.0 * d['clicks'] / d['impr'] if d['impr'] else 0
+        missed = max(0.0, d['impr'] * expected_ctr(pos) / 100 - d['clicks'])
+        top = '، '.join(f'{q} ({n})' for n, q in sorted(d['queries'], reverse=True)[:6])
+        GscPagePerformance.objects.update_or_create(url=page[:500], defaults={
+            'clicks': d['clicks'], 'impressions': d['impr'], 'ctr': round(ctr, 2), 'position': round(pos, 1),
+            'opportunity': round(missed, 1), 'top_queries': top, 'updated_at': now})
+    GscPagePerformance.objects.filter(updated_at__lt=now).delete()
+    if write:
+        write(f'GSC: اتسحب أداء {len(pages)} صفحة من نتائج البحث')
+    return len(pages)
+
+
 def run(limit=None, submit=True, report=True, stdout=None):
     from core.models import GscUrlStatus
     write = (stdout.write if stdout else logger.info)
@@ -158,6 +208,10 @@ def run(limit=None, submit=True, report=True, stdout=None):
     if submit:
         submit_sitemap(s, base + '/sitemap.xml')
         write('GSC: السايت ماب اتبعت لجوجل')
+    try:
+        sync_performance(s, write=write)
+    except Exception as e:  # الأداء معلومة إضافية؛ متوقفش الفحص لو فشل
+        write(f'GSC: سحب أداء البحث فشل: {e}')
     found = sitemap_urls()
     todo = pick_urls(found, limit or DAILY_INSPECTIONS)
     checked = 0

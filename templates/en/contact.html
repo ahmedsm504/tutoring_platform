@@ -33,12 +33,25 @@
     <div class="form-card">
       <h2 style="font-size:1.4rem;">Booking details</h2>
       {% if form.non_field_errors or form.errors %}<div class="notice notice-error" role="alert">Please check the fields marked below.</div>{% endif %}
-      <form method="post" novalidate>
+      <form method="post" novalidate data-booking data-start-url="{% url 'booking_start' %}" data-lang="en">
         {% csrf_token %}
-        {% with f=form.name %}<div class="field"><label for="{{ f.id_for_label }}">Name<span class="req" aria-hidden="true">*</span></label>
+        <input type="hidden" name="trk_first" value=""><input type="hidden" name="trk_prev" value="">
+        <input type="hidden" name="ref" value="{{ request.GET.ref|default:'' }}"><input type="hidden" name="program" value="{{ request.GET.program|default:'' }}">
+        <input type="hidden" name="booking_token" value="{{ request.POST.booking_token|default:'' }}">
+        <div class="hp-field" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div data-step="1">
+          <p class="step-label" hidden>Step 1 of 2: your name and WhatsApp number</p>
+          {% with f=form.name %}<div class="field"><label for="{{ f.id_for_label }}">Name<span class="req" aria-hidden="true">*</span></label>
           <input type="text" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="name" placeholder="Student's or parent's name">
           {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
-        <div class="field-row">
+          {% with f=form.phone %}<div class="field"><label for="{{ f.id_for_label }}">Phone or WhatsApp number<span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="tel" placeholder="+44 7700 000000">
+            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+          <button type="button" class="btn btn-primary btn-block" data-next hidden>Next</button>
+        </div>
+        <div data-step="2">
+          <p class="step-label" hidden>Step 2 of 2: a few details so we can match the right teacher</p>
+          <div class="field-row">
           {% with f=form.country %}<div class="field"><label for="{{ f.id_for_label }}">Country<span class="req" aria-hidden="true">*</span></label>
             <input type="text" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="country-name" placeholder="e.g. United Kingdom, USA, Canada">
             {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
@@ -48,19 +61,16 @@
               {% for value, label in f.field.choices %}{% if value %}<option value="{{ value }}" {% if f.value == value %}selected{% endif %}>{% if value == 'male' %}Male / boy{% elif value == 'female' %}Female / girl{% else %}{{ label }}{% endif %}</option>{% endif %}{% endfor %}
             </select>
             {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
-        </div>
-        <div class="field-row">
-          {% with f=form.phone %}<div class="field"><label for="{{ f.id_for_label }}">Phone or WhatsApp number<span class="req" aria-hidden="true">*</span></label>
-            <input type="tel" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" required autocomplete="tel" placeholder="+44 7700 000000">
-            {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
+          </div>
           {% with f=form.email %}<div class="field"><label for="{{ f.id_for_label }}">Email (optional)</label>
             <input type="email" name="{{ f.html_name }}" id="{{ f.id_for_label }}" value="{{ f.value|default_if_none:'' }}" autocomplete="email">
             {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
-        </div>
-        {% with f=form.notes %}<div class="field"><label for="{{ f.id_for_label }}">Student's age, level, language and preferred times (optional)</label>
+          {% with f=form.notes %}<div class="field"><label for="{{ f.id_for_label }}">Student's age, level, language and preferred times (optional)</label>
           <textarea name="{{ f.html_name }}" id="{{ f.id_for_label }}" rows="4" placeholder="e.g. 8 years old, knows the Arabic letters, speaks English, free after 5 pm London time">{{ f.value|default_if_none:'' }}</textarea>
           {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}</div>{% endwith %}
-        <button type="submit" class="btn btn-primary btn-block">Book my free class</button>
+          <button type="submit" class="btn btn-primary btn-block">Book my free class</button>
+          <button type="button" class="btn btn-ghost btn-block" data-back hidden style="margin-top:8px;">Back</button>
+        </div>
         <p style="color:var(--muted); font-size:.9rem; margin:12px 0 0; text-align:center;">Your details are only used to contact you about your booking.</p>
       </form>
     </div>
@@ -82,4 +92,5 @@
     </aside>
   </div>
 </section>
+<script src="{% static 'js/booking.js' %}" defer></script>
 {% endblock %}

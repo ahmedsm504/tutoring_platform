@@ -865,3 +865,25 @@ class GscUrlStatus(models.Model):
     @property
     def indexed(self):
         return self.verdict == 'PASS'
+
+
+class GscPagePerformance(models.Model):
+    """أداء كل صفحة في نتائج بحث جوجل آخر 28 يوم (Search Analytics API)، بيتحدّث يوميًا من gsc.run.
+    الهدف: نلاقي الصفحات اللي بتظهر كتير ومحدش بيدوس عليها، ونحسّن عنوانها ووصفها."""
+    url = models.CharField(max_length=500, unique=True)
+    clicks = models.PositiveIntegerField('النقرات', default=0)
+    impressions = models.PositiveIntegerField('مرات الظهور', default=0)
+    ctr = models.FloatField('نسبة النقر %', default=0)
+    position = models.FloatField('متوسط الترتيب', default=0)
+    opportunity = models.FloatField('نقرات ضايعة (تقدير)', default=0, db_index=True,
+                                    help_text='النقرات المتوقعة لترتيبها ناقص النقرات الفعلية')
+    top_queries = models.TextField('أهم كلمات البحث', blank=True)
+    updated_at = models.DateTimeField('آخر تحديث', default=timezone.now)
+
+    class Meta:
+        verbose_name = 'أداء صفحة في بحث جوجل'
+        verbose_name_plural = 'أداء الصفحات في بحث جوجل (فرص تحسين العنوان)'
+        ordering = ['-opportunity']
+
+    def __str__(self):
+        return self.url

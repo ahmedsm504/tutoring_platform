@@ -641,3 +641,15 @@ html[dir="rtl"] .features li::before { box-shadow: -18px 0 0 #ffc83d, -36px 0 0 
 @media (max-width: 1480px) and (min-width: 1181px) { .nav a { padding-inline: 7px; font-size: .9rem; } .header-inner { gap: 16px; } .brand-name small { display: none; } }
 @media (max-width: 440px) { .header-actions .btn { padding: 8px 11px; font-size: .8rem; } .brand-name { font-size: 1.05rem; } .lang-switch { padding: 6px 9px; } }
 @media (max-width: 600px) { .hero::before, .page-head::before { opacity: .3; } }
+
+/* أسعار بعملة الزائر (core/pricing.py + static/js/prices.js) */
+.currency-picker { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 14px 0 4px; }
+.currency-picker label { font-weight: 600; }
+.currency-picker select { font: inherit; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); background: #fff; color: var(--ink, #1b2559); min-width: 160px; }
+.price-table td[data-p] { font-weight: 700; font-variant-numeric: tabular-nums; }
+.price-table th, .price-table td { text-align: start; }
+[dir="ltr"] .plan-side caption, [dir="ltr"] .plan-side th { text-align: left; }
+
+/* فورم الحجز على خطوتين (static/js/booking.js) */
+.hp-field { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; opacity: 0; pointer-events: none; }
+.step-label { font-weight: 600; color: var(--muted); margin: 0 0 14px; font-size: .95rem; }
