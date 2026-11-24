@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from .engine import validate
-from .models import Application, ApplicationFile, JobOpening
+from .models import Application, ApplicationFile, JobOpening, PendingUpload
 
 logger = logging.getLogger(__name__)
 RATE = 4  # أقصى عدد طلبات من نفس الجهاز في الساعة
@@ -89,6 +89,59 @@ def _questions(job):
     return list(job.questions.filter(is_active=True).select_related('step').order_by('step__order', 'order', 'pk'))
 
 
+UPLOAD_RATE = 80  # أقصى عدد ملفات من نفس الجهاز في الساعة
+
+
+@require_http_methods(['POST'])
+def upload_file(request, slug):
+    """رفع ملف واحد (صورة/تسجيل) قبل إرسال الطلب: طلبات صغيرة بتنجح على نت الموبايل الضعيف،
+    ولو واحد اتقطع الجافاسكربت بتعيده لوحده بدل ما الطلب كله يفشل."""
+    import secrets
+    from datetime import timedelta
+    from django.utils import timezone
+    from .engine import AUDIO_EXT, AUDIO_MAX, EXT_SETS, FILE_MAX, MB, _file_ext
+    job = get_object_or_404(JobOpening, slug=slug)
+    if not job.is_active and not request.user.is_staff:
+        raise Http404
+    key = request.POST.get('key', '')
+    f = request.FILES.get('file')
+    q = next((q for q in _questions(job) if q.key == key and q.qtype in ('files', 'audio')), None)
+    if not q or not f or not f.size:
+        return JsonResponse({'ok': False, 'error': 'ملف غير صالح.'}, status=400)
+    rate_key = f'careers-upload-rate:{_ip(request)}'
+    if cache.get(rate_key, 0) >= UPLOAD_RATE:
+        return JsonResponse({'ok': False, 'error': 'ملفات كثيرة من هذا الجهاز. حاولي بعد ساعة.'}, status=429)
+    audio = q.qtype == 'audio'
+    allowed = AUDIO_EXT if audio else EXT_SETS.get(q.file_kind, EXT_SETS['images'])
+    if not _file_ext(f, allowed, audio):
+        return JsonResponse({'ok': False, 'error': 'نوع الملف غير مسموح هنا.'}, status=400)
+    maxs = AUDIO_MAX if audio else FILE_MAX
+    if f.size > maxs:
+        return JsonResponse({'ok': False, 'error': f'حجم الملف أكبر من {maxs // MB} ميجا.'}, status=400)
+    PendingUpload.objects.filter(created_at__lt=timezone.now() - timedelta(days=1)).delete()
+    up = PendingUpload.objects.create(token=secrets.token_urlsafe(24), job=job, key=key, name=(f.name or '')[:200],
+                                      content_type=(f.content_type or '')[:100], size=f.size, data=f.read())
+    cache.set(rate_key, cache.get(rate_key, 0) + 1, 3600)
+    return JsonResponse({'ok': True, 'token': up.token})
+
+
+def _with_uploads(job, post, files):
+    """يضيف الملفات اللي اترفعت قبل كده (up_<key> = توكنات) على request.FILES عشان validate تشتغل زي ما هي"""
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    from django.utils.datastructures import MultiValueDict
+    merged = MultiValueDict({k: files.getlist(k) for k in files})
+    used = []
+    for k in post:
+        if not k.startswith('up_'):
+            continue
+        key = k[3:]
+        tokens = [t for t in post.get(k, '').split(',') if t][:10]
+        for up in PendingUpload.objects.filter(job=job, key=key, token__in=tokens):
+            merged.appendlist(key, SimpleUploadedFile(up.name or 'file', bytes(up.data), up.content_type or None))
+            used.append(up.pk)
+    return merged, used
+
+
 @require_http_methods(['GET', 'POST'])
 def apply(request, slug):
     job = get_object_or_404(JobOpening, slug=slug)
@@ -105,7 +158,8 @@ def apply(request, slug):
         if cache.get(rate_key, 0) >= RATE:
             errors = {'__all__': 'تم إرسال طلبات كثيرة من هذا الجهاز. حاولي مرة أخرى بعد ساعة.'}
         else:
-            answers, files, meta, errors = validate(questions, request.POST, request.FILES)
+            all_files, used_uploads = _with_uploads(job, request.POST, request.FILES)
+            answers, files, meta, errors = validate(questions, request.POST, all_files)
             if not errors:
                 with transaction.atomic():
                     app = Application.objects.create(job=job, answers=answers, ip=_ip(request),
@@ -113,6 +167,7 @@ def apply(request, slug):
                     ApplicationFile.objects.bulk_create([
                         ApplicationFile(application=app, question=q, label=lbl[:250], name=n, mime=m, size=len(b), data=b)
                         for q, lbl, n, m, b in files])
+                    PendingUpload.objects.filter(pk__in=used_uploads).delete()
                 cache.set(rate_key, cache.get(rate_key, 0) + 1, 3600)
                 _notify(app)
                 return JsonResponse({'ok': True, 'redirect': done_url}) if ajax else redirect(done_url)

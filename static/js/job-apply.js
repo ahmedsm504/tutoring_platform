@@ -185,39 +185,87 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     for (var i = 0; i < steps.length; i++) { if (!checkStep(i)) { show(i); setTimeout(function () { var b = form.querySelector('.ja-step.on .has-err'); if (b) b.scrollIntoView({ block: 'center' }); }, 350); return; } }
-    var fd = new FormData(form);
-    Object.keys(store).forEach(function (name) {
-      fd.delete(name);
-      var v = store[name]; if (!v) return;
-      (Array.isArray(v) ? v : [v]).forEach(function (f) { fd.append(name, f, f.name || (name + '.bin')); });
-    });
-    form.querySelectorAll('input[type=file]').forEach(function (inp) { if (!(inp.name in store)) fd.delete(inp.name); });
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', form.action);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.upload.onprogress = function (ev) { if (ev.lengthComputable && bar) { var p = Math.round(100 * ev.loaded / ev.total); bar.style.width = p + '%'; ptxt.textContent = 'جارٍ رفع الطلب… ' + p + '%'; if (p >= 100) ptxt.textContent = 'جارٍ الحفظ…'; } };
-    xhr.onload = function () {
-      var r = null; try { r = JSON.parse(xhr.responseText); } catch (err) { r = null; }
-      if (r && r.ok) { ls(KEY, null); location.href = r.redirect; return; }
-      submitBtn.disabled = false; prog.classList.remove('on');
-      var errs = (r && r.errors) || { __all__: 'حدث خطأ أثناء الإرسال. تأكدي من الإنترنت وحاولي مرة أخرى.' };
-      var firstStep = null;
-      Object.keys(errs).forEach(function (k) {
-        if (k === '__all__') return;
-        var box = form.querySelector('.field[data-name="' + k + '"]'); if (!box) return;
-        setErr(box, errs[k]);
-        var st = steps.indexOf(box.closest('.ja-step')); if (firstStep === null || st < firstStep) firstStep = st;
-      });
-      topErr.textContent = errs.__all__ || 'من فضلك راجعي الحقول اللي عليها ملاحظة.';
-      topErr.hidden = false;
-      show(firstStep === null ? cur : firstStep);
-    };
-    xhr.onerror = function () {
-      submitBtn.disabled = false; prog.classList.remove('on');
-      topErr.textContent = 'انقطع الاتصال أثناء الرفع. تأكدي من الإنترنت وحاولي مرة أخرى (إجاباتك محفوظة).'; topErr.hidden = false;
-    };
     submitBtn.disabled = true; prog.classList.add('on'); bar.style.width = '0'; topErr.hidden = true;
-    xhr.send(fd);
+    // كل ملف بيترفع لوحده (طلبات صغيرة) ومع إعادة محاولة تلقائية؛ وبعدين الطلب نفسه من غير ملفات.
+    // كده لو النت اتقطع في نص ملف، بيتعاد الملف ده بس، والملفات اللي اترفعت مش بتترفع تاني.
+    var csrf = (form.querySelector('[name=csrfmiddlewaretoken]') || {}).value || '';
+    var uploadUrl = form.action.replace(/\/?$/, '/') + 'upload/';
+    var jobs = [];
+    Object.keys(store).forEach(function (name) {
+      var v = store[name]; if (!v) return;
+      (Array.isArray(v) ? v : [v]).forEach(function (f) { jobs.push({ name: name, file: f }); });
+    });
+    var totalBytes = jobs.reduce(function (n, j) { return n + (j.file.size || 0); }, 0) || 1, doneBytes = 0;
+    function setProg(loaded, label) {
+      var p = Math.min(100, Math.round(100 * (doneBytes + loaded) / totalBytes));
+      bar.style.width = p + '%'; ptxt.textContent = label + ' ' + p + '%';
+    }
+    function fail(msg) {
+      submitBtn.disabled = false; prog.classList.remove('on');
+      topErr.textContent = msg; topErr.hidden = false;
+    }
+    function uploadOne(j, idx, attempt) {
+      return new Promise(function (resolve, reject) {
+        if (j.file.__tok) { doneBytes += j.file.size || 0; return resolve(); }
+        var fd1 = new FormData();
+        fd1.append('csrfmiddlewaretoken', csrf); fd1.append('key', j.name);
+        fd1.append('file', j.file, j.file.name || (j.name + '.bin'));
+        var x = new XMLHttpRequest();
+        x.open('POST', uploadUrl); x.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); x.timeout = 180000;
+        var label = 'جارٍ رفع الملف ' + (idx + 1) + ' من ' + jobs.length + (attempt ? ' (محاولة ' + (attempt + 1) + ')' : '') + '…';
+        x.upload.onprogress = function (ev) { if (ev.lengthComputable) setProg(ev.loaded * (j.file.size || 0) / (ev.total || 1), label); };
+        x.onload = function () {
+          var r = null; try { r = JSON.parse(x.responseText); } catch (e) { r = null; }
+          if (r && r.ok) { j.file.__tok = r.token; doneBytes += j.file.size || 0; return resolve(); }
+          if (x.status >= 500 && attempt < 3) return setTimeout(function () { uploadOne(j, idx, attempt + 1).then(resolve, reject); }, 2000 * (attempt + 1));
+          var box = form.querySelector('.field[data-name="' + j.name + '"]');
+          if (box && r && r.error) { setErr(box, r.error); show(steps.indexOf(box.closest('.ja-step'))); }
+          reject((r && r.error) || 'تعذر رفع أحد الملفات. حاولي مرة أخرى.');
+        };
+        x.onerror = x.ontimeout = function () {
+          if (attempt < 3) return setTimeout(function () { uploadOne(j, idx, attempt + 1).then(resolve, reject); }, 2000 * (attempt + 1));
+          reject('انقطع الاتصال أثناء رفع الملفات بعد أكتر من محاولة. لو على بيانات الموبايل جربي واي فاي، ثم اضغطي إرسال تاني (الملفات اللي اترفعت مش هتترفع من الأول، وإجاباتك محفوظة).');
+        };
+        x.send(fd1);
+      });
+    }
+    var chain = Promise.resolve();
+    jobs.forEach(function (j, i) { chain = chain.then(function () { return uploadOne(j, i, 0); }); });
+    chain.then(function () { sendForm(0); }, fail);
+
+    function sendForm(attempt) {
+      var fd = new FormData(form);
+      form.querySelectorAll('input[type=file]').forEach(function (inp) { fd.delete(inp.name); });
+      var toks = {};
+      jobs.forEach(function (j) { (toks[j.name] = toks[j.name] || []).push(j.file.__tok); });
+      Object.keys(toks).forEach(function (name) { fd.delete(name); fd.append('up_' + name, toks[name].join(',')); });
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', form.action);
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ptxt.textContent = 'جارٍ حفظ الطلب…'; bar.style.width = '100%';
+      xhr.onload = function () {
+        var r = null; try { r = JSON.parse(xhr.responseText); } catch (err) { r = null; }
+        if (r && r.ok) { ls(KEY, null); location.href = r.redirect; return; }
+        if (!r && xhr.status >= 500 && attempt < 2) return setTimeout(function () { sendForm(attempt + 1); }, 2000);
+        submitBtn.disabled = false; prog.classList.remove('on');
+        var errs = (r && r.errors) || { __all__: 'حدث خطأ أثناء الإرسال. تأكدي من الإنترنت وحاولي مرة أخرى.' };
+        var firstStep = null;
+        Object.keys(errs).forEach(function (k) {
+          if (k === '__all__') return;
+          var box = form.querySelector('.field[data-name="' + k + '"]'); if (!box) return;
+          setErr(box, errs[k]);
+          var st = steps.indexOf(box.closest('.ja-step')); if (firstStep === null || st < firstStep) firstStep = st;
+        });
+        topErr.textContent = errs.__all__ || 'من فضلك راجعي الحقول اللي عليها ملاحظة.';
+        topErr.hidden = false;
+        show(firstStep === null ? cur : firstStep);
+      };
+      xhr.onerror = function () {
+        if (attempt < 2) return setTimeout(function () { sendForm(attempt + 1); }, 2000);
+        fail('انقطع الاتصال أثناء الإرسال. تأكدي من الإنترنت واضغطي إرسال تاني (الملفات اترفعت خلاص، وإجاباتك محفوظة).');
+      };
+      xhr.send(fd);
+    }
   });
 
   /* ---------------- البداية */

@@ -1,6 +1,6 @@
 <article class="vcard" {% if v.is_english %}lang="en" dir="ltr"{% else %}lang="ar" dir="rtl"{% endif %}>
   <a class="vthumb{% if v.is_short %} short{% endif %}" href="{{ v.get_absolute_url }}">
-    <img src="{{ v.thumbnail_url }}" alt="" width="480" height="360" loading="lazy" decoding="async">
+    <img src="{{ v.thumbnail_url }}" alt="{{ v.title }}" width="480" height="360" loading="lazy" decoding="async">
     <span class="vplay" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
     {% if v.duration %}<span class="vdur">{{ v.duration }}</span>{% endif %}
   </a>

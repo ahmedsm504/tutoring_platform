@@ -10,7 +10,7 @@
   <h1>فهرس كل المقالات والأسئلة</h1>
   <p>{{ posts_count }} مقال و{{ questions_count }} سؤال مُجاب عن حفظ القرآن الكريم والتجويد والتربية القرآنية، مرتبة حسب التصنيف.</p>
 </div></header>
-<section class="section"><div class="container"><div class="prose" style="max-width:980px;">
+<section class="section"><div class="container"><div class="prose site-index" style="max-width:980px; overflow-wrap:anywhere; overflow-x:clip;"><style>.site-index ul{padding-inline-start:1.2em}.site-index li{min-width:0;max-width:100%}</style>
   <nav aria-label="أقسام الفهرس">
     <p><strong>المقالات:</strong>
     {% for cat, items in blog_groups %}<a href="#blog-{{ cat.slug }}">{{ cat.name }} ({{ items|length }})</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>

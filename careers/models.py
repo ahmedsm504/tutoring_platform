@@ -231,3 +231,20 @@ class ApplicationFile(models.Model):
     @property
     def is_audio(self):
         return self.mime.startswith('audio/')
+
+
+class PendingUpload(models.Model):
+    """ملف اترفع لوحده قبل إرسال الطلب (عشان الطلب الكبير على نت الموبايل كان بيتقطع).
+    بيتنقل لـ ApplicationFile لما الطلب يتبعت، واللي بيفضل أكتر من يوم بيتمسح."""
+    token = models.CharField(max_length=40, unique=True)
+    job = models.ForeignKey(JobOpening, on_delete=models.CASCADE)
+    key = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
+    content_type = models.CharField(max_length=100, blank=True)
+    size = models.PositiveIntegerField()
+    data = models.BinaryField(editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'ملف مرفوع مؤقت'
+        verbose_name_plural = 'ملفات مرفوعة مؤقتًا'

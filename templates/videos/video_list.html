@@ -26,7 +26,7 @@
 
   {% if featured %}
   <article class="vfeatured"{% if featured.is_english %} lang="en" dir="ltr"{% endif %}>
-    <a class="vthumb" href="{{ featured.get_absolute_url }}"><img src="{{ featured.thumbnail_url }}" alt="" width="480" height="360" fetchpriority="high"><span class="vplay" aria-hidden="true"><svg><use href="#i-play"/></svg></span></a>
+    <a class="vthumb" href="{{ featured.get_absolute_url }}"><img src="{{ featured.thumbnail_url }}" alt="{{ featured.title }}" width="480" height="360" fetchpriority="high"><span class="vplay" aria-hidden="true"><svg><use href="#i-play"/></svg></span></a>
     <div>
       <span class="vcat">{{ featured.get_category_display }}</span>
       <h2><a href="{{ featured.get_absolute_url }}" style="color:inherit;text-decoration:none;">{{ featured.title }}</a></h2>
