@@ -3,7 +3,7 @@ Same programmes and facts as core/site_content.py (the Arabic source of truth), 
 If you change a programme in site_content.py, update its English twin here too."""
 
 # prices live in core/pricing.py
-STANDARD_SCHEDULE = [('4 classes', '30 or 60 minutes'), ('8 classes', '30 or 60 minutes'), ('12 classes', '30 or 60 minutes')]
+STANDARD_SCHEDULE = [('4 classes', '40 or 60 minutes'), ('8 classes', '40 or 60 minutes'), ('12 classes', '40 or 60 minutes')]
 
 PROGRAMS = [
     {
@@ -175,11 +175,11 @@ def faq_schema():
 
 
 def _offer(p, currency):
-    """سعر أرخص باقة (4 حصص × 30 دقيقة) من core/pricing.py؛ الدورات من غير سعر"""
+    """سعر أرخص باقة (4 حصص، أقصر حصة) من core/pricing.py؛ الدورات من غير سعر"""
     o = {'@type': 'Offer', 'category': 'Paid', 'availability': 'https://schema.org/InStock'}
     if p.get('schedule') is STANDARD_SCHEDULE:
         from core.pricing import package_price
-        o.update({'price': str(package_price(currency, 4).normalize()), 'priceCurrency': currency})
+        o.update({'price': str(package_price(currency, 4)), 'priceCurrency': currency})
     return o
 
 

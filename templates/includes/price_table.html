@@ -1,6 +1,6 @@
-{# جدول أسعار الباقة الشهرية بعملة الزائر. محتاج: price_rows, price_currency, price_name (من core.pricing.context) و en (اختياري) #}
+{# جدول أسعار الباقة الشهرية بعملة الزائر. محتاج: price_rows, price_durations, price_name (من core.pricing.context) و en (اختياري) #}
 <table class="price-table" data-price-table>
   <caption>{% if en %}Monthly price (<span data-price-name>{{ price_name }}</span>){% else %}السعر الشهري (<span data-price-name>{{ price_name }}</span>){% endif %}</caption>
-  <thead><tr><th scope="col">{% if en %}Classes / month{% else %}عدد الحصص شهريًا{% endif %}</th><th scope="col">{% if en %}30 min{% else %}30 دقيقة{% endif %}</th><th scope="col">{% if en %}60 min{% else %}60 دقيقة{% endif %}</th></tr></thead>
-  <tbody>{% for n, p30, p60 in price_rows %}<tr><td>{% if en %}{{ n }} classes{% else %}{{ n }} {% if n > 10 %}حصة{% else %}حصص{% endif %}{% endif %}</td><td data-p="{{ forloop.counter0 }}-30">{{ p30 }}</td><td data-p="{{ forloop.counter0 }}-60">{{ p60 }}</td></tr>{% endfor %}</tbody>
+  <thead><tr><th scope="col">{% if en %}Classes / month{% else %}عدد الحصص شهريًا{% endif %}</th>{% for d in price_durations %}<th scope="col" data-dur="{{ forloop.counter0 }}">{{ d }} {% if en %}min{% else %}دقيقة{% endif %}</th>{% endfor %}</tr></thead>
+  <tbody>{% for n, a, b in price_rows %}<tr><td>{% if en %}{{ n }} classes{% else %}{{ n }} {% if n > 10 %}حصة{% else %}حصص{% endif %}{% endif %}</td><td data-p="{{ forloop.counter0 }}-0">{{ a }}</td><td data-p="{{ forloop.counter0 }}-1">{{ b }}</td></tr>{% endfor %}</tbody>
 </table>

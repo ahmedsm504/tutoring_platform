@@ -1665,7 +1665,9 @@ class BookingAndPricingTests(TestCase):
 
     def test_prices(self):
         from core.pricing import package_price, table
-        self.assertEqual([r[1] for r in table('SAR')], ['28', '56', '84'])
+        self.assertEqual([r[1] for r in table('USD')], ['12', '24', '36'])
+        self.assertEqual([r[2] for r in table('USD')], ['20', '40', '60'])
+        self.assertTrue(all(r[1].isdigit() and r[2].isdigit() for c in ('SAR', 'KWD', 'GBP', 'EUR', 'CAD') for r in table(c)))
         self.assertEqual([r[1] for r in table('EGP')], ['200', '350', '500'])
         self.assertEqual(str(package_price('EGP', 12, 60)), '1000')
         r = self.client.get(reverse('pricing'))

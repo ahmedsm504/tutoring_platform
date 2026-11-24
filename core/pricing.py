@@ -1,31 +1,33 @@
 """أسعار الباقات بعملة الزائر.
 
-القاعدة (من صاحب الموقع، نوفمبر 2026):
-- الحصة (30 دقيقة) بـ 7 ريال سعودي، وباقي العملات بما يعادلها، مقرّبة لرقم سهل.
-- مصر: 4 حصص بـ 200 جنيه، 8 بـ 350، 12 بـ 500.
-- الحصة 60 دقيقة بضعف سعر الـ 30 دقيقة.
+القاعدة (من صاحب الموقع، 24 نوفمبر 2026):
+- الحصة 40 دقيقة بـ 3 دولار، والحصة 60 دقيقة بـ 5 دولار. باقي العملات بما يعادلها،
+  وسعر الباقة كلها متقرّب لأقرب رقم صحيح (من غير كسور).
+- مصر زي ما هي: حصة 30 دقيقة: 4 حصص بـ 200 جنيه، 8 بـ 350، 12 بـ 500، والـ 60 دقيقة بالضعف.
 - الدورات (نور البيان، الأربعون النووية) من غير سعر على الموقع.
 
-لتغيير السعر: عدّل SAR_PER_CLASS أو EGP_PACKAGES أو أسعار الصرف تحت.
+لتغيير السعر: عدّل USD_PER_CLASS أو EGP_PACKAGES أو أسعار الصرف تحت.
 """
 import json
 from decimal import ROUND_HALF_UP, Decimal
 
-SAR_PER_CLASS = Decimal('7')
+USD_PER_CLASS = {40: Decimal('3'), 60: Decimal('5')}
 COUNTS = (4, 8, 12)
-EGP_PACKAGES = {4: 200, 8: 350, 12: 500}
+EGP_PACKAGES = {4: 200, 8: 350, 12: 500}  # حصة 30 دقيقة، والـ 60 بالضعف
+DURATIONS = {'EGP': (30, 60)}
+DEFAULT_DURATIONS = (40, 60)
 
-# ريال سعودي -> العملة (سعر تقريبي، نوفمبر 2026). step = التقريب لأقرب كام.
+# العملة مقابل 1 دولار (تقريبي، نوفمبر 2026)
 CURRENCIES = {
-    'SAR': {'rate': Decimal('1'), 'step': Decimal('1'), 'ar': 'ريال سعودي', 'en': 'SAR', 'sym': 'ر.س'},
-    'AED': {'rate': Decimal('0.978'), 'step': Decimal('1'), 'ar': 'درهم إماراتي', 'en': 'AED', 'sym': 'د.إ'},
-    'QAR': {'rate': Decimal('0.98'), 'step': Decimal('1'), 'ar': 'ريال قطري', 'en': 'QAR', 'sym': 'ر.ق'},
-    'KWD': {'rate': Decimal('0.0832'), 'step': Decimal('0.05'), 'ar': 'دينار كويتي', 'en': 'KWD', 'sym': 'د.ك'},
-    'USD': {'rate': Decimal('0.2663'), 'step': Decimal('0.5'), 'ar': 'دولار أمريكي', 'en': 'USD', 'sym': '$'},
-    'CAD': {'rate': Decimal('0.383'), 'step': Decimal('0.5'), 'ar': 'دولار كندي', 'en': 'CAD', 'sym': 'C$'},
-    'GBP': {'rate': Decimal('0.2047'), 'step': Decimal('0.5'), 'ar': 'جنيه إسترليني', 'en': 'GBP', 'sym': '£'},
-    'EUR': {'rate': Decimal('0.2447'), 'step': Decimal('0.5'), 'ar': 'يورو', 'en': 'EUR', 'sym': '€'},
-    'EGP': {'rate': None, 'step': Decimal('1'), 'ar': 'جنيه مصري', 'en': 'EGP', 'sym': 'ج.م'},
+    'SAR': {'rate': Decimal('3.755'), 'ar': 'ريال سعودي', 'en': 'SAR', 'sym': 'ر.س'},
+    'AED': {'rate': Decimal('3.673'), 'ar': 'درهم إماراتي', 'en': 'AED', 'sym': 'د.إ'},
+    'QAR': {'rate': Decimal('3.682'), 'ar': 'ريال قطري', 'en': 'QAR', 'sym': 'ر.ق'},
+    'KWD': {'rate': Decimal('0.3122'), 'ar': 'دينار كويتي', 'en': 'KWD', 'sym': 'د.ك'},
+    'USD': {'rate': Decimal('1'), 'ar': 'دولار أمريكي', 'en': 'USD', 'sym': '$'},
+    'CAD': {'rate': Decimal('1.438'), 'ar': 'دولار كندي', 'en': 'CAD', 'sym': 'C$'},
+    'GBP': {'rate': Decimal('0.7685'), 'ar': 'جنيه إسترليني', 'en': 'GBP', 'sym': '£'},
+    'EUR': {'rate': Decimal('0.919'), 'ar': 'يورو', 'en': 'EUR', 'sym': '€'},
+    'EGP': {'rate': None, 'ar': 'جنيه مصري', 'en': 'EGP', 'sym': 'ج.م'},
 }
 DEFAULT = 'SAR'
 DEFAULT_EN = 'USD'
@@ -42,34 +44,30 @@ TZ_CURRENCY = {
 }
 
 
-def _nice(value, step):
-    return (value / step).quantize(Decimal('1'), rounding=ROUND_HALF_UP) * step
+def durations(code):
+    return DURATIONS.get(code, DEFAULT_DURATIONS)
 
 
-def _fmt(d):
-    d = d.normalize()
-    s = f'{d:f}'
-    return s
-
-
-def package_price(code, count, minutes=30):
-    """سعر الباقة الشهرية (Decimal)"""
-    c = CURRENCIES[code]
+def package_price(code, count, minutes=None):
+    """سعر الباقة الشهرية (عدد صحيح). minutes الافتراضي = أقصر حصة في العملة دي"""
+    short, long_ = durations(code)
+    minutes = minutes or short
     if code == 'EGP':
-        base = Decimal(EGP_PACKAGES[count])
-    else:
-        base = _nice(SAR_PER_CLASS * count * c['rate'], c['step'])
-    return base * (2 if minutes == 60 else 1)
+        return EGP_PACKAGES[count] * (2 if minutes == 60 else 1)
+    usd = USD_PER_CLASS[60 if minutes == 60 else 40] * count
+    return int((usd * CURRENCIES[code]['rate']).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
 
 
 def table(code):
-    """[(count, سعر 30 دقيقة, سعر 60 دقيقة)] كنصوص جاهزة"""
-    return [(n, _fmt(package_price(code, n, 30)), _fmt(package_price(code, n, 60))) for n in COUNTS]
+    """[(count, سعر الحصة القصيرة, سعر الساعة)]"""
+    short, long_ = durations(code)
+    return [(n, str(package_price(code, n, short)), str(package_price(code, n, long_))) for n in COUNTS]
 
 
 def all_tables():
     """كل العملات للجافاسكربت: {code: {name_ar, name_en, sym, rows: [[n, p30, p60], ...]}}"""
-    return {code: {'ar': c['ar'], 'en': c['en'], 'sym': c['sym'], 'rows': [list(r) for r in table(code)]}
+    return {code: {'ar': c['ar'], 'en': c['en'], 'sym': c['sym'], 'dur': list(durations(code)),
+                   'rows': [list(r) for r in table(code)]}
             for code, c in CURRENCIES.items()}
 
 
@@ -79,6 +77,7 @@ def context(code=None, en=False):
         'price_currency': code,
         'price_name': CURRENCIES[code]['en' if en else 'ar'],
         'price_rows': table(code),
+        'price_durations': durations(code),
         'price_currencies': [(k, v['en' if en else 'ar']) for k, v in CURRENCIES.items()],
         'prices_json': json.dumps({'tables': all_tables(), 'tz': TZ_CURRENCY}, ensure_ascii=False),
     }

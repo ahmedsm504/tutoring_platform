@@ -12,7 +12,7 @@
 <section class="section">
   <div class="container prose">
     <table>
-      <thead><tr><th scope="col">Country</th><th scope="col">Currency</th><th scope="col">4 classes (30 min)</th></tr></thead>
+      <thead><tr><th scope="col">Country</th><th scope="col">Currency</th><th scope="col">4 classes (40 min)</th></tr></thead>
       <tbody>{% for slug, e, cur, p in rows %}<tr><td><a href="{% url 'en_country_page' slug %}">Online Quran classes in {{ e.title_name }}</a></td><td>{{ cur }}</td><td>{{ p }}</td></tr>{% endfor %}</tbody>
     </table>
     <p>Your country isn't listed? The <a href="{% url 'en_pricing' %}">programmes page</a> shows prices in several currencies, and we schedule classes in your time zone.</p>

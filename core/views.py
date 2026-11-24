@@ -176,8 +176,8 @@ def level_test(request):
 
 def countries_index(request):
     from .countries import COUNTRIES
-    from .pricing import CURRENCIES, package_price
-    rows = [(c, CURRENCIES[c['currency']]['ar'], package_price(c['currency'], 4).normalize()) for c in COUNTRIES]
+    from .pricing import CURRENCIES, durations, package_price
+    rows = [(c, CURRENCIES[c['currency']]['ar'], package_price(c['currency'], 4), durations(c['currency'])[0]) for c in COUNTRIES]
     return render(request, 'core/countries.html', {'rows': rows, 'ALT_URL': '/en/online-quran-classes/'})
 
 
