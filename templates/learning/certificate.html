@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}شهادة حفظ القرآن للأطفال: اصنع شهادة تقدير باسم طفلك مجانًا | مؤسسة العجمي{% endblock %}
+{% block meta_description %}اصنع شهادة تقدير ملونة باسم طفلك لما يخلص حفظ سورة أو جزء عمّ، وحمّلها صورة أو اطبعها أو ابعتها على واتساب. مجانية ومن غير تسجيل.{% endblock %}
+{% block og_title %}شهادة حفظ القرآن للأطفال - مجانية باسم طفلك{% endblock %}
+{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},{"@type":"ListItem","position":2,"name":"المصحف","item":"{{ SITE_URL }}{% url 'quran_index' %}"},{"@type":"ListItem","position":3,"name":"شهادة حفظ للأطفال","item":"{{ canonical_url }}"}]}</script>
+{% endblock %}
+{% block content %}
+<style>
+.cert-wrap{display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:28px;align-items:start}
+@media (max-width:860px){.cert-wrap{grid-template-columns:1fr}}
+.cert-form .field{margin-bottom:14px}
+.cert-form label{display:block;font-weight:600;margin-bottom:6px}
+.cert-form input,.cert-form select{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.cert-seg{display:flex;gap:8px}.cert-seg label{flex:1;display:flex;gap:8px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:12px;padding:9px;font-weight:500;cursor:pointer}
+.cert-seg input{width:auto}.cert-seg label:has(input:checked){border-color:var(--green);background:var(--green-tint)}
+.cert-preview canvas{width:100%;height:auto;border-radius:16px;box-shadow:var(--shadow);background:#fff;display:block}
+.cert-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+@media print{body *{visibility:hidden}#cert-print,#cert-print *{visibility:visible}#cert-print{position:fixed;inset:0;width:100%}}
+</style>
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'quran_index' %}">المصحف</a></li><li aria-current="page">شهادة حفظ للأطفال</li></ol>
+    <h1>شهادة حفظ القرآن باسم طفلك</h1>
+    <p>طفلك خلّص سورة؟ اكتب اسمه واختار السورة، وحمّل له شهادة تقدير ملونة يفرح بيها ويعلقها في أوضته أو تبعتها للعيلة.</p>
+  </div>
+</header>
+<section class="section">
+  <div class="container">
+    <div class="cert-wrap">
+      <form class="form-card cert-form" id="cert-form" onsubmit="return false">
+        <div class="field"><label for="c-name">اسم الطفل</label><input id="c-name" maxlength="40" placeholder="مثلًا: يوسف أحمد" value="{{ pre_name }}"></div>
+        <div class="field"><span style="display:block;font-weight:600;margin-bottom:6px">الطفل</span>
+          <div class="cert-seg"><label><input type="radio" name="c-g" value="m" checked> ولد</label><label><input type="radio" name="c-g" value="f"> بنت</label></div></div>
+        <div class="field"><label for="c-what">حفظ إيه؟</label>
+          <select id="c-what">
+            <option value="juz30">جزء عمّ كاملًا</option>
+            <option value="juz29">جزء تبارك كاملًا</option>
+            {% for n, name in surahs %}<option value="{{ n }}"{% if pre_surah == n|stringformat:'s' %} selected{% endif %}>سورة {{ name }}</option>{% endfor %}
+          </select></div>
+        <div class="field"><label for="c-from">مقدَّمة من (اختياري)</label><input id="c-from" maxlength="40" placeholder="مثلًا: ماما وبابا"></div>
+        <p style="color:var(--muted);font-size:.9rem;margin:0">الشهادة بتتعمل على جهازك، ومفيش أي بيانات بتتبعت لنا.</p>
+      </form>
+      <div class="cert-preview" id="cert-print">
+        <canvas id="cert" width="1600" height="1131" aria-label="معاينة الشهادة" role="img"></canvas>
+        <div class="cert-actions">
+          <button type="button" class="btn btn-primary" id="c-dl">⬇ حمّل الشهادة صورة</button>
+          <button type="button" class="btn" id="c-share" hidden>مشاركة على واتساب</button>
+          <button type="button" class="btn btn-ghost" id="c-print">🖨 اطبعها</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:40px;max-width:820px">
+      <h2>ليه الشهادة بتفرق مع الطفل؟</h2>
+      <p>الطفل بيحب يشوف تعبه متقدّر. شهادة باسمه يعلقها في أوضته بتخليه فخور باللي حفظه، وبتشجعه يكمّل السورة اللي بعدها. والأحسن تكون في لحظة حلوة: بعد ما يسمّع السورة كاملة قدام العيلة، أو في آخر الأسبوع مع هدية صغيرة.</p>
+      <h2>أفكار تكمّل بيها الفرحة</h2>
+      <ul class="checklist">
+        <li>اطبعها وعلّقها على «حيطة الإنجازات» في البيت، وكل سورة جديدة شهادة جنبها.</li>
+        <li>ابعتها في جروب العيلة؛ دعوة الجدة والجد بتفرق مع الطفل جدًا.</li>
+        <li>اربطها بخطة: <a href="{% url 'juz_amma_challenge' %}">تحدي 30 يوم لحفظ جزء عمّ</a> فيه شهادة في آخر كل مرحلة.</li>
+        <li>سجّل السور اللي حفظها في <a href="{% url 'quran_tracker' %}">متابعة الحفظ</a> عشان متنساش مواعيد المراجعة.</li>
+      </ul>
+      <div class="inline-cta" style="margin-top:24px">
+        <p>عايز طفلك يحفظ مع معلمة بتشجعه وبتديله شهادة في آخر كل مستوى؟ أول حلقة مجانية.</p>
+        <a class="btn btn-primary" href="{% url 'contact' %}?program=nourania&amp;ref=certificate">احجز حلقة تجريبية مجانية</a>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var cv=document.getElementById('cert'), ctx=cv.getContext('2d'), W=cv.width, H=cv.height;
+  var nameI=document.getElementById('c-name'), whatI=document.getElementById('c-what'), fromI=document.getElementById('c-from');
+  var logo=new Image(); logo.src="{% static 'images/logo.jpeg' %}"; logo.onload=draw;
+  var SPARKS=[];for(var k=0;k<16;k++){SPARKS.push([160+((k*397)%1280),150+((k*131)%140),4+(k%4)*2])}
+  var BLUE='#1e3bbd', DEEP='#152a8f', GOLD='#f5a524', INK='#13204a';
+  function g(){var r=document.querySelector('input[name=c-g]:checked');return r?r.value:'m'}
+  function star(x,y,r,c){ctx.save();ctx.translate(x,y);ctx.beginPath();for(var i=0;i<10;i++){var a=Math.PI/5*i-Math.PI/2,rr=i%2?r*.45:r;ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath();ctx.fillStyle=c;ctx.fill();ctx.restore()}
+  function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+  function fit(text,font,size,max){ctx.font=font.replace('{s}',size);while(ctx.measureText(text).width>max&&size>20){size-=2;ctx.font=font.replace('{s}',size)}return size}
+  function what(){var v=whatI.value;if(v==='juz30')return 'جزء عمّ كاملًا';if(v==='juz29')return 'جزء تبارك كاملًا';return 'سورة '+whatI.options[whatI.selectedIndex].text.replace('سورة ','')+' كاملة'}
+  function date(){try{return new Intl.DateTimeFormat('ar-EG',{day:'numeric',month:'long',year:'numeric'}).format(new Date())}catch(e){return new Date().toLocaleDateString()}}
+  function hijri(){try{return new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(new Date())}catch(e){return ''}}
+  function draw(){
+    var f=g()==='f';
+    // الخلفية
+    var bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#fffaf0');bg.addColorStop(1,'#eef3ff');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    // إطار مزدوج
+    ctx.lineWidth=18;ctx.strokeStyle=BLUE;rr(36,36,W-72,H-72,40);ctx.stroke();
+    ctx.lineWidth=4;ctx.strokeStyle=GOLD;rr(70,70,W-140,H-140,28);ctx.stroke();
+    // زخارف الأركان
+    [[110,110],[W-110,110],[110,H-110],[W-110,H-110]].forEach(function(p){star(p[0],p[1],26,GOLD)});
+    SPARKS.forEach(function(p){star(p[0],p[1],p[2],'rgba(245,165,36,.35)')});
+    // ميدالية
+    ctx.save();ctx.translate(W/2,205);
+    ctx.fillStyle='#e0483e';ctx.beginPath();ctx.moveTo(-55,30);ctx.lineTo(-80,120);ctx.lineTo(-50,104);ctx.lineTo(-28,130);ctx.lineTo(-10,45);ctx.fill();
+    ctx.beginPath();ctx.moveTo(55,30);ctx.lineTo(80,120);ctx.lineTo(50,104);ctx.lineTo(28,130);ctx.lineTo(10,45);ctx.fill();
+    ctx.beginPath();ctx.arc(0,0,70,0,Math.PI*2);ctx.fillStyle=GOLD;ctx.fill();
+    ctx.beginPath();ctx.arc(0,0,55,0,Math.PI*2);ctx.fillStyle='#ffd166';ctx.fill();
+    star(0,0,36,'#fff');ctx.restore();
+    ctx.textAlign='center';ctx.direction='rtl';ctx.textBaseline='alphabetic';
+    // العنوان
+    ctx.fillStyle=DEEP;fit('شهادة تقدير',"800 {s}px 'Baloo Bhaijaan 2', 'Noto Kufi Arabic', sans-serif",110,W-300);ctx.fillText('شهادة تقدير',W/2,440);
+    ctx.fillStyle='#3b4a75';ctx.font="600 40px 'IBM Plex Sans Arabic', sans-serif";ctx.fillText(f?'تُهدى هذه الشهادة إلى البطلة الصغيرة':'تُهدى هذه الشهادة إلى البطل الصغير',W/2,512);
+    // الاسم
+    var name=(nameI.value||'').trim()||(f?'اسم البطلة':'اسم البطل');
+    ctx.fillStyle=nameI.value.trim()?BLUE:'#a9b3d6';var s=fit(name,"800 {s}px 'Baloo Bhaijaan 2', 'Noto Kufi Arabic', sans-serif",120,W-360);ctx.fillText(name,W/2,648);
+    ctx.strokeStyle=GOLD;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(W/2-360,678);ctx.lineTo(W/2+360,678);ctx.stroke();
+    // الإنجاز
+    ctx.fillStyle=INK;ctx.font="600 44px 'IBM Plex Sans Arabic', sans-serif";ctx.fillText(f?'تقديرًا لحفظها':'تقديرًا لحفظه',W/2,752);
+    ctx.fillStyle=DEEP;fit(what(),"800 {s}px 'Baloo Bhaijaan 2', 'Noto Kufi Arabic', sans-serif",68,W-360);ctx.fillText(what(),W/2,838);
+    ctx.fillStyle='#3b4a75';ctx.font="500 34px 'IBM Plex Sans Arabic', sans-serif";ctx.fillText('﴿وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ﴾ · جعله الله في ميزان حسناتك',W/2,900);
+    // التاريخ والمقدم
+    ctx.font="500 30px 'IBM Plex Sans Arabic', sans-serif";ctx.fillStyle=INK;
+    var h=hijri();ctx.textAlign='right';ctx.fillText(date()+(h?'  ·  '+h:''),W-160,1012);
+    var from=(fromI.value||'').trim();if(from){ctx.textAlign='left';ctx.fillText('مع الحب: '+from,160,1012)}
+    // الفوتر
+    ctx.textAlign='center';ctx.font="500 24px 'IBM Plex Sans Arabic', sans-serif";ctx.fillStyle='#5f6b8c';ctx.fillText('alagme.com · منصة العجمي التعليمية',W/2,1044);
+    if(logo.complete&&logo.naturalWidth){ctx.save();ctx.beginPath();ctx.arc(W/2,984,28,0,Math.PI*2);ctx.clip();ctx.drawImage(logo,W/2-28,956,56,56);ctx.restore()}
+  }
+  function file(cb){cv.toBlob(function(b){cb(new File([b],'شهادة-'+((nameI.value||'').trim()||'حفظ')+'.png',{type:'image/png'}))},'image/png')}
+  ['input','change'].forEach(function(e){document.getElementById('cert-form').addEventListener(e,draw)});
+  document.getElementById('c-dl').onclick=function(){file(function(f){var a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);if(window.gtag)gtag('event','certificate_download')})};
+  document.getElementById('c-print').onclick=function(){window.print()};
+  var sh=document.getElementById('c-share');
+  file(function(f){if(navigator.canShare&&navigator.canShare({files:[f]})){sh.hidden=false}});
+  sh.onclick=function(){file(function(f){navigator.share({files:[f],title:'شهادة حفظ',text:'الحمد لله، '+((nameI.value||'').trim()||'طفلنا')+' خلّص '+what()+' 🌟'}).catch(function(){})})};
+  var fonts=["800 60px 'Baloo Bhaijaan 2'","600 40px 'IBM Plex Sans Arabic'","500 30px 'IBM Plex Sans Arabic'","400 60px 'Amiri Quran'"];
+  if(document.fonts&&document.fonts.load){Promise.all(fonts.map(function(x){return document.fonts.load(x,'شهادة')})).then(draw,draw)}else draw();
+  draw();
+})();
+</script>
+{% endblock %}

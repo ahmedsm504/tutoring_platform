@@ -352,3 +352,22 @@ def quran_surah(request, n):
         'audio_first': quran.audio_url(quran.DEFAULT_RECITER, n, 1), 'related': related,
         'surah_articles': quran.surah_articles(n),
     }))
+
+
+def juz_amma_challenge(request):
+    from .challenge import plan
+    days = plan()
+    return render(request, 'learning/challenge.html', {'days': days, 'total_ayat': sum(d['ayat'] for d in days)})
+
+
+def certificate(request):
+    idx = quran.index()
+    return render(request, 'learning/certificate.html', {
+        'surahs': [(i + 1, s['name']) for i, s in enumerate(idx)],
+        'pre_surah': request.GET.get('surah', ''), 'pre_name': (request.GET.get('name') or '')[:40],
+    })
+
+
+def ramadan(request):
+    from .planner import KHATMA_PRESETS  # noqa: F401  (الروابط للخطط الجاهزة)
+    return render(request, 'learning/ramadan.html', {})
