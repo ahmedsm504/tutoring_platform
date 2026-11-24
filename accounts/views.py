@@ -173,7 +173,10 @@ def save_booking(request, form, en=False):
     if en:
         booking.notes = ('[EN site] ' + (booking.notes or '').strip()).strip()
     tracking.apply(booking, request.POST, request.GET)
+    booking.alert_sent = True  # اكتمل، فمفيش تنبيه «مكملش»
     booking.save()
+    from .booking_alerts import notify_new
+    notify_new(booking)
     return booking
 
 
@@ -192,6 +195,9 @@ def contact_view(request):
         prog = next((p for p in PROGRAMS if p['slug'] == slug), None)
         if prog:
             initial['notes'] = f"مهتم بـ{prog['kind']} {prog['name']}"
+        note = (request.GET.get('note') or '').strip()[:300]
+        if note:
+            initial['notes'] = (initial.get('notes', '') + '\n' + note).strip()
         form = TrialBookingForm(initial=initial)
 
     return render(request, 'accounts/contact.html', {'form': form})

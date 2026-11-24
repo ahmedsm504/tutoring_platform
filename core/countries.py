@@ -171,6 +171,124 @@ COUNTRIES = [
 ]
 BY_SLUG = {c['slug']: c for c in COUNTRIES}
 
+# النسخة الإنجليزي للدول اللي أطفالها لغتهم الأولى غالبًا إنجليزي/لغة أوروبية
+EN = {
+    'usa': {
+        'name': 'the USA', 'title_name': 'USA', 'people': 'Muslim families in the USA', 'weekend': 'Saturday and Sunday',
+        'extra_zones': [('West Coast (Los Angeles)', 'America/Los_Angeles'), ('Central (Chicago)', 'America/Chicago')],
+        'intro': "Many Muslim children in America speak English first, and the nearest mosque or weekend school can be a long drive away. A one-to-one online class gives your child a qualified Quran teacher at home, before school or on weekend mornings.",
+        'tips': [
+            'Cairo is 7 hours ahead of the East Coast and 10 hours ahead of the West Coast, so early mornings before school and weekend mornings usually work best.',
+            'Saturday is a working day for our teachers, so Saturday morning classes are easy to book. Friday is their day off.',
+            'If your child struggles to read Arabic, start with the Noor Al-Bayan reading course before memorisation.',
+            'The US changes its clocks on different dates from Egypt, so for a couple of weeks in spring and autumn the class may move by an hour; the teacher will confirm with you.',
+        ],
+        'faq': [
+            ('Can the teacher explain in English?', "Write in the booking form that the student speaks English and we will match you with a teacher who can explain in English."),
+            ('Are prices in US dollars?', 'Yes, the prices on this page are in US dollars.'),
+        ],
+    },
+    'canada': {
+        'name': 'Canada', 'title_name': 'Canada', 'people': 'Muslim families in Canada', 'weekend': 'Saturday and Sunday',
+        'extra_zones': [('Vancouver', 'America/Vancouver')],
+        'intro': 'Large Arab and Muslim communities live in Toronto, Montreal, Ottawa and Calgary, and children grow up speaking English or French. One-to-one online classes keep them connected to the Quran with the same teacher every week.',
+        'tips': [
+            'Toronto and Montreal are 7 hours behind Cairo, so weekend mornings or early mornings before school fit best.',
+            'Long winters keep children indoors more, which is a good time to add classes.',
+            'If your child attends a French school in Quebec, let us know so the teacher keeps explanations especially simple.',
+        ],
+        'faq': [
+            ('Are prices in Canadian dollars?', 'Yes, the prices on this page are in Canadian dollars.'),
+            ('Can we book Sunday classes?', 'Yes, Sunday is a working day for our teachers.'),
+        ],
+    },
+    'uk': {
+        'name': 'the UK', 'title_name': 'UK', 'people': 'Muslim families in the UK', 'weekend': 'Saturday and Sunday',
+        'intro': 'Mosques and weekend schools across the UK teach the Quran, but classes are often large. A one-to-one online class gives your child their own teacher who corrects every letter, at a time that suits school.',
+        'tips': [
+            'The UK is 2 hours behind Cairo for most of the year, so after school (4–7 pm) is an ideal time.',
+            'Half-term breaks are a good chance for extra classes and revision.',
+            'If your child already attends a weekend school, one-to-one classes can focus on correction and revision.',
+        ],
+        'faq': [
+            ('Are prices in pounds?', 'Yes, the prices on this page are in pounds sterling.'),
+            ('Can the teacher explain in English?', 'Mention it in the booking form and we will match you with a teacher who can explain in English.'),
+        ],
+    },
+    'germany': {
+        'name': 'Germany', 'title_name': 'Germany', 'people': 'Muslim families in Germany', 'weekend': 'Saturday and Sunday',
+        'intro': 'Many Arab families have settled in Germany in recent years, and children quickly lose their Arabic as they learn German at school. One-to-one online classes keep the Quran and the language alive with a qualified Arabic-speaking teacher.',
+        'tips': [
+            'Germany is 1 hour behind Cairo for most of the year, so after-school and evening times are easy.',
+            'German schools often finish early, so early afternoon is often free for a class.',
+            'If your child reads Arabic with difficulty, start with Noor Al-Bayan before memorisation.',
+        ],
+        'faq': [
+            ('Are prices in euros?', 'Yes, the prices on this page are in euros.'),
+            ('Does the teacher speak German?', 'Explanations are in simple Arabic, and the teacher starts from your child\'s level, whatever it is.'),
+        ],
+    },
+    'france': {
+        'name': 'France', 'title_name': 'France', 'people': 'Muslim families in France', 'weekend': 'Saturday and Sunday (and Wednesday afternoons off in many schools)',
+        'intro': 'Many families in France come from North Africa, Egypt and the Levant, and their children speak French first. A one-to-one online class gives your child a patient teacher who builds correct reading and memorisation step by step.',
+        'tips': [
+            'Many French schools are off on Wednesday afternoons, which is an excellent time for a class.',
+            'France is 1 hour behind Cairo for most of the year, so times are flexible.',
+            'We teach the Hafs narration; if your family reads Warsh, mention it and the teacher will explain the differences.',
+        ],
+        'faq': [
+            ('Are prices in euros?', 'Yes, the prices on this page are in euros.'),
+            ('Do you teach the Warsh narration?', 'We teach the Hafs an Asim narration.'),
+        ],
+    },
+}
+
+
+def _hour_label_en(h):
+    h = int(h) % 24
+    if h == 0:
+        return 'midnight'
+    if h == 12:
+        return 'noon'
+    return f'{h} am' if h < 12 else f'{h - 12} pm'
+
+
+def _offset_en(h):
+    if h == 0:
+        return 'same time as Cairo'
+    n = abs(h)
+    n = int(n) if n == int(n) else n
+    return f'{n} hour{"s" if n != 1 else ""} {"ahead of" if h > 0 else "behind"} Cairo'
+
+
+def time_info_en(tz, year=None):
+    year = year or datetime.now().year
+    rows = []
+    for label, when in (('Winter (January)', datetime(year, 1, 15, 12)), ('Summer (July)', datetime(year, 7, 15, 12))):
+        off = _offset_hours(tz, when)
+        rows.append({'season': label, 'offset': _offset_en(off),
+                     'window': f'{_hour_label_en(TEACHER_START + off)} to {_hour_label_en(TEACHER_END + off)}'})
+    same = rows[0]['offset'] == rows[1]['offset']
+    return {'rows': rows[:1] if same else rows, 'same_all_year': same}
+
+
+SLOTS_EN = [('Before school', 7), ('Midday', 13), ('After school', 16), ('Early evening', 19), ('Evening', 21)]
+
+
+def slots_en(tz, when=None):
+    when = when or datetime.now().replace(tzinfo=None)
+    off = _offset_hours(tz, when)
+    return [{'label': label, 'local': _hour_label_en(h), 'cairo': _hour_label_en(h - off),
+             'ok': TEACHER_START <= h - off <= TEACHER_END - 1} for label, h in SLOTS_EN]
+
+
+def context_en(slug):
+    from .pricing import context as price_ctx
+    c, e = BY_SLUG[slug], EN[slug]
+    extra = [{'name': n, **time_info_en(z)} for n, z in e.get('extra_zones', [])]
+    return {'country': c, 'c': e, 'times': time_info_en(c['tz']), 'extra_times': extra,
+            'slots': slots_en(c['tz']), **price_ctx(c['currency'], en=True)}
+
 
 def _offset_hours(tz, when):
     z = ZoneInfo(tz)

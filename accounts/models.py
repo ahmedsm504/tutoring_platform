@@ -320,6 +320,7 @@ class TrialBooking(models.Model):
     campaign = models.CharField('الحملة (UTM)', max_length=200, blank=True, default='')
     cta = models.CharField('الزرار اللي داس عليه', max_length=60, blank=True, default='')
     program = models.CharField('البرنامج', max_length=30, blank=True, default='')
+    alert_sent = models.BooleanField('اتبعت تنبيه «مكملش الحجز»', default=False)
 
     class Meta:
         verbose_name = "حجز تجربة"

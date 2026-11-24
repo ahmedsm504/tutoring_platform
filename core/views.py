@@ -160,11 +160,25 @@ def pricing(request):
     ))
 
 
+def level_test(request):
+    from . import level_test as lt
+    from . import site_content as sc
+    from .pricing import context as pricing_context
+    ctx = {'questions': lt.QUESTIONS, 'answers': request.GET}
+    a = lt.answers_from(request.GET)
+    if a:
+        slug, count, minutes, reasons = lt.recommend(a)
+        prog = next(p for p in sc.PROGRAMS if p['slug'] == slug)
+        ctx.update({'result': True, 'prog': prog, 'count': count, 'minutes': minutes, 'reasons': reasons,
+                    'is_course': prog['kind'] == 'دورة', 'note': lt.note_for(a, slug), **pricing_context()})
+    return render(request, 'core/level_test.html', ctx)
+
+
 def countries_index(request):
     from .countries import COUNTRIES
     from .pricing import CURRENCIES, package_price
     rows = [(c, CURRENCIES[c['currency']]['ar'], package_price(c['currency'], 4).normalize()) for c in COUNTRIES]
-    return render(request, 'core/countries.html', {'rows': rows})
+    return render(request, 'core/countries.html', {'rows': rows, 'ALT_URL': '/en/online-quran-classes/'})
 
 
 def country_page(request, slug):
@@ -175,6 +189,9 @@ def country_page(request, slug):
         raise Http404
     ctx = context(c)
     ctx['others'] = [x for x in COUNTRIES if x['slug'] != slug]
+    from .countries import EN
+    if slug in EN:
+        ctx['ALT_URL'] = f'/en/online-quran-classes/{slug}/'
     return render(request, 'core/country.html', _public_ctx(**ctx))
 
 

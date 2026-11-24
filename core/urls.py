@@ -10,6 +10,7 @@ urlpatterns = [
     path('contact/start/', booking_start, name='booking_start'),
     path('pricing/', views.pricing, name='pricing'),
     path('online-quran/', views.countries_index, name='countries'),
+    path('level-test/', views.level_test, name='level_test'),
     path('online-quran/<slug:slug>/', views.country_page, name='country_page'),
     path('quality-standards/', views.quality_standards, name='quality_standards'),
     path('privacy-policy/', views.privacy, name='privacy'),

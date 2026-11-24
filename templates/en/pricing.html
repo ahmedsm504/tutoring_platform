@@ -26,6 +26,7 @@
     <p>Every programme is one-to-one with a certified teacher. Choose how many classes a month and how long each class is. The first class is a free trial.</p>
     <p style="margin-top:6px;">Each class is 30 minutes; 60-minute classes cost double. Paid monthly, and the first class is free.</p>
     {% include 'includes/currency_picker.html' with en=True %}
+    <p style="margin:4px 0 0;"><a href="{% url 'en_countries' %}" style="color:inherit; text-decoration:underline;">Class times in your country's time zone</a></p>
     <ul class="plans-jump" aria-label="Jump to a programme">
       {% for p in programs %}<li><a href="#{{ p.slug }}">{{ p.name }}</a></li>{% endfor %}
     </ul>
