@@ -1757,3 +1757,38 @@ class BookingAndPricingTests(TestCase):
         self.assertEqual(topic_for(P('تفسير سورة الكهف')), 'general')
         r = self.client.get('/blog/noon-sakinah-tanween-rules/')
         self.assertContains(r, 'program=ghiras&amp;ref=article-end')
+
+
+class LevelTestAndAlertsTests(TestCase):
+    def test_level_test(self):
+        r = self.client.get(reverse('level_test'))
+        self.assertContains(r, 'type="radio"')
+        self.assertNotContains(r, 'noindex')
+        r = self.client.get(reverse('level_test') + '?who=kid&reading=none&memorized=little&goal=hifz&times=2')
+        self.assertContains(r, 'البداية النورانية')
+        self.assertContains(r, 'noindex, follow')
+        self.assertContains(r, 'program=nourania&amp;ref=level-test')
+        r = self.client.get(reverse('level_test') + '?who=adult&reading=none&memorized=little&goal=hifz&times=1')
+        self.assertContains(r, 'نور البيان')
+
+    def test_english_country_pages(self):
+        from core.countries import EN
+        for slug in EN:
+            r = self.client.get(f'/en/online-quran-classes/{slug}/')
+            self.assertEqual(r.status_code, 200, slug)
+            self.assertContains(r, f'/online-quran/{slug}/')  # hreflang للنسخة العربي
+        self.assertEqual(self.client.get('/en/online-quran-classes/egypt/').status_code, 404)
+
+    def test_abandoned_booking_alert_once(self):
+        from datetime import timedelta
+        from unittest import mock
+        from django.utils import timezone
+        from accounts.booking_alerts import notify_abandoned
+        from accounts.models import TrialBooking
+        b = TrialBooking.objects.create(name='x', phone='0100000000', is_complete=False)
+        TrialBooking.objects.filter(pk=b.pk).update(created_at=timezone.now() - timedelta(minutes=15))
+        TrialBooking.objects.create(name='y', phone='0100000001', is_complete=False)  # لسه جديد
+        with mock.patch('accounts.notifications.send_admin_notification') as send:
+            self.assertEqual(notify_abandoned(), 1)
+            self.assertEqual(notify_abandoned(), 0)
+            self.assertEqual(send.call_count, 1)

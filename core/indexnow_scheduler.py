@@ -42,6 +42,11 @@ def _run():
     except Exception:
         logger.exception('IndexNow scheduler فشل')
     try:
+        from accounts.booking_alerts import notify_abandoned
+        notify_abandoned()  # تنبيه الأدمن بالحجوزات اللي وقفت عند الخطوة الأولى
+    except Exception:
+        logger.exception('تنبيه الحجوزات اللي مكملتش فشل')
+    try:
         if _claim(GSC_LOCK_URL, GSC_INTERVAL):
             from core import gsc
             try:

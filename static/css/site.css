@@ -653,3 +653,8 @@ html[dir="rtl"] .features li::before { box-shadow: -18px 0 0 #ffc83d, -36px 0 0 
 /* فورم الحجز على خطوتين (static/js/booking.js) */
 .hp-field { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; opacity: 0; pointer-events: none; }
 .step-label { font-weight: 600; color: var(--muted); margin: 0 0 14px; font-size: .95rem; }
+
+/* اختبار تحديد المستوى */
+.lt-opt { display: flex; gap: 12px; align-items: center; justify-content: flex-start; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 8px; cursor: pointer; font-weight: 500; }
+.lt-opt input[type=radio] { width: 20px; height: 20px; min-height: 0; flex: none; margin: 0; padding: 0; accent-color: var(--primary, #2b4be0); }
+.lt-opt:has(input:checked) { border-color: var(--primary, #2b4be0); background: rgba(43, 75, 224, .06); }

@@ -47,6 +47,7 @@ class StaticViewSitemap(Sitemap):
         ('home', 1.0, 'daily'),
         ('pricing', 0.9, 'weekly'),
         ('countries', 0.7, 'monthly'),
+        ('level_test', 0.7, 'monthly'),
         ('contact', 0.8, 'monthly'),
         ('about', 0.7, 'monthly'),
         ('quality_standards', 0.7, 'monthly'),
@@ -59,6 +60,7 @@ class StaticViewSitemap(Sitemap):
         # النسخة الإنجليزية (/en/) للزوار من برا الدول العربية
         ('en_home', 0.9, 'weekly'),
         ('en_pricing', 0.8, 'monthly'),
+        ('en_countries', 0.6, 'monthly'),
         ('en_contact', 0.7, 'monthly'),
         ('en_about', 0.6, 'monthly'),
         ('en_quality_standards', 0.6, 'monthly'),
@@ -98,11 +100,11 @@ class CountrySitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        from core.countries import COUNTRIES
-        return [c['slug'] for c in COUNTRIES]
+        from core.countries import COUNTRIES, EN
+        return [('country_page', c['slug']) for c in COUNTRIES] + [('en_country_page', s) for s in EN]
 
-    def location(self, slug):
-        return reverse('country_page', args=[slug])
+    def location(self, item):
+        return reverse(item[0], args=[item[1]])
 
 
 class BlogPostSitemap(Sitemap):

@@ -97,3 +97,22 @@ def quran_index(request):
 def blog_list(request):
     posts = Paginator(_english_posts(), 12).get_page(request.GET.get('page'))
     return render(request, 'en/blog_list.html', {'posts': posts})
+
+
+def countries(request):
+    from core.countries import EN, BY_SLUG
+    from core.pricing import CURRENCIES, package_price
+    rows = [(slug, e, CURRENCIES[BY_SLUG[slug]['currency']]['en'], package_price(BY_SLUG[slug]['currency'], 4).normalize())
+            for slug, e in EN.items()]
+    return render(request, 'en/countries.html', {'rows': rows, 'ALT_URL': '/online-quran/'})
+
+
+def country(request, slug):
+    from django.http import Http404
+    from core.countries import EN, context_en
+    if slug not in EN:
+        raise Http404
+    ctx = context_en(slug)
+    ctx.update({'programs': en.PROGRAMS, 'others': [(s2, e) for s2, e in EN.items() if s2 != slug],
+                'ALT_URL': f'/online-quran/{slug}/'})
+    return render(request, 'en/country.html', ctx)

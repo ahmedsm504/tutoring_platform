@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Online Quran Classes in {{ c.title_name }}: Times in Your Time Zone &amp; Prices in {{ price_name }} | Al-Agmi{% endblock %}
+{% block meta_description %}One-to-one online Quran and Tajweed classes for {{ c.people }}: class times in your local time, prices in {{ price_name }}, and tips that fit school there. First class free.{% endblock %}
+{% block og_title %}Online Quran Classes in {{ c.title_name }} - Al-Agmi{% endblock %}
+{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},
+ {"@type":"ListItem","position":2,"name":"Online Quran classes by country","item":"{{ SITE_URL }}{% url 'en_countries' %}"},
+ {"@type":"ListItem","position":3,"name":"{{ c.title_name }}","item":"{{ canonical_url }}"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{% for q, a in c.faq %}{"@type":"Question","name":"{{ q|escapejs }}","acceptedAnswer":{"@type":"Answer","text":"{{ a|escapejs }}"}}{% if not forloop.last %},{% endif %}{% endfor %}]}
+</script>
+{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li><a href="{% url 'en_countries' %}">By country</a></li><li aria-current="page">{{ c.title_name }}</li></ol>
+    <h1>Online Quran Classes in {{ c.title_name }}</h1>
+    <p>{{ c.intro }}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'en_contact' %}?ref=country-en-{{ country.slug }}">Book a free trial class</a>
+      <a class="btn btn-ghost" href="#prices">Prices in {{ price_name }}</a>
+    </div>
+  </div>
+</header>
+<section class="section">
+  <div class="container prose">
+    <h2 id="times">Class times in {{ c.name }}</h2>
+    <p>Our teachers work Saturday to Thursday, 9 am to midnight Cairo time; Friday is their day off. That means these times are open for you:</p>
+    <table>
+      <thead><tr>{% if not times.same_all_year %}<th scope="col">Season</th>{% endif %}<th scope="col">Time difference</th><th scope="col">Available times in your time zone</th></tr></thead>
+      <tbody>{% for r in times.rows %}<tr>{% if not times.same_all_year %}<td>{{ r.season }}</td>{% endif %}<td>{{ r.offset }}</td><td>{{ r.window }}</td></tr>{% endfor %}</tbody>
+    </table>
+    {% for z in extra_times %}<p><strong>{{ z.name }}:</strong> {% for r in z.rows %}{{ r.offset }}; available {{ r.window }}{% if not forloop.last %} — {% endif %}{% endfor %}.</p>{% endfor %}
+    <h3>Common times: are they available?</h3>
+    <table>
+      <thead><tr><th scope="col">Your time</th><th scope="col">Teacher's time (Cairo)</th><th scope="col">Available?</th></tr></thead>
+      <tbody>{% for x in slots %}<tr><td>{{ x.label }} ({{ x.local }})</td><td>{{ x.cairo }}</td><td>{% if x.ok %}✓ Yes{% else %}✗ Outside teaching hours{% endif %}</td></tr>{% endfor %}</tbody>
+    </table>
+    <p>Weekend in {{ c.name }}: {{ c.weekend }}. We fix your class in your own time zone, and the teacher handles the difference.</p>
+
+    <h2 id="prices">Prices in {{ price_name }}</h2>
+    <p>All packages are one-to-one classes, paid monthly. Each class is 30 minutes; 60-minute classes cost double.</p>
+    <div class="plan-side" style="position:static; max-width:520px;">
+      {% include 'includes/price_table.html' with en=True %}
+      <p class="plan-note">The first class is free; you choose a package afterwards. Details of each programme are on the <a href="{% url 'en_pricing' %}">programmes page</a>.</p>
+    </div>
+
+    <h2 id="tips">Tips for {{ c.people }}</h2>
+    <ul class="checklist">{% for t in c.tips %}<li>{{ t }}</li>{% endfor %}</ul>
+
+    <h2 id="programs">Programmes</h2>
+    <ul class="checklist">{% for p in programs %}<li><a href="{% url 'en_pricing' %}#{{ p.slug }}"><strong>{{ p.name }}</strong></a>: {{ p.audience }}.</li>{% endfor %}</ul>
+
+    <h2 id="how">How to start</h2>
+    <ol>
+      <li>Fill in the booking form (just your name and WhatsApp number first).</li>
+      <li>A supervisor contacts you within 24 hours to set the trial class in your time zone.</li>
+      <li>In the trial class the teacher checks the student's level and recommends a programme; the choice is yours.</li>
+    </ol>
+
+    <h2 id="faq">Questions from {{ c.name }}</h2>
+    {% for q, a in c.faq %}<h3>{{ q }}</h3><p>{{ a }}</p>{% endfor %}
+    <h3>Which app do you use?</h3>
+    <p>Zoom or Google Meet, on a phone or a computer, with the teacher's camera on.</p>
+
+    <div class="hero-actions" style="margin-top:28px;">
+      <a class="btn btn-primary" href="{% url 'en_contact' %}?ref=country-en-{{ country.slug }}">Book a free trial class</a>
+      <a class="btn btn-ghost" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">Ask us on WhatsApp</a>
+    </div>
+    <h2 style="font-size:1.2rem; margin-top:40px;">Other countries</h2>
+    <p>{% for s, o in others %}<a href="{% url 'en_country_page' s %}">{{ o.title_name }}</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>
+  </div>
+</section>
+{% endblock %}
