@@ -93,6 +93,25 @@ class CareersTests(TestCase):
         self.assertContains(r, '<audio')
         self.assertContains(r, 'سورة الطلاق')
 
+    def test_files_uploaded_one_by_one_then_submitted(self):
+        # الملفات بتترفع لوحدها (/upload/) والطلب بيتبعت بتوكناتها بس (عشان النت الضعيف على الموبايل)
+        from .models import PendingUpload
+        data = self._payload(self.job)
+        for q in self.job.questions.filter(is_active=True, qtype__in=('files', 'audio')):
+            if q.key not in data:
+                continue
+            f = data.pop(q.key)
+            r = self.client.post('/jobs/quran-teacher/upload/', {'key': q.key, 'file': f}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            self.assertEqual(r.status_code, 200, r.content.decode())
+            data['up_' + q.key] = r.json()['token']
+        r = self.client.post('/jobs/quran-teacher/', data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertTrue(r.json()['ok'], r.content.decode())
+        app = Application.objects.get()
+        self.assertEqual(app.files.filter(mime='audio/webm').count(), 2)
+        self.assertEqual(PendingUpload.objects.count(), 0)
+        bad = self.client.post('/jobs/quran-teacher/upload/', {'key': 'nope', 'file': SimpleUploadedFile('a.jpg', b'x')})
+        self.assertEqual(bad.status_code, 400)
+
     def test_basic_conditions_block(self):
         data = self._payload(self.job)
         grad = self.job.questions.get(label='هل أنهيتِ الدراسة؟')

@@ -135,7 +135,7 @@
     {% if featured_posts and not search_query and posts.number == 1 %}{% with fp=featured_posts.0 %}
     <article class="featured post-card" aria-labelledby="featured-title">
       <a class="cover" href="{% url 'blog_detail' fp.slug %}" tabindex="-1" aria-hidden="true">
-        {% if fp.cloud_url %}<img src="{{ fp.cloud_url|card_img }}" srcset="{{ fp.cloud_url|card_img }} 640w, {{ fp.cloud_url }} 1200w" sizes="(max-width: 900px) 100vw, 590px" alt="" width="640" height="400" fetchpriority="high">{% else %}<img src="{% static 'images/default_post.webp' %}" alt="" width="640" height="400">{% endif %}
+        {% if fp.cloud_url %}<img src="{{ fp.cloud_url|card_img }}" srcset="{{ fp.cloud_url|card_img }} 640w, {{ fp.cloud_url }} 1200w" sizes="(max-width: 900px) 100vw, 590px" alt="{{ fp.title }}" width="640" height="400" fetchpriority="high">{% else %}<img src="{% static 'images/default_post.webp' %}" alt="{{ fp.title }}" width="640" height="400">{% endif %}
       </a>
       <div>
         <div class="post-meta">{% if fp.category %}<a href="{% url 'category_posts' fp.category.slug %}">{{ fp.category.name }}</a>{% endif %}<span>مقال مميز</span><span>{{ fp.reading_time }} دقائق قراءة</span></div>

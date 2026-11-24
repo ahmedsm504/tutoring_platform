@@ -7,5 +7,6 @@ urlpatterns = [
     path('jobs/', views.jobs_list, name='list'),
     path('jobs/<slug:slug>/', views.apply, name='apply'),
     path('jobs/<slug:slug>/done/', views.done, name='done'),
+    path('jobs/<slug:slug>/upload/', views.upload_file, name='upload'),
     path('staff/job-files/<int:pk>/', views.file_view, name='file'),
 ]

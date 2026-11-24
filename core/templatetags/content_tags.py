@@ -276,6 +276,19 @@ def _clip_title(title):
                     sub = re.split(r'[،(]', rest.strip(), 1)[0].strip()
                     if sub and len(head) + 2 + len(sub) <= TITLE_MAX:
                         return f'{head}: {sub}'
+                    # العنوان الفرعي طويل: ناخد منه كلمات لحد ما نكمّل 60 (بدل عنوان قصير زي «سورة الواقعة للأطفال»)
+                    out = []
+                    for w in (sub or rest.strip()).split():
+                        if len(head) + 2 + len(' '.join(out + [w])) > TITLE_MAX:
+                            break
+                        out.append(w)
+                    while out and (out[-1].lower() in _DANGLING or out[-1].lower() in _EN_DANGLING
+                                   or out[-1].startswith('و') and len(out[-1]) <= 2):
+                        out.pop()
+                    if len(out) >= 3 and out[-1].startswith('و') and len(' '.join(out)) < len((sub or rest).strip()):
+                        out.pop()  # «والنار ومعاني…» مقطوعة: نقف قبل حرف العطف
+                    if len(out) >= 2:
+                        return f'{head}: ' + ' '.join(out).rstrip(' ،,:-–|(')
                 return head
     return _clip_words(t, TITLE_MAX)
 
