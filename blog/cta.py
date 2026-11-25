@@ -96,4 +96,5 @@ def for_post(post, en=False):
     t = TOPICS[key]
     text, button, program_label = t['en' if en else 'ar']
     return {'topic': key, 'program': t['program'], 'text': text, 'button': button, 'program_label': program_label,
-            'tools': [] if en else tools_for(post, key)}
+            'tools': [] if en else tools_for(post, key),
+            'program_url': f"/programs/{t['program']}/" if t['program'] in ('nourania', 'ghiras', 'himma', 'sufaraa') else ''}

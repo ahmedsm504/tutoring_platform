@@ -157,7 +157,26 @@ def pricing(request):
     return render(request, 'core/pricing.html', _public_ctx(
         courses_ldjson=json.dumps(sc.courses_schema(site), ensure_ascii=False).replace('<', '\\u003c'),
         **pricing_context(),
+        program_pages=list(__import__('core.program_pages', fromlist=['PAGES']).PAGES),
     ))
+
+
+def program_page(request, slug):
+    from django.http import Http404
+    from . import site_content as sc
+    from .program_pages import PAGES
+    from .pricing import context as pricing_context
+    page = PAGES.get(slug)
+    prog = next((p for p in sc.PROGRAMS if p['slug'] == slug), None)
+    if not page or not prog:
+        raise Http404
+    from blog.cta import topic_for
+    from blog.models import Post
+    related = [p for p in Post.objects.indexable().select_related('category').order_by('-created_at')[:600]
+               if topic_for(p) == page['topic']][:8]
+    others = [(s, PAGES[s]['h1']) for s in PAGES if s != slug]
+    return render(request, 'core/program.html', _public_ctx(page=page, prog=prog, related=related, others=others,
+                                                            **pricing_context()))
 
 
 def level_test(request):

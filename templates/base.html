@@ -81,7 +81,11 @@
           "@type": "EducationalOrganization",
           "@id": "{{ SITE_URL }}/#organization",
           "name": "مؤسسة العجمي",
-          "alternateName": ["Al-Agmi Foundation", "Alagme", "منصة العجمي"],
+          "alternateName": ["منصة العجمي التعليمية", "منصة العجمي", "مؤسسة العجمي لتحفيظ القرآن الكريم", "Al-Agmi Foundation", "Alagme", "Al-Agmi Quran Academy"],
+          "slogan": "علمٌ يُفهم، وأثرٌ يبقى",
+          "foundingDate": "2024",
+          "founder": [{"@type": "Person", "name": "أحمد سمير"}, {"@type": "Person", "name": "رويدا العجمي"}],
+          "keywords": "تحفيظ القرآن أونلاين, تعليم التجويد أونلاين, تحفيظ القرآن للأطفال, معلمة قرآن أونلاين",
           "url": "{{ SITE_URL }}/",
           "logo": {"@type": "ImageObject", "url": "{{ SITE_URL }}{% static 'images/logo.png' %}", "width": 512, "height": 512},
           "image": "{{ SITE_URL }}{% static 'images/og-image.jpg' %}",
@@ -208,10 +212,10 @@
         <div>
           <h2>البرامج</h2>
           <ul>
-            <li><a href="{% url 'pricing' %}#nourania">البداية النورانية (أطفال)</a></li>
-            <li><a href="{% url 'pricing' %}#himma">الهمة العالية (10–15 سنة)</a></li>
-            <li><a href="{% url 'pricing' %}#sufaraa">سفراء القرآن (الكبار)</a></li>
-            <li><a href="{% url 'pricing' %}#ghiras">تصحيح التلاوة</a></li>
+            <li><a href="{% url 'program_page' 'nourania' %}">تحفيظ القرآن للأطفال</a></li>
+            <li><a href="{% url 'program_page' 'himma' %}">تحفيظ القرآن للمراهقين (10–15)</a></li>
+            <li><a href="{% url 'program_page' 'sufaraa' %}">تحفيظ القرآن للكبار</a></li>
+            <li><a href="{% url 'program_page' 'ghiras' %}">تعليم التجويد وتصحيح التلاوة</a></li>
             <li><a href="{% url 'countries' %}">الأسعار والمواعيد حسب الدولة</a></li>
             <li><a href="{% url 'level_test' %}">اختبار تحديد المستوى</a></li>
             <li><a href="{% url 'pricing' %}#nour-albayan">دورة نور البيان</a></li>
