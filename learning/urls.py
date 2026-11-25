@@ -23,6 +23,7 @@ urlpatterns = [
     path('learning/admin/<int:pk>/', views.admin_detail, name='learning_admin_detail'),
     # عام (سيو)
     path('quran/', views.quran_index, name='quran_index'),
+    path('quran/for-kids/', views.kids_surahs, name='quran_kids'),
     path('quran/hifz-tracker/', views.quran_tracker, name='quran_tracker'),
     path('quran/juz-amma-challenge/', views.juz_amma_challenge, name='juz_amma_challenge'),
     path('quran/certificate/', views.certificate, name='quran_certificate'),

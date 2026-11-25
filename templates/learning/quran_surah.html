@@ -43,6 +43,7 @@
     {% if next %}<a href="{% url 'quran_surah' next.id %}" rel="next">سورة {{ next.name }} ←</a>{% endif %}
   </nav>
   {% include 'includes/hifz_quiz.html' with n=meta.id name=meta.name %}
+  {% if kids_article %}<p style="margin:18px 0 0;"><a class="btn btn-gold" href="{{ kids_article.0 }}">🧒 شرح سورة {{ meta.name }} للأطفال بقصة وأنشطة</a> <a class="btn" href="{% url 'quran_kids' %}">كل السور للأطفال</a></p>{% endif %}
   {% if surah_articles %}<aside class="related-learn" aria-labelledby="surah-art-title"><h2 id="surah-art-title" style="font-size:1.2rem;">عن سورة {{ meta.name }} في مدونتنا</h2>
     <ul>{% for url, t in surah_articles %}<li><a href="{{ url }}">{{ t }}</a></li>{% endfor %}</ul></aside>{% endif %}
   <section aria-labelledby="reciters-title" style="margin-top:22px;"><h2 id="reciters-title" style="font-size:1.2rem;">استمع إلى سورة {{ meta.name }} بصوت كبار القراء</h2>
