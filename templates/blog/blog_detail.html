@@ -211,7 +211,7 @@
       <aside class="inline-cta" style="margin-top:28px;" aria-label="{% if en %}Read and listen to the surah{% else %}اقرأ واستمع للسورة{% endif %}">
         {% if en %}<p><strong>Read the full Arabic text of this surah and listen verse by verse</strong> with Al-Husary, Al-Minshawi, Abdul Basit and other great reciters, with verse repetition for memorisation.</p>
         <a class="btn btn-primary" href="{% url 'quran_surah' quran_surah.0 %}">Open the surah with audio</a>{% else %}<p><strong>اقرأ سورة {{ quran_surah.1 }} كاملة واستمع لها آية آية</strong> بصوت الحصري والمنشاوي وعبد الباسط وكبار القراء، مع تكرار الآيات للحفظ.</p>
-        <a class="btn btn-primary" href="{% url 'quran_surah' quran_surah.0 %}">سورة {{ quran_surah.1 }} مكتوبة بصوت الشيوخ</a>{% endif %}
+        <a class="btn btn-primary" href="{% url 'quran_surah' quran_surah.0 %}">سورة {{ quran_surah.1 }} مكتوبة بصوت الشيوخ</a>{% if post.slug|slice:'-9:' == '-for-kids' %} <a class="btn" href="{% url 'quran_kids' %}">🧒 شرح باقي السور للأطفال</a>{% endif %}{% endif %}
       </aside>
       {% endif %}
       {% if quran_surahs %}

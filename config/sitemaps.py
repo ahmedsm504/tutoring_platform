@@ -50,6 +50,7 @@ class StaticViewSitemap(Sitemap):
         ('level_test', 0.7, 'monthly'),
         ('ramadan', 0.8, 'weekly'),
         ('juz_amma_challenge', 0.7, 'monthly'),
+        ('quran_kids', 0.8, 'weekly'),
         ('quran_certificate', 0.6, 'monthly'),
         ('contact', 0.8, 'monthly'),
         ('about', 0.7, 'monthly'),

@@ -114,3 +114,30 @@ def surah_articles(n, limit=6):
         items = items[:limit]
         cache.set(key, items, 6 * 3600)
     return items
+
+
+def kids_articles():
+    """{رقم السورة: (رابط، عنوان)} لشرح السور للأطفال: مقالات «سورة X للأطفال»، وأقسام صفحات
+    «شرح سور X إلى Y للأطفال» الشاملة (رابط القسم نفسه) - لفهرس سور الأطفال وروابط صفحات السور."""
+    from django.core.cache import cache
+    key = 'quran:kids:v2'
+    data = cache.get(key)
+    if data is None:
+        from django.urls import reverse
+        from blog.models import Post
+        from core.templatetags.content_tags import toc
+        data = {}
+        qs = list(Post.objects.filter(status='published', slug__endswith='-for-kids').values_list('slug', 'title', 'content'))
+        for slug, title, _ in qs:
+            hit = surah_from_title(title)
+            if hit and hit[0] not in data and slug.startswith('surat-'):
+                data[hit[0]] = (reverse('blog_detail', args=[slug]), title)
+        for slug, title, content in qs:
+            if not title.startswith('شرح سور '):
+                continue
+            for sid, heading in toc(content):
+                hit = surah_from_title(heading)
+                if hit and hit[0] not in data:
+                    data[hit[0]] = (reverse('blog_detail', args=[slug]) + f'#{sid}', f'سورة {hit[1]} للأطفال')
+        cache.set(key, data, 6 * 3600)
+    return data

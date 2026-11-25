@@ -322,6 +322,14 @@ def quran_index(request):
     return render(request, 'learning/quran_index.html', _player_ctx({'surahs': quran.index()}))
 
 
+def kids_surahs(request):
+    """فهرس شرح سور القرآن للأطفال: كل سورة لها مقال مبسط للطفل، مرتبة بترتيب المصحف."""
+    kids = quran.kids_articles()
+    rows = [dict(s, article=kids.get(s['id'])) for s in quran.index()]
+    return render(request, 'learning/kids_surahs.html', {
+        'rows': rows, 'with_article': [r for r in rows if r['article']], 'count': len(kids)})
+
+
 def quran_tracker(request):
     """متابعة الحفظ: الزائر يعلّم السور اللي حفظها وآخر مراجعة - محفوظة على جهازه (localStorage)"""
     return render(request, 'learning/quran_tracker.html', {'surahs': quran.index()})
@@ -351,6 +359,7 @@ def quran_surah(request, n):
         'reciter_name': quran.RECITER_NAMES.get(rec or '', quran.RECITER_NAMES[quran.DEFAULT_RECITER]),
         'audio_first': quran.audio_url(quran.DEFAULT_RECITER, n, 1), 'related': related,
         'surah_articles': quran.surah_articles(n),
+        'kids_article': quran.kids_articles().get(n),
     }))
 
 

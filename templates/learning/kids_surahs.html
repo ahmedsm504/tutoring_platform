@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}شرح سور القرآن للأطفال بالترتيب: قصة ونشاط وخطة حفظ لكل سورة | العجمي{% endblock %}
+{% block meta_description %}فهرس شرح سور القرآن الكريم للأطفال بترتيب المصحف: {{ count }} سورة مشروحة بأسلوب بسيط مع قصة وأنشطة ومعاني كلمات وخطة حفظ أسبوعية، واستماع لكل سورة.{% endblock %}
+{% block meta_keywords %}شرح سور القرآن للأطفال, تفسير القرآن للأطفال, سور القرآن للأطفال, تحفيظ القرآن للأطفال, قصص القرآن للأطفال, تفسير مبسط للأطفال{% endblock %}
+{% block og_title %}شرح سور القرآن للأطفال | مؤسسة العجمي{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}{% url 'quran_kids' %}{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},{"@type":"ListItem","position":2,"name":"القرآن الكريم","item":"{{ SITE_URL }}{% url 'quran_index' %}"},{"@type":"ListItem","position":3,"name":"شرح السور للأطفال","item":"{{ SITE_URL }}{% url 'quran_kids' %}"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"شرح سور القرآن للأطفال","numberOfItems":{{ count }},"itemListElement":[{% for r in with_article %}{"@type":"ListItem","position":{{ forloop.counter }},"name":"{{ r.article.1|escapejs }}","url":"{{ SITE_URL }}{{ r.article.0 }}"}{% if not forloop.last %},{% endif %}{% endfor %}]}</script>
+{% endblock %}
+{% block extra_css %}
+<style>
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;padding:0;margin:0;list-style:none}
+.kgrid li>div{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);height:100%}
+.kgrid li.has>div{border-color:color-mix(in srgb,var(--gold) 55%,var(--line))}
+.knum{width:40px;height:40px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;background:color-mix(in srgb,var(--gold) 14%,transparent);color:var(--green-deep);font-weight:700;font-size:.9rem}
+.kname{font-family:'Amiri Quran',serif;font-size:1.2rem;line-height:1.6;display:block;color:var(--ink);text-decoration:none}
+.klinks{font-size:.82rem;display:flex;gap:10px;flex-wrap:wrap}
+.kfilter{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.kfind{width:100%;max-width:420px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);font:inherit;margin-bottom:12px;background:var(--surface)}
+</style>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'quran_index' %}">القرآن الكريم</a></li><li aria-current="page">شرح السور للأطفال</li></ol>
+  <h1>شرح سور القرآن للأطفال بترتيب المصحف</h1>
+  <p>{{ count }} سورة مشروحة للطفل بكلام بسيط: معنى الآيات، وقصة يحبها، وأنشطة في البيت، ومعاني الكلمات، وخطة حفظ أسبوعية. وكل سورة تقدر تقرأها وتسمعها آية آية.</p>
+</div></header>
+<section class="section"><div class="container">
+  <label class="sr-only" for="kfind">ابحث عن سورة</label>
+  <input id="kfind" class="kfind" type="search" placeholder="🔎 ابحث باسم السورة أو رقمها">
+  <div class="kfilter"><button type="button" class="btn btn-primary" data-f="has">السور المشروحة فقط ({{ count }})</button><button type="button" class="btn" data-f="all">كل السور (114)</button></div>
+  <ul class="kgrid" id="kgrid">
+    {% for r in rows %}<li class="{% if r.article %}has{% endif %}" data-k="{{ r.id }} {{ r.name }}"{% if not r.article %} hidden{% endif %}><div><span class="knum">{{ r.id }}</span><span>
+      {% if r.article %}<a class="kname" href="{{ r.article.0 }}">سورة {{ r.name }} للأطفال</a>{% else %}<span class="kname">سورة {{ r.name }}</span>{% endif %}
+      <span class="klinks">{% if r.article %}<a href="{{ r.article.0 }}">الشرح والقصة</a>{% endif %}<a href="{% url 'quran_surah' r.id %}">اقرأ واستمع</a></span></span></div></li>{% endfor %}
+  </ul>
+  <aside class="related-learn" style="margin-top:28px;"><h2 style="font-size:1.2rem;">أدوات مجانية للطفل</h2>
+    <ul><li><a href="{% url 'juz_amma_challenge' %}">تحدي حفظ جزء عمّ في 30 يوم</a></li>
+    <li><a href="{% url 'quran_certificate' %}">شهادة حفظ باسم طفلك</a></li>
+    <li><a href="{% url 'quran_tracker' %}">متابعة الحفظ والمراجعة</a></li>
+    <li><a href="{% url 'program_page' 'nourania' %}">القاعدة النورانية للأطفال</a></li>
+    <li><a href="{% url 'program_page' 'ghiras' %}">برنامج غراس لتحفيظ الأطفال</a></li></ul></aside>
+  <div class="inline-cta" style="margin-top:28px;"><p><strong>عايز طفلك يحفظ ويفهم مع معلمة متخصصة في الأطفال؟</strong> أول حصة أونلاين مجانية.</p><a class="btn btn-gold" href="{% url 'contact' %}?program=تحفيظ الأطفال">احجز حصة تجريبية مجانية</a></div>
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function(){ var i=document.getElementById('kfind'), items=document.querySelectorAll('#kgrid li'), mode='has';
+  function norm(s){ return s.replace(/[ً-ٰٟۖ-ۭ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي'); }
+  function apply(){ var q=norm(i.value.trim()); items.forEach(function(li){ var ok=(mode==='all'||li.classList.contains('has')); li.hidden = !ok || (q && norm(li.dataset.k).indexOf(q) < 0); }); }
+  i.addEventListener('input', apply);
+  document.querySelectorAll('.kfilter button').forEach(function(b){ b.addEventListener('click', function(){ mode=b.dataset.f; document.querySelectorAll('.kfilter button').forEach(function(x){ x.classList.toggle('btn-primary', x===b); }); apply(); }); });
+})();
+</script>
+{% endblock %}
