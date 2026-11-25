@@ -327,7 +327,8 @@ def kids_surahs(request):
     kids = quran.kids_articles()
     rows = [dict(s, article=kids.get(s['id'])) for s in quran.index()]
     return render(request, 'learning/kids_surahs.html', {
-        'rows': rows, 'with_article': [r for r in rows if r['article']], 'count': len(kids)})
+        'rows': rows, 'with_article': [r for r in rows if r['article']], 'count': len(kids),
+        'ALT_URL': '/en/quran/for-kids/'})
 
 
 def quran_tracker(request):

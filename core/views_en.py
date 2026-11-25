@@ -94,6 +94,25 @@ def quran_index(request):
     return render(request, 'en/quran_index.html', {'surahs': surahs})
 
 
+def quran_kids(request):
+    """Surahs explained for kids in English: every surah with an English kids article, in mushaf order."""
+    from blog.models import Post
+    from learning import quran
+    from core.templatetags.content_tags import translation_of
+    kids_ar = quran.kids_articles()
+    live = set(Post.objects.indexable().filter(slug__endswith='-for-kids-english').values_list('slug', flat=True))
+    rows = []
+    for s, (tr, meaning) in zip(quran.index(), en.SURAH_EN):
+        art = kids_ar.get(s['id'])
+        en_slug = ''
+        if art and '#' not in art[0]:
+            en_slug = translation_of(art[0].strip('/').split('/')[-1])
+        rows.append({**s, 'en': tr, 'meaning': meaning, 'en_slug': en_slug if en_slug in live else ''})
+    with_article = [r for r in rows if r['en_slug']]
+    return render(request, 'en/quran_kids.html', {'rows': rows, 'with_article': with_article,
+                                                  'count': len(with_article), 'ALT_URL': '/quran/for-kids/'})
+
+
 def blog_list(request):
     posts = Paginator(_english_posts(), 12).get_page(request.GET.get('page'))
     return render(request, 'en/blog_list.html', {'posts': posts})
