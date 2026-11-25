@@ -70,6 +70,7 @@ class StaticViewSitemap(Sitemap):
         ('en_quality_standards', 0.6, 'monthly'),
         ('en_blog_list', 0.7, 'weekly'),
         ('en_quran_index', 0.7, 'monthly'),
+        ('en_quran_kids', 0.7, 'weekly'),
         ('en_editorial_policy', 0.3, 'yearly'),
         ('en_privacy', 0.3, 'yearly'),
         ('en_terms', 0.3, 'yearly'),

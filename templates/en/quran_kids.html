@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Quran Surahs Explained for Kids in English: Stories, Activities and Memorization Plans | Al-Agmi{% endblock %}
+{% block meta_description %}{{ count }} surahs of the Quran explained for kids in simple English, in mushaf order: meanings, stories, home activities, word lists and weekly memorization plans for parents.{% endblock %}
+{% block meta_keywords %}surah for kids, quran for kids in english, surah explained for children, quran stories for kids, islamic parenting quran, teach quran to kids at home{% endblock %}
+{% block og_title %}Quran Surahs Explained for Kids - Al-Agmi{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}{% url 'en_quran_kids' %}{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},{"@type":"ListItem","position":2,"name":"The Holy Quran","item":"{{ SITE_URL }}{% url 'en_quran_index' %}"},{"@type":"ListItem","position":3,"name":"Surahs for kids","item":"{{ SITE_URL }}{% url 'en_quran_kids' %}"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Quran surahs explained for kids","numberOfItems":{{ count }},"itemListElement":[{% for r in with_article %}{"@type":"ListItem","position":{{ forloop.counter }},"name":"Surah {{ r.en|escapejs }} for Kids","url":"{{ SITE_URL }}/blog/{{ r.en_slug }}/"}{% if not forloop.last %},{% endif %}{% endfor %}]}</script>
+{% endblock %}
+{% block extra_css %}
+<style>
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:0;margin:0;list-style:none}
+.kgrid li>div{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);height:100%}
+.kgrid li.has>div{border-color:color-mix(in srgb,var(--gold) 55%,var(--line))}
+.knum{width:40px;height:40px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;background:color-mix(in srgb,var(--gold) 14%,transparent);color:var(--green-deep);font-weight:700;font-size:.9rem}
+.kbody{flex:1;min-width:0}
+.kname{font-weight:700;color:var(--ink);text-decoration:none;display:block}
+.kar{font-family:'Amiri Quran',serif;font-size:1.1rem;float:right;margin-left:6px}
+.klinks{font-size:.82rem;display:flex;gap:10px;flex-wrap:wrap}
+.kfilter{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.kfind{width:100%;max-width:420px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);font:inherit;margin-bottom:12px;background:var(--surface)}
+</style>
+{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container">
+  <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li><a href="{% url 'en_quran_index' %}">The Holy Quran</a></li><li aria-current="page">Surahs for kids</li></ol>
+  <h1>Quran surahs explained for kids</h1>
+  <p>{{ count }} surahs explained for children in simple English: what the verses mean, a story they will love, activities for home, word meanings and a one-week memorization plan. Each surah can also be read and heard verse by verse.</p>
+</div></header>
+<section class="section"><div class="container">
+  <label class="sr-only" for="kfind">Search for a surah</label>
+  <input id="kfind" class="kfind" type="search" placeholder="🔎 Search by surah name or number">
+  <div class="kfilter"><button type="button" class="btn btn-primary" data-f="has">Explained surahs ({{ count }})</button><button type="button" class="btn" data-f="all">All 114 surahs</button></div>
+  <ul class="kgrid" id="kgrid">
+    {% for r in rows %}<li class="{% if r.en_slug %}has{% endif %}" data-k="{{ r.id }} {{ r.en|lower }} {{ r.meaning|lower }} {{ r.name }}"{% if not r.en_slug %} hidden{% endif %}><div><span class="knum">{{ r.id }}</span><span class="kbody"><span class="kar" lang="ar">{{ r.name }}</span>
+      {% if r.en_slug %}<a class="kname" href="/blog/{{ r.en_slug }}/">Surah {{ r.en }} for Kids</a>{% else %}<span class="kname">Surah {{ r.en }}</span>{% endif %}
+      <span class="klinks">{% if r.en_slug %}<a href="/blog/{{ r.en_slug }}/">Explanation and story</a>{% endif %}<a href="{% url 'quran_surah' r.id %}" hreflang="ar">Read and listen</a></span></span></div></li>{% endfor %}
+  </ul>
+  <aside class="related-learn" style="margin-top:28px;"><h2 style="font-size:1.2rem;">Free tools for families</h2>
+    <ul><li><a href="{% url 'en_hifz_planner' %}">Quran memorization planner</a></li>
+    <li><a href="{% url 'en_khatma_planner' %}">Quran khatam planner</a></li>
+    <li><a href="{% url 'quran_kids' %}" hreflang="ar">All 114 surahs explained for kids in Arabic</a></li></ul></aside>
+  <div class="inline-cta" style="margin-top:28px;"><p><strong>Want your child to memorize and understand the Quran with a teacher who specializes in kids?</strong> Your first online class is free, at a time that suits your time zone.</p><a class="btn btn-gold" href="{% url 'en_contact' %}">Book a free trial class</a></div>
+</div></section>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function(){ var i=document.getElementById('kfind'), items=document.querySelectorAll('#kgrid li'), mode='has';
+  function apply(){ var q=i.value.trim().toLowerCase(); items.forEach(function(li){ var ok=(mode==='all'||li.classList.contains('has')); li.hidden = !ok || (q && li.dataset.k.indexOf(q) < 0); }); }
+  i.addEventListener('input', apply);
+  document.querySelectorAll('.kfilter button').forEach(function(b){ b.addEventListener('click', function(){ mode=b.dataset.f; document.querySelectorAll('.kfilter button').forEach(function(x){ x.classList.toggle('btn-primary', x===b); }); apply(); }); });
+})();
+</script>
+{% endblock %}
