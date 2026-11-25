@@ -99,12 +99,14 @@ class StaticViewSitemap(Sitemap):
 class CountrySitemap(Sitemap):
     """صفحات تحفيظ القرآن أونلاين لكل دولة (core/countries.py)"""
     protocol = 'https'
-    priority = 0.7
+    priority = 0.8
     changefreq = 'monthly'
 
     def items(self):
         from core.countries import COUNTRIES, EN
-        return [('country_page', c['slug']) for c in COUNTRIES] + [('en_country_page', s) for s in EN]
+        from core.program_pages import PAGES
+        return ([('country_page', c['slug']) for c in COUNTRIES] + [('en_country_page', s) for s in EN]
+                + [('program_page', s) for s in PAGES])
 
     def location(self, item):
         return reverse(item[0], args=[item[1]])

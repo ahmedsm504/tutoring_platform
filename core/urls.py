@@ -11,6 +11,7 @@ urlpatterns = [
     path('pricing/', views.pricing, name='pricing'),
     path('online-quran/', views.countries_index, name='countries'),
     path('level-test/', views.level_test, name='level_test'),
+    path('programs/<slug:slug>/', views.program_page, name='program_page'),
     path('online-quran/<slug:slug>/', views.country_page, name='country_page'),
     path('quality-standards/', views.quality_standards, name='quality_standards'),
     path('privacy-policy/', views.privacy, name='privacy'),

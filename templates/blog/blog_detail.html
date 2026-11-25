@@ -252,7 +252,7 @@
       <div class="inline-cta">
         <p>{{ cta.text }}</p>
         <a class="btn btn-primary" data-cta="end" href="{% if en %}{% url 'en_contact' %}{% else %}{% url 'contact' %}{% endif %}?{% if cta.program %}program={{ cta.program }}&amp;{% endif %}ref=article-end">{{ cta.button }}</a>
-        <a class="btn" data-cta="pricing" href="{% if en %}{% url 'en_pricing' %}{% else %}{% url 'pricing' %}{% endif %}{% if cta.program %}#{{ cta.program }}{% endif %}">{{ cta.program_label }}</a>
+        <a class="btn" data-cta="pricing" href="{% if en %}{% url 'en_pricing' %}{% if cta.program %}#{{ cta.program }}{% endif %}{% elif cta.program_url %}{{ cta.program_url }}{% else %}{% url 'pricing' %}{% if cta.program %}#{{ cta.program }}{% endif %}{% endif %}">{{ cta.program_label }}</a>
         {% if WHATSAPP_LINK %}<a class="btn" data-cta="whatsapp" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">{% if en %}Chat on WhatsApp{% else %}كلمنا واتساب{% endif %}</a>{% endif %}
       </div>
       {% if cta.tools %}<p class="post-tools" style="margin:14px 0 0;"><strong>أدوات مجانية:</strong> {% for u, label in cta.tools %}<a href="{{ u }}">{{ label }}</a>{% if not forloop.last %} · {% endif %}{% endfor %}</p>{% endif %}

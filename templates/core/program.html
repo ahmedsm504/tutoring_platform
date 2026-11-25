@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ page.title }} | مؤسسة العجمي{% endblock %}
+{% block meta_description %}{{ page.meta }}{% endblock %}
+{% block og_title %}{{ page.h1 }} - مؤسسة العجمي{% endblock %}
+{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"{{ SITE_URL }}/"},{"@type":"ListItem","position":2,"name":"الباقات","item":"{{ SITE_URL }}{% url 'pricing' %}"},{"@type":"ListItem","position":3,"name":"{{ page.h1|escapejs }}","item":"{{ canonical_url }}"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"{{ page.h1|escapejs }} - باقة {{ prog.name|escapejs }}","description":"{{ page.meta|escapejs }}","inLanguage":"ar","provider":{"@id":"{{ SITE_URL }}/#organization"},"offers":{"@type":"Offer","category":"Paid","price":"{{ price_rows.0.1 }}","priceCurrency":"{{ price_currency }}","availability":"https://schema.org/InStock","url":"{{ canonical_url }}"},"hasCourseInstance":{"@type":"CourseInstance","courseMode":"Online","courseWorkload":"PT40M"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{% for q, a in page.faq %}{"@type":"Question","name":"{{ q|escapejs }}","acceptedAnswer":{"@type":"Answer","text":"{{ a|escapejs }}"}}{% if not forloop.last %},{% endif %}{% endfor %}]}</script>
+{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'pricing' %}">الباقات</a></li><li aria-current="page">{{ page.h1 }}</li></ol>
+    <h1>{{ page.h1 }}</h1>
+    <p>{{ page.lead }}</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold" href="{% url 'contact' %}?program={{ prog.slug }}&amp;ref=program-{{ prog.slug }}">احجز حلقة تجريبية مجانية</a>
+      <a class="btn btn-light" href="#prices">الأسعار بعملة بلدك</a>
+    </div>
+  </div>
+</header>
+<section class="section">
+  <div class="container prose" style="max-width:900px">
+    <h2>الباقة دي مناسبة لمين؟</h2>
+    <ul class="checklist">{% for w in page.who %}<li>{{ w }}</li>{% endfor %}</ul>
+
+    <h2>بتمشي إزاي خطوة بخطوة؟</h2>
+    <ol>{% for t, d in page.steps %}<li><strong>{{ t }}:</strong> {{ d }}</li>{% endfor %}</ol>
+
+    {% for title, items in prog.sections %}
+    <h2>{{ title }}</h2>
+    <ul class="checklist">{% for i in items %}<li>{{ i }}</li>{% endfor %}</ul>
+    {% endfor %}
+
+    <h2 id="prices">الأسعار</h2>
+    <p>حصص فردية، والدفع شهري، والحلقة الأولى مجانية. {{ prog.tip }}.</p>
+    {% include 'includes/currency_picker.html' %}
+    <div class="plan-side" style="position:static;max-width:520px">{% include 'includes/price_table.html' %}</div>
+
+    <h2>ليه مؤسسة العجمي؟</h2>
+    <ul class="checklist">
+      <li>حصص فردية: طالب واحد مع معلمة واحدة، مش مجموعة.</li>
+      <li>معلمات متقنات للتجويد، بنختارهم بتسجيلات صوتية ومقابلة (<a href="{% url 'about' %}#teachers">إزاي بنختار المعلمات</a>).</li>
+      <li>تقرير شهري لولي الأمر، وشهادة في آخر كل مستوى.</li>
+      <li>المواعيد على توقيت بلدك (<a href="{% url 'countries' %}">المواعيد حسب الدولة</a>).</li>
+      <li>مش متأكد؟ جرّب <a href="{% url 'level_test' %}">اختبار تحديد المستوى</a> في دقيقة.</li>
+    </ul>
+
+    <h2>أسئلة بتتكرر</h2>
+    {% for q, a in page.faq %}<h3>{{ q }}</h3><p>{{ a }}</p>{% endfor %}
+
+    <div class="inline-cta" style="margin-top:26px">
+      <p>ابدأ بحلقة تجريبية مجانية: المعلمة بتحدد المستوى، وبعدها تختار عدد الحصص اللي يناسبك.</p>
+      <a class="btn btn-primary" href="{% url 'contact' %}?program={{ prog.slug }}&amp;ref=program-{{ prog.slug }}">احجز حلقة تجريبية مجانية</a>
+      {% if WHATSAPP_LINK %}<a class="btn" href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener">كلمنا واتساب</a>{% endif %}
+    </div>
+
+    {% if related %}
+    <h2>مقالات تفيدك</h2>
+    <ul>{% for p in related %}<li><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></li>{% endfor %}</ul>
+    {% endif %}
+    <h2 style="font-size:1.2rem">باقات تانية</h2>
+    <p>{% for s, h in others %}<a href="{% url 'program_page' s %}">{{ h }}</a>{% if not forloop.last %} · {% endif %}{% endfor %} · <a href="{% url 'pricing' %}">كل الباقات</a></p>
+  </div>
+</section>
+<script src="{% static 'js/prices.js' %}" defer></script>
+{% endblock %}

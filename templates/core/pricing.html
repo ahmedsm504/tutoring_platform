@@ -46,7 +46,7 @@
           <h2 id="{{ p.slug }}-title">{{ p.kind }} {{ p.name }}</h2>
         </div>
         <p class="plan-aud">{{ p.audience }}</p>
-        <p class="plan-sum">{{ p.summary }}</p>
+        <p class="plan-sum">{{ p.summary }}{% if p.slug in program_pages %} <a href="{% url 'program_page' p.slug %}">تفاصيل الباقة كاملة ←</a>{% endif %}</p>
         <div class="plan-cols">
           {% for title, items in p.sections %}
           <div>
