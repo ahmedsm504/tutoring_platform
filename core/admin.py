@@ -170,3 +170,16 @@ class GscPagePerformanceAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+
+from .models import SerpTitleTest  # noqa: E402
+
+
+@admin.register(SerpTitleTest)
+class SerpTitleTestAdmin(admin.ModelAdmin):
+    """تجارب العناوين اللي محسّن نسبة النقر عملها لوحده، ونتيجة كل واحدة بعد 28 يوم"""
+    list_display = ('new_title', 'old_title', 'query', 'status', 'base_ctr', 'result_ctr', 'base_position',
+                    'result_position', 'started_at')
+    list_filter = ('status',)
+    search_fields = ('new_title', 'old_title', 'query')
+    raw_id_fields = ('post',)

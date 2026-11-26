@@ -102,6 +102,8 @@ class Post(models.Model):
     
     # SEO
     meta_description = models.CharField(max_length=160, blank=True, verbose_name='وصف SEO')
+    serp_title = models.CharField(max_length=90, blank=True, verbose_name='عنوان نتيجة جوجل (اختياري)',
+                                  help_text='لو اتملا بيظهر في جوجل بدل عنوان المقال. بيملاه تلقائيًا محسّن نسبة النقر.')
     keywords = models.CharField(max_length=200, blank=True, verbose_name='كلمات مفتاحية')
     
     # الميزات

@@ -130,6 +130,7 @@
           <button class="vote" type="button" data-url="{% url 'qna:vote_answer' official_answer.id %}" data-key="voted_official_{{ official_answer.id }}" aria-label="الإجابة مفيدة">♥ <span class="likes-count">{{ official_answer.likes }}</span></button>
         </div>
         <div class="answer-body"{% if en %} lang="en" dir="ltr"{% endif %}>{{ official_answer.answer_text|rich }}</div>
+        {% if guide_posts %}<div class="guide-links" style="margin:14px 0 0; padding:12px 14px; border-inline-start:3px solid var(--gold, #c9a227); background:rgba(201,162,39,.07);"><strong>{% if en %}Full explanation with examples:{% else %}الشرح الكامل بالأمثلة:{% endif %}</strong><ul style="margin:6px 0 0; padding-inline-start:20px;">{% for slug, t in guide_posts %}<li><a href="{% url 'blog_detail' slug %}">{{ t }}</a></li>{% endfor %}</ul></div>{% endif %}
         {% if hub_url %}<p style="margin:12px 0 0;"><a href="{{ hub_url }}">{% if en %}See this question with more {{ question.category.name }} on one page ←{% else %}اقرأ هذا السؤال مع باقي أسئلة «{{ question.category.name }}» في صفحة واحدة ←{% endif %}</a></p>{% endif %}
         <div class="qmeta"><span>{% if en %}Al-Agmi Quran team{% else %}{{ official_answer.answered_by.get_full_name|default:"فريق مؤسسة العجمي" }}{% endif %}</span><time datetime="{{ official_answer.answered_at|date:'c' }}">{% if en %}{% language 'en' %}{{ official_answer.answered_at|date:"F j, Y" }}{% endlanguage %}{% else %}{{ official_answer.answered_at|date:"j F Y" }}{% endif %}</time></div>
       </article>

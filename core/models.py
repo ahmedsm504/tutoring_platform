@@ -887,3 +887,31 @@ class GscPagePerformance(models.Model):
 
     def __str__(self):
         return self.url
+
+
+
+class SerpTitleTest(models.Model):
+    """تجربة عنوان جديد لنتيجة جوجل: لو الصفحة بتظهر كتير ومحدش بيدوس عليها وكلمة البحث مش في عنوانها،
+    محسّن نسبة النقر بيحط الكلمة في أول العنوان، وبعد 28 يوم يقارن النتيجة: يكمّل لو اتحسنت ويرجّع لو لأ."""
+    ACTIVE, KEPT, REVERTED = 'active', 'kept', 'reverted'
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='serp_tests')
+    query = models.CharField('كلمة البحث', max_length=200)
+    old_title = models.CharField('العنوان القديم', max_length=200)
+    new_title = models.CharField('العنوان الجديد', max_length=200)
+    base_impressions = models.PositiveIntegerField('ظهور قبل', default=0)
+    base_ctr = models.FloatField('نسبة النقر قبل %', default=0)
+    base_position = models.FloatField('الترتيب قبل', default=0)
+    result_ctr = models.FloatField('نسبة النقر بعد %', null=True, blank=True)
+    result_position = models.FloatField('الترتيب بعد', null=True, blank=True)
+    status = models.CharField('الحالة', max_length=10, default=ACTIVE,
+                              choices=[(ACTIVE, 'شغالة'), (KEPT, 'نجحت واتثبتت'), (REVERTED, 'اترجعت')])
+    started_at = models.DateTimeField('بدأت', default=timezone.now)
+    decided_at = models.DateTimeField('اتحسمت', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'تجربة عنوان في جوجل'
+        verbose_name_plural = 'محسّن نسبة النقر (تجارب العناوين)'
+        ordering = ['-started_at']
+
+    def __str__(self):
+        return self.new_title

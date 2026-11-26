@@ -1844,3 +1844,83 @@ class SeoOpportunitiesTests(TestCase):
         self.client.force_login(u)
         r = self.client.get('/admin/seo-opportunities/')
         self.assertContains(r, 'سور القرآن للأطفال')
+
+
+class CtrOptimizerTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth import get_user_model
+        from blog.models import Post
+        u = get_user_model().objects.create_user('w', 'w@example.com', 'x')
+        self.post = Post.objects.create(title='شرح سور الفيل إلى الناس للأطفال: قصص ومعاني وأنشطة', slug='fil-kids',
+                                        author=u, content='x', status='published')
+
+    def _perf(self, ctr, pos, impr=800):
+        from core.models import GscPagePerformance
+        GscPagePerformance.objects.update_or_create(url='https://alagme.com/blog/fil-kids/', defaults=dict(
+            impressions=impr, clicks=int(impr * ctr / 100), ctr=ctr, position=pos, opportunity=20,
+            top_queries='سورة قريش للاطفال (400)، الفيل (100)'))
+
+    def test_starts_then_reverts_when_not_better(self):
+        from datetime import timedelta
+        from django.utils import timezone
+        from core import ctr_optimizer
+        from core.models import SerpTitleTest
+        self._perf(0.5, 8.2)
+        self.assertEqual(ctr_optimizer.start_tests(write=lambda *_: None), 1)
+        self.post.refresh_from_db()
+        self.assertTrue(self.post.serp_title.startswith('سورة قريش للأطفال'))
+        self.assertEqual(self.client.get('/blog/fil-kids/').status_code, 200)
+        self.assertEqual(ctr_optimizer.start_tests(write=lambda *_: None), 0)  # مفيش تجربة تانية لنفس الصفحة
+        SerpTitleTest.objects.update(started_at=timezone.now() - timedelta(days=29))
+        self._perf(0.5, 8.2)
+        ctr_optimizer.evaluate(write=lambda *_: None)
+        self.post.refresh_from_db()
+        self.assertEqual(self.post.serp_title, '')
+        self.assertEqual(SerpTitleTest.objects.get().status, 'reverted')
+
+    def test_keeps_when_better(self):
+        from datetime import timedelta
+        from django.utils import timezone
+        from core import ctr_optimizer
+        from core.models import SerpTitleTest
+        self._perf(0.5, 8.2)
+        ctr_optimizer.start_tests(write=lambda *_: None)
+        SerpTitleTest.objects.update(started_at=timezone.now() - timedelta(days=29))
+        self._perf(3.5, 8.0)
+        ctr_optimizer.evaluate(write=lambda *_: None)
+        self.post.refresh_from_db()
+        self.assertTrue(self.post.serp_title)
+        self.assertEqual(SerpTitleTest.objects.get().status, 'kept')
+
+    def test_skips_good_ctr_and_brand(self):
+        from core import ctr_optimizer
+        self._perf(5.0, 8.0)
+        self.assertEqual(ctr_optimizer.start_tests(write=lambda *_: None), 0)
+        self.assertFalse(ctr_optimizer.usable_query('مؤسسة العجمي للقرآن', 'عنوان'))
+
+
+class CrossLinksTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth import get_user_model
+        from blog.models import Post
+        from core import crosslinks
+        from qna.models import PublicQuestion
+        crosslinks._MEMO.clear()
+        u = get_user_model().objects.create_user('xl', 'xl@example.com', 'x')
+        self.post = Post.objects.create(title='زقزوق البرتقالي والفستقي: شرح كامل', slug='zaqzuq-guide',
+                                        author=u, content='كلام تجريبي عن الموضوع. ' * 400, status='published', keywords='زقزوق, فستقي')
+        from django.core.cache import cache
+        cache.clear()
+        self.q = PublicQuestion.objects.create(visitor_name='زائر', title='ما معنى زقزوق البرتقالي والفستقي؟',
+                                               question_text='سؤال تجريبي طويل بما يكفي للاختبار', status='approved')
+
+    def tearDown(self):
+        from core import crosslinks
+        crosslinks._MEMO.clear()
+
+    def test_links_both_ways(self):
+        from core.crosslinks import posts_for_question, questions_for_post
+        self.assertIn('zaqzuq-guide', [s for s, _ in posts_for_question(self.q)])
+        self.assertIn(self.q.slug, [s for s, _ in questions_for_post(self.post)])
+        r = self.client.get('/blog/zaqzuq-guide/')
+        self.assertContains(r, 'أسئلة الزوار عن الموضوع')

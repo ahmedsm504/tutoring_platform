@@ -43,9 +43,9 @@ def seo_opportunities(request):
         post, title, meta = None, '', ''
         m = re.match(r'^/blog/([^/]+)/$', path)
         if m:
-            post = Post.objects.filter(slug=m.group(1)).only('title', 'meta_description', 'excerpt', 'slug').first()
+            post = Post.objects.filter(slug=m.group(1)).only('title', 'serp_title', 'meta_description', 'excerpt', 'slug').first()
         if post:
-            title = seo_title(post.title)
+            title = post.serp_title or seo_title(post.title)
             meta = (post.meta_description or post.excerpt or '')[:160]
         q = _top_query(p.top_queries)
         rows.append({'p': p, 'path': path, 'post': post, 'title': title, 'meta': meta, 'query': q,
