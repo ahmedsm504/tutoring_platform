@@ -170,10 +170,33 @@ def translation_of(slug):
         return ''
 
 
+_TITLE_CUTS = re.compile(r'\s*(?:[:،,؛;|]|\s[-–—]\s)\s*')
+SERP_MAX = 62
+
+
+def serp_title(title, limit=SERP_MAX):
+    """العنوان الطويل جوجل بيقصه في نص كلمة ويحط «...»، وده بيقلل النقرات.
+    هنا بنقصه إحنا عند آخر فاصلة/نقطتين قبل الحد، فيظهر جملة كاملة وكلمة البحث في أوله.
+    عنوان المقال (H1) نفسه بيفضل كامل جوه الصفحة."""
+    title = (title or '').strip()
+    if len(title) <= limit:
+        return title
+    best = None
+    for m in _TITLE_CUTS.finditer(title):
+        if m.start() <= limit:
+            best = m.start()
+    if best is None or best < 38:  # القص هيشيل معظم المعنى: نسيبه كامل أحسن
+        return title
+    out = title[:best].rstrip(' :،,؛;|-–—')
+    if out.count('«') > out.count('»'):  # ماينفعش نقص في نص آية/اقتباس: نسيبه كامل وجوجل يتصرف
+        return title
+    return out
+
+
 @register.filter
 def seo_title(title, suffix=''):
     """يضيف اسم الموقع للعنوان بس لو فيه مكان (جوجل بيقص العناوين بعد ~60 حرف)."""
-    title = (title or '').strip()
+    title = serp_title(title)
     if suffix and len(title) + len(suffix) + 3 <= 60:
         return f'{title} | {suffix}'
     return title

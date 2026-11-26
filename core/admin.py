@@ -157,6 +157,13 @@ class GscPagePerformanceAdmin(admin.ModelAdmin):
     search_fields = ('url', 'top_queries')
     readonly_fields = [f.name for f in GscPagePerformance._meta.fields]
 
+    def changelist_view(self, request, extra_context=None):
+        from django.contrib import messages
+        from django.utils.safestring import mark_safe
+        messages.info(request, mark_safe('📈 النسخة المرتبة بالفرص مع العنوان الحالي وكلمة البحث وزرار نسخ التقرير: '
+                                         '<a href="/admin/seo-opportunities/">فرص الصفحة الأولى في جوجل</a>'))
+        return super().changelist_view(request, extra_context)
+
     @admin.display(description='أهم كلمات البحث')
     def short_queries(self, obj):
         return obj.top_queries[:120]
