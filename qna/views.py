@@ -267,6 +267,8 @@ class QuestionDetailView(DetailView):
 
         from .hubs import question_hub_url
         context['hub_url'] = question_hub_url(self.object)
+        from core.crosslinks import posts_for_question
+        context['guide_posts'] = posts_for_question(self.object)
         context['schema_markup'] = self.generate_schema_markup()
         context['user_ip'] = self.get_client_ip()
 

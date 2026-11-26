@@ -184,6 +184,8 @@ def blog_detail(request, slug):
     related_posts = _related(post, limit=4)
     new_posts = discover_posts(post, exclude=[p.pk for p in related_posts])
     prev_post, next_post = prev_next(post)
+    from core.crosslinks import questions_for_post
+    post_questions = questions_for_post(post)
 
     # ✅ جديد: معرض الصور وفيديوهات المقال
     gallery_images = post.gallery_images.all()
@@ -212,6 +214,7 @@ def blog_detail(request, slug):
         'comments': comments,
         'comments_count': comments.count(),
         'related_posts': related_posts,
+        'post_questions': post_questions,
         'new_posts': new_posts,
         'quran_surah': _listen_surah(post),
         'quran_surahs': _section_surahs(post),

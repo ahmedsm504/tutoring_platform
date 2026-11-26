@@ -212,6 +212,13 @@ def run(limit=None, submit=True, report=True, stdout=None):
         sync_performance(s, write=write)
     except Exception as e:  # الأداء معلومة إضافية؛ متوقفش الفحص لو فشل
         write(f'GSC: سحب أداء البحث فشل: {e}')
+    else:
+        try:
+            from core import ctr_optimizer
+            ev, st = ctr_optimizer.run(write=write)
+            write(f'GSC: محسّن نسبة النقر: اتحسم {ev} تجربة، وبدأ {st} تجربة جديدة')
+        except Exception as e:
+            write(f'GSC: محسّن نسبة النقر فشل: {e}')
     found = sitemap_urls()
     todo = pick_urls(found, limit or DAILY_INSPECTIONS)
     checked = 0
