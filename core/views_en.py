@@ -107,7 +107,10 @@ def quran_kids(request):
         en_slug = ''
         if art and '#' not in art[0]:
             en_slug = translation_of(art[0].strip('/').split('/')[-1])
-        rows.append({**s, 'en': tr, 'meaning': meaning, 'en_slug': en_slug if en_slug in live else ''})
+        if en_slug not in live:  # مقالات جزء عمّ الإنجليزي مالهاش مقابل عربي مستقل: نطابق بالـ slug
+            guess = 'surah-' + tr.lower().replace("'", '').replace(' ', '-') + '-for-kids-english'
+            en_slug = guess if guess in live else ''
+        rows.append({**s, 'en': tr, 'meaning': meaning, 'en_slug': en_slug})
     with_article = [r for r in rows if r['en_slug']]
     return render(request, 'en/quran_kids.html', {'rows': rows, 'with_article': with_article,
                                                   'count': len(with_article), 'ALT_URL': '/quran/for-kids/'})
