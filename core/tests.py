@@ -1818,3 +1818,29 @@ class RamadanChallengeCertificateTests(TestCase):
         for s in range(78, 115):
             self.assertEqual(covered[s], set(range(1, ayah_count(s) + 1)), s)
         self.assertEqual(days[0]['items'][0]['surah'], 114)
+
+
+class SerpTitleTests(TestCase):
+    def test_cuts_long_title_at_clause(self):
+        from core.templatetags.content_tags import serp_title
+        t = 'سورة الأنبياء للأطفال: من الماء كل شيء حي، وإبراهيم والأصنام، ويا نار كوني بردًا وسلامًا'
+        self.assertEqual(serp_title(t), 'سورة الأنبياء للأطفال: من الماء كل شيء حي، وإبراهيم والأصنام')
+
+    def test_keeps_short_or_unsafe_titles(self):
+        from core.templatetags.content_tags import serp_title
+        self.assertEqual(serp_title('عنوان قصير'), 'عنوان قصير')
+        quoted = 'تفسير آية «ما أصاب من مصيبة إلا بإذن الله ومن يؤمن بالله يهد قلبه» للأطفال والكبار'
+        self.assertEqual(serp_title(quoted), quoted)
+
+
+class SeoOpportunitiesTests(TestCase):
+    def test_staff_page(self):
+        from django.contrib.auth import get_user_model
+        from core.models import GscPagePerformance
+        u = get_user_model().objects.create_superuser('seo', 'seo@example.com', 'x')
+        GscPagePerformance.objects.create(url='https://alagme.com/quran/for-kids/', impressions=900, clicks=3,
+                                          ctr=0.3, position=8.4, opportunity=24, top_queries='سور القرآن للأطفال (500)')
+        self.assertEqual(self.client.get('/admin/seo-opportunities/').status_code, 302)
+        self.client.force_login(u)
+        r = self.client.get('/admin/seo-opportunities/')
+        self.assertContains(r, 'سور القرآن للأطفال')
