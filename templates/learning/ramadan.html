@@ -23,6 +23,22 @@
 .rm-card .big{font-size:2rem;font-weight:800;color:var(--green-deep);font-family:'Baloo Bhaijaan 2',var(--font-display)}
 .rm-acts{columns:2 260px;column-gap:28px}
 .rm-acts li{break-inside:avoid;margin-bottom:6px}
+.rm-juz{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;list-style:none;padding:0;margin:14px 0}
+.rm-juz li{border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center;background:#fff}
+.rm-juz li span{display:block;font-size:.8rem;color:var(--muted)}
+.rm-juz li.soon{opacity:.6}
+.rm-chart{width:100%;border-collapse:collapse;font-size:.92rem}
+.rm-chart th,.rm-chart td{border:1px solid var(--line);padding:6px;text-align:center}
+.rm-chart td.box{width:14%}
+.rm-print-only{display:none}
+@media print{
+  body *{visibility:hidden}
+  #rm-chart-wrap,#rm-chart-wrap *{visibility:visible}
+  #rm-chart-wrap{position:fixed;top:0;left:0;right:0;width:100%;background:#fff}
+  #rm-chart-wrap .no-print{display:none}
+  .rm-print-only{display:block}
+  .rm-chart{font-size:10pt}.rm-chart th,.rm-chart td{padding:3pt}
+}
 </style>
 <header class="page-head">
   <div class="container">
@@ -64,6 +80,25 @@
       </tbody>
     </table>
     <p>طفلك حافظهم؟ خليه يدخل <a href="{% url 'juz_amma_challenge' %}">تحدي جزء عمّ في 30 يوم</a>، ورمضان أحسن وقت له.</p>
+
+    <h2 id="challenge">تحدي جزء عمّ في رمضان</h2>
+    <p>لو طفلك حافظ آخر 10 سور، أو عايز هدف أكبر، رمضان 30 يوم والتحدي 30 يوم. ادخل <a href="{% url 'juz_amma_challenge' %}">تحدي حفظ جزء عمّ</a> واضغط «ابدأ مع أول رمضان»: كل يوم هيظهر جنبه تاريخه ويومه في رمضان، وجنب كل سورة رابط شرحها للأطفال، وتقدر تطبع الجدول وتعمل صورة بتقدم طفلك تبعتها لجروب العيلة.</p>
+
+    <div id="rm-chart-wrap">
+    <h2 id="chart" class="no-print">جدول رمضان للطفل (يتطبع)</h2>
+    <p class="no-print">اطبع الجدول ده وعلّقه على التلاجة: كل يوم الطفل يحط نجمة أو علامة في كل خانة عملها. الجدول بيخلي الطفل يشوف رمضان كله قدامه، ويفرح وهو بيملاه يوم بيوم.</p>
+    <p class="rm-print-only" style="text-align:center;font-size:16pt;font-weight:700">جدول رمضان ⭐ اسم البطل: ................</p>
+    <button type="button" class="btn btn-primary no-print" onclick="window.print()">🖨️ اطبع الجدول</button>
+    <table class="rm-chart" style="margin-top:12px">
+      <thead><tr><th scope="col">اليوم</th><th scope="col">صليت الصلوات</th><th scope="col">قرأت/حفظت قرآن</th><th scope="col">صدقة أو مساعدة</th><th scope="col">دعاء</th><th scope="col">عمل طيب</th></tr></thead>
+      <tbody>{% for n, u in juz %}<tr><td>{{ n }} رمضان</td><td class="box"></td><td class="box"></td><td class="box"></td><td class="box"></td><td class="box"></td></tr>{% endfor %}</tbody>
+    </table>
+    <p class="rm-print-only" style="text-align:center;margin-top:6pt">alagme.com/ramadan</p>
+    </div>
+
+    <h2 id="juz-daily">ملخص جزء كل يوم في رمضان</h2>
+    <p>لو بتقرأ جزء في اليوم، اقرأ قبله ملخص الجزء: موضوعاته وأهم آياته وسؤال تتدبره مع عيلتك. القراءة بفهم بتفرق جدًا في الخشوع، وبتخلي الختمة رحلة مش مجرد صفحات.{% if juz_live < 30 %} بننشر الملخصات تباعًا قبل رمضان.{% endif %}</p>
+    <ul class="rm-juz">{% for n, u in juz %}<li{% if not u %} class="soon"{% endif %}>{% if u %}<a href="{{ u }}">الجزء {{ n }}</a>{% else %}الجزء {{ n }}{% endif %}<span>{{ n }} رمضان</span></li>{% endfor %}</ul>
 
     <h2 id="activities">30 نشاط رمضاني للطفل</h2>
     <ol class="rm-acts">

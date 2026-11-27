@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block title %}Ramadan 2027 Quran Plan: Daily Khatam Schedule, Kids' Memorization Plan and Activities | Al-Agmi{% endblock %}
+{% block meta_description %}Get ready for Ramadan 2027: how many pages to read daily to finish the Quran once, twice or three times, a kids' memorization plan, and 30 Ramadan activities.{% endblock %}
+{% block meta_keywords %}ramadan quran plan, how many pages a day to finish quran in ramadan, ramadan khatam schedule, ramadan 2027, ramadan activities for kids, quran goals for ramadan{% endblock %}
+{% block og_title %}Ramadan 2027 With the Quran: Khatam, Memorization and Kids' Activities{% endblock %}
+{% block canonical_url %}{{ SITE_URL }}{% url 'en_ramadan' %}{% endblock %}
+{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}
+{% block extra_ldjson %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"{{ SITE_URL }}/en/"},{"@type":"ListItem","position":2,"name":"Ramadan with the Quran","item":"{{ SITE_URL }}{% url 'en_ramadan' %}"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How many pages a day do I need to read to finish the Quran in Ramadan?","acceptedAnswer":{"@type":"Answer","text":"The standard Madani mushaf has 604 pages, so one khatam in 30 days is about 20 pages a day, which is 4 pages after each of the five prayers."}},
+{"@type":"Question","name":"When does Ramadan 2027 start?","acceptedAnswer":{"@type":"Answer","text":"Astronomical calculations expect Ramadan 1448 AH to begin on or around Monday 8 February 2027. The official start depends on the moon sighting announced in each country, so it may differ by a day."}},
+{"@type":"Question","name":"What should my child memorize in Ramadan?","acceptedAnswer":{"@type":"Answer","text":"A realistic goal for most children aged 5 to 10 is the last ten surahs of Juz Amma, from Al-Fil to An-Nas, one surah every three days. Children who already know them can take on the full 30-day Juz Amma challenge."}},
+{"@type":"Question","name":"When should I start preparing for Ramadan?","acceptedAnswer":{"@type":"Answer","text":"Start now or in Sha'ban: build a small daily reading habit, correct your recitation, and review what you have memorized, so that Ramadan does not begin with a sudden jump in effort."}}
+]}</script>
+{% endblock %}
+{% block content %}
+<style>
+.rm-count{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+.rm-count div{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:10px 16px;min-width:78px;text-align:center}
+.rm-count strong{display:block;font-size:1.8rem;font-family:'Baloo Bhaijaan 2',var(--font-display);line-height:1.1}
+.rm-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.rm-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.rm-card h3{margin:0 0 6px;font-size:1.15rem}
+.rm-card .big{font-size:2rem;font-weight:800;color:var(--green-deep);font-family:'Baloo Bhaijaan 2',var(--font-display)}
+.rm-acts{columns:2 260px;column-gap:28px}
+.rm-acts li{break-inside:avoid;margin-bottom:6px}
+.rm-juz{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;list-style:none;padding:0;margin:14px 0}
+.rm-juz li{border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center;background:#fff}
+.rm-juz li span{display:block;font-size:.8rem;color:var(--muted)}
+</style>
+<header class="page-head">
+  <div class="container">
+    <ol class="crumbs"><li><a href="{% url 'en_home' %}">Home</a></li><li aria-current="page">Ramadan with the Quran</li></ol>
+    <h1>Ramadan 2027 with the Quran 🌙</h1>
+    <p>Ramadan is the month of the Quran, and the best Ramadan is the one we prepare for early. Here you will find a daily khatam plan that fits your time, a memorization plan for children, a 30-day Juz Amma challenge, and simple activities that make the month special at home.</p>
+    <div class="rm-count" id="rm-count" aria-live="polite"><div><strong id="rm-d">--</strong>days</div><div><strong id="rm-h">--</strong>hours</div></div>
+    <p style="font-size:.92rem;opacity:.9;margin:0">until Ramadan 1448 AH (expected to begin on Monday 8 February 2027 according to astronomical calculations; the official start follows the moon sighting in each country).</p>
+  </div>
+</header>
+<section class="section">
+  <div class="container prose" style="max-width:900px">
+    <h2 id="khatam">How many pages a day to finish the Quran in Ramadan?</h2>
+    <p>The standard Madani mushaf has 604 pages. Divide them over the days of the month and spread your reading across the five daily prayers, and the daily portion becomes surprisingly light:</p>
+    <div class="rm-cards">
+      <div class="rm-card"><h3>One khatam</h3><div class="big">20 pages</div><p style="margin:4px 0 10px">a day = 4 pages after each prayer (about one juz a day)</p><a href="{% url 'en_khatma_preset' 'ramadan' %}">Day-by-day schedule</a></div>
+      <div class="rm-card"><h3>Two khatams</h3><div class="big">40 pages</div><p style="margin:4px 0 10px">a day = 8 pages after each prayer</p><a href="{% url 'en_khatma_preset' 'ramadan-2-khatmas' %}">Day-by-day schedule</a></div>
+      <div class="rm-card"><h3>Three khatams</h3><div class="big">60 pages</div><p style="margin:4px 0 10px">a day = 12 pages after each prayer</p><a href="{% url 'en_khatma_preset' 'ramadan-3-khatmas' %}">Day-by-day schedule</a></div>
+    </div>
+    <p>If your time is limited, one calm khatam with reflection is far better than several rushed ones without understanding. If you work long hours or have young children, try our <a href="{% url 'en_khatma_planner' %}">khatam planner</a>: enter the days and the time you actually have, and it will build a schedule around your life rather than an ideal one.</p>
+    <p>The Prophet ﷺ was at his most generous in Ramadan, and Jibril would meet him every night of Ramadan to study the Quran with him (al-Bukhari and Muslim). Ramadan is not only a month of reading more: it is a month of reviewing, understanding and living with the Quran.</p>
+
+    <h3>Reading when you are not fluent yet</h3>
+    <p>Many adults, especially those who grew up outside the Arab world, feel shy about reading the Quran in Arabic. Do not let that keep you from it. Read a smaller amount slowly and correctly, listen to the same pages from a good reciter, and read a translation alongside so you understand what you recite. The Prophet ﷺ said that the one who reads the Quran with difficulty, stumbling over it, receives a double reward (al-Bukhari and Muslim). Ramadan is a beautiful time to start lessons and fix your recitation, so that next Ramadan you can read with ease.</p>
+
+    <h3>A simple daily rhythm</h3>
+    <ul>
+      <li><strong>After Fajr:</strong> the quietest time of the day. Read your largest portion here, even ten minutes makes a difference.</li>
+      <li><strong>During the day:</strong> listen to the day's juz on your commute or while cooking, so the words stay with you.</li>
+      <li><strong>Before iftar:</strong> a short portion with the children, followed by du'a, which is a time when du'a is hoped to be answered.</li>
+      <li><strong>After Tarawih:</strong> read a short tafsir of what you heard in prayer, so the recitation in salah becomes meaningful.</li>
+    </ul>
+
+    <h2 id="juz-daily">One juz a day: read the summary first</h2>
+    <p>If you are reading one juz a day, spend five minutes on its summary before you start: the main themes, the key verses and the stories it contains. Reading with that map in mind makes the Arabic far easier to follow, even if you rely on a translation, and turns the khatam into a journey rather than a page count.</p>
+    <ul class="rm-juz">{% for n, u in juz %}<li>{% if u %}<a href="{{ u }}">Juz {{ n }}</a>{% else %}Juz {{ n }}{% endif %}<span>Ramadan {{ n }}</span></li>{% endfor %}</ul>
+
+    <h2 id="kids">A Ramadan memorization plan for children</h2>
+    <p>A realistic goal for most children aged five to ten is <strong>the last ten surahs of Juz Amma</strong>, one surah roughly every three days, with yesterday's surah recited in the next day's prayers:</p>
+    <table>
+      <thead><tr><th scope="col">Days</th><th scope="col">Surah</th><th scope="col">Tip</th></tr></thead>
+      <tbody>
+        <tr><td>1–3</td><td><a href="/quran/114/">An-Nas</a></td><td>Start with the easiest</td></tr>
+        <tr><td>4–6</td><td><a href="/quran/113/">Al-Falaq</a></td><td>Recite it with An-Nas before bed</td></tr>
+        <tr><td>7–9</td><td><a href="/quran/112/">Al-Ikhlas</a></td><td>Tell them it equals a third of the Quran</td></tr>
+        <tr><td>10–12</td><td><a href="/quran/111/">Al-Masad</a></td><td>The story of Abu Lahab, simply told</td></tr>
+        <tr><td>13–15</td><td><a href="/quran/110/">An-Nasr</a></td><td>Link it to the conquest of Makkah</td></tr>
+        <tr><td>16–18</td><td><a href="/quran/109/">Al-Kafirun</a></td><td>Review the last two weeks</td></tr>
+        <tr><td>19–21</td><td><a href="/quran/108/">Al-Kawthar</a></td><td>The shortest surah, a quick win</td></tr>
+        <tr><td>22–24</td><td><a href="/quran/107/">Al-Ma'un</a></td><td>Link it to feeding the poor in Ramadan</td></tr>
+        <tr><td>25–27</td><td><a href="/quran/106/">Quraysh</a></td><td>Last ten nights: recite at home</td></tr>
+        <tr><td>28–30</td><td><a href="/quran/105/">Al-Fil</a></td><td>Recite all ten and earn a <a href="{% url 'en_quran_certificate' %}">certificate</a> 🎉</td></tr>
+      </tbody>
+    </table>
+    <p>Already know these? Take on the <a href="{% url 'en_juz_amma_challenge' %}">30-day Juz Amma challenge</a>. Tap "Start on 1 Ramadan" and every day of the plan will show its date and its day of Ramadan, with a progress picture your child can share with the family. To help your child understand what they memorize, read our <a href="{% url 'en_quran_kids' %}">surahs explained for kids</a> together after iftar.</p>
+
+    <h2 id="activities">30 Ramadan activities for children</h2>
+    <ol class="rm-acts">
+      <li>Make a paper lantern and hang it in the house</li><li>Set up a charity jar and add a coin every day</li><li>Help prepare iftar: dates, water and juice</li>
+      <li>Read one verse and explain its meaning to the family</li><li>Write a du'a and stick it on the fridge</li><li>Offer water and dates before Maghrib (with an adult)</li>
+      <li>Pray Tarawih, even just two rak'ahs</li><li>Learn the iftar du'a "Dhahaba adh-dhama'..." (Abu Dawud; graded hasan by al-Albani)</li><li>Recite Surah Al-Mulk before sleeping</li>
+      <li>Call grandparents to ask how they are</li><li>Pack a gift bag for a child in need</li><li>Learn one simple tajweed rule</li>
+      <li>Make a greeting card for the neighbours</li><li>Count the tasbih after prayer on their fingers</li><li>Help decorate the house</li>
+      <li>Learn "Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni"</li><li>Choose a story book and read a little every day</li><li>Switch off screens for a full hour of Quran</li>
+      <li>Write three blessings to thank Allah for</li><li>Say sorry to someone they upset</li><li>Hand out dates to neighbours before Maghrib</li>
+      <li>Recite a surah in front of the family</li><li>Attend a talk at the mosque with a parent</li><li>Prepare an Eid box for less fortunate children</li>
+      <li>Learn about Zakat al-Fitr and why we give it</li><li>Write a letter to themselves for next Ramadan</li><li>Help an elderly neighbour with shopping</li>
+      <li>Tidy the prayer area at home</li><li>Make du'a for a friend by name</li><li>Plan a small Eid gift for a teacher</li>
+    </ol>
+
+    <h2 id="last-ten">The last ten nights and Laylat al-Qadr</h2>
+    <p>The Prophet ﷺ said: "Whoever stands in prayer in Ramadan out of faith and seeking reward will have his past sins forgiven" (al-Bukhari and Muslim). 'A'ishah asked him what she should say if she knew which night was Laylat al-Qadr, and he said: "Say: O Allah, You are Pardoning and You love to pardon, so pardon me" (at-Tirmidhi, who graded it hasan sahih).</p>
+    <ul class="checklist">
+      <li>Give the last ten nights more reading time, even if it means cutting back elsewhere.</li>
+      <li>Teach your children this du'a and say it together on the odd nights.</li>
+      <li>Give charity in the last ten nights, however small, and let the children hand it over themselves.</li>
+      <li>Read Surah Al-Qadr with its meaning, so the family knows why this night is better than a thousand months.</li>
+    </ul>
+
+    <h2 id="prepare">Start preparing now</h2>
+    <p>What spoils Ramadan for many people is that reading feels heavy in the first week, because the jump from no daily reading to a juz a day is too big. So:</p>
+    <ul class="checklist">
+      <li>Start a small daily portion now, two pages a day, and increase it gradually.</li>
+      <li>Correct your recitation and tajweed before Ramadan, so you can read accurately and comfortably.</li>
+      <li>Review the surahs you have memorized, and plan revision with our <a href="{% url 'en_hifz_planner' %}">memorization planner</a>.</li>
+      <li>Decide your family's Ramadan goals together: one khatam for the adults, ten surahs for the children, one good habit for everyone.</li>
+    </ul>
+    <div class="inline-cta" style="margin-top:24px">
+      <p>Start with a teacher before Ramadan: correct your recitation or help your child memorize, and enter Ramadan ready. The first class is free, scheduled in your own time zone.</p>
+      <a class="btn btn-primary" href="{% url 'en_contact' %}?ref=ramadan">Book a free trial class</a>
+    </div>
+
+    <h2 id="faq">Common questions about Ramadan and the Quran</h2>
+    <h3>How many pages a day do I need to read to finish the Quran in Ramadan?</h3>
+    <p>About 20 pages a day for one khatam in 30 days, which is 4 pages after each prayer. If the month turns out to be 29 days, add a page on a few days.</p>
+    <h3>When does Ramadan 2027 start?</h3>
+    <p>Astronomical calculations expect it on or around Monday 8 February 2027. The official start depends on the moon sighting announced in each country, so it may differ by a day.</p>
+    <h3>What should my child memorize in Ramadan?</h3>
+    <p>The last ten surahs of Juz Amma suit most children. If they already know them, they can continue with the rest of Juz Amma in the 30-day challenge.</p>
+    <h3>When should I start preparing for Ramadan?</h3>
+    <p>Now, or from Sha'ban: a small daily reading habit, correcting your recitation, and reviewing what you have memorized.</p>
+    <p style="margin-top:28px">اقرأ هذه الصفحة بالعربي: <a href="{% url 'ramadan' %}" lang="ar">رمضان مع القرآن</a></p>
+  </div>
+</section>
+<script>
+(function(){
+  var target=new Date('2027-02-08T00:00:00+02:00').getTime();
+  function tick(){var ms=target-Date.now();var box=document.getElementById('rm-count');if(ms<=0){box.innerHTML='<div><strong>🌙</strong>Ramadan Mubarak</div>';return}
+    document.getElementById('rm-d').textContent=Math.floor(ms/864e5);document.getElementById('rm-h').textContent=Math.floor(ms%864e5/36e5)}
+  tick();setInterval(tick,60000);
+})();
+</script>
+{% endblock %}

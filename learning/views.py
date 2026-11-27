@@ -365,9 +365,17 @@ def quran_surah(request, n):
 
 
 def juz_amma_challenge(request):
-    from .challenge import plan
-    days = plan()
-    return render(request, 'learning/challenge.html', {'days': days, 'total_ayat': sum(d['ayat'] for d in days)})
+    import copy
+    from .challenge import RAMADAN_START, plan
+    kids = quran.kids_articles()
+    days = copy.deepcopy(plan())
+    for d in days:
+        for it in d['items']:
+            hit = kids.get(it['surah'])
+            it['kids_url'] = hit[0] if hit and it['from'] == 1 else ''
+    return render(request, 'learning/challenge.html', {'days': days, 'total_ayat': sum(d['ayat'] for d in days),
+                                                       'ramadan_start': RAMADAN_START,
+                                                       'ALT_URL': '/en/quran/juz-amma-challenge/'})
 
 
 def certificate(request):
@@ -375,9 +383,14 @@ def certificate(request):
     return render(request, 'learning/certificate.html', {
         'surahs': [(i + 1, s['name']) for i, s in enumerate(idx)],
         'pre_surah': request.GET.get('surah', ''), 'pre_name': (request.GET.get('name') or '')[:40],
+        'ALT_URL': '/en/quran/certificate/',
     })
 
 
 def ramadan(request):
     from .planner import KHATMA_PRESETS  # noqa: F401  (الروابط للخطط الجاهزة)
-    return render(request, 'learning/ramadan.html', {})
+    from blog.models import Post
+    live = set(Post.objects.indexable().filter(slug__regex=r'^juz-[0-9]+-themes-and-summary$').values_list('slug', flat=True))
+    juz = [(n, f'/blog/juz-{n}-themes-and-summary/' if f'juz-{n}-themes-and-summary' in live else '') for n in range(1, 31)]
+    return render(request, 'learning/ramadan.html', {'ALT_URL': '/en/ramadan/', 'juz': juz,
+                                                     'juz_live': sum(1 for _, u in juz if u)})

@@ -8,29 +8,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"حفظ جزء عمّ في 30 يوم","totalTime":"P30D","step":[{% for d in days %}{"@type":"HowToStep","position":{{ d.n }},"name":"اليوم {{ d.n }}","text":"{% if d.kind == 'review' %}{{ d.title|escapejs }}{% else %}{% for it in d.items %}{{ it.label|escapejs }}{% if not forloop.last %}، {% endif %}{% endfor %}{% endif %}"}{% if not forloop.last %},{% endif %}{% endfor %}]}</script>
 {% endblock %}
 {% block content %}
-<style>
-.ch-top{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-bottom:22px}
-.ch-bar{flex:1 1 280px;background:var(--green-tint);border-radius:999px;height:16px;overflow:hidden}
-.ch-bar span{display:block;height:100%;width:0;margin-inline-start:0;margin-inline-end:auto;background:linear-gradient(90deg,var(--gold),#ffd166);transition:width .4s}
-.ch-stat{font-weight:700;color:var(--ink)}
-.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.ch-day{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;position:relative;box-shadow:var(--shadow)}
-.ch-day.today{border:2px solid var(--green);}
-.ch-day.done{background:linear-gradient(180deg,#fffaf0,#fff);border-color:var(--gold)}
-.ch-day.review{background:var(--green-tint)}
-.ch-n{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-family:'Baloo Bhaijaan 2',var(--font-display)}
-.ch-day.done .ch-n{background:var(--gold)}
-.ch-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.ch-head small{color:var(--muted)}
-.ch-items{list-style:none;margin:0 0 12px;padding:0;line-height:1.9}
-.ch-items a{font-weight:600}
-.ch-check{display:flex;align-items:center;gap:10px;font-weight:600;cursor:pointer;padding:8px 10px;border-radius:12px;background:var(--page)}
-.ch-check input{width:22px;height:22px;accent-color:var(--gold);margin:0}
-.ch-cert{display:inline-block;margin-top:10px;font-weight:700}.ch-cert[hidden]{display:none}
-.ch-badge{position:absolute;top:12px;left:12px;font-size:.8rem;font-weight:700;color:var(--green);background:var(--green-tint);padding:3px 10px;border-radius:999px}
-.ch-start{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.ch-start input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:10px}
-</style>
+{% include 'learning/_challenge_css.html' %}
 <header class="page-head">
   <div class="container">
     <ol class="crumbs"><li><a href="{% url 'home' %}">الرئيسية</a></li><li><a href="{% url 'quran_index' %}">المصحف</a></li><li aria-current="page">تحدي جزء عمّ</li></ol>
@@ -40,6 +18,18 @@
 </header>
 <section class="section">
   <div class="container">
+    <div class="ch-tools">
+      <label for="ch-name">اسم البطل/البطلة:</label><input type="text" id="ch-name" maxlength="30" placeholder="مثلًا: يوسف">
+      <button type="button" class="btn btn-ghost" id="ch-ramadan">🌙 ابدأ مع أول رمضان</button>
+      <button type="button" class="btn btn-ghost" id="ch-img">📸 صورة التقدم للمشاركة</button>
+      <button type="button" class="btn btn-ghost" id="ch-print">🖨️ اطبع الجدول</button>
+    </div>
+    <div class="ch-share" id="ch-share" hidden>
+      <canvas id="ch-cv" width="1080" height="1350" role="img" aria-label="صورة تقدم الطفل في التحدي"></canvas>
+      <button type="button" class="btn btn-primary" id="ch-send" hidden>مشاركة على واتساب</button>
+      <button type="button" class="btn" id="ch-dl">تحميل الصورة</button>
+    </div>
+    <p class="ch-print-title" id="ch-print-title">تحدي حفظ جزء عمّ في 30 يوم</p>
     <div class="ch-top">
       <div class="ch-stat" id="ch-stat">ابدأ اليوم الأول 👇</div>
       <div class="ch-bar" aria-hidden="true"><span id="ch-bar"></span></div>
@@ -48,14 +38,14 @@
         <button type="button" class="btn btn-ghost" id="ch-reset">ابدأ من جديد</button>
       </div>
     </div>
-    <p style="color:var(--muted);margin:-8px 0 20px">التقدم بيتحفظ على الجهاز ده بس. اضغط على اسم السورة عشان تقرأها وتسمعها بصوت الشيخ.</p>
+    <p id="ch-note" style="color:var(--muted);margin:-8px 0 20px">التقدم بيتحفظ على الجهاز ده بس. اضغط على اسم السورة عشان تقرأها وتسمعها بصوت الشيخ.</p>
 
     <div class="ch-grid" id="ch-grid">
       {% for d in days %}
       <article class="ch-day{% if d.kind == 'review' %} review{% endif %}" data-n="{{ d.n }}" data-completes="{{ d.completes|join:',' }}">
-        <div class="ch-head"><span class="ch-n">{{ d.n }}</span><div><strong>اليوم {{ d.n }}</strong><br><small>{% if d.kind == 'review' %}مراجعة{% else %}{{ d.ayat }} آية{% endif %}</small></div></div>
+        <div class="ch-head"><span class="ch-n">{{ d.n }}</span><div><strong>اليوم {{ d.n }}</strong><span class="ch-date" data-date></span><small>{% if d.kind == 'review' %}مراجعة{% else %}{{ d.ayat }} آية{% endif %}</small></div></div>
         {% if d.kind == 'review' %}<p style="margin:0 0 12px;font-weight:600">{{ d.title }}</p>
-        {% else %}<ul class="ch-items">{% for it in d.items %}<li><a href="{{ it.url }}">{{ it.label }}</a></li>{% endfor %}</ul>{% endif %}
+        {% else %}<ul class="ch-items">{% for it in d.items %}<li><a href="{{ it.url }}" data-name="{{ it.name }}">{{ it.label }}</a>{% if it.kids_url %}<a class="ch-kids" href="{{ it.kids_url }}">📖 شرحها للأطفال</a>{% endif %}</li>{% endfor %}</ul>{% endif %}
         <label class="ch-check"><input type="checkbox" data-day="{{ d.n }}"> {% if d.kind == 'review' %}راجعناه{% else %}حفظنا ورد اليوم{% endif %}</label>
         <a class="ch-cert" hidden href="{% url 'quran_certificate' %}">🏅 شهادة</a>
       </article>
@@ -71,6 +61,10 @@
         <li><strong>علّم على اليوم:</strong> لما يخلص، علّم عليه هنا وخليه يشوف الشريط وهو بيتملا.</li>
         <li><strong>احتفل في آخر السورة:</strong> اعمله <a href="{% url 'quran_certificate' %}">شهادة باسمه</a>، وعلّقها في أوضته.</li>
       </ol>
+      <h2>التحدي في رمضان 🌙</h2>
+      <p>رمضان 30 يوم، والتحدي 30 يوم، فده أنسب وقت تبدأ فيه. اضغط «ابدأ مع أول رمضان» فوق، وكل يوم هيظهر جنبه تاريخه ويومه في رمضان. اجعلوا ورد الحفظ بعد العصر أو قبل الفطار بنص ساعة، والتسميع في صلاة التراويح أو قبل النوم، وفي العشر الأواخر هتكونوا في المراجعة والاحتفال. وشوف <a href="{% url 'ramadan' %}">صفحة رمضان مع القرآن</a> فيها خطة ختمة للكبار و30 نشاط رمضاني للأطفال.</p>
+      <h2>شارك تقدّم طفلك</h2>
+      <p>اكتب اسم طفلك واضغط «صورة التقدم للمشاركة»: هتطلع صورة فيها النجوم اللي جمعها، ابعتها لجروب العيلة. تشجيع الجد والجدة والخالات بيفرق مع الطفل جدًا، وبيخليه يكمّل للآخر. وتقدر تطبع الجدول وتعلقه على التلاجة ويعلّم عليه بإيده.</p>
       <h2>لو اليوم تقيل على طفلك؟</h2>
       <p>عادي جدًا. الأطفال الصغيرين (5–7 سنين) ممكن ياخدوا ورد اليوم على يومين، والمهم الاستمرار مش السرعة. والأيام الأولى فيها سور كتير لكنها قصيرة جدًا، فلو طفلك حافظ بعضها هيخلص أسرع.</p>
       <h2>بعد ما يخلص جزء عمّ</h2>
@@ -82,31 +76,6 @@
     </div>
   </div>
 </section>
-<script>
-(function(){
-  var KEY='al_juz_amma_challenge', st={};
-  try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){st={}}
-  st.done=st.done||[];
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
-  var startI=document.getElementById('ch-start');
-  if(st.start)startI.value=st.start;
-  var boxes=document.querySelectorAll('[data-day]'), cards=document.querySelectorAll('.ch-day'), total=cards.length;
-  var cert="{% url 'quran_certificate' %}";
-  function today(){for(var i=1;i<=total;i++){if(st.done.indexOf(i)<0)return i}return 0}
-  function render(){
-    var t=today();
-    cards.forEach(function(c){var n=+c.dataset.n,done=st.done.indexOf(n)>=0;c.classList.toggle('done',done);c.classList.toggle('today',n===t&&!done);
-      var b=c.querySelector('.ch-badge');if(n===t&&!done){if(!b){b=document.createElement('span');b.className='ch-badge';b.textContent='الورد الجاي';c.appendChild(b)}}else if(b)b.remove();
-      var a=c.querySelector('.ch-cert'),comp=(c.dataset.completes||'').split(',').filter(Boolean);
-      if(done&&(comp.length||n===total)){a.hidden=false;a.href=cert+(n===total?'?surah=juz30':'?surah='+comp[comp.length-1]);a.textContent=n===total?'🏅 شهادة ختم جزء عمّ':'🏅 شهادة سورة '+c.querySelector('.ch-items li:last-child a').textContent.replace(/^سورة /,'').replace(/ \(.*\)$/,'')}else a.hidden=true});
-    boxes.forEach(function(x){x.checked=st.done.indexOf(+x.dataset.day)>=0});
-    var p=Math.round(100*st.done.length/total);document.getElementById('ch-bar').style.width=p+'%';
-    document.getElementById('ch-stat').textContent=st.done.length?('خلصتوا '+st.done.length+' من '+total+' يوم ('+p+'%)'+(st.done.length===total?' 🎉 مبروك!':' · كمّلوا 💪')):'ابدأ اليوم الأول 👇';
-  }
-  boxes.forEach(function(x){x.addEventListener('change',function(){var n=+x.dataset.day,i=st.done.indexOf(n);if(x.checked&&i<0)st.done.push(n);if(!x.checked&&i>=0)st.done.splice(i,1);if(!st.start){var d=new Date();st.start=d.toISOString().slice(0,10);startI.value=st.start}save();render();if(x.checked&&window.gtag)gtag('event','challenge_day_done',{day:n})})});
-  startI.addEventListener('change',function(){st.start=startI.value||null;save();render()});
-  document.getElementById('ch-reset').addEventListener('click',function(){st={done:[]};startI.value='';save();render()});
-  render();
-})();
-</script>
+
+{% include 'learning/_challenge_js.html' %}
 {% endblock %}

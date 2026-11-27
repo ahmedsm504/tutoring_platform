@@ -1,0 +1,84 @@
+<script>
+(function(){
+  {% if en %}var T={next:'Up next',certAll:'🏅 Juz Amma certificate',certSurah:'🏅 Certificate: Surah ',start:'Start with day 1 👇',
+  stat:function(d,t,p){return d+' of '+t+' days done ('+p+'%)'+(d===t?' 🎉 Well done!':' · keep going 💪')},locale:'en-GB',
+  rday:function(n){return ' · Ramadan '+n},title:'Juz Amma Memorization Challenge: 30 Days',imgTitle:'Juz Amma Challenge',inRamadan:'in Ramadan 🌙',in30:'in 30 days',
+  hero:'Our little hero',allDone:'Finished the whole challenge! 🎉',done:function(n,t){return n+' of '+t+' days done'},dua:'Make du\'a for them 🤲',
+  url:'alagme.com/en/quran/juz-amma-challenge',file:'juz-amma-challenge.png',dir:'ltr',cert:"{% url 'en_quran_certificate' %}",
+  shareText:function(n){return (n||'Our little one')+' is doing the Juz Amma memorization challenge 🌟 alagme.com/en/quran/juz-amma-challenge/'}};{% else %}var T={next:'الورد الجاي',certAll:'🏅 شهادة ختم جزء عمّ',certSurah:'🏅 شهادة سورة ',start:'ابدأ اليوم الأول 👇',
+  stat:function(d,t,p){return 'خلصتوا '+d+' من '+t+' يوم ('+p+'%)'+(d===t?' 🎉 مبروك!':' · كمّلوا 💪')},locale:'ar-EG',
+  rday:function(n){return ' · '+n+' رمضان'},title:'تحدي حفظ جزء عمّ في 30 يوم',imgTitle:'تحدي حفظ جزء عمّ',inRamadan:'في رمضان 🌙',in30:'في 30 يوم',
+  hero:'بطلنا الصغير',allDone:'خلّص التحدي كله! 🎉',done:function(n,t){return 'خلّص '+n+' يوم من '+t},dua:'ادعوا له بالثبات 🤲',
+  url:'alagme.com/quran/juz-amma-challenge',file:'تحدي-جزء-عم.png',dir:'rtl',cert:"{% url 'quran_certificate' %}",
+  shareText:function(n){return (n||'بطلنا')+' في تحدي حفظ جزء عمّ 🌟 alagme.com/quran/juz-amma-challenge/'}};{% endif %}
+  var KEY='al_juz_amma_challenge', st={};
+  try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){st={}}
+  st.done=st.done||[];
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+  var startI=document.getElementById('ch-start');
+  if(st.start)startI.value=st.start;
+  var boxes=document.querySelectorAll('[data-day]'), cards=document.querySelectorAll('.ch-day'), total=cards.length;
+  var cert=T.cert;
+  function today(){for(var i=1;i<=total;i++){if(st.done.indexOf(i)<0)return i}return 0}
+  function render(){
+    var t=today();
+    cards.forEach(function(c){var n=+c.dataset.n,done=st.done.indexOf(n)>=0;c.classList.toggle('done',done);c.classList.toggle('today',n===t&&!done);
+      var b=c.querySelector('.ch-badge');if(n===t&&!done){if(!b){b=document.createElement('span');b.className='ch-badge';b.textContent=T.next;c.appendChild(b)}}else if(b)b.remove();
+      var a=c.querySelector('.ch-cert'),comp=(c.dataset.completes||'').split(',').filter(Boolean);
+      if(done&&(comp.length||n===total)){a.hidden=false;a.href=cert+(n===total?'?surah=juz30':'?surah='+comp[comp.length-1]);a.textContent=n===total?T.certAll:T.certSurah+c.querySelector('.ch-items li:last-child a:first-child').dataset.name}else a.hidden=true});
+    boxes.forEach(function(x){x.checked=st.done.indexOf(+x.dataset.day)>=0});
+    var p=Math.round(100*st.done.length/total);document.getElementById('ch-bar').style.width=p+'%';
+    document.getElementById('ch-stat').textContent=st.done.length?T.stat(st.done.length,total,p):T.start;
+  }
+  boxes.forEach(function(x){x.addEventListener('change',function(){var n=+x.dataset.day,i=st.done.indexOf(n);if(x.checked&&i<0)st.done.push(n);if(!x.checked&&i>=0)st.done.splice(i,1);if(!st.start){var d=new Date();st.start=d.toISOString().slice(0,10);startI.value=st.start}save();render();if(x.checked&&window.gtag)gtag('event','challenge_day_done',{day:n})})});
+  startI.addEventListener('change',function(){st.start=startI.value||null;save();render()});
+  document.getElementById('ch-reset').addEventListener('click',function(){st={done:[]};startI.value='';save();render()});
+  // تاريخ كل يوم من يوم البداية
+  var RAMADAN='{{ ramadan_start }}';
+  function fmt(d){try{return new Intl.DateTimeFormat(T.locale,{weekday:'long',day:'numeric',month:'long'}).format(d)}catch(e){return d.toISOString().slice(0,10)}}
+  function dates(){
+    var s=st.start?new Date(st.start+'T12:00:00'):null;
+    cards.forEach(function(c){var el=c.querySelector('[data-date]');if(!el)return;
+      if(!s){el.textContent='';return}var d=new Date(s);d.setDate(d.getDate()+(+c.dataset.n)-1);
+      var r=st.start===RAMADAN?T.rday(+c.dataset.n):'';el.textContent=fmt(d)+r});
+  }
+  var _render=render;render=function(){_render();dates()};
+  document.getElementById('ch-ramadan').addEventListener('click',function(){st.start=RAMADAN;startI.value=RAMADAN;save();render();if(window.gtag)gtag('event','challenge_ramadan_start')});
+  // اسم الطفل
+  var nameI=document.getElementById('ch-name');nameI.value=st.name||'';
+  nameI.addEventListener('input',function(){st.name=nameI.value.slice(0,30);save();document.getElementById('ch-print-title').textContent=T.title+(st.name?' · '+st.name:'')});
+  document.getElementById('ch-print-title').textContent=T.title+(st.name?' · '+st.name:'');
+  document.getElementById('ch-print').addEventListener('click',function(){window.print();if(window.gtag)gtag('event','challenge_print')});
+  // صورة التقدم
+  var cv=document.getElementById('ch-cv'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  function star(x,y,r,col){ctx.save();ctx.translate(x,y);ctx.beginPath();for(var i=0;i<10;i++){var a=Math.PI/5*i-Math.PI/2,q=i%2?r*.45:r;ctx.lineTo(Math.cos(a)*q,Math.sin(a)*q)}ctx.closePath();ctx.fillStyle=col;ctx.fill();ctx.restore()}
+  function fit(t,font,size,max){ctx.font=font.replace('{s}',size);while(ctx.measureText(t).width>max&&size>24){size-=2;ctx.font=font.replace('{s}',size)}}
+  function draw(){
+    var n=st.done.length,name=(st.name||'').trim(),rm=st.start===RAMADAN;
+    var bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#152a8f');bg.addColorStop(1,'#1e3bbd');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    for(var k=0;k<40;k++)star(40+((k*397)%1000),30+((k*211)%420),2+(k%3)*2,'rgba(255,255,255,.35)');
+    ctx.beginPath();ctx.arc(W-170,170,80,0,Math.PI*2);ctx.fillStyle='#ffd166';ctx.fill();
+    ctx.beginPath();ctx.arc(W-135,145,72,0,Math.PI*2);ctx.fillStyle=bg;ctx.fill();
+    ctx.textAlign='center';ctx.direction=T.dir;ctx.fillStyle='#fff';
+    fit(T.imgTitle,"800 {s}px 'Baloo Bhaijaan 2', 'Noto Kufi Arabic', sans-serif",84,W-160);ctx.fillText(T.imgTitle,W/2,360);
+    ctx.font="600 40px 'IBM Plex Sans Arabic', sans-serif";ctx.fillStyle='#dbe3ff';ctx.fillText(rm?T.inRamadan:T.in30,W/2,420);
+    ctx.fillStyle='#ffd166';fit(name||T.hero,"800 {s}px 'Baloo Bhaijaan 2', 'Noto Kufi Arabic', sans-serif",96,W-160);ctx.fillText(name||T.hero,W/2,560);
+    ctx.fillStyle='#fff';ctx.font="700 50px 'IBM Plex Sans Arabic', sans-serif";ctx.fillText(n>=total?T.allDone:T.done(n,total),W/2,650);
+    // 30 دائرة
+    var cols=6,size=104,gx=(W-cols*size)/2;
+    for(var i=0;i<total;i++){var r=Math.floor(i/cols),c=i%cols,x=(T.dir==='rtl'?W-gx-c*size-size/2:gx+c*size+size/2),y=690+r*size+size/2,done=st.done.indexOf(i+1)>=0;
+      ctx.beginPath();ctx.arc(x,y,42,0,Math.PI*2);ctx.fillStyle=done?'#f5a524':'rgba(255,255,255,.14)';ctx.fill();
+      if(done)star(x,y,28,'#fff');else{ctx.fillStyle='rgba(255,255,255,.7)';ctx.font="700 34px 'IBM Plex Sans Arabic', sans-serif";ctx.fillText(String(i+1),x,y+12)}}
+    ctx.fillStyle='#dbe3ff';ctx.font="500 34px 'IBM Plex Sans Arabic', sans-serif";ctx.fillText(T.dua,W/2,H-110);
+    ctx.font="600 30px 'IBM Plex Sans Arabic', sans-serif";ctx.fillStyle='#fff';ctx.fillText(T.url,W/2,H-56);
+  }
+  function file(cb){cv.toBlob(function(b){cb(new File([b],T.file,{type:'image/png'}))},'image/png')}
+  document.getElementById('ch-img').addEventListener('click',function(){var box=document.getElementById('ch-share');box.hidden=false;draw();
+    var go=function(){draw()};if(document.fonts&&document.fonts.load){Promise.all(["800 60px 'Baloo Bhaijaan 2'","600 40px 'IBM Plex Sans Arabic'"].map(function(f){return document.fonts.load(f,'تحدي')})).then(go,go)}
+    file(function(f){if(navigator.canShare&&navigator.canShare({files:[f]}))document.getElementById('ch-send').hidden=false});
+    box.scrollIntoView({behavior:'smooth',block:'center'});if(window.gtag)gtag('event','challenge_progress_image')});
+  document.getElementById('ch-send').addEventListener('click',function(){file(function(f){navigator.share({files:[f],title:T.imgTitle,text:T.shareText((st.name||'').trim())}).catch(function(){})})});
+  document.getElementById('ch-dl').addEventListener('click',function(){file(function(f){var a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)})});
+  render();
+})();
+</script>

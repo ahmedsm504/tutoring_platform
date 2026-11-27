@@ -37,3 +37,30 @@ def lang(request):
         except NoReverseMatch:
             alt = ''
     return {'LANG': 'en' if is_en else 'ar', 'ALT_URL': alt}
+
+
+# شريط رمضان: بيظهر لوحده من أول شعبان لحد العيد ويختفي بعدها (مش محتاج حد يشغله أو يقفله).
+# لرمضان الجاي: غيّر التواريخ دي بس.
+RAMADAN_START = (2027, 2, 8)   # 1 رمضان 1448 تقريبًا
+BANNER_FROM = (2027, 1, 9)     # حوالي 1 شعبان
+BANNER_UNTIL = (2027, 3, 12)   # بعد العيد بيومين
+_NO_BANNER = ('/admin', '/dashboard', '/teacher', '/student', '/supervisor', '/learning/admin', '/ramadan',
+              '/en/ramadan', '/login', '/register', '/accounts')
+
+
+def season(request):
+    from datetime import date
+    from django.utils import timezone
+    today = timezone.localdate()
+    path = request.path or '/'
+    if not (date(*BANNER_FROM) <= today <= date(*BANNER_UNTIL)) or path.startswith(_NO_BANNER):
+        return {}
+    en = path == '/en' or path.startswith('/en/')
+    days = (date(*RAMADAN_START) - today).days
+    if days > 0:
+        text = (f'{days} day{"" if days == 1 else "s"} to Ramadan 🌙 Get your Quran plan ready' if en
+                else f'باقي {days} {"أيام" if 3 <= days <= 10 else "يوم"} على رمضان 🌙 جهّز خطة ختمتك وتحدي طفلك')
+    else:
+        text = ('Ramadan Mubarak 🌙 Your daily Quran plan and kids\' challenge' if en
+                else 'رمضان كريم 🌙 خطة الختمة اليومية وتحدي الأطفال')
+    return {'RAMADAN_BANNER': {'text': text, 'url': '/en/ramadan/' if en else '/ramadan/'}}
