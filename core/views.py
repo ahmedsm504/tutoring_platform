@@ -151,14 +151,18 @@ def contact(request):
 
 
 def pricing(request):
+    from . import geo
     from . import site_content as sc
     from .pricing import context as pricing_context
+    # الزائر بيتحول على طول لصفحة بلده وأسعارها (محدش يشوف أسعار بلد تانية)
+    if not geo.is_bot(request) and geo.visitor_country_slug(request):
+        return geo.private(redirect(reverse('country_page', args=[geo.visitor_country_slug(request)]) + '#prices'))
     site = settings.CANONICAL_URL.rstrip('/')
-    return render(request, 'core/pricing.html', _public_ctx(
+    return geo.private(render(request, 'core/pricing.html', _public_ctx(
         courses_ldjson=json.dumps(sc.courses_schema(site), ensure_ascii=False).replace('<', '\\u003c'),
-        **pricing_context(),
+        **pricing_context(geo.price_code(request)),
         program_pages=list(__import__('core.program_pages', fromlist=['PAGES']).PAGES),
-    ))
+    )))
 
 
 def program_page(request, slug):
@@ -175,8 +179,9 @@ def program_page(request, slug):
     related = [p for p in Post.objects.indexable().select_related('category').order_by('-created_at')[:600]
                if topic_for(p) == page['topic']][:8]
     others = [(s, PAGES[s]['h1']) for s in PAGES if s != slug]
-    return render(request, 'core/program.html', _public_ctx(page=page, prog=prog, related=related, others=others,
-                                                            **pricing_context()))
+    from . import geo
+    return geo.private(render(request, 'core/program.html', _public_ctx(
+        page=page, prog=prog, related=related, others=others, **pricing_context(geo.price_code(request)))))
 
 
 def level_test(request):
@@ -189,14 +194,18 @@ def level_test(request):
         slug, count, minutes, reasons = lt.recommend(a)
         prog = next(p for p in sc.PROGRAMS if p['slug'] == slug)
         ctx.update({'result': True, 'prog': prog, 'count': count, 'minutes': minutes, 'reasons': reasons,
-                    'is_course': prog['kind'] == 'دورة', 'note': lt.note_for(a, slug), **pricing_context()})
+                    'is_course': prog['kind'] == 'دورة', 'note': lt.note_for(a, slug)})
+        from . import geo
+        ctx.update(pricing_context(geo.price_code(request)))
+        return geo.private(render(request, 'core/level_test.html', ctx))
     return render(request, 'core/level_test.html', ctx)
 
 
 def countries_index(request):
     from .countries import COUNTRIES
     from .pricing import CURRENCIES, durations, package_price
-    rows = [(c, CURRENCIES[c['currency']]['ar'], package_price(c['currency'], 4), durations(c['currency'])[0]) for c in COUNTRIES]
+    # من غير أسعار: كل زائر بيشوف أسعار بلده بس في صفحة بلده
+    rows = [(c, CURRENCIES[c['currency']]['ar'], None, None) for c in COUNTRIES]
     return render(request, 'core/countries.html', {'rows': rows, 'ALT_URL': '/en/online-quran-classes/'})
 
 
@@ -206,12 +215,20 @@ def country_page(request, slug):
     c = BY_SLUG.get(slug)
     if not c:
         raise Http404
+    from . import geo
+    mine = None if geo.is_bot(request) else geo.visitor_country_slug(request)
+    if mine and mine != slug:
+        return geo.private(redirect(reverse('country_page', args=[mine])))
     ctx = context(c)
+    code = geo.price_code(request, c['currency'])
+    if code != c['currency']:  # زائر من بلد مالهاش صفحة: يشوف عملته (الدولار)
+        from .pricing import context as pricing_context
+        ctx.update(pricing_context(code))
     ctx['others'] = [x for x in COUNTRIES if x['slug'] != slug]
     from .countries import EN
     if slug in EN:
         ctx['ALT_URL'] = f'/en/online-quran-classes/{slug}/'
-    return render(request, 'core/country.html', _public_ctx(**ctx))
+    return geo.private(render(request, 'core/country.html', _public_ctx(**ctx)))
 
 
 def quality_standards(request):

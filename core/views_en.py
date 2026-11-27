@@ -33,12 +33,17 @@ def home(request):
 
 
 def pricing(request):
+    from core import geo
+    from core.countries import EN
     from core.pricing import context as pricing_ctx
+    mine = None if geo.is_bot(request) else geo.visitor_country_slug(request)
+    if mine in EN:
+        return geo.private(redirect(f'/en/online-quran-classes/{mine}/#prices'))
     site = settings.CANONICAL_URL.rstrip('/')
-    return render(request, 'en/pricing.html', {
+    return geo.private(render(request, 'en/pricing.html', {
         'programs': en.PROGRAMS, 'courses_ldjson': _ld(en.courses_schema(site)),
-        **pricing_ctx(en=True),
-    })
+        **pricing_ctx(geo.price_code(request), en=True),
+    }))
 
 
 def about(request):
@@ -124,8 +129,7 @@ def blog_list(request):
 def countries(request):
     from core.countries import EN, BY_SLUG
     from core.pricing import CURRENCIES, package_price
-    rows = [(slug, e, CURRENCIES[BY_SLUG[slug]['currency']]['en'], package_price(BY_SLUG[slug]['currency'], 4))
-            for slug, e in EN.items()]
+    rows = [(slug, e, CURRENCIES[BY_SLUG[slug]['currency']]['en'], None) for slug, e in EN.items()]
     return render(request, 'en/countries.html', {'rows': rows, 'ALT_URL': '/online-quran/'})
 
 
@@ -134,7 +138,16 @@ def country(request, slug):
     from core.countries import EN, context_en
     if slug not in EN:
         raise Http404
+    from core import geo
+    from core.countries import BY_SLUG
+    mine = None if geo.is_bot(request) else geo.visitor_country_slug(request)
+    if mine and mine != slug and mine in EN:
+        return geo.private(redirect(f'/en/online-quran-classes/{mine}/'))
     ctx = context_en(slug)
+    code = geo.price_code(request, BY_SLUG[slug]['currency'])
+    if code != BY_SLUG[slug]['currency']:
+        from core.pricing import context as pricing_ctx
+        ctx.update(pricing_ctx(code, en=True))
     ctx.update({'programs': en.PROGRAMS, 'others': [(s2, e) for s2, e in EN.items() if s2 != slug],
                 'ALT_URL': f'/online-quran/{slug}/'})
-    return render(request, 'en/country.html', ctx)
+    return geo.private(render(request, 'en/country.html', ctx))

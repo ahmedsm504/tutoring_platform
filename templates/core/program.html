@@ -65,5 +65,4 @@
     <p>{% for s, h in others %}<a href="{% url 'program_page' s %}">{{ h }}</a>{% if not forloop.last %} · {% endif %}{% endfor %} · <a href="{% url 'pricing' %}">كل الباقات</a></p>
   </div>
 </section>
-<script src="{% static 'js/prices.js' %}" defer></script>
 {% endblock %}

@@ -78,6 +78,4 @@ def context(code=None, en=False):
         'price_name': CURRENCIES[code]['en' if en else 'ar'],
         'price_rows': table(code),
         'price_durations': durations(code),
-        'price_currencies': [(k, v['en' if en else 'ar']) for k, v in CURRENCIES.items()],
-        'prices_json': json.dumps({'tables': all_tables(), 'tz': TZ_CURRENCY}, ensure_ascii=False),
     }
