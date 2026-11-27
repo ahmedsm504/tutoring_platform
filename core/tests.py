@@ -1672,7 +1672,7 @@ class BookingAndPricingTests(TestCase):
         self.assertEqual(str(package_price('EGP', 12, 60)), '1000')
         r = self.client.get(reverse('pricing'))
         self.assertContains(r, 'data-price-table')
-        self.assertContains(r, 'id="prices-data"')
+        self.assertNotContains(r, 'id="prices-data"')  # مفيش جداول عملات تانية في الصفحة
         self.assertContains(self.client.get('/en/pricing/'), 'data-price-table')
 
     def test_country_pages(self):
@@ -1924,3 +1924,48 @@ class CrossLinksTests(TestCase):
         self.assertIn(self.q.slug, [s for s, _ in questions_for_post(self.post)])
         r = self.client.get('/blog/zaqzuq-guide/')
         self.assertContains(r, 'أسئلة الزوار عن الموضوع')
+
+
+class GeoPricingTests(TestCase):
+    """كل زائر يتحول لصفحة بلده ويشوف أسعار بلده بس؛ محركات البحث مستثناة"""
+    UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Safari/604.1'
+
+    def get(self, path, country, ua=None):
+        from unittest import mock
+        with mock.patch('core.geo._lookup', return_value=country):
+            return self.client.get(path, HTTP_USER_AGENT=ua or self.UA, HTTP_X_FORWARDED_FOR='1.2.3.4')
+
+    def test_pricing_redirects_to_own_country(self):
+        r = self.get('/pricing/', 'EG')
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(r['Location'], '/online-quran/egypt/#prices')
+        self.assertIn('private', r['Cache-Control'])
+        self.assertEqual(self.get('/en/pricing/', 'GB')['Location'], '/en/online-quran-classes/uk/#prices')
+
+    def test_other_country_page_redirects(self):
+        r = self.get('/online-quran/egypt/', 'SA')
+        self.assertEqual(r['Location'], '/online-quran/saudi-arabia/')
+        self.assertEqual(self.get('/online-quran/saudi-arabia/', 'EG')['Location'], '/online-quran/egypt/')
+        self.assertEqual(self.get('/online-quran/egypt/', 'EG').status_code, 200)
+
+    def test_unlisted_country_sees_dollars_only(self):
+        r = self.get('/online-quran/egypt/', 'JO')
+        self.assertEqual(r.status_code, 200)
+        self.assertNotContains(r, '>200<')  # مش أسعار مصر
+        self.assertContains(r, '>12<')  # 4 حصص بالدولار
+        r = self.get('/pricing/', 'MA')
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, 'دولار')
+        self.assertNotContains(r, 'جنيه مصري')
+
+    def test_bots_are_not_redirected(self):
+        googlebot = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        r = self.get('/online-quran/egypt/', 'US', ua=googlebot)
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, '>200<')
+        self.assertEqual(self.get('/pricing/', 'US', ua=googlebot).status_code, 200)
+
+    def test_real_lookup(self):
+        from core.geo import _lookup
+        self.assertEqual(_lookup('8.8.8.8'), 'US')
+        self.assertEqual(_lookup('127.0.0.1'), '')
