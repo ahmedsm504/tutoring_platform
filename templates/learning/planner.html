@@ -65,6 +65,12 @@ table.pl-table{width:100%;border-collapse:collapse;font-size:.95rem}
   <h1>{{ c.h1 }}</h1>
   {% for p in c.intro %}<p>{{ p|safe }}</p>{% endfor %}
 </div></header>
+{% if unique %}
+<section class="section pl-noprint" style="padding-top:20px;padding-bottom:0"><div class="container article">
+  <h2>{{ unique.0 }}</h2>
+  {% for p in unique.1 %}<p>{{ p|safe }}</p>{% endfor %}
+</div></section>
+{% endif %}
 
 <section class="section" style="padding-top:24px"><div class="container">
   <p class="pl-print-title"><strong>{{ c.h1 }}</strong> — alagme.com</p>
@@ -110,7 +116,7 @@ table.pl-table{width:100%;border-collapse:collapse;font-size:.95rem}
   <table class="pl-table" id="pl-table">
     {% if mode == 'khatma' %}
     <thead><tr><th class="pl-noprint" scope="col"><span class="sr-only">{% if en %}Done{% else %}تم{% endif %}</span>✓</th><th scope="col">{% if en %}{% if weekly %}Days{% else %}Day{% endif %}{% else %}{% if weekly %}الأيام{% else %}اليوم{% endif %}{% endif %}</th><th scope="col" class="c-date" hidden>{% if en %}Date{% else %}التاريخ{% endif %}</th><th scope="col">{% if en %}Pages{% else %}الصفحات{% endif %}</th><th scope="col">{% if en %}From{% else %}من{% endif %}</th><th scope="col">{% if en %}To{% else %}إلى{% endif %}</th><th scope="col">{% if en %}Juz{% else %}الجزء{% endif %}</th></tr></thead>
-    <tbody>{% for r in rows %}<tr{% if r.khatma_done %} class="khatm"{% endif %}><td class="pl-noprint"><input type="checkbox" aria-label="{% if en %}Done{% else %}تم{% endif %} {{ r.day }}"></td><td><bdi dir="ltr">{{ r.day }}</bdi></td><td class="c-date" hidden></td><td><bdi dir="ltr">{{ r.from_page }}–{{ r.to_page }}</bdi> <span class="pl-note">({{ r.pages }})</span></td><td class="ref">{{ r.from_txt }}</td><td class="ref">{{ r.to_txt }}{% if r.khatma_done %}<span class="pl-badge">{% if en %}Khatam ✓{% else %}ختمة ✓{% endif %}</span>{% endif %}</td><td><bdi dir="ltr">{% if r.juz_from == r.juz_to %}{{ r.juz_from }}{% else %}{{ r.juz_from }}–{{ r.juz_to }}{% endif %}</bdi></td></tr>{% endfor %}</tbody>
+    <tbody>{% for r in rows %}<tr{% if r.khatma_done %} class="khatm"{% endif %}><td class="pl-noprint"><input type="checkbox" aria-label="{% if en %}Done{% else %}تم{% endif %} {{ r.day }}"></td><td><bdi dir="ltr">{{ r.day }}</bdi></td><td class="c-date" hidden></td><td><bdi dir="ltr">{{ r.from_page }}–{{ r.to_page }}</bdi> <span class="pl-note">({{ r.pages }})</span>{% if r.prayers %}<div class="pl-note pl-prayers">{% for n, rng in r.prayers %}{{ n }} <bdi dir="ltr">{{ rng }}</bdi>{% if not forloop.last %} · {% endif %}{% endfor %}</div>{% endif %}</td><td class="ref">{{ r.from_txt }}</td><td class="ref">{{ r.to_txt }}{% if r.khatma_done %}<span class="pl-badge">{% if en %}Khatam ✓{% else %}ختمة ✓{% endif %}</span>{% endif %}</td><td><bdi dir="ltr">{% if r.juz_from == r.juz_to %}{{ r.juz_from }}{% else %}{{ r.juz_from }}–{{ r.juz_to }}{% endif %}</bdi></td></tr>{% endfor %}</tbody>
     {% else %}
     <thead><tr><th class="pl-noprint" scope="col"><span class="sr-only">{% if en %}Done{% else %}تم{% endif %}</span>✓</th><th scope="col">{% if en %}Month{% else %}الشهر{% endif %}</th><th scope="col">{% if en %}What to memorize{% else %}المطلوب حفظه{% endif %}</th><th scope="col">{% if en %}Pages{% else %}الصفحات{% endif %}</th><th scope="col">{% if en %}Total memorized{% else %}إجمالي المحفوظ{% endif %}</th></tr></thead>
     <tbody>{% for r in rows %}<tr><td class="pl-noprint"><input type="checkbox" aria-label="{% if en %}Done{% else %}تم{% endif %} {{ r.month }}"></td><td>{{ r.month }}</td><td>{% for run in r.runs %}<div class="ref">{% if en %}Juz {{ run.juz }}{% if run.juz_to != run.juz %}–{{ run.juz_to }}{% endif %}: {{ run.from_txt }} → {{ run.to_txt }}{% else %}{% if run.juz_to != run.juz %}الأجزاء <bdi dir="ltr">{{ run.juz }}–{{ run.juz_to }}</bdi>{% else %}الجزء {{ run.juz }}{% endif %}: من {{ run.from_txt }} إلى {{ run.to_txt }}{% endif %} <span class="pl-note">({% if en %}p.{% else %}ص{% endif %} <bdi dir="ltr">{{ run.from_page }}–{{ run.to_page }}</bdi>)</span></div>{% endfor %}</td><td>{{ r.pages }}</td><td>{{ r.done_pct }}%</td></tr>{% endfor %}</tbody>
@@ -123,7 +129,7 @@ table.pl-table{width:100%;border-collapse:collapse;font-size:.95rem}
     <h2>{% if mode == 'khatma' %}{% if en %}Ready-made khatam schedules{% else %}جداول ختمة جاهزة{% endif %}{% else %}{% if en %}Ready-made memorization plans{% else %}خطط حفظ جاهزة{% endif %}{% endif %}</h2>
     <ul class="pl-presets">{% for s, t, u in presets %}<li><a href="{{ u }}"{% if s == slug %} aria-current="page"{% endif %}>{{ t }}</a></li>{% endfor %}</ul>
 
-    {% if mode == 'khatma' %}
+    {% if is_hub %}{% if mode == 'khatma' %}
     <h2>{% if en %}How to use the planner{% else %}كيف تستخدم حاسبة الختمة؟{% endif %}</h2>
     <ol>{% if en %}
       <li><strong>Choose the number of days</strong> (for example 30 for Ramadan) and how many khatams you want.</li>
@@ -153,6 +159,7 @@ table.pl-table{width:100%;border-collapse:collapse;font-size:.95rem}
 
     <h2>{% if en %}Tips to stay consistent{% else %}نصائح للاستمرار{% endif %}</h2>
     <ul>{% for t in c.tips %}<li>{{ t }}</li>{% endfor %}</ul>
+    {% endif %}
 
     <h2>{% if en %}Frequently asked questions{% else %}أسئلة شائعة{% endif %}</h2>
     <div class="pl-faq">{% for q, a in c.faq %}<details{% if forloop.first %} open{% endif %}><summary>{{ q }}</summary><p>{{ a }}</p></details>{% endfor %}</div>
