@@ -1,0 +1,190 @@
+title: Tajweed Checklist Before Ramadan: 12 Rules to Review So Your Khatam and Tarawih Are Recited Correctly
+category: english
+translation_of: tajweed-checklist-before-ramadan
+excerpt: A practical checklist of the tajweed rules you meet on almost every page of the Quran, to review before Ramadan: isti'adhah and basmalah, noon sakinah and tanween, meem sakinah, ghunnah, the long vowels and their counts, qalqalah, heavy and light letters, the sun and moon letters, hamzat al-wasl, stopping and starting, the four pauses of Hafs, and letters that are easily confused, with a two-week review plan.
+meta: Review 12 tajweed rules before Ramadan: noon and meem sakinah, ghunnah, madd, qalqalah, heavy letters, hamzat al-wasl, stopping and the saktat.
+keywords: tajweed before ramadan, tajweed checklist, basic tajweed rules, common quran recitation mistakes, improve quran recitation, tajweed for beginners
+reading: 14
+---
+In Ramadan you may read hundreds of pages, listen to the imam for hours in Tarawih, and perhaps lead your family in prayer at home. Every mistake in your recitation will be repeated thousands of times, and a small mistake in a madd or a ghunnah will settle deeper on your tongue. That is why **reviewing tajweed before Ramadan** is one of the most useful things you can do: a few hours of review can correct a whole khatam.
+
+This is not a full tajweed course. It is a checklist of the **rules you meet most often**, on almost every page. For each rule you will find a short explanation, examples and a common mistake, followed by a two-week review plan. Everything here follows the **riwayah of Hafs from 'Asim via ash-Shatibiyyah**, the most widely recited reading in the world.
+
+## Why Tajweed Matters Especially in Ramadan
+
+Allah says:
+
+﴿أَوۡ زِدۡ عَلَيۡهِ وَرَتِّلِ ٱلۡقُرۡءَانَ تَرۡتِيلًا﴾ (Quran 73:4)
+
+Tartil is careful, measured recitation that gives every letter its due. The Prophet ﷺ said: "The one who is skilled in the Quran will be with the noble and righteous scribes, and the one who reads the Quran and stumbles over it, finding it difficult, will have a double reward" (al-Bukhari and Muslim). So never stop reading because your tajweed is imperfect, but do work to correct it; you are rewarded for the effort.
+
+Ramadan combines three reasons that make tajweed more important:
+- **Volume.** Reading a lot fixes whatever you read, right or wrong.
+- **Speed.** Anyone aiming for several khatams tends to speed up, and speed erases rules that are not already secure.
+- **Leading prayer.** Many people lead their families in Ramadan, and a mistake as imam is carried by others with you.
+
+## 1. Isti'adhah and Basmalah
+
+Before reading you seek refuge with Allah, then say the basmalah if you are starting at the beginning of any surah except At-Tawbah. There are several ways to begin; the simplest for learners is to pause after the isti'adhah, pause after the basmalah, then begin the surah.
+
+**Common mistake**: joining the end of the basmalah to the surah while pausing irregularly elsewhere. Beginners are safest pausing after each.
+
+## 2. Noon Sakinah and Tanween
+
+This is the most frequent rule in the Quran. It has four outcomes depending on the letter that follows:
+
+| Rule | Letters | Example | How |
+|---|---|---|---|
+| Izhar (clear) | ء ه ع ح غ خ | «من آمن» man amana | Pronounce the noon clearly with no extra nasal sound |
+| Idgham (merging) | ي ر م ل و ن | «من يقول» man yaqul | Merge into the next letter, with ghunnah for ينمو, without it for ل and ر |
+| Iqlab (conversion) | ب | «من بعد», pronounced "mim ba'd" | Change the noon to a hidden meem with ghunnah |
+| Ikhfa' (hiding) | the remaining 15 letters | «من قبل» min qabl, «أنتم» antum | Between clear and merged, with ghunnah |
+
+**Common mistake**: pronouncing a clear noon before ikhfa' letters, so «أنتم» sounds like "an-tum" with a sharp n. Full details are in our guide to [noon sakinah and tanween](/blog/noon-sakinah-tanween-rules-english/).
+
+## 3. Meem Sakinah
+
+Three rules:
+- **Ikhfa' shafawi** before ب, as in «ترميهم بحجارة»: hide the meem with ghunnah.
+- **Idgham mithlayn** before another م, as in «لهم ما يشاءون»: merge with ghunnah.
+- **Izhar shafawi** before all other letters, taking special care before و and ف, as in «عليهم ولا الضالين».
+
+**Common mistake**: pressing the lips hard in ikhfa' shafawi so the meem becomes fully clear, or hiding the meem before و and ف. See our [meem sakinah guide](/blog/meem-sakinah-rules-english/).
+
+## 4. Ghunnah on Doubled Noon and Meem
+
+Every doubled noon or meem carries a nasal sound held for two counts, as in «إنّ» inna, «ثمّ» thumma, «الناس» an-nas. It is everywhere in the Quran.
+
+**Common mistake**: shortening the ghunnah until it disappears, or stretching it longer than a madd. Our [ghunnah guide](/blog/ghunnah-english/) explains its levels.
+
+## 5. The Long Vowels (Madd) and Their Counts
+
+Madd is where learners differ most. Here is a summary for Hafs via ash-Shatibiyyah:
+
+| Type | When | Example | Counts |
+|---|---|---|---|
+| Natural (tabi'i) | A long vowel with no hamzah or sukun after it | «قال» qala, «يقول» yaqulu | 2 |
+| Connected (muttasil) | Long vowel followed by hamzah in the same word | «جاء» ja'a, «السماء» as-sama' | 4 or 5 |
+| Separated (munfasil) | Long vowel at the end of a word, hamzah at the start of the next | «يا أيها» ya ayyuha | 4 or 5 |
+| Temporary sukun ('arid) | Long vowel before a letter made silent by stopping | «العالمين» when stopping | 2, 4 or 6 |
+| Necessary (lazim) | Long vowel followed by a permanent sukun | «الضالين», «الم» | 6 |
+| Exchange (badal) | Hamzah before a long vowel | «آمنوا» amanu | 2 |
+
+**Key principle**: be consistent. If you choose four counts for the separated madd, use four throughout the khatam. Consistency in madd is a mark of mastery. More detail is in our [madd rules guide](/blog/madd-rules-tajweed-english/).
+
+**Common mistake**: shortening the connected madd to two counts when reading fast. In Hafs the connected madd is never shortened.
+
+## 6. Qalqalah
+
+The five qalqalah letters are gathered in the phrase **qutb jad**: ق ط ب ج د. Qalqalah happens when one of them has a sukun, whether in the middle of a word or at the end when you stop:
+
+﴿قُلۡ هُوَ ٱللَّهُ أَحَدٌ﴾ ﴿ٱللَّهُ ٱلصَّمَدُ﴾ ﴿لَمۡ يَلِدۡ وَلَمۡ يُولَدۡ﴾ ﴿وَلَمۡ يَكُن لَّهُۥ كُفُوًا أَحَدُۢ﴾ (Quran 112:1-4)
+
+In Surah Al-Ikhlas you hear qalqalah on the د of «أحد», «الصمد», «يلد» and «يولد» when stopping on them, among the clearest examples of strong qalqalah.
+
+**Common mistake**: adding a vowel after the letter, so «أحد» becomes "ahada". Qalqalah is a bounce with no vowel. See our [qalqalah guide](/blog/qalqalah-rules-english/).
+
+## 7. Heavy and Light Letters
+
+- **The seven elevated letters** are always heavy: خ ص ض غ ط ق ظ, gathered in the phrase "khussa daghtin qidh".
+- **Ra'** is heavy or light depending on its vowel and what precedes it.
+- **The lam of "Allah"** is heavy after fathah or dammah, as in «قال الله» qala-llah, and light after kasrah, as in «بسم الله» bismi-llah.
+- **Alif** follows the letter before it: heavy after a heavy letter, light after a light one.
+
+**Common mistake**: making light letters heavy when they sit next to a heavy letter, such as the س in «نستعين».
+
+## 8. Sun and Moon Letters
+
+The lam of «ال» is either pronounced clearly before the moon letters, as in «القمر» al-qamar, or merged into a following sun letter, which is then doubled, as in «الشمس» ash-shams and «الرحمن» ar-rahman.
+
+**Common mistake**: pronouncing the lam before sun letters, so «الرحمن» sounds like "al-rahman".
+
+## 9. Hamzat al-Wasl
+
+The connecting hamzah is pronounced when you start with the word, and dropped when you join it to what comes before. If you start with «اهدنا», you say "ihdina"; when joined, it disappears. The vowel you use when starting follows clear rules, explained in our [hamzat al-wasl guide](/blog/hamzat-al-wasl-rules-english/).
+
+**Common mistake**: pronouncing the connecting hamzah in the middle of continuous recitation, or starting a verb with the wrong vowel.
+
+## 10. Stopping and Starting
+
+Stopping in the wrong place can change the meaning. The rule is to stop where the meaning is complete, using the mushaf's signs:
+- **م**: a necessary stop.
+- **لا**: do not stop here.
+- **قلى**: stopping is preferred.
+- **صلى**: continuing is preferred.
+- **ج**: stopping and continuing are equal.
+- **∴ ∴**: if you stop at one, do not stop at the other.
+
+**Common mistake**: running out of breath in the middle of a phrase that changes the meaning, then starting straight from the next word. The correct way is to go back and restart from a point where the meaning is sound.
+
+## 11. The Four Pauses (Saktat) of Hafs
+
+Via ash-Shatibiyyah, Hafs has four required brief pauses without taking a breath:
+- After «عوجا» at the start of Al-Kahf, before «قيما».
+- After «من مرقدنا» in Ya-Sin, before «هذا ما وعد الرحمن».
+- After «من» in Surah Al-Qiyamah:
+
+﴿وَقِيلَ مَنۡۜ رَاقٖ﴾ (Quran 75:27)
+
+- After «بل» in Surah Al-Mutaffifin:
+
+﴿كَلَّاۖ بَلۡۜ رَانَ عَلَىٰ قُلُوبِهِم مَّا كَانُواْ يَكۡسِبُونَ﴾ (Quran 83:14)
+
+**Common mistake**: merging the noon into the ra' in «من راق», and the lam into the ra' in «بل ران», which the pause prevents.
+
+## 12. Letters That Are Easily Confused
+
+These letters are often confused, especially by non-Arabic speakers and some dialect speakers:
+- **ض, ظ and د**: «الضالين» is not "al-dhallin" or "al-dallin".
+- **ذ and ز, ث and س**: «الذين» is not "al-zin", and «ثم» is not "summa".
+- **ح and ه, ع and ء**: «الحمد» is not "al-hamd" with a soft h, and «العالمين» is not "al-alamin".
+- **ق and ك**: «قل» is not "kul".
+
+These mistakes are rarely noticed by the reader. They need a teacher's ear.
+
+## Practice: One Verse, Many Rules
+
+Read this verse slowly and try to find its rules before reading the analysis:
+
+﴿إِنَّ ٱلَّذِينَ كَفَرُواْ سَوَآءٌ عَلَيۡهِمۡ ءَأَنذَرۡتَهُمۡ أَمۡ لَمۡ تُنذِرۡهُمۡ لَا يُؤۡمِنُونَ﴾ (Quran 2:6)
+
+- **«إنّ»**: doubled noon with two counts of ghunnah.
+- **«الذين»**: a sun letter; the lam merges into the ذ, which is doubled.
+- **«سواءٌ»**: a connected madd of four or five counts; the tanween before ع is izhar.
+- **«عليهم ءأنذرتهم»**: meem sakinah before hamzah, so izhar shafawi. Both hamzahs of «ءأنذرتهم» are pronounced fully in Hafs.
+- **«أنذرتهم» and «تنذرهم»**: noon sakinah before ذ, so ikhfa' with ghunnah.
+- **«لا يؤمنون»**: a natural madd in «لا», and a temporary-sukun madd of two, four or six when stopping on «يؤمنون».
+
+One verse, more than ten tajweed points. If you read one page a day with this attention before Ramadan, the rules will come naturally in your khatam.
+
+## A Two-Week Review Plan
+
+| Day | Review | Practice |
+|---|---|---|
+| 1 | Isti'adhah, basmalah and Al-Fatiha | Recite Al-Fatiha to a teacher or record yourself |
+| 2–3 | Noon sakinah and tanween | Find ten examples on one page of Al-Baqarah |
+| 4 | Meem sakinah | Recite Surah Al-Fil, focusing on «ترميهم بحجارة» |
+| 5 | Ghunnah | Recite Surah An-Nas and count the ghunnahs |
+| 6–7 | Madd | Read a page and label each madd and its count |
+| 8 | Qalqalah | Recite Al-Ikhlas, Al-Falaq and Al-Masad |
+| 9 | Heavy and light letters, ra' | Recite Surah Al-Qadr |
+| 10 | Sun and moon letters, hamzat al-wasl | Recite Surah Ash-Shams |
+| 11 | Stopping and starting | Read a page following the stop signs |
+| 12 | The four pauses | Recite their four places |
+| 13 | Confusable letters | Record yourself and listen for ض, ذ and ق |
+| 14 | General review | Recite Juz Amma slowly |
+
+## Frequently Asked Questions
+
+### Is tajweed obligatory?
+Scholars hold that reciting in a way that protects the letters from changes that alter the meaning is obligatory for every reader; this is avoiding "clear errors". The finer points are a matter of excellence. Secure the essentials first, then refine.
+
+### Should I read in Ramadan if my tajweed is weak?
+Yes. Keep reading and work on correction alongside it. The one who stumbles while striving has a double reward.
+
+### How can I know my recitation is correct?
+By reading to a qualified teacher. Books and videos teach the rules, but correcting pronunciation needs an expert ear. Our [tajweed roadmap](/blog/learn-tajweed-roadmap-english/) suggests where to begin.
+
+---
+
+If you would like to review your tajweed before Ramadan with a teacher who corrects every letter, book a free trial class with Al-Agmi Academy at a time that suits your time zone. Our full preparation plan is in [how to prepare for Ramadan with the Quran](/blog/prepare-for-ramadan-shaban-english/).
