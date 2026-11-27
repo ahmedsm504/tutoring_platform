@@ -188,6 +188,7 @@
     </header>
     {% endif %}
 
+    {% if RAMADAN_BANNER %}<a class="season-bar" href="{{ RAMADAN_BANNER.url }}" style="display:block;text-align:center;padding:9px 16px;background:linear-gradient(90deg,#152a8f,#1e3bbd);color:#fff;font-weight:700;text-decoration:none">{{ RAMADAN_BANNER.text }} {% if LANG == 'en' %}→{% else %}←{% endif %}</a>{% endif %}
     <main id="main">
       {% block content %}{% endblock %}
     </main>

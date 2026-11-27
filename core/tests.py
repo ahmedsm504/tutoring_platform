@@ -1969,3 +1969,39 @@ class GeoPricingTests(TestCase):
         from core.geo import _lookup
         self.assertEqual(_lookup('8.8.8.8'), 'US')
         self.assertEqual(_lookup('127.0.0.1'), '')
+
+
+class RamadanAndChallengeTests(TestCase):
+    """رمضان وتحدي جزء عمّ: النسخ الإنجليزي، الربط بين اللغتين، وشريط رمضان التلقائي"""
+
+    def test_english_pages(self):
+        for path in ['/en/quran/juz-amma-challenge/', '/en/quran/certificate/', '/en/ramadan/']:
+            r = self.client.get(path)
+            self.assertEqual(r.status_code, 200, path)
+            self.assertContains(r, 'hreflang="ar"')
+        r = self.client.get('/en/quran/juz-amma-challenge/')
+        self.assertContains(r, 'Surah An-Nas')
+        self.assertContains(r, 'Start on 1 Ramadan')
+        self.assertContains(r, "dir:'ltr'")
+
+    def test_arabic_pages_link_english(self):
+        for path, alt in [('/quran/juz-amma-challenge/', '/en/quran/juz-amma-challenge/'),
+                          ('/quran/certificate/', '/en/quran/certificate/'), ('/ramadan/', '/en/ramadan/')]:
+            r = self.client.get(path)
+            self.assertEqual(r.status_code, 200, path)
+            self.assertContains(r, alt)
+        r = self.client.get('/quran/juz-amma-challenge/')
+        self.assertContains(r, 'ابدأ مع أول رمضان')
+        self.assertContains(r, "dir:'rtl'")
+        self.assertContains(self.client.get('/ramadan/'), 'جدول رمضان للطفل')
+
+    def test_ramadan_banner_window(self):
+        from datetime import date
+        from unittest import mock
+        with mock.patch('django.utils.timezone.localdate', return_value=date(2027, 2, 1)):
+            r = self.client.get('/about/')
+            self.assertContains(r, 'باقي 7 أيام على رمضان')
+            self.assertNotContains(self.client.get('/ramadan/'), 'season-bar')
+            self.assertContains(self.client.get('/en/'), 'days to Ramadan')
+        with mock.patch('django.utils.timezone.localdate', return_value=date(2026, 12, 1)):
+            self.assertNotContains(self.client.get('/about/'), 'season-bar')

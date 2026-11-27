@@ -1,0 +1,40 @@
+<style>
+.ch-top{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-bottom:22px}
+.ch-bar{flex:1 1 280px;background:var(--green-tint);border-radius:999px;height:16px;overflow:hidden}
+.ch-bar span{display:block;height:100%;width:0;margin-inline-start:0;margin-inline-end:auto;background:linear-gradient(90deg,var(--gold),#ffd166);transition:width .4s}
+.ch-stat{font-weight:700;color:var(--ink)}
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.ch-day{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;position:relative;box-shadow:var(--shadow)}
+.ch-day.today{border:2px solid var(--green);}
+.ch-day.done{background:linear-gradient(180deg,#fffaf0,#fff);border-color:var(--gold)}
+.ch-day.review{background:var(--green-tint)}
+.ch-n{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-family:'Baloo Bhaijaan 2',var(--font-display)}
+.ch-day.done .ch-n{background:var(--gold)}
+.ch-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ch-head small{color:var(--muted)}
+.ch-items{list-style:none;margin:0 0 12px;padding:0;line-height:1.9}
+.ch-items a{font-weight:600}
+.ch-check{display:flex;align-items:center;gap:10px;font-weight:600;cursor:pointer;padding:8px 10px;border-radius:12px;background:var(--page)}
+.ch-check input{width:22px;height:22px;accent-color:var(--gold);margin:0}
+.ch-cert{display:inline-block;margin-top:10px;font-weight:700}.ch-cert[hidden]{display:none}
+.ch-badge{position:absolute;top:12px;left:12px;font-size:.8rem;font-weight:700;color:var(--green);background:var(--green-tint);padding:3px 10px;border-radius:999px}
+.ch-start{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ch-start input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:10px}
+.ch-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 18px;padding:14px;border-radius:16px;background:var(--green-tint)}
+.ch-tools input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:10px;min-width:160px}
+.ch-date{display:block;color:var(--green-deep);font-weight:600;font-size:.85rem}
+.ch-kids{font-size:.85rem;font-weight:600;margin-inline-start:6px;color:var(--green-deep)}
+.ch-share{margin:0 0 22px;text-align:center}.ch-share[hidden]{display:none}
+.ch-share canvas{width:100%;max-width:360px;height:auto;border-radius:16px;box-shadow:var(--shadow);display:block;margin:0 auto 12px}
+@media print{
+  header.page-head,.site-header,.site-footer,footer,nav,.ch-tools,.ch-top .ch-start,.ch-share,.prose,.inline-cta,.ch-cert,.ch-badge,.ch-kids,#ch-note,.adsbygoogle,.fab-wa{display:none!important}
+  .ch-print-title{display:block!important;text-align:center;font-size:20pt;margin:0 0 8pt}
+  .ch-grid{grid-template-columns:repeat(3,1fr);gap:6pt}
+  .ch-day{box-shadow:none;padding:6pt;break-inside:avoid;border:1pt solid #999}
+  .ch-items{margin:0 0 4pt;line-height:1.4;font-size:10pt}
+  .ch-items a{color:#000;text-decoration:none}
+  .ch-check{background:none;padding:0}
+  .ch-check input{width:16pt;height:16pt}
+}
+.ch-print-title{display:none}
+</style>

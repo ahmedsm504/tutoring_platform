@@ -149,6 +149,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'config.context_processors.seo',
                 'config.context_processors.lang',
+                'config.context_processors.season',
                 'chat.context_processors.chat_counts',
                 'learning.context_processors.learning_counts',
             ],

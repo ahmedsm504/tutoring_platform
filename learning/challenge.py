@@ -5,6 +5,7 @@ from functools import lru_cache
 from . import quran
 
 CAP = 27
+RAMADAN_START = '2027-02-08'  # 1 رمضان 1448 حسب الحسابات الفلكية (زر «ابدأ مع أول رمضان»)
 FIRST, LAST = 78, 114
 
 
