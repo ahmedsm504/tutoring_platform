@@ -287,7 +287,7 @@ def context_en(slug):
     c, e = BY_SLUG[slug], EN[slug]
     extra = [{'name': n, **time_info_en(z)} for n, z in e.get('extra_zones', [])]
     return {'country': c, 'c': e, 'times': time_info_en(c['tz']), 'extra_times': extra,
-            'slots': slots_en(c['tz']), **price_ctx(c['currency'], en=True)}
+            'slots': slots_en(c['tz']), 'guide': _guide(slug, en=True), **price_ctx(c['currency'], en=True)}
 
 
 def _offset_hours(tz, when):
@@ -361,4 +361,9 @@ def context(country):
     info = time_info(country['tz'])
     extra = [{'name': n, **time_info(z)} for n, z in country.get('extra_zones', [])]
     return {'country': country, 'times': info, 'extra_times': extra, 'slots': slots(country['tz']),
-            'teacher_days': TEACHER_DAYS_AR, **price_ctx(country['currency'])}
+            'teacher_days': TEACHER_DAYS_AR, 'guide': _guide(country['slug']), **price_ctx(country['currency'])}
+
+
+def _guide(slug, en=False):
+    from .country_guides import AR, EN
+    return (EN if en else AR).get(slug)

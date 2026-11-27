@@ -54,6 +54,9 @@
       <p class="plan-note">أول حلقة مجانية، وبعدها بتختار الباقة اللي تناسبك. تفاصيل كل باقة في <a href="{% url 'pricing' %}">صفحة الباقات</a>.</p>
     </div>
 
+    {% if guide %}<h2 id="guide">{{ guide.0 }}</h2>
+    {% for p in guide.1 %}<p>{{ p|safe }}</p>{% endfor %}{% endif %}
+
     <h2 id="tips">نصايح لـ{{ country.people }}</h2>
     <ul class="checklist">{% for t in country.tips %}<li>{{ t }}</li>{% endfor %}</ul>
 

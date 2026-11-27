@@ -260,6 +260,9 @@ class PlannerTests(TestCase):
 
     def test_in_sitemap(self):
         xml = self.client.get('/sitemap.xml').content.decode()
-        for u in ('/quran/khatma/', '/quran/khatma/ramadan/', '/quran/hifz-plan/3-years/',
-                  '/en/quran/khatam-planner/30-days/', '/en/quran/memorization-planner/'):
+        for u in ('/quran/khatma/', '/quran/khatma/ramadan/', '/quran/hifz-plan/2-years/',
+                  '/en/quran/khatam-planner/7-days/', '/en/quran/memorization-planner/'):
             self.assertIn('https://alagme.com' + u, xml)
+        # النسخ المطابقة للصفحة الرئيسية بتتحول لها، فمش في السايت ماب
+        self.assertNotIn('https://alagme.com/quran/hifz-plan/3-years/', xml)
+        self.assertNotIn('https://alagme.com/en/quran/khatam-planner/30-days/', xml)

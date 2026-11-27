@@ -2005,3 +2005,43 @@ class RamadanAndChallengeTests(TestCase):
             self.assertContains(self.client.get('/en/'), 'days to Ramadan')
         with mock.patch('django.utils.timezone.localdate', return_value=date(2026, 12, 1)):
             self.assertNotContains(self.client.get('/about/'), 'season-bar')
+
+
+class DuplicateContentTests(TestCase):
+    """الصفحات الجاهزة وصفحات الدول: كل صفحة لها محتوى خاص، والنسخ المطابقة للرئيسية بتتحول لها"""
+
+    def test_presets_same_as_hub_redirect(self):
+        for old, new in [('/quran/khatma/30-days/', '/quran/khatma/'), ('/en/quran/khatam-planner/30-days/', '/en/quran/khatam-planner/'),
+                         ('/quran/hifz-plan/3-years/', '/quran/hifz-plan/'), ('/en/quran/memorization-planner/3-years/', '/en/quran/memorization-planner/')]:
+            r = self.client.get(old)
+            self.assertEqual(r.status_code, 301, old)
+            self.assertEqual(r['Location'], new)
+        from learning.views_planner import all_urls
+        self.assertNotIn('/quran/khatma/30-days/', all_urls())
+
+    def test_each_preset_has_unique_section(self):
+        from learning import planner as P
+        from learning.planner_unique import HIFZ_AR, HIFZ_EN, KHATMA_AR, KHATMA_EN
+        for slug in P.KHATMA_PRESETS:
+            if slug == '30-days':
+                continue
+            self.assertIn(slug, KHATMA_AR)
+            self.assertIn(slug, KHATMA_EN)
+        for y in (1, 2, 4, 5):
+            self.assertIn(y, HIFZ_AR)
+            self.assertIn(y, HIFZ_EN)
+        r = self.client.get('/quran/khatma/7-days/')
+        self.assertContains(r, 'فمي بشوق')
+        self.assertNotContains(r, 'كيف تستخدم حاسبة الختمة')
+        self.assertContains(self.client.get('/quran/khatma/'), 'كيف تستخدم حاسبة الختمة')
+        self.assertContains(self.client.get('/quran/khatma/ramadan/'), 'pl-prayers')
+
+    def test_country_guides(self):
+        from core.countries import COUNTRIES, EN
+        from core.country_guides import AR as GA, EN as GE
+        for c in COUNTRIES:
+            self.assertIn(c['slug'], GA)
+        for s in EN:
+            self.assertIn(s, GE)
+        self.assertContains(self.client.get('/online-quran/germany/'), 'id="guide"')
+        self.assertContains(self.client.get('/en/online-quran-classes/uk/'), 'id="guide"')

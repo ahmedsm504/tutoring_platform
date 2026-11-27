@@ -49,6 +49,9 @@
       <p class="plan-note">The first class is free; you choose a package afterwards. Details of each programme are on the <a href="{% url 'en_pricing' %}">programmes page</a>.</p>
     </div>
 
+    {% if guide %}<h2 id="guide">{{ guide.0 }}</h2>
+    {% for p in guide.1 %}<p>{{ p|safe }}</p>{% endfor %}{% endif %}
+
     <h2 id="tips">Tips for {{ c.people }}</h2>
     <ul class="checklist">{% for t in c.tips %}<li>{{ t }}</li>{% endfor %}</ul>
 
