@@ -2112,3 +2112,30 @@ class SitemapNotNoindexedTests(TestCase):
     def test_country_and_ramadan_pages_have_no_noindex_header(self):
         for url in ('/ramadan/', '/level-test/', '/online-quran/'):
             self.assertNotIn('X-Robots-Tag', self.client.get(url))
+
+
+class RankingPagesTests(TestCase):
+    """صفحات عليها ظهور كبير في جوجل: مقالات كاملة بدل أقسام مدمجة، والأسئلة اللي ليها مقال بتتحول له"""
+
+    def test_restored_articles_not_merged(self):
+        m = merged_redirects()
+        for slug in ('madd-farq-and-tamkin', 'tafsir-ayah-rabbi-inni-lima-anzalta-ilayya-faqir',
+                     'ha-al-kinaya-rules', 'idgham-mutajanisayn'):
+            self.assertNotIn(slug, m)
+        self.assertEqual(m['ghunnah-levels'], 'ghunnah-five-levels')
+
+    def test_question_with_article_redirects(self):
+        import json
+        from pathlib import Path
+        from content_seed import load_articles
+        m = json.loads((Path(__file__).resolve().parents[1] / 'content_seed' / 'question_redirects.json').read_text())
+        slugs = {a['slug'] for a in load_articles()}
+        for target in m.values():
+            self.assertIn(target.split('#')[0], slugs)
+        u = get_user_model().objects.create_user('qr', 'qr@example.com', 'x')
+        cat = QuestionCategory.objects.create(name='تجويد', slug='tajweed-q')
+        PublicQuestion.objects.create(title='ما معنى حروف الاستعلاء والاستفال؟', slug='ما-معنى-حروف-الاستعلاء-والاستفال',
+                                      question_text='x', category=cat, status='approved')
+        r = self.client.get('/questions/question/ما-معنى-حروف-الاستعلاء-والاستفال/')
+        self.assertEqual(r.status_code, 301)
+        self.assertEqual(r['Location'], '/blog/istila-and-istifal-letters/')
