@@ -2078,6 +2078,15 @@ class LegacyConsolidationTests(TestCase):
         self.assertEqual(r.status_code, 301)
         self.assertEqual(r['Location'], '/blog/learn-tajweed-roadmap/')
 
+    def test_migration_drafts_legacy_posts(self):
+        import importlib
+        from django.apps import apps
+        u = get_user_model().objects.create_user('lg2', 'lg2@example.com', 'x')
+        Post.objects.create(title='قديم', slug='تعلم-التجويد', author=u, content='x', status='published')
+        importlib.import_module('blog.migrations.0159_draft_legacy_duplicates').run(apps, None)
+        self.assertEqual(Post.objects.get(slug='تعلم-التجويد').status, 'draft')
+        self.assertEqual(self.client.get('/blog/تعلم-التجويد/').status_code, 301)
+
     def test_qna_redirect(self):
         r = self.client.get('/qna/')
         self.assertEqual((r.status_code, r['Location']), (301, '/questions/'))
