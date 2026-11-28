@@ -85,6 +85,7 @@ urlpatterns = [
     path('', include('learning.urls')),
     path('accounts/', include('accounts.urls')),
     path('blog/', include('blog.urls')),
+    path('qna/', RedirectView.as_view(url='/questions/', permanent=True)),  # رابط قديم في جوجل
     path('questions/', include('qna.urls', namespace='qna')),
     path('videos/', include('videos.urls')),
     path('', include('careers.urls')),
