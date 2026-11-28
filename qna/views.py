@@ -144,10 +144,35 @@ class QuestionListView(ListView):
         return context
 
 
+def question_redirects():
+    """{slug السؤال: 'slug_المقال#القسم'}: أسئلة كانت بتظهر في جوجل وبقى لها مقال كامل -> 301 للمقال"""
+    global _QUESTION_REDIRECTS
+    if _QUESTION_REDIRECTS is None:
+        from pathlib import Path
+        path = Path(settings.BASE_DIR) / 'content_seed' / 'question_redirects.json'
+        try:
+            _QUESTION_REDIRECTS = json.loads(path.read_text(encoding='utf-8'))
+        except FileNotFoundError:
+            _QUESTION_REDIRECTS = {}
+    return _QUESTION_REDIRECTS
+
+
+_QUESTION_REDIRECTS = None
+
+
 class QuestionDetailView(DetailView):
     model = PublicQuestion
     template_name = 'qna/question_detail.html'
     context_object_name = 'question'
+
+    def get(self, request, *args, **kwargs):
+        target = question_redirects().get(self.kwargs.get('slug'))
+        if target:
+            from django.http import HttpResponsePermanentRedirect
+            from django.utils.encoding import iri_to_uri
+            slug, _, anchor = target.partition('#')
+            return HttpResponsePermanentRedirect(iri_to_uri(f'/blog/{slug}/' + (f'#{anchor}' if anchor else '')))
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         return PublicQuestion.objects.filter(status='approved')
