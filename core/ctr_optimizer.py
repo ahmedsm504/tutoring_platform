@@ -7,7 +7,7 @@
 والكلمة دي ماتتجربش تاني لمدة 90 يوم."""
 import re
 from datetime import timedelta
-from urllib.parse import unquote, urlparse
+from urllib.parse import quote, unquote, urlparse
 
 from django.utils import timezone
 
@@ -112,7 +112,10 @@ def evaluate(now=None, write=print):
     now = now or timezone.now()
     done = 0
     for t in SerpTitleTest.objects.filter(status=SerpTitleTest.ACTIVE, started_at__lte=now - timedelta(days=TEST_DAYS)):
-        perf = GscPagePerformance.objects.filter(url__endswith=f'/blog/{t.post.slug}/').first()
+        from django.db.models import Q
+        slug = t.post.slug  # روابط جوجل محفوظة مشفّرة (%D8..) للعناوين العربي
+        perf = GscPagePerformance.objects.filter(
+            Q(url__endswith=f'/blog/{slug}/') | Q(url__endswith=f'/blog/{quote(slug)}/')).first()
         if not perf or perf.impressions < 30:
             continue  # لسه مفيش بيانات كفاية: نستنى
         t.result_ctr, t.result_position, t.decided_at = perf.ctr, perf.position, now

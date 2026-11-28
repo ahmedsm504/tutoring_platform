@@ -1892,6 +1892,22 @@ class CtrOptimizerTests(TestCase):
         self.assertTrue(self.post.serp_title)
         self.assertEqual(SerpTitleTest.objects.get().status, 'kept')
 
+    def test_evaluate_matches_encoded_arabic_url(self):
+        from datetime import timedelta
+        from urllib.parse import quote
+        from django.utils import timezone
+        from blog.models import Post
+        from core import ctr_optimizer
+        from core.models import GscPagePerformance, SerpTitleTest
+        p = Post.objects.create(title='عنوان', slug='مقال-عربي', author=self.post.author, content='x',
+                                status='published', serp_title='جديد')
+        SerpTitleTest.objects.create(post=p, query='q', old_title='عنوان', new_title='جديد', base_impressions=500,
+                                     base_ctr=0.5, base_position=8, started_at=timezone.now() - timedelta(days=29))
+        GscPagePerformance.objects.create(url=f"https://alagme.com/blog/{quote('مقال-عربي')}/", impressions=500,
+                                          clicks=20, ctr=4.0, position=8, opportunity=1, top_queries='')
+        self.assertEqual(ctr_optimizer.evaluate(write=lambda *_: None), 1)
+        self.assertEqual(SerpTitleTest.objects.get(post=p).status, 'kept')
+
     def test_skips_good_ctr_and_brand(self):
         from core import ctr_optimizer
         self._perf(5.0, 8.0)
@@ -2045,3 +2061,23 @@ class DuplicateContentTests(TestCase):
             self.assertIn(s, GE)
         self.assertContains(self.client.get('/online-quran/germany/'), 'id="guide"')
         self.assertContains(self.client.get('/en/online-quran-classes/uk/'), 'id="guide"')
+
+
+class LegacyConsolidationTests(TestCase):
+    """مقالات قديمة متكررة: تتحول 301 للمقال الأشمل، و/qna/ القديم يروح للأسئلة"""
+
+    def test_legacy_slugs_in_redirect_map(self):
+        m = merged_redirects()
+        self.assertEqual(m.get('تعلم-التجويد'), 'learn-tajweed-roadmap')
+        self.assertEqual(m.get('madd-elongation-in-the-quran-its-types-examples-an'), 'madd-rules-tajweed-english')
+
+    def test_draft_legacy_post_redirects(self):
+        u = get_user_model().objects.create_user('lg', 'lg@example.com', 'x')
+        Post.objects.create(title='قديم', slug='تعلم-التجويد', author=u, content='x', status='draft')
+        r = self.client.get('/blog/تعلم-التجويد/')
+        self.assertEqual(r.status_code, 301)
+        self.assertEqual(r['Location'], '/blog/learn-tajweed-roadmap/')
+
+    def test_qna_redirect(self):
+        r = self.client.get('/qna/')
+        self.assertEqual((r.status_code, r['Location']), (301, '/questions/'))
