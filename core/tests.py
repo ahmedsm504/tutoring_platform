@@ -2090,3 +2090,25 @@ class LegacyConsolidationTests(TestCase):
     def test_qna_redirect(self):
         r = self.client.get('/qna/')
         self.assertEqual((r.status_code, r['Location']), (301, '/questions/'))
+
+
+class SitemapNotNoindexedTests(TestCase):
+    """أي صفحة في السايت ماب لازم ماتاخدش X-Robots-Tag: noindex (صفحات الدول والبرامج ورمضان كانت بتاخده)"""
+
+    def test_every_sitemap_path_is_public(self):
+        from urllib.parse import urlparse
+        from config.middleware import is_public_path
+        idx = self.client.get('/sitemap.xml').content.decode()
+        paths = []
+        for loc in re.findall(r'<loc>([^<]+)</loc>', idx):
+            p = urlparse(loc).path
+            if p.endswith('.xml'):
+                paths += [urlparse(x).path for x in re.findall(r'<loc>([^<]+)</loc>', self.client.get(p).content.decode())]
+            else:
+                paths.append(p)
+        self.assertGreater(len(paths), 20)
+        self.assertEqual([p for p in paths if not is_public_path(p)], [])
+
+    def test_country_and_ramadan_pages_have_no_noindex_header(self):
+        for url in ('/ramadan/', '/level-test/', '/online-quran/'):
+            self.assertNotIn('X-Robots-Tag', self.client.get(url))
